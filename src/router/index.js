@@ -31,6 +31,11 @@ const router=new Router({
           name:'cardOrderSearch',
           children:[{path:':type',component:resolve => require(['@/components/cardOrderList'], resolve),name:'cardOrderSearchItem'}]
         },
+		{//ecs网厅订单查询
+          path:'ecsNetOrderSearch',
+          component:resolve => require(['@/components/ecsNetOrderSearch'], resolve),
+          name:'ecsNetOrderSearch',
+        },
         {//统计下载
           path:'cardOrderDownload',
           component:resolve => require(['@/components/cardOrderDownload'], resolve),

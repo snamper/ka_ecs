@@ -64,6 +64,12 @@
 						<li><a><b></b>已审核</a></li>
 					</ul> -->
 				</li>
+				<!--ecs网厅订单查询-->
+				<li :class="{active:$route.path.indexOf('/home/ecsNetOrderSearch')>-1}" v-if="off.power">
+				  <b></b>
+				  <router-link to="/home/ecsNetOrderSearch"><div><i class="u-icon-search"></i><span>网厅订单查询</span></div></router-link>
+				</li>
+
 				<li :class="{active:$route.path.indexOf('/home/merchantAttr')>-1}">
 					<b></b>
 					<router-link to="/home/merchantAttr"><div><i class="u-icon-merchantAttr"></i><span>商户属性审核</span><b class="animated infinite bounce m-lighter" v-if="count.data.attribute!=0">{{count.data.attribute}}</b></div></router-link>
@@ -220,9 +226,9 @@ export default{
 
 				data.data.opencard!="0"||data.data.transfer!="0" ? vm.count.total=(parseInt(data.data.opencard)+parseInt(data.data.transfer)) : vm.count.total=0;
 				//data.data.opencard!="0" ? vm.count.total=parseInt(data.data.opencard) : vm.count.total=0;
-				
+
 				data.data.opencardAfterwards!="0" ? vm.count.total2=parseInt(data.data.opencardAfterwards) : vm.count.total2=0;
-				
+
 				vm.count.data=data.data;
 			},function(){
 				//去除加载层
