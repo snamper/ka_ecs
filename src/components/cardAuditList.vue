@@ -148,7 +148,7 @@ export default{
 						}
 						points=Math.max.apply(null,vm.integralCount);
 					}
-					
+
 				}
 				//points==0 ? btn.innerHTML='确定' : btn.innerHTML='确定<b class="f-c-red">【-'+(parseFloat(points)/1000).toFixed(3)+'】</b>';
 			}
@@ -199,10 +199,10 @@ export default{
 							}
 						})
 					})
-					
+
 				}
 			})
-			
+
 		},
 		getAuditList:function(){//获取订单
 			const vm=this,type=vm.$route.params.type,auditType=vm.off.auditType;
