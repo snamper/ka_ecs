@@ -17,7 +17,6 @@
 					<td>
 						<table class="g-inner-table">
 							<tbody>
-
 								<tr v-if="list.operatorType!=7"><td>订单号码：</td><td>{{list.orderId}}<a href="javascript:void(0)" @click="detailsOrder" class="details m-l">查看详情</a></td></tr>
 								<tr v-if="list.payOrderId&&list.operatorType!=7"><td>支付流水号：</td><td>{{list.payOrderId}}<a href="javascript:void(0)" @click="detailsPayOrder" class="details m-l">查看详情</a></td></tr>
 								<tr><td>生成时间：</td><td>{{$parent.getDateTime(list.createTime)[6]}}</td></tr>
@@ -45,7 +44,7 @@
 									<td v-if="list.auditType==0">实时审核</td>
 									<td v-if="list.auditType==1">事后审核</td>
 								</tr>
-								
+
 								<tr><td>用户姓名：</td><td>{{ list.userName }}</td></tr>
 								<tr v-if="list.operatorType==7"><td>原机主姓名：</td><td>{{ list.userNameOld }}</td></tr>
 								<tr><td>商户名称：</td><td>{{ list.merchantShopName }}【信用等级：{{list.dealerLevel}}】</td></tr>
@@ -90,7 +89,7 @@
   		</table>
   	</div>
   <um-details-view v-if="isShowDetails" :type="typeDetails" :list="detailsList" :dealerId="list.dealerId">
-	
+
   </um-details-view>
 </section>
 </template>
@@ -119,6 +118,7 @@ export default{
 		'um-details-view':detailsView
 	},
 	created:function(){
+	  console.log(this.list);
 		var vm=this;
 		if(vm.list.operatorType==7){
 			vm.imgData[0]={'src':vm.list.frontImageOld||'assets/img/no-img.png','name':'原机主正面照片'};
