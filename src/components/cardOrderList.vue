@@ -14,14 +14,14 @@
 				<span class="dp">系统名称：</span>
 				<div class="m-form-radio">
 					 <label><span class="radio"><input type="radio" value="0" v-model="form.source"><span></span></span><span class="text">远盟</span></label>
-					<label><span class="radio"><input type="radio" value="1" v-model="form.source"><span></span></span><span class="text">远易站</span></label> 
+					<label><span class="radio"><input type="radio" value="1" v-model="form.source"><span></span></span><span class="text">远易站</span></label>
 					<label><span class="radio"><input type="radio" value="6" v-model="form.source" checked="checked"><span></span></span><span class="text">卡盟</span></label>
 					<label><span class="radio"><input type="radio" value="3" v-model="form.source"><span></span></span><span class="text">远微商城</span></label>
 					<label><span class="radio"><input type="radio" value="2" v-model="form.source"><span></span></span><span class="text">信时空</span></label>
 					<label><span class="radio"><input type="radio" value="4" v-model="form.source"><span></span></span><span class="text">网厅</span></label>
 				</div>
 			</div>
-			
+
 		</section>-->
 		<div class="m-tag"><b></b>订单查询</div>
 		<section class="form-c">
@@ -77,7 +77,7 @@
 				</div>
 			</div>
 		</section>
-		
+
 		<section class="form-c o-no-bgc">
 			<div class="row" :class="{active:form.select==2}">
 				<span class="m-form-radio">
@@ -300,7 +300,7 @@
 	</section>
 	<!--详情-->
 	<list-details :list="detailsData" :type="off.type" v-if="off.details" :number="off.number">
-	
+
 	</list-details>
   </div>
 </template>
@@ -370,12 +370,12 @@ export default{
 			// 	vm.drop.off=false;
 			// 	event.stopPropagation();
 			// },false);
-			// 
-			// 
+			//
+			//
 		},
 		searchList:function(index,page){
 			var vm=this,url,json={"source":vm.form.source,"type":vm.form.orderType,"pageSize":vm.pageSize,"pageNum":page||1,"startTime":vm.form.startTime,"endTime":vm.form.endTime,"status":vm.form.orderStatus,'auditType':vm.form.auditType,"cardType":vm.form.cardType};
-			
+
 			//进行中，已关闭
 			if(vm.off.type==3||vm.off.type==4){
 				vm.searchClosedAndDoing(index,page);
@@ -466,7 +466,7 @@ export default{
 		},
 		searchClosedAndDoing:function(index,page){//进行中,已关闭
 			var vm=this,url,json={"source":vm.form.source,"type":vm.form.orderType,"pageSize":vm.pageSize,"pageNum":page||1,"startTime":vm.form.startTime,"endTime":vm.form.endTime,"status":vm.off.type,"statusDetail":vm.form.orderStatus,"cardType":vm.form.cardType};
-			
+
 
 			if(index=='order'){
 				if(!vm.form.context1){
@@ -531,7 +531,7 @@ export default{
 			if(vm.off.isLoad)return false;
 			vm.off.isLoad=true;
 			vm.AJAX('w/audit/getOrderList',json,function(data){
-				vm.list=data.data.list
+				vm.list=data.data.list;
 				vm.total=data.data.total;
 				vm.maxpage=Math.ceil(parseInt(data.data.total)/10);
 				vm.pageNum=page||1;
@@ -646,12 +646,12 @@ export default{
 		// 			input.removeAttribute("readonly");
 		// 			input.detachEvent ? input.detachEvent('onclick',vm.searchList) : input.removeEventListener("click",vm.searchList,false);
 		// 		}
-				
+
 		// 	};
 		// 	if(obj.name=="79"){
 		// 		vm.drop.text="开卡状态：全部";
 		// 		setInput(1)
-				
+
 		// 	}else if(obj.name=="71"){
 		// 		vm.drop.text="开卡状态：成功";
 		// 		setInput(1)
@@ -662,7 +662,7 @@ export default{
 		// 		vm.drop.text=obj.innerHTML;
 		// 		setInput()
 		// 	}
-			
+
 		// 	vm.drop.type=obj.name;
 		// 	vm.drop.off=false;
 		// }
