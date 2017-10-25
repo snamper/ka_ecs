@@ -33,9 +33,9 @@ Vue.prototype.AJAX=function(url,data,success,closeLoad){
         data=BASE64.encode(JSON.stringify(data));
     }else{
          error({'code':648});
-         return false;
+         return false; 
     }
-
+    
     axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
 
     axios.post(url,data).then((response) => {

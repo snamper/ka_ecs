@@ -31,7 +31,7 @@ const router=new Router({
           name:'cardOrderSearch',
           children:[{path:':type',component:resolve => require(['@/components/cardOrderList'], resolve),name:'cardOrderSearchItem'}]
         },
-		{//ecs网厅订单查询
+        {//ecs网厅订单查询
           path:'ecsNetOrderSearch',
           component:resolve => require(['@/components/ecsNetOrderSearch'], resolve),
           name:'ecsNetOrderSearch',
@@ -65,14 +65,14 @@ const router=new Router({
 
 
 
-router.beforeEach((to, from, next) => {  
-    
-    var token = localStorage.getItem('KA_ECS_INFO');
-    if (!token&&to.path!=='/login'||to.path=='/'){
-        next({path:'/login'});
-        return false;
-    }
-    next()
-  
-})
+// router.beforeEach((to, from, next) => {
+//
+//     var token = localStorage.getItem('KA_ECS_INFO');
+//     if (!token&&to.path!=='/login'||to.path=='/'){
+//         next({path:'/login'});
+//         return false;
+//     }
+//     next()
+//
+// })
 export default router;
