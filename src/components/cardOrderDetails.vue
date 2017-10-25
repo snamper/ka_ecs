@@ -129,7 +129,10 @@ export default{
 			vm.imgData[5]={'src':vm.list.handImage||'assets/img/no-img.png','name':'过户人手持照片'};
 			vm.imgData[6]={'src':vm.list.signImage||'assets/img/no-img.png','name':'过户人手签名照片'};
 		}else{
-			vm.imgData=[{'src':vm.list.handImageUrl||'assets/img/no-img.png','name':'手持'},{'src':vm.list.imageUrl||'assets/img/no-img.png','name':'正面'},{'src':vm.list.backImageUrl||'assets/img/no-img.png','name':'反面'},{'src':vm.list.signImageUrl||'assets/img/no-img.png','name':'手签名'},{'src':vm.list.livingImg||'assets/img/no-img.png','name':'活体识别'}];
+			vm.imgData=[{'src':vm.list.handImageUrl||'assets/img/no-img.png','name':'手持'},{'src':vm.list.imageUrl||'assets/img/no-img.png','name':'正面'},{'src':vm.list.backImageUrl||'assets/img/no-img.png','name':'反面'},{'src':vm.list.livingImg||'assets/img/no-img.png','name':'活体识别'}];
+			if(vm.type==2){
+				vm.imgData.push({'src':vm.list.signImageUrl||'assets/img/no-img.png','name':'手签名'},{'src':vm.list.acceptanceImg||'assets/img/no-img.png','name':'受理单'})
+			}
 		}
 		vm.zoomStyle.backgroundImage='url('+vm.imgData[0].src+')';
 	},

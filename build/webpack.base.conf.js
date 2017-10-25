@@ -9,7 +9,8 @@ function resolve (dir) {
 
 module.exports = {
   entry: {
-    app: './src/main.js'
+    app: './src/main.js',
+    static:'./src/static.js'//静态资源管理
   },
   output: {
     path: config.build.assetsRoot,

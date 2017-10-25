@@ -65,14 +65,19 @@ const router=new Router({
 
 
 
-router.beforeEach((to, from, next) => {  
-    
+
+router.beforeEach((to, from, next) => {
+
+
     var token = localStorage.getItem('KA_ECS_INFO');
     if (!token&&to.path!=='/login'||to.path=='/'){
         next({path:'/login'});
         return false;
     }
     next()
+
   
 })
 export default router;
+
+

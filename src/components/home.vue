@@ -64,11 +64,13 @@
 						<li><a><b></b>已审核</a></li>
 					</ul> -->
 				</li>
+
 				<!--网厅订单查询-->
 				<li :class="{active:$route.path.indexOf('/home/ecsNetOrderSearch')>-1}" v-if="off.power">
 				  <b></b>
 				  <router-link to="/home/ecsNetOrderSearch"><div><i class="u-icon-search"></i><span>网厅订单查询</span></div></router-link>
 				</li>
+
 				<li :class="{active:$route.path.indexOf('/home/merchantAttr')>-1}">
 					<b></b>
 					<router-link to="/home/merchantAttr"><div><i class="u-icon-merchantAttr"></i><span>商户属性审核</span><b class="animated infinite bounce m-lighter" v-if="count.data.attribute!=0">{{count.data.attribute}}</b></div></router-link>

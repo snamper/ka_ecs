@@ -240,7 +240,7 @@ export default{
 					vm.imgData[5]={'src':vm.auditData.handImage||'assets/img/no-img.png','name':'过户人手持照片'};
 					vm.imgData[6]={'src':vm.auditData.signImage||'assets/img/no-img.png','name':'过户人手签名照片'};
 				}else{
-					vm.imgData=[{'src':vm.auditData.papersImage||'assets/img/no-img.png','name':'正面'},{'src':vm.auditData.backImage||'assets/img/no-img.png','name':'反面'},{'src':vm.auditData.headImage||'assets/img/no-img.png','name':'手持'},{'src':vm.auditData.avatarImage||'assets/img/no-img.png','name':'手签名'},{'src':vm.auditData.livingImg||'assets/img/no-img.png','name':'活体识别'}];
+					vm.imgData=[{'src':vm.auditData.papersImage||'assets/img/no-img.png','name':'正面'},{'src':vm.auditData.backImage||'assets/img/no-img.png','name':'反面'},{'src':vm.auditData.headImage||'assets/img/no-img.png','name':'手持'},{'src':vm.auditData.livingImg||'assets/img/no-img.png','name':'活体识别'}];
 				}
 				vm.zoomStyle.backgroundImage='url('+vm.imgData[0].src+')';
 				vm.off.auditIndex++;
