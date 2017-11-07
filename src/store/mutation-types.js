@@ -1,0 +1,6 @@
+export const SET_AUDIT_STATISTICS_INFO = "SET_AUDIT_STATISTICS_INFO";
+export const SET_ONLINE_TIME = "SET_ONLINE_TIME";
+export const CLEAR_TIMER = "CLEAR_TIMER";
+export const SIGN_OUT = "SIGN_OUT";
+export const SET_USERINFO = "SET_USERINFO";
+

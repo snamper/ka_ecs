@@ -1,5 +1,10 @@
+<!--**
+  *@info 统计报表模块-开卡订单
+  *@author: thinkmix
+  *@date 2017-11-6
+* *-->
 <style scoped>
-  @import "../assets/css/download.css";
+  @import "../../assets/css/download.css";
 </style>
 <template>
 	<section class="g-download-box">
@@ -38,10 +43,10 @@
 	</section>
 </template>
 <script>
-require("../assets/js/laydate/laydate.js");
-require("../assets/js/laydate/skins/default/laydate.css");
+require("../../assets/js/laydate/laydate.js");
+require("../../assets/js/laydate/skins/default/laydate.css");
 export default{
-	name:'audit',
+	name:'cardOrderDownload',
 	data (){
 		return {
 			tabType:1,

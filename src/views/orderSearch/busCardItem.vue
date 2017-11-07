@@ -1,5 +1,10 @@
+<!--**
+  *@info 订单查询模块-公交一卡通订单子模块
+  *@author: thinkmix
+  *@date 2017-11-6
+* *-->
 <style scoped>
-  @import "../assets/css/search.css";
+  @import "../../assets/css/search.css";
   .o-col-2-input{width: 80%;margin:0;}
   .o-col-2-input>.col-r{margin-left: 0;}
   .o-col-2-input>.col-r>input{border-radius:0;}
@@ -176,10 +181,10 @@
   </div>
 </template>
 <script>
-require("../assets/js/laydate/laydate.js");
-require("../assets/js/laydate/skins/default/laydate.css");
-import pagination from "../components/page.vue";
-import details from "../components/cardOrderDetails.vue";
+require("../../assets/js/laydate/laydate.js");
+require("../../assets/js/laydate/skins/default/laydate.css");
+import pagination from "../../components/Page.vue";
+import details from "../../components/cardOrderDetails.vue";
 export default{
 	name:'busOrderList',
 	data (){

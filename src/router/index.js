@@ -1,83 +1,132 @@
-import Vue from 'vue'
-import Router from 'vue-router'
-
+/**
+  *@info 路由模块
+  *@author: thinkmix
+  *@date 2017-11-6
+* */
+import Vue from "vue"
+import Router from "vue-router"
 Vue.use(Router);
+
+const login=resolve => require(["@/views/login"], resolve);
+const home=resolve => require(["@/views/home"], resolve);
+/*审核*/
+const Audit=resolve=>require(["@/views/audit/index"],resolve);
+const Audit_card=resolve=>require(["@/views/audit/card"],resolve);
+const Audit_cardItem=resolve=>require(["@/views/audit/cardItem"],resolve);
+
+
+/*订单查询*/
+const OrderSearch=resolve=>require(["@/views/orderSearch/index"],resolve);
+const OrderSearch_card=resolve => require(["@/views/orderSearch/card"], resolve);
+const OrderSearch_cardItem=resolve => require(["@/views/orderSearch/cardItem"], resolve);
+const OrderSearch_merchant=resolve => require(["@/views/orderSearch/merchant"], resolve);
+const OrderSearch_onlineHall=resolve => require(["@/views/orderSearch/onlineHall"], resolve);
+const OrderSearch_busCard=resolve => require(["@/views/orderSearch/busCard"], resolve);
+const OrderSearch_busCardItem=resolve => require(["@/views/orderSearch/busCardItem"], resolve);
+/*资源查询*/
+const Resource=resolve=>require(["@/views/resource/index"],resolve);
+const Resource_merchant=resolve=>require(["@/views/resource/merchant"],resolve);
+/*统计报表*/
+const Statistics=resolve=>require(["@/views/statistics/index"],resolve);
+const Statistics_cardOrder=resolve=>require(["@/views/statistics/cardOrder"],resolve);
+
 const router=new Router({
   routes: [
     {
-      path:'/login',
-      component:resolve => require(['@/components/login.vue'], resolve)
+      path:"/login",
+      component:login
     },
     {
-      path:'/home',
-      component:resolve => require(['@/components/home'], resolve),
-      redirect:'home/realtime/kameng',
-      children:[
-        {//开卡实时审核
-          path:'realtime/:source',
-          name:'realtime',
-          component:resolve=>require(['@/components/cardAudit'],resolve),
-          children:[{path:':type',component:resolve => require(['@/components/cardAuditList'], resolve),name:'realtimeChild'}]
-        },
-        {//开卡事后审核
-          path:'afterwards/:source',
-          name:'afterwards',
-          component:resolve=>require(['@/components/cardAudit'],resolve),
-          children:[{path:':type',component:resolve => require(['@/components/cardAuditList'], resolve),name:'afterwardsChild'}]
+      path:"/home",
+      component:home,
+      redirect:"home/audit/card/realtime",
+      children:[{//审核
+          path:"audit",
+          component:Audit,
+          redirect:"audit/card/realtime",
+          children:[{//开卡
+            path:"card/:source",
+            name:"audit_card",
+            component:Audit_card,
+            children:[{
+              path:":type",
+              component:Audit_cardItem,
+              name:"realtime"
+            },{
+              path:":type",
+              component:Audit_cardItem,
+              name:"afterwards"
+            }]
+          },{//商户属性
+            path:"merchant/:type",
+            name:'merchantAudit',
+            component:OrderSearch_merchant,
+          }]
         },
         {//订单查询
-          path:'cardOrderSearch',
-          component:resolve => require(['@/components/cardOrderSearch'], resolve),
-          name:'cardOrderSearch',
-          children:[{path:':type',component:resolve => require(['@/components/cardOrderList'], resolve),name:'cardOrderSearchItem'}]
+          path:"orderSearch",
+          component:OrderSearch,
+          redirect:"orderSearch/card",
+          children:[{//开卡
+            path:"card",
+            name:"orderSearch_card",
+            component:OrderSearch_card,
+            children:[{
+              path:":type",
+              component:OrderSearch_cardItem,
+              name:"orderSearch_cardItem"
+            }]
+          },{//商户属性
+            path:"merchant/:type",
+            component:OrderSearch_merchant,
+            name:'merchantSearch'
+          },,{//网厅
+            path:"onlineHall",
+            component:OrderSearch_onlineHall,
+          },{//公交一卡通
+            path:"busCard",
+            component:OrderSearch_busCard,
+            children:[{
+              path:":type",component:OrderSearch_busCardItem
+            }]
+          }]
         },
-		{//ecs网厅订单查询
-          path:'ecsNetOrderSearch',
-          component:resolve => require(['@/components/ecsNetOrderSearch'], resolve),
-          name:'ecsNetOrderSearch',
+		    {//资源查询
+          path:"resource",
+          component:Resource,
+          redirect:"resource/merchant",
+          children:[{//商户
+            path:"merchant",
+            component:Resource_merchant
+          }]
         },
-        {//统计下载
-          path:'cardOrderDownload',
-          component:resolve => require(['@/components/cardOrderDownload'], resolve),
-          name:'cardOrderDownload'
-        },
-        {//商户属性审核
-          path:'merchantAttr',
-          component:resolve=>require(['@/components/merchantAttr'],resolve),
-          name:'merchantAttr',
-          children:[{path:':type',component:resolve => require(['@/components/merchantAttrOrderList'], resolve),name:'orderList'}]
-        },
-        {//商户查询
-          path:'merchantSearch',
-          component:resolve => require(['@/components/merchantSearch'], resolve),
-          name:'merchantSearch'
-        },
-        {//公交一卡通
-          path:'busOrderSearch',
-          component:resolve => require(['@/components/busOrderSearch'], resolve),
-          name:'busOrderSearch',
-          children:[{path:':type',component:resolve => require(['@/components/busOrderList'], resolve),name:'busOrderSearchItem'}]
+        {//统计报表
+          path:"statistics",
+          component:Statistics,
+          redirect:"statistics/cardOrder",
+          children:[{
+            path:"cardOrder",
+            component:Statistics_cardOrder,
+          }]
         },
       ]
     }
   ]
-})
-
-
+});
 
 
 router.beforeEach((to, from, next) => {
 
 
-    var token = localStorage.getItem('KA_ECS_INFO');
-    if (!token&&to.path!=='/login'||to.path=='/'){
-        next({path:'/login'});
+    var token = localStorage.getItem("KA_ECS_USER");
+    if (!token&&to.path!=="/login"||to.path=="/"){
+        next({path:"/login"});
         return false;
     }
-    next()
+    next();
 
   
-})
+});
 export default router;
 
 

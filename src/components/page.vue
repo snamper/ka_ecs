@@ -1,3 +1,8 @@
+<!--**
+  *@info 分页组件
+  *@author: thinkmix
+  *@date 2017-2-13
+* *-->
 <template>
 	<div class="page-div">
 		<ul class="pagination pagination-sm" v-if="maxpage">

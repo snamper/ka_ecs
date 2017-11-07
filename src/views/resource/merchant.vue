@@ -1,5 +1,10 @@
+<!--**
+  *@info 资源查询模块-商户
+  *@author: thinkmix
+  *@date 2017-11-6
+* *-->
 <style scoped>
-  @import "../assets/css/search.css";
+  @import "../../assets/css/search.css";
   .g-search-form>.form-c>.row{width:auto}
   .m-col-2>.col-l{display: none;}
   .m-col-2>.col-r{margin-left: 0;width: 2.5rem;}
@@ -344,7 +349,7 @@
   	</div>
 </template>
 <script>
-import pagination from "../components/page.vue";
+import pagination from "../../components/Page.vue";
 export default{
 	name:'merchantSearch',
 	data (){

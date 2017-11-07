@@ -1,6 +1,10 @@
-
+<!--**
+  *@info 订单查询模块-网厅订单
+  *@author: thinkmix
+  *@date 2017-11-6
+* *-->
 <style scoped>
-  @import "../assets/css/search.css";
+  @import "../../assets/css/search.css";
 </style>
 <template>
   <section class="g-search-menu">
@@ -103,10 +107,10 @@
   </section>
 </template>
 <script>
-  require("../assets/js/laydate/laydate.js");
-  require("../assets/js/laydate/skins/default/laydate.css");
-  import pagination from "../components/page.vue";
-  import details from "../components/ecsNetOrderDetails.vue";
+  require("../../assets/js/laydate/laydate.js");
+  require("../../assets/js/laydate/skins/default/laydate.css");
+  import pagination from "../../components/Page.vue";
+  import details from "../../components/ecsNetOrderDetails.vue";
   export default{
     name:'ecsNetOrderList',
     data (){
@@ -159,7 +163,7 @@
 //查询按钮
       ,searchList:function(index,page){
         var s=this.form.select;
-        var userInfo=localStorage.getItem('KA_ECS_INFO');
+        var userInfo=localStorage.getItem('KA_ECS_USER');
         userInfo=JSON.parse(userInfo);
         var customerId=userInfo.customerId;
         var vm=this,url,whichBtn,json={"customerId": customerId,"orderId":'','phoneNumber':'',"cardNumber":'',"pageNum": "1","pageSize": "10","userName":'',"papersCode":'',"opTimeStart":vm.form.startTime,"opTimeEnd":vm.form.endTime};
@@ -247,7 +251,7 @@
           //导出条件查询结果
           if(vm.off.buttonState===1){
             var s=this.form.select;
-                userInfo=localStorage.getItem('KA_ECS_INFO');
+                userInfo=localStorage.getItem('KA_ECS_USER');
                 userInfo=JSON.parse(userInfo);
                 customerId=userInfo.customerId;
                 vm=this,url,json={"customerId": customerId,"orderId":'','phoneNumber':'',"cardNumber":'',"pageNum": "1","pageSize": "10","userName":'',"papersCode":'',"opTimeStart":vm.form.startTime,"opTimeEnd":vm.form.endTime};
@@ -269,7 +273,7 @@
           //导出订单号查询结果
           else if(vm.off.buttonState==='ord'){
             json={"customerId": '',"orderId":'','phoneNumber':'',"cardNumber":'',"pageNum": "1","pageSize": "10","userName":'',"papersCode":'',"opTimeStart":' ',"opTimeEnd":' '};
-            var userInfo=localStorage.getItem('KA_ECS_INFO');
+            var userInfo=localStorage.getItem('KA_ECS_USER');
             userInfo=JSON.parse(userInfo);
             json.customerId=userInfo.customerId;
             json.codeId=userInfo.codeId;
@@ -301,7 +305,7 @@
 //      详情页点击事件
       ,details:function(e){//详情
         var vm=this
-            ,customerId=localStorage.getItem('KA_ECS_INFO')[customerId]
+            ,customerId=localStorage.getItem('KA_ECS_USER')[customerId]
             ,json={"customerId": customerId,"orderId":'','phoneNumber':'',"cardNumber":'',"pageNum": "1","pageSize": "10","userName":'',"papersCode":'',"opTimeStart":'',"opTimeEnd":''}
             ,url;
         vm.off.number=e.target.title;

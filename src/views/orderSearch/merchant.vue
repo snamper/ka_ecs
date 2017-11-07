@@ -1,5 +1,10 @@
+<!--**
+  *@info 订单查询模块-商户属性审核订单
+  *@author: thinkmix
+  *@date 2017-11-6
+* *-->
 <style scoped>
-  @import "../assets/css/search.css";
+  @import "../../assets/css/search.css";
   .form-c.o-no-bgc>.row .text{
   	width: auto;
   }
@@ -180,12 +185,12 @@
   </div>
 </template>
 <script>
-require("../assets/js/laydate/laydate.js");
-require("../assets/js/laydate/skins/default/laydate.css");
-import pagination from "../components/page.vue";
-import details from "../components/merchantAttrOrderDetails.vue";
+require("../../assets/js/laydate/laydate.js");
+require("../../assets/js/laydate/skins/default/laydate.css");
+import pagination from "../../components/Page.vue";
+import details from "../../components/merchantAuditOrderDetails.vue";
 export default{
-	name:'busOrderList',
+	name:'merchantAuditOrderSearch',
 	data (){
 		return {
 			off:{

@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import axios from 'axios';
+import {setStore, getStore} from '../../config/utils';
 require('./base64.min.js');
-
 Vue.prototype.AJAX=function(url,data,success,closeLoad){
     var index;
     !closeLoad&&(index=layer.open({type: 2,shadeClose:false}));
@@ -13,7 +13,7 @@ Vue.prototype.AJAX=function(url,data,success,closeLoad){
             btn:['确定'],
             shadeClose:false,
             yes:function(){
-                window.localStorage.setItem('KA_ECS_INFO','');
+                setStore("KA_ECS_USER","");
                 window.location.href="#/login";
                 layer.closeAll();
             }
@@ -25,9 +25,8 @@ Vue.prototype.AJAX=function(url,data,success,closeLoad){
         });
     };
 
-    var userInfo=localStorage.getItem('KA_ECS_INFO');
+    var userInfo=getStore("KA_ECS_USER");;
     if(userInfo){
-        userInfo=JSON.parse(userInfo);
         data.customerId=userInfo.customerId;
         data.codeId=userInfo.codeId;
         data=BASE64.encode(JSON.stringify(data));
@@ -39,7 +38,7 @@ Vue.prototype.AJAX=function(url,data,success,closeLoad){
     axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
 
     axios.post(url,data).then((response) => {
-        closeLoad ? closeLoad() : layer.close(index);
+        typeof closeLoad==='function' ? closeLoad() : layer.close(index);
         if(typeof response.data==='string'){
             error({'code':999,'msg':'数据解析失败'});
             return false;
@@ -52,6 +51,6 @@ Vue.prototype.AJAX=function(url,data,success,closeLoad){
         }else{
             error({'code':999,'msg':response.status});
         }
-        closeLoad ? closeLoad() : layer.close(index);
+        typeof closeLoad==='function' ? closeLoad() : layer.close(index);
     });
 };

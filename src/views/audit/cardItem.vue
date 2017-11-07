@@ -1,5 +1,10 @@
+<!--**
+  *@info 审核子模块-开卡子模块
+  *@author: thinkmix
+  *@date 2017-11-6
+* *-->
 <style scoped>
-  @import "../assets/css/audit.css";
+  @import "../../assets/css/audit.css";
 </style>
 <template>
 	<div id="auditList">
@@ -216,6 +221,7 @@ export default{
 			            time: 4,
 			            msgSkin:'error',
 			        })
+			        return false;
 				}
 				vm.list=data.data.list;
 				vm.off.auditIndex=0;

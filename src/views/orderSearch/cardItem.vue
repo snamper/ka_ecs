@@ -1,5 +1,10 @@
+<!--**
+  *@info 订单查询模块-开卡订单子模块
+  *@author: thinkmix
+  *@date 2017-11-6
+* *-->
 <style scoped>
-  @import "../assets/css/search.css";
+  @import "../../assets/css/search.css";
 </style>
 <template>
   <div id="search" :class="{active:off.details}">
@@ -60,7 +65,7 @@
 					<!-- <label><span class="radio"><input type="radio" value="3" v-model="form.orderStatus"><span></span></span><span class="text">复审同意</span></label> -->
 				</div>
 			</div>
-			<div class="row clr m-col-2">
+			<div class="row clr m-col-2" :class="{fullRow:off.type==3||off.type==4}">
 				<div class="dp col-l">时间区间：</div>
 				<div class="col-r">
 					<span class="m-time-area"><input @click="to_laydate(1)" v-model="form.startTime" type="text" readonly="readonly"></span>
@@ -135,7 +140,10 @@
 					<label><span class="radio"><input value="2" type="radio" v-model="form.orderStatus"><span></span></span><span class="text">已选套餐</span></label>
 					<label><span class="radio"><input value="3" type="radio" v-model="form.orderStatus"><span></span></span><span class="text">已上传资料</span></label>
 					<label><span class="radio"><input value="4" type="radio" v-model="form.orderStatus"><span></span></span><span class="text">已支付</span></label>
-					<label v-if="off.type==4"><span class="radio"><input value="5" type="radio" v-model="form.orderStatus"><span></span></span><span class="text">已审核</span></label>
+					<!-- <label><span class="radio"><input value="5" type="radio" v-model="form.orderStatus"><span></span></span><span class="text">已审核</span></label> -->
+					<label><span class="radio"><input value="6" type="radio" v-model="form.orderStatus"><span></span></span><span class="text">已开户申请</span></label>
+					<label><span class="radio"><input value="7" type="radio" v-model="form.orderStatus"><span></span></span><span class="text">已获取IMSI</span></label>
+					<label><span class="radio"><input value="8" type="radio" v-model="form.orderStatus"><span></span></span><span class="text">已开卡申请</span></label>
 				</div>
 			</div>
 			<button class="f-btn f-btn-line" @click="searchList(1)">查询</button>
@@ -206,6 +214,7 @@
 					<th>序号</th>
 					<th>订单号</th>
 					<th>操作类型</th>
+					<th>审核方式</th>
 					<th>用户姓名</th>
 					<th>用户号码</th>
 					<th>号码等级</th>
@@ -282,6 +291,11 @@
 					<td>{{((pageNum-1)*10+(index+1))}}</td>
 					<td>{{todo.orderId}}</td>
 					<td>{{translateData(1,todo.type)}}</td>
+					<td>
+						<span v-if="todo.auditType=='0'">实时审核</span>
+						<span v-else-if="todo.auditType==1">事后审核</span>
+						<span v-else>--</span>
+					</td>
 					<td>{{todo.userName}}</td>
 					<td>{{todo.phoneNumber}}</td>
 					<td>{{translateData(5,todo.phoneLevel)}}</td>
@@ -305,12 +319,12 @@
   </div>
 </template>
 <script>
-require("../assets/js/laydate/laydate.js");
-require("../assets/js/laydate/skins/default/laydate.css");
-import pagination from "../components/page.vue";
-import details from "../components/cardOrderDetails.vue";
+require("../../assets/js/laydate/laydate.js");
+require("../../assets/js/laydate/skins/default/laydate.css");
+import pagination from "../../components/Page.vue";
+import details from "../../components/cardOrderDetails.vue";
 export default{
-	name:'cardOrderList',
+	name:'cardOrderSearch',
 	data (){
 		return {
 			off:{
@@ -610,7 +624,7 @@ export default{
 				    return day>0 ? day+"天"+hour+"时"+minute+"分"+second+"秒" : hour>0? hour+"时"+minute+"分"+second+"秒" : minute>0 ? minute+"分"+second+"秒" : second+"秒";
 					break;
 				case 7://进行中，已关闭，订单状态
-					return v==1 ? '已选号' : v==2 ? '已选套餐' : v==3 ? '已上传资料' : v==4 ? '已支付' : v==5 ? '已审核' : v==6 ? '已写卡' : v==0 ? '--' :void 0;
+					return v==1 ? '已选号' : v==2 ? '已选套餐' : v==3 ? '已上传资料' : v==4 ? '已支付' : v==5 ? '已审核' : v==6 ? '已开户申请' : v==7 ? '已获取IMSI' : v==8 ? '已开卡申请' : v==0 ? '--' :void 0;
 					break;
 			}
 		},

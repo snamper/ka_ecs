@@ -70,7 +70,7 @@
 <script>
 import detailsView from '../components/cardOrderDetailsAlert';
 export default{
-	name:'cardOrderDetails',
+	name:'orderDetails',
 	props:{
 		list:Object,
 		type:Number,

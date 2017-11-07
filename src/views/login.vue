@@ -16,6 +16,7 @@
   </section>
 </template>
 <script type="text/javascript">
+import {mapMutations} from 'vuex';
 import hexMD5 from "../assets/js/md5.min.js";
 import axios from 'axios';
 export default {
@@ -35,6 +36,9 @@ export default {
     this.getVlidateCode();
   },
   methods:{
+    ...mapMutations([
+        "SET_USERINFO",
+    ]),
     getVlidateCode:function(){
       var vm=this;
       var json={"data":'156465'};
@@ -67,11 +71,9 @@ export default {
       axios.post('w/user/login',json).then((response)=>{
         vm.load=false;
         if(response.data.code=="200"){
-          var staffInfo=response.data.data.staffInfo;
-          staffInfo.time=0;
-          staffInfo.codeId=vm.list.codeId;
-          window.localStorage.clear();
-          window.localStorage.setItem('KA_ECS_INFO',JSON.stringify(staffInfo))
+          var userInfo=response.data.data.staffInfo;
+          userInfo.codeId=vm.list.codeId;
+          vm.SET_USERINFO(userInfo);
           window.location.href="#/home";
         }else{
           vm.getVlidateCode();
