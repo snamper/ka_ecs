@@ -1,7 +1,7 @@
 # ecs
 
 > 路由导图
-<img width="500" src="./static/router.png" />
+<img width="1000" src="./static/router.png" />
 ## Build Setup
 
 ``` bash
