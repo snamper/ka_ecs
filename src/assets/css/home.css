@@ -53,6 +53,7 @@
   word-break: break-word;
 }
 
+/*左侧模块*/
 .g-side {
   width: 1.80rem;
   background-color: #405364;
@@ -445,6 +446,7 @@
   margin-right: 0.4rem;
 }
 
+/*头部面包屑*/
 .m-crumb a {
   color: #fff;
   /*display: inline-block;vertical-align: middle;height: 0.2rem; line-height: 1.1;*/

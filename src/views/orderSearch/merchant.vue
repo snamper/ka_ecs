@@ -4,7 +4,7 @@
   *@date 2017-11-6
 * *-->
 <style scoped>
-  @import "../../assets/css/search.css";
+@import "../../assets/css/search.css";
   .form-c.o-no-bgc>.row .text{
   	width: auto;
   }

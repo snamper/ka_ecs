@@ -4,7 +4,6 @@
   *@date 2017-11-6
 * *-->
 <style scoped>
-  @import "../../assets/css/search.css";
   .g-search-form>.form-c>.row{width:auto}
   .m-col-2>.col-l{display: none;}
   .m-col-2>.col-r{margin-left: 0;width: 2.5rem;}

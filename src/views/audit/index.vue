@@ -8,7 +8,6 @@
 </style>
 <template>
 		<router-view></router-view>
-	</section>
 </template>
 <script>
 export default{
@@ -18,17 +17,6 @@ export default{
 
 		}
 	},
-	created:function(){
-		
-	},
-	watch:{
-		'$route':'setType'
-	},
-	methods:{
-		setType:function(){
-			const path=this.$route.path;
-		}
-	}
 }
 </script>
 

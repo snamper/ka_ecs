@@ -4,7 +4,6 @@
   *@date 2017-11-6
 * *-->
 <style scoped>
-  @import "../../assets/css/search.css";
   .o-col-2-input{width: 80%;margin:0;}
   .o-col-2-input>.col-r{margin-left: 0;}
   .o-col-2-input>.col-r>input{border-radius:0;}

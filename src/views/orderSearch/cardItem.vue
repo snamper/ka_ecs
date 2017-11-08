@@ -3,9 +3,6 @@
   *@author: thinkmix
   *@date 2017-11-6
 * *-->
-<style scoped>
-  @import "../../assets/css/search.css";
-</style>
 <template>
   <div id="search" :class="{active:off.details}">
   	<header class="m-scroll-bar animated infinite" :class="{active:off.isLoad}"></header>

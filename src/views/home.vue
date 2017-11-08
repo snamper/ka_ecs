@@ -107,7 +107,7 @@
 						</div>
 					</router-link>
 					<ul class="g-side-subul nav4">
-						<li><router-link to="/home/statistics/cardOrder"><b></b>开卡订单下载</router-link></li>
+						<li><router-link to="/home/statistics/cardOrder"><b></b>开卡统计下载</router-link></li>
 					</ul>
 				</li>
 			</ul>

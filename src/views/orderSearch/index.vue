@@ -4,11 +4,10 @@
   *@date 2017-11-6
 * *-->
 <style scoped>
-  @import "../../assets/css/audit.css";
+  @import "../../assets/css/search.css";
 </style>
 <template>
 		<router-view></router-view>
-	</section>
 </template>
 <script>
 export default{
@@ -16,17 +15,6 @@ export default{
 	data (){
 		return {
 
-		}
-	},
-	created:function(){
-		
-	},
-	watch:{
-		'$route':'setType'
-	},
-	methods:{
-		setType:function(){
-			const path=this.$route.path;
 		}
 	}
 }

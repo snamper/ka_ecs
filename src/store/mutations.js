@@ -39,7 +39,7 @@ export default {
 	},
 	[CLEAR_TIMER](state){
 		Object.keys(state.timer).forEach(function(key){
-			state.timer[key]=null;
+			clearInterval(state.timer[key]);
 		});
 	},
 	[SET_USERINFO](state,res){

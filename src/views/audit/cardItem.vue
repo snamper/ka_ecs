@@ -3,9 +3,6 @@
   *@author: thinkmix
   *@date 2017-11-6
 * *-->
-<style scoped>
-  @import "../../assets/css/audit.css";
-</style>
 <template>
 	<div id="auditList">
 	  <section class="g-list-box" v-if="auditData">

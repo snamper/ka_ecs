@@ -3,9 +3,6 @@
   *@author: thinkmix
   *@date 2017-11-6
 * *-->
-<style scoped>
-  @import "../../assets/css/search.css";
-</style>
 <template>
 	<section class="g-search-menu">
 		<div v-show="off.source==1" class="g-search-menu-c">
