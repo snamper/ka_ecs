@@ -107,7 +107,7 @@
   require("../../assets/js/laydate/laydate.js");
   require("../../assets/js/laydate/skins/default/laydate.css");
   import pagination from "../../components/Page.vue";
-  import details from "../../components/ecsNetOrderDetails.vue";
+  import details from "../../components/onlineHallOrderDetails.vue";
   export default{
     name:'ecsNetOrderList',
     data (){
@@ -326,19 +326,6 @@
             v==1 ? vm.form.startTime=dates : vm.form.endTime=dates;
           }
         });
-      }
-      ,getDateTime:function(e) {
-        var t;
-        t = e ? new Date(parseInt(e)) : new Date;
-        var n = t.getFullYear(),
-          a = t.getMonth()+1,
-          r = t.getDate(),
-          o = t.getHours(),
-          i = t.getMinutes(),
-          c = t.getSeconds(),
-          k = [];
-        a >= 10 ? a : a = "0" + a, r >= 10 ? r : r = "0" + r, o >= 10 ? o : o = "0" + o, i >= 10 ? i : i = "0" + i, c >= 10 ? c : c = "0" + c, k[0]=n,k[1]=a,k[2]=r,k[3]=n+'-'+a,k[4]=a+'-'+r,k[5]=o+":"+i+":"+c,k[6]=n + "-" + a + "-" + r + " " + o + ":" + i + ":" + c;
-        return k;
       },
     }
   }

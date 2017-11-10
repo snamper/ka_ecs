@@ -12,7 +12,7 @@ export default {
 		state
 	}) {
 		let res = await getAuditStatistics();
-		commit(SET_AUDIT_STATISTICS_INFO, res)
+		res&&commit(SET_AUDIT_STATISTICS_INFO, res)
 	},
 
 }

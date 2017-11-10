@@ -101,19 +101,20 @@
 .g-side-ul>li.active>.g-side-subul {
   margin-bottom: 0.2rem;
   opacity: 1;
+  height: auto;
 }
-.g-side-ul>li.active>.nav1{
-	height: 1.01rem;
+/*.g-side-ul>li.active>.nav1{
+	height: 1.38rem;
 }
 .g-side-ul>li.active>.nav2{
 	height: 1.01rem;
 }
 .g-side-ul>li.active>.nav3{
-	height: 0.27rem;
+	height: 0.64rem;
 }
 .g-side-ul>li.active>.nav4{
 	height: 0.27rem;
-}
+}*/
 .g-side-ul>li.active:hover {
   background-color: #3F5062;
   border-top-color: inherit;
@@ -216,13 +217,9 @@
   position: absolute;
   display: inline-block;
   top: 7px;
-
-  /*background-color: #F44336;*/
-  font-family: fantasy;
   width: 15px;
-  height: 15px;
-  line-height: 0.15rem;
-  border-radius: 100%;
+  margin-left: 5px;
+  font-family: fantasy;
   text-align: center;
   color: #F44336;
   font-size: 0.1rem;
@@ -245,7 +242,7 @@
   display: inline-block;
   text-align: center;
   font-size: 0.12rem;
-  border-radius: 50%;
+  border-radius:7px;
   top: 0.22rem;
   right: 0.2rem;
   padding: 0 4px;

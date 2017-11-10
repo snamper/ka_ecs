@@ -30,7 +30,7 @@ input, button{ -webkit-appearance: none;-moz-appearance: none;-ms-appearance: no
 .f-mgt-10{margin-top: 0.1rem;}
 
 .f-bdr50{border-radius: 50%;}
-.f-btn{ display: inline-block;color: #fff; outline: none;border:none; text-align: center;line-height: 1;font-size: 0.14rem;border-radius: 4px;cursor: pointer;} 
+.f-btn{ display: inline-block;color: #fff; outline: none;border:none; text-align: center;line-height: 1;font-size: 0.14rem;border-radius: 8px;cursor: pointer;} 
 .f-btn-success{background-color: #13ce66;}
 .f-btn-success:hover, .f-btn-success:active{background-color:#42d885;}
 .f-btn-danger{background-color: #ff4949;}
@@ -429,8 +429,8 @@ body::-webkit-scrollbar-resizer, .f-scroll-lt::-webkit-scrollbar-resizer{/*å®šä¹
     70% {
         -webkit-transition-timing-function: cubic-bezier(0.755, .050, .855, .060);
         transition-timing-function: cubic-bezier(0.755, .050, .855, .060);
-        -webkit-transform: translate3d(15px, 0, 0);
-        transform: translate3d(15px, 0, 0)
+        -webkit-transform: translate3d(10px, 0, 0);
+        transform: translate3d(10px, 0, 0)
     }
     90% {
         -webkit-transform: translate3d(4px, 0, 0);
@@ -461,9 +461,9 @@ body::-webkit-scrollbar-resizer, .f-scroll-lt::-webkit-scrollbar-resizer{/*å®šä¹
     70% {
         -webkit-transition-timing-function: cubic-bezier(0.755, .050, .855, .060);
         transition-timing-function: cubic-bezier(0.755, .050, .855, .060);
-        -webkit-transform: translate3d(15px,0, 0);
-        -ms-transform: translate3d(15px,, 0);
-        transform: translate3d(15px,0, 0)
+        -webkit-transform: translate3d(10px,0, 0);
+        -ms-transform: translate3d(10px,, 0);
+        transform: translate3d(10px,0, 0)
     }
     90% {
         -webkit-transform: translate3d(4px, 0, 0);
@@ -514,5 +514,103 @@ body::-webkit-scrollbar-resizer, .f-scroll-lt::-webkit-scrollbar-resizer{/*å®šä¹
     animation-duration: .5s;
     -webkit-animation-fill-mode: both;
     animation-fill-mode: both
+}
+
+/*router-loading*/
+#routerLoading{
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: none;
+}
+#home.active>#routerLoading>.circle-loader{
+    margin-left:1rem;
+}
+@-webkit-keyframes rotate-animation {
+    0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+    }
+    100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+    }
+}
+@keyframes rotate-animation {
+    0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+    }
+    100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+    }
+}
+
+.circle-loader {
+    display: block;
+    width: 64px;
+    height: 64px;
+
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    -webkit-transform-origin: 8px 8px;
+    transform-origin: 7px 8px;
+    -webkit-animation: rotate-animation 1s infinite;
+    animation: rotate-animation 1s infinite;
+    -webkit-animation-timing-function: linear;
+    animation-timing-function: linear;
+}
+.circle-loader .circle {
+position: absolute;
+width: 16px;
+height: 16px;
+top: 50%;
+left: 50%;
+margin-top: -8px;
+margin-left: -8px;
+border-radius: 12px;
+}
+.circle-loader .circle-line {
+width: 64px;
+height: 24px;
+position: absolute;
+top: 4px;
+left: 0;
+-webkit-transform-origin: 4px 4px;
+transform-origin: 4px 4px;
+}
+.circle-loader .circle-line:nth-child(0) {
+-webkit-transform: rotate(0deg);
+transform: rotate(0deg);
+}
+.circle-loader .circle-line:nth-child(1) {
+-webkit-transform: rotate(90deg);
+transform: rotate(90deg);
+}
+.circle-loader .circle-line:nth-child(2) {
+-webkit-transform: rotate(180deg);
+transform: rotate(180deg);
+}
+.circle-loader .circle-line:nth-child(3) {
+-webkit-transform: rotate(270deg);
+transform: rotate(270deg);
+}
+
+.circle-loader .circle-blue {
+background-color: #1f4e5a;
+}
+.circle-loader .circle-red {
+background-color: #ff5955;
+}
+.circle-loader .circle-yellow {
+background-color: #ffb265;
+}
+.circle-loader .circle-green {
+background-color: #00a691;
 }
 

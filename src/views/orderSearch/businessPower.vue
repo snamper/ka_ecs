@@ -1,5 +1,5 @@
 <!--**
-  *@info 订单查询模块-商户属性审核订单
+  *@info 订单查询模块-业务权限审核订单
   *@author: thinkmix
   *@date 2017-11-6
 * *-->
@@ -16,6 +16,7 @@
   }
 </style>
 <template>
+<section class="g-search-menu">
   <div id="search" :class="{active:off.details}">
   	<header class="m-scroll-bar animated infinite" :class="{active:off.isLoad}"></header>
   	<!--查询-->
@@ -183,14 +184,15 @@
 	
 	</list-details>
   </div>
+</section>
 </template>
 <script>
 require("../../assets/js/laydate/laydate.js");
 require("../../assets/js/laydate/skins/default/laydate.css");
 import pagination from "../../components/Page.vue";
 import details from "../../components/merchantAuditOrderDetails.vue";
+import { getDateTime } from "../../config/utils.js";
 export default{
-	name:'merchantAuditOrderSearch',
 	data (){
 		return {
 			off:{
@@ -318,18 +320,8 @@ export default{
 				}
 			});
 		},
-		getDateTime:function(e) {
-		    var t;
-		    t = e ? new Date(parseInt(e)) : new Date;
-		    var n = t.getFullYear(),
-		        a = t.getMonth()+1,
-		        r = t.getDate(),
-		        o = t.getHours(),
-		        i = t.getMinutes(),
-		        c = t.getSeconds(),
-		        k = [];
-		    a >= 10 ? a : a = "0" + a, r >= 10 ? r : r = "0" + r, o >= 10 ? o : o = "0" + o, i >= 10 ? i : i = "0" + i, c >= 10 ? c : c = "0" + c, k[0]=n,k[1]=a,k[2]=r,k[3]=n+'-'+a,k[4]=a+'-'+r,k[5]=o+":"+i+":"+c,k[6]=n + "-" + a + "-" + r + " " + o + ":" + i + ":" + c;
-		    return k;
+		getDateTime(v){
+			return getDateTime(v);
 		}
 	}
 }

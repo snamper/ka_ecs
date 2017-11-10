@@ -184,8 +184,8 @@ require("../../assets/js/laydate/laydate.js");
 require("../../assets/js/laydate/skins/default/laydate.css");
 import pagination from "../../components/Page.vue";
 import details from "../../components/cardOrderDetails.vue";
+import { getDateTime,getUnixTime } from "../../config/utils.js";
 export default{
-	name:'busOrderList',
 	data (){
 		return {
 			off:{
@@ -245,7 +245,7 @@ export default{
 			
 		},
 		searchRechargeList(index,page){//充值订单
-			var vm=this,url,json={"pageSize":vm.pageSize,"pageIndex":page||1,"startTime":vm.getUnixTime(vm.form.startTime),"lastIndex":vm.form.lastIndex,"endTime":vm.getUnixTime(vm.form.endTime),"orderStatus":vm.form.orderStatus,'searchType':vm.form.searchType};
+			var vm=this,url,json={"pageSize":vm.pageSize,"pageIndex":page||1,"startTime":getUnixTime(vm.form.startTime),"lastIndex":vm.form.lastIndex,"endTime":getUnixTime(vm.form.endTime),"orderStatus":vm.form.orderStatus,'searchType':vm.form.searchType};
 			if(index==1){
 				if(!vm.form.content1){
 					layer.open({
@@ -344,27 +344,6 @@ export default{
 				}
 			});
 		},
-		getDateTime:function(e) {
-		    var t;
-		    t = e ? new Date(parseInt(e)) : new Date;
-		    var n = t.getFullYear(),
-		        a = t.getMonth()+1,
-		        r = t.getDate(),
-		        o = t.getHours(),
-		        i = t.getMinutes(),
-		        c = t.getSeconds(),
-		        k = [];
-		    a >= 10 ? a : a = "0" + a, r >= 10 ? r : r = "0" + r, o >= 10 ? o : o = "0" + o, i >= 10 ? i : i = "0" + i, c >= 10 ? c : c = "0" + c, k[0]=n,k[1]=a,k[2]=r,k[3]=n+'-'+a,k[4]=a+'-'+r,k[5]=o+":"+i+":"+c,k[6]=n + "-" + a + "-" + r + " " + o + ":" + i + ":" + c;
-		    return k;
-		},
-		getUnixTime:function(e){
-			var t;
-			if(e){
-				e=e.replace(/-/g,'/');
-				t=new Date(e);
-			}else t= new Date();
-			return t.getTime().toString();
-		},
 		dropSelectButton:function(e){
 			var vm=this;
 			vm.drop.off ? vm.drop.off=false : vm.drop.off=true;
@@ -375,7 +354,10 @@ export default{
 			vm.drop.type=obj.name;
 			vm.drop.text=obj.innerHTML;
 			vm.drop.off=false;
-		}
+		},
+		getDateTime(v){
+			return getDateTime(v);
+		},
 	}
 }
 </script>

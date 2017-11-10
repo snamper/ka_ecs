@@ -12,7 +12,8 @@
 						<span v-if="crumb[1].name" class="f-inline-block m-crumb">
 							<a>{{crumb[0].name}}</a>
 							<a class="u-icon-right mid"></a>
-							<router-link :to="crumb[1].href">{{crumb[1].name}}</router-link>
+							<a v-show="!crumb[1].href">{{crumb[1].name}}</a>
+							<router-link v-show="crumb[1].href" :to="crumb[1].href">{{crumb[1].name}}</router-link>
 							<span v-show="crumb[2].name">
 								<a class="u-icon-right mid"></a>
 								<a>{{crumb[2].name}}</a>
@@ -54,24 +55,30 @@
 						</div>
 					</router-link>
 					<ul class="g-side-subul nav1">
-						<li>
+						<li v-if="userInfo.isadmin.indexOf('0')>-1||userInfo.isadmin.indexOf('1')>-1">
 							<router-link :to="{name:'audit_card',params:{source:'realtime'}}">
 								<b></b>开卡实时审核<span>{{auditCount.opencard+auditCount.transfer}}</span>
 							</router-link>
 						</li>
-						<li>
+						<li v-if="userInfo.isadmin.indexOf('0')>-1||userInfo.isadmin.indexOf('1')>-1">
 							<router-link :to="{name:'audit_card',params:{source:'afterwards'}}">
 								<b></b>开卡事后审核<span>{{auditCount.opencardAfterwards}}</span>
 							</router-link>
 						</li>
-						<li>
-							<router-link :to="{name:'merchantAudit',params:{type:'auditing'}}">
-								<b></b>商户属性审核<span>{{auditCount.attribute}}</span>
+						<!-- <li v-if="userInfo.isadmin.indexOf('0')>-1">
+							<router-link :to="{name:'audit_card',params:{source:'sdk_realtime'}}">
+								<b></b>SDK开卡实时<span>{{auditCount.sdkRealTime}}</span>
+							</router-link>
+						</li> -->
+						<li v-if="userInfo.isadmin.indexOf('6')>-1||userInfo.isadmin.indexOf('5')>-1||userInfo.isadmin.indexOf('1')>-1">
+							<router-link :to="{name:'businessPowerAudit',params:{type:'auditing'}}">
+								<b></b>业务权限审核<span>{{auditCount.attribute}}</span>
 							</router-link>
 						</li>
 					</ul>
 				</li>
-				<li :class="{active:$route.path.indexOf('/home/orderSearch')>-1}" v-if="off.power">
+				<li :class="{active:$route.path.indexOf('/home/orderSearch')>-1}"
+					v-if="userInfo.isadmin.indexOf('2')>-1||userInfo.isadmin.indexOf('1')>-1">
 					<b></b>
 					<router-link to="/home/orderSearch">
 						<div>
@@ -82,11 +89,11 @@
 					<ul class="g-side-subul nav2">
 						<li><router-link to="/home/orderSearch/card"><b></b>开卡订单</router-link></li>
 						<li><router-link to="/home/orderSearch/onlineHall"><b></b>网厅订单</router-link></li>
-						<li><router-link :to="{name:'merchantSearch',params:{type:'audited'}}"><b></b>商户属性</router-link></li>
+						<li><router-link :to="{name:'businessPowerSearch',params:{type:'audited'}}"><b></b>业务权限</router-link></li>
 						<!-- <li><router-link to="/home/orderSearch/busCard"><b></b>公交一卡通</router-link></li> -->
 					</ul>
 				</li>
-				<li :class="{active:$route.path.indexOf('/home/resource')>-1}" v-if="off.power">
+				<li :class="{active:$route.path.indexOf('/home/resource')>-1}">
 					<b></b>
 					<router-link to="/home/resource">
 						<div>
@@ -96,6 +103,7 @@
 					</router-link>
 					<ul class="g-side-subul nav3">
 						<li><router-link to="/home/resource/merchant"><b></b>商户查询</router-link></li>
+						<li v-if="userInfo.isadmin.indexOf('7')>-1||userInfo.isadmin.indexOf('1')>-1"><router-link to="/home/resource/numberRelease"><b></b>号码解冻</router-link></li>
 					</ul>
 				</li>
 				<li :class="{active:$route.path.indexOf('/home/statistics')>-1}">
@@ -121,6 +129,22 @@
 	<footer class="g-foot">
 
 	</footer>
+	<div id="routerLoading">
+      <div class="circle-loader">
+          <div class="circle-line">
+              <div class="circle circle-blue"></div>
+          </div>
+          <div class="circle-line">
+              <div class="circle circle-yellow"></div>
+          </div>
+          <div class="circle-line">
+              <div class="circle circle-red"></div>
+          </div>
+          <div class="circle-line">
+              <div class="circle circle-green"></div>
+          </div>
+      </div>
+    </div>
   </div>
 </template>
 <script>
@@ -134,9 +158,8 @@ export default{
 				headMenu:1,
 				window:0,
 				userMenu:0,
-				power:0,
 			},
-			userInfo:'',
+			userInfo:{isadmin:''},
 			crumb:[{'name':''},{'name':''},{'name':''}],//面包屑
 		}
 	},
@@ -181,7 +204,6 @@ export default{
 
 			let userInfo=getStore("KA_ECS_USER");
 			vm.userInfo=userInfo;
-			userInfo.isadmin!='0'&&userInfo.isadmin!='3' ? vm.off.power=true : vm.off.power=false;
 
 			document.attachEvent ? doucument.body.attachEvent("onclick",function(event){
 				vm.off.userMenu=false;
@@ -213,8 +235,8 @@ export default{
 					if(path.indexOf("6")>-1){
 						crumb[2]={"name":"开卡"}
 					}
-				}else if(path.indexOf("merchant")>-1){
-					crumb[1]={"name":"商户属性审核","href":"/home/audit/merchant/auditing"};
+				}else if(path.indexOf("businessPower")>-1){
+					crumb[1]={"name":"业务权限","href":""};
 					if(path.indexOf("auditing")>-1){
 						crumb[2]={"name":"待审核"}
 					}
@@ -233,10 +255,10 @@ export default{
 						crumb[2]={"name":"已审核"}
 					}
 				}else if(path.indexOf("onlineHall")>-1){
-					crumb[1]={"name":"网厅订单","href":"/home/orderSearch/onlineHall"}
+					crumb[1]={"name":"网厅订单","href":""}
 					
-				}else if(path.indexOf("merchant")>-1){
-					crumb[1]={"name":"商户属性","href":"/home/orderSearch/merchant/audited"};
+				}else if(path.indexOf("businessPower")>-1){
+					crumb[1]={"name":"业务权限","href":""};
 					if(path.indexOf("audited")>-1){
 						crumb[2]={"name":"已审核"}
 					}
@@ -244,14 +266,15 @@ export default{
 			}else if(path.indexOf("/home/resource")>-1){
 				crumb[0]={"name":"资源查询"}
 				if(path.indexOf("merchant")>-1){
-					crumb[1]={"name":"商户查询","href":"/home/resource/merchant"}
+					crumb[1]={"name":"商户查询","href":""}
+				}else if(path.indexOf("numberRelease")>-1){
+					crumb[1]={"name":"号码解冻","href":""}
 				}
 			}else if(path.indexOf("/home/statistics")>-1){
 				crumb[0]={"name":"统计报表"}
-				if(path.indexOf("statistics")>-1){
-					crumb[1]={"name":"开卡订单下载","href":"/home/statistics/cardOrder"}
+				if(path.indexOf("cardOrder")>-1){
+					crumb[1]={"name":"开卡订单下载","href":""}
 				}
-				
 			}
 		
 			this.crumb=crumb;
@@ -280,7 +303,6 @@ export default{
 			signOut().then(function(res){
 				vm.SIGN_OUT();
 				vm.CLEAR_TIMER();
-				window.location.href='#/login';
 			});
 		},
 	}

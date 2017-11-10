@@ -1,4 +1,5 @@
 import {getStore} from '../config/utils';
+import store from '../store';
 require('../assets/js/base64.min.js');
 export default async(url = '', data = {}, type = 'GET', load, method = 'fetch') => {
 	if(!load){
@@ -7,19 +8,18 @@ export default async(url = '', data = {}, type = 'GET', load, method = 'fetch') 
 	type = type.toUpperCase();
 	
 	const error=(res)=>{
-        load ? load() : layer.close(layerIndex);
-        res.code=="648"||res.code=="671" ? layer.open({
+        typeof load==='function' ? load() : layer.close(layerIndex);
+        res.code=="648"||res.code=="671" ? (layer.open({
             content:'登录已过期，请重新登录',
             style:'width:auto;',
             btn:['确定'],
             shadeClose:false,
             yes:function(){
-                setStore("KA_ECS_USER","");
-                window.location.href="#/login";
+                store.commit("SIGN_OUT");
                 layer.closeAll();
             }
-        }) : layer.open({
-            content:res.msg,
+        }),store.commit("CLEAR_TIMER")) : layer.open({
+            content:res.msg||res.statusText||res,
             skin: 'msg',
             time: 4,
             msgSkin:'error',
@@ -65,19 +65,16 @@ export default async(url = '', data = {}, type = 'GET', load, method = 'fetch') 
 		
 		try {
 			const response = await fetch(url, requestConfig);
-			const responseJson = await response.json();
-
+			const responseJson = await response;
 			typeof load==='function' ? load() : layer.close(layerIndex);
-	        if(typeof responseJson==='string'){
-	            error({'code':999,'msg':'数据解析失败'});
-	            return false;
-	        }else if(responseJson.code=="200"){
-	        	return responseJson;
+	        if(responseJson.status=="200"){
+	        	return responseJson.json();
 	        }else{
 	        	error(responseJson);
 	        }
-		} catch (error) {
-			throw new Error(error);
+		} catch (errorText) {
+			
+			throw new Error(errorText);
 		}
 	} else {
 		return new Promise((resolve, reject) => {

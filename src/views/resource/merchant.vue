@@ -349,6 +349,7 @@
 </template>
 <script>
 import pagination from "../../components/Page.vue";
+import { getDateTime } from "../../config/utils.js"
 export default{
 	name:'merchantSearch',
 	data (){
@@ -473,6 +474,7 @@ export default{
 
 			if(vm.off.isLoad)return false;
 			vm.off.isLoad=true;
+			vm.ajaxData.list=[];
 			vm.AJAX(url,json,function(data){
 				vm.ajaxData.list=data.data.list;
 				vm.ajaxData.total=data.data.total||0;
@@ -484,20 +486,7 @@ export default{
 			});
 		},
 		getDateTime:function(e) {
-			if(e=="null"||e==0||!e){
-				return [" "," "," "," "," "," ","--"];
-			}
-		    var t;
-		    t = e ? new Date(parseInt(e)) : new Date;
-		    var n = t.getFullYear(),
-		        a = t.getMonth()+1,
-		        r = t.getDate(),
-		        o = t.getHours(),
-		        i = t.getMinutes(),
-		        c = t.getSeconds(),
-		        k = [];
-		    a >= 10 ? a : a = "0" + a, r >= 10 ? r : r = "0" + r, o >= 10 ? o : o = "0" + o, i >= 10 ? i : i = "0" + i, c >= 10 ? c : c = "0" + c, k[0]=n,k[1]=a,k[2]=r,k[3]=n+'-'+a,k[4]=a+'-'+r,k[5]=o+":"+i+":"+c,k[6]=n + "-" + a + "-" + r + " " + o + ":" + i + ":" + c;
-		    return k;
+			return getDateTime(e);
 		},
 	}
 };

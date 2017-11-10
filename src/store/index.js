@@ -15,9 +15,11 @@ const state = {
 		"opencard_Afterwards":0,//开卡事后已分配
 		"attribute":0,//商户属性待审核
 		"transfer":0,//过户办理待审核
-		"transfer_":0//过户办理已分配
+		"transfer_":0,//过户办理已分配
+		"sdkRealTime":0,//sdk开卡实时待审核
+		"sdkRealTime_":0,//sdk开卡实时已分配
 	},
-	onlineTime:'00:00',//在线时间
+	onlineTime:'00:00:00',//在线时间
 	timer:{//定时器对象
 		online:null,
 		count:null

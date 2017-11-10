@@ -1,12 +1,12 @@
 <style scoped>
-  @import "../assets/css/searchDetails.css";
+  @import "../assets/css/cardOrderDetails.css";
   .m-footD-btn>a{margin-right: 0.2rem;}
 
 </style>
 <template>
 <section class="g-list-box" id="details">
 	<header class="g-lis-head">
-		<a class="m-details-back" @click="close"></a>
+		<a class="m-details-back u-icon-back" @click="close"></a>
   	  	<div class="m-footD-btn" v-if="list.status==1">
 			<a class="f-btn f-btn-success" @click="audit(2)">通过</a>
 			<a class="f-btn f-btn-danger" @click="refuse()">拒绝</a>
@@ -47,13 +47,7 @@
 						</table>
 					</td>
 					<td class="m-box-img m-meida-640up">
-						<div class="m-zoomContent zoom-c">
-							<div class="m-img-c"><div id="imgContent" class="fGrab" :class="{fGrabbing:mouse.off}" :style="zoomStyle" @mousemove="mouseOn" @mousedown="mouseOn" @mouseup="mouseOn" @mouseout="mouseOn" @mousewheel="mouseOn"></div></div>
-							<a href="javascript:void(0)" class="slide slide-left" @click="slide(1)"></a>
-							<a href="javascript:void(0)" class="slide slide-right" @click="slide(2)"></a>
-							<a href="javascript:void(0)" class="rotate" @click="rotate"><span></span></a>
-							<div class="text">{{imgData[imgIndex].name}}</div>
-						</div>
+						<ImgZoom :imgData="imgData"></ImgZoom>
 					</td>
 				</tr>
 				<tr class="m-box-img m-meida-640down">
@@ -68,6 +62,7 @@
 </section>
 </template>
 <script>
+import ImgZoom from '../components/ImgZoom';
 import detailsView from '../components/cardOrderDetailsAlert';
 export default{
 	name:'orderDetails',
@@ -78,23 +73,19 @@ export default{
 	},
 	data(){
 		return{
-			zoomStyle:{"transform":"translate3d(0,0,0) scale(1) rotate(0deg)"},//缩放样式
-			transformStyle:{x:0,y:0,s:1,r:0},//缩放初始坐标
-			mouse:{x:0,y:0,off:!1},//鼠标坐标
-			imgData:[{"name":''}],//当前订单的图片
-			imgIndex:0,//图片索引
+			imgData:[],//当前订单的图片
 			isShowDetails:0,
 			typeDetails:0,
 			detailsList:''
 		}
 	},
 	components:{
-		'um-details-view':detailsView
+		'um-details-view':detailsView,
+		'ImgZoom':ImgZoom
 	},
 	created:function(){
 		var vm=this;
-		vm.imgData=[{'src':vm.list.img||'assets/img/no-img.png','name':'手签名'}];
-		vm.zoomStyle.backgroundImage='url('+vm.imgData[0].src+')';
+		vm.imgData=[{'src':vm.list.img,'name':'手签名'}];
 	},
 	methods:{
 		close:function(){
@@ -148,55 +139,7 @@ export default{
 				vm.typeDetails=2;
 			})
 		},
-		rotate:function(){//旋转
-			var deg=parseInt(this.zoomStyle.transform.match(/\((\S*)deg/)[1]);
-			deg+=90;
-			this.transformStyle.r=deg;
-			this.zoomStyle.transform='translate3d(0,0,0) scale(1) rotate('+deg+'deg)';
-		},
-		slide:function(index){//切换
-			var len=this.imgData.length;
-			index==2?this.imgIndex<(len-1) ? this.imgIndex+=1 : this.imgIndex=0 : this.imgIndex>0 ? this.imgIndex-=1 : this.imgIndex=len-1;
-			this.zoomStyle.backgroundImage='url('+this.imgData[this.imgIndex].src+')';
-			this.transformStyle={x:0,y:0,s:1,r:0};
-			this.zoomStyle.transform='translate3d(0,0,0) scale(1) rotate(0deg)';
-		},
-		mouseOn:function(e){//图片缩放，鼠标事件
-			var vm=this;
-			switch(e.type){
-				case "mousedown":
-					vm.mouse.off=true;
-					vm.mouse.x=e.clientX;
-					vm.mouse.y=e.clientY;
-					vm.zoomStyle.transform='translate3d('+vm.transformStyle.x+'px,'+vm.transformStyle.y+'px,0) scale('+vm.transformStyle.s+') rotate('+vm.transformStyle.r+'deg)';
-					break;
-				case "mousemove":
-					if(vm.mouse.off){
-						var x=e.clientX-vm.mouse.x,y=e.clientY-vm.mouse.y;
-						vm.transformStyle.x+=x;
-						vm.transformStyle.y+=y;
-						vm.mouse.x=e.clientX;
-						vm.mouse.y=e.clientY;
-						vm.zoomStyle.transform='translate3d('+vm.transformStyle.x+'px,'+vm.transformStyle.y+'px,0) scale('+vm.transformStyle.s+') rotate('+vm.transformStyle.r+'deg)';
-					}
-					break;
-				case "mouseup":
-					vm.mouse.off=false;
-					break;
-				case "mouseout":
-					vm.mouse.off=false;
-					break;
-				case "mousewheel":case "DOMMouseScroll":
-					if(e.wheelDelta&&e.wheelDelta>0||(e.detail&&e.detail<0)){
-						vm.transformStyle.s.toFixed(0)==3?vm.transformStyle.s=3:vm.transformStyle.s+=0.2;
-
-					}else{
-						vm.transformStyle.s.toFixed(1)==0.4?vm.transformStyle.s=0.4:vm.transformStyle.s-=0.2;
-					}
-					vm.zoomStyle.transform='translate3d('+vm.transformStyle.x+'px,'+vm.transformStyle.y+'px,0) scale('+vm.transformStyle.s+') rotate('+vm.transformStyle.r+'deg)';
-					break;
-			}
-		},
+		
 	}
 }
 </script>

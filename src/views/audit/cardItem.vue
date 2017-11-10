@@ -3,6 +3,14 @@
   *@author: thinkmix
   *@date 2017-11-6
 * *-->
+<style scoped>
+  @import "../../assets/css/audit.css";
+  #auditList{
+  	width: 100%;
+  	height: 100%;
+  	position: relative;
+  }
+</style>
 <template>
 	<div id="auditList">
 	  <section class="g-list-box" v-if="auditData">
@@ -55,13 +63,7 @@
 							</table>
 						</td>
 						<td class="m-box-img m-meida-640up">
-							<div class="m-zoomContent zoom-c">
-								<div class="m-img-c"><div id="imgContent" class="fGrab" :class="{fGrabbing:mouse.off}" :style="zoomStyle" @mousemove="mouseOn" @mousedown="mouseOn" @mouseup="mouseOn" @mouseout="mouseOn" @mousewheel="mouseOn"></div></div>
-								<a href="javascript:void(0)" class="slide slide-left" @click="slide(1)"></a>
-								<a href="javascript:void(0)" class="slide slide-right" @click="slide(2)"></a>
-								<a href="javascript:void(0)" class="rotate" @click="rotate"><span></span></a>
-								<div class="text">{{imgData[imgIndex].name}}</div>
-							</div>
+							<ImgZoom :imgData="imgData"></ImgZoom>
 						</td>
 					</tr>
 					<tr class="m-box-img m-meida-640down">
@@ -75,8 +77,9 @@
   </div>
 </template>
 <script>
+import ImgZoom from '../../components/ImgZoom';
+import { getDateTime } from "../../config/utils.js";
 export default{
-	name:'auditList',
 	data (){
 		return {
 			off:{
@@ -89,13 +92,12 @@ export default{
 			integralCount:[0],//选择的拒绝原因
 			list:[],//分配的订单
 			auditData:'',//当前处理的订单
-			zoomStyle:{"transform":"translate3d(0,0,0) scale(1) rotate(0deg)"},//缩放样式
-			transformStyle:{x:0,y:0,s:1,r:0},//缩放初始坐标
-			mouse:{x:0,y:0,off:!1},//鼠标坐标
-			imgData:[{"name":''}],//当前订单的图片
-			imgIndex:0,//图片索引
+			imgData:[],//当前订单的图片
 			refuseArr:{}//拒绝原因
 		}
+	},
+	components:{
+		'ImgZoom':ImgZoom
 	},
 	beforeDestroy:function(){
 		window.clearInterval(this.timer)
@@ -105,7 +107,9 @@ export default{
 		vm.off.auditType=vm.$parent.off.auditType;
 		vm.AJAX('w/audit/getRefuseReasons',{"auditType":vm.off.auditType},function(data){
 			vm.refuseArr=data.data;
-		})
+		},function(){
+
+		});
 		vm.getAuditList();
 	},
 	methods:{
@@ -152,18 +156,16 @@ export default{
 					}
 					
 				}
-				//points==0 ? btn.innerHTML='确定' : btn.innerHTML='确定<b class="f-c-red">【-'+(parseFloat(points)/1000).toFixed(3)+'】</b>';
 			}
 			for(var i=0;i<vm.refuseArr.list.length;i++){
 				var b='';
-				// if(vm.refuseArr.list[i].stopCard==1&&vm.off.auditType==1)b='<b class="u-icon-stop"></b>';
 				if(vm.refuseArr.list[i].stopCard==1)b='<b class="f-c-red">★</b>';
 				str+='<div class="checkbox-list">'+
 						'<div class="m-form-checkbox"><label>'+
 							'<span class="checkbox">'+
 								'<input onclick="reasonClick(this)" type="checkbox" name="'+i+'">'+
 								'<span></span>'+
-							'</span>'+//[-'+(parseFloat(vm.refuseArr.list[i].point)/1000).toFixed(3)+']
+							'</span>'+
 							'<span class="text"><b class="f-c-red"></b>'+vm.refuseArr.list[i].info+b+'</span>'+
 							'</label></div>'+
 					  '</div>';
@@ -235,17 +237,21 @@ export default{
 			if(len&&(vm.off.auditIndex+1)<=len){
 				vm.auditData=vm.list[vm.off.auditIndex];
 				if(vm.$route.params.type==7){
-					vm.imgData[0]={'src':vm.auditData.frontImageOld||'assets/img/no-img.png','name':'原机主正面照片'};
-					vm.imgData[1]={'src':vm.auditData.backImageOld||'assets/img/no-img.png','name':'原机主反面照片'};//
-					vm.imgData[2]={'src':vm.auditData.handImageOld||'assets/img/no-img.png','name':'原机主手持照片'};
-					vm.imgData[3]={'src':vm.auditData.papersImage||'assets/img/no-img.png','name':'过户人正面照片'};
-					vm.imgData[4]={'src':vm.auditData.backImage||'assets/img/no-img.png','name':'过户人反面照片'};
-					vm.imgData[5]={'src':vm.auditData.handImage||'assets/img/no-img.png','name':'过户人手持照片'};
-					vm.imgData[6]={'src':vm.auditData.signImage||'assets/img/no-img.png','name':'过户人手签名照片'};
+					vm.imgData[0]={'src':vm.auditData.frontImageOld,'name':'原机主正面照片'};
+					vm.imgData[1]={'src':vm.auditData.backImageOld,'name':'原机主反面照片'};//
+					vm.imgData[2]={'src':vm.auditData.handImageOld,'name':'原机主手持照片'};
+					vm.imgData[3]={'src':vm.auditData.papersImage,'name':'过户人正面照片'};
+					vm.imgData[4]={'src':vm.auditData.backImage,'name':'过户人反面照片'};
+					vm.imgData[5]={'src':vm.auditData.handImage,'name':'过户人手持照片'};
+					vm.imgData[6]={'src':vm.auditData.signImage,'name':'过户人手签名照片'};
 				}else{
-					vm.imgData=[{'src':vm.auditData.papersImage||'assets/img/no-img.png','name':'正面'},{'src':vm.auditData.backImage||'assets/img/no-img.png','name':'反面'},{'src':vm.auditData.headImage||'assets/img/no-img.png','name':'手持'},{'src':vm.auditData.livingImg||'assets/img/no-img.png','name':'活体识别'}];
+					vm.imgData=[
+						{'src':vm.auditData.papersImage,'name':'正面'},
+						{'src':vm.auditData.backImage,'name':'反面'},
+						{'src':vm.auditData.headImage,'name':'手持'},
+						{'src':vm.auditData.livingImg,'name':'活体识别'}
+					];
 				}
-				vm.zoomStyle.backgroundImage='url('+vm.imgData[0].src+')';
 				vm.off.auditIndex++;
 			}
 		},
@@ -260,106 +266,8 @@ export default{
 	    		time==0?(vm.off.time='00:00',clearInterval(vm.timer),vm.auditData=''):vm.off.time=timeFormat(time);
 			},1000);
 		},
-		rotate:function(e){//旋转
-			var deg=parseInt(this.zoomStyle.transform.match(/\((\S*)deg/)[1]);
-			deg+=90;
-			this.transformStyle.r=deg;
-			var transform='translate3d(0,0,0) scale(1) rotate('+deg+'deg)';
-			this.zoomStyle.transform=transform;
-		},
-		slide:function(index){//切换
-			var len=this.imgData.length;
-			index==2?this.imgIndex<(len-1) ? this.imgIndex+=1 : this.imgIndex=0 : this.imgIndex>0 ? this.imgIndex-=1 : this.imgIndex=len-1;
-				this.zoomStyle.backgroundImage='url('+this.imgData[this.imgIndex].src+')';
-			this.transformStyle={x:0,y:0,s:1,r:0};
-			this.zoomStyle.transform='translate3d(0,0,0) scale(1) rotate(0deg)';
-		},
-		mouseOn:function(e){//图片缩放，鼠标事件
-			var vm=this;
-			switch(e.type){
-				case "mousedown":
-					vm.mouse.off=true;
-					vm.mouse.x=e.clientX;
-					vm.mouse.y=e.clientY;
-					var transform='translate3d('+vm.transformStyle.x+'px,'+vm.transformStyle.y+'px,0) scale('+vm.transformStyle.s+') rotate('+vm.transformStyle.r+'deg)';
-
-					vm.zoomStyle.transform=transform;
-					break;
-				case "mousemove":
-					if(vm.mouse.off){
-						var x=e.clientX-vm.mouse.x,y=e.clientY-vm.mouse.y;
-						vm.transformStyle.x+=x;
-						vm.transformStyle.y+=y;
-						vm.mouse.x=e.clientX;
-						vm.mouse.y=e.clientY;
-						var transform='translate3d('+vm.transformStyle.x+'px,'+vm.transformStyle.y+'px,0) scale('+vm.transformStyle.s+') rotate('+vm.transformStyle.r+'deg)';
-						vm.zoomStyle.transform=transform
-					}
-					break;
-				case "mouseup":
-					vm.mouse.off=false;
-					break;
-				case "mouseout":
-					vm.mouse.off=false;
-					break;
-				case "mousewheel":case "DOMMouseScroll":
-					if(e.wheelDelta&&e.wheelDelta>0||(e.detail&&e.detail<0)){
-						vm.transformStyle.s.toFixed(0)==3?vm.transformStyle.s=3:vm.transformStyle.s+=0.2;
-
-					}else{
-						vm.transformStyle.s.toFixed(1)==0.4?vm.transformStyle.s=0.4:vm.transformStyle.s-=0.2;
-					}
-					var transform='translate3d('+vm.transformStyle.x+'px,'+vm.transformStyle.y+'px,0) scale('+vm.transformStyle.s+') rotate('+vm.transformStyle.r+'deg)';
-					vm.zoomStyle.transform=transform;
-					break;
-			}
-		},
-		typeCheck:function(v,l){
-			var ret=new Array();
-			v=parseInt(v);
-			if(v!=1&&v!=2&&v!=3&&v!=4){
-				ret[0]="其他";
-				ret[1]="证件地址";
-				ret[2]="证件号码";
-				return ret;
-			}
-			switch(v){
-				case 1:
-					ret[0]="身份证";
-					ret[1]="身份证地址";
-					ret[2]="身份证号码";
-					return ret;
-					break;
-				case 2:
-					ret[0]="军官证";
-					ret[1]="发证机关";
-					ret[2]="编号";
-					return ret;
-					break;
-				case 3:
-					ret[0]="护照";
-					ret[1]="签发地址";
-					ret[2]="护照号码";
-					return ret;
-					break;
-				case 4:
-					var level=["普号","特级","一级","二级","三级","四级","五级","六级","七级","八级","九级","十级","十一级"];
-	   	 			return l?level[parseInt(l)]:"未知";
-					break;
-			}
-		},
-		getDateTime:function(e) {
-		    var t;
-		    t = e ? new Date(parseInt(e)) : new Date;
-		    var n = t.getFullYear(),
-		        a = t.getMonth()+1,
-		        r = t.getDate(),
-		        o = t.getHours(),
-		        i = t.getMinutes(),
-		        c = t.getSeconds(),
-		        k = [];
-		    a >= 10 ? a : a = "0" + a, r >= 10 ? r : r = "0" + r, o >= 10 ? o : o = "0" + o, i >= 10 ? i : i = "0" + i, c >= 10 ? c : c = "0" + c, k[0]=n,k[1]=a,k[2]=r,k[3]=n+'-'+a,k[4]=a+'-'+r,k[5]=o+":"+i,k[6]=n + "-" + a + "-" + r + " " + o + ":" + i + ":" + c;
-		    return k;
+		getDateTime(v){
+			return getDateTime(v);
 		}
 	}
 }

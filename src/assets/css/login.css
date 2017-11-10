@@ -22,8 +22,8 @@
 box-shadow:0 0 10px rgba(0,0,0,0.2);-moz-box-shadow:0 0 10px rgba(0,0,0,0.2);-webkit-box-shadow:0 0 10px rgba(0,0,0,0.2);
 transition-duration: .25s;-webkit-transition-duration: .25s;-moz-transition-duration: .25s;
 }
-form>header{text-align: center;font-size: 0.24rem;padding: 0.2rem 0;border-bottom: 1px solid transparent;border-color:#eff2f6 ;margin-bottom: 0.2rem;}
-form>header>img{width: 60%;}
+form>header{font-size: 0.24rem;padding: 0.2rem 0;border-bottom: 1px solid transparent;border-color:#eff2f6 ;margin-bottom: 0.2rem;}
+form>header>img{width: 60%;margin-left:0.4rem;}
 form>.form-controll{padding:0 0.2rem;margin-top: 6%;}
 form>.form-controll>label{height: 0.4rem; width: 15%; display:inline-block; vertical-align: middle; text-align: right; padding-right: 7%;background-position:center;background-size:0.25rem;background-repeat: no-repeat;}
 form>.form-controll>.letter-space2>em{margin:0 6px;}

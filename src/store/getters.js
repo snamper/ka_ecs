@@ -4,6 +4,6 @@ export default {
 		Object.keys(auditCount).forEach(function(key){
 			auditCount[key]=parseInt(auditCount[key]);
 		});
-		return auditCount.opencard+auditCount.opencardAfterwards+auditCount.attribute+auditCount.transfer;
+		return auditCount.opencard+auditCount.opencardAfterwards+auditCount.attribute+auditCount.transfer+auditCount.sdkRealTime;
 	}
 }

@@ -3,6 +3,9 @@
   *@author: thinkmix
   *@date 2017-11-6
 * *-->
+<style scoped>
+  @import "../../assets/css/cardOrderDetails.css";
+</style>
 <template>
 	<section class="g-audit-menu">
 		<div v-if="off.source==4&&off.auditType==0" class="g-audit-menu-c">

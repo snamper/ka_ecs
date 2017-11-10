@@ -8,31 +8,19 @@ import {
 import {
 	getAuditStatistics
 } from '../config/service';
-import {setStore, getStore, removeStore} from '../config/utils';
+import {setStore, getStore, removeStore, secondsFormat} from '../config/utils';
 
 export default {
 	//获取审核统计信息
 	[SET_AUDIT_STATISTICS_INFO](state,res) {
-		state.count = Object.assign({}, state.count,res);
+		state.auditCount = Object.assign({}, state.auditCount,res.data);
 	},
 	//设置在线时间
 	[SET_ONLINE_TIME](state){
-		const timeFormat=function (t){
-		    t=parseInt(t);
-		    var day,minute,second,hour;
-		    day=Math.floor(t/(60*60*24));
-		    day>0 ? hour=Math.floor(t%(60*60*24)/(60*60)) : hour=Math.floor(t/(60*60));
-		    hour>0 ? minute=Math.floor(t%(60*60)/60) : minute=Math.floor(t/60);
-		    minute>0 ? second=Math.floor(t%60) : second=t;
-		    hour<10&&(hour='0'+hour);
-		    minute<10&&(minute='0'+minute);
-		    second<10&&(second='0'+second);
-		    return day!='00' ? day+"天"+hour+":"+minute+":"+second : hour!='00' ? hour+":"+minute+":"+second : minute!='00' ? minute+":"+second : "00:"+second;
-		}
 		state.timer.online=setInterval(function(){
 			let time=parseInt(getStore('KA_ECS_ONLINE_TIME'));
 			!time&&(time=0);
-			state.onlineTime=timeFormat(time);
+			state.onlineTime=secondsFormat(time);
 			time++;
 			setStore('KA_ECS_ONLINE_TIME',time);
 		},1000);
@@ -50,5 +38,6 @@ export default {
 		state.userInfo={};
 		removeStore("KA_ECS_USER");
 		removeStore("KA_ECS_ONLINE_TIME");
+		window.location.href='#/login';
 	}
 };

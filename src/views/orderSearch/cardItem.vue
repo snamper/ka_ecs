@@ -238,8 +238,8 @@
 					<td>{{todo.identityCard}}</td>
 					<td>{{todo.customerName}}</td>
 					<td>{{todo.operator}}<br/><b class="f-m-lighter">({{todo.operatorName}})</b></td>
-					<td>{{todo.createTime?getDateTime(todo.createTime)[6]:''}}</td>
-					<td>{{todo.createTime?getDateTime(todo.modifyTime)[6]:''}}</td>
+					<td>{{getDateTime(todo.createTime)[6]}}</td>
+					<td>{{getDateTime(todo.modifyTime)[6]}}</td>
 					<td v-if="todo.status==1"><b class="f-c-red">待分配</b></td>
 					<td v-if="todo.status==2"><b class="f-c-green">已分配</b></td>
 					<td><a :name="todo.orderId" @click="details" href="javascript:void(0)" class="details">详情</a></td>
@@ -257,9 +257,9 @@
 					<td>{{todo.identityCard}}</td>
 					<td>{{todo.customerName}}</td>
 					<td>{{todo.operator}}<br/><b class="f-m-lighter">({{todo.operatorName}})</b></td>
-					<td>{{todo.createTime?getDateTime(todo.createTime)[6]:''}}</td>
-					<td>{{todo.createTime?getDateTime(todo.modifyTime)[6]:''}}</td>
-					<td>{{translateData(6,todo.auditTime)}}</td>
+					<td>{{getDateTime(todo.createTime)[6]}}</td>
+					<td>{{getDateTime(todo.modifyTime)[6]}}</td>
+					<td>{{secondsFormat(todo.auditTime)}}</td>
 					<td :class="{fCYellow:todo.cardStatus==1,fCGreen:todo.cardStatus==2,fCRed:todo.cardStatus==3,fCRed:todo.cardStatus==4,fCGrey:todo.cardStatus==9}">{{translateData(4,todo.cardStatus)}}</td>
 					<td colspan="2" v-if="todo.status==1" class="td-col-2">
 						<div class="f-c-green">同意</div>
@@ -299,8 +299,8 @@
 					<td>{{todo.identityCard}}</td>
 					<td>{{todo.operatorName}}</td>
 					<td>{{todo.operatorId}}</td>
-					<td>{{todo.createTime?getDateTime(todo.createTime)[6]:''}}</td>
-					<td v-if="off.type==4">{{todo.createTime?getDateTime(todo.modifyTime)[6]:''}}</td>
+					<td>{{getDateTime(todo.createTime)[6]}}</td>
+					<td v-if="off.type==4">{{getDateTime(todo.modifyTime)[6]}}</td>
 					<td>{{translateData(7,todo.statusDetail)}}</td>
 					<td><a :name="todo.orderId" @click="details" href="javascript:void(0)" class="details">详情</a></td>
 				</tr>
@@ -320,8 +320,8 @@ require("../../assets/js/laydate/laydate.js");
 require("../../assets/js/laydate/skins/default/laydate.css");
 import pagination from "../../components/Page.vue";
 import details from "../../components/cardOrderDetails.vue";
+import { getDateTime,translateData,secondsFormat } from "../../config/utils.js";
 export default{
-	name:'cardOrderSearch',
 	data (){
 		return {
 			off:{
@@ -592,91 +592,15 @@ export default{
 		toSearch:function(e){
 			e.keyCode==13&&this.searchList(2);
 		},
-		translateData:function(type,v) {
-			v=parseInt(v);
-			switch(type){
-				case 1://操作类型
-						return v==1 ? '开成卡' : v==2 ? '开白卡' : v==4 ? '实名补录' : v==7 ? '过户办理' : v==5 ? '实名登记' : v==6 ? '空卡' : void 0;
-					break;
-				case 2://证件类型
-						return v==1 ? '身份证' : v==2 ? '军官证' : v==3 ? '护照' :void 0;
-					break;
-				case 3://已审核，订单状态
-
-					break;
-				case 4://开卡状态
-					return v==1 ? '初始状态' : v==2 ? '成功' : v==3 ? '失败' : v==4 ? '订单关闭' : v==9 ? '--' :void 0;
-					break;
-				case 5://靓号等级
-					var level=["普号","特级","一级","二级","三级","四级","五级","六级","七级","八级","九级","十级","十一级"];
-		    		return v||v==0 ? level[parseInt(v)] : '未知';
-					break;
-				case 6://天数，时分秒
-					v=parseInt(v);
-				    var day,minute,second,hour;
-				    day=Math.floor(v/(60*60*24));
-				    hour=Math.floor(v%(60*60*24)/(60*60))
-				    minute=Math.floor(v%(60*60)/60)
-				    second=Math.floor(v%60)
-				    return day>0 ? day+"天"+hour+"时"+minute+"分"+second+"秒" : hour>0? hour+"时"+minute+"分"+second+"秒" : minute>0 ? minute+"分"+second+"秒" : second+"秒";
-					break;
-				case 7://进行中，已关闭，订单状态
-					return v==1 ? '已选号' : v==2 ? '已选套餐' : v==3 ? '已上传资料' : v==4 ? '已支付' : v==5 ? '已审核' : v==6 ? '已开户申请' : v==7 ? '已获取IMSI' : v==8 ? '已开卡申请' : v==0 ? '--' :void 0;
-					break;
-			}
+		getDateTime(v){
+			return getDateTime(v);
 		},
-		getDateTime:function(e) {
-		    var t;
-		    t = e ? new Date(parseInt(e)) : new Date;
-		    var n = t.getFullYear(),
-		        a = t.getMonth()+1,
-		        r = t.getDate(),
-		        o = t.getHours(),
-		        i = t.getMinutes(),
-		        c = t.getSeconds(),
-		        k = [];
-		    a >= 10 ? a : a = "0" + a, r >= 10 ? r : r = "0" + r, o >= 10 ? o : o = "0" + o, i >= 10 ? i : i = "0" + i, c >= 10 ? c : c = "0" + c, k[0]=n,k[1]=a,k[2]=r,k[3]=n+'-'+a,k[4]=a+'-'+r,k[5]=o+":"+i+":"+c,k[6]=n + "-" + a + "-" + r + " " + o + ":" + i + ":" + c;
-		    return k;
+		translateData(type,v){
+			return translateData(type,v);
 		},
-		// dropSelectButton:function(e){
-		// 	var vm=this;
-		// 	vm.drop.off ? vm.drop.off=false : vm.drop.off=true;
-		// 	e.stopPropagation();
-		// },
-		// dropSelect:function(e){
-		// 	var vm=this,obj=e.target,input=document.getElementById('context'),setInput=function(index){
-		// 		if(index){
-		// 			vm.form.context="点击查询";
-		// 			input.className="active"
-		// 			input.setAttribute("readonly","readonly");
-		// 			input.attachEvent ? input.attachEvent("onclick",vm.searchList) : input.addEventListener("click",vm.searchList,false);
-
-		// 		}else{
-		// 			vm.form.context="";
-		// 			input.className="";
-		// 			input.removeAttribute("readonly");
-		// 			input.detachEvent ? input.detachEvent('onclick',vm.searchList) : input.removeEventListener("click",vm.searchList,false);
-		// 		}
-
-		// 	};
-		// 	if(obj.name=="79"){
-		// 		vm.drop.text="开卡状态：全部";
-		// 		setInput(1)
-
-		// 	}else if(obj.name=="71"){
-		// 		vm.drop.text="开卡状态：成功";
-		// 		setInput(1)
-		// 	}else if(obj.name=="72"){
-		// 		vm.drop.text="开卡状态：失败";
-		// 		setInput(1)
-		// 	}else{
-		// 		vm.drop.text=obj.innerHTML;
-		// 		setInput()
-		// 	}
-
-		// 	vm.drop.type=obj.name;
-		// 	vm.drop.off=false;
-		// }
+		secondsFormat(v){
+			return secondsFormat(v);
+		}
 	}
 }
 </script>
