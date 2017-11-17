@@ -133,8 +133,8 @@ body::-webkit-scrollbar-resizer, .f-scroll-lt::-webkit-scrollbar-resizer{/*定�
     display: inline-block;}
 .m-form-radio>label>.radio>span:hover{border-color: #20a0ff}
 .m-form-radio>label>.radio>span:after{
-    width: 10px;
-    height: 10px;
+    width: 12px;
+    height: 12px;
     border-radius: 50%;
      -moz-border-radius: 50%;
      -webkit-border-radius: 50%;
@@ -272,30 +272,37 @@ body::-webkit-scrollbar-resizer, .f-scroll-lt::-webkit-scrollbar-resizer{/*定�
 .navInfoDiv{ text-align: center; font-size:0.14rem;  margin-top:0.2rem; color: #3e3e3e;}
 .navInfoDiv span{ color: #f00; margin: 0px 5px; }
 .navInfoDiv p{ margin: 5px 0; }
-.u-bg>div{background-repeat: no-repeat;background-position:center 35%;}
-.navBg1>div{background-image:url(../../assets/images/sim.png);background-color: #54C7C4;}
+.u-bg>div{background-repeat: no-repeat;background-position:center 35%;background-size:0.48rem;}
+/*开卡*/
+.navBg1>div{background-image:url(../images/sim.png);background-color: #54C7C4;}
 .navBg1>p{background-color:rgba(63,147,147, 1); color:rgba(63,147,147, 1);}
-
-.navBg2>div{background-image:url(../../assets/images/icon_yuanmeng_chengka.png);background-color:#00B07F;}
-.navBg2>p{background-color:#00B07F; color:#00B07F;}
-
-.navBg3>div{background-image:url(../../assets/images/icon_yuanmeng_baika.png);background-color:#FC7F53;}
-.navBg3>p{background-color:#FC7F53; color:#FC7F53;}
-
-.navBg4>div{background-image:url(../../assets/images/icon_yuanmeng_bulu.png);background-color: #FF9800;}
-.navBg4>p{background-color:#FF9800; color:#FF9800;}
-
-.navBg5>div{background-image:url(../../assets/images/icon_yuanmeng_guohu.png);background-color:#4D96F5;}
+/*成卡*/
+/*.navBg2>div{background-image:url(../../assets/images/icon_yuanmeng_chengka.png);background-color:#00B07F;}
+.navBg2>p{background-color:#00B07F; color:#00B07F;}*/
+/*白卡*/
+/*.navBg3>div{background-image:url(../../assets/images/icon_yuanmeng_baika.png);background-color:#FC7F53;}
+.navBg3>p{background-color:#FC7F53; color:#FC7F53;}*/
+/*实名补录*/
+/*.navBg4>div{background-image:url(../../assets/images/icon_yuanmeng_bulu.png);background-color: #FF9800;}
+.navBg4>p{background-color:#FF9800; color:#FF9800;}*/
+/*过户*/
+.navBg5>div{background-image:url(../images/icon_yuanmeng_guohu.png);background-color:#4D96F5;}
 .navBg5>p{background-color:#4D96F5; color:#4D96F5;}
-
-.navBg6>div{background-image:url(../../assets/images/icon_yuanmeng_dengji.png);background-color:#24BAC9;}
+/*实名登记*/
+.navBg6>div{background-image:url(../images/icon_yuanmeng_dengji.png);background-color:#24BAC9;}
 .navBg6>p{background-color:#24BAC9; color:#24BAC9;}
 
-.navBg7>div{background-image:url(../../assets/images/dingdan.png);background-color:#13ce66;}
+/*公交一卡通*/
+.navBg7>div{background-image:url(../images/dingdan.png);background-color:#13ce66;}
 .navBg7>p{background-color:#13ce66; color:#13ce66;}
 
-.navBg8>div{background-image:url(../../assets/images/jiaoyi.png);background-color:#4b3887;}
+.navBg8>div{background-image:url(../images/jiaoyi.png);background-color:#4b3887;}
 .navBg8>p{background-color:#4b3887; color:#4b3887;}
+/*SDK开卡*/
+.navBg9>div{background-image:url(../images/sim_sdk.png);background-color:#4b3887;}
+.navBg9>p{background-color:#4b3887; color:#4b3887;}
+/*卡盟穿戴*/
+.u-icon-back{background-image: url("../images/left.png");background-size: contain;}
 
 /*layer-loading*/
 .m-loading-mask {
@@ -527,7 +534,7 @@ body::-webkit-scrollbar-resizer, .f-scroll-lt::-webkit-scrollbar-resizer{/*定�
     display: none;
 }
 #home.active>#routerLoading>.circle-loader{
-    margin-left:1rem;
+    margin-left:0.85rem;
 }
 @-webkit-keyframes rotate-animation {
     0% {
@@ -554,7 +561,8 @@ body::-webkit-scrollbar-resizer, .f-scroll-lt::-webkit-scrollbar-resizer{/*定�
     display: block;
     width: 64px;
     height: 64px;
-
+    margin-top: 0.2rem;
+    margin-left:-5px;
     position: absolute;
     left: 50%;
     top: 50%;

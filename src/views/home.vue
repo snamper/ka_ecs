@@ -65,11 +65,6 @@
 								<b></b>开卡事后审核<span>{{auditCount.opencardAfterwards}}</span>
 							</router-link>
 						</li>
-						<!-- <li v-if="userInfo.isadmin.indexOf('0')>-1">
-							<router-link :to="{name:'audit_card',params:{source:'sdk_realtime'}}">
-								<b></b>SDK开卡实时<span>{{auditCount.sdkRealTime}}</span>
-							</router-link>
-						</li> -->
 						<li v-if="userInfo.isadmin.indexOf('6')>-1||userInfo.isadmin.indexOf('5')>-1||userInfo.isadmin.indexOf('1')>-1">
 							<router-link :to="{name:'businessPowerAudit',params:{type:'auditing'}}">
 								<b></b>业务权限审核<span>{{auditCount.attribute}}</span>
@@ -88,6 +83,7 @@
 					</router-link>
 					<ul class="g-side-subul nav2">
 						<li><router-link to="/home/orderSearch/card"><b></b>开卡订单</router-link></li>
+						<li><router-link to="/home/orderSearch/recharge"><b></b>充值订单</router-link></li>
 						<li><router-link to="/home/orderSearch/onlineHall"><b></b>网厅订单</router-link></li>
 						<li><router-link :to="{name:'businessPowerSearch',params:{type:'audited'}}"><b></b>业务权限</router-link></li>
 						<!-- <li><router-link to="/home/orderSearch/busCard"><b></b>公交一卡通</router-link></li> -->
@@ -116,6 +112,8 @@
 					</router-link>
 					<ul class="g-side-subul nav4">
 						<li><router-link to="/home/statistics/cardOrder"><b></b>开卡统计下载</router-link></li>
+						<li><router-link :to="{name:'softwareUseTimes',params:{type:'idCard'}}"><b></b>身份证识别统计</router-link></li>
+						<li><router-link :to="{name:'softwareUseTimes',params:{type:'faceConfirm'}}"><b></b>活体识别统计</router-link></li>
 					</ul>
 				</li>
 			</ul>
@@ -187,6 +185,7 @@ export default{
             "SET_ONLINE_TIME",
             "CLEAR_TIMER",
             "SIGN_OUT",
+            "SET_USERINFO"
         ]),
         ...mapActions([
         	"getAuditStatisticsInfo"
@@ -204,7 +203,7 @@ export default{
 
 			let userInfo=getStore("KA_ECS_USER");
 			vm.userInfo=userInfo;
-
+			vm.SET_USERINFO(userInfo);
 			document.attachEvent ? doucument.body.attachEvent("onclick",function(event){
 				vm.off.userMenu=false;
 				window.event.cacenlBubble=false;
@@ -229,6 +228,8 @@ export default{
 						crumb[2]={"name":"开卡"}
 					}else if(path.indexOf("7")>-1){
 						crumb[2]={"name":"过户办理"}
+					}else if(path.indexOf("8")>-1){
+						crumb[2]={"name":"SDK开卡"}
 					}
 				}else if(path.indexOf("card/afterwards")>-1){
 					crumb[1]={"name":"开卡事后审核","href":"/home/audit/card/afterwards"}
@@ -256,12 +257,13 @@ export default{
 					}
 				}else if(path.indexOf("onlineHall")>-1){
 					crumb[1]={"name":"网厅订单","href":""}
-					
 				}else if(path.indexOf("businessPower")>-1){
 					crumb[1]={"name":"业务权限","href":""};
 					if(path.indexOf("audited")>-1){
 						crumb[2]={"name":"已审核"}
 					}
+				}else if(path.indexOf("recharge")>-1){
+					crumb[1]={"name":"充值订单","href":""}
 				}
 			}else if(path.indexOf("/home/resource")>-1){
 				crumb[0]={"name":"资源查询"}
@@ -274,6 +276,10 @@ export default{
 				crumb[0]={"name":"统计报表"}
 				if(path.indexOf("cardOrder")>-1){
 					crumb[1]={"name":"开卡订单下载","href":""}
+				}else if(path.indexOf("softwareUseTimes/idCard")>-1){
+					crumb[1]={"name":"身份识别统计下载","href":""}
+				}else if(path.indexOf("softwareUseTimes/faceConfirm")>-1){
+					crumb[1]={"name":"活体识别统计下载","href":""}
 				}
 			}
 		

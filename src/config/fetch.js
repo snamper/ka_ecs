@@ -1,37 +1,22 @@
-import {getStore} from '../config/utils';
-import store from '../store';
+import {getStore,errorDeal} from '../config/utils';
+
 require('../assets/js/base64.min.js');
 export default async(url = '', data = {}, type = 'GET', load, method = 'fetch') => {
 	if(!load){
 		var layerIndex=layer.open({type: 2,shadeClose:false});
 	}
 	type = type.toUpperCase();
-	
-	const error=(res)=>{
+	const closeLoadLayout=()=>{
         typeof load==='function' ? load() : layer.close(layerIndex);
-        res.code=="648"||res.code=="671" ? (layer.open({
-            content:'登录已过期，请重新登录',
-            style:'width:auto;',
-            btn:['确定'],
-            shadeClose:false,
-            yes:function(){
-                store.commit("SIGN_OUT");
-                layer.closeAll();
-            }
-        }),store.commit("CLEAR_TIMER")) : layer.open({
-            content:res.msg||res.statusText||res,
-            skin: 'msg',
-            time: 4,
-            msgSkin:'error',
-        });
     };
+	
 //--------------------------------------------------------------------
 	let userInfo=getStore("KA_ECS_USER");
 	if(userInfo){
         data.customerId=userInfo.customerId;
         data.codeId=userInfo.codeId;
     }else{
-         error({'code':648});
+         errorDeal({'code':648},closeLoadLayout);
          return false;
     }
 //--------------------------------------------------------------------
@@ -46,7 +31,7 @@ export default async(url = '', data = {}, type = 'GET', load, method = 'fetch') 
 			url = url + '?' + dataStr;
 		}
 	}
-	if (window.fetch && method == 'fetch') {
+	if (window.fetch && method == 'fetch') {//FETCH
 		let requestConfig = {
 			credentials: 'include',
 			method: type,
@@ -66,17 +51,17 @@ export default async(url = '', data = {}, type = 'GET', load, method = 'fetch') 
 		try {
 			const response = await fetch(url, requestConfig);
 			const responseJson = await response;
-			typeof load==='function' ? load() : layer.close(layerIndex);
+			closeLoadLayout();
 	        if(responseJson.status=="200"){
 	        	return responseJson.json();
 	        }else{
-	        	error(responseJson);
+	        	errorDeal(responseJson);
 	        }
 		} catch (errorText) {
 			
 			throw new Error(errorText);
 		}
-	} else {
+	} else {//XHR对象
 		return new Promise((resolve, reject) => {
 			let requestObj;
 			if (window.XMLHttpRequest) {
@@ -101,14 +86,14 @@ export default async(url = '', data = {}, type = 'GET', load, method = 'fetch') 
 						if (typeof obj !== 'object') {
 							obj = JSON.parse(obj);
 						}
-						typeof load==='function' ? load() : layer.close(layerIndex);
+						closeLoadLayout();
 				        if(typeof obj==='string'){
-				            error({'code':999,'msg':'数据解析失败'});
+				            errorDeal('数据解析失败');
 				            return false;
 				        }else if(obj.code=="200"){
 				        	resolve(obj);
 				        }else{
-				        	error(obj);
+				        	errorDeal(obj);
 				        }
 						
 					} else {

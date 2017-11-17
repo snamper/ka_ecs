@@ -3,157 +3,152 @@
   *@author: thinkmix
   *@date 2017-11-6
 * */
-import Vue from "vue"
-import Router from "vue-router"
+import Vue from "vue";
+import Router from "vue-router";
 Vue.use(Router);
 const load=(isShow)=>{
   var routerLoad=document.getElementById("routerLoading");
   if(routerLoad){
     isShow ? routerLoad.style.display="block" : setTimeout(function(){
       routerLoad.style.display="none";
-    },1000);
+    },300);
   }
-}
-//const login=resolve => require(["@/views/login"], resolve);
+};
 const login = resolve => {
   require.ensure(["@/views/login"], () => {
     resolve(require("@/views/login"));
   });
-}
-//const home=resolve => require(["@/views/home"], resolve);
+};
 const home = resolve => {
   require.ensure(["@/views/home"], () => {
     resolve(require("@/views/home"));
   });
-}
+};
 /*审核*/
-// const Audit=resolve=>require(["@/views/audit/index"],resolve);
-// const Audit_card=resolve=>require(["@/views/audit/card"],resolve);
-// const Audit_cardItem=resolve=>require(["@/views/audit/cardItem"],resolve);
 const Audit = resolve => {
-  load(true)
+  load(true);
   require.ensure(["@/views/audit/index"], () => {
     resolve(require("@/views/audit/index"));
-    load()
+    load();
   });
-}
+};
 const Audit_card = resolve => {
-  load(true)
+  load(true);
   require.ensure(["@/views/audit/card"], () => {
     resolve(require("@/views/audit/card"));
-    load()
+    load();
   });
-}
+};
 const Audit_cardItem = resolve => {
-  load(true)
+  load(true);
   require.ensure(["@/views/audit/cardItem"], () => {
     resolve(require("@/views/audit/cardItem"));
-    load()
+    load();
   });
-}
+};
 /*订单查询*/
-// const OrderSearch=resolve=>require(["@/views/orderSearch/index"],resolve);
-// const OrderSearch_card=resolve => require(["@/views/orderSearch/card"], resolve);
-// const OrderSearch_cardItem=resolve => require(["@/views/orderSearch/cardItem"], resolve);
-// const OrderSearch_businessPower=resolve => require(["@/views/orderSearch/businessPower"], resolve);
-// const OrderSearch_onlineHall=resolve => require(["@/views/orderSearch/onlineHall"], resolve);
-// const OrderSearch_busCard=resolve => require(["@/views/orderSearch/busCard"], resolve);
-// const OrderSearch_busCardItem=resolve => require(["@/views/orderSearch/busCardItem"], resolve);
 const OrderSearch = resolve => {
-  load(true)
+  load(true);
   require.ensure(["@/views/orderSearch/index"], () => {
     resolve(require("@/views/orderSearch/index"));
-    load()
+    load();
   });
-}
+};
 const OrderSearch_card = resolve => {
-  load(true)
+  load(true);
   require.ensure(["@/views/orderSearch/card"], () => {
     resolve(require("@/views/orderSearch/card"));
-    load()
+    load();
   });
-}
+};
 const OrderSearch_cardItem = resolve => {
-  load(true)
+  load(true);
   require.ensure(["@/views/orderSearch/cardItem"], () => {
     resolve(require("@/views/orderSearch/cardItem"));
-    load()
+    load();
   });
-}
+};
 const OrderSearch_businessPower = resolve => {
-  load(true)
+  load(true);
   require.ensure(["@/views/orderSearch/businessPower"], () => {
     resolve(require("@/views/orderSearch/businessPower"));
-    load()
+    load();
   });
-}
+};
 const OrderSearch_onlineHall = resolve => {
-  load(true)
+  load(true);
   require.ensure(["@/views/orderSearch/onlineHall"], () => {
     resolve(require("@/views/orderSearch/onlineHall"));
-    load()
+    load();
   });
-}
+};
 const OrderSearch_busCard = resolve => {
-  load(true)
+  load(true);
   require.ensure(["@/views/orderSearch/busCard"], () => {
     resolve(require("@/views/orderSearch/busCard"));
-    load()
+    load();
   });
-}
+};
 const OrderSearch_busCardItem = resolve => {
-  load(true)
+  load(true);
   require.ensure(["@/views/orderSearch/busCardItem"], () => {
     resolve(require("@/views/orderSearch/busCardItem"));
-    load()
+    load();
   });
-}
-
+};
+const OrderSearch_recharge = resolve => {
+  load(true);
+  require.ensure(["@/views/orderSearch/recharge"], () => {
+    resolve(require("@/views/orderSearch/recharge"));
+    load();
+  });
+};
 
 /*资源查询*/
-// const Resource=resolve=>require(["@/views/resource/index"],resolve);
-// const Resource_merchant=resolve=>require(["@/views/resource/merchant"],resolve);
-// const Resource_numberRelease=resolve=>require(["@/views/resource/numberRelease"],resolve);
-
 const Resource = resolve => {
-  load(true)
+  load(true);
   require.ensure(["@/views/resource/index"], () => {
     resolve(require("@/views/resource/index"));
-    load()
+    load();
   });
-}
+};
 const Resource_merchant = resolve => {
-  load(true)
+  load(true);
   require.ensure(["@/views/resource/merchant"], () => {
     resolve(require("@/views/resource/merchant"));
-    load()
+    load();
   });
-}
+};
 const Resource_numberRelease = resolve => {
-  load(true)
+  load(true);
   require.ensure(["@/views/resource/numberRelease"], () => {
     resolve(require("@/views/resource/numberRelease"));
-    load()
+    load();
   });
-}
+};
 
 /*统计报表*/
-// const Statistics=resolve=>require(["@/views/statistics/index"],resolve);
-// const Statistics_cardOrder=resolve=>require(["@/views/statistics/cardOrder"],resolve);
 const Statistics = resolve => {
-  load(true)
+  load(true);
   require.ensure(["@/views/statistics/index"], () => {
     resolve(require("@/views/statistics/index"));
-    load()
+    load();
   });
-}
+};
 const Statistics_cardOrder = resolve => {
-  load(true)
+  load(true);
   require.ensure(["@/views/statistics/cardOrder"], () => {
-    resolve(require("@/views/statistics/cardOrder"))
-    load()
+    resolve(require("@/views/statistics/cardOrder"));
+    load();
   });
-}
+};
+const Statistics_softwareUseTimes= resolve => {
+  load(true);
+  require.ensure(["@/views/statistics/softwareUseTimes"], () => {
+    resolve(require("@/views/statistics/softwareUseTimes"));
+    load();
+  });
+};
 
 const router=new Router({
   routes: [
@@ -173,18 +168,14 @@ const router=new Router({
             path:"card/:source",
             name:"audit_card",
             component:Audit_card,
-            children:[{//实时
+            children:[{//实时审核
               path:":type",
               component:Audit_cardItem,
               name:"realtime"
-            },{//事后
+            },{//事后审核
               path:":type",
               component:Audit_cardItem,
               name:"afterwards"
-            },{//SDK实时
-              path:":type",
-              component:Audit_cardItem,
-              name:"sdk_realtime"
             }]
           },{//业务权限
             path:"businessPower/:type",
@@ -209,7 +200,7 @@ const router=new Router({
             path:"businessPower/:type",
             component:OrderSearch_businessPower,
             name:'businessPowerSearch'
-          },,{//网厅
+          },{//网厅
             path:"onlineHall",
             component:OrderSearch_onlineHall,
           },{//公交一卡通
@@ -218,6 +209,9 @@ const router=new Router({
             children:[{
               path:":type",component:OrderSearch_busCardItem
             }]
+          },{//充值订单
+            path:"recharge",
+            component:OrderSearch_recharge,
           }]
         },
 		    {//资源查询
@@ -239,6 +233,10 @@ const router=new Router({
           children:[{
             path:"cardOrder",
             component:Statistics_cardOrder,
+          },{
+            path:"softwareUseTimes/:type",
+            component:Statistics_softwareUseTimes,
+            name:"softwareUseTimes"
           }]
         },
       ]

@@ -5,6 +5,7 @@
 * *-->
 <style scoped>
   @import "../../assets/css/download.css";
+  @import "../../assets/css/search.css";
 </style>
 <template>
 	<section class="g-download-box">
@@ -17,14 +18,12 @@
 		<div class="g-tabcontent">
 			<div v-if="tabType==1">
 				<label class="left-tag">日期：</label>
-				<span class="m-time-area"><input placeholder="选择日期" @click="to_laydate(3)" v-model="form.singleTime" type="text" readonly="readonly"></span>
+				<span class="f-inline-block"><input placeholder="选择日期" @click="to_laydate(3)" v-model="form.singleTime" type="text" readonly="readonly"></span>
 				<button class="m-create-button" @click="dealerListDown">点击生成EXCEL</button>
 			</div>
 			<div v-if="tabType==2||tabType==3">
 				<label class="left-tag">时间区间：</label>
-				<span class="m-time-area"><input placeholder="选择起始日期" @click="to_laydate(1)" v-model="form.startTime" type="text" readonly="readonly"></span>
-				<span class="m-space">一</span>
-				<span class="m-time-area"><input placeholder="选择截止日期" @click="to_laydate(2)" v-model="form.endTime" type="text" readonly="readonly"></span>
+				<span class="m-time-area"><input placeholder="选择起始日期" @click="to_laydate(1)" v-model="form.startTime" type="text" readonly="readonly"><input placeholder="选择截止日期" @click="to_laydate(2)" v-model="form.endTime" type="text" readonly="readonly"></span>
 				<button class="m-create-button" @click="orderListDown">点击生成EXCEL</button>
 			</div>
 			<div v-if="tabType==4">
@@ -33,9 +32,7 @@
 					<div class="col-r"><input v-model="form.dealerId" placeholder="请输入商户ID" type="text" maxlength="24"></div>
 				</div>
 				<label class="left-tag">时间区间：</label>
-				<span class="m-time-area"><input placeholder="选择起始日期" @click="to_laydate(1)" v-model="form.startTime" type="text" readonly="readonly"></span>
-				<span class="m-space">一</span>
-				<span class="m-time-area"><input placeholder="选择截止日期" @click="to_laydate(2)" v-model="form.endTime" type="text" readonly="readonly"></span>
+				<span class="m-time-area"><input placeholder="选择起始日期" @click="to_laydate(1)" v-model="form.startTime" type="text" readonly="readonly"><input placeholder="选择截止日期" @click="to_laydate(2)" v-model="form.endTime" type="text" readonly="readonly"></span>
 				<button class="m-create-button" @click="accountList">点击生成EXCEL</button>
 			</div>
 		</div>

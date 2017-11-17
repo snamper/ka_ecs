@@ -13,6 +13,7 @@
 	</div>
 </template>
 <script>
+import noImage from '../assets/images/no-img.png';
 export default{
 	name:'pagination',
 	props:{
@@ -27,7 +28,12 @@ export default{
 		}
 	},
 	created:function(){
-		this.zoomStyle.backgroundImage='url('+this.imgData[0].src+')';
+		if(this.imgData[0].src){
+			this.zoomStyle.backgroundImage='url('+this.imgData[0].src+')';
+		}else{
+			this.zoomStyle.backgroundImage='url('+noImage+')';
+		}
+		
 	},
 	methods:{
 		rotate:function(e){//旋转
@@ -40,7 +46,11 @@ export default{
 		slide:function(index){//切换
 			var len=this.imgData.length;
 			index==2?this.imgIndex<(len-1) ? this.imgIndex+=1 : this.imgIndex=0 : this.imgIndex>0 ? this.imgIndex-=1 : this.imgIndex=len-1;
+			if(this.imgData[this.imgIndex].src){
 				this.zoomStyle.backgroundImage='url('+this.imgData[this.imgIndex].src+')';
+			}else{
+				this.zoomStyle.backgroundImage='url('+noImage+')';
+			}
 			this.transformStyle={x:0,y:0,s:1,r:0};
 			this.zoomStyle.transform='translate3d(0,0,0) scale(1) rotate(0deg)';
 		},

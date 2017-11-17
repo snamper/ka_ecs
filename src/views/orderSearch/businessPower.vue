@@ -32,12 +32,10 @@
 		</section>
 		<div class="m-tag"><b></b>条件查询</div>
 		<section class="form-c">	
-			<div class="row clr m-col-2">
-				<div class="dp col-l">时间区间：</div>
-				<div class="col-r">
-					<span class="m-time-area"><input @click="to_laydate(1)" v-model="form.startTime" type="text" readonly="readonly"></span>
-					<span class="m-space">一</span>
-					<span class="m-time-area"><input @click="to_laydate(2)" v-model="form.endTime" type="text" readonly="readonly"></span>
+			<div class="row">
+				<span class="dp">时间区间：</span>
+				<div class="f-inline-block">
+					<span class="m-time-area"><input @click="to_laydate(1)" v-model="form.startTime" type="text" readonly="readonly"><input @click="to_laydate(2)" v-model="form.endTime" type="text" readonly="readonly"></span>
 				</div>
 			</div>
 			<div class="row clr m-col-2" v-if="off.type==2">
@@ -58,24 +56,20 @@
 					<div class="input-box"><input v-model="form.userPhone" maxlength="16" type="tel" placeholder="请输入查询的申请人ID"></div>
 				</div>
 			</div>
-			<div class="row clr m-col-2 active">
-				<span class="dp col-l">申请业务：</span>
-				<div class="col-r">
-					<div class="m-form-radio">
-						<label><span class="radio"><input type="radio" value="0" v-model="form.type"><span></span></span><span class="text">全部</span></label>
-						<label><span class="radio"><input type="radio" value="4" v-model="form.type"><span></span></span><span class="text">远特售卡</span></label>
-						<label><span class="radio"><input type="radio" value="3" v-model="form.type"><span></span></span><span class="text">联通售卡</span></label>
-					</div>
+			<div class="row">
+				<span class="dp">申请业务：</span>
+				<div class="m-form-radio">
+					<label><span class="radio"><input type="radio" value="0" v-model="form.type"><span></span></span><span class="text">全部</span></label>
+					<label><span class="radio"><input type="radio" value="4" v-model="form.type"><span></span></span><span class="text">远特售卡</span></label>
+					<label><span class="radio"><input type="radio" value="3" v-model="form.type"><span></span></span><span class="text">联通售卡</span></label>
 				</div>
 			</div>
-			<div class="row clr m-col-2 active" v-if="off.type==2">
-				<span class="dp col-l">审核状态：</span>
-				<div class="col-r">
-					<div class="m-form-radio">
-						<label><span class="radio"><input type="radio" value="0" v-model="form.status"><span></span></span><span class="text">全部</span></label>
-						<label><span class="radio"><input type="radio" value="2" v-model="form.status"><span></span></span><span class="text">通过</span></label>
-						<label><span class="radio"><input type="radio" value="3" v-model="form.status"><span></span></span><span class="text">拒绝</span></label>
-					</div>
+			<div class="row" v-if="off.type==2">
+				<span class="dp">审核状态：</span>
+				<div class="m-form-radio">
+					<label><span class="radio"><input type="radio" value="0" v-model="form.status"><span></span></span><span class="text">全部</span></label>
+					<label><span class="radio"><input type="radio" value="2" v-model="form.status"><span></span></span><span class="text">通过</span></label>
+					<label><span class="radio"><input type="radio" value="3" v-model="form.status"><span></span></span><span class="text">拒绝</span></label>
 				</div>
 			</div>
 			<button class="f-btn f-btn-line" @click="searchList(2)">查询</button>

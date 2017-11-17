@@ -23,9 +23,7 @@
             <div class="row clr m-col-2">
               <div class="dp col-l">时间区间：</div>
               <div class="col-r">
-                <span class="m-time-area"><input @click="to_laydate(1)" v-model="form.startTime" type="text" readonly="readonly"></span>
-                <span class="m-space">一</span>
-                <span class="m-time-area"><input @click="to_laydate(2)" v-model="form.endTime" type="text" readonly="readonly"></span>
+                <span class="m-time-area"><input @click="to_laydate(1)" v-model="form.startTime" type="text" readonly="readonly"><input @click="to_laydate(2)" v-model="form.endTime" type="text" readonly="readonly"></span>
               </div>
             </div>
           </section>
@@ -108,6 +106,7 @@
   require("../../assets/js/laydate/skins/default/laydate.css");
   import pagination from "../../components/Page.vue";
   import details from "../../components/onlineHallOrderDetails.vue";
+  import {createDownload} from '../../config/utils';
   export default{
     name:'ecsNetOrderList',
     data (){
@@ -277,22 +276,11 @@
             json.orderId=vm.form.context1;
             var _data=BASE64.encode(JSON.stringify(json));
           }
-          //构造表单发送请求
-            var body=document.getElementsByTagName("body")[0];
-            var form = document.createElement("form");
-            form.setAttribute("style","display:none");
-            form.setAttribute("target","");
-            form.setAttribute("enctype","application/x-www-form-urlencoded");
-            form.setAttribute("method","post");
-            form.setAttribute("action","w/boss/order/export");
-            var input1 = document.createElement("input");
-            input1.setAttribute("type","hidden");
-            input1.setAttribute("name","data");
-            input1.setAttribute("value",_data);
-            body.appendChild(form);
-            form.appendChild(input1);
-            form.submit();
-            form.remove();
+
+          vm.off.load=true;
+          createDownload("w/boss/order/export",_data,function(){
+            vm.off.load=false;
+          });
         }
       }
       //按钮

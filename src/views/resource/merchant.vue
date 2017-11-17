@@ -161,11 +161,11 @@
 									<td><span>基础分值：</span>{{ ajaxData.details.btScore }}</td>
 								</tr>
 								<tr>
-									<td><span>上级推广渠道ID：</span>{{ ajaxData.details.superDealerId }}【名称：{{ ajaxData.details.superDealerName }}】</td>
+									<td><span>上级推广渠道ID：</span>{{ ajaxData.details.superDealerId||'--' }}【名称：{{ ajaxData.details.superDealerName||'--' }}】</td>
 									<td><span>基础总次数：</span>{{ ajaxData.details.btFrequency }}</td>
 								</tr>
 								<tr>
-									<td><span>总部推广渠道ID：</span>{{ ajaxData.details.topDealerId }}【名称：{{ ajaxData.details.topDealerName }}】</td>
+									<td><span>总部推广渠道ID：</span>{{ ajaxData.details.topDealerId||'--' }}【名称：{{ ajaxData.details.topDealerName||'--' }}】</td>
 									<td><span>基础成功次数：</span>{{ ajaxData.details.bsFrequency }}</td>
 								</tr>
 							</tbody>
@@ -262,7 +262,7 @@
 								</tr>
 								<tr>
 									<td><span>所属商户渠道ID：</span>{{ ajaxData.details.dealerId }}（{{ ajaxData.details.companyName }}<a  class="details" @click="details(ajaxData.details.dealerId,1)" href="javascript:void(0)">详情</a>）</td>
-									<td><span>经纬度：</span>{{ ajaxData.details.longitude }},{{ ajaxData.details.latitude }}</td>
+									<td><span>经纬度：</span>{{ ajaxData.details.longitude }},{{ ajaxData.details.latitude }}<a href="javascript:void(0)" @click="toMap" class="details m-l">查看地图</a></td>
 								</tr>
 								<tr>
 									<td><span>当前城市：</span>{{ ajaxData.details.cityName }}</td>
@@ -393,6 +393,11 @@ export default{
 		},500);
 	},
 	methods:{
+		toMap(){
+			var w=document.documentElement.clientWidth,url='',vm=this;
+			w<640 ? url='http://map.baidu.com/mobile/?latlng='+vm.ajaxData.details.latitude+','+vm.ajaxData.details.longitude+'' : url='http://map.baidu.com/?latlng='+vm.ajaxData.details.latitude+','+vm.ajaxData.details.longitude+'';
+			window.open(url);
+		},
 		getTotal(){//获取顶部统计数据
 			var vm=this;
 			vm.off.isLoad=true;

@@ -1,3 +1,70 @@
+import store from '../store';
+/**
+ * http错误处理
+ */
+export const errorDeal=(res,cb)=>{
+    typeof cb==="function"&&cb();
+    res.code=="648"||res.code=="671" ? (layer.open({
+        content:'登录已过期，请重新登录',
+        style:'width:auto;',
+        btn:['确定'],
+        shadeClose:false,
+        yes:function(){
+            store.commit("SIGN_OUT");
+            layer.closeAll();
+        }
+    }),store.commit("CLEAR_TIMER")) : layer.open({
+        content:res.msg||res.statusText||res,
+        skin: 'msg',
+        time: 4,
+        msgSkin:'error',
+    });
+};
+/**
+ * iframe 文件下载
+ */
+export const createDownload=(url,data,cb)=>{
+	var body=document.getElementsByTagName("body")[0],
+	ifr=document.getElementById("downLoadForm"),
+    form = document.createElement("form"),
+    input = document.createElement("input");
+
+    if(!ifr){
+    	ifr=document.createElement("iframe");
+    	ifr.setAttribute("id","downLoadForm");
+    	ifr.setAttribute("name","downLoadForm");
+    	ifr.setAttribute("style","display:none");
+    }
+
+    ifr.addEventListener("load",function(e){
+    	cb();
+    	try{
+    		var result=JSON.parse(ifr.contentWindow.document.body.textContent);
+    		if(result.code!=200){
+    			errorDeal(result);
+    		}
+    	}catch(err){
+    		errorDeal(err);
+    	}
+    });
+    
+    form.setAttribute("style","display:none");
+    form.setAttribute("target","downLoadForm");
+    form.setAttribute("enctype","application/x-www-form-urlencoded;charset=utf-8");
+    form.setAttribute("method","post");
+    form.setAttribute("action",url);
+
+    input.setAttribute("type","hidden");
+    input.setAttribute("name","data");
+    input.setAttribute("value",data);
+
+    body.appendChild(ifr);
+    body.appendChild(form);
+
+    form.appendChild(input);
+    form.submit();
+    form.remove();
+};
 /**
  * 存储localStorage
  */
@@ -77,7 +144,7 @@ export const translateData=(type,v)=> {
 	v=parseInt(v);
 	switch(type){
 		case 1://操作类型
-				return v==1 ? '开成卡' : v==2 ? '开白卡' : v==4 ? '实名补录' : v==7 ? '过户办理' : v==5 ? '实名登记' : v==6 ? '空卡' : void 0;
+				return v==1 ? '开成卡' : v==2 ? '开白卡' : v==4 ? '实名补录' : v==7 ? '过户办理' : v==5 ? '实名登记' : v==6 ? '空卡' : '--';
 			break;
 		case 2://证件类型
 				return v==1 ? '身份证' : v==2 ? '军官证' : v==3 ? '护照' :void 0;
@@ -93,7 +160,7 @@ export const translateData=(type,v)=> {
     		return v||v==0 ? level[parseInt(v)] : '未知';
 			break;
 		case 7://进行中，已关闭，订单状态
-			return v==1 ? '已选号' : v==2 ? '已选套餐' : v==3 ? '已上传资料' : v==4 ? '已支付' : v==5 ? '已审核' : v==6 ? '已开户申请' : v==7 ? '已获取IMSI' : v==8 ? '已开卡申请' : v==0 ? '--' :void 0;
+			return v==1||v==1000 ? '已选号' : v==2||v==1001 ? '已选套餐' : v==3||v==1003 ? '已上传资料' : v==4||v==1004 ? '已支付' : v==5||v==1005 ? '已审核' : v==6||v==1006 ? '已开户申请' : v==7||v==1007 ? '已获取IMSI' : v==8||v==1008 ? '已开卡申请' : v==0 ? '--' :void 0;
 			break;
 	}
 }

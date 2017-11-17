@@ -19,14 +19,28 @@
 							<tbody>
 								<tr v-if="list.operatorType!=7"><td>订单号码：</td><td>{{list.orderId}}<a href="javascript:void(0)" @click="detailsOrder" class="details m-l">查看详情</a></td></tr>
 								<tr v-if="list.payOrderId&&list.operatorType!=7"><td>支付流水号：</td><td>{{list.payOrderId}}<a href="javascript:void(0)" @click="detailsPayOrder" class="details m-l">查看详情</a></td></tr>
+
 								<tr><td>生成时间：</td><td>{{$parent.getDateTime(list.createTime)[6]}}</td></tr>
-								<tr v-if="type==1||type==2"><td>状态修改时间：</td><td>{{list.modifyTime?$parent.getDateTime(list.modifyTime)[6]:''}}</td></tr>
-								<tr v-if="type==4"><td>关闭时间：</td><td>{{list.modifyTime?$parent.getDateTime(list.modifyTime)[6]:''}}</td></tr>
-								<tr v-if="type==4"><td>关闭原因：</td><td>{{list.closeReason}}</td></tr>
-								<tr v-if="type==1"><td>当前状态：</td>
-									<td v-if="list.status==1" class="f-c-red">待分配</td>
-									<td v-if="list.status==2" class="f-c-green">已分配</td>
+								<tr v-if="type==1||type==2"><td>状态修改时间：</td><td>{{$parent.getDateTime(list.modifyTime)[6]}}</td></tr>
+								<tr v-if="type==1||type==2"><td>审核方式：</td>
+									<td v-if="list.auditType==0">实时审核</td>
+									<td v-if="list.auditType==1">事后审核</td>
 								</tr>
+								<tr v-if="type==1"><td>当前状态：</td>
+									<td>
+										<span v-show="source!=7">
+											<b v-show="todo.status==1" class="f-c-red">待分配</b>
+											<b v-show="todo.status==2" class="f-c-green">已分配</b>
+										</span>
+										<span v-show="source==7">
+											<b v-show="todo.status==4" class="f-c-red">待分配</b>
+											<b v-show="todo.status==5" class="f-c-green">已分配</b>
+										</span>
+									</td>
+								</tr>
+								<tr v-if="type==4"><td>关闭时间：</td><td>{{$parent.getDateTime(list.modifyTime)[6]}}</td></tr>
+								<tr v-if="type==4"><td>关闭原因：</td><td>{{list.closeReason}}</td></tr>
+								
 								<tr v-if="type==3||type==4"><td>订单状态：</td><td>{{ $parent.translateData(7,list.statusDetail) }}</td></tr>
 								<tr v-if="type==2"><td>号卡状态：</td><td>{{ $parent.translateData(4,list.cardStatus) }}</td></tr>
 								<tr v-if="type==2"><td>审核状态：</td>
@@ -40,35 +54,83 @@
 									</td>
 								</tr>
 
-								<tr v-if="type==1||type==2"><td>审核方式：</td>
-									<td v-if="list.auditType==0">实时审核</td>
-									<td v-if="list.auditType==1">事后审核</td>
-								</tr>
-
 								<tr><td>用户姓名：</td><td>{{ list.userName }}</td></tr>
 								<tr v-if="list.operatorType==7"><td>原机主姓名：</td><td>{{ list.userNameOld }}</td></tr>
-								<tr><td>商户名称：</td><td>{{ list.merchantShopName }}【信用等级：{{list.dealerLevel}}】</td></tr>
-								<tr><td>相似度：</td><td>{{ list.similarity }}%</td></tr>
-								<tr><td>电话号码：</td><td>{{ list.phoneNumber }}（<b v-if="list.cardType==1" class="f-c-purple">远特</b><b v-if="list.cardType==2" class="f-c-yellow">联通</b><b class="f-c-yellow">{{ $parent.translateData(5,list.phoneLevel) }}</b>，{{list.phoneHome}}）</td></tr>
+								<tr><td>商户名称：</td>
+									<td>
+										<span>{{ list.merchantShopName }}</span>
+										<span v-show="source!=7">【信用等级：{{list.dealerLevel}}】</span>
+									</td>
+								</tr>
+								<tr><td>相似度：</td>
+									<td>
+										<span v-show="source!=7">{{ list.similarity }}%</span>
+										<span v-show="source==7">{{ userMoreInfo.similarity }}%</span>
+									</td>
+								</tr>
+								<tr><td>电话号码：</td>
+									<td>{{ list.phoneNumber }}（<b v-if="list.cardType==1" class="f-c-purple">远特</b>
+										<b v-if="list.cardType==2" class="f-c-yellow">联通</b>
+										<b class="f-c-yellow">{{ $parent.translateData(5,list.phoneLevel) }}</b>，{{list.phoneHome}}）</td>
+								</tr>
 								<tr><td>号码规则：</td><td>{{ list.ruleCode }}</td></tr>
 								<tr><td>身份证号码：</td><td>{{ list.identityCard }}</td></tr>
 								<tr v-if="list.operatorType==7"><td>原机主证件号码：</td><td>{{ list.identityCardOld }}</td></tr>
-								<tr><td>身份证地址：</td><td>{{ list.userAddress }}</td></tr>
+								<tr><td>身份证地址：</td>
+									<td>
+										<span v-show="source!=7">{{ list.userAddress }}</span>
+										<span v-show="source==7">{{ userMoreInfo.userAddress }}</span>
+									</td>
+								</tr>
 								<tr v-if="list.operatorType==7"r><td>原机主证件地址：</td><td>{{ list.userAddressOld }}</td></tr>
-								<tr><td>证件期限：</td><td>{{ list.period }}</td></tr>
+								<tr><td>证件期限：</td>
+									<td>
+										<span v-show="source!=7">{{ list.period }}</span>
+										<span v-show="source==7">{{ userMoreInfo.period }}</span>
+									</td>
+								</tr>
 								<tr><td>ICCID：</td><td>{{ list.ICCID }}</td></tr>
-								<tr><td>Mac地址：</td><td>{{ list.devMac }}</td></tr>
-								<tr><td>终端类型：</td><td>{{ list.terminalType }}</td></tr>
-								<tr><td>识别仪名称：</td><td>{{ list.devInfo }}</td></tr>
-								<tr><td>活体识别名称：</td><td>{{ list.livingImgSoftWareName }}</td></tr>
-								<tr><td>识别模式：</td><td>{{ list.openMode }}</td></tr>
-								<tr><td>审核人：</td><td>{{ list.customerName }}【审核人ID：{{ list.customerId }}】</td></tr>
-								<tr><td>操作人姓名：</td><td>{{ list.operatorName }}【操作人ID：{{ list.operatorId }}】<a v-if="list.operatorName" href="javascript:void(0)" @click="detailsUser" class="details m-l">查看详情</a></td></tr>
-								<tr><td>渠道ID：</td><td>{{ list.dealerId }}<a v-if="list.dealerId" href="javascript:void(0)" @click="detailsMerchant" class="details m-l">查看详情</a></td></tr>
-								<tr v-if="type==2"><td>审核用时：</td><td>{{ $parent.secondsFormat(6,list.auditTime) }}</td></tr>
-								<tr v-if="type==2"><td>失败原因：</td><td>{{ list.cardStatusReason }}</td></tr>
-								<tr v-if="type==2&&list.status==2"><td>拒绝原因：</td><td><ul><li v-for="todo in filterReason(list.auditReason)"><b v-if="todo.star" class="f-c-red">*</b>{{todo.text}}</li></ul></td></tr>
-								<tr v-if="type==2"><td>备注：</td><td>{{ list.adutiRemarks }}</td></tr>
+								<tr><td>Mac地址：</td>
+									<td>
+										<span v-show="source!=7">{{ list.devMac }}</span>
+										<span v-show="source==7">{{ userMoreInfo.devMac }}</span>
+									</td>
+								</tr>
+								<tr><td>终端类型：</td>
+									<td>
+										<span v-show="source!=7">{{ list.terminalType }}</span>
+										<span v-show="source==7">
+											<b v-show="list.terminalType==1">IOS</b>
+											<b v-show="list.terminalType==2">Android</b>
+										</span>
+									</td>
+								</tr>
+								<tr><td>识别仪名称：</td>
+									<td>
+										<span v-show="source!=7">{{ list.devInfo }}</span>
+										<span v-show="source==7">{{ userMoreInfo.devInfo }}</span>
+									</td>
+								</tr>
+								<tr><td>活体识别名称：</td>
+									<td>
+										<span v-show="source!=7">{{ list.livingImgSoftWareName }}</span>
+										<span v-show="source==7">{{ userMoreInfo.livingImgSoftWareName }}</span>
+									</td>
+								</tr>
+								<tr v-show="source!=7"><td>识别模式：</td><td>{{ list.openMode }}</td></tr>
+								<tr v-show="type==2"><td>审核人：</td><td>{{ list.customerName }}【审核人ID：{{ list.customerId }}】</td></tr>
+								<tr v-show="source!=7"><td>操作人姓名：</td><td>{{ list.operatorName }}【操作人ID：{{ list.operatorId }}】<a v-show="list.operatorName" href="javascript:void(0)" @click="detailsUser" class="details m-l">查看详情</a></td></tr>
+								<tr><td>渠道ID：</td><td>{{ list.dealerId }}<a v-show="list.dealerId" href="javascript:void(0)" @click="detailsMerchant" class="details m-l">查看详情</a></td></tr>
+
+								<tr v-show="type==2"><td>审核用时：</td>
+									<td>
+										<span v-show="source!=7">{{ $parent.secondsFormat(6,list.auditTime) }}</span>
+										<span v-show="source==7">{{ $parent.secondsFormat(parseInt(list.modifyTime)-parseInt(list.createTime)) }}</span>
+									</td>
+								</tr>
+								<tr v-show="type==2"><td>状态说明：</td><td>{{ list.cardStatusReason }}</td></tr>
+								<tr v-if="type==2&&list.status==2"><td>拒绝原因：</td><td><ul><li v-for="todo in filterReason(list.auditReason)"><b v-show="todo.star" class="f-c-red">*</b>{{todo.text}}</li></ul></td></tr>
+								<tr v-show="type==2&&list.adutiRemarks"><td>备注：</td><td>{{ list.adutiRemarks }}</td></tr>
 							</tbody>
 						</table>
 					</td>
@@ -90,19 +152,22 @@
 <script>
 import ImgZoom from '../components/ImgZoom';
 import detailsView from '../components/cardOrderDetailsAlert';
+import { SDK_IMAGE_URL } from '../config/service';
 export default{
 	name:'cardOrderDetails',
 	props:{
 		list:Object,
 		type:Number,
 		number:String,
+		source:String
 	},
 	data(){
 		return{
 			imgData:[],//当前订单的图片
 			isShowDetails:0,
 			typeDetails:0,
-			detailsList:''
+			detailsList:'',
+			userMoreInfo:''//sdk更多用户信息
 		}
 	},
 	components:{
@@ -120,14 +185,46 @@ export default{
 			vm.imgData[5]={'src':vm.list.handImage,'name':'过户人手持照片'};
 			vm.imgData[6]={'src':vm.list.signImage,'name':'过户人手签名照片'};
 		}else{
-			vm.imgData=[
-				{'src':vm.list.handImageUrl,'name':'手持'},
-				{'src':vm.list.imageUrl,'name':'正面'},
-				{'src':vm.list.backImageUrl,'name':'反面'},
-				{'src':vm.list.livingImg,'name':'活体识别'}
-			];
+			if(vm.source==7){
+				var userMoreInfo=JSON.parse(decodeURIComponent(vm.list.userMoreInfo));
+				
+				if(userMoreInfo){
+					vm.userMoreInfo=userMoreInfo;
+					vm.imgData=[
+						{'src':SDK_IMAGE_URL+userMoreInfo.handImageNameSrc,'name':'手持'},
+						{'src':SDK_IMAGE_URL+userMoreInfo.imageNameSrc,'name':'正面'},
+						{'src':SDK_IMAGE_URL+userMoreInfo.backImageNameSrc,'name':'反面'},
+						{'src':SDK_IMAGE_URL+userMoreInfo.livingIdentificationImagePath,'name':'活体识别'}
+					];
+				}else{
+					vm.imgData=[
+						{'src':'','name':'手持'},
+						{'src':'','name':'正面'},
+						{'src':'','name':'反面'},
+						{'src':'','name':'活体识别'}
+					];
+				}
+				
+			}else{
+				vm.imgData=[
+					{'src':vm.list.handImageUrl,'name':'手持'},
+					{'src':vm.list.imageUrl,'name':'正面'},
+					{'src':vm.list.backImageUrl,'name':'反面'},
+					{'src':vm.list.livingImg,'name':'活体识别'}
+				];
+			}
+			
 			if(vm.type==2){
-				vm.imgData.push({'src':vm.list.signImageUrl,'name':'手签名'},{'src':vm.list.acceptanceImg,'name':'受理单'})
+				if(vm.source==7){
+					if(userMoreInfo){
+						vm.imgData.push({'src':SDK_IMAGE_URL+vm.userMoreInfo.signImageName,'name':'手签名'});
+					}else{
+						vm.imgData.push({'src':'','name':'手签名'});
+					}
+					vm.imgData.push({'src':SDK_IMAGE_URL+vm.list.acceptanceImg,'name':'受理单'});
+				}else{
+					vm.imgData.push({'src':vm.list.signImageUrl,'name':'手签名'},{'src':vm.list.acceptanceImg,'name':'受理单'});
+				}
 			}
 		}
 	},
