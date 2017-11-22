@@ -30,6 +30,7 @@ const webpackConfig = merge(baseWebpackConfig, {
   plugins: [
     // http://vuejs.github.io/vue-loader/en/workflow/production.html
     new webpack.DefinePlugin({
+      '__DEV__': false,
       'process.env': env
     }),
     new BundleAnalyzerPlugin(),

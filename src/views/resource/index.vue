@@ -3,7 +3,7 @@
   *@author: thinkmix
   *@date 2017-11-6
 * *-->
-<style scoped>
+<style>
 	@import "../../assets/css/search.css";
 </style>
 <template>

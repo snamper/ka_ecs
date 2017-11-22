@@ -12,13 +12,15 @@ export default async(url = '', data = {}, type = 'GET', load, method = 'fetch') 
 	
 //--------------------------------------------------------------------
 	let userInfo=getStore("KA_ECS_USER");
-	if(userInfo){
-        data.customerId=userInfo.customerId;
-        data.codeId=userInfo.codeId;
-    }else{
-         errorDeal({'code':648},closeLoadLayout);
-         return false;
-    }
+	if(url!="w/user/getSmsCode"&&url!="w/user/login"){//排除登录
+		if(userInfo){
+	        data.customerId=userInfo.customerId;
+	        data.codeId=userInfo.codeId;
+	    }else{
+	         errorDeal({'code':648},closeLoadLayout);
+	         return false;
+	    }
+	}
 //--------------------------------------------------------------------
 	if (type == 'GET') {
 		let dataStr = ''; //数据拼接字符串
@@ -82,18 +84,17 @@ export default async(url = '', data = {}, type = 'GET', load, method = 'fetch') 
 			requestObj.onreadystatechange = () => {
 				if (requestObj.readyState == 4) {
 					if (requestObj.status == 200) {
-						let obj = requestObj.response;
-						if (typeof obj !== 'object') {
-							obj = JSON.parse(obj);
+						let response = requestObj.response;
+						if (typeof response !== 'object') {
+							response = JSON.parse(response);
 						}
 						closeLoadLayout();
-				        if(typeof obj==='string'){
+				        if(typeof response==='string'){
 				            errorDeal('数据解析失败');
-				            return false;
-				        }else if(obj.code=="200"){
-				        	resolve(obj);
+				        }else if(response.code=="200"){
+				        	resolve(response);
 				        }else{
-				        	errorDeal(obj);
+				        	errorDeal(response);
 				        }
 						
 					} else {

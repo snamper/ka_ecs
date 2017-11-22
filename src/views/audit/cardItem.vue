@@ -4,6 +4,7 @@
   *@date 2017-11-6
 * *-->
 <style scoped>
+  @import "../../assets/css/cardOrderDetails.css";
   @import "../../assets/css/audit.css";
   #auditList{
   	width: 100%;
@@ -252,8 +253,8 @@ export default{
 					vm.imgData[0]={'src':vm.auditData.frontImageOld,'name':'原机主正面照片'};
 					vm.imgData[1]={'src':vm.auditData.backImageOld,'name':'原机主反面照片'};//
 					vm.imgData[2]={'src':vm.auditData.handImageOld,'name':'原机主手持照片'};
-					vm.imgData[3]={'src':vm.auditData.papersImage,'name':'过户人正面照片'};
-					vm.imgData[4]={'src':vm.auditData.backImage,'name':'过户人反面照片'};
+					vm.imgData[3]={'src':vm.auditData.imageUrl,'name':'过户人正面照片'};
+					vm.imgData[4]={'src':vm.auditData.backImageUrl,'name':'过户人反面照片'};
 					vm.imgData[5]={'src':vm.auditData.handImage,'name':'过户人手持照片'};
 					vm.imgData[6]={'src':vm.auditData.signImage,'name':'过户人手签名照片'};
 				}else{//开卡

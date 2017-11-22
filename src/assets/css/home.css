@@ -256,6 +256,9 @@
   height: 100%;
 }
 
+.g-audit-menu{width: 100%;height: 100%; padding:0.15rem; display: table; word-break: break-word;word-wrap: break-word;white-space: normal;}
+.g-audit-menu>.g-audit-menu-c{ text-align: center;display: table-cell; vertical-align: middle;}
+
 
 /*背景图元件*/
 
@@ -274,6 +277,11 @@
   height: 0.2rem;
 }
 
+.u-icon-home {
+  background-image: url(../assets/images/home.png);
+  width: 0.17rem;
+  height: 0.17rem;
+}
 .u-icon-audit {
   background-image: url(../assets/images/audit.png);
   width: 0.17rem;
@@ -285,11 +293,10 @@
   width: 0.17rem;
   height: 0.17rem;
 }
-.u-icon-search2 {
+.u-icon-searchResource {
   background-image: url(../assets/images/net-order.png);
-  width: 0.19rem;
-  height: 0.19rem;
-  margin-right: 0.13rem !important;
+  width: 0.17rem;
+  height: 0.17rem;
 }
 .u-icon-statistics {
   background-image: url(../assets/images/statistics.png);

@@ -45,10 +45,10 @@
 			msgSkin=function(skin){
 				switch(skin){
 					case 'success':
-						return '<div class="myicon-success-no-circle msgSkin"></div>';
+						return '<div class="u-icon-success-no-circle msgSkin"></div>';
 						break;
 					case 'error':
-						return '<div class="myicon-clear msgSkin"></div>';
+						return '<div class="u-icon-clear msgSkin"></div>';
 						break;
 					default:
 						return "";

@@ -3,9 +3,6 @@
   *@author: thinkmix
   *@date 2017-11-6
 * *-->
-<style scoped>
-  @import "../../assets/css/audit.css";
-</style>
 <template>
 		<router-view></router-view>
 </template>

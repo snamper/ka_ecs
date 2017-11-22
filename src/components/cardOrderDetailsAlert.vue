@@ -1,12 +1,14 @@
 <style scoped>
 #detailsView{position: absolute;top: 0;left: 0;width: 100%;height: 100%;display: table; z-index: 997;text-align: center;}
 #detailsView>div{display: table-cell;vertical-align: middle;}
-#detailsView table{margin:auto;border-radius: 4px;}
+#detailsView table{margin:auto;border-radius: 4px;background-color: #fff;border-collapse: collapse;table-layout: fixed;word-wrap:break-word;word-break: break-word;white-space: normal;}
+#detailsView table{}
 #detailsView table td{padding:5px;}
 #detailsView table th{padding: 10px 0;background-color: #eee;border-radius: 4px 4px 0 0;}
+#detailsView table td>.fl{width:1rem;text-align: right;}
+#detailsView table td>.fright{margin-left: 1.05rem;text-align: left; }
 .lay-mask{position:absolute;background-color: rgba(0,0,0,0.3);z-index: -1;width: 100%;height: 100%;top: 0;left: 0;}
 
-.lay-details.light>li>.fl{width: 1rem}
 </style>
 <template>
 <section id="detailsView">

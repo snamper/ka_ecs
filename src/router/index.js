@@ -11,17 +11,24 @@ const load=(isShow)=>{
   if(routerLoad){
     isShow ? routerLoad.style.display="block" : setTimeout(function(){
       routerLoad.style.display="none";
-    },300);
+    },200);
   }
 };
-const login = resolve => {
+const Login = resolve => {
   require.ensure(["@/views/login"], () => {
     resolve(require("@/views/login"));
   });
 };
-const home = resolve => {
+const Home = resolve => {
   require.ensure(["@/views/home"], () => {
     resolve(require("@/views/home"));
+  });
+};
+const Dashboard = resolve => {
+  load(true);
+  require.ensure(["@/views/dashboard"], () => {
+    resolve(require("@/views/dashboard"));
+    load();
   });
 };
 /*审核*/
@@ -154,13 +161,17 @@ const router=new Router({
   routes: [
     {
       path:"/login",
-      component:login
+      component:Login
     },
     {
       path:"/home",
-      component:home,
-      redirect:"home/audit/card/realtime",
-      children:[{//审核
+      component:Home,
+      redirect:"home/dashboard",
+      children:[{
+        path:"dashboard",
+        component:Dashboard
+      },
+      {//审核
           path:"audit",
           component:Audit,
           redirect:"audit/card/realtime",

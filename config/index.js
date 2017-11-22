@@ -12,7 +12,7 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
         '/w':{
-            target:'http://192.168.10.138:6086',
+            target:'http://192.168.10.167:6088',
             changeOrigin:true,
             pathRewrite:{
                 '^/w':'/ecs/w'
@@ -21,9 +21,9 @@ module.exports = {
     },
 
     // Various Dev Server settings
-    host: 'localhost', // can be overwritten by process.env.HOST
+    host:"192.168.10.138",
     port: 8081, // can be overwritten by process.env.HOST, if port is in use, a free one will be determined
-    autoOpenBrowser: false,
+    autoOpenBrowser: true,
     errorOverlay: true,
     notifyOnErrors: true,
     poll: false, // https://webpack.js.org/configuration/dev-server/#devserver-watchoptions-
@@ -62,8 +62,8 @@ module.exports = {
 
     // Paths
     assetsRoot: path.resolve(__dirname, '../dist'),
-    assetsSubDirectory: 'static',
-    assetsPublicPath: '/',
+    assetsSubDirectory: 'assets',
+    assetsPublicPath: '/ecs/',
 
     /**
      * Source Maps

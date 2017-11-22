@@ -1,7 +1,3 @@
-.g-audit-menu{width: 100%;height: 100%; padding:0.15rem; display: table; word-break: break-word;word-wrap: break-word;white-space: normal;}
-.g-audit-menu>.g-audit-menu-c{ text-align: center;display: table-cell; vertical-align: middle;}
-
-
 /*审核列表*/
 .m-has-db>b, .m-time-down>span{ display: inline-block;vertical-align: top;}
 .m-has-db, .m-time-down{ position: relative; }
@@ -22,24 +18,6 @@
 .u-icon-refresh{background-image:url(../../assets/images/refresh.png);}
 .m-refresh>a{color:#20a0ff;font-weight: bold;font-size: 0.15rem;z-index: 2; cursor: pointer;line-height: 1rem;text-align: center;}
 
-/*拒绝弹出层*/
-
-.lay-div-refuse{max-height:5rem;overflow-y:scroll;}
-.lay-div-refuse>.checkbox-list{margin:0 0.2rem;margin-bottom: 0.1rem;}
-.lay-div-refuse>.checkbox-list>.m-form-checkbox{margin:0;}
-.lay-div-refuse>.checkbox-list>.m-form-checkbox>label{margin-right:0;white-space: normal;}
-.lay-div-refuse>.checkbox-list>.m-form-checkbox>label>.checkbox{ float: left;top: 2px; }
-.lay-div-refuse>.checkbox-list>.m-form-checkbox>label>.text{margin-left: 0.23rem;padding-left: 0; display: block;}
-.lay-div-refuse>.checkbox-list>input{background-color: #fff;background-image: none;border-radius: 7px;border: 1px solid #bfcbd9;color: #1f2d3d;
-   font-size: inherit;
-   font-family: inherit;
-    height: 0.35rem;line-height: 1;
-    outline: none;
-    padding: 3px 10px;
-    width: 100%;
-    transition: border-color .2s cubic-bezier(.645, .045, .355, 1);-webkit-transition: border-color .2s cubic-bezier(.645, .045, .355, 1);-moz-transition: border-color .2s cubic-bezier(.645, .045, .355, 1);
-}
-.lay-div-refuse>.checkbox-list>input:hover {border-color: #20a0ff}
 /*响应式*/
 @media screen and (min-width: 960px){
   .m-menu-div{margin-top:-0.2rem;}
@@ -54,11 +32,9 @@
 }
 
 @media screen and (max-width: 640px){
-  .lay-div-refuse{max-height: 3.5rem;}
   .g-audit-menu{padding:5px;}
   .m-foot-btn{position:fixed;bottom: 0;right: 0.1rem;z-index: 998;}
   .m-foot-btn>a{padding: 0;width: 0.4rem;height: 0.4rem;line-height: 0.41rem;border-radius: 50%; display: block;font-size: 0.13rem;margin-bottom: 0.2rem;}
-  .lay-div-refuse>.checkbox-list{margin:0;margin-bottom: 0.1rem;}
 }
 
 @media screen and (max-width: 350px){

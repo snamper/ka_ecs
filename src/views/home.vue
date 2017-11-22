@@ -1,4 +1,4 @@
-<style scoped>
+<style>
   @import "../assets/css/home.css";
 </style>
 <template>
@@ -45,13 +45,22 @@
 		<nav class="g-side-nav">
 			<header class="g-side-head">卡盟</header>
 			<ul class="g-side-ul">
+				<li :class="{active:$route.path.indexOf('/home/dashboard')>-1}">
+					<b></b>
+					<router-link to="/home">
+						<div>
+							<i class="u-icon-home"></i>
+							<span>首页</span>
+						</div>
+					</router-link>
+				</li>
 				<li :class="{active:$route.path.indexOf('/home/audit')>-1}">
 					<b></b>
 					<router-link to="/home/audit">
 						<div>
 							<i class="u-icon-audit"></i>
 							<span>订单审核</span>
-							<b class="animated infinite bounce m-lighter" v-show="getCountTotal">{{getCountTotal}}</b>
+							<b class="animated m-lighter" :class="{bounce:offCountChange}" v-show="countTotal">{{countTotal}}</b>
 						</div>
 					</router-link>
 					<ul class="g-side-subul nav1">
@@ -93,7 +102,7 @@
 					<b></b>
 					<router-link to="/home/resource">
 						<div>
-							<i class="u-icon-search2"></i>
+							<i class="u-icon-searchResource"></i>
 							<span>资源查询</span>
 						</div>
 					</router-link>
@@ -146,7 +155,7 @@
   </div>
 </template>
 <script>
-import {mapState, mapMutations, mapActions, mapGetters} from 'vuex';
+import {mapState, mapMutations, mapActions} from 'vuex';
 import {getStore} from '../config/utils';
 import { signOut } from '../config/service';
 export default{
@@ -175,9 +184,8 @@ export default{
             "onlineTime",
             "timer",
             "auditCount",
-        ]),
-        ...mapGetters([
-            "getCountTotal",
+            "countTotal",
+            "offCountChange"
         ]),
 	},
 	methods:{

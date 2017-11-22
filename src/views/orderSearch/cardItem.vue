@@ -9,7 +9,7 @@
   	<!--查询-->
   	<section v-if="!off.details">
   	<div class="g-search-form">
-		<!-- <section class="m-top-shift f-tas">
+		<section class="m-top-shift f-tas">
 			<div class="box">
 				<label class="item" @click="topShiftClick">
 					<input type="radio" v-model="form.source" value="6"><span class="slider">APP</span>
@@ -17,7 +17,7 @@
 				<label class="item" @click="topShiftClick">
 					<input type="radio" v-model="form.source" value="7"><span class="slider">SDK-PHONE</span>
 				</label>
-				<label class="item" @click="topShiftClick">
+				<!-- <label class="item" @click="topShiftClick">
 					<input type="radio" v-model="form.source" value="8"><span class="slider">SDK-WEAR</span>
 				</label>
 				<label class="item" @click="topShiftClick">
@@ -25,9 +25,9 @@
 				</label>
 				<label class="item" @click="topShiftClick">
 					<input type="radio" v-model="form.source" value="10"><span class="slider">ANDROID-WEAR</span>
-				</label>
+				</label> -->
 			</div>
-		</section> -->
+		</section>
 		<!-- <div class="m-tag"><b></b>条件查询</div> -->
 		<section class="form-c">
 			<div class="row">
@@ -178,16 +178,17 @@
 				<tr>
 					<th>序号</th>
 					<th>订单号</th>
+					<th>生成时间</th>
 					<th>操作类型</th>
 					<th>审核方式</th>
 					<th>用户姓名</th>
 					<th>用户号码</th>
-					<th>号码等级</th>
+					<!-- <th>号码等级</th> -->
 					<th>身份证号码</th>
 					<th v-show="off.type==1||off.type==2">审核姓名</th>
 					<th v-show="form.source!=7">操作人</th>
-					<th>生成时间</th>
-					<th v-show="off.type==1||off.type==2">状态修改时间</th>
+					
+					<!-- <th v-show="off.type==1||off.type==2">状态修改时间</th> -->
 					<th v-show="off.type==4">关闭时间</th>
 					<th v-show="off.type!=2">订单状态</th>
 
@@ -201,6 +202,7 @@
 				<tr v-for="(todo,index) in list">
 					<td>{{((pageNum-1)*10+(index+1))}}</td>
 					<td>{{todo.orderId}}</td>
+					<td>{{getDateTime(todo.createTime)[6]}}</td>
 					<td>{{translateData(1,todo.type)}}</td>
 					<td>
 						<span v-if="todo.auditType=='0'">实时审核</span>
@@ -209,7 +211,7 @@
 					</td>
 					<td>{{todo.userName}}</td>
 					<td>{{todo.phoneNumber}}</td>
-					<td>{{translateData(5,todo.phoneLevel)}}</td>
+					<!-- <td>{{translateData(5,todo.phoneLevel)}}</td> -->
 					<td>{{todo.identityCard}}</td>
 
 					<td v-if="off.type==1||off.type==2">{{todo.customerName}}</td>
@@ -220,8 +222,8 @@
 						<br/><b class="f-m-lighter">({{todo.operatorName}})</b>
 					</td>
 
-					<td>{{getDateTime(todo.createTime)[6]}}</td>
-					<td v-if="off.type!=3">{{getDateTime(todo.modifyTime)[6]}}</td>
+					
+					<!-- <td v-if="off.type!=3">{{getDateTime(todo.modifyTime)[6]}}</td> -->
 					<td v-if="off.type==2">
 						<span v-if="form.source!=7">{{secondsFormat(todo.auditTime)}}</span>
 						<span v-else>{{ secondsFormat(parseInt(todo.modifyTime)-parseInt(todo.createTime)) }}</span>
@@ -302,7 +304,7 @@ export default{
 				context3:'',//审核人ID
 				context4:'',//身份证号
 				context5:'',// 操作者ID
-				context6:0,//type=1，订单状态；type=2，开卡状态
+				context6:0,//type=1，订单状态；type=2，号卡状态
 				startTime:'',
 				endTime:'',
 				select:6//条件查询，选择的条件

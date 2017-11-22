@@ -16,6 +16,7 @@
   </section>
 </template>
 <script type="text/javascript">
+import {getSignCode,signIn} from '../config/service.js';
 import {mapMutations} from 'vuex';
 import hexMD5 from "../assets/js/md5.min.js";
 import axios from 'axios';
@@ -41,14 +42,11 @@ export default {
     ]),
     getVlidateCode:function(){
       var vm=this;
-      var json={"data":'156465'};
-      json=BASE64.encode(JSON.stringify(json));
-      axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
-      axios.post('w/user/getSmsCode',json).then((response)=>{
-        if(response.data.code=="200"){
-          vm.list=response.data.data
-        }
-      })
+      getSignCode({"data":'156465'},function(){
+        vm.load=false;
+      }).then(function(res){
+        res?vm.list=res.data:void 0;
+      });
     },
     login:function(){
       var vm=this;
@@ -65,24 +63,21 @@ export default {
         }
       }
       vm.load=true;
-      var json={"userId":vm.user,"pwd":hexMD5(vm.password),"validCode":vm.validCode,"codeId":vm.list.codeId};
-      json=BASE64.encode(JSON.stringify(json));
-      axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
-      axios.post('w/user/login',json).then((response)=>{
+      signIn({"userId":vm.user,"pwd":hexMD5(vm.password),"validCode":vm.validCode,"codeId":vm.list.codeId},function(){
         vm.load=false;
-        if(response.data.code=="200"){
-          var userInfo=response.data.data.staffInfo;
+      }).then(res=>{
+        if(res.code=="200"){
+          let userInfo=res.data.staffInfo;
           userInfo.codeId=vm.list.codeId;
           vm.SET_USERINFO(userInfo);
           window.location.href="#/home";
         }else{
           vm.getVlidateCode();
-          vm.showMessage(2,response.data.msg)
+          vm.showMessage(2,res.msg)
         }
-      }).catch((response)=>{
-          vm.load=false;
-          vm.getVlidateCode();
-          vm.showMessage(2,'服务错误');
+      }).catch(res=>{
+        vm.getVlidateCode();
+        vm.showMessage(2,'服务器异常');
       })
     },
     toLogin:function(e){

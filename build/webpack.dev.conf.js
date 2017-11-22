@@ -36,6 +36,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
   },
   plugins: [
     new webpack.DefinePlugin({
+      '__DEV__': false,
       'process.env': require('../config/dev.env')
     }), 
     new webpack.HotModuleReplacementPlugin(),

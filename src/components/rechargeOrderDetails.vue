@@ -14,7 +14,7 @@
 						<table class="g-inner-table">
 							<tbody>
 								<tr><td>系统订单号：</td><td>{{ list.orderId }}</td></tr>
-								<tr><td>支付订单号：</td><td>{{ list.payOrderId }}</td></tr>
+								<tr v-show="list.payOrderId"><td>支付订单号：</td><td>{{ list.payOrderId }}</td></tr>
 								
 								<tr><td>生成时间：</td><td>{{ getDateTime(list.createTime)[6] }}</td></tr>
 								<tr><td>支付耗时：</td><td>
@@ -36,6 +36,7 @@
 									<span v-show="list.payType==2" class="u-icon-wechat"></span>
 									<span v-show="list.payType==3" class="u-icon-alipay"></span>
 								</td></tr>
+								<tr v-show="list.rechargeType==1"><td>产品号：</td><td>{{ list.productId }}</td></tr>
 								<tr><td>充值面额：</td><td>
 									<span v-if="list.rechargeType==1">{{ list.flowNum+list.flowUnit }}</span>
 									<span v-if="list.rechargeType==2">{{ parseInt(list.money)/100 }}</span>
@@ -51,7 +52,7 @@
 									<span v-show="list.isp==3">电信</span>
 									<span v-show="list.isp==4">远特</span>
 								</td></tr>
-								<tr v-show="list.rechargeType==1"><td>产品号：</td><td>{{ list.productId }}</td></tr>
+								
 								<tr v-show="list.rechargeType==1"><td>订单状态：</td><td>
 									<span v-show="list.orderStatus==1" class="f-c-yellow">待支付</span>
 									<span v-show="list.orderStatus==2" class="f-c-red">支付失败</span>

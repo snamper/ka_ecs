@@ -5,7 +5,6 @@
 * *-->
 <style scoped>
   @import "../../assets/css/download.css";
-  @import "../../assets/css/search.css";
 </style>
 <template>
 	<section class="g-download-box">

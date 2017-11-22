@@ -19,6 +19,8 @@ const state = {
 		"sdkRealTime":0,//sdk开卡实时待审核
 		"sdkRealTime_":0,//sdk开卡实时已分配
 	},
+	countTotal:0,//审核总待审核数
+	offCountChange:true,//统计变化开关
 	onlineTime:'00:00:00',//在线时间
 	timer:{//定时器对象
 		online:null,

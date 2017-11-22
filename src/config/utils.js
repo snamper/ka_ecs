@@ -135,10 +135,10 @@ export const secondsFormat=(v)=>{
     second<10&&(second='0'+second);
     return day!='00' ? day+"天"+hour+":"+minute+":"+second : 
 	    hour!='00' ? hour+":"+minute+":"+second : 
-	    minute!='00' ? "00:"+minute+":"+second : "00:"+second;
+	    minute!='00' ? "00:"+minute+":"+second : "00:00:"+second;
 }
 /**
- * 开卡订单-翻译数据
+ * 开卡订单-数据翻译
  */
 export const translateData=(type,v)=> {
 	v=parseInt(v);
@@ -152,8 +152,8 @@ export const translateData=(type,v)=> {
 		case 3:
 
 			break;
-		case 4://开卡状态
-			return v==1 ? '初始状态' : v==2 ? '成功' : v==3 ? '失败' : v==4 ? '订单关闭' : v==9 ? '--' :void 0;
+		case 4://号卡状态
+			return v==1 ? '初始状态' : v==2 ? '成功' : v==3 ? '失败' : v==4 ? '订单关闭' : '--';
 			break;
 		case 5://靓号等级
 			var level=["普号","特级","一级","二级","三级","四级","五级","六级","七级","八级","九级","十级","十一级"];
