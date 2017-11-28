@@ -51,7 +51,7 @@
 </section>
 </template>
 <script>
-
+import { getDateTime } from "../config/utils.js
 export default{
 	name:'busOrderDetails',
 	props:{
@@ -69,6 +69,9 @@ export default{
 	methods:{
 		close:function(){
 			this.$parent.off.details=false;
+		},
+		getDateTime(v){
+			return getDateTime(v);
 		},
 	}
 }

@@ -247,7 +247,8 @@
 		}), h.oclear = b("#laydate_clear"), c.on(h.oclear, "click", function() {
 			c.elem[h.elemv] = "", c.close()
 		}), h.otoday = b("#laydate_today"), c.on(h.otoday, "click", function() {
-			c.elem[h.elemv] = laydate.now(0, c.options.format), c.close()
+			var todayTime=laydate.now(0, c.options.format)
+			c.elem[h.elemv] = todayTime, c.close(),"function" == typeof c.options.choose && c.options.choose(todayTime)
 		}), h.ok = b("#laydate_ok"), c.on(h.ok, "click", function() {
 			c.valid && c.creation([c.ymd[0], c.ymd[1] + 1, c.ymd[2]])
 		}), e.times = b("#laydate_time"), c.hmsin = e.hmsin = b("#laydate_hms input"), e.hmss = ["小时", "分钟", "秒数"], e.hmsarr = [], c.msg = function(a, d) {

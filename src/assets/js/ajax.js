@@ -1,57 +1,41 @@
 import Vue from 'vue';
 import axios from 'axios';
+import {setStore, getStore, errorDeal} from '../../config/utils';
 require('./base64.min.js');
-
-Vue.prototype.AJAX=function(url,data,success,closeLoad){
+Vue.prototype.AJAX=function(url,data,success,load){
     var index;
-    !closeLoad&&(index=layer.open({type: 2,shadeClose:false}));
-    const error=function(data){
-        closeLoad ? closeLoad() : layer.close(index);
-        data.code=="648"||data.code=="671" ? layer.open({
-            content:'登录已过期，请重新登录',
-            style:'width:auto;',
-            btn:['确定'],
-            shadeClose:false,
-            yes:function(){
-                window.localStorage.setItem('KA_ECS_INFO','');
-                window.location.href="#/login";
-                layer.closeAll();
-            }
-        }) : layer.open({
-            content:data.msg,
-            skin: 'msg',
-            time: 4,
-            msgSkin:'error',
-        });
+    !load&&(index=layer.open({type: 2,shadeClose:false}));
+    
+    const closeLoadLayout=()=>{
+        typeof load==='function' ? load() : layer.close(index);
     };
-
-    var userInfo=localStorage.getItem('KA_ECS_INFO');
+    var userInfo=getStore("KA_ECS_USER");
     if(userInfo){
-        userInfo=JSON.parse(userInfo);
         data.customerId=userInfo.customerId;
         data.codeId=userInfo.codeId;
         data=BASE64.encode(JSON.stringify(data));
     }else{
-         error({'code':648});
+         errorDeal({'code':648},closeLoadLayout);
          return false;
     }
 
     axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
 
     axios.post(url,data).then((response) => {
-        closeLoad ? closeLoad() : layer.close(index);
+        closeLoadLayout();
         if(typeof response.data==='string'){
-            error({'code':999,'msg':'数据解析失败'});
+            errorDeal('数据解析失败');
             return false;
         }
-        response.data.code=="200" ? success(response.data) : error(response.data);
+        response.data.code=="200" ? success(response.data) : errorDeal(response.data);
     }).catch((response)=>{
+        let msg='';
         if (response instanceof Error) {
-            // error({'code':999,'msg':response.message});
-            console.log(response.message);
+            msg=response.message;
+            //console.log(response.message);
         }else{
-            error({'code':999,'msg':response.status});
+            msg=response.status;
         }
-        closeLoad ? closeLoad() : layer.close(index);
+        errorDeal(msg,closeLoadLayout);
     });
 };

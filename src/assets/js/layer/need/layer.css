@@ -385,16 +385,16 @@ body .layui-m-layer .layui-m-layer-msg {
 
 .layui-m-layer-msg>.msgSkin {
     display: inline-block;
-    color: #fff;
-    font-size: .2rem;
-    padding: 8px 5px
+    height: 0.36rem;
+    width: 0.36rem;
+    background-size: 0.2rem;
 }
 
-.layui-m-layer-msg>.myicon-success-no-circle {
-    background-color: #13ce66
+.layui-m-layer-msg>.u-icon-success-no-circle {
+    background-color: #13ce66;
 }
 
-.layui-m-layer-msg>.myicon-clear {
+.layui-m-layer-msg>.u-icon-clear {
     background-color: #ff4949
 }
 
