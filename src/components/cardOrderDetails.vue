@@ -22,19 +22,27 @@
 
 								<tr><td>生成时间：</td><td>{{$parent.getDateTime(list.createTime)[6]}}</td></tr>
 								<tr v-if="type==1||type==2"><td>状态修改时间：</td><td>{{$parent.getDateTime(list.modifyTime)[6]}}</td></tr>
+								<tr v-show="type==2"><td>审核用时：</td>
+									<td>
+										<span v-show="source!=7">{{ $parent.secondsFormat(list.auditTime) }}</span>
+										<span v-show="source==7">{{ $parent.secondsFormat(parseInt(list.modifyTime)-parseInt(list.createTime)) }}</span>
+									</td>
+								</tr>
 								<tr v-if="type==1||type==2"><td>审核方式：</td>
-									<td v-if="list.auditType==0">实时审核</td>
-									<td v-if="list.auditType==1">事后审核</td>
+									<td v-if="list.auditType=='0'">实时审核</td>
+									<td v-else-if="list.auditType==1">事后审核</td>
+									<td v-else-if="list.auditType==2">自动审核<a href="javascript:void(0)" @click="autoAuditInfo" class="details m-l">查看详情</a></td>
+									<td v-else>--</td>
 								</tr>
 								<tr v-if="type==1"><td>当前状态：</td>
 									<td>
 										<span v-show="source!=7">
-											<b v-show="todo.status==1" class="f-c-red">待分配</b>
-											<b v-show="todo.status==2" class="f-c-green">已分配</b>
+											<b v-show="list.status==1" class="f-c-red">待分配</b>
+											<b v-show="list.status==2" class="f-c-green">已分配</b>
 										</span>
 										<span v-show="source==7">
-											<b v-show="todo.status==4" class="f-c-red">待分配</b>
-											<b v-show="todo.status==5" class="f-c-green">已分配</b>
+											<b v-show="list.status==4" class="f-c-red">待分配</b>
+											<b v-show="list.status==5" class="f-c-green">已分配</b>
 										</span>
 									</td>
 								</tr>
@@ -53,8 +61,7 @@
 										<span v-if="list.allowRecheck==2" class="red">超过复审时间</span>
 									</td>
 								</tr>
-
-								<tr><td>用户姓名：</td><td>{{ list.userName }}</td></tr>
+								<tr v-show="source!=7"><td>操作人姓名：</td><td>{{ list.operatorName }}【操作人ID：{{ list.operatorId }}】<a v-show="list.operatorName" href="javascript:void(0)" @click="detailsUser" class="details m-l">查看详情</a></td></tr>
 								<tr v-if="list.operatorType==7"><td>原机主姓名：</td><td>{{ list.userNameOld }}</td></tr>
 								<tr><td>商户名称：</td>
 									<td>
@@ -62,11 +69,12 @@
 										<span v-show="source!=7">【信用等级：{{list.dealerLevel}}】</span>
 									</td>
 								</tr>
-								<tr><td>相似度：</td>
-									<td>
-										<span v-show="source!=7">{{ list.similarity }}%</span>
-										<span v-show="source==7">{{ userMoreInfo.similarity }}%</span>
-									</td>
+								<tr><td>渠道ID：</td><td>{{ list.dealerId }}<a v-show="list.dealerId" href="javascript:void(0)" @click="detailsMerchant" class="details m-l">查看详情</a></td></tr>
+								<tr v-show="list.similarity!='0'&&source!=7"><td>活体识别相似度：</td>
+									<td>{{ list.similarity }}%</td>
+								</tr>
+								<tr v-show="userMoreInfo.similarity&&source==7"><td>活体识别相似度：</td>
+									<td>{{ userMoreInfo.similarity }}%</td>
 								</tr>
 								<tr><td>电话号码：</td>
 									<td>{{ list.phoneNumber }}（<b v-if="list.cardType==1" class="f-c-purple">远特</b>
@@ -74,6 +82,7 @@
 										<b class="f-c-yellow">{{ $parent.translateData(5,list.phoneLevel) }}</b>，{{list.phoneHome}}）</td>
 								</tr>
 								<tr><td>号码规则：</td><td>{{ list.ruleCode }}</td></tr>
+								<tr><td>用户姓名：</td><td>{{ list.userName }}</td></tr>
 								<tr><td>身份证号码：</td><td>{{ list.identityCard }}</td></tr>
 								<tr v-if="list.operatorType==7"><td>原机主证件号码：</td><td>{{ list.identityCardOld }}</td></tr>
 								<tr><td>身份证地址：</td>
@@ -111,23 +120,15 @@
 										<span v-show="source==7">{{ userMoreInfo.devInfo }}</span>
 									</td>
 								</tr>
-								<tr><td>活体识别名称：</td>
+								<!-- <tr><td>活体识别名称：</td>
 									<td>
 										<span v-show="source!=7">{{ list.livingImgSoftWareName }}</span>
 										<span v-show="source==7">{{ userMoreInfo.livingImgSoftWareName }}</span>
 									</td>
-								</tr>
+								</tr> -->
 								<tr v-show="source!=7"><td>识别模式：</td><td>{{ list.openMode }}</td></tr>
 								<tr v-show="type==2"><td>审核人：</td><td>{{ list.customerName }}【审核人ID：{{ list.customerId }}】</td></tr>
-								<tr v-show="source!=7"><td>操作人姓名：</td><td>{{ list.operatorName }}【操作人ID：{{ list.operatorId }}】<a v-show="list.operatorName" href="javascript:void(0)" @click="detailsUser" class="details m-l">查看详情</a></td></tr>
-								<tr><td>渠道ID：</td><td>{{ list.dealerId }}<a v-show="list.dealerId" href="javascript:void(0)" @click="detailsMerchant" class="details m-l">查看详情</a></td></tr>
-
-								<tr v-show="type==2"><td>审核用时：</td>
-									<td>
-										<span v-show="source!=7">{{ $parent.secondsFormat(6,list.auditTime) }}</span>
-										<span v-show="source==7">{{ $parent.secondsFormat(parseInt(list.modifyTime)-parseInt(list.createTime)) }}</span>
-									</td>
-								</tr>
+								
 								<tr v-show="type==2"><td>状态说明：</td><td>{{ list.cardStatusReason }}</td></tr>
 								<tr v-if="type==2&&list.status==2"><td>拒绝原因：</td><td><ul><li v-for="todo in filterReason(list.auditReason)"><b v-show="todo.star" class="f-c-red">*</b>{{todo.text}}</li></ul></td></tr>
 								<tr v-show="type==2&&list.adutiRemarks"><td>备注：</td><td>{{ list.adutiRemarks }}</td></tr>
@@ -296,6 +297,23 @@ export default{
 				vm.detailsList=data.data;
 				vm.isShowDetails=true;
 				vm.typeDetails=2;
+			})
+		},
+		autoAuditInfo(){//自动审核详情
+			var vm=this;
+			vm.AJAX("w/handler/query",{"opKey":"order.autoAudit.details","params":['order_id="'+vm.list.orderId+'"'],"pageSize":"10","pageNum":"-1"},function(data){
+				var list_item1= data.data.list[0];
+				layer.open({
+					content:`<ul class="f-scroll-lt lay-details o-fl-w">
+					<li class="clr"><div class="fl">正面与手持对比相似度：</div><div class="fright">${list_item1.frontHandImageSimilarity}%</div></li>
+					<li class="clr"><div class="fl">正面与第三方对比相似度：</div><div class="fright">${list_item1.frontImageSimilarity}%</div></li>
+					<li class="clr"><div class="fl">手持与第三方相似度：</div><div class="fright">${list_item1.handImageSimilarity}%</div></li>
+					<li class="clr"><div class="fl">活体识别照相似度：</div><div class="fright">${list_item1.livingImageSimilarity}%</div></li></ul>`,
+					type:0,
+					title:'自动审核详情',
+					btn:0,
+					style:'width:auto;'
+				});
 			})
 		},
 		agree:function(){//复审同意

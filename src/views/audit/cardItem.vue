@@ -45,8 +45,7 @@
 											<span v-show="off.auditType==1">事后审核</span>
 										</td>
 									</tr>
-									<tr><td>用户姓名：</td><td>{{auditData.userName}}</td></tr>
-									<tr v-show="off.itemType==7"><td>原机主姓名：</td><td>{{auditData.userNameOld}}</td></tr>
+
 									<tr><td>电话号码：</td>
 										<td>{{ auditData.phone }}
 											<span class="f-c-purple" v-if="auditData.cardType==1">远特</span>
@@ -54,17 +53,20 @@
 										</td>
 									</tr>
 									<tr><td>归属地：</td><td>{{ auditData.cityName }}</td></tr>
-									<tr><td>相似度：</td><td>{{ auditData.similarity }}%</td></tr>
+									
 									<tr><td>证件类型：</td><td>身份证</td></tr>
+									<tr v-show="off.itemType==7"><td>原机主姓名：</td><td>{{auditData.userNameOld}}</td></tr>
+									<tr><td>用户姓名：</td><td>{{auditData.userName}}</td></tr>
 									<tr><td>证件号码：</td><td>{{ auditData.papersCode }}</td></tr>
 									<tr v-show="off.itemType==7"><td>原机主证件号码：</td><td>{{auditData.papersCodeOld}}</td></tr>
 									<tr><td>证件地址：</td><td>{{ auditData.userAddress }}</td></tr>
 									<tr v-show="off.itemType==7"><td>原机主证件地址：</td><td>{{auditData.userAddressOld}}</td></tr>
 									<tr><td>证件期限：</td><td>{{ auditData.validityPeriod }}</td></tr>
+									<tr><td>活体识别相似度：</td><td>{{ auditData.similarity }}%</td></tr>
 									<tr><td>Mac地址：</td><td>{{ auditData.devMacAddr }}</td></tr>
 									<tr><td>终端类型：</td><td>{{ auditData.terminalType }}</td></tr>
 									<tr><td>识别仪名称：</td><td>{{ auditData.devSN }}</td></tr>
-									<tr><td>活体识别APK：</td><td>{{ auditData.livingImgSoftWareName }}</td></tr>
+									<!-- <tr><td>活体识别APK：</td><td>{{ auditData.livingImgSoftWareName }}</td></tr> -->
 									<tr v-show="off.itemType!=8"><td>操作人：</td>
 										<td>{{ auditData.operatorName }}【操作人ID：{{ auditData.operator }}】</td>
 									</tr>

@@ -166,7 +166,8 @@ const router=new Router({
     {
       path:"/home",
       component:Home,
-      redirect:"home/dashboard",
+      // redirect:"home/dashboard",
+      redirect:"home/audit/card/realtime",
       children:[{
         path:"dashboard",
         component:Dashboard

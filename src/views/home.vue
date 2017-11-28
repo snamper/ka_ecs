@@ -47,7 +47,7 @@
 			<ul class="g-side-ul">
 				<li :class="{active:$route.path.indexOf('/home/dashboard')>-1}">
 					<b></b>
-					<router-link to="/home">
+					<router-link to="/home/dashboard">
 						<div>
 							<i class="u-icon-home"></i>
 							<span>首页</span>

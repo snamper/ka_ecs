@@ -12,10 +12,10 @@
 		<section class="m-top-shift f-tas">
 			<div class="box">
 				<label class="item" @click="topShiftClick">
-					<input type="radio" v-model="form.source" value="6"><span class="slider">APP</span>
+					<input type="radio" v-model="form.source" value="6"><span class="slider">卡盟APP</span>
 				</label>
 				<label class="item" @click="topShiftClick">
-					<input type="radio" v-model="form.source" value="7"><span class="slider">SDK-PHONE</span>
+					<input type="radio" v-model="form.source" value="7"><span class="slider">卡盟SDK</span>
 				</label>
 				<!-- <label class="item" @click="topShiftClick">
 					<input type="radio" v-model="form.source" value="8"><span class="slider">SDK-WEAR</span>
@@ -59,6 +59,7 @@
 					<label><span class="radio"><input type="radio" value="9" v-model="form.auditType"><span></span></span><span class="text">全部</span></label>
 					<label><span class="radio"><input type="radio" value="0" v-model="form.auditType"><span></span></span><span class="text">实时审核</span></label>
 					<label><span class="radio"><input type="radio" value="1" v-model="form.auditType"><span></span></span><span class="text">事后审核</span></label>
+					<label><span class="radio"><input type="radio" value="2" v-model="form.auditType"><span></span></span><span class="text">自动审核</span></label>
 				</div>
 			</div>
 			<div class="row">
@@ -179,6 +180,7 @@
 					<th>序号</th>
 					<th>订单号</th>
 					<th>生成时间</th>
+					<th v-show="off.type==4">关闭时间</th>
 					<th>操作类型</th>
 					<th>审核方式</th>
 					<th>用户姓名</th>
@@ -188,8 +190,7 @@
 					<th v-show="off.type==1||off.type==2">审核姓名</th>
 					<th v-show="form.source!=7">操作人</th>
 					
-					<!-- <th v-show="off.type==1||off.type==2">状态修改时间</th> -->
-					<th v-show="off.type==4">关闭时间</th>
+					<!-- <th v-show="off.type==1||off.type==2">状态修改时间</th> -->	
 					<th v-show="off.type!=2">订单状态</th>
 
 					<th v-show="off.type==2">审核用时</th>
@@ -203,10 +204,12 @@
 					<td>{{((pageNum-1)*10+(index+1))}}</td>
 					<td>{{todo.orderId}}</td>
 					<td>{{getDateTime(todo.createTime)[6]}}</td>
+					<td v-if="off.type==4">{{getDateTime(todo.modifyTime)[6]}}</td>
 					<td>{{translateData(1,todo.type)}}</td>
 					<td>
 						<span v-if="todo.auditType=='0'">实时审核</span>
 						<span v-else-if="todo.auditType==1">事后审核</span>
+						<span v-else-if="todo.auditType==2">自动审核</span>
 						<span v-else>--</span>
 					</td>
 					<td>{{todo.userName}}</td>
@@ -222,8 +225,6 @@
 						<br/><b class="f-m-lighter">({{todo.operatorName}})</b>
 					</td>
 
-					
-					<!-- <td v-if="off.type!=3">{{getDateTime(todo.modifyTime)[6]}}</td> -->
 					<td v-if="off.type==2">
 						<span v-if="form.source!=7">{{secondsFormat(todo.auditTime)}}</span>
 						<span v-else>{{ secondsFormat(parseInt(todo.modifyTime)-parseInt(todo.createTime)) }}</span>
@@ -496,7 +497,12 @@ export default{
 				}
 
 				if(json.context!=0&&json.searchtype!=1){
-					sql+=" AND A.order_status="+json.context;
+					if(json.searchtype==6){
+						sql+=" AND A.order_status="+json.context;
+					}else if(vm.form.context6!=0){
+						sql+=" AND A.order_status="+vm.form.context6;
+					}
+					
 				}
 			}else if(type==3||type==4){
 				resJson.opKey="sdk.orderApp.list";
@@ -613,6 +619,19 @@ export default{
 		topShiftClick(){
 			var vm=this;
 			vm.list='';
+			vm.form=Object.assign(vm.form,{
+				orderType:6,
+				cardType:0,
+				orderStatus:0,
+				auditType:9,
+				context1:'',
+				context2:'',
+				context3:'',
+				context4:'',
+				context5:'',
+				context6:0,
+				select:6
+			});
 		},
 		getUnixTime(v){
 			return getUnixTime(v);

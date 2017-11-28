@@ -18,7 +18,7 @@
 .g-inner-table{}
 .g-inner-table>tbody>tr{}
 .g-inner-table>tbody>tr:nth-child(even){background-color: #fafafa;}
-.g-inner-table>tbody>tr>td:first-child{width:1rem;text-align:right;color:#666;}
+.g-inner-table>tbody>tr>td:first-child{width:1.1rem;text-align:right;color:#666;}
 .g-inner-table>tbody>tr>td:last-child{padding-left: 0.1rem;}
 .g-inner-table>tr{}
 .m-box-img{ position: relative;}
