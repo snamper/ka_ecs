@@ -35,7 +35,6 @@
 								<li><a @click="clickSignOut">退出</a></li>
 							</ul>
 						</div>
-
 					</td>
 				</tr>
 			</tbody>
@@ -228,6 +227,9 @@ export default{
 			var path=this.$route.path,
 				crumb=[{"name":""},{"name":""},{"name":""}],
 				mainDom=document.getElementById("main");
+			if(path.indexOf('dashboard')>0){
+        this.off.headMenu=false;
+      }
 			if(path.indexOf("/home/audit")>-1){
 				crumb[0]={"name":"订单审核"}
 				if(path.indexOf("card/realtime")>-1){
@@ -290,7 +292,7 @@ export default{
 					crumb[1]={"name":"活体识别统计下载","href":""}
 				}
 			}
-		
+
 			this.crumb=crumb;
 			mainDom.style.overflowY='hidden';
 			var timer=setTimeout(function(){

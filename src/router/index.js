@@ -266,8 +266,10 @@ router.beforeEach((to, from, next) => {
         return false;
     }
     next();
+    if(location.hash.indexOf('dashboard')>0){
+     console.log(this);
+    }
 
-  
 });
 export default router;
 
