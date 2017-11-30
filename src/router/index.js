@@ -133,6 +133,20 @@ const Resource_numberRelease = resolve => {
     load();
   });
 };
+const Resource_promoter = resolve => {
+  load(true);
+  require.ensure(["@/views/resource/promoter"], () => {
+    resolve(require("@/views/resource/promoter"));
+    load();
+  });
+};
+const Resource_device = resolve => {
+  load(true);
+  require.ensure(["@/views/resource/device"], () => {
+    resolve(require("@/views/resource/device"));
+    load();
+  });
+};
 
 /*统计报表*/
 const Statistics = resolve => {
@@ -166,8 +180,8 @@ const router=new Router({
     {
       path:"/home",
       component:Home,
-      // redirect:"home/dashboard",
-      redirect:"home/audit/card/realtime",
+      redirect:"home/dashboard",
+      // redirect:"home/audit/card/realtime",
       children:[{
         path:"dashboard",
         component:Dashboard
@@ -229,13 +243,22 @@ const router=new Router({
 		    {//资源查询
           path:"resource",
           component:Resource,
-          redirect:"resource/merchant",
-          children:[{//商户
-            path:"merchant",
-            component:Resource_merchant
+          redirect:"resource/merchant/null",
+          children:[{//商户查询
+            path:"merchant/:val",
+            component:Resource_merchant,
+            name:"merchant"
           },{//号码解冻
             path:"numberRelease",
             component:Resource_numberRelease
+          },{//推广方查询
+            path:"promoter/:val",
+            component:Resource_promoter,
+            name:"promoter"
+          },{//设备查询
+            path:"device/:val",
+            component:Resource_device,
+            name:"device"
           }]
         },
         {//统计报表
@@ -266,10 +289,8 @@ router.beforeEach((to, from, next) => {
         return false;
     }
     next();
-    if(location.hash.indexOf('dashboard')>0){
-     console.log(this);
-    }
 
+  
 });
 export default router;
 

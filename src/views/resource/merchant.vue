@@ -11,9 +11,9 @@
   .total-head>span{margin-right: 10px;}
   .total-head>span>b{font-weight: bold;}
   .total-head>.f-btn-group{position: absolute;width:3.5rem;left: 50%;margin-left:-1.75rem;top:50%;margin-top: -0.16rem;}
-  .total-head>.f-btn-group>button{height:0.32rem;color:#717171 !important;border-bottom-color:#ccc;-webkit-box-shadow:0 1px 1px rgba(90, 90, 90, 0.1);box-shadow:0 1px 1px rgba(90, 90, 90, 0.1);display:inline-block;padding: 0 3px;font-size:12px;line-height:1.428571429;cursor:pointer;background-color:#fff;border:1px solid transparent;border-color:#dadada;}
+  .total-head>.f-btn-group>button{height:0.32rem;color:#717171 !important;border-radius: 5px; border-bottom-color:#ccc;-webkit-box-shadow:0 1px 1px rgba(90, 90, 90, 0.1);box-shadow:0 1px 1px rgba(90, 90, 90, 0.1);display:inline-block;padding: 0 3px;font-size:12px;line-height:1.428571429;cursor:pointer;background-color:#fff;border:1px solid transparent;border-color:#dadada;}
   .total-head>.f-btn-group>button:hover{color:#333333;background-color:#f1f1f1;}
-  .total-head>.f-btn-group>button.active{color:#717171 !important;background-color:#f7f7f7;border-color:#c6c6c6;box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);}
+  .total-head>.f-btn-group>button.active{color:#717171 !important;background-color:#F9F9F9;border-color:#c6c6c6;box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);}
   .total-head>.m-select{display: none;margin-left:0.1rem;}
 
   .merchant-total, .g-in-table, .merchant-total>tbody>tr>td{border:none !important;border-collapse:separate !important;}
@@ -94,7 +94,7 @@
 			</section>
 	  	</section>
 		<!--商户ID-->
-	  	<div id="totalDiv" style="margin-top: 0.2rem;" v-if="form.type==1">
+	  	<div class="m-total-table" style="margin-top: 0.2rem;" v-if="form.type==1">
 			<table class="merchant-total g-list-table" v-if="ajaxData.details">
 			<thead>
 				<tr>
@@ -235,7 +235,7 @@
 			
 		</div>
 		<!--工号ID-->
-		<div id="totalDiv" style="margin-top: 0.2rem;" v-if="form.type==2">
+		<div class="m-total-table" style="margin-top: 0.2rem;" v-if="form.type==2">
 			<table class="merchant-total g-list-table" v-if="ajaxData.details">
 			<thead>
 				<tr>
@@ -390,6 +390,11 @@ export default{
 		var vm=this;
 		setTimeout(function(){
 			vm.getTotal();
+			let val=vm.$route.params.val;
+			if(val!='null'){
+				vm.form.context=val;
+				vm.getDetails();
+			}
 		},500);
 	},
 	methods:{
@@ -400,11 +405,11 @@ export default{
 		},
 		getTotal(){//获取顶部统计数据
 			var vm=this;
-			vm.off.isLoad=true;
+			//vm.off.isLoad=true;
 			vm.AJAX('w/merchant/statistics',{},function(data){
 				vm.totalInfo=data.data;
 			},function(){
-				vm.off.isLoad=false;
+				//vm.off.isLoad=false;
 			});
 		},
 		shiftType(){//radio切换

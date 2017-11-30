@@ -57,7 +57,7 @@
             <button class="f-btn f-btn-line" @click="searchList(1)">查询</button>
           </section>
         </div>
-        <div id="totalDiv" v-if="list">
+        <div class="m-total-table" v-if="list">
           <div class="total-head">
               统计结果<b>{{total}}</b>
               <button :class="list.length==0? 'enable' : 'export_excel' "  :disabled="list.length==0? true : false " @click="searchList(2)">导出excel</button>

@@ -4,7 +4,7 @@
   *@date 2017-11-8
 * *-->
 <style scoped>
-#totalDiv{margin-top: 0.2rem;}
+.m-total-table{margin-top: 0.2rem;}
 @media screen and (min-width: 961px){
 	.o-input-button{
 		width: 500px
@@ -17,7 +17,7 @@
 		<div class="m-input-button o-input-button">
 			<input maxlength="11" type="tel" v-model="form.phone" placeholder="请输入查询的手机号码"><button @click="searchPhone">查询</button>
 		</div>
-		<div id="totalDiv" v-show="phoneList.occupancy">
+		<div class="m-total-table" v-show="phoneList.occupancy">
 			<table>
 				<thead>
 					<tr>

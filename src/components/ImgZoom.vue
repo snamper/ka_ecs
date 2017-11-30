@@ -25,17 +25,23 @@ export default{
 			transformStyle:{x:0,y:0,s:1,r:0},//缩放初始坐标
 			mouse:{x:0,y:0,off:!1},//鼠标坐标
 			imgIndex:0,//图片索引
+
 		}
 	},
 	created:function(){
-		if(this.imgData[0].src){
-			this.zoomStyle.backgroundImage='url('+this.imgData[0].src+')';
-		}else{
-			this.zoomStyle.backgroundImage='url('+noImage+')';
-		}
-		
+		this.initSet();
+	},
+	watch:{
+		imgData:'initSet'
 	},
 	methods:{
+		initSet(){
+			if(this.imgData[0].src){
+				this.zoomStyle.backgroundImage='url('+this.imgData[0].src+')';
+			}else{
+				this.zoomStyle.backgroundImage='url('+noImage+')';
+			}
+		},
 		rotate:function(e){//旋转
 			var deg=parseInt(this.zoomStyle.transform.match(/\((\S*)deg/)[1]);
 			deg+=90;

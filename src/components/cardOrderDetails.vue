@@ -62,6 +62,10 @@
 									</td>
 								</tr>
 								<tr v-show="source!=7"><td>操作人姓名：</td><td>{{ list.operatorName }}【操作人ID：{{ list.operatorId }}】<a v-show="list.operatorName" href="javascript:void(0)" @click="detailsUser" class="details m-l">查看详情</a></td></tr>
+								<tr v-show="source!=7"><td>操作人IP：</td><td>{{ list.host }}</td></tr>
+								<tr v-show="source!=7"><td>操作人GPS：</td><td>
+									<span v-show="list.longitude">{{ list.longitude }}，{{ list.latitude }}<a href="javascript:void(0)" @click="toMap" class="details m-l">查看地图</a></span>
+								</td></tr>
 								<tr v-if="list.operatorType==7"><td>原机主姓名：</td><td>{{ list.userNameOld }}</td></tr>
 								<tr><td>商户名称：</td>
 									<td>
@@ -98,7 +102,9 @@
 										<span v-show="source==7">{{ userMoreInfo.period }}</span>
 									</td>
 								</tr>
-								<tr><td>ICCID：</td><td>{{ list.ICCID }}</td></tr>
+								<tr><td>IMEI：</td><td>{{ list.IMEI }}</td></tr>
+								<tr v-if="source!=7"><td>ICCID：</td><td>{{ list.ICCID }}</td></tr>
+
 								<tr><td>Mac地址：</td>
 									<td>
 										<span v-show="source!=7">{{ list.devMac }}</span>
@@ -230,6 +236,11 @@ export default{
 		}
 	},
 	methods:{
+		toMap(){
+			var w=document.documentElement.clientWidth,url='',vm=this;
+			w<640 ? url='http://map.baidu.com/mobile/?latlng='+vm.list.latitude+','+vm.list.longitude+'' : url='http://map.baidu.com/?latlng='+vm.list.latitude+','+vm.list.longitude+'';
+			window.open(url);
+		},
 		close:function(){
 			this.$parent.off.details=false
 		},
@@ -308,7 +319,45 @@ export default{
 					<li class="clr"><div class="fl">正面与手持对比相似度：</div><div class="fright">${list_item1.frontHandImageSimilarity}%</div></li>
 					<li class="clr"><div class="fl">正面与第三方对比相似度：</div><div class="fright">${list_item1.frontImageSimilarity}%</div></li>
 					<li class="clr"><div class="fl">手持与第三方相似度：</div><div class="fright">${list_item1.handImageSimilarity}%</div></li>
-					<li class="clr"><div class="fl">活体识别照相似度：</div><div class="fright">${list_item1.livingImageSimilarity}%</div></li></ul>`,
+					<li class="clr"><div class="fl">活体识别照相似度：</div><div class="fright">${list_item1.livingImageSimilarity}%</div></li>
+					<li class="clr"><div class="fl">年龄校验结果：</div><div class="fright">${
+						list_item1.ageCheck==1?'<span class="fCGreen">成功</span>':
+						list_item1.ageCheck==2?'<span class="fCRed">失败</span>':
+						list_item1.ageCheck==3?'<span class="fCYellow">未定</span>':	'--'
+					}</div></li>
+					<li class="clr"><div class="fl">地址校验结果：</div><div class="fright">${
+						list_item1.addressCheck==1?'<span class="fCGreen">成功</span>':
+						list_item1.addressCheck==2?'<span class="fCRed">失败</span>':
+						list_item1.addressCheck==3?'<span class="fCYellow">未定</span>':	'--'
+					}</div></li>
+					<li class="clr"><div class="fl">身份证有效期校验结果：</div><div class="fright">${
+						list_item1.periodCheck==1?'<span class="fCGreen">成功</span>':
+						list_item1.periodCheck==2?'<span class="fCRed">失败</span>':
+						list_item1.periodCheck==3?'<span class="fCYellow">未定</span>':	'--'
+					}</div></li>
+					<li class="clr"><div class="fl">身份证号与正面OCR匹配结果：</div><div class="fright">${
+						list_item1.ocrIdCardNoCheck==1?'<span class="fCGreen">成功</span>':
+						list_item1.ocrIdCardNoCheck==2?'<span class="fCRed">失败</span>':
+						list_item1.ocrIdCardNoCheck==3?'<span class="fCYellow">未定</span>':	'--'
+					}</div></li>
+					<li class="clr"><div class="fl">有效期与背面OCR匹配结果：</div><div class="fright">${
+						list_item1.ocrIdCardPeriodCheck==1?'<span class="fCGreen">成功</span>':
+						list_item1.ocrIdCardPeriodCheck==2?'<span class="fCRed">失败</span>':
+						list_item1.ocrIdCardPeriodCheck==3?'<span class="fCYellow">未定</span>':	'--'
+					}</div></li>
+					<li class="clr"><div class="fl">上传身份证号与OCR对比相似度：</div><div class="fright">${list_item1.idCardNoSimilarity}%</div></li>
+					<li class="clr"><div class="fl">上传姓名与OCR对比相似度：</div><div class="fright">${list_item1.idCardNameSimilarity}%</div></li>
+					<li class="clr"><div class="fl">上传地址与OCR对比相似度：</div><div class="fright">${list_item1.idCardAddressSimilarity}%</div></li>
+					<li class="clr"><div class="fl">上传有效期与OCR对比相似度：</div><div class="fright">${list_item1.idCardPeriodSimilarity}%</div></li>
+					<li class="clr"><div class="fl">审核结果：</div><div class="fright">${
+						list_item1.result==1?'<span class="fCGreen">成功</span>':
+						list_item1.result==2?'<span class="fCRed">拒绝</span>':
+						list_item1.result==3?'<span class="fCYellow">转人工审核</span>':	'--'
+					}</div></li>
+					<li class="clr"><div class="fl">拒绝理由：</div><div class="fright">${
+						list_item1.code==1018?'<span class="fCGreen">远特开卡超过上限</span>':
+						list_item1.code==1019?'<span class="fCRed">联通开卡超过上限</span>':'--'
+					}</div></li></ul>`,
 					type:0,
 					title:'自动审核详情',
 					btn:0,
