@@ -35,6 +35,7 @@
 								<li><a @click="clickSignOut">退出</a></li>
 							</ul>
 						</div>
+
 					</td>
 				</tr>
 			</tbody>
@@ -106,7 +107,10 @@
 						</div>
 					</router-link>
 					<ul class="g-side-subul nav3">
-						<li><router-link to="/home/resource/merchant"><b></b>商户查询</router-link></li>
+						<li><router-link :to="{name:'merchant',params:{val:'null'}}"><b></b>商户查询</router-link></li>
+						<li><router-link :to="{name:'device',params:{val:'null'}}"><b></b>设备查询</router-link></li>
+						<li><router-link :to="{name:'promoter',params:{val:'null'}}"><b></b>推广方查询</router-link></li>
+						
 						<li v-if="userInfo.isadmin.indexOf('7')>-1||userInfo.isadmin.indexOf('1')>-1"><router-link to="/home/resource/numberRelease"><b></b>号码解冻</router-link></li>
 					</ul>
 				</li>
@@ -228,8 +232,8 @@ export default{
 				crumb=[{"name":""},{"name":""},{"name":""}],
 				mainDom=document.getElementById("main");
 			if(path.indexOf('dashboard')>0){
-        this.off.headMenu=false;
-      }
+				this.off.headMenu=false;
+			}
 			if(path.indexOf("/home/audit")>-1){
 				crumb[0]={"name":"订单审核"}
 				if(path.indexOf("card/realtime")>-1){
@@ -281,6 +285,10 @@ export default{
 					crumb[1]={"name":"商户查询","href":""}
 				}else if(path.indexOf("numberRelease")>-1){
 					crumb[1]={"name":"号码解冻","href":""}
+				}else if(path.indexOf("promoter")>-1){
+					crumb[1]={"name":"推广方","href":""}
+				}else if(path.indexOf("device")>-1){
+					crumb[1]={"name":"设备","href":""}
 				}
 			}else if(path.indexOf("/home/statistics")>-1){
 				crumb[0]={"name":"统计报表"}
@@ -292,7 +300,7 @@ export default{
 					crumb[1]={"name":"活体识别统计下载","href":""}
 				}
 			}
-
+		
 			this.crumb=crumb;
 			mainDom.style.overflowY='hidden';
 			var timer=setTimeout(function(){

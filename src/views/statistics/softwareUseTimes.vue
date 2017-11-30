@@ -68,7 +68,7 @@
 			<button class="f-btn f-btn-line" @click="searchList(2)">查询</button>
 		</section>
   	</div>
-  	<div id="totalDiv" v-if="list">
+  	<div class="m-total-table" v-if="list">
 		<div class="total-head">统计结果<b>{{total}}</b></div>
 		<table>
 			<thead>

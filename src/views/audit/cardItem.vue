@@ -53,7 +53,8 @@
 										</td>
 									</tr>
 									<tr><td>归属地：</td><td>{{ auditData.cityName }}</td></tr>
-									
+									<tr v-show="off.itemType!=8"><td>IMEI：</td><td>{{ auditData.IMEI }}</td></tr>
+
 									<tr><td>证件类型：</td><td>身份证</td></tr>
 									<tr v-show="off.itemType==7"><td>原机主姓名：</td><td>{{auditData.userNameOld}}</td></tr>
 									<tr><td>用户姓名：</td><td>{{auditData.userName}}</td></tr>
@@ -70,6 +71,9 @@
 									<tr v-show="off.itemType!=8"><td>操作人：</td>
 										<td>{{ auditData.operatorName }}【操作人ID：{{ auditData.operator }}】</td>
 									</tr>
+									
+									<tr v-show="off.itemType!=8"><td>操作人IP：</td><td>{{ auditData.host }}</td></tr>
+									<tr v-show="off.itemType!=8"><td>操作人GPS：</td><td>{{ auditData.longitude }}，{{ auditData.latitude }}</td></tr>
 									<tr><td>商户名称：</td>
 										<td>
 											<span>{{ auditData.companyName }}</span>
@@ -264,8 +268,10 @@ export default{
 						{'src':vm.auditData.imageUrl,'name':'正面'},
 						{'src':vm.auditData.backImageUrl,'name':'反面'},
 						{'src':vm.auditData.handImageUrl,'name':'手持'},
-						{'src':vm.auditData.livingImgUrl,'name':'活体识别'}
+						{'src':vm.auditData.livingImgUrl,'name':'活体识别'},
+						{'src':vm.auditData.signImageUrl,'name':'手签名'}
 					];
+					console.log(vm.imgData[0].src)
 				}
 				vm.off.auditIndex++;
 			}

@@ -216,11 +216,11 @@ input, button{ -webkit-appearance: none;-moz-appearance: none;-ms-appearance: no
   border-color: #20a0ff
 }
 .o-fl-w>.clr>.fl{
+    width: 2.2rem;
+}
+.o-fl-w>.clr>.fright{
     width: 1.7rem;
-  }
-  .o-fl-w>.clr>.fright{
-    width: 1.7rem;
-  }
+}
 /*拒绝弹出层*/
 
 .lay-div-refuse{max-height:5rem;overflow-y:scroll;}
