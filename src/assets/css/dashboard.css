@@ -1,3 +1,125 @@
 .dashboard-box{
-  
+
+}
+.dashboard-box {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+.map-box-out {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  top:0;
+  left:0;
+}
+.map-box-out1{
+  display: flex;
+  width: 100%;
+  height: 100%;
+  top:0;
+  left:0;
+}
+.map-box {
+  display: flex;
+  width: 100%;
+  height: 50%;
+}
+.map-box-inner {
+  flex: 1;
+}
+.map-box-inner1 {
+  width: 100%;
+  height: 50%;
+}
+.switch{
+  display: inline-block;
+  width: 30px;
+  height: 70px;
+  position: absolute;
+  right: 10px;
+  top: 40%;
+  background: #374858;
+  border-radius: 5px;
+  font-size: 40px;
+  padding-top: 5px;
+  cursor: pointer;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.class1{
+  position: absolute;
+}
+/*售卡情况统计结果*/
+.statistics{
+  padding-top:100px;
+  background: rgb(14, 42, 67);
+  color: #cad7d6;
+}
+.statistics p{
+  font-size:24px;
+}
+.statistics h3{
+  margin-top:20px;
+  width:88px;
+  text-align: justify;
+}
+.statistics h3 > span { display: inline-block /* Opera */; padding-left: 100%;  position: relative;  top:-20px;  left:5px;}
+/*公告区域*/
+.notice{
+  color: #cad7d6;;
+  background: rgb(14, 42, 67);
+  text-align: center;
+}
+.notice p{
+  font-size:26px;
+}
+/* 切换效果 */
+.hidescale {
+  -webkit-transform: translateX(-100%);
+  -moz-transform:  translateX(-100%);
+  -o-transform:  translateX(-100%);
+  -ms-transform:  translateX(-100%);
+  transform:  translateX(-100%);
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+  filter: alpha(opacity=0);
+  filter: alpha(opacity=0);
+  opacity: 0;
+}
+
+.showscale {
+  -webkit-transform:  translateX(0);
+  -moz-transform: translateX(0);
+  -o-transform: translateX(0);
+  -ms-transform: translateX(0);
+  transform: translateX(0);
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+  filter: alpha(opacity=100);
+  opacity: 1;
+
+  -webkit-transition-delay: .3s;
+  -moz-transition-delay: .3s;
+  -o-transition-delay: .3s;
+  -ms-transition-delay: .3s;
+  transition-delay: .3s;
+}
+
+.make_transist {
+  -webkit-transition: all .5s ease-in-out;
+  -moz-transition: all .5s ease-in-out;
+  -o-transition: all .5s ease-in-out;
+  -ms-transition: all .5s ease-in-out;
+  transition: all .5s ease-in-out;
+}
+.noticeul li{
+  margin:20px 10px;
+}
+.noticediv{
+  height:100%;
+  overflow: scroll;
 }
