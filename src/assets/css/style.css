@@ -246,28 +246,28 @@ input, button{ -webkit-appearance: none;-moz-appearance: none;-ms-appearance: no
 
 /*body滚动条*/
 body::-webkit-scrollbar, .f-scroll-lt::-webkit-scrollbar{/*滚动条整体部分*/
-    width:3px;
-    height:3px;
+    width:2px;
+    height:2px;
 }
 body::-webkit-scrollbar-button, .f-scroll-lt::-webkit-scrollbar-button{/*滚动条两端的按钮*/
     
     display: none !important;
 }
 body::-webkit-scrollbar-track, .f-scroll-lt::-webkit-scrollbar-track{/*外层轨道*/
-    background-color:rgba(0,0,0,0.5);
+    background-color:rgba(0,0,0,0.3);
 }
 body::-webkit-scrollbar-track-piece, .f-scroll-lt::-webkit-scrollbar-track-piece{/*内层轨道*/
 background-color:#fff;
 }
 body::-webkit-scrollbar-thumb, .f-scroll-lt::-webkit-scrollbar-thumb{/*滚动条里面可以拖动的那部分*/
-    background-color:rgba(0,0,0,0.5);
+    background-color:rgba(0,0,0,0.3);
     border-radius:5px;   
 }
 body::-webkit-scrollbar-corner, .f-scroll-lt::-webkit-scrollbar-corner{/*边角*/
     
 }
 body::-webkit-scrollbar-resizer, .f-scroll-lt::-webkit-scrollbar-resizer{/*定义右下角拖动块的样式*/
-    background-color:rgba(0,0,0,0.5);
+    background-color:rgba(0,0,0,0.3);
 }
 
 /*菜单按钮*/

@@ -21,7 +21,7 @@
 								<tr v-if="list.payOrderId&&list.operatorType!=7"><td>支付流水号：</td><td>{{list.payOrderId}}<a href="javascript:void(0)" @click="detailsPayOrder" class="details m-l">查看详情</a></td></tr>
 
 								<tr><td>生成时间：</td><td>{{$parent.getDateTime(list.createTime)[6]}}</td></tr>
-								<tr v-if="type==1||type==2"><td>状态修改时间：</td><td>{{$parent.getDateTime(list.modifyTime)[6]}}</td></tr>
+								<tr v-if="type==1||type==2"><td>状态修改时间：</td><td>{{$parent.getDateTime(list.modifyTime)[6]}}<a href="javascript:void(0)" @click="detailsTime" class="details m-l">查看详情</a></td></tr>
 								<tr v-show="type==2"><td>审核用时：</td>
 									<td>
 										<span v-show="source!=7">{{ $parent.secondsFormat(list.auditTime) }}</span>
@@ -29,10 +29,12 @@
 									</td>
 								</tr>
 								<tr v-if="type==1||type==2"><td>审核方式：</td>
-									<td v-if="list.auditType=='0'">实时审核</td>
-									<td v-else-if="list.auditType==1">事后审核</td>
-									<td v-else-if="list.auditType==2">自动审核<a href="javascript:void(0)" @click="autoAuditInfo" class="details m-l">查看详情</a></td>
-									<td v-else>--</td>
+									<td>
+										<span v-if="list.auditType=='0'">实时审核</span>
+										<span v-else-if="list.auditType==1">事后审核</span>
+										<span v-else-if="list.auditType==2">自动审核</span>
+										<a href="javascript:void(0)" @click="autoAuditInfo" class="details m-l">查看详情</a>
+									</td>
 								</tr>
 								<tr v-if="type==1"><td>当前状态：</td>
 									<td>
@@ -63,8 +65,8 @@
 								</tr>
 								<tr v-show="source!=7"><td>操作人姓名：</td><td>{{ list.operatorName }}【操作人ID：{{ list.operatorId }}】<a v-show="list.operatorName" href="javascript:void(0)" @click="detailsUser" class="details m-l">查看详情</a></td></tr>
 								<tr v-show="source!=7"><td>操作人IP：</td><td>{{ list.host }}</td></tr>
-								<tr v-show="source!=7"><td>操作人GPS：</td><td>
-									<span v-show="list.longitude">{{ list.longitude }}，{{ list.latitude }}<a href="javascript:void(0)" @click="toMap" class="details m-l">查看地图</a></span>
+								<tr v-show="source!=7"><td>开卡位置信息：</td><td>
+									<span v-show="list.longitude">{{ list.latitude }}，{{ list.longitude }}<a href="javascript:void(0)" @click="toMap" class="details m-l">查看地图</a></span>
 								</td></tr>
 								<tr v-if="list.operatorType==7"><td>原机主姓名：</td><td>{{ list.userNameOld }}</td></tr>
 								<tr><td>商户名称：</td>
@@ -201,14 +203,16 @@ export default{
 						{'src':SDK_IMAGE_URL+userMoreInfo.handImageNameSrc,'name':'手持'},
 						{'src':SDK_IMAGE_URL+userMoreInfo.imageNameSrc,'name':'正面'},
 						{'src':SDK_IMAGE_URL+userMoreInfo.backImageNameSrc,'name':'反面'},
-						{'src':SDK_IMAGE_URL+userMoreInfo.livingIdentificationImagePath,'name':'活体识别'}
+						{'src':SDK_IMAGE_URL+userMoreInfo.livingIdentificationImagePath,'name':'活体识别'},
+						{'src':SDK_IMAGE_URL+vm.userMoreInfo.signImageName,'name':'手签名'}
 					];
 				}else{
 					vm.imgData=[
 						{'src':'','name':'手持'},
 						{'src':'','name':'正面'},
 						{'src':'','name':'反面'},
-						{'src':'','name':'活体识别'}
+						{'src':'','name':'活体识别'},
+						{'src':'','name':'手签名'}
 					];
 				}
 				
@@ -217,20 +221,20 @@ export default{
 					{'src':vm.list.handImageUrl,'name':'手持'},
 					{'src':vm.list.imageUrl,'name':'正面'},
 					{'src':vm.list.backImageUrl,'name':'反面'},
-					{'src':vm.list.livingImg,'name':'活体识别'}
+					{'src':vm.list.livingImg,'name':'活体识别'},
+					{'src':vm.list.signImageUrl,'name':'手签名'}
 				];
 			}
 			
 			if(vm.type==2){
 				if(vm.source==7){
-					if(userMoreInfo){
-						vm.imgData.push({'src':SDK_IMAGE_URL+vm.userMoreInfo.signImageName,'name':'手签名'});
+					if(vm.list.acceptanceImg){
+						vm.imgData.push({'src':SDK_IMAGE_URL+vm.list.acceptanceImg,'name':'受理单'});
 					}else{
-						vm.imgData.push({'src':'','name':'手签名'});
+						vm.imgData.push({'src':'','name':'受理单'});
 					}
-					vm.imgData.push({'src':SDK_IMAGE_URL+vm.list.acceptanceImg,'name':'受理单'});
 				}else{
-					vm.imgData.push({'src':vm.list.signImageUrl,'name':'手签名'},{'src':vm.list.acceptanceImg,'name':'受理单'});
+					vm.imgData.push({'src':vm.list.acceptanceImg,'name':'受理单'});
 				}
 			}
 		}
@@ -243,6 +247,41 @@ export default{
 		},
 		close:function(){
 			this.$parent.off.details=false
+		},
+		detailsTime(){//用时信息
+			var vm=this;
+			vm.AJAX("w/handler/query",{"opKey":"order.time.details","params":['sys_order_id="'+vm.list.orderId+'"'],"pageSize":"10","pageNum":"-1"},function(data){
+				var list_item= data.data.list[0];
+				if(list_item){
+					layer.open({
+						content:`<ul class="f-scroll-lt lay-details">
+						<li class="clr"><div class="fl">生成时间：</div><div class="fright">${vm.$parent.getDateTime(list_item.time_create_order)[6]}</div></li>
+						<li class="clr"><div class="fl">支付时间：</div><div class="fright">${vm.$parent.getDateTime(list_item.time_payed)[6]}</div></li>
+						<li class="clr"><div class="fl">自动审核时间：</div><div class="fright">${vm.$parent.getDateTime(list_item.time_auto_audited)[6]}</div></li>
+						<li class="clr"><div class="fl">实时审核时间：</div><div class="fright">${vm.$parent.getDateTime(list_item.time_real_audited)[6]}</div></li>
+						<li class="clr"><div class="fl">开户成功时间：</div><div class="fright">${vm.$parent.getDateTime(list_item.time_serverice_open)[6]}</div></li>
+						<li class="clr"><div class="fl">受理单提交时间：</div><div class="fright">${vm.$parent.getDateTime(list_item.time_accepted)[6]}</div></li>
+						<li class="clr"><div class="fl">请求IMSI时间：</div><div class="fright">${vm.$parent.getDateTime(list_item.time_imsi_request)[6]}</div></li>
+						<li class="clr"><div class="fl">拿到IMSI时间：</div><div class="fright">${vm.$parent.getDateTime(list_item.time_imsi_got)[6]}</div></li>
+						<li class="clr"><div class="fl">提交写卡结果时间：</div><div class="fright">${vm.$parent.getDateTime(list_item.time_write_card)[6]}</div></li>
+						<li class="clr"><div class="fl">开卡保存订单时间：</div><div class="fright">${vm.$parent.getDateTime(list_item.time_save_order)[6]}</div></li>
+						<li class="clr"><div class="fl">提交到BOSS时间：</div><div class="fright">${vm.$parent.getDateTime(list_item.time_submit_order)[6]}</div></li>
+						<li class="clr"><div class="fl">开卡异步结果时间：</div><div class="fright">${vm.$parent.getDateTime(list_item.time_order_result)[6]}</div></li>
+						<li class="clr"><div class="fl">事后审核时间：</div><div class="fright">${vm.$parent.getDateTime(list_item.time_after_audit)[6]}</div></li></ul>`,
+						type:0,
+						title:'开卡时间详情',
+						btn:0,
+						style:'width:auto;'
+					});
+				}else{
+					layer.open({
+			            content:'暂无该订单用时详情',
+			            skin: 'msg',
+			            time: 2,
+			            msgSkin:'error',
+			        })
+				}
+			});
 		},
 		detailsOrder:function(){//开卡订单详情
 			var vm=this;
