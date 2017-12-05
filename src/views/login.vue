@@ -16,6 +16,7 @@
   </section>
 </template>
 <script type="text/javascript">
+import {removeStore} from '../config/utils';
 import {getSignCode,signIn} from '../config/service.js';
 import {mapMutations} from 'vuex';
 import hexMD5 from "../assets/js/md5.min.js";
@@ -67,6 +68,7 @@ export default {
         vm.load=false;
       }).then(res=>{
         if(res.code=="200"){
+          removeStore("KA_ECS_ONLINE_TIME");
           let userInfo=res.data.staffInfo;
           userInfo.codeId=vm.list.codeId;
           vm.SET_USERINFO(userInfo);
