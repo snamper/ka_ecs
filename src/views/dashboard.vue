@@ -200,7 +200,6 @@ import { getDateTime,getUnixTime } from "../config/utils.js";
           vm.initMap({
             id: "merchant",
             name: "商户总数",
-            //subtext:subtext,
             index:0,
             legend: ["天"],
             category: [vm.getLatelyTime(data.data.lasttime,'day',7)],
@@ -259,7 +258,7 @@ import { getDateTime,getUnixTime } from "../config/utils.js";
             name: "活跃商户",
             legend: ["天"],
             index:0,
-            category: [vm.getLatelyTime(data.data.lasttime[1],'day',7)],
+            category: [vm.getLatelyTime(data.data.lasttime,'day',7)],
             lineData: [data.data.day],
           });
         },true);
