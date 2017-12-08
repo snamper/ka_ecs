@@ -4,8 +4,6 @@
   *@date 2017-11-6
 * *-->
 <style scoped>
-  @import "../../assets/css/cardOrderDetails.css";
-  @import "../../assets/css/audit.css";
   #auditList{
   	width: 100%;
   	height: 100%;
@@ -98,6 +96,8 @@
   </div>
 </template>
 <script>
+import "../../assets/css/cardOrderDetails.css";
+import "../../assets/css/audit.css";
 import ImgZoom from '../../components/ImgZoom';
 import { getDateTime } from "../../config/utils.js";
 export default{

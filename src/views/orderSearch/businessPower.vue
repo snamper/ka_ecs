@@ -4,7 +4,6 @@
   *@date 2017-11-6
 * *-->
 <style scoped>
-@import "../../assets/css/search.css";
   .form-c.o-no-bgc>.row .text{
   	width: auto;
   }
@@ -181,6 +180,7 @@
 </section>
 </template>
 <script>
+import "../../assets/css/search.css";
 require("../../assets/js/laydate/laydate.js");
 require("../../assets/js/laydate/skins/default/laydate.css");
 import pagination from "../../components/Page.vue";

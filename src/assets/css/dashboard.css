@@ -1,11 +1,14 @@
-.dashboard-box{
-  background-color:#F8FAFB;
-}
 .dashboard-box {
   position: relative;
   width: 100%;
   height: 100%;
   overflow: hidden;
+  background-color:#F1F2F3;
+}
+.dashboard-box-inner{
+  position:relative;
+  height:100%;
+  min-width:1200px;min-height:700px;
 }
 .map-box-out {
   height: 100%;
@@ -19,27 +22,37 @@
 }
 .map-box>.inner-total{
   position: absolute;
-  top: 0.2rem;
-  
-  margin-right:-0.5rem;
+  top:-0.12rem;
+  margin-right:-0.4rem;
 }
-.map-box>.inner-total>b, .statistics>b{
-  color: #43eec6;
+.map-box>.inner-total>b, .statistics>.col>b{
+  color: #4b3887;
   font-size: 0.32rem;
-  text-shadow: 0 3px rgba(0,0,0,0.15);
+  letter-spacing: 1px;
+  /*text-shadow: 0 3px rgba(0,0,0,0.15);*/
 }
 .fsfantasy{
   font-family: fantasy;
 }
 .map-box>.inner-total.total-1{
-  right: 75%;
+  right: 60%;
 
 }
 .map-box>.inner-total.total-2{
-  right: 25%;
+  right: 10%;
+}
+.map-box>.inner-total.total-3{
+  left:0;
+  width: 100%;
+  text-align: center;
 }
 .map-box-inner {
-  flex: 1;
+  flex: 0.85;
+}
+@media screen and (min-width: 1600px){
+  .map-box-inner {
+    flex: 0.92;
+  }
 }
 .switch{
   display: inline-block;
@@ -62,6 +75,9 @@
 /*公告区域*/
 .notice{
   background-color: #fff;
+  box-shadow: 0 0 20px rgba(0,0,0,0.15);
+  z-index:2;
+  width: 20%;
 }
 .notice>header{
   text-align: center;
@@ -163,7 +179,9 @@
   -o-transition: all .5s ease-in-out;
   -ms-transition: all .5s ease-in-out;
   transition: all .5s ease-in-out;
-  margin-left:25%;
+  left:20%;
+  padding-top: 0.1rem;
+  width:80%;
 }
 .u-icon-chongzhi{
   background-image: url("../assets/images/icon_chongzhi.png");
@@ -185,11 +203,27 @@
   background-size: 0.25rem;
 }
 .statistics{
-  flex: 0.1;
-  padding-top: 0.7rem;
+  position: absolute;
+  right: 0.1rem;
+  bottom: 0.5rem;
   text-align: right;
-  padding-right: 0.1rem;
 }
-.statistics>div{
+.statistics>.col>b{
+  margin-bottom: 0.1rem;
+  display: inline-block;
+}
+/*@media screen and (min-width:1600px){
+  .statistics{
+    top: 1.3rem;
+    text-align: center;
+  }
+  .statistics>.col{
+    display: inline-block;
+  }
+}*/
+.statistics>.col>div{
   font-size: 0.17rem;
+}
+.statistics>.col>div>span{
+  font-size: 0.13rem;
 }

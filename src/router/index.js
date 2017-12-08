@@ -53,6 +53,13 @@ const Audit_cardItem = resolve => {
     load();
   });
 };
+const Audit_registMerchant = resolve => {
+  load(true);
+  require.ensure(["@/views/audit/registMerchant"], () => {
+    resolve(require("@/views/audit/registMerchant"));
+    load();
+  });
+};
 /*订单查询*/
 const OrderSearch = resolve => {
   load(true);
@@ -110,7 +117,13 @@ const OrderSearch_recharge = resolve => {
     load();
   });
 };
-
+const OrderSearch_registMerchant = resolve => {
+  load(true);
+  require.ensure(["@/views/orderSearch/registMerchant"], () => {
+    resolve(require("@/views/orderSearch/registMerchant"));
+    load();
+  });
+};
 /*资源查询*/
 const Resource = resolve => {
   load(true);
@@ -203,10 +216,14 @@ const router=new Router({
               component:Audit_cardItem,
               name:"afterwards"
             }]
-          },{//业务权限
+          },{//售卡权限
             path:"businessPower/:type",
             name:'businessPowerAudit',
             component:OrderSearch_businessPower,
+          },{//激活商户
+            path:"registMerchant/:type",
+            name:'registMerchantAudit',
+            component:Audit_registMerchant,
           }]
         },
         {//订单查询
@@ -222,7 +239,7 @@ const router=new Router({
               component:OrderSearch_cardItem,
               name:"orderSearch_cardItem"
             }]
-          },{//业务权限
+          },{//售卡权限
             path:"businessPower/:type",
             component:OrderSearch_businessPower,
             name:'businessPowerSearch'
@@ -238,6 +255,10 @@ const router=new Router({
           },{//充值订单
             path:"recharge",
             component:OrderSearch_recharge,
+          },{//激活商户
+            path:"registMerchant/:type",
+            name:'registMerchantSearch',
+            component:OrderSearch_registMerchant,
           }]
         },
 		    {//资源查询

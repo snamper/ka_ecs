@@ -1,7 +1,5 @@
 <style scoped>
-  @import "../assets/css/cardOrderDetails.css";
   .m-footD-btn>a{margin-right: 0.2rem;}
-
 </style>
 <template>
 <section class="g-list-box" id="details">

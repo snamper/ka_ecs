@@ -1,5 +1,5 @@
 <style scoped>
-  @import "../assets/css/searchDetails.css";
+
 </style>
 <template>
 <section class="g-list-box" id="details">
@@ -51,6 +51,7 @@
 </section>
 </template>
 <script>
+import "../assets/css/cardOrderDetails.css";
 import { getDateTime } from "../config/utils.js
 export default{
 	name:'busOrderDetails',
