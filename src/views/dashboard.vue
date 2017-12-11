@@ -188,7 +188,7 @@ import CountUp from 'vue-countup-v2';
         },
         notice:[],//公共数据列表
         noticeUlHeight:'',//公共栏高
-        noticelatestTime:0,//最近获取消息的时间
+        noticelatestMaxid:0,//最近获取消息的时间
         TimerNotice:[],//消息定时器
         TimerLine:[],
         off:{
@@ -304,7 +304,7 @@ import CountUp from 'vue-countup-v2';
       },
       getnotice(){//获取公告
         var vm=this;
-        vm.AJAX('w/statistics/realtimenotice',{time:vm.noticelatestTime},function(data){
+        vm.AJAX('w/statistics/realtimenotice',{"maxId":vm.noticelatestMaxid},function(data){
           if(data.code==200){
             data.data.list.reverse();
             for(let i=0;i<data.data.list.length;i++){
@@ -316,7 +316,7 @@ import CountUp from 'vue-countup-v2';
             },30)
             
             if(data.data.list[0]){
-              vm.noticelatestTime=data.data.list[0].now;
+              vm.noticelatestMaxid=data.data.list[0].maxId;
             }
           }
         },true);

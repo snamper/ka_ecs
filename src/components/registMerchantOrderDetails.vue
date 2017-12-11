@@ -32,11 +32,11 @@
 										<span v-show="list.merchantStatus==0" class="f-c-red">游客</span>
 									</td></tr>
 									<tr><td>
-										<span v-show="list.merchantType=1">门店名称：</span>
+										<span v-show="list.merchantType==1">门店名称：</span>
 										<span v-show="list.merchantType==2">个人商户名称：</span>
 									</td><td>{{list.companyName}}</td></tr>
 									<tr><td>
-										<span v-show="list.merchantType=1">营业执照编号：</span>
+										<span v-show="list.merchantType==1">营业执照编号：</span>
 										<span v-show="list.merchantType==2">身份证号码：</span>
 									</td><td>{{list.businessLicence}}</td></tr>
 									<tr><td>商户注册电话：</td><td>{{list.phone}}</td></tr>
@@ -69,7 +69,7 @@
 									<tr><td>操作人ID：</td><td>{{list.userId}}</td></tr>
 									<tr><td>操作人姓名：</td><td>{{list.userName}}</td></tr>
 									<tr v-show="auditType==2"><td>审核人：</td><td>{{list.customer}}</td></tr>
-									<tr v-show="auditType==2"><td>备注：</td><td>{{list.remarks}}</td></tr>
+									<tr v-show="auditType==2"><td>备注：</td><td v-html="filterReason()"></td></tr>
 								</tbody>
 							</table>
 						</td>
@@ -90,6 +90,7 @@
 import "../assets/css/cardOrderDetails.css";
 import ImgZoom from './ImgZoom';
 import { getDateTime } from "../config/utils.js";
+import { REGISTER_MERCHANT_IMAGE_URL } from '../config/service';
 export default{
 	props:{
 		list:Object,
@@ -106,25 +107,23 @@ export default{
 
 	created:function(){
 		var vm=this;
-		if(vm.list.merchantType==1){//企业
-			vm.imgData=[
-				{'src':vm.list.doorPictureLeft,'name':'门店照片-左'},
-				{'src':vm.list.doorPictureRight,'name':'门店照片-右'},
-				{'src':vm.list.handPicture,'name':'手持证件照'},
-				{'src':vm.list.signPicture,'name':'手签名'},
-			];
-		}else if(vm.list.merchantType==2){//个人
-			vm.imgData=[
-				{'src':vm.list.doorPictureLeft,'name':'身份证正面'},
-				{'src':vm.list.doorPictureRight,'name':'身份证反面'},
-				{'src':vm.list.handPicture,'name':'手持证件照'},
-				{'src':vm.list.signPicture,'name':'手签名'},
-			];
+		vm.imgData=[
+			{'src':vm.list.doorPictureLeft?REGISTER_MERCHANT_IMAGE_URL+vm.list.doorPictureLeft:'','name':'门店照片-左'},
+			{'src':vm.list.doorPictureRight?REGISTER_MERCHANT_IMAGE_URL+vm.list.doorPictureRight:'','name':'门店照片-右'},
+			{'src':vm.list.handPicture?REGISTER_MERCHANT_IMAGE_URL+vm.list.handPicture:'','name':'手持证件照'},
+			{'src':vm.list.signPicture?REGISTER_MERCHANT_IMAGE_URL+vm.list.signPicture:'','name':'手签名'},
+		];
+		if(vm.list.merchantType==2){//个人
+			vm.imgData[0].name="身份证正面";
+			vm.imgData[1].name="身份证反面";
 		}
 	},
 	methods:{
 		close:function(){
 			this.$parent.off.details=false
+		},
+		filterReason(){
+			return this.list.remarks.replace(/\|/g,"<br/>");
 		},
 		getDateTime(v){
 			return getDateTime(v);
