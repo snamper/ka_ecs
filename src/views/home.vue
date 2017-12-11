@@ -76,7 +76,12 @@
 						</li>
 						<li v-if="userInfo.isadmin.indexOf('6')>-1||userInfo.isadmin.indexOf('5')>-1||userInfo.isadmin.indexOf('1')>-1">
 							<router-link :to="{name:'businessPowerAudit',params:{type:'auditing'}}">
-								<b></b>业务权限审核<span>{{auditCount.attribute}}</span>
+								<b></b>售卡权限审核<span>{{auditCount.attribute}}</span>
+							</router-link>
+						</li>
+						<li v-if="userInfo.isadmin.indexOf('6')>-1||userInfo.isadmin.indexOf('5')>-1||userInfo.isadmin.indexOf('1')>-1">
+							<router-link :to="{name:'registMerchantAudit',params:{type:'index'}}">
+								<b></b>激活商户审核<span>{{auditCount.registerMerchant}}</span>
 							</router-link>
 						</li>
 					</ul>
@@ -94,7 +99,8 @@
 						<li><router-link to="/home/orderSearch/card"><b></b>开卡订单</router-link></li>
 						<li><router-link to="/home/orderSearch/recharge"><b></b>充值订单</router-link></li>
 						<li><router-link to="/home/orderSearch/onlineHall"><b></b>网厅订单</router-link></li>
-						<li><router-link :to="{name:'businessPowerSearch',params:{type:'audited'}}"><b></b>业务权限</router-link></li>
+						<li><router-link :to="{name:'businessPowerSearch',params:{type:'audited'}}"><b></b>售卡权限</router-link></li>
+						<li><router-link :to="{name:'registMerchantSearch',params:{type:'search'}}"><b></b>激活商户</router-link></li>
 						<!-- <li><router-link to="/home/orderSearch/busCard"><b></b>公交一卡通</router-link></li> -->
 					</ul>
 				</li>
@@ -165,7 +171,7 @@ export default{
 	data (){
 		return {
 			off:{
-				headMenu:1,
+				headMenu:false,
 				window:0,
 				userMenu:0,
 			},
@@ -231,7 +237,7 @@ export default{
 			var path=this.$route.path,
 				crumb=[{"name":""},{"name":""},{"name":""}],
 				mainDom=document.getElementById("main");
-			if(path.indexOf('dashboard')>0){
+			if(path.indexOf('dashboard')>-1){
 				this.off.headMenu=false;
 			}
 			if(path.indexOf("/home/audit")>-1){
@@ -251,9 +257,14 @@ export default{
 						crumb[2]={"name":"开卡"}
 					}
 				}else if(path.indexOf("businessPower")>-1){
-					crumb[1]={"name":"业务权限","href":""};
+					crumb[1]={"name":"售卡权限","href":""};
 					if(path.indexOf("auditing")>-1){
 						crumb[2]={"name":"待审核"}
+					}
+				}else if(path.indexOf("registMerchant")>-1){
+					crumb[1]={"name":"激活商户","href":"/home/audit/registMerchant/index"};
+					if(path.indexOf("get")>-1){
+						crumb[2]={"name":"审核"}
 					}
 				}
 			}else if(path.indexOf("/home/orderSearch")>-1){
@@ -272,10 +283,12 @@ export default{
 				}else if(path.indexOf("onlineHall")>-1){
 					crumb[1]={"name":"网厅订单","href":""}
 				}else if(path.indexOf("businessPower")>-1){
-					crumb[1]={"name":"业务权限","href":""};
+					crumb[1]={"name":"售卡权限","href":""};
 					if(path.indexOf("audited")>-1){
 						crumb[2]={"name":"已审核"}
 					}
+				}else if(path.indexOf("registMerchant")>-1){
+					crumb[1]={"name":"激活商户","href":""};
 				}else if(path.indexOf("recharge")>-1){
 					crumb[1]={"name":"充值订单","href":""}
 				}

@@ -3,13 +3,11 @@
   *@author: thinkmix
   *@date 2017-11-6
 * *-->
-<style>
-  @import "../../assets/css/search.css";
-</style>
 <template>
 		<router-view></router-view>
 </template>
 <script>
+import "../../assets/css/search.css";
 export default{
 	name:'audit',
 	data (){

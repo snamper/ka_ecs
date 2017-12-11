@@ -97,7 +97,7 @@ export const removeStore = name => {
  */
 export const getDateTime= e =>{
     var t;
-    if(!e||e=='null')return ['--','--','--','--','--','--','--'];
+    if(!e||e=='null'||e=='0')return ['--','--','--','--','--','--','--'];
     t = new Date(parseInt(e));
     var n = t.getFullYear(),
         a = t.getMonth()+1,

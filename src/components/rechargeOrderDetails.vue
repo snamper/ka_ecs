@@ -1,5 +1,5 @@
 <style scoped>
-  @import "../assets/css/cardOrderDetails.css";
+
 </style>
 <template>
 <section class="g-list-box" id="details">
@@ -79,6 +79,7 @@
 </section>
 </template>
 <script>
+import "../assets/css/cardOrderDetails.css";
 import { getDateTime,secondsFormat } from "../config/utils.js";
 export default{
 	name:'rechargeOrderDetails',

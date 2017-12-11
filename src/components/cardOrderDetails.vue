@@ -1,5 +1,10 @@
+<!--**
+  *@info 开卡订单详情模块
+  *@author: thinkmix
+  *@date 2017-2-11
+* *-->
 <style scoped>
-  @import "../assets/css/cardOrderDetails.css";
+
 </style>
 <template>
 <section class="g-list-box" id="details">
@@ -159,6 +164,7 @@
 </section>
 </template>
 <script>
+import "../assets/css/cardOrderDetails.css";
 import ImgZoom from '../components/ImgZoom';
 import detailsView from '../components/cardOrderDetailsAlert';
 import { SDK_IMAGE_URL } from '../config/service';
@@ -251,20 +257,28 @@ export default{
 		detailsTime(){//用时信息
 			var vm=this;
 			vm.AJAX("w/handler/query",{"opKey":"order.time.details","params":['sys_order_id="'+vm.list.orderId+'"'],"pageSize":"10","pageNum":"-1"},function(data){
-				var list_item= data.data.list[0];
+				var list_item= data.data.list[0],str='',str2='';
+				
+				
+				
 				if(list_item){
+					if(list_item.card_type==1){
+						str+=`<li class="clr"><div class="fl">实时审核时间：</div><div class="fright">${vm.$parent.getDateTime(list_item.time_real_audited)[6]}</div></li>`;
+						str2+=`<li class="clr"><div class="fl">开卡保存订单时间：</div><div class="fright">${vm.$parent.getDateTime(list_item.time_save_order)[6]}</div></li>`;
+					}else if(list_item.card_type==2){
+						str+=`<li class="clr"><div class="fl">开户成功时间：</div><div class="fright">${vm.$parent.getDateTime(list_item.time_serverice_open)[6]}</div></li>`;
+					}
 					layer.open({
 						content:`<ul class="f-scroll-lt lay-details">
 						<li class="clr"><div class="fl">生成时间：</div><div class="fright">${vm.$parent.getDateTime(list_item.time_create_order)[6]}</div></li>
+						<li class="clr"><div class="fl">保存套餐时间：</div><div class="fright">${vm.$parent.getDateTime(list_item.time_set_business)[6]}</div></li>
+						<li class="clr"><div class="fl">保存身份信息时间：</div><div class="fright">${vm.$parent.getDateTime(list_item.time_set_user_info)[6]}</div></li>
 						<li class="clr"><div class="fl">支付时间：</div><div class="fright">${vm.$parent.getDateTime(list_item.time_payed)[6]}</div></li>
-						<li class="clr"><div class="fl">自动审核时间：</div><div class="fright">${vm.$parent.getDateTime(list_item.time_auto_audited)[6]}</div></li>
-						<li class="clr"><div class="fl">实时审核时间：</div><div class="fright">${vm.$parent.getDateTime(list_item.time_real_audited)[6]}</div></li>
-						<li class="clr"><div class="fl">开户成功时间：</div><div class="fright">${vm.$parent.getDateTime(list_item.time_serverice_open)[6]}</div></li>
+						<li class="clr"><div class="fl">自动审核时间：</div><div class="fright">${vm.$parent.getDateTime(list_item.time_auto_audited)[6]}</div></li>${str}
 						<li class="clr"><div class="fl">受理单提交时间：</div><div class="fright">${vm.$parent.getDateTime(list_item.time_accepted)[6]}</div></li>
 						<li class="clr"><div class="fl">请求IMSI时间：</div><div class="fright">${vm.$parent.getDateTime(list_item.time_imsi_request)[6]}</div></li>
 						<li class="clr"><div class="fl">拿到IMSI时间：</div><div class="fright">${vm.$parent.getDateTime(list_item.time_imsi_got)[6]}</div></li>
-						<li class="clr"><div class="fl">提交写卡结果时间：</div><div class="fright">${vm.$parent.getDateTime(list_item.time_write_card)[6]}</div></li>
-						<li class="clr"><div class="fl">开卡保存订单时间：</div><div class="fright">${vm.$parent.getDateTime(list_item.time_save_order)[6]}</div></li>
+						<li class="clr"><div class="fl">提交写卡结果时间：</div><div class="fright">${vm.$parent.getDateTime(list_item.time_write_card)[6]}</div></li>${str2}
 						<li class="clr"><div class="fl">提交到BOSS时间：</div><div class="fright">${vm.$parent.getDateTime(list_item.time_submit_order)[6]}</div></li>
 						<li class="clr"><div class="fl">开卡异步结果时间：</div><div class="fright">${vm.$parent.getDateTime(list_item.time_order_result)[6]}</div></li>
 						<li class="clr"><div class="fl">事后审核时间：</div><div class="fright">${vm.$parent.getDateTime(list_item.time_after_audit)[6]}</div></li></ul>`,
@@ -275,7 +289,7 @@ export default{
 					});
 				}else{
 					layer.open({
-			            content:'暂无该订单用时详情',
+			            content:'暂无该订单时间详情',
 			            skin: 'msg',
 			            time: 2,
 			            msgSkin:'error',

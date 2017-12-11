@@ -278,7 +278,7 @@ export default{
 		details:function(e){//详情
 			var vm=this,
 			orderId=e.target.name,
-			json={"pageSize":vm.pageSize,"pageNum":vm.page||1,"params":['A.sys_order_id="'+orderId+'"']};
+			json={"pageSize":"10","pageNum":"-1","params":['A.sys_order_id="'+orderId+'"']};
 			if(vm.form.rechargeType==1){
 				json.opKey="order.rechargeFlow.details";
 			}else if(vm.form.rechargeType==2){

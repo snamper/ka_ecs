@@ -209,12 +209,13 @@
 
 .layui-m-layerchild h3 {
     padding: 0 10px;
-    height: 40px;
-    line-height: 40px;
-    font-size: 16px;
-    font-weight: 400;
+    height: 35px;
+    line-height: 35px;
+    font-size: 14px;
+    font-weight: bold;
     border-radius: 5px 5px 0 0;
-    text-align: center
+    text-align: center;
+    border-bottom: 1px solid #eee;
 }
 
 .layui-m-layerbtn span,
@@ -225,7 +226,7 @@
 }
 
 .layui-m-layercont {
-    padding: 15px;
+    padding:10px 15px;
     line-height: 22px;
     text-align: center
 }
