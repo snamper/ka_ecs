@@ -41,11 +41,11 @@
 									<tr><td>订单号码：</td><td>{{auditData.orderId}}</td></tr>
 									<tr><td>申请时间：</td><td>{{getDateTime(auditData.createTime)[6]}}</td></tr>
 									<tr><td>
-										<span v-show="auditData.merchantType=1">门店名称：</span>
+										<span v-show="auditData.merchantType==1">门店名称：</span>
 										<span v-show="auditData.merchantType==2">个人商户名称：</span>
 									</td><td>{{auditData.companyName}}</td></tr>
 									<tr><td>
-										<span v-show="auditData.merchantType=1">营业执照编号：</span>
+										<span v-show="auditData.merchantType==1">营业执照编号：</span>
 										<span v-show="auditData.merchantType==2">身份证号码：</span>
 									</td><td>{{auditData.businessLicence}}</td></tr>
 									<tr><td>商户注册电话：</td><td>{{auditData.phone}}</td></tr>
@@ -113,7 +113,8 @@ export default{
 			timer:Number,//审核倒计时
 			list:[],//分配的订单
 			auditData:'',//当前处理的订单
-			imgData:[],//当前订单的图片
+			imgData:[],//当前订单的图片,
+			refuseArr:{"type":"1","list":[{"code":"1001","info":"没有用户签名或签名与用户姓名不符","point":"325","stopCard":"0"},{"code":"1002","info":"部分或全部照片中存在模糊、分辨率太小无法辨认/严重变形/反光严重/拍摄角度不规范","point":"0","stopCard":"0"},{"code":"1005","info":"无证件与SIM卡合影(包括身份证正反面及现场手持照)","point":"0","stopCard":"0"},{"code":"1006","info":"背景非通讯营业网点、非通讯销售商业场所或非售卡现场拍摄照片(包括证件及手持照)","point":"0","stopCard":"0"},{"code":"1007","info":"手持证卡合影不规范,非免冠正脸照、人脸被遮挡等导致无法清晰辨别是否为本人","point":"325","stopCard":"0"},{"code":"1010","info":"非有效期证件或申卡人未满16周岁","point":"650","stopCard":"0"},{"code":"1011","info":"填报信息与证照中信息不符、缺失内容或乱码(包括但不限于证件号码,姓名,地址等信息)","point":"0","stopCard":"0"},{"code":"1013","info":"部分或全部照片内容为疑似翻拍或合成","point":"650","stopCard":"0"},{"code":"1014","info":"非本人现场手持证卡照","point":"650","stopCard":"0"},{"code":"1015","info":"证件与手持合影照中证件不同","point":"2500","stopCard":"0"},{"code":"1016","info":"已被拒绝并明知信息有问题（包括但不限于非本人现场手持证件）仍然多次重复恶意上传（严重违规）","point":"2500","stopCard":"1"},{"code":"1017","info":"部分或全部照片内容被明确为翻拍或合成、造假（严重违规）","point":"2500","stopCard":"1"},{"code":"1018","info":"远特一证五号校验失败","point":"0","stopCard":"0"},{"code":"1019","info":"联通开卡数超过上限","point":"0","stopCard":"0"}]}//拒绝原因
 		}
 	},
 	components:{
@@ -159,18 +160,42 @@ export default{
 			})
 		},
 		refuse:function(obj){//审核拒绝
-			var str='',vm=this,orderId=vm.auditData.orderId,popIndex;
+			var str='',vm=this,orderId=vm.auditData.orderId,popIndex,ww=window.innerWidth,wwSet;
 		
+			for(let i=0;i<vm.refuseArr.list.length;i++){
+				var b='';
+				if(vm.refuseArr.list[i].stopCard==1)b='<b class="f-c-red">★</b>';
+				str+=`<div class="checkbox-list">
+						<div class="m-form-checkbox">
+							<label>
+								<span class="checkbox">
+									<input type="checkbox" name="${i}">
+									<span></span>
+								</span>
+								<span class="text"><b class="f-c-red"></b>${vm.refuseArr.list[i].info+b}</span>
+							</label>
+						</div>
+					  </div>`;
+			}
+			ww<=640 ? wwSet='width:98%' : wwSet='max-width:645px';
 			popIndex=layer.open({
-				content:`<div class="f-scroll-lt lay-div-refuse f-tal" id="refuseList"><div class="checkbox-list" style="margin:0;width:200px;"><input maxlength="30" type="text" id="remarks" placeholder="请输入拒绝理由"></div></div>`,
-				type:0,
-				title:'开卡时间详情',
+				content:`<div class="f-scroll-lt lay-div-refuse f-tal" id="refuseList">${str}<div class="checkbox-list"><input maxlength="30" type="text" id="reason" placeholder="请输入补充内容"></div></div>`,
 				btn:['确定','取消'],
-				style:'width:auto;',
+				type:1,
+				style:wwSet,
+				title:['选择拒绝理由','color:#ffc333;text-align:left;padding-left:0.2rem;'],
 				yes:function(){
-					let remarks=document.getElementById('remarks').value;
-					if(remarks=='')return false;
-					vm.AJAX("w/regist/audit",{"orderId":orderId,"result":2,"remarks":remarks},function(data){
+					var p=document.getElementsByTagName('input'),remark='',reason;
+					for(let i=0;i<p.length;i++){
+						if(p[i].nodeType==1&&p[i].checked){
+							remark+=vm.refuseArr.list[p[i].name].info+'|';//拒绝原因
+						}
+					}
+					remark=remark.substring(0,remark.length-1);
+					reason=document.getElementById('reason').value;
+					if(remark==''&&reason=='')return false;
+					console.log(remark+'|'+reason)
+					vm.AJAX("w/regist/audit",{"orderId":orderId,"result":2,"remarks":remark+'|'+reason},function(data){
 						layer.open({
 							content:data.msg,
 							skin: 'msg',
@@ -181,9 +206,10 @@ export default{
 								layer.close(popIndex);
 							}
 						})
-					})
+					})					
 				}
-			});	
+			})
+			
 		},
 		getAuditList:function(){//获取订单
 			const vm=this;
