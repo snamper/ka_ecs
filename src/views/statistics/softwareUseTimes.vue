@@ -242,7 +242,8 @@ export default{
 					"deviceId":vm.form.deviceId,
 					"result":vm.form.result,
 					"customerId":userInfo.customerId,
-					"codeId":userInfo.codeId
+					"codeId":userInfo.codeId,
+					"orderId":vm.form.orderId
 				};
 			if(vm.off.type==1){
 				url="w/statistics/identifierListdown";
