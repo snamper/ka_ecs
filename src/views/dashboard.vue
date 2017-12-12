@@ -38,14 +38,14 @@
                       </div>
           <div class="statistics">
             <div class="col">
-              <div>远特普号<span>（可售）</span></div><b class="fsfantasy">
+              <div>远特普号<span class="media-540">（可售）</span></div><b class="fsfantasy">
                 <CountUp :start="0"
                         :end="parseInt(phoneTotal[0])"
                         :decimals="0"
                         :duration="3"
                         :options="countOptions"
                         :callback="callback"></CountUp></b>
-              <div>远特靓号<span>（可售）</span></div><b class="fsfantasy"><CountUp :start="0"
+              <div>远特靓号<span class="media-540">（可售）</span></div><b class="fsfantasy"><CountUp :start="0"
                         :end="parseInt(phoneTotal[1])"
                         :decimals="0"
                         :duration="3"
@@ -53,13 +53,13 @@
                         :callback="callback"></CountUp></b></b>
             </div>
             <div class="col">
-              <div>联通普号<span>（可售）</span></div><b class="fsfantasy"><CountUp :start="0"
+              <div>联通普号<span class="media-540">（可售）</span></div><b class="fsfantasy"><CountUp :start="0"
                         :end="parseInt(phoneTotal[2])"
                         :decimals="0"
                         :duration="3"
                         :options="countOptions"
                         :callback="callback"></CountUp></b></b>
-              <div>联通靓号<span>（可售）</span></div><b class="fsfantasy"><CountUp :start="0"
+              <div>联通靓号<span class="media-540">（可售）</span></div><b class="fsfantasy"><CountUp :start="0"
                         :end="parseInt(phoneTotal[3])"
                         :decimals="0"
                         :duration="3"
@@ -323,7 +323,7 @@ import CountUp from 'vue-countup-v2';
       },
       noticeScroll(){//消息滚动执行
         var vm=this,noticeBox=document.getElementById("notice-box");
-        noticeBox.scrollTop=noticeBox.scrollHeight;
+        if(noticeBox)noticeBox.scrollTop=noticeBox.scrollHeight;
         if(vm.notice.length>100){
           vm.notice=[];
         }

@@ -65,11 +65,11 @@
 				</tr>
 				<tr>
 					<td><div class="fl">商户属性：</div><div class="fright">{{list.merchantType}}</div></td>
-					<td><div class="fl">业务范围：</div><div class="fright">
-						<span v-if="list.attribute==1">远特售卡</span>
-						<span v-if="list.attribute==2">联通售卡</span>
-						<span v-if="list.attribute==3">远特售卡+联通售卡</span>
-						<span v-if="list.attribute==4">联通售卡+远特售卡</span>
+					<td><div class="fl">售卡范围：</div><div class="fright">
+						<span v-if="list.attribute==1">A远特售卡</span>
+						<span v-if="list.attribute==2">B联通售卡</span>
+						<span v-if="list.attribute==3">C远特售卡+联通售卡</span>
+						<span v-if="list.attribute==4">D联通售卡+远特售卡</span>
 					</div></td>
 				</tr>
 				<tr>

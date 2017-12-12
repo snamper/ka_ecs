@@ -28,7 +28,7 @@
 						<th>激活时间</th>
 						<th>推广方</th>
 						<th>绑定商户</th>
-						<th>业务权限</th>
+						<th>售卡范围</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -53,10 +53,10 @@
 							<span v-else class="f-c-red">未绑定</span>
 						</td>
 						<td>
-							<span v-show="todo.businessPower==1">远特发展线</span>
-							<span v-show="todo.businessPower==2">联通发展线</span>
-							<span v-show="todo.businessPower==3">远特开通联通卡权限</span>
-							<span v-show="todo.businessPower==4">联通开通远特卡权限</span>
+							<span v-show="todo.businessPower==1">A远特售卡</span>
+							<span v-show="todo.businessPower==2">B联通售卡</span>
+							<span v-show="todo.businessPower==3">C远特售卡+联通售卡</span>
+							<span v-show="todo.businessPower==4">D联通售卡+远特售卡</span>
 						</td>
 					</tr>
 				</tbody>

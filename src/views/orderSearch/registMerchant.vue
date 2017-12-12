@@ -81,7 +81,7 @@
 					<th>商户类型</th>
 					<th>申请人号码</th>
 					<th>订单状态</th>
-					<th></th>
+					<th class="hasBtn"></th>
 				</tr>
 			</thead>
 			<tbody>

@@ -67,7 +67,7 @@
 									<tr><td>识别仪名称：</td><td>{{ auditData.devSN }}</td></tr>
 									<!-- <tr><td>活体识别APK：</td><td>{{ auditData.livingImgSoftWareName }}</td></tr> -->
 									<tr v-show="off.itemType!=8"><td>操作人：</td>
-										<td>{{ auditData.operatorName }}【操作人ID：{{ auditData.operator }}】</td>
+										<td>{{ auditData.operatorName }}【ID：{{ auditData.operator }}】</td>
 									</tr>
 									
 									<tr v-show="off.itemType!=8"><td>操作人IP：</td><td>{{ auditData.host }}</td></tr>

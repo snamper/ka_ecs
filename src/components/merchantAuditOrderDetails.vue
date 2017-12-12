@@ -60,6 +60,7 @@
 </section>
 </template>
 <script>
+import "../assets/css/cardOrderDetails.css";
 import ImgZoom from '../components/ImgZoom';
 import detailsView from '../components/cardOrderDetailsAlert';
 export default{

@@ -26,7 +26,7 @@
 						<th>创建时间</th>
 						<th>创建人</th>
 						<th>推广码</th>
-						<th>渠道模式</th>
+						<th>号码模式</th>
 						<th>折扣模式</th>
 					</tr>
 				</thead>
@@ -37,8 +37,14 @@
 						<td>{{ getDateTime(promoterData.createTime)[6] }}</td>
 						<td>{{ promoterData.modifyUser||'--' }}</td>
 						<td>{{ promoterData.referralCode||'--' }}</td>
-						<td>{{ promoterData.phoneModel||'--' }}</td>
-						<td>{{ promoterData.discountModel||'--' }}</td>
+						<td>
+							<b v-if="promoterData.phoneModel=='basemodel'||promoterData.phoneModel==''">基本模式</b>
+							<b v-else>其它模式</b>
+						</td>
+						<td>
+							<b v-if="promoterData.discountModel=='basemodel'||promoterData.discountModel==''">基本模式</b>
+							<b v-else>其它模式</b>
+						</td>
 					</tr>
 				</tbody>
 			</table>
@@ -52,7 +58,7 @@
 						<th>设备编号</th>
 						<th>激活状态</th>
 						<th>MAC地址</th>
-						<th>业务权限</th>
+						<th>售卡范围</th>
 						<th>创建时间</th>
 						<th>激活时间</th>
 					</tr>
@@ -67,10 +73,10 @@
 						</td>
 						<td>{{ todo.mac }}</td>
 						<td>
-							<span v-show="todo.businessPower==1">远特发展线</span>
-							<span v-show="todo.businessPower==2">联通发展线</span>
-							<span v-show="todo.businessPower==3">远特开通联通卡权限</span>
-							<span v-show="todo.businessPower==4">联通开通远特卡权限</span>
+							<span v-show="todo.businessPower==1">A远特售卡</span>
+							<span v-show="todo.businessPower==2">B联通售卡</span>
+							<span v-show="todo.businessPower==3">C远特售卡+联通售卡</span>
+							<span v-show="todo.businessPower==4">D联通售卡+远特售卡</span>
 						</td>
 						<td>{{ getDateTime(todo.createTime)[6] }}</td>
 						<td>{{ todo.activationTime }}</td>

@@ -196,7 +196,7 @@
 					<th v-show="off.type==2">审核用时</th>
 					<th v-show="off.type==2">号卡状态</th>
 					<th v-show="off.type==2">审核状态</th>
-					<th></th>
+					<th class="hasBtn"></th>
 				</tr>
 			</thead>
 			<tbody>

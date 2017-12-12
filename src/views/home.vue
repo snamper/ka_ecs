@@ -99,7 +99,7 @@
 						<li><router-link to="/home/orderSearch/card"><b></b>开卡订单</router-link></li>
 						<li><router-link to="/home/orderSearch/recharge"><b></b>充值订单</router-link></li>
 						<li><router-link to="/home/orderSearch/onlineHall"><b></b>网厅订单</router-link></li>
-						<li><router-link :to="{name:'businessPowerSearch',params:{type:'audited'}}"><b></b>售卡权限</router-link></li>
+						<li><router-link :to="{name:'businessPowerSearch',params:{type:'audited'}}"><b></b>售卡范围</router-link></li>
 						<li><router-link :to="{name:'registMerchantSearch',params:{type:'search'}}"><b></b>激活商户</router-link></li>
 						<!-- <li><router-link to="/home/orderSearch/busCard"><b></b>公交一卡通</router-link></li> -->
 					</ul>

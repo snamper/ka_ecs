@@ -119,7 +119,7 @@
 					<th>操作者工号</th>
 					<th>生成时间</th>
 					<th>订单状态</th>
-					<th></th>
+					<th class="hasBtn"></th>
 				</tr>
 				<tr v-if="off.type==2">
 					<th>序号</th>
