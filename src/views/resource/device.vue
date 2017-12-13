@@ -43,20 +43,20 @@
 						<td>{{ getDateTime(todo.createTime)[6] }}</td>
 						<td>{{ todo.activationTime }}</td>
 						<td>
-							<a :href="'#/home/resource/promoter/'+todo.protomerDealerId" title="点击查看详情" class="details">{{todo.protomerDealerId}}</a>
-							<span v-show="todo.protomerName">[{{todo.protomerName}}]</span></td>
+							<a :href="'#/home/resource/promoter/'+todo.protomerDealerId" title="点击查看详情" class="details">{{todo.protomerDealerId}}</a><br/>
+							<span v-show="todo.protomerName">（{{todo.protomerName}}）</span></td>
 						<td>
 							<span v-if="todo.merchantDealerId!='null'">
-								<a :href="'#/home/resource/merchant/'+todo.merchantDealerId" title="点击查看详情" class="details">{{todo.merchantDealerId}}</a>
-								<span>[{{todo.merchantName}}]</span>
+								<a :href="'#/home/resource/merchant/'+todo.merchantDealerId" title="点击查看详情" class="details">{{todo.merchantDealerId}}</a><br/>
+								<span>（{{todo.merchantName}}）</span>
 							</span>
 							<span v-else class="f-c-red">未绑定</span>
 						</td>
 						<td>
-							<span v-show="todo.businessPower==1">A远特售卡</span>
-							<span v-show="todo.businessPower==2">B联通售卡</span>
-							<span v-show="todo.businessPower==3">C远特售卡+联通售卡</span>
-							<span v-show="todo.businessPower==4">D联通售卡+远特售卡</span>
+							<span v-show="todo.businessPower==1">A（远特售卡）</span>
+							<span v-show="todo.businessPower==2">B（联通售卡）</span>
+							<span v-show="todo.businessPower==3">C（远特售卡+联通售卡）</span>
+							<span v-show="todo.businessPower==4">D（联通售卡+远特售卡）</span>
 						</td>
 					</tr>
 				</tbody>

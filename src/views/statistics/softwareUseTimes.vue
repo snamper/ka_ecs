@@ -26,17 +26,17 @@
 		<section class="form-c">	
 			
 			<div class="row clr m-col-2 fullRow">
-				<span class="dp col-l">用户工号：</span>
+				<span class="dp col-l">操作人ID：</span>
 				<div class="col-r">
 					<div class="input-box"><input v-model="form.userId" maxlength="16" type="tel" placeholder="请输入查询的用户工号"></div>
 				</div>
 			</div>
-			<div class="row clr m-col-2 fullRow">
+			<!-- <div class="row clr m-col-2 fullRow">
 				<span class="dp col-l">订单号码：</span>
 				<div class="col-r">
 					<div class="input-box"><input v-model="form.orderId" maxlength="32" type="tel" placeholder="请输入查询的订单号码"></div>
 				</div>
-			</div>
+			</div> -->
 			<div class="row">
 				<span class="dp">时间区间：</span>
 				<div class="f-inline-block">
@@ -80,19 +80,18 @@
 			<thead>
 				<tr>
 					<th>序号</th>
-					<th>用户</th>
+					<th>操作人</th>
 					<th>识别时间</th>
 					<th>终端类型</th>
 					<th>设备类型</th>
-					<th>创建时间</th>
-					<th>订单号码</th>
+					<!-- <th>订单号码</th> -->
 					<th>状态</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr v-for="(todo,index) in list">
 					<td>{{ (pageNum-1)*pageSize+(index+1) }}</td>
-					<td>{{ todo.userId }}({{todo.userName}})</td>
+					<td>{{ todo.userId }}<br/>（{{todo.userName}}）</td>
 					<td>{{ getDateTime(todo.readTime)[6] }}</td>
 					<td>
 						<span v-show="todo.terminalType==1">IOS</span>
@@ -107,8 +106,7 @@
 							<b v-show="todo.deviceId==1">旷视</b>
 						</span>
 					</td>
-					<td>{{ getDateTime(todo.createTime)[6] }}</td>
-					<td>{{ todo.orderId }}</td>
+					<!-- <td>{{ todo.orderId }}</td> -->
 					<td>
 						<span v-show="todo.result==0" class="f-c-red">失败</span>
 						<span v-show="todo.result==1" class="f-c-green">成功</span>

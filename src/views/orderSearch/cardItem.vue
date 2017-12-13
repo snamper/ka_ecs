@@ -196,7 +196,7 @@
 					<th v-show="off.type==2">审核用时</th>
 					<th v-show="off.type==2">号卡状态</th>
 					<th v-show="off.type==2">审核状态</th>
-					<th class="hasBtn"></th>
+					<th></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -222,7 +222,7 @@
 					<td v-if="form.source!=7">
 						<span v-if="todo.operator">{{todo.operator}}</span>
 						<span v-if="todo.operatorId">{{todo.operatorId}}</span>
-						<br/><b class="f-m-lighter">({{todo.operatorName}})</b>
+						<br/><b class="f-m-lighter">（{{todo.operatorName}}）</b>
 					</td>
 
 					<td v-if="off.type==2">
@@ -282,10 +282,10 @@
 <script>
 require("../../assets/js/laydate/laydate.js");
 require("../../assets/js/laydate/skins/default/laydate.css");
+require('../../assets/js/base64.min.js');
 import pagination from "../../components/Page.vue";
 import details from "../../components/cardOrderDetails.vue";
 import { getDateTime,translateData,secondsFormat,getUnixTime,createDownload,setStore, getStore, errorDeal } from "../../config/utils.js";
-let Base64 = require('js-base64').Base64;
 export default{
 	data (){
 		return {
@@ -533,7 +533,7 @@ export default{
 			}else{
 				url='w/audit/downloadEdList';
 			}
-			createDownload(url,  Base64.encode(JSON.stringify(json)),  function(){
+			createDownload(url,  BASE64.encode(JSON.stringify(json)),  function(){
 		        vm.off.isLoad=false;
 	      	});
 		},

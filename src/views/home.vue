@@ -76,7 +76,7 @@
 						</li>
 						<li v-if="userInfo.isadmin.indexOf('6')>-1||userInfo.isadmin.indexOf('5')>-1||userInfo.isadmin.indexOf('1')>-1">
 							<router-link :to="{name:'businessPowerAudit',params:{type:'auditing'}}">
-								<b></b>售卡权限审核<span>{{auditCount.attribute}}</span>
+								<b></b>售卡范围审核<span>{{auditCount.attribute}}</span>
 							</router-link>
 						</li>
 						<li v-if="userInfo.isadmin.indexOf('6')>-1||userInfo.isadmin.indexOf('5')>-1||userInfo.isadmin.indexOf('1')>-1">
@@ -257,7 +257,7 @@ export default{
 						crumb[2]={"name":"开卡"}
 					}
 				}else if(path.indexOf("businessPower")>-1){
-					crumb[1]={"name":"售卡权限","href":""};
+					crumb[1]={"name":"售卡范围","href":""};
 					if(path.indexOf("auditing")>-1){
 						crumb[2]={"name":"待审核"}
 					}
@@ -283,7 +283,7 @@ export default{
 				}else if(path.indexOf("onlineHall")>-1){
 					crumb[1]={"name":"网厅订单","href":""}
 				}else if(path.indexOf("businessPower")>-1){
-					crumb[1]={"name":"售卡权限","href":""};
+					crumb[1]={"name":"售卡范围","href":""};
 					if(path.indexOf("audited")>-1){
 						crumb[2]={"name":"已审核"}
 					}

@@ -126,7 +126,7 @@
 					<td>{{ todo.orderId }}</td>
 					<td>{{ todo.companyName }}</td>
 					<td>{{ todo.dealerId }}</td>
-					<td>{{ todo.userId }}({{ todo.userName }})</td>
+					<td>{{ todo.userId }}<br/>（{{ todo.userName }}）</td>
 					<td>
 						<span v-if="todo.type==3">联通售卡</span>
 						<span v-if="todo.type==4">远特售卡</span>
@@ -140,13 +140,13 @@
 					<td>{{ todo.orderId }}</td>
 					<td>{{ todo.companyName }}</td>
 					<td>{{ todo.dealerId }}</td>
-					<td>{{ todo.userId }}({{ todo.userName }})</td>
+					<td>{{ todo.userId }}<br/>（{{ todo.userName }}）</td>
 					<td>
 						<span v-if="todo.type==3">联通售卡</span>
 						<span v-if="todo.type==4">远特售卡</span>
 					</td>
 					<td>{{ getDateTime(todo.createTime)[6] }}</td>
-					<td>{{ todo.customerId }}({{ todo.customerName }})</td>
+					<td>{{ todo.customerId }}<br/>（{{ todo.customerName }}）</td>
 					<td>{{ getDateTime(todo.modifyTime)[6] }}</td>
 					<td>
 						<span v-if="todo.status==2" class="f-c-green">通过</span>

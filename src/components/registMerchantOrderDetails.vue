@@ -34,17 +34,17 @@
 									<tr><td>
 										<span v-show="list.merchantType==1">门店名称：</span>
 										<span v-show="list.merchantType==2">个人商户名称：</span>
-									</td><td>{{list.companyName}}</td></tr>
+									</td><td>{{list.companyName}}【{{list.dealerId}}】</td></tr>
 									<tr><td>
 										<span v-show="list.merchantType==1">营业执照编号：</span>
 										<span v-show="list.merchantType==2">身份证号码：</span>
 									</td><td>{{list.businessLicence}}</td></tr>
 									<tr><td>商户注册电话：</td><td>{{list.phone}}</td></tr>
 									<tr><td>具体地址：</td><td>{{list.address}}</td></tr>
-									<tr><td>邀请码：</td><td>{{list.superInviteCode}}</td></tr>
-									<tr><td>支付宝账号：</td><td>{{list.alipayUserId}}</td></tr>
-									<tr><td>微信账号：</td><td>{{list.weixinUserId}}</td></tr>
-									<tr><td>售卡城市：</td><td>{{list.cityName}}[{{list.cityCode}}]</td></tr>
+									<tr><td>邀请码：</td><td>{{list.superInviteCode||'--'}}</td></tr>
+									<tr><td>支付宝账号：</td><td>{{list.alipayUserId||'--'}}</td></tr>
+									<tr><td>微信账号：</td><td>{{list.weixinUserId||'--'}}</td></tr>
+									<tr><td>售卡城市：</td><td>{{list.cityName}}【{{list.cityCode}}】</td></tr>
 									<tr><td>商户属性：</td><td>
 										<span v-show="list.merchantType==1">企业</span>
 										<span v-show="list.merchantType==2">个人</span>
@@ -58,18 +58,13 @@
 									<tr><td>折扣模式：</td><td>{{list.discountModel}}</td></tr>
 									<tr><td>号码模式：</td><td>{{list.phoneModel}}</td></tr>
 									<tr><td>转账模式：</td><td>{{list.transferModel}}</td></tr>
-									
-									
 									<tr><td>设备编号：</td><td>{{list.devMac}}</td></tr>
 									<tr><td>设备MAC：</td><td>{{list.devMacAddress}}</td></tr>
-									<tr><td>推广渠道ID：</td><td>{{list.popchannel}}</td></tr>
-									<tr><td>推广渠道名称：</td><td>{{list.popchannelName}}</td></tr>
-									<tr><td>上级商户ID：</td><td>{{list.superDealerId}}</td></tr>
-									<tr><td>上级商户名称：</td><td>{{list.superDealerName}}</td></tr>
-									<tr><td>操作人ID：</td><td>{{list.userId}}</td></tr>
-									<tr><td>操作人姓名：</td><td>{{list.userName}}</td></tr>
-									<tr v-show="auditType==2"><td>审核人：</td><td>{{list.customer}}</td></tr>
-									<tr v-show="auditType==2"><td>备注：</td><td v-html="filterReason()"></td></tr>
+									<tr><td>推广渠道：</td><td>{{list.popchannel}}（{{list.popchannelName}}）</td></tr>
+									<tr><td>上级商户：</td><td>{{list.superDealerId}}（{{list.superDealerName}}）</td></tr>
+									<tr><td>操作人：</td><td>{{list.userId}}（{{list.userName}}）</td></tr>
+									<tr v-show="auditType==2"><td>审核人ID：</td><td>{{list.customer}}</td></tr>
+									<tr v-show="auditType==2&&list.orderStatus==2"><td>备注：</td><td v-html="filterReason()"></td></tr>
 								</tbody>
 							</table>
 						</td>

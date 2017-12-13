@@ -133,10 +133,10 @@
 								</tr>
 								<tr>
 									<td><span>售卡范围：</span>
-										<b v-if="ajaxData.details.attribute==1">A远特售卡</b>
-										<b v-if="ajaxData.details.attribute==2">B联通售卡</b>
-										<b v-if="ajaxData.details.attribute==3">C远特售卡+联通售卡</b>
-										<b v-if="ajaxData.details.attribute==4">D联通售卡+远特售卡</b>
+										<b v-if="ajaxData.details.attribute==1">A（远特售卡）</b>
+										<b v-if="ajaxData.details.attribute==2">B（联通售卡）</b>
+										<b v-if="ajaxData.details.attribute==3">C（远特售卡+联通售卡）</b>
+										<b v-if="ajaxData.details.attribute==4">D（联通售卡+远特售卡）</b>
 									</td>
 									<td><span>信用积分：</span>{{ ajaxData.details.creditNums }}</td>
 								</tr>
@@ -204,21 +204,21 @@
 									<td><span>保证金：</span>{{ parseFloat(ajaxData.details.bond)/100 }}元</td>
 								</tr>
 								<tr>
-									<td><span>号码模式：</span>
-										<b v-if="ajaxData.details.phoneModel=='basemodel'||ajaxData.details.phoneModel==''">基本模式</b>
-										<b v-else>其它模式</b>
+									<td><span>号码模式：</span>{{ajaxData.details.phoneModel}}
+										<!-- <b v-if="ajaxData.details.phoneModel=='basemodel'||ajaxData.details.phoneModel==''">基本模式</b>
+										<b v-else>其它模式</b> -->
 									</td>
 								</tr>
 								<tr>
-									<td><span>折扣模式：</span>
-										<b v-if="ajaxData.details.discountModel=='basemodel'||ajaxData.details.discountModel==''">基本模式</b>
-										<b v-else>其它模式</b>
+									<td><span>折扣模式：</span>{{ajaxData.details.discountModel}}
+										<!-- <b v-if="ajaxData.details.discountModel=='basemodel'||ajaxData.details.discountModel==''">基本模式</b>
+										<b v-else>其它模式</b> -->
 									</td>
 								</tr>
 								<tr>
-									<td><span>转账模式：</span>
-										<b v-if="ajaxData.details.transferModel=='basemodel'||ajaxData.details.transferModel==''">基本模式</b>
-										<b v-else>其它模式</b>
+									<td><span>转账模式：</span>{{ajaxData.details.transferModel}}
+										<!-- <b v-if="ajaxData.details.transferModel=='basemodel'||ajaxData.details.transferModel==''">基本模式</b>
+										<b v-else>其它模式</b> -->
 									</td>
 								</tr>
 							</tbody>
