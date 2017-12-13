@@ -198,6 +198,18 @@
 .u-icon-icon_yewu{
   background-image: url("../assets/images/icon_yewu.png");
 }
+.u-icon-liuliang{
+  background-image: url("../assets/images/icon_liuliang.png")
+}
+.u-icon-zhuce{
+  background-image: url("../assets/images/icon_zhuce.png")
+}
+.u-icon-jihuo{
+  background-image: url("../assets/images/icon_jihuo.png")
+}
+.u-icon-huafei{
+  background-image: url("../assets/images/icon_huafei.png")
+}
 .u-icon-shiftEchart{
   background-image: url("../assets/images/echarts-shift.png");
   background-size: 0.25rem;

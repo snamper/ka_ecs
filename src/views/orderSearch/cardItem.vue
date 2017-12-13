@@ -173,7 +173,7 @@
 		</section> -->
   	</div>
   	<div class="m-total-table" v-if="list">
-		<div class="total-head">统计结果<b>{{total}}</b></div>
+		<div class="total-head">统计结果<b>{{total}}</b> <button class="btn_export_excel" v-if="maxpage"  @click="downLoadList">导出excel</button></div>
 		<table>
 			<thead>
 				<tr>
@@ -284,7 +284,8 @@ require("../../assets/js/laydate/laydate.js");
 require("../../assets/js/laydate/skins/default/laydate.css");
 import pagination from "../../components/Page.vue";
 import details from "../../components/cardOrderDetails.vue";
-import { getDateTime,translateData,secondsFormat,getUnixTime } from "../../config/utils.js";
+import { getDateTime,translateData,secondsFormat,getUnixTime,createDownload,setStore, getStore, errorDeal } from "../../config/utils.js";
+let Base64 = require('js-base64').Base64;
 export default{
 	data (){
 		return {
@@ -473,6 +474,68 @@ export default{
 			},function(){
 				vm.off.isLoad=false;
 			})
+		},
+		// 导出查询结果excel
+		downLoadList:function(page){
+			var vm=this,url,json={"source":vm.form.source,"type":vm.form.orderType,"startTime":vm.form.startTime,"endTime":vm.form.endTime,"status":vm.form.orderStatus,'auditType':vm.form.auditType,"cardType":vm.form.cardType};
+			let context=vm.form['context'+vm.form.select];
+			vm.off.type==1&&vm.form.select!=6&&(json.status=0,vm.form.orderStatus=0);
+			if(vm.form.select==2&&(!context)){
+				layer.open({
+		            content:'请输入手机号码',
+		            skin: 'msg',
+		            time: 2,
+		            msgSkin:'error',
+		        });
+		        return false;
+			}else if(vm.form.select==2&&context.length!=11){
+				layer.open({
+		            content:'手机号码格式错误',
+		            skin: 'msg',
+		            time: 2,
+		            msgSkin:'error',
+		        });
+		        return false;
+			}else if(vm.form.select==3&&(!context)){
+				layer.open({
+		            content:'请输入审核人ID',
+		            skin: 'msg',
+		            time: 2,
+		            msgSkin:'error',
+		        });
+		        return false;
+			}else if(vm.form.select==4&&(!context)){
+				layer.open({
+		            content:'请输入身份证号',
+		            skin: 'msg',
+		            time: 2,
+		            msgSkin:'error',
+		        });
+		        return false;
+			}else if(vm.form.select==5&&(!context)){
+				layer.open({
+		            content:'请输入操作者ID',
+		            skin: 'msg',
+		            time: 2,
+		            msgSkin:'error',
+		        });
+		        return false;
+			}
+			var userInfo = getStore("KA_ECS_USER");
+			var	customerId = userInfo.customerId;
+			var codeId = userInfo.codeId;
+				json.customerId = customerId;
+				json.codeId = codeId;
+				json.context=context;
+				json.searchtype=vm.form.select;
+			if(vm.form.source==7){
+				return false;
+			}else{
+				url='w/audit/downloadEdList';
+			}
+			createDownload(url,  Base64.encode(JSON.stringify(json)),  function(){
+		        vm.off.isLoad=false;
+	      	});
 		},
 		getSdkJson(json){//SDK查询采用统一查询接口
 			var vm=this,type=vm.off.type,resJson={
