@@ -28,23 +28,24 @@ export const createDownload=(url,data,cb)=>{
 	ifr=document.getElementById("downLoadForm"),
     form = document.createElement("form"),
     input = document.createElement("input");
-
     if(!ifr){
     	ifr=document.createElement("iframe");
     	ifr.setAttribute("id","downLoadForm");
     	ifr.setAttribute("name","downLoadForm");
     	ifr.setAttribute("style","display:none");
     }
-
     ifr.addEventListener("load",function(e){
     	cb();
     	try{
-    		var result=JSON.parse(ifr.contentWindow.document.body.textContent);
-    		if(result.code!=200){
-    			errorDeal(result);
-    		}
-    	}catch(err){
-    		errorDeal(err);
+            var res = ifr.contentWindow.document.body.textContent;
+            if(res!=''&&res.hasOwnProperty('code')){
+               var result=JSON.parse(res);
+               if(res.code!=200){
+                  errorDeal(res);
+               } 
+            };	
+    	}catch(error){
+    		errorDeal(error);
     	}
     });
     
