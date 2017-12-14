@@ -100,8 +100,7 @@
 					<th>订单号</th>
 					<th>商户名称</th>
 					<th>商户ID</th>
-					<th>申请人姓名</th>
-					<th>申请人ID</th>
+					<th>申请人</th>
 					<th>申请业务</th>
 					<th>申请时间</th>
 					<th></th>
@@ -111,15 +110,13 @@
 					<th>订单号</th>
 					<th>商户名称</th>
 					<th>商户ID</th>
-					<th>申请人姓名</th>
-					<th>申请人ID</th>
+					<th>申请人</th>
 					<th>申请业务</th>
 					<th>申请时间</th>
-					<th>审核时间</th>
 					<th>审核人</th>
-					<th>审核人ID</th>
+					<th>审核时间</th>
 					<th>审核状态</th>
-					<th></th>
+					<th class="hasBtn"></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -129,8 +126,7 @@
 					<td>{{ todo.orderId }}</td>
 					<td>{{ todo.companyName }}</td>
 					<td>{{ todo.dealerId }}</td>
-					<td>{{ todo.userName }}</td>
-					<td>{{ todo.userId }}</td>
+					<td>{{ todo.userId }}<br/>（{{ todo.userName }}）</td>
 					<td>
 						<span v-if="todo.type==3">联通售卡</span>
 						<span v-if="todo.type==4">远特售卡</span>
@@ -144,16 +140,14 @@
 					<td>{{ todo.orderId }}</td>
 					<td>{{ todo.companyName }}</td>
 					<td>{{ todo.dealerId }}</td>
-					<td>{{ todo.userName }}</td>
-					<td>{{ todo.userId }}</td>
+					<td>{{ todo.userId }}<br/>（{{ todo.userName }}）</td>
 					<td>
 						<span v-if="todo.type==3">联通售卡</span>
 						<span v-if="todo.type==4">远特售卡</span>
 					</td>
 					<td>{{ getDateTime(todo.createTime)[6] }}</td>
+					<td>{{ todo.customerId }}<br/>（{{ todo.customerName }}）</td>
 					<td>{{ getDateTime(todo.modifyTime)[6] }}</td>
-					<td>{{ todo.customerName }}</td>
-					<td>{{ todo.customerId }}</td>
 					<td>
 						<span v-if="todo.status==2" class="f-c-green">通过</span>
 						<span v-if="todo.status==3" class="f-c-red">拒绝</span>

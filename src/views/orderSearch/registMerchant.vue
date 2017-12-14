@@ -30,6 +30,19 @@
 				</div>
 			</div>
 			<div class="row">
+				<span class="dp">订单状态：</span>
+				<div class="m-form-radio" v-show="form.auditType==1">
+					<label><span class="radio"><input type="radio" value="0" v-model="form.orderStatus"><span></span></span><span class="text">全部</span></label>
+					<label><span class="radio"><input type="radio" value="3" v-model="form.orderStatus"><span></span></span><span class="text">待分配</span></label>
+					<label><span class="radio"><input type="radio" value="4" v-model="form.orderStatus"><span></span></span><span class="text">已分配</span></label>
+				</div>
+				<div class="m-form-radio" v-show="form.auditType==2">
+					<label><span class="radio"><input type="radio" value="0" v-model="form.orderStatus"><span></span></span><span class="text">全部</span></label>
+					<label><span class="radio"><input type="radio" value="1" v-model="form.orderStatus"><span></span></span><span class="text">通过</span></label>
+					<label><span class="radio"><input type="radio" value="2" v-model="form.orderStatus"><span></span></span><span class="text">拒绝</span></label>
+				</div>
+			</div>
+			<div class="row fullRow">
 				<span class="dp">时间区间：</span>
 				<div class="f-inline-block">
 					<span class="m-time-area">
@@ -42,31 +55,17 @@
 		<section class="form-c o-no-bgc">
 			<div class="row" :class="{active:form.select==1}">
 				<span class="m-form-radio">
-					<label><span class="radio"><input type="radio" value="1" v-model="form.select"><span></span></span><span class="text">订单号码：</span></label>
+					<label><span class="radio"><input @click="radioClick" type="radio" value="1" v-model="form.select"><span></span></span><span class="text">订单号码：</span></label>
 				</span>
 				<div class="input-box"><input v-model="form.context1" :readonly="form.select!=1" maxlength="32" type="tel" placeholder="请输入查询的订单号码"></div>
 			</div>
 			<div class="row" :class="{active:form.select==2}">
 				<span class="m-form-radio">
-					<label><span class="radio"><input type="radio" value="2" v-model="form.select"><span></span></span><span class="text">申请人号码：</span></label>
+					<label><span class="radio"><input @click="radioClick" type="radio" value="2" v-model="form.select"><span></span></span><span class="text">申请人号码：</span></label>
 				</span>
 				<div class="input-box"><input v-model="form.context2" :readonly="form.select!=2" maxlength="11" type="tel" placeholder="请输入查询的申请人号码"></div>
 			</div>
-			<div class="row fullRow" :class="{active:form.select==3}">
-				<span class="m-form-radio">
-					<label><span class="radio"><input type="radio" value="3" :readonly="form.select!=3" v-model="form.select"><span></span></span><span class="text">订单状态：</span></label>
-				</span>
-				<div class="m-form-radio col-radio" v-show="form.auditType==1">
-					<label><span class="radio"><input type="radio" value="0" v-model="form.context3"><span></span></span><span class="text">全部</span></label>
-					<label><span class="radio"><input type="radio" value="3" v-model="form.context3"><span></span></span><span class="text">待分配</span></label>
-					<label><span class="radio"><input type="radio" value="4" v-model="form.context3"><span></span></span><span class="text">已分配</span></label>
-				</div>
-				<div class="m-form-radio col-radio" v-show="form.auditType==2">
-					<label><span class="radio"><input type="radio" value="0" v-model="form.context3"><span></span></span><span class="text">全部</span></label>
-					<label><span class="radio"><input type="radio" value="1" v-model="form.context3"><span></span></span><span class="text">通过</span></label>
-					<label><span class="radio"><input type="radio" value="2" v-model="form.context3"><span></span></span><span class="text">拒绝</span></label>
-				</div>
-			</div>
+			
 			<button class="f-btn f-btn-line" @click="searchList()">查询</button>
 		</section>
   	</div>
@@ -81,7 +80,7 @@
 					<th>商户类型</th>
 					<th>申请人号码</th>
 					<th>订单状态</th>
-					<th></th>
+					<th class="hasBtn"></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -130,12 +129,12 @@ export default{
 			form:{
 				auditType:1,//1,待审核；2，已审核
 				merchantType:0,//1,企业；2，个人
+				orderStatus:0,//订单状态
 				context1:'',//订单号码
 				context2:'',//充值号码
-				context3:0,//订单状态
 				startTime:'',
 				endTime:'',
-				select:3//条件查询，选择的条件
+				select:0//条件查询，选择的条件
 			},
 			list:'',//查询数据
 			detailsData:'',//详情数据
@@ -160,6 +159,9 @@ export default{
 			vm.form.startTime=laydate.now(0,'YYYY-MM-DD 00:00:00');
 			vm.form.endTime=laydate.now(0,'YYYY-MM-DD 23:59:59');
 		},
+		radioClick(){
+			this.form.select=0;
+		},
 		searchList:function(page){
 			var vm=this,select=vm.form.select,
 			   sql="A.create_time BETWEEN "+getUnixTime(vm.form.startTime)+" AND "+getUnixTime(vm.form.endTime)+"",
@@ -182,23 +184,22 @@ export default{
 		        });
 		        return false;
 			}
-
 			if(vm.form.merchantType!=0)sql+=" AND A.merchant_type="+vm.form.merchantType;
 
 			if(select==1){
 				sql+=' AND A.order_id="'+context+'"';
 			}else if(select==2){
 				sql+=' AND A.request_phone="'+context+'"';
-			}else if(select==3){
-				if(vm.form.auditType==1){
-					if(context==0){
-						sql+=" AND (A.order_status=3 OR A.order_status=4)";
-					}else sql+=" AND A.order_status="+context;
-				}else if(vm.form.auditType==2){
-					if(context==0){
-						sql+=" AND (A.order_status=1 OR A.order_status=2)";
-					}else sql+=" AND A.order_status="+context;
-				}
+			}
+			let orderStatus=vm.form.orderStatus;
+			if(vm.form.auditType==1){
+				if(context==orderStatus){
+					sql+=" AND (A.order_status=3 OR A.order_status=4)";
+				}else sql+=" AND A.order_status="+orderStatus;
+			}else if(vm.form.auditType==2){
+				if(orderStatus==0){
+					sql+=" AND (A.order_status=1 OR A.order_status=2)";
+				}else sql+=" AND A.order_status="+orderStatus;
 			}
 
 			json.params.push(sql);

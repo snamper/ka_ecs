@@ -94,9 +94,9 @@
 					<th>运营商</th>
 					<th>支付方式</th>
 					<th>充值时间</th>
-					<th>操作者工号</th>
+					<th>操作人</th>
 					<th>订单状态</th>
-					<th></th>
+					<th class="hasBtn"></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -120,7 +120,7 @@
 						<span v-show="todo.payType==3" class="u-icon-alipay"></span>
 					</td>
 					<td>{{getDateTime(todo.rechargeTime)[6]}}</td>
-					<td>{{todo.userId}}</td>
+					<td>{{todo.userId}}<br/>（{{todo.userName}}）</td>
 					<td v-if="todo.rechargeType==1">
 						<span v-show="todo.orderStatus==1||todo.orderStatus==3" class="f-c-yellow">进行中</span>
 						<span v-show="todo.orderStatus==2||todo.orderStatus==4" class="f-c-red">失败</span>

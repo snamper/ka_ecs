@@ -68,7 +68,7 @@
 										<span v-if="list.allowRecheck==2" class="red">超过复审时间</span>
 									</td>
 								</tr>
-								<tr v-show="source!=7"><td>操作人姓名：</td><td>{{ list.operatorName }}【操作人ID：{{ list.operatorId }}】<a v-show="list.operatorName" href="javascript:void(0)" @click="detailsUser" class="details m-l">查看详情</a></td></tr>
+								<tr v-show="source!=7"><td>操作人：</td><td>{{ list.operatorName }}【ID：{{ list.operatorId }}】<a v-show="list.operatorName" href="javascript:void(0)" @click="detailsUser" class="details m-l">查看详情</a></td></tr>
 								<tr v-show="source!=7"><td>操作人IP：</td><td>{{ list.host }}</td></tr>
 								<tr v-show="source!=7"><td>开卡位置信息：</td><td>
 									<span v-show="list.longitude">{{ list.latitude }}，{{ list.longitude }}<a href="javascript:void(0)" @click="toMap" class="details m-l">查看地图</a></span>
@@ -408,7 +408,7 @@ export default{
 						list_item1.result==3?'<span class="fCYellow">转人工审核</span>':	'--'
 					}</div></li>
 					<li class="clr"><div class="fl">拒绝理由：</div><div class="fright">${
-						list_item1.code==1018?'<span class="fCGreen">远特开卡超过上限</span>':
+						list_item1.code==1018?'<span class="fCRed">远特开卡超过上限</span>':
 						list_item1.code==1019?'<span class="fCRed">联通开卡超过上限</span>':'--'
 					}</div></li></ul>`,
 					type:0,

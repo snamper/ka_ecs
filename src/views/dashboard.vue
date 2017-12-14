@@ -42,14 +42,14 @@
                       </div>
           <div class="statistics">
             <div class="col">
-              <div>远特普号<span>（可售）</span></div><b class="fsfantasy">
+              <div>远特普号<span class="media-540">（可售）</span></div><b class="fsfantasy">
                 <CountUp :start="0"
                         :end="parseInt(phoneTotal[0])"
                         :decimals="0"
                         :duration="3"
                         :options="countOptions"
                         :callback="callback"></CountUp></b>
-              <div>远特靓号<span>（可售）</span></div><b class="fsfantasy"><CountUp :start="0"
+              <div>远特靓号<span class="media-540">（可售）</span></div><b class="fsfantasy"><CountUp :start="0"
                         :end="parseInt(phoneTotal[1])"
                         :decimals="0"
                         :duration="3"
@@ -57,13 +57,13 @@
                         :callback="callback"></CountUp></b></b>
             </div>
             <div class="col">
-              <div>联通普号<span>（可售）</span></div><b class="fsfantasy"><CountUp :start="0"
+              <div>联通普号<span class="media-540">（可售）</span></div><b class="fsfantasy"><CountUp :start="0"
                         :end="parseInt(phoneTotal[2])"
                         :decimals="0"
                         :duration="3"
                         :options="countOptions"
                         :callback="callback"></CountUp></b></b>
-              <div>联通靓号<span>（可售）</span></div><b class="fsfantasy"><CountUp :start="0"
+              <div>联通靓号<span class="media-540">（可售）</span></div><b class="fsfantasy"><CountUp :start="0"
                         :end="parseInt(phoneTotal[3])"
                         :decimals="0"
                         :duration="3"
@@ -135,8 +135,8 @@
       <div class="map-box-out make_transist" v-bind:class="{'showscale' : !isA, 'hidescale': isA}">
         <div class="map-box">
           <!--开卡尝试-->
-          <div class="map-box-inner" id="cardCreate">总数</div>
-          <div class="inner-total total-1">（<span>总数：</span><b class="fsfantasy"><CountUp :start="0"
+          <div class="map-box-inner" id="cardCreate"></div>
+          <div class="inner-total total-1">（<span>历史总数：</span><b class="fsfantasy"><CountUp :start="0"
                         :end="parseInt(secondViewTotal[0])"
                         :decimals="0"
                         :duration="3"
@@ -144,7 +144,7 @@
                         :callback="callback"></CountUp></b>）</div>
           <!--开卡成功数-->
           <div class="map-box-inner" style="flex:1.2" id="openCardSuccess"></div>
-          <div class="inner-total total-2">（<span>总数：</span><b class="fsfantasy"><CountUp :start="0"
+          <div class="inner-total total-2">（<span>历史总数：</span><b class="fsfantasy"><CountUp :start="0"
                         :end="parseInt(secondViewTotal[1])"
                         :decimals="0"
                         :duration="3"
@@ -154,7 +154,7 @@
         <div class="map-box">
           <!--在线用户-->
           <div class="map-box-inner" id="onlineUser"></div>
-          <div class="inner-total total-1">（<span>总数：</span><b class="fsfantasy"><CountUp :start="0"
+          <div class="inner-total total-1">（<span>历史总数：</span><b class="fsfantasy"><CountUp :start="0"
                         :end="parseInt(secondViewTotal[2])"
                         :decimals="0"
                         :duration="3"
@@ -162,7 +162,7 @@
                         :callback="callback"></CountUp></b>）</div>
           <!--充值金额-->
           <div class="map-box-inner" style="flex:1.2" id="rechargeMoney"></div>
-          <div class="inner-total total-2">（<span>总数：</span><b class="fsfantasy"><CountUp :start="0"
+          <div class="inner-total total-2">（<span>历史总数：</span><b class="fsfantasy"><CountUp :start="0"
                         :end="parseInt(secondViewTotal[3])"
                         :decimals="0"
                         :duration="3"
@@ -327,7 +327,7 @@ import CountUp from 'vue-countup-v2';
       },
       noticeScroll(){//消息滚动执行
         var vm=this,noticeBox=document.getElementById("notice-box");
-        noticeBox.scrollTop=noticeBox.scrollHeight;
+        if(noticeBox)noticeBox.scrollTop=noticeBox.scrollHeight;
         if(vm.notice.length>100){
           vm.notice=[];
         }

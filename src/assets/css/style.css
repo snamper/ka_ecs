@@ -219,7 +219,8 @@ input, button{ -webkit-appearance: none;-moz-appearance: none;-ms-appearance: no
     width: 2.2rem;
 }
 .o-fl-w>.clr>.fright{
-    width: 1.7rem;
+    width:auto;
+    margin-left:2.2rem;
 }
 /*拒绝弹出层*/
 

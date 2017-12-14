@@ -132,11 +132,11 @@
 									<td><span>额外分值：</span>{{ ajaxData.details.extraCredit }}</td>
 								</tr>
 								<tr>
-									<td><span>业务范围：</span>
-										<b v-if="ajaxData.details.attribute==1">远特售卡</b>
-										<b v-if="ajaxData.details.attribute==2">联通售卡</b>
-										<b v-if="ajaxData.details.attribute==3">远特售卡+联通售卡</b>
-										<b v-if="ajaxData.details.attribute==4">联通售卡+远特售卡</b>
+									<td><span>售卡范围：</span>
+										<b v-if="ajaxData.details.attribute==1">A（远特售卡）</b>
+										<b v-if="ajaxData.details.attribute==2">B（联通售卡）</b>
+										<b v-if="ajaxData.details.attribute==3">C（远特售卡+联通售卡）</b>
+										<b v-if="ajaxData.details.attribute==4">D（联通售卡+远特售卡）</b>
 									</td>
 									<td><span>信用积分：</span>{{ ajaxData.details.creditNums }}</td>
 								</tr>
@@ -157,11 +157,13 @@
 									<td><span>真实等级：</span>{{ ajaxData.details.realLevel }}</td>
 								</tr>
 								<tr>
-									<td><span>设备信息：</span>{{ ajaxData.details.devMac }}</td>
+									<td><span>设备信息：</span>
+										<a :href="'#/home/resource/device/'+ajaxData.details.devMac" title="点击查看详情" class="details m-l">{{ ajaxData.details.devMac }}</a></td>
 									<td><span>基础分值：</span>{{ ajaxData.details.btScore }}</td>
 								</tr>
 								<tr>
-									<td><span>上级推广渠道ID：</span>{{ ajaxData.details.superDealerId||'--' }}【名称：{{ ajaxData.details.superDealerName||'--' }}】</td>
+									<td><span>上级推广渠道ID：</span>
+										<a v-show="ajaxData.details.superDealerId" :href="'#/home/resource/promoter/'+ajaxData.details.superDealerId" title="点击查看详情" class="details">{{ajaxData.details.superDealerId}}</a>【名称：{{ ajaxData.details.superDealerName||'--' }}】</td>
 									<td><span>基础总次数：</span>{{ ajaxData.details.btFrequency }}</td>
 								</tr>
 								<tr>
@@ -200,6 +202,24 @@
 								</tr>
 								<tr>
 									<td><span>保证金：</span>{{ parseFloat(ajaxData.details.bond)/100 }}元</td>
+								</tr>
+								<tr>
+									<td><span>号码模式：</span>{{ajaxData.details.phoneModel}}
+										<!-- <b v-if="ajaxData.details.phoneModel=='basemodel'||ajaxData.details.phoneModel==''">基本模式</b>
+										<b v-else>其它模式</b> -->
+									</td>
+								</tr>
+								<tr>
+									<td><span>折扣模式：</span>{{ajaxData.details.discountModel}}
+										<!-- <b v-if="ajaxData.details.discountModel=='basemodel'||ajaxData.details.discountModel==''">基本模式</b>
+										<b v-else>其它模式</b> -->
+									</td>
+								</tr>
+								<tr>
+									<td><span>转账模式：</span>{{ajaxData.details.transferModel}}
+										<!-- <b v-if="ajaxData.details.transferModel=='basemodel'||ajaxData.details.transferModel==''">基本模式</b>
+										<b v-else>其它模式</b> -->
+									</td>
 								</tr>
 							</tbody>
 						</table>

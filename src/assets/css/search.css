@@ -226,6 +226,7 @@ display:inline-block;position: absolute;right: 5px;top:50%;width:0.18rem;height:
 .m-total-table table, .g-base-table{width: 100%;word-break:break-all;word-wrap: break-word;white-space: normal;table-layout:fixed;border-spacing:0px; border-collapse: collapse;  border:1px solid #dfe6ec; background-color: transparent;  text-align: center; }
 .m-total-table table thead{  }
 .m-total-table table thead th, .g-base-table thead th{ height: 35px; background-color: #eef1f6;font-weight: normal;}
+.m-total-table table thead th:first-child, .m-total-table table thead .hasBtn{width: 0.5rem;}
 .m-total-table table tbody tr, .g-base-table tbody tr{border-top:1px solid #dfe6ec;color: #4e5e6e;}
 .m-total-table table tbody tr>td, .g-base-table tbody tr>td{padding: 10px 0;}
 .m-total-table table tbody tr:nth-child(even), .g-base-table tbody tr:nth-child(even){ background: #fafafa; }
