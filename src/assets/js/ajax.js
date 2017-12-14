@@ -29,7 +29,6 @@ Vue.prototype.AJAX=function(url,data,success,load){
         }
         response.data.code=="200" ? success(response.data) : errorDeal(response.data);
     }).catch((response)=>{
-        console.log(response);
         let msg='';
         if (response instanceof Error) {
             msg=response.message;

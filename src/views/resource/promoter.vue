@@ -50,7 +50,7 @@
 			</table>
 		</div>
 		<div class="m-total-table" v-show="deviceList.length">
-			<div class="total-head">设备列表<b>{{devicePageParam.total}}</b></div>
+			<div class="total-head">推广方设备列表<b>{{devicePageParam.total}}</b></div>
 			<table>
 				<thead>
 					<tr>
@@ -78,7 +78,7 @@
 							<span v-show="todo.businessPower==3">C（远特售卡+联通售卡）</span>
 							<span v-show="todo.businessPower==4">D（联通售卡+远特售卡）</span>
 						</td>
-						<td>{{ getDateTime(todo.createTime)[6] }}</td>
+						<td>{{ todo.createTime }}</td>
 						<td>{{ todo.activationTime }}</td>
 					</tr>
 				</tbody>

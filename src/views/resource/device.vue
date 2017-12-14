@@ -40,7 +40,7 @@
 							<span class="f-c-red" v-show="todo.state==0">未激活</span>
 						</td>
 						
-						<td>{{ getDateTime(todo.createTime)[6] }}</td>
+						<td>{{ todo.createTime }}</td>
 						<td>{{ todo.activationTime }}</td>
 						<td>
 							<a :href="'#/home/resource/promoter/'+todo.protomerDealerId" title="点击查看详情" class="details">{{todo.protomerDealerId}}</a><br/>
