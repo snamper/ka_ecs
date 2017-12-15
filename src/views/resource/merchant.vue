@@ -415,7 +415,7 @@ export default{
 				vm.form.context=val;
 				vm.getDetails();
 			}
-		},500);
+		},10);
 	},
 	methods:{
 		toMap(){

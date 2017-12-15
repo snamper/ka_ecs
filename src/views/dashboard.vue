@@ -219,6 +219,8 @@ import CountUp from 'vue-countup-v2';
       window.onresize=function(){
         change();
       };
+
+
     },
     beforeDestroy:function(){
       this.noticeMouseEvent();
@@ -455,9 +457,12 @@ import CountUp from 'vue-countup-v2';
         // }else return filter(num)
       },
       initMap(params) {
-        var vm = this,series = [],min=[],
-        myChart = echarts.init(document.getElementById(params.id));
-        myChart.showLoading();
+        var vm = this,series = [],min=[],myChart = '';
+        if(document.getElementById(params.id)==null){
+          return false;
+        }else{
+          myChart = echarts.init(document.getElementById(params.id));
+          myChart.showLoading();
         for (let i = 0; i < params.legend.length; i++) {
           let option={
             name: params.legend[i],
@@ -599,6 +604,7 @@ import CountUp from 'vue-countup-v2';
         });
         myChart.setOption(option);
         myChart.hideLoading();
+        } 
       },
       getDateTime(v){
         return getDateTime(v);
