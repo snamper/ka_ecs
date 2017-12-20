@@ -24,19 +24,41 @@
 		
 		<div class="m-tag"><b></b>条件查询</div>
 		<section class="form-c">	
-			
-			<div class="row clr m-col-2 fullRow">
+			<div class="row fullRow">
+				<span class="dp">系统类型：</span>
+				<div class="m-form-radio">
+					<label><span class="radio"><input type="radio" value="0" v-model="form.appType"><span></span></span><span class="text">全部</span></label>
+					<label><span class="radio"><input type="radio" value="1" v-model="form.appType"><span></span></span><span class="text">卡盟APP</span></label>
+					<label><span class="radio"><input type="radio" value="2" v-model="form.appType"><span></span></span><span class="text">Dwatch</span></label>
+					<label><span class="radio"><input type="radio" value="3" v-model="form.appType"><span></span></span><span class="text">Android Wear</span></label>
+					<label><span class="radio"><input type="radio" value="4" v-model="form.appType"><span></span></span><span class="text">卡盟SDK</span></label>
+					<label><span class="radio"><input type="radio" value="5" v-model="form.appType"><span></span></span><span class="text">卡盟通服</span></label>
+				</div>
+			</div>
+			<div class="row clr m-col-2">
 				<span class="dp col-l">操作人ID：</span>
 				<div class="col-r">
 					<div class="input-box"><input v-model="form.userId" maxlength="16" type="tel" placeholder="请输入查询的用户工号"></div>
 				</div>
 			</div>
-			<!-- <div class="row clr m-col-2 fullRow">
+			<div class="row clr m-col-2">
 				<span class="dp col-l">订单号码：</span>
 				<div class="col-r">
 					<div class="input-box"><input v-model="form.orderId" maxlength="32" type="tel" placeholder="请输入查询的订单号码"></div>
 				</div>
-			</div> -->
+			</div>
+			<div class="row clr m-col-2">
+				<span class="dp col-l">身份证号：</span>
+				<div class="col-r">
+					<div class="input-box"><input v-model="form.idCardNo" maxlength="18" type="tel" placeholder="请输入查询的用户工号"></div>
+				</div>
+			</div>
+			<div class="row clr m-col-2">
+				<span class="dp col-l">操作号码：</span>
+				<div class="col-r">
+					<div class="input-box"><input v-model="form.phoneNo" maxlength="11" type="tel" placeholder="请输入查询的订单号码"></div>
+				</div>
+			</div>
 			<div class="row">
 				<span class="dp">时间区间：</span>
 				<div class="f-inline-block">
@@ -53,6 +75,16 @@
 				<div class="m-form-radio" v-show="off.type==2">
 					<label><span class="radio"><input type="radio" value="0" v-model="form.deviceId"><span></span></span><span class="text">全部</span></label>
 					<label><span class="radio"><input type="radio" value="1" v-model="form.deviceId"><span></span></span><span class="text">旷视</span></label>
+				</div>
+			</div>
+			
+			<div class="row">
+				<span class="dp">操作类型：</span>
+				<div class="m-form-radio">
+					<label><span class="radio"><input type="radio" value="0" v-model="form.operation"><span></span></span><span class="text">全部</span></label>
+					<label><span class="radio"><input type="radio" value="1" v-model="form.operation"><span></span></span><span class="text">开卡</span></label>
+					<label><span class="radio"><input type="radio" value="2" v-model="form.operation"><span></span></span><span class="text">激活商户</span></label>
+					<label><span class="radio"><input type="radio" value="3" v-model="form.operation"><span></span></span><span class="text">过户办理</span></label>
 				</div>
 			</div>
 			<div class="row">
@@ -84,7 +116,9 @@
 					<th>识别时间</th>
 					<th>终端类型</th>
 					<th>设备类型</th>
-					<!-- <th>订单号码</th> -->
+					<th>订单号码</th>
+					<th>系统类型</th>
+					<th>操作类型</th>
 					<th>状态</th>
 				</tr>
 			</thead>
@@ -106,7 +140,19 @@
 							<b v-show="todo.deviceId==1">旷视</b>
 						</span>
 					</td>
-					<!-- <td>{{ todo.orderId }}</td> -->
+					<td>{{ todo.orderId }}</td>
+					<td>
+						<span v-show="todo.appType==1">卡盟APP</span>
+						<span v-show="todo.appType==2">Dwatch</span>
+						<span v-show="todo.appType==3">Android wear</span>
+						<span v-show="todo.appType==4">卡盟SDK</span>
+						<span v-show="todo.appType==5">卡盟通服</span>
+					</td>
+					<td>
+						<span v-show="todo.operation==1">开卡</span>
+						<span v-show="todo.operation==2">激活商户</span>
+						<span v-show="todo.operation==3">过户办理</span>
+					</td>
 					<td>
 						<span v-show="todo.result==0" class="f-c-red">失败</span>
 						<span v-show="todo.result==1" class="f-c-green">成功</span>
@@ -145,6 +191,10 @@ export default{
 			},
 			form:{
 				orderId:'',//订单号码
+				idCardNo:'',//身份证号码
+				phoneNo:'',//操作号码
+				operation:0,//操作类型
+				appType:0,//系统类型
 				userId:'',//用户工号
 				deviceId:0,//设备类型
 				terminalType:0,//终端类型
@@ -194,7 +244,11 @@ export default{
 					"terminalType":vm.form.terminalType,
 					"deviceId":vm.form.deviceId,
 					"result":vm.form.result,
-					"orderId":vm.form.orderId
+					"orderId":vm.form.orderId,
+					"idCardNo":vm.form.idCardNo,
+					"phoneNo":vm.form.phoneNo,
+					"operation":vm.form.operation,
+					"appType":vm.form.appType,
 				};
 			if(vm.off.type==1){
 				url="w/statistics/identifier";
@@ -241,7 +295,11 @@ export default{
 					"result":vm.form.result,
 					"customerId":userInfo.customerId,
 					"codeId":userInfo.codeId,
-					"orderId":vm.form.orderId
+					"orderId":vm.form.orderId,
+					"idCardNo":vm.form.idCardNo,
+					"phoneNo":vm.form.phoneNo,
+					"operation":vm.form.operation,
+					"appType":vm.form.appType,
 				};
 			if(vm.off.type==1){
 				url="w/statistics/identifierListdown";

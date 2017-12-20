@@ -350,7 +350,7 @@ body::-webkit-scrollbar-resizer, .f-scroll-lt::-webkit-scrollbar-resizer{
 .navBg9>div{background-image:url(../images/sim_sdk.png);background-color:#4b3887;}
 .navBg9>p{background-color:#4b3887; color:#4b3887;}
 /*激活商户*/
-.navBg10>div{background-image:url(../images/icon_jihuo.png);background-color: #FFB300;}
+.navBg10>div{background-image:url(../images/icon_jihuo_audit.png);background-color: #FFB300;}
 .navBg10>p{background-color:#FF8F00; color:#FF8F00;}
 /*卡盟穿戴*/
 .u-icon-back{background-image: url("../images/left.png");background-size: contain;}

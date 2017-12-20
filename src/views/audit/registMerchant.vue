@@ -65,6 +65,8 @@
 										<button class="gztBtn" @click="gztBtn" v-show="auditData.merchantType==2">国政通检验</button>
 									</td>
 								</tr>
+									<tr><td>身份证有效期：</td><td>{{auditData.idCardPeriod}}</td></tr>
+
 									<tr><td>商户注册电话：</td><td>{{auditData.phone}}</td></tr>
 									<tr><td>具体地址：</td><td>{{auditData.address}}</td></tr>
 									<tr><td>邀请码：</td><td>{{auditData.superInviteCode}}</td></tr>
@@ -167,7 +169,9 @@ export default{
 		},
 		agree:function(){//审核同意
 			var vm=this,url='',orderId=vm.auditData.orderId;
+
 			vm.AJAX("w/regist/audit",{"orderId":orderId,"result":1,"remarks":""},function(data){
+
 				layer.open({
 					content:data.msg,
 					skin: 'msg',
@@ -215,7 +219,7 @@ export default{
 					reason=document.getElementById('reason').value;
 					if(remark==''&&reason=='')return false;
 					console.log(remark+'|'+reason)
-					vm.AJAX("w/regist/audit",{"orderId":orderId,"result":2,"remarks":remark+'|'+reason},function(data){
+					vm.AJAX("w/regist/audit",{"orderId":orderId,"result":2,"remarks":remark+'|'+reason,"auditType":2},function(data){
 						layer.open({
 							content:data.msg,
 							skin: 'msg',
