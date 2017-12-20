@@ -193,9 +193,9 @@ export default{
 			}
 			let orderStatus=vm.form.orderStatus;
 			if(vm.form.auditType==1){
-				if(context==orderStatus){
+				 if(orderStatus==0){
 					sql+=" AND (A.order_status=3 OR A.order_status=4)";
-				}else sql+=" AND A.order_status="+orderStatus;
+				 }else sql+=" AND A.order_status="+orderStatus;
 			}else if(vm.form.auditType==2){
 				if(orderStatus==0){
 					sql+=" AND (A.order_status=1 OR A.order_status=2)";

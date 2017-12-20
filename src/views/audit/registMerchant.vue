@@ -9,6 +9,19 @@
   	height: 100%;
   	position: relative;
   }
+  .gztBtn{
+  	width: 86px;
+  	height: 24px;
+  	border:1px solid #13ce66;
+  	border-radius: 5px;
+  	background: #13ce66;
+  	color: white;
+  	margin-left: 20px;
+  	font-size: 14px;
+  }
+  .gztBtn:active{
+  	box-shadow: 0 0 2px #13ce66;
+  }
 </style>
 <template>
 <div style="width100%;height:100%;padding:10px;">
@@ -47,7 +60,11 @@
 									<tr><td>
 										<span v-show="auditData.merchantType==1">营业执照编号：</span>
 										<span v-show="auditData.merchantType==2">身份证号码：</span>
-									</td><td>{{auditData.businessLicence}}</td></tr>
+									</td>
+									<td>{{auditData.businessLicence}}
+										<button class="gztBtn" @click="gztBtn" v-show="auditData.merchantType==2">国政通检验</button>
+									</td>
+								</tr>
 									<tr><td>商户注册电话：</td><td>{{auditData.phone}}</td></tr>
 									<tr><td>具体地址：</td><td>{{auditData.address}}</td></tr>
 									<tr><td>邀请码：</td><td>{{auditData.superInviteCode}}</td></tr>
@@ -77,6 +94,7 @@
 									<tr><td>上级商户名称：</td><td>{{auditData.superDealerName}}</td></tr>
 									<tr><td>操作人ID：</td><td>{{auditData.userId}}</td></tr>
 									<tr><td>操作人姓名：</td><td>{{auditData.userName}}</td></tr>
+
 								</tbody>
 							</table>
 						</td>
@@ -114,6 +132,8 @@ export default{
 			list:[],//分配的订单
 			auditData:'',//当前处理的订单
 			imgData:[],//当前订单的图片,
+			result:'',
+			datagzt:{},
 			refuseArr:{"type":"1","list":[{"code":"2001","info":"部分或全部照片中存在模糊、分辨率太小无法辨认/严重变形/反光严重/拍摄角度不规范","point":"0","stopCard":"0"},{"code":"2002","info":"背景非售卡现场拍摄照片(包括证件及手持照)","point":"0","stopCard":"0"},{"code":"2003","info":"无用户签名或签名与用户姓名不符","point":"0","stopCard":"0"},{"code":"2004","info":"手持证卡合影不规范，非免冠正脸照、人脸被遮挡等导致无法清晰辨别是否为本人","point":"0","stopCard":"0"},{"code":"2005","info":"部分或全部照片内容为疑似翻拍或合成","point":"0","stopCard":"0"},{"code":"2006","info":"非本人现场手持证卡照","point":"0","stopCard":"0"},{"code":"2007","info":"证件与手持合影照中证件不同","point":"0","stopCard":"0"},{"code":"2008","info":"已被拒绝并明知信息有问题（包括但不限于非本人现场手持证件）仍然多次重复恶意上传（严重违规）","point":"0","stopCard":"1"},{"code":"2009","info":"部分或全部照片内容被明确为翻拍或合成、造假（严重违规）","point":"0","stopCard":"1"}]}//拒绝原因
 		}
 	},
@@ -147,7 +167,6 @@ export default{
 		},
 		agree:function(){//审核同意
 			var vm=this,url='',orderId=vm.auditData.orderId;
-
 			vm.AJAX("w/regist/audit",{"orderId":orderId,"result":1,"remarks":""},function(data){
 				layer.open({
 					content:data.msg,
@@ -210,31 +229,74 @@ export default{
 					})					
 				}
 			})
-			
 		},
 		getAuditList:function(){//获取订单
 			const vm=this;
 			if(vm.off.isLoad==1){return false};
 			vm.off.isLoad=1;
-			vm.AJAX("w/regist/toAuditList",{},function(data){
-				if(data.data.list.length==0){
-					layer.open({
-			            content:'当前没有分配的订单',
-			            skin: 'msg',
-			            time: 4,
-			            msgSkin:'error',
-			        })
-			        return false;
-				}
-				vm.list=data.data.list;
-				vm.off.auditIndex=0;
-				vm.dealAuditList();
-				window.clearInterval(vm.timer);
-				vm.timeDown(parseInt(vm.list[0].peirod));
-			},function(){
-				vm.off.isLoad=0;
-			})
+			// 审核信息列表
+				new Promise(function(resolve,reject){
+					vm.AJAX("w/regist/toAuditList",{"auditType":1},function(data){
+						if(data.data.list.length==0){
+							layer.open({
+					            content:'当前没有分配的订单',
+					            skin: 'msg',
+					            time: 4,
+					            msgSkin:'error',
+					        })
+					        return false;
+						}
+						vm.list=data.data.list;
+						vm.off.auditIndex=0;
+						vm.dealAuditList();
+						window.clearInterval(vm.timer);
+						vm.timeDown(parseInt(vm.list[0].peirod));
+						if(data.data.list[0].merchantType==2){
+						  resolve("success!!");
+						}else{
+							reject("f")
+						}
+					},function(){
+						vm.off.isLoad=0;
+					})
+					debugger;
+				}).then(function(msg){
+				}).catch(function(msg){
+				})   				
 		},
+		// 激活审核国政通校验
+		gztBtn:function(){
+			const vm=this;
+		   vm.datagzt.orderId = vm.auditData.orderId;
+			vm.AJAX("w/regist/gztCheck",vm.datagzt,function(data){
+				if(data==''){
+			        return false;
+				}else{
+					vm.result = data.msg;
+					var code = data.code;
+				    vm.off.auditIndex=0;
+				    if(code==200){
+				    	layer.open({
+				            content:vm.result,
+				            skin: 'msg',
+				            time: 4,
+				            msgSkin:'success',
+				        })
+				    }else{
+				    	layer.open({
+				            content:vm.result,
+				            skin: 'msg',
+				            time: 4,
+				            msgSkin:'error',
+				        })
+				    }
+				    
+				}
+				},function(){
+					vm.off.isLoad=0;
+			})
+		}
+		,
 		dealAuditList:function(){//处理分配的订单
 			const vm=this,len=vm.list.length;
 			vm.auditData='';
