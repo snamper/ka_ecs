@@ -48,6 +48,7 @@
 										<span v-show="auditData.merchantType==1">营业执照编号：</span>
 										<span v-show="auditData.merchantType==2">身份证号码：</span>
 									</td><td>{{auditData.businessLicence}}</td></tr>
+									<tr><td>身份证有效期：</td><td>{{auditData.idCardPeriod}}</td></tr>
 									<tr><td>商户注册电话：</td><td>{{auditData.phone}}</td></tr>
 									<tr><td>具体地址：</td><td>{{auditData.address}}</td></tr>
 									<tr><td>邀请码：</td><td>{{auditData.superInviteCode}}</td></tr>
@@ -148,7 +149,7 @@ export default{
 		agree:function(){//审核同意
 			var vm=this,url='',orderId=vm.auditData.orderId;
 
-			vm.AJAX("w/regist/audit",{"orderId":orderId,"result":1,"remarks":""},function(data){
+			vm.AJAX("w/regist/audit",{"orderId":orderId,"result":1,"remarks":"","auditType":2},function(data){
 				layer.open({
 					content:data.msg,
 					skin: 'msg',
@@ -196,7 +197,7 @@ export default{
 					reason=document.getElementById('reason').value;
 					if(remark==''&&reason=='')return false;
 					console.log(remark+'|'+reason)
-					vm.AJAX("w/regist/audit",{"orderId":orderId,"result":2,"remarks":remark+'|'+reason},function(data){
+					vm.AJAX("w/regist/audit",{"orderId":orderId,"result":2,"remarks":remark+'|'+reason,"auditType":2},function(data){
 						layer.open({
 							content:data.msg,
 							skin: 'msg',
@@ -216,7 +217,7 @@ export default{
 			const vm=this;
 			if(vm.off.isLoad==1){return false};
 			vm.off.isLoad=1;
-			vm.AJAX("w/regist/toAuditList",{},function(data){
+			vm.AJAX("w/regist/toAuditList",{"auditType":2},function(data){
 				if(data.data.list.length==0){
 					layer.open({
 			            content:'当前没有分配的订单',
