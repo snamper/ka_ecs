@@ -119,6 +119,8 @@
 					<th>订单号码</th>
 					<th>系统类型</th>
 					<th>操作类型</th>
+					<th>身份证号码</th>
+					<th>用户号码</th>
 					<th>状态</th>
 				</tr>
 			</thead>
@@ -153,6 +155,8 @@
 						<span v-show="todo.operation==2">激活商户</span>
 						<span v-show="todo.operation==3">过户办理</span>
 					</td>
+					<td>{{ todo.idCardNo }}</td>
+					<td>{{ todo.phoneNo }}</td>
 					<td>
 						<span v-show="todo.result==0" class="f-c-red">失败</span>
 						<span v-show="todo.result==1" class="f-c-green">成功</span>

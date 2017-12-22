@@ -13,10 +13,10 @@
   		<section class="m-top-shift f-tas">
 			<div class="box">
 				<label class="item" @click="topShiftClick">
-					<input type="radio" v-model="form.auditType" value="1"><span class="slider">待审核</span>
+					<input type="radio" v-model="form.orderType" value="1"><span class="slider">待审核</span>
 				</label>
 				<label class="item" @click="topShiftClick">
-					<input type="radio" v-model="form.auditType" value="2"><span class="slider">已审核</span>
+					<input type="radio" v-model="form.orderType" value="2"><span class="slider">已审核</span>
 				</label>
 			</div>
 		</section>
@@ -31,23 +31,32 @@
 			</div>
 			<div class="row">
 				<span class="dp">订单状态：</span>
-				<div class="m-form-radio" v-show="form.auditType==1">
+				<div class="m-form-radio" v-show="form.orderType==1">
 					<label><span class="radio"><input type="radio" value="0" v-model="form.orderStatus"><span></span></span><span class="text">全部</span></label>
 					<label><span class="radio"><input type="radio" value="3" v-model="form.orderStatus"><span></span></span><span class="text">待分配</span></label>
 					<label><span class="radio"><input type="radio" value="4" v-model="form.orderStatus"><span></span></span><span class="text">已分配</span></label>
 				</div>
-				<div class="m-form-radio" v-show="form.auditType==2">
+				<div class="m-form-radio" v-show="form.orderType==2">
 					<label><span class="radio"><input type="radio" value="0" v-model="form.orderStatus"><span></span></span><span class="text">全部</span></label>
 					<label><span class="radio"><input type="radio" value="1" v-model="form.orderStatus"><span></span></span><span class="text">通过</span></label>
 					<label><span class="radio"><input type="radio" value="2" v-model="form.orderStatus"><span></span></span><span class="text">拒绝</span></label>
 				</div>
 			</div>
-			<div class="row fullRow">
+			<div class="row">
 				<span class="dp">时间区间：</span>
 				<div class="f-inline-block">
 					<span class="m-time-area">
 						<input @click="to_laydate(1)" v-model="form.startTime" type="text" readonly="readonly"><input @click="to_laydate(2)" v-model="form.endTime" type="text" readonly="readonly">
 					</span>
+				</div>
+			</div>
+			<div class="row">
+				<span class="dp">审核方式：</span>
+				<div class="m-form-radio">
+					<label><span class="radio"><input value="0" type="radio" v-model="form.auditType"><span></span></span><span class="text">全部</span></label>
+					<label><span class="radio"><input value="1" type="radio" v-model="form.auditType"><span></span></span><span class="text">实时审核</span></label>
+					<label><span class="radio"><input value="2" type="radio" v-model="form.auditType"><span></span></span><span class="text">事后审核</span></label>
+					<label><span class="radio"><input value="3" type="radio" v-model="form.auditType"><span></span></span><span class="text">自动审核</span></label>
 				</div>
 			</div>
 		</section>
@@ -78,7 +87,9 @@
 					<th>订单号</th>
 					<th>申请时间</th>
 					<th>商户类型</th>
+					<th>售卡范围</th>
 					<th>申请人号码</th>
+					<th>审核方式</th>
 					<th>订单状态</th>
 					<th class="hasBtn"></th>
 				</tr>
@@ -92,7 +103,18 @@
 						<span v-show="todo.merchantType==1">企业</span>
 						<span v-show="todo.merchantType==2">个人</span>
 					</td>
+					<td>
+						<span v-show="todo.merchantAttribute==1">A（远特售卡）</span>
+						<span v-show="todo.merchantAttribute==2">B（联通售卡）</span>
+						<span v-show="todo.merchantAttribute==3">C（远特售卡+联通售卡）</span>
+						<span v-show="todo.merchantAttribute==4">D（联通售卡+远特售卡）</span>
+					</td>
 					<td>{{todo.phone}}</td>
+					<td>
+						<span v-show="todo.auditType==1">实时审核</span>
+						<span v-show="todo.auditType==2">事后审核</span>
+						<span v-show="todo.auditType==3">自动审核</span>
+					</td>
 					<td>
 						<span v-show="todo.orderStatus==1" class="f-c-green">通过</span>
 						<span v-show="todo.orderStatus==2" class="f-c-red">拒绝</span>
@@ -107,7 +129,7 @@
 	</div>
 	</section>
 	<!--详情-->
-	<list-details :list="detailsData" v-if="off.details" :auditType="form.auditType">
+	<list-details :list="detailsData" v-if="off.details" :orderType="form.orderType">
 
 	</list-details>
   </div>
@@ -127,7 +149,8 @@ export default{
 				details:0,//详情页面开关
 			},
 			form:{
-				auditType:1,//1,待审核；2，已审核
+				auditType:0,//审核方式
+				orderType:1,//1,待审核；2，已审核
 				merchantType:0,//1,企业；2，个人
 				orderStatus:0,//订单状态
 				context1:'',//订单号码
@@ -185,6 +208,7 @@ export default{
 		        return false;
 			}
 			if(vm.form.merchantType!=0)sql+=" AND A.merchant_type="+vm.form.merchantType;
+			if(vm.form.auditType!=0)sql+=" AND A.audit_type="+vm.form.auditType;
 
 			if(select==1){
 				sql+=' AND A.order_id="'+context+'"';
@@ -192,11 +216,11 @@ export default{
 				sql+=' AND A.request_phone="'+context+'"';
 			}
 			let orderStatus=vm.form.orderStatus;
-			if(vm.form.auditType==1){
+			if(vm.form.orderType==1){
 				 if(orderStatus==0){
 					sql+=" AND (A.order_status=3 OR A.order_status=4)";
 				 }else sql+=" AND A.order_status="+orderStatus;
-			}else if(vm.form.auditType==2){
+			}else if(vm.form.orderType==2){
 				if(orderStatus==0){
 					sql+=" AND (A.order_status=1 OR A.order_status=2)";
 				}else sql+=" AND A.order_status="+orderStatus;

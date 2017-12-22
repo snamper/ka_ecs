@@ -14,8 +14,10 @@ const state = {
 		"opencardAfterwards":0,//开卡事后待审核
 		"opencard_Afterwards":0,//开卡事后已分配
 		"attribute":0,//售卡权限待审核
-		"registerMerchant":0,//激活商户待审核
-		"registerMerchant_":0,//激活商户已分配
+		"registerMerchantRealTime":0,//激活商户实时待审核
+		"registerMerchantRealTime_":0,//激活商户实时已分配
+		"registerMerchantAfter":0,//激活商户事后待审核
+		"registerMerchantAfter_":0,//激活商户事后已分配
 		"transfer":0,//过户办理待审核
 		"transfer_":0,//过户办理已分配
 		"sdkRealTime":0,//sdk开卡实时待审核

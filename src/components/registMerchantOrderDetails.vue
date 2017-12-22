@@ -31,6 +31,11 @@
 										<span v-show="list.merchantStatus==1" class="f-c-green">已激活</span>
 										<span v-show="list.merchantStatus==0" class="f-c-red">游客</span>
 									</td></tr>
+									<tr><td>审核方式：</td><td>
+										<span v-show="list.auditType==1">实时审核</span>
+										<span v-show="list.auditType==2">事后审核</span>
+										<span v-show="list.auditType==3">自动审核</span>
+									</td></tr>
 									<tr><td>
 										<span v-show="list.merchantType==1">门店名称：</span>
 										<span v-show="list.merchantType==2">个人商户名称：</span>
@@ -39,6 +44,7 @@
 										<span v-show="list.merchantType==1">营业执照编号：</span>
 										<span v-show="list.merchantType==2">身份证号码：</span>
 									</td><td>{{list.businessLicence}}</td></tr>
+									<tr v-show="list.merchantType==2"><td>身份证有效期：</td><td>{{list.idCardPeriod}}</td></tr>
 									<tr><td>商户注册电话：</td><td>{{list.phone}}</td></tr>
 									<tr><td>具体地址：</td><td>{{list.address}}</td></tr>
 									<tr><td>邀请码：</td><td>{{list.superInviteCode||'--'}}</td></tr>
@@ -63,8 +69,8 @@
 									<tr><td>推广渠道：</td><td>{{list.popchannel}}（{{list.popchannelName}}）</td></tr>
 									<tr><td>上级商户：</td><td>{{list.superDealerId}}（{{list.superDealerName}}）</td></tr>
 									<tr><td>操作人：</td><td>{{list.userId}}（{{list.userName}}）</td></tr>
-									<tr v-show="auditType==2"><td>审核人ID：</td><td>{{list.customer}}</td></tr>
-									<tr v-show="auditType==2&&list.orderStatus==2"><td>备注：</td><td v-html="filterReason()"></td></tr>
+									<tr v-show="orderType==2"><td>审核人ID：</td><td>{{list.customer}}</td></tr>
+									<tr v-show="orderType==2&&list.orderStatus==2"><td>备注：</td><td v-html="filterReason()"></td></tr>
 								</tbody>
 							</table>
 						</td>
@@ -89,7 +95,7 @@ import { REGISTER_MERCHANT_IMAGE_URL } from '../config/service';
 export default{
 	props:{
 		list:Object,
-		auditType:String
+		orderType:String
 	},
 	data (){
 		return {
