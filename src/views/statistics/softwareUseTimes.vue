@@ -219,17 +219,10 @@ export default{
 	},
 	created:function(){
 		this.init();
+		this.changeRouter();
 	},
 	watch:{
-		'$route'(){
-			let type=this.$route.params.type
-			if(type=="idCard"){
-				this.off.type=1;
-			}else if(type=="faceConfirm"){
-				this.off.type=2;
-			}
-			this.list='';
-		}
+		'$route':'changeRouter'
 	},
 	methods:{
 		init:function(){
@@ -329,6 +322,15 @@ export default{
 		},
 		getDateTime(v){
 			return getDateTime(v);
+		},
+		changeRouter(){
+			let type=this.$route.params.type
+			if(type=="idCard"){
+				this.off.type=1;
+			}else if(type=="faceConfirm"){
+				this.off.type=2;
+			}
+		     this.list='';
 		}
 	}
 }
