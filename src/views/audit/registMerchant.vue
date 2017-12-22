@@ -18,6 +18,7 @@
   	color: white;
   	margin-left: 20px;
   	font-size: 14px;
+  	cursor: pointer;
   }
   .gztBtn:active{
   	box-shadow: 0 0 2px #13ce66;
@@ -25,16 +26,19 @@
 </style>
 <template>
 <div style="width100%;height:100%;padding:10px;">
-	<section class="g-audit-menu" v-show="!off.type">
+	<section class="g-audit-menu" v-show="!off.isGet">
 		<div class="g-audit-menu-c">
-			<div class="m-menu-div">
-				<router-link :to="{name:'registMerchantAudit',params:{type:'get'}}" class="u-bg navBg10"><div>激活商户</div><p><span>点击审核</span></p></router-link>
-				<div class="navInfoDiv"><p>待审核<span>{{auditCount.registerMerchant}}</span></p><p>已分配<span>{{auditCount.registerMerchant_}}</span></p></div>
+			<div class="m-menu-div" v-show="off.auditType==1">
+				<router-link :to="{name:'registMerchantAudit',params:{type:'realtime_get'}}" class="u-bg navBg10"><div>激活商户</div><p><span>点击审核</span></p></router-link>
+				<div class="navInfoDiv"><p>待审核<span>{{auditCount.registerMerchantRealTime}}</span></p><p>已分配<span>{{auditCount.registerMerchantRealTime_}}</span></p></div>
+			</div>
+			<div class="m-menu-div" v-show="off.auditType==2">
+				<router-link :to="{name:'registMerchantAudit',params:{type:'afterwards_get'}}" class="u-bg navBg10"><div>激活商户</div><p><span>点击审核</span></p></router-link>
+				<div class="navInfoDiv"><p>待审核<span>{{auditCount.registerMerchantAfter}}</span></p><p>已分配<span>{{auditCount.registerMerchantAfter_}}</span></p></div>
 			</div>
 		</div>
-		<router-view></router-view>
 	</section>
-	<div id="auditList" v-show="off.type">
+	<div id="auditList" v-show="off.isGet">
 	  <section class="g-list-box" v-if="auditData">
 	  	  <header class="g-lis-head">
 	  	  	<div class="m-has-db">审核状态：<span><b>{{off.auditIndex}}</b>/<i>{{list.length}}</i></span></div>
@@ -62,10 +66,10 @@
 										<span v-show="auditData.merchantType==2">身份证号码：</span>
 									</td>
 									<td>{{auditData.businessLicence}}
-										<button class="gztBtn" @click="gztBtn" v-show="auditData.merchantType==2">国政通检验</button>
+										<!-- <button class="gztBtn" @click="gztBtn" v-show="auditData.merchantType==2">国政通检验</button> -->
 									</td>
 								</tr>
-									<tr><td>身份证有效期：</td><td>{{auditData.idCardPeriod}}</td></tr>
+									<tr v-show="auditData.merchantType==2"><td>身份证有效期：</td><td>{{auditData.idCardPeriod}}</td></tr>
 
 									<tr><td>商户注册电话：</td><td>{{auditData.phone}}</td></tr>
 									<tr><td>具体地址：</td><td>{{auditData.address}}</td></tr>
@@ -128,14 +132,14 @@ export default{
 				auditIndex:0,//订单索引
 				time:'00:00',//审核计时
 				isLoad:0,//是否ajax请求,
-				type:0
+				isGet:0,//是否获取订单数据
+				auditType:1//1，实时；2、事后
 			},
 			timer:Number,//审核倒计时
 			list:[],//分配的订单
 			auditData:'',//当前处理的订单
 			imgData:[],//当前订单的图片,
 			result:'',
-			datagzt:{},
 			refuseArr:{"type":"1","list":[{"code":"2001","info":"部分或全部照片中存在模糊、分辨率太小无法辨认/严重变形/反光严重/拍摄角度不规范","point":"0","stopCard":"0"},{"code":"2002","info":"背景非售卡现场拍摄照片(包括证件及手持照)","point":"0","stopCard":"0"},{"code":"2003","info":"无用户签名或签名与用户姓名不符","point":"0","stopCard":"0"},{"code":"2004","info":"手持证卡合影不规范，非免冠正脸照、人脸被遮挡等导致无法清晰辨别是否为本人","point":"0","stopCard":"0"},{"code":"2005","info":"部分或全部照片内容为疑似翻拍或合成","point":"0","stopCard":"0"},{"code":"2006","info":"非本人现场手持证卡照","point":"0","stopCard":"0"},{"code":"2007","info":"证件与手持合影照中证件不同","point":"0","stopCard":"0"},{"code":"2008","info":"已被拒绝并明知信息有问题（包括但不限于非本人现场手持证件）仍然多次重复恶意上传（严重违规）","point":"0","stopCard":"1"},{"code":"2009","info":"部分或全部照片内容被明确为翻拍或合成、造假（严重违规）","point":"0","stopCard":"1"}]}//拒绝原因
 		}
 	},
@@ -159,18 +163,24 @@ export default{
 	},
 	methods:{
 		setType:function(){
-			const route=this.$route;
-			if(route.params.type=="index"){
-				this.off.type=0;
-			}else if(route.params.type=="get"){
-				this.off.type=1;
+			const route=this.$route,type=this.$route.params.type;
+			if(type.indexOf("realtime")>-1){
+				this.off.auditType=1;
+			}else if(type.indexOf("afterwards")>-1){
+				this.off.auditType=2;
+			}
+
+			if(type.indexOf("_get")>-1){
+				this.off.isGet=1;
 				this.getAuditList();
+			}else{
+				this.off.isGet=0;
 			}
 		},
 		agree:function(){//审核同意
 			var vm=this,url='',orderId=vm.auditData.orderId;
 
-			vm.AJAX("w/regist/audit",{"orderId":orderId,"result":1,"remarks":""},function(data){
+			vm.AJAX("w/regist/audit",{"orderId":orderId,"result":1,"remarks":"","auditType":vm.off.auditType,"gztResult":vm.auditData.gztResult},function(data){
 
 				layer.open({
 					content:data.msg,
@@ -219,7 +229,7 @@ export default{
 					reason=document.getElementById('reason').value;
 					if(remark==''&&reason=='')return false;
 					console.log(remark+'|'+reason)
-					vm.AJAX("w/regist/audit",{"orderId":orderId,"result":2,"remarks":remark+'|'+reason,"auditType":2},function(data){
+					vm.AJAX("w/regist/audit",{"orderId":orderId,"result":2,"remarks":remark+'|'+reason,"auditType":vm.off.auditType,"gztResult":vm.auditData.gztResult},function(data){
 						layer.open({
 							content:data.msg,
 							skin: 'msg',
@@ -239,40 +249,29 @@ export default{
 			if(vm.off.isLoad==1){return false};
 			vm.off.isLoad=1;
 			// 审核信息列表
-				new Promise(function(resolve,reject){
-					vm.AJAX("w/regist/toAuditList",{"auditType":1},function(data){
-						if(data.data.list.length==0){
-							layer.open({
-					            content:'当前没有分配的订单',
-					            skin: 'msg',
-					            time: 4,
-					            msgSkin:'error',
-					        })
-					        return false;
-						}
-						vm.list=data.data.list;
-						vm.off.auditIndex=0;
-						vm.dealAuditList();
-						window.clearInterval(vm.timer);
-						vm.timeDown(parseInt(vm.list[0].peirod));
-						if(data.data.list[0].merchantType==2){
-						  resolve("success!!");
-						}else{
-							reject("f")
-						}
-					},function(){
-						vm.off.isLoad=0;
-					})
-					debugger;
-				}).then(function(msg){
-				}).catch(function(msg){
-				})   				
+			vm.AJAX("w/regist/toAuditList",{"auditType":vm.off.auditType},function(data){
+				if(data.data.list.length==0){
+					layer.open({
+			            content:'当前没有分配的订单',
+			            skin: 'msg',
+			            time: 4,
+			            msgSkin:'error',
+			        })
+			        return false;
+				}
+				vm.list=data.data.list;
+				vm.off.auditIndex=0;
+				vm.dealAuditList();
+				window.clearInterval(vm.timer);
+				vm.timeDown(parseInt(vm.list[0].peirod));
+			},function(){
+				vm.off.isLoad=0;
+			});		
 		},
 		// 激活审核国政通校验
 		gztBtn:function(){
 			const vm=this;
-		   vm.datagzt.orderId = vm.auditData.orderId;
-			vm.AJAX("w/regist/gztCheck",vm.datagzt,function(data){
+			vm.AJAX("w/regist/gztCheck",{"orderId":vm.auditData.orderId,"auditType":vm.off.auditType},function(data){
 				if(data==''){
 			        return false;
 				}else{
@@ -294,9 +293,8 @@ export default{
 				            msgSkin:'error',
 				        })
 				    }
-				    
 				}
-				},function(){
+			},function(){
 					vm.off.isLoad=0;
 			})
 		}

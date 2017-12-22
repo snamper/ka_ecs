@@ -80,8 +80,13 @@
 							</router-link>
 						</li>
 						<li v-if="userInfo.isadmin.indexOf('6')>-1||userInfo.isadmin.indexOf('5')>-1||userInfo.isadmin.indexOf('1')>-1">
-							<router-link :to="{name:'registMerchantAudit',params:{type:'index'}}">
-								<b></b>激活商户审核<span>{{auditCount.registerMerchant}}</span>
+							<router-link :to="{name:'registMerchantAudit',params:{type:'realtime'}}">
+								<b></b>激活商户实时<span>{{auditCount.registerMerchantRealTime}}</span>
+							</router-link>
+						</li>
+						<li v-if="userInfo.isadmin.indexOf('6')>-1||userInfo.isadmin.indexOf('5')>-1||userInfo.isadmin.indexOf('1')>-1">
+							<router-link :to="{name:'registMerchantAudit',params:{type:'afterwards'}}">
+								<b></b>激活商户事后<span>{{auditCount.registerMerchantAfter}}</span>
 							</router-link>
 						</li>
 					</ul>
@@ -262,9 +267,13 @@ export default{
 						crumb[2]={"name":"待审核"}
 					}
 				}else if(path.indexOf("registMerchant")>-1){
-					crumb[1]={"name":"激活商户","href":"/home/audit/registMerchant/index"};
-					if(path.indexOf("get")>-1){
-						crumb[2]={"name":"审核"}
+					if(path.indexOf("/realtime")>-1){
+						crumb[1]={"name":"激活商户实时","href":"/home/audit/registMerchant/realtime"};
+					}else if(path.indexOf("/afterwards")>-1){
+						crumb[1]={"name":"激活商户事后","href":"/home/audit/registMerchant/afterwards"};
+					}
+					if(path.indexOf("_get")>-1){
+						crumb[2]={"name":"审核"};
 					}
 				}
 			}else if(path.indexOf("/home/orderSearch")>-1){
