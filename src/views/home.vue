@@ -122,7 +122,7 @@
 						<li><router-link :to="{name:'device',params:{val:'null'}}"><b></b>设备查询</router-link></li>
 						<li><router-link :to="{name:'promoter',params:{val:'null'}}"><b></b>推广方查询</router-link></li>
 						
-						<li v-if="userInfo.isadmin.indexOf('7')>-1||userInfo.isadmin.indexOf('1')>-1"><router-link to="/home/resource/numberRelease"><b></b>号码解冻</router-link></li>
+						<li v-if="userInfo.isadmin.indexOf('7')>-1||userInfo.isadmin.indexOf('1')>-1"><router-link to="/home/resource/numberRelease"><b></b>号码占用/解冻</router-link></li>
 					</ul>
 				</li>
 				<li :class="{active:$route.path.indexOf('/home/statistics')>-1}">
