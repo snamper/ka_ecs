@@ -46,7 +46,8 @@
 									</td><td>{{list.businessLicence}}</td></tr>
 									<tr v-show="list.merchantType==2"><td>身份证有效期：</td><td>{{list.idCardPeriod}}</td></tr>
 									<tr><td>商户注册电话：</td><td>{{list.phone}}</td></tr>
-									<tr><td>具体地址：</td><td>{{list.address}}</td></tr>
+									<tr><td>门店地址：</td><td>{{list.storeAddress}}</td></tr>
+									<tr><td>证件地址：</td><td>{{list.address}}</td></tr>
 									<tr><td>邀请码：</td><td>{{list.superInviteCode||'--'}}</td></tr>
 									<tr><td>支付宝账号：</td><td>{{list.alipayUserId||'--'}}</td></tr>
 									<tr><td>微信账号：</td><td>{{list.weixinUserId||'--'}}</td></tr>

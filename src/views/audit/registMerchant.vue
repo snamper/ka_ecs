@@ -72,7 +72,8 @@
 									<tr v-show="auditData.merchantType==2"><td>身份证有效期：</td><td>{{auditData.idCardPeriod}}</td></tr>
 
 									<tr><td>商户注册电话：</td><td>{{auditData.phone}}</td></tr>
-									<tr><td>具体地址：</td><td>{{auditData.address}}</td></tr>
+									<tr><td>门店地址：</td><td>{{auditData.storeAddress}}</td></tr>
+									<tr><td>证件地址：</td><td>{{auditData.address}}</td></tr>
 									<tr><td>邀请码：</td><td>{{auditData.superInviteCode}}</td></tr>
 									<tr><td>支付宝账号：</td><td>{{auditData.alipayUserId}}</td></tr>
 									<tr><td>微信账号：</td><td>{{auditData.weixinUserId}}</td></tr>
