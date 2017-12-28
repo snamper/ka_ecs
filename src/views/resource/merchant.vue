@@ -120,16 +120,20 @@
 									<td><span>额外成功次数：</span>{{ ajaxData.details.extraFrequency }}</td>
 								</tr>
 								<tr>
-									<td><span>创建时间：</span>{{ ajaxData.details.createtime }}</td>
+									<td><span>门店地址：</span>{{ ajaxData.details.storeAddress }}</td>
 									<td><span>获得分数：</span>{{ ajaxData.details.getPoints }}</td>
 								</tr>
 								<tr>
-									<td><span>商户属性：</span>{{ ajaxData.details.merchantType }}</td>
+									<td><span>创建时间：</span>{{ ajaxData.details.createtime }}</td>
 									<td><span>扣除分数：</span>{{ ajaxData.details.losePoints }}</td>
 								</tr>
 								<tr>
-									<td><span>商户类别：</span>{{ ajaxData.details.userType }}</td>
+									<td><span>商户属性：</span>{{ ajaxData.details.merchantType }}</td>
 									<td><span>额外分值：</span>{{ ajaxData.details.extraCredit }}</td>
+								</tr>
+								<tr>
+									<td><span>商户类别：</span>{{ ajaxData.details.userType }}</td>
+									<td><span>信用积分：</span>{{ ajaxData.details.creditNums }}</td>
 								</tr>
 								<tr>
 									<td><span>售卡范围：</span>
@@ -138,7 +142,7 @@
 										<b v-if="ajaxData.details.attribute==3">C（远特售卡+联通售卡）</b>
 										<b v-if="ajaxData.details.attribute==4">D（联通售卡+远特售卡）</b>
 									</td>
-									<td><span>信用积分：</span>{{ ajaxData.details.creditNums }}</td>
+									<td><span>真实信用积分：</span>{{ ajaxData.details.realCreditNums }}</td>
 								</tr>
 								<tr>
 									<td><span>激活状态：</span>
@@ -146,14 +150,10 @@
 										<b v-if="ajaxData.details.status==1" class="f-c-yellow">待激活</b>
 										<b v-if="ajaxData.details.status==2" class="f-c-blue">已申请设备</b>
 									</td>
-									<td><span>真实信用积分：</span>{{ ajaxData.details.realCreditNums }}</td>
-								</tr>
-								<tr>
-									<td><span>签约状态：</span>{{ ajaxData.details.isSignAgreement }}</td>
 									<td><span>显示等级：</span>{{ ajaxData.details.showLevel }}</td>
 								</tr>
 								<tr>
-									<td><span>签约时间：</span>{{ ajaxData.details.signTime }}</td>
+									<td><span>签约状态：</span>{{ ajaxData.details.isSignAgreement }}[{{ ajaxData.details.signTime }}]</td>
 									<td><span>真实等级：</span>{{ ajaxData.details.realLevel }}</td>
 								</tr>
 								<tr>
