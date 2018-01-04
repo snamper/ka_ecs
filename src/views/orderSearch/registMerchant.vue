@@ -91,6 +91,10 @@
 					<th>申请人号码</th>
 					<th>审核方式</th>
 					<th>订单状态</th>
+					<th>商户名称</th>
+					<th>操作人姓名</th>
+					<th>审核时间</th>
+					<th>审核人</th>
 					<th class="hasBtn"></th>
 				</tr>
 			</thead>
@@ -121,6 +125,10 @@
 						<span v-show="todo.orderStatus==3" class="f-c-yellow">待分配</span>
 						<span v-show="todo.orderStatus==4" class="f-c-green">已分配</span>
 					</td>
+					<td>{{todo.companyName}}</td>
+					<td>{{todo.userName}}</td>
+					<td>{{getDateTime(todo.auditTime)[6]}}</td>
+					<td>{{todo.customer}}</td>
 					<td><a :name="todo.orderId" @click="details" href="javascript:void(0)" class="details">详情</a></td>
 				</tr>
 			</tbody>

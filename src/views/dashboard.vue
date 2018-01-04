@@ -290,16 +290,19 @@ import CountUp from 'vue-countup-v2';
           }
         }
       },
-      getLatelyTime(now,type,num){//获取最近日期
+      getLatelyTime(now,type,num,other){//获取最近日期
         let dateArr=[];
         for(let i=(num-1);i>=0;i--){
           if(type=='hour'){
             if(i!=11){
               let sm=getDateTime(now-1000*60*60*i)[7];
               dateArr.push(sm.split(":")[0]+":00");
-              if(i==0){
+              if(i==0&&!other){
                 dateArr.push(getDateTime(now-1000*60*60*i)[7]);
               }
+            }else if(other){
+              let sm=getDateTime(now-1000*60*60*i)[7];
+              dateArr.push(sm.split(":")[0]+":00");
             }
             
           };
@@ -406,7 +409,7 @@ import CountUp from 'vue-countup-v2';
             name: "在线用户",
             legend: ["时","天"],
             index:vm.off.onlineUser_index,
-            category: [vm.getLatelyTime(data.data.lasttime[0],'hour',12),vm.getLatelyTime(data.data.lasttime[1],'day',7)],
+            category: [vm.getLatelyTime(data.data.lasttime[0],'hour',12,true),vm.getLatelyTime(data.data.lasttime[1],'day',7)],
             lineData: [data.data.hour,data.data.day]
           });
         },true);
