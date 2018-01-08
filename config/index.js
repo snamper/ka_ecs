@@ -12,7 +12,7 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
         '/w':{
-            target:'http://192.168.10.110:6086',
+            target:'http://192.168.10.109:6086',
             changeOrigin:true,
             pathRewrite:{
                 '^/w':'/ecs/w'
@@ -21,7 +21,7 @@ module.exports = {
     },
 
     // Various Dev Server settings
-    host:"192.168.10.137",
+    host:"192.168.10.138",
     port: 8081, // can be overwritten by process.env.HOST, if port is in use, a free one will be determined
     autoOpenBrowser: true,
     errorOverlay: true,
