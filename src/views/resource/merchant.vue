@@ -162,13 +162,16 @@
 									<td><span>基础分值：</span>{{ ajaxData.details.btScore }}</td>
 								</tr>
 								<tr>
-									<td><span>上级推广渠道ID：</span>
+									<td><span>上级商户：</span>
 										<a v-show="ajaxData.details.superDealerId" :href="'#/home/resource/promoter/'+ajaxData.details.superDealerId" title="点击查看详情" class="details">{{ajaxData.details.superDealerId}}</a>【名称：{{ ajaxData.details.superDealerName||'--' }}】</td>
 									<td><span>基础总次数：</span>{{ ajaxData.details.btFrequency }}</td>
 								</tr>
 								<tr>
-									<td><span>总部推广渠道ID：</span>{{ ajaxData.details.topDealerId||'--' }}【名称：{{ ajaxData.details.topDealerName||'--' }}】</td>
+									<td><span>推广渠道：</span>{{ ajaxData.details.popDealerId||'--' }}【名称：{{ ajaxData.details.popDealerName||'--' }}】</td>
 									<td><span>基础成功次数：</span>{{ ajaxData.details.bsFrequency }}</td>
+								</tr>
+								<tr>
+									<td colspan="2"><span>总部推广渠道：</span>{{ ajaxData.details.topDealerId||'--' }}【名称：{{ ajaxData.details.topDealerName||'--' }}】</td>
 								</tr>
 							</tbody>
 						</table>
@@ -415,7 +418,7 @@ export default{
 				vm.form.context=val;
 				vm.getDetails();
 			}
-		},10);
+		},300);
 	},
 	methods:{
 		toMap(){

@@ -1,5 +1,6 @@
 import fetch from "./fetch";
 export const SDK_IMAGE_URL="https://kmsdk.m10027.com/eas/";//sdk图片地址路径
+export const TF_IMAGE_URL="https://192.168.10.109/tas/";//sdk图片地址路径
 export const REGISTER_MERCHANT_IMAGE_URL="https://km.m10027.com/ums/";//sdk图片地址路径
 
 
