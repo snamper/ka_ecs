@@ -197,7 +197,7 @@
 
 					<td v-if="off.type==2">
 						<span v-if="form.source!=7&&form.source!=8">{{secondsFormat(todo.auditTime)}}</span>
-						<span v-else>{{ secondsFormat(parseInt(todo.modifyTime)-parseInt(todo.createTime)) }}</span>
+						<span v-else>{{ secondsFormat(parseInt(todo.modifyTime)/1000-parseInt(todo.createTime)/1000) }}</span>
 					</td>
 					<td v-if="off.type!=2">
 						<span v-if="off.type==1">
@@ -721,7 +721,6 @@ export default{
 			}else{
 				type==1 ? url='w/audit/ingInfo' : type==2 ? url='w/audit/edInfo' : url='w/audit/getOrderInfo';
 			}
-			console.log(vm.form.source)
 			if(vm.off.isLoad)return false;
 			vm.off.isLoad=true;
 			vm.AJAX(url,json,function(data){

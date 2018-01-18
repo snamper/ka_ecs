@@ -31,7 +31,7 @@
 								</tr>
 								<tr v-show="type==2"><td>审核用时：</td>
 									<td>
-										<span v-if="source==7||source==8">{{ $parent.secondsFormat(parseInt(list.modifyTime)-parseInt(list.createTime)) }}</span>
+										<span v-if="source==7||source==8">{{ $parent.secondsFormat(parseInt(list.modifyTime)/1000-parseInt(list.createTime)/1000) }}</span>
 										<span v-else>{{ $parent.secondsFormat(list.auditTime) }}</span>
 									</td>
 								</tr>
@@ -72,12 +72,12 @@
 								</tr>
 								<tr v-show="source!=7&&source!=8"><td>操作人：</td><td>{{ list.operatorName }}【ID：{{ list.operatorId }}】<a v-show="list.operatorName" href="javascript:void(0)" @click="detailsUser" class="details m-l">查看详情</a></td></tr>
 								<tr v-show="source!=7"><td>操作人IP：</td>
-									<td v-if="source==8">{{ list.tokenInfo.host }}</td>
+									<td v-if="source==8">{{ userMoreInfo.host }}</td>
 									<td v-else>{{ list.host }}</td>
 								</tr>
 								<tr v-show="source!=7"><td>开卡位置信息：</td><td>
-									<span v-show="list.longitude">
-										<i v-if="source==8">{{ list.tokenInfo.latitude }}，{{ list.tokenInfo.longitude }}</i>
+									<span v-show="list.longitude||userMoreInfo.longitude">
+										<i v-if="source==8">{{ userMoreInfo.latitude }}，{{ userMoreInfo.longitude }}</i>
 										<i v-else>{{ list.latitude }}，{{ list.longitude }}</i>
 										<a href="javascript:void(0)" @click="toMap" class="details m-l">查看地图</a>
 									</span>
@@ -107,27 +107,38 @@
 								<tr v-if="list.operatorType==7"><td>原机主证件号码：</td><td>{{ list.identityCardOld }}</td></tr>
 								<tr><td>身份证地址：</td>
 									<td>
-										<span v-show="source!=7">{{ list.userAddress }}</span>
-										<span v-show="source==7">{{ userMoreInfo.userAddress }}</span>
+										<span v-if="source==7||source==8">{{ userMoreInfo.userAddress }}</span>
+										<span v-else>{{ list.userAddress }}</span>
 									</td>
 								</tr>
 								<tr v-if="list.operatorType==7"r><td>原机主证件地址：</td><td>{{ list.userAddressOld }}</td></tr>
 								<tr><td>证件期限：</td>
 									<td>
-										<span v-show="source!=7">{{ list.period }}</span>
-										<span v-show="source==7">{{ userMoreInfo.period }}</span>
+										<span v-if="source==7||source==8">{{ userMoreInfo.period }}</span>
+										<span v-else>{{ list.period }}</span>
 									</td>
 								</tr>
-								<tr><td>IMEI：</td><td>{{ list.IMEI }}</td></tr>
+								<tr><td>IMEI：</td><td>
+									<span v-if="source!=8">{{ list.IMEI }}</span>
+									<span v-else>{{ userMoreInfo.IMEI }}</span>
+								</td></tr>
 								<tr v-if="source!=7"><td>ICCID：</td><td>{{ list.ICCID }}</td></tr>
 								
-								<tr><td>终端类型：</td>
+								<tr v-show="source!=8"><td>终端类型：</td>
 									<td>
-										<span v-show="source!=7">{{ list.terminalType }}</span>
-										<span v-show="source==7">
+										<span v-if="source==7">
 											<b v-show="list.terminalType==1">IOS</b>
 											<b v-show="list.terminalType==2">Android</b>
 										</span>
+										<span v-else>{{ list.terminalType }}</span>
+										
+									</td>
+								</tr>
+								<tr v-show="source==8"><td>终端类型：</td>
+									<td>
+										<span>{{ userMoreInfo.phoneType }}</span>
+										<span>{{ userMoreInfo.osVersion }}</span>
+										<span>{{ userMoreInfo.net }}</span>
 									</td>
 								</tr>
 								<tr v-show="source!=8"><td>Mac地址：</td>
@@ -176,7 +187,6 @@
 import "../assets/css/cardOrderDetails.css";
 import ImgZoom from '../components/ImgZoom';
 import detailsView from '../components/cardOrderDetailsAlert';
-import { SDK_IMAGE_URL,TF_IMAGE_URL } from '../config/service';
 export default{
 	name:'cardOrderDetails',
 	props:{
@@ -191,7 +201,7 @@ export default{
 			isShowDetails:0,
 			typeDetails:0,
 			detailsList:'',
-			userMoreInfo:''//sdk更多用户信息
+			userMoreInfo:''//更多用户信息
 		}
 	},
 	components:{
@@ -210,25 +220,28 @@ export default{
 			vm.imgData[6]={'src':vm.list.signImage,'name':'过户人手签名照片'};
 		}else{
 			if(vm.source==7||vm.source==8){
-				var userMoreInfo=JSON.parse(decodeURIComponent(vm.list.userMoreInfo));
+				let imgUrl='',userMoreInfo=JSON.parse(decodeURIComponent(vm.list.userMoreInfo));
 				
-				if(vm.source==8)vm.tokenInfo=JSON.parse(vm.tokenInfo);
+				if(_CONFIG.prod_env){//是否为开发环境
+					imgUrl=_CONFIG.prod.SDK_IMAGE_URL;
+				}else imgUrl=_CONFIG.dev.SDK_IMAGE_URL;
 
+				if(vm.source==8){
+					Object.assign(userMoreInfo,JSON.parse(decodeURIComponent(vm.list.tokenInfo)));
+					if(_CONFIG.prod_env){//是否为开发环境
+						imgUrl=_CONFIG.prod.TF_IMAGE_URL;
+					}else imgUrl=_CONFIG.dev.TF_IMAGE_URL;
+				}
 				if(userMoreInfo){
 					vm.userMoreInfo=userMoreInfo;
-					let imgUrl='';
-					if(vm.source==7)imgUrl=SDK_IMAGE_URL;
-					if(vm.source==8)imgUrl=TF_IMAGE_URL;
 					vm.imgData=[
-						{'src':imgUrl+userMoreInfo.handImageNameSrc,'name':'手持'},
 						{'src':imgUrl+userMoreInfo.imageNameSrc,'name':'正面'},
 						{'src':imgUrl+userMoreInfo.backImageNameSrc,'name':'反面'},
 						{'src':imgUrl+userMoreInfo.livingIdentificationImagePath,'name':'活体识别'},
-						{'src':imgUrl+vm.userMoreInfo.signImageName,'name':'手签名'}
+						{'src':imgUrl+userMoreInfo.signImageName,'name':'手签名'}
 					];
 				}else{
 					vm.imgData=[
-						{'src':'','name':'手持'},
 						{'src':'','name':'正面'},
 						{'src':'','name':'反面'},
 						{'src':'','name':'活体识别'},
@@ -246,7 +259,7 @@ export default{
 				];
 			}
 			
-			if(vm.type==2){
+			if(vm.type==2){//已审核
 				if(vm.source==7){
 					if(vm.list.acceptanceImg){
 						vm.imgData.push({'src':SDK_IMAGE_URL+vm.list.acceptanceImg,'name':'受理单'});
