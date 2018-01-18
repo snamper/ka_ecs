@@ -303,6 +303,11 @@
   width: 0.17rem;
   height: 0.17rem;
 }
+.u-icon-opinion {
+  background-image: url(../assets/images/opinion.png);
+  width: 0.17rem;
+  height: 0.17rem;
+}
 .u-icon-menu2 {
   background-image: url(../assets/images/menu2.png);
   width: 0.2rem;

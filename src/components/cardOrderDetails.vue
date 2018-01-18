@@ -4,7 +4,6 @@
   *@date 2017-2-11
 * *-->
 <style scoped>
-
 </style>
 <template>
 <section class="g-list-box" id="details">
@@ -481,4 +480,3 @@ export default{
 	}
 }
 </script>
-

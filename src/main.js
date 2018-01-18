@@ -15,6 +15,7 @@ require("./assets/css/style.css");
 require('./assets/js/layer/layer.js');
 require("./assets/js/layer/need/layer.css");
 require("./assets/js/ajax.js");
+require("./assets/js/base64.min.js");
 
 
 

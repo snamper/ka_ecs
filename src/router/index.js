@@ -183,7 +183,21 @@ const Statistics_softwareUseTimes= resolve => {
     load();
   });
 };
-
+/*意见反馈*/
+const Opinion = resolve =>{
+  load(true);
+  require.ensure(["@/views/opinion/index"], () => {
+    resolve(require("@/views/opinion/index"));
+    load();
+  });
+};
+const Opinion_item = resolve => {
+  load(true);
+  require.ensure(["@/views/opinion/opinion"], () => {
+    resolve(require("@/views/opinion/opinion"));
+    load();
+  });
+};
 const router=new Router({
   routes: [
     {
@@ -295,6 +309,16 @@ const router=new Router({
             name:"softwareUseTimes"
           }]
         },
+        {//意见反馈
+          path:"opinion",
+          component:Opinion,
+          name:"opinion",
+          children:[{
+            path:":type",
+            component:Opinion_item,
+            name:"opinion_item"
+          }]
+        }
       ]
     }
   ]
@@ -303,15 +327,12 @@ const router=new Router({
 
 router.beforeEach((to, from, next) => {
 
-
     var token = localStorage.getItem("KA_ECS_USER");
     if (!token&&to.path!=="/login"||to.path=="/"){
         next({path:"/login"});
         return false;
     }
     next();
-
-  
 });
 export default router;
 

@@ -287,3 +287,11 @@ display:inline-block;position: absolute;right: 5px;top:50%;width:0.18rem;height:
   -moz-box-shadow: 0 0 5px #29b024;
   box-shadow: 0 0 5px #29b024;
 }
+/*意见反馈统计数字*/
+p.opinionCountP{
+  width: .2rem;
+  height: .2rem;
+  margin:.2rem auto;
+  font-size: 18px;
+  font-weight: bold;
+}
