@@ -51,8 +51,9 @@
 										</td>
 									</tr>
 									<tr><td>归属地：</td><td>{{ auditData.cityName }}</td></tr>
-									<tr v-show="off.itemType!=8"><td>IMEI：</td><td>{{ auditData.IMEI }}</td></tr>
-
+									<tr v-show="off.itemType!=8&&off.itemType!=9"><td>IMEI：</td><td>{{ auditData.IMEI }}</td></tr>
+									<tr v-show="off.itemType==9"><td>appId：</td><td>{{ auditData.appId }}</td></tr>
+	
 									<tr><td>证件类型：</td><td>身份证</td></tr>
 									<tr v-show="off.itemType==7"><td>原机主姓名：</td><td>{{auditData.userNameOld}}</td></tr>
 									<tr><td>用户姓名：</td><td>{{auditData.userName}}</td></tr>
@@ -62,17 +63,17 @@
 									<tr v-show="off.itemType==7"><td>原机主证件地址：</td><td>{{auditData.userAddressOld}}</td></tr>
 									<tr><td>证件期限：</td><td>{{ auditData.validityPeriod }}</td></tr>
 									<tr><td>活体识别相似度：</td><td>{{ auditData.similarity }}%</td></tr>
-									<tr><td>Mac地址：</td><td>{{ auditData.devMacAddr }}</td></tr>
 									<tr><td>终端类型：</td><td>{{ auditData.terminalType }}</td></tr>
-									<tr><td>识别仪名称：</td><td>{{ auditData.devSN }}</td></tr>
+									<tr v-show="off.itemType!=8&&off.itemType!=9"><td>Mac地址：</td><td>{{ auditData.devMacAddr }}</td></tr>
+									<tr v-show="off.itemType!=8&&off.itemType!=9"><td>识别仪名称：</td><td>{{ auditData.devSN }}</td></tr>
 									<!-- <tr><td>活体识别APK：</td><td>{{ auditData.livingImgSoftWareName }}</td></tr> -->
-									<tr v-show="off.itemType!=8"><td>操作人：</td>
+									<tr v-show="off.itemType!=8&&off.itemType!=9"><td>操作人：</td>
 										<td>{{ auditData.operatorName }}【ID：{{ auditData.operator }}】</td>
 									</tr>
 									
 									<tr v-show="off.itemType!=8"><td>操作人IP：</td><td>{{ auditData.host }}</td></tr>
 									<tr v-show="off.itemType!=8"><td>操作人GPS：</td><td>{{ auditData.longitude }}，{{ auditData.latitude }}</td></tr>
-									<tr><td>商户名称：</td>
+									<tr v-show="off.itemType!=8&&off.itemType!=9"><td>商户名称：</td>
 										<td>
 											<span>{{ auditData.companyName }}</span>
 											<span v-show="">【信用等级：{{auditData.levelName}}】</span>
@@ -107,8 +108,8 @@ export default{
 				auditIndex:0,//订单索引
 				time:'00:00',//审核计时
 				isLoad:0,//是否ajax请求
-				auditType:1,
-				itemType:6//6，开卡；7，过户；8，SDK开卡
+				auditType:1,//0,实时;1,事后;
+				itemType:6//6，APP开卡；7，过户；8，SDK开卡；9，通服开卡
 			},
 			timer:Number,//审核倒计时
 			list:[],//分配的订单
@@ -141,6 +142,8 @@ export default{
 
 			if(vm.off.itemType==8){
 				url="w/sdk/auditOrder";
+			}else if(vm.off.itemType==9){
+				url="w/tongfu/auditOrder";
 			}else{
 				url="w/audit/audit";
 			}
@@ -198,6 +201,8 @@ export default{
 
 					if(vm.off.itemType==8){
 						url="w/sdk/auditOrder";
+					}else if(vm.off.itemType==9){
+						url="w/tongfu/auditOrder";
 					}else{
 						url="w/audit/audit";
 					}
@@ -227,6 +232,8 @@ export default{
 
 			if(vm.off.itemType==8){
 				url="w/sdk/distributeOrder";
+			}else if(vm.off.itemType==9){
+				url="w/tongfu/distributeOrder";
 			}else{
 				url="w/audit/toaudit";
 			}

@@ -92,7 +92,7 @@
 import "../assets/css/cardOrderDetails.css";
 import ImgZoom from './ImgZoom';
 import { getDateTime } from "../config/utils.js";
-import { REGISTER_MERCHANT_IMAGE_URL } from '../config/service';
+
 export default{
 	props:{
 		list:Object,
@@ -108,13 +108,18 @@ export default{
 	},
 
 	created:function(){
-		var vm=this;
+		let vm=this,imgUrl='';
+		if(_CONFIG.prod_env){//是否为开发环境
+			imgUrl=_CONFIG.prod.REGISTER_MERCHANT_IMAGE_URL;
+		}else imgUrl=_CONFIG.dev.REGISTER_MERCHANT_IMAGE_URL;
+
 		vm.imgData=[
-			{'src':vm.list.doorPictureLeft?REGISTER_MERCHANT_IMAGE_URL+vm.list.doorPictureLeft:'','name':'门店照片-左'},
-			{'src':vm.list.doorPictureRight?REGISTER_MERCHANT_IMAGE_URL+vm.list.doorPictureRight:'','name':'门店照片-右'},
-			{'src':vm.list.handPicture?REGISTER_MERCHANT_IMAGE_URL+vm.list.handPicture:'','name':'手持证件照'},
-			{'src':vm.list.signPicture?REGISTER_MERCHANT_IMAGE_URL+vm.list.signPicture:'','name':'手签名'},
+			{'src':vm.list.doorPictureLeft?imgUrl+vm.list.doorPictureLeft:'','name':'门店照片-左'},
+			{'src':vm.list.doorPictureRight?imgUrl+vm.list.doorPictureRight:'','name':'门店照片-右'},
+			{'src':vm.list.handPicture?imgUrl+vm.list.handPicture:'','name':'手持证件照'},
+			{'src':vm.list.signPicture?imgUrl+vm.list.signPicture:'','name':'手签名'},
 		];
+		
 		if(vm.list.merchantType==2){//个人
 			vm.imgData[0].name="身份证正面";
 			vm.imgData[1].name="身份证反面";
