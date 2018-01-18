@@ -17,15 +17,9 @@
 				<label class="item" @click="topShiftClick">
 					<input type="radio" v-model="form.source" value="7"><span class="slider">卡盟SDK</span>
 				</label>
-				<!-- <label class="item" @click="topShiftClick">
-					<input type="radio" v-model="form.source" value="8"><span class="slider">SDK-WEAR</span>
-				</label>
 				<label class="item" @click="topShiftClick">
-					<input type="radio" v-model="form.source" value="9"><span class="slider">D-WATCH</span>
+					<input type="radio" v-model="form.source" value="8"><span class="slider">卡盟通服</span>
 				</label>
-				<label class="item" @click="topShiftClick">
-					<input type="radio" v-model="form.source" value="10"><span class="slider">ANDROID-WEAR</span>
-				</label> -->
 			</div>
 		</section>
 		<!-- <div class="m-tag"><b></b>条件查询</div> -->
@@ -42,7 +36,7 @@
 				<div class="m-form-radio">
 					<label><span class="radio"><input type="radio" value="0" v-model="form.cardType"><span></span></span><span class="text">全部</span></label>
 					<label><span class="radio"><input type="radio" value="1" v-model="form.cardType"><span></span></span><span class="text">远特</span></label>
-					<label><span class="radio"><input type="radio" value="2" v-model="form.cardType"><span></span></span><span class="text">联通</span></label>
+					<label v-show="form.source!=8"><span class="radio"><input type="radio" value="2" v-model="form.cardType"><span></span></span><span class="text">联通</span></label>
 				</div>
 			</div>
 			<div class="row" v-if="off.type==2">
@@ -53,7 +47,7 @@
 					<label><span class="radio"><input type="radio" value="2" v-model="form.orderStatus"><span></span></span><span class="text">拒绝</span></label>
 				</div>
 			</div>
-			<div class="row" v-if="off.type==1||off.type==2" v-show="form.source!=7">
+			<div class="row" v-if="off.type==1||off.type==2" v-show="form.source!=7&&form.source!=8">
 				<span class="dp">审核方式：</span>
 				<div class="m-form-radio">
 					<label><span class="radio"><input type="radio" value="9" v-model="form.auditType"><span></span></span><span class="text">全部</span></label>
@@ -97,7 +91,7 @@
 				</span>
 				<div class="input-box"><input v-model="form.context4" :readonly="form.select!=4" maxlength="18" type="text" placeholder="请输入查询的身份证号码"></div>
 			</div>
-			<div class="row" :class="{active:form.select==5}" v-show="form.source!=7">
+			<div class="row" :class="{active:form.select==5}" v-show="form.source!=7&&form.source!=8">
 				<span class="m-form-radio">
 					<label><span class="radio"><input type="radio" value="5" v-model="form.select"><span></span></span><span class="text">操作者ID：</span></label>
 				</span>
@@ -140,37 +134,13 @@
 					<label><span class="radio"><input value="2" type="radio" v-model="form.orderStatus"><span></span></span><span class="text">已选套餐</span></label>
 					<label><span class="radio"><input value="3" type="radio" v-model="form.orderStatus"><span></span></span><span class="text">已上传资料</span></label>
 					<label><span class="radio"><input value="4" type="radio" v-model="form.orderStatus"><span></span></span><span class="text">已支付</span></label>
-					<!-- <label><span class="radio"><input value="5" type="radio" v-model="form.orderStatus"><span></span></span><span class="text">已审核</span></label> -->
-					<label><span class="radio"><input value="6" type="radio" v-model="form.orderStatus"><span></span></span><span class="text">已开户申请</span></label>
+					<label v-show="form.source!=8"><span class="radio"><input value="6" type="radio" v-model="form.orderStatus"><span></span></span><span class="text">已开户申请</span></label>
 					<label><span class="radio"><input value="7" type="radio" v-model="form.orderStatus"><span></span></span><span class="text">已获取IMSI</span></label>
 					<label><span class="radio"><input value="8" type="radio" v-model="form.orderStatus"><span></span></span><span class="text">已开卡申请</span></label>
 				</div>
 			</div>
 			<button class="f-btn f-btn-line" @click="searchList()">查询</button>
 		</section>
-		<!-- <section class="form-c o-detail-form" style="display:none">
-			<div class="m-col-select_input clr">
-				<div class="m-dropdown-select fl">
-					<button class="drop-button" @click="dropSelectButton"><span class="text">{{drop.text}}</span><i class="caret"></i></button>
-					<ul class="drop-menu" v-if="drop.off">
-						<li :class="{selected:drop.type==2}"><a name="2" @click="dropSelect">手机号码</a></li>
-						<li :class="{selected:drop.type==1}"><a name="1" @click="dropSelect">订单号码</a></li>
-						<li class="cascarder" v-if="off.type==2">
-							<a>开卡状态</a>
-							<ul>
-								<li :class="{selected:drop.type==79}"><a name="79" @click="dropSelect">全部</a></li>
-								<li :class="{selected:drop.type==71}"><a name="71" @click="dropSelect">成功</a></li>
-								<li :class="{selected:drop.type==72}"><a name="72" @click="dropSelect">失败</a></li>
-							</ul>
-						</li>
-						<li :class="{selected:drop.type==3}"><a name="3" @click="dropSelect">审核人ID</a></li>
-						<li :class="{selected:drop.type==4}"><a name="4" @click="dropSelect">身份证号码</a></li>
-						<li :class="{selected:drop.type==6}"><a name="6" @click="dropSelect">操作者ID</a></li>
-					</ul>
-				</div>
-				<input class="fl" type="text" id="context" @keydown="toSearch" v-model="form.context" placeholder="请输入对应参数，键入Enter查询" maxlength="32">
-			</div>
-		</section> -->
   	</div>
   	<div class="m-total-table" v-if="list">
 		<div class="total-head">统计结果<b>{{total}}</b> <button class="btn_export_excel" v-if="maxpage"  @click="downLoadList">导出excel</button></div>
@@ -188,7 +158,7 @@
 					<!-- <th>号码等级</th> -->
 					<th>身份证号码</th>
 					<th v-show="off.type==1||off.type==2">审核姓名</th>
-					<th v-show="form.source!=7">操作人</th>
+					<th v-show="form.source!=7&&form.source!=8">操作人</th>
 					
 					<!-- <th v-show="off.type==1||off.type==2">状态修改时间</th> -->	
 					<th v-show="off.type!=2">订单状态</th>
@@ -219,26 +189,27 @@
 
 					<td v-if="off.type==1||off.type==2">{{todo.customerName}}</td>
 
-					<td v-if="form.source!=7">
+					<td v-if="form.source!=7&&form.source!=8">
 						<span v-if="todo.operator">{{todo.operator}}</span>
 						<span v-if="todo.operatorId">{{todo.operatorId}}</span>
 						<br/><b class="f-m-lighter">（{{todo.operatorName}}）</b>
 					</td>
 
 					<td v-if="off.type==2">
-						<span v-if="form.source!=7">{{secondsFormat(todo.auditTime)}}</span>
-						<span v-else>{{ secondsFormat(parseInt(todo.modifyTime)-parseInt(todo.createTime)) }}</span>
+						<span v-if="form.source!=7&&form.source!=8">{{secondsFormat(todo.auditTime)}}</span>
+						<span v-else>{{ secondsFormat(parseInt(todo.modifyTime)/1000-parseInt(todo.createTime)/1000) }}</span>
 					</td>
 					<td v-if="off.type!=2">
 						<span v-if="off.type==1">
-							<span v-show="form.source!=7">
-								<b v-show="todo.status==1" class="f-c-red">待分配</b>
-								<b v-show="todo.status==2" class="f-c-green">已分配</b>
-							</span>
-							<span v-show="form.source==7">
+							<span v-if="form.source==7||form.source==8">
 								<b v-show="todo.status==4" class="f-c-red">待分配</b>
 								<b v-show="todo.status==5" class="f-c-green">已分配</b>
 							</span>
+							<span v-else>
+								<b v-show="todo.status==1" class="f-c-red">待分配</b>
+								<b v-show="todo.status==2" class="f-c-green">已分配</b>
+							</span>
+							
 						</span>
 						<span v-else>{{translateData(7,todo.statusDetail)}}</span>
 					</td>
@@ -263,10 +234,10 @@
 						<div class="f-c-red">超时关闭</div>
 						<div><a :name="todo.orderId" :title="index" @click="details" class="details" href="javascript:void(0)">详情</a></div>
 					</td>
-					<td colspan="2" v-if="off.type==2&&todo.status==4" class="td-col-2">
+					<!-- <td colspan="2" v-if="off.type==2&&todo.status==4" class="td-col-2">
 						<div class="f-c-blue">复审同意</div>
 						<div><a :name="todo.orderId" :title="index" @click="details" class="details" href="javascript:void(0)">详情</a></div>
-					</td>
+					</td> -->
 				</tr>
 			</tbody>
 		</table>
@@ -296,7 +267,7 @@ export default{
 				number:'',//第几条详情
 			},
 			form:{
-				source:'6',//订单来源
+				source:'6',//订单来源，6、卡盟APP；7、卡盟SDK；8卡盟通服
 				orderType:6,//操作类型
 				cardType:0,//运营商
 				orderStatus:0,//订单状态
@@ -306,16 +277,11 @@ export default{
 				context3:'',//审核人ID
 				context4:'',//身份证号
 				context5:'',// 操作者ID
-				context6:0,//type=1，订单状态；type=2，号卡状态
+				context6:0,//号卡状态
 				startTime:'',
 				endTime:'',
 				select:6//条件查询，选择的条件
 			},
-			// drop:{//下拉控制
-			// 	text:'订单号码',
-			// 	type:1,
-			// 	off:0
-			// },
 			list:'',//查询数据
 			detailsData:'',//详情数据
 			total:0,//总查询条数
@@ -338,29 +304,27 @@ export default{
 			type=='auditing' ? vm.off.type=1 : type=='audited' ? vm.off.type=2 : type=='closed' ? vm.off.type=4 : vm.off.type=3;
 			vm.form.startTime=laydate.now(0,'YYYY-MM-DD 00:00:00');
 			vm.form.endTime=laydate.now(0,'YYYY-MM-DD 23:59:59');
-			// vm.off.type==1 ? vm.form.select=6 : vm.form.select=7;
-			// document.attachEvent ? document.body.attachEvent("onclick",function(event){
-			// 	vm.drop.off=false;
-			// 	window.event.cacenlBubble=false;
-			// }) : document.body.addEventListener("click", function(event) {
-			// 	vm.drop.off=false;
-			// 	event.stopPropagation();
-			// },false);
-			//
-			//
 		},
 		searchList:function(page){
 			var vm=this,url,json={"source":vm.form.source,"type":vm.form.orderType,"pageSize":vm.pageSize,"pageNum":page||1,"startTime":vm.form.startTime,"endTime":vm.form.endTime,"status":vm.form.orderStatus,'auditType':vm.form.auditType,"cardType":vm.form.cardType};
 
 			//进行中，已关闭
-			if(json.source!=7&&(vm.off.type==3||vm.off.type==4)){
+			if(json.source!=7&&json.source!=8&&(vm.off.type==3||vm.off.type==4)){
 				vm.searchClosedAndDoing(page);
 				return false;
 			}
 
 			let context=vm.form['context'+vm.form.select];
 			vm.off.type==1&&vm.form.select!=6&&(json.status=0,vm.form.orderStatus=0);
-			if(vm.form.select==2&&(!context)){
+			if(vm.form.select==1&&(!context)){
+				layer.open({
+		            content:'请输入订单号码',
+		            skin: 'msg',
+		            time: 2,
+		            msgSkin:'error',
+		        });
+		        return false;
+			}else if(vm.form.select==2&&(!context)){
 				layer.open({
 		            content:'请输入手机号码',
 		            skin: 'msg',
@@ -406,10 +370,13 @@ export default{
 			if(vm.form.source==7){
 				url="w/handler/query";
 				json=vm.getSdkJson(json);
+			}else if(vm.form.source==8){
+				url="w/handler/query";
+				json=vm.getTfJson(json);
 			}else{
 				vm.off.type==1 ? url='w/audit/ingList' : url='w/audit/edList';
 			}
-			
+
 			if(vm.off.isLoad)return false;
 			vm.off.isLoad=true;
 			vm.AJAX(url,json,function(data){
@@ -427,7 +394,15 @@ export default{
 
 
 			let context=vm.form['context'+vm.form.select];
-			if(vm.form.select==2&&(!context)){
+			if(vm.form.select==1&&(!context)){
+				layer.open({
+		            content:'请输入订单号码',
+		            skin: 'msg',
+		            time: 2,
+		            msgSkin:'error',
+		        });
+		        return false;
+			}else if(vm.form.select==2&&(!context)){
 				layer.open({
 		            content:'请输入手机号码',
 		            skin: 'msg',
@@ -578,7 +553,7 @@ export default{
 				if(json.status!=0&&json.searchtype!=1){
 					let code=0;
 					if(json.status==1){
-						code=1000;//已选号
+						code=1001;//已选号
 					}else if(json.status==2){
 						code=1001;//已选套餐
 					}else if(json.status==3){
@@ -587,6 +562,80 @@ export default{
 						code=1004;//已支付
 					}else if(json.status==6){
 						code=1006;//已开户申请
+					}else if(json.status==7){
+						code=1007;//已获取IMSI
+					}else if(json.status==8){
+						code=1008;//已开卡申请
+					}
+					sql+=" AND A.latest_phase="+code;
+				}
+			}
+
+			if(json.searchtype==1){
+				sql+=' AND A.sys_order_id="'+json.context+'"';
+			}else if(json.searchtype==2){
+				sql+=' AND A.phone_number="'+json.context+'"';
+			}else if(json.searchtype==3){
+				sql+=' AND A.customer_id="'+json.context+'"';
+			}else if(json.searchtype==4){
+				sql+=' AND A.papers_code="'+json.context+'"';
+			}
+			resJson.params.push(sql);
+			return resJson;
+		},
+		getTfJson(json){//通服查询采用统一查询接口
+			var vm=this,type=vm.off.type,resJson={
+					"opKey":"",
+					"params":[],
+					"pageSize":"10",
+					"pageNum":json.pageNum
+				},sql="A.create_time BETWEEN "+getUnixTime(json.startTime)+" AND "+getUnixTime(json.endTime)+"";
+
+			if(type==2||type==1){//待审核-已审核
+				resJson.opKey="tf.orderAudit.list";
+				if(json.status!=0){
+					sql+=" AND A.result="+json.status;
+				}else if(json.status==0){//订单状态-全部
+					if(type==2){
+						sql+=" AND (A.result=1 OR A.result=2)";
+					}else if(type==1){
+						sql+=" AND (A.result=4 OR A.result=5)";
+					}
+				}
+
+				if(json.context!=0&&json.searchtype!=1){
+					if(json.searchtype==6){
+						if(json.context==1){
+							sql+=" AND B.order_status=2";
+						}else if(json.context==2){
+							sql+=" AND B.order_status=3";
+						}else if(json.context==3){
+							sql+=" AND B.order_status=1";
+						}else if(json.context==4){
+							sql+=" AND B.order_status=4";
+						}
+					}else if(vm.form.context6!=0){//输入值时，添加号卡状态查询条件
+						sql+=" AND B.order_status="+vm.form.context6;
+					}
+				}
+			}else if(type==3||type==4){
+				resJson.opKey="tf.orderApp.list";
+				if(type==3){
+					sql+=" AND B.result=6";
+				}else if(type==4){
+					sql+=" AND B.result=3";
+				}
+
+				if(json.status!=0&&json.searchtype!=1){
+					let code=0;
+					if(json.status==1){
+						code=1000;//已选号
+					}else if(json.status==2){
+						code=1001;//已选套餐
+					}else if(json.status==3){
+						code=1003;//已上传资料
+					}else if(json.status==4){
+						code=1004;//已支付
 					}else if(json.status==7){
 						code=1007;//已获取IMSI
 					}else if(json.status==8){
@@ -641,9 +690,29 @@ export default{
 				}else if(type==3||type==4){
 					json.opKey="sdk.orderApp.details";
 					if(type==3){
-						sql+=" AND A.order_status=1";
+						sql+=" AND A.order_status=6";
 					}else if(type==4){
 						sql+=" AND A.order_status=4";
+					}
+				}
+				json.params=[sql];
+				json.pageSize="10";
+				json.pageNum="-1";
+			}else if(vm.form.source==8){//通服
+				url="w/handler/query";
+				if(type==1||type==2){
+					json.opKey="tf.orderAudit.details";
+					if(type==2){
+						sql+=" AND (A.result=1 OR A.result=2)";
+					}else if(type==1){
+						sql+=" AND (A.result=4 OR A.result=5)";
+					}
+				}else if(type==3||type==4){
+					json.opKey="tf.orderApp.details";
+					if(type==3){
+						sql+=" AND B.result=1";
+					}else if(type==4){
+						sql+=" AND B.result=4";
 					}
 				}
 				json.params=[sql];
@@ -652,11 +721,10 @@ export default{
 			}else{
 				type==1 ? url='w/audit/ingInfo' : type==2 ? url='w/audit/edInfo' : url='w/audit/getOrderInfo';
 			}
-			
 			if(vm.off.isLoad)return false;
 			vm.off.isLoad=true;
 			vm.AJAX(url,json,function(data){
-				if(vm.form.source==7){
+				if(vm.form.source==7||vm.form.source==8){
 					vm.detailsData=data.data.list[0];
 				}else{
 					vm.detailsData=data.data;
@@ -711,4 +779,3 @@ export default{
 	}
 }
 </script>
-

@@ -7,11 +7,11 @@
 	<section class="g-audit-menu">
 		<div v-if="off.source==4&&off.auditType==0" class="g-audit-menu-c">
 			<div class="m-menu-div">
-				<router-link :to="{name:'realtime',params:{type:6}}" class="u-bg navBg1"><div>开卡审核</div><p><span>点击审核</span></p></router-link>
+				<router-link :to="{name:'realtime',params:{type:6}}" class="u-bg navBg1"><div>卡盟APP订单</div><p><span>点击审核</span></p></router-link>
 				<div class="navInfoDiv"><p>待审核<span>{{auditCount.opencard}}</span></p><p>已分配<span>{{auditCount.opencard_}}</span></p></div>
 			</div>
 			<div class="m-menu-div">
-				<router-link :to="{name:'realtime',params:{type:8}}" class="u-bg navBg9"><div>SDK开卡审核</div><p><span>点击审核</span></p></router-link>
+				<router-link :to="{name:'realtime',params:{type:8}}" class="u-bg navBg9"><div>卡盟SDK订单</div><p><span>点击审核</span></p></router-link>
 				<div class="navInfoDiv"><p>待审核<span>{{auditCount.sdkRealTime}}</span></p><p>已分配<span>{{auditCount.sdkRealTime_}}</span></p></div>
 			</div>
 			<div class="m-menu-div">
@@ -21,8 +21,12 @@
 		</div>
 		<div v-if="off.source==4&&off.auditType==1" class="g-audit-menu-c">
 			<div class="m-menu-div">
-				<router-link :to="{name:'afterwards',params:{type:6}}" class="u-bg navBg1"><div>开卡审核</div><p><span>点击审核</span></p></router-link>
+				<router-link :to="{name:'afterwards',params:{type:6}}" class="u-bg navBg1"><div>卡盟APP订单</div><p><span>点击审核</span></p></router-link>
 				<div class="navInfoDiv"><p>待审核<span>{{auditCount.opencardAfterwards}}</span></p><p>已分配<span>{{auditCount.opencard_Afterwards}}</span></p></div>
+			</div>
+			<div class="m-menu-div">
+				<router-link :to="{name:'afterwards',params:{type:9}}" class="u-bg navBg11"><div>卡盟通服订单</div><p><span>点击审核</span></p></router-link>
+				<div class="navInfoDiv"><p>待审核<span>{{auditCount.tfOpenCard}}</span></p><p>已分配<span>{{auditCount.tfOpenCard_}}</span></p></div>
 			</div>
 		</div>
 		<router-view></router-view>
