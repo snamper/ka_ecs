@@ -26,6 +26,9 @@ const state = {
 		"tfOpenCard_":0,//通服开卡事后已分配
 	},
 	countTotal:0,//审核总待审核数
+	opinionTotal1:0,//意见反馈未处理
+	opinionTotal2:0,//意见反馈处理中
+	opinionTotal3:0,//意见反馈已完成
 	offCountChange:true,//统计变化开关
 	onlineTime:'00:00:00',//在线时间
 	timer:{//定时器对象

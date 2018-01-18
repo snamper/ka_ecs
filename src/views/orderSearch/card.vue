@@ -37,6 +37,7 @@ export default{
 		return {
 			off:{
 				source:0,
+				name:"orderSearch_cardIte"
 			}
 		}
 	},
@@ -50,7 +51,7 @@ export default{
 	methods:{
 		setType:function(){
 			const path=this.$route.path;
-
+			
 			if(path.indexOf('/home/orderSearch/card/')>-1||path.indexOf('/home/orderSearch/sdkCard/')>-1){
 				this.off.source=0;
 			}else if(path.indexOf('/home/orderSearch/card')>-1){

@@ -139,6 +139,15 @@
 						<li><router-link :to="{name:'softwareUseTimes',params:{type:'faceConfirm'}}"><b></b>活体识别统计</router-link></li>
 					</ul>
 				</li>
+				<li :class="{active:$route.path.indexOf('/home/opinion')>-1}">
+					<b></b>
+					<router-link to="/home/opinion">
+						<div>
+							<i class="u-icon-opinion"></i>
+							<span>意见反馈</span>
+						</div>
+					</router-link>
+				</li>
 			</ul>
 		</nav>
 	</aside>
@@ -322,6 +331,15 @@ export default{
 					crumb[1]={"name":"身份识别统计下载","href":""}
 				}else if(path.indexOf("softwareUseTimes/faceConfirm")>-1){
 					crumb[1]={"name":"活体识别统计下载","href":""}
+				}
+			}else if(path.indexOf("/home/opinion")>-1){
+				crumb[0]={"name":"意见反馈"};
+				if(path.indexOf("pending")>-1){
+					crumb[1]={"name":"待处理","href":""}
+				}else if(path.indexOf("processing")>-1){
+					crumb[1]={"name":"进行中","href":""}
+				}else if(path.indexOf("finish")>-1){
+					crumb[1]={"name":"已完成","href":""}
 				}
 			}
 		
