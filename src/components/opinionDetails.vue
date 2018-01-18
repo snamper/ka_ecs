@@ -266,7 +266,7 @@
 	          	    		<li v-if="v.treaterName">处理人: <span>{{v.treaterName}} 【ID : {{v.treaterId}}】</span></li>
 	          	    	</ul>
           	    	</div>
-          	    	<div class="disposeInput">
+          	    	<div class="disposeInput" v-if="list.status!=3">
           	    		<div >
           	    			<p class="tl emoij">
           	    				<!-- <div class="fileInputContainer">
@@ -310,7 +310,7 @@
 	          	    		<li v-if="v.treaterName">处理人: <span>{{v.treaterName}} 【ID : {{v.treaterId}}】</span></li>
 	          	    	</ul>	
           	    	</div>
-          	    	<div class="disposeInput" style="height:15%">
+          	    	<div v-if="list.status!=3" class="disposeInput" style="height:15%">
           	    		<div >
           	    			<p class="tl emoij">
           	    				<!-- <div class="fileInputContainer">
@@ -325,8 +325,8 @@
 								  <input class="fileInput " type="file" name="" id="" />
 							    </div> -->
           	    		    </p>
-          	    		    <input type="text" v-model="form.context1">
-          	    		    <p class="tr disposeInputBtn">
+          	    		    <input  type="text" v-model="form.context1">
+          	    		    <p v-if="list.status!=3" class="tr disposeInputBtn">
           	    		    	<button  :class="{forb:form.context1.length==0? true : false}" :disabled="form.context1.length==0? true : false " :name="list.acceptId" @click="btnDeal('finished')">处理结束</button>
           	    		    	<button  :class="{forb:form.context1.length==0? true : false}" :disabled="form.context1.length==0? true : false " :name="list.acceptId" @click="btnDeal('continue')">继续跟进</button>
           	    		    </p>

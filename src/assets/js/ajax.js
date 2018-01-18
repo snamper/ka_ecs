@@ -3,7 +3,6 @@ import axios from 'axios';
 import {setStore, getStore, errorDeal} from '../../config/utils';
 require('./base64.min.js');
 Vue.prototype.AJAX=function(url,data,success,load){
-    console.log(url);
     var index;
     !load&&(index=layer.open({type: 2,shadeClose:false}));
     
