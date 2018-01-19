@@ -298,9 +298,11 @@ display:inline-block;position: absolute;right: 5px;top:50%;width:0.18rem;height:
 }
 /*意见反馈统计数字*/
 p.opinionCountP{
-  width: .2rem;
+  width: 2rem;
   height: .2rem;
-  margin:.2rem auto;
+  padding-top: .3rem;
+  text-align: left;
+  margin:0 auto;
   font-size: 18px;
   font-weight: bold;
 }

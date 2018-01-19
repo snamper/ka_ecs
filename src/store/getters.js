@@ -20,5 +20,19 @@ export default {
 		}else{
 			return 0;
 		}
+	},
+	getOpinionTotal:state=>{
+		let auditCount=state.auditCount;
+		Object.keys(auditCount).forEach(function(key){
+			auditCount[key]=parseInt(auditCount[key]);
+		});
+		let isadmin=state.userInfo.isadmin;
+		if(isadmin){
+			let Opcount=0;
+			Opcount += auditCount[0]+auditCount[1]+auditCount[2];
+			return Opcount;	
+		}else{
+			return 0;
+		}
 	}
 };
