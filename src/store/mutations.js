@@ -5,10 +5,12 @@ import {
 	SET_ONLINE_TIME,
 	CLEAR_TIMER,
 	SIGN_OUT,
-	SET_USERINFO
+	SET_USERINFO,
+	SET_OPINION_COUNT
 } from './mutation-types.js';
 import {
-	getAuditStatistics
+	getAuditStatistics,
+	getOpinionCount
 } from '../config/service';
 import {setStore, getStore, removeStore, secondsFormat} from '../config/utils';
 
@@ -23,6 +25,17 @@ export default {
 			state.offCountChange=false;
 		}
 		state.countTotal=count;
+	},
+	// 获取意见反馈统计数
+	[SET_OPINION_COUNT](state,res){
+		state.auditCount = Object.assign({}, state.auditCount,res.data);
+		let Opcount=this.getters.getOpinionTotal;
+		if(Opcount!=state.OpcountTotal){
+			state.offCountChange=true;
+		}else{
+			state.offCountChange=false;
+		}
+		state.OpcountTotal=Opcount;
 	},
 	//设置在线时间
 	[SET_ONLINE_TIME](state){

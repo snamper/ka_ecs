@@ -145,6 +145,7 @@
 						<div>
 							<i class="u-icon-opinion"></i>
 							<span>意见反馈</span>
+							<b class="animated m-lighter" :class="{bounce:offCountChange}" v-show="OpcountTotal">{{auditCount[0]}}</b>
 						</div>
 					</router-link>
 				</li>
@@ -208,7 +209,8 @@ export default{
             "timer",
             "auditCount",
             "countTotal",
-            "offCountChange"
+            "offCountChange",
+            "OpcountTotal"
         ]),
 	},
 	methods:{
@@ -219,7 +221,8 @@ export default{
             "SET_USERINFO"
         ]),
         ...mapActions([
-        	"getAuditStatisticsInfo"
+        	"getAuditStatisticsInfo",
+        	"getOpinionCountInfo",
         ]),
 		async init(){//页面初始化
 			const vm=this;
@@ -230,6 +233,10 @@ export default{
 			vm.timer.count=setInterval(function(){
 				vm.getAuditStatisticsInfo();
 			},3000);
+
+			vm.timer.OpcountT=setInterval(function(){
+				vm.getOpinionCountInfo();
+			},600);
 			vm.SET_ONLINE_TIME();
 
 			let userInfo=getStore("KA_ECS_USER");

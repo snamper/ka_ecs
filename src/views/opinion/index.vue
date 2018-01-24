@@ -6,21 +6,21 @@
 		<div v-show="off.source==1" class="g-search-menu-c">
 			<div class="m-search-menu">
 				<div class="slide">
-					<router-link :to="{name:off.name,params:{type:'pending'}}" class="slide-c f-c-green">待处理</router-link>
+					<router-link :to="{name:off.name,params:{type:'pending'}}" class="slide-c f-c-green">待处理
+					
+					</router-link>
 				</div>
-				<p class="opinionCountP" style="color:#3DD79B"></p>
 			</div>
 			<div class="m-search-menu">
 				<div class="slide">
-					<router-link :to="{name:off.name,params:{type:'processing'}}" class="slide-c f-c-purple">进行中</router-link>
+					<router-link :to="{name:off.name,params:{type:'processing'}}" class="slide-c f-c-purple">进行中
+					</router-link>
 				</div>
-				<p class="opinionCountP" style="color:#4b3887"></p>
 			</div>
 			<div class="m-search-menu">
 				<div class="slide">
 					<router-link :to="{name:off.name,params:{type:'finish'}}" class="slide-c f-c-red">已完成</router-link>
 				</div>
-				<p class="opinionCountP" style="color:#E13722"></p>
 			</div>
 		</div>
 		<router-view></router-view>
@@ -28,6 +28,8 @@
 </template>
 <script>
  import "../../assets/css/search.css";
+ import {mapState, mapMutations, mapActions} from 'vuex';
+ import {getStore} from '../../config/utils';
 export default{
 	name:'opinionItem',
 	data (){
@@ -38,6 +40,7 @@ export default{
 			}
 		}
 	},
+
 	created:function(){
 		var vm=this;
 		vm.setType();
@@ -45,7 +48,27 @@ export default{
 	watch:{
 		'$route':'setType'
 	},
+	computed:{
+		...mapState([
+            "onlineTime",
+            "timer",
+            "auditCount",
+            "countTotal",
+            "offCountChange",
+            "OpcountTotal"
+        ]),
+	},
 	methods:{
+		...mapMutations([
+            "SET_ONLINE_TIME",
+            "CLEAR_TIMER",
+            "SIGN_OUT",
+            "SET_USERINFO"
+        ]),
+        ...mapActions([
+        	"getAuditStatisticsInfo",
+        	"getOpinionCountInfo",
+        ]),
 		setType:function(){
 			const path = this.$route.path;
 			if(path.indexOf('/home/opinion/')<0){

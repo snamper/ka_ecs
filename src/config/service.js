@@ -5,3 +5,4 @@ export const getSignCode=(data,load)=>fetch("w/user/getSmsCode",data,"POST",load
 export const signOut=(data)=>fetch("w/user/loginOut",data,"POST");//登出
 export const getAuditStatistics=(data)=>fetch("w/audit/statisticsaudit",data,"POST",true);//获取审核统计
 export const unifySearchApi=(data,load)=>fetch("w/handler/query",data,"POST",load);//统一查询接口
+export const getOpinionCount=(data)=>fetch("w/advice/countNum",data,"POST",true);//查询意见反馈统计数

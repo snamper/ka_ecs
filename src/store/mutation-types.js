@@ -5,4 +5,5 @@ export const SIGN_OUT = "SIGN_OUT";
 export const SET_USERINFO = "SET_USERINFO";
 export const SET_COUNT_TOTAL = "SET_COUNT_TOTAL";
 export const SET_COUNT_TOTAL_CHANGE = "SET_COUNT_TOTAL_CHANGE";
+export const SET_OPINION_COUNT = "SET_OPINION_COUNT";
 

@@ -213,15 +213,21 @@
 								<tr >
 									<td>反馈人</td>
 									<td colspan="2">{{list.userName||'--'}} 
-									<span>【ID : {{list.userId||'--'}}】</span></td>
+									<span>【ID : {{list.userId||'--'}}】</span>
+									<a  href="javascript:void(0)" @click="detailsUser" class="details m-l">查看详情</a>	
+									</td>
 								    <td>商户名称</td>
 								    <td class="noborder" colspan="2">{{list.companyName||'--'}} <span>【信用等级：{{list.showLevel||'--'}}】</span> </td>
 								</tr>
 								<tr >
 									<td>反馈人位置</td>
-									<td colspan="2">{{list.longitude||'--'}},{{list.latitude||'--'}}</td>
+									<td colspan="2">{{list.longitude||'--'}},{{list.latitude||'--'}}
+									<a href="javascript:void(0)" @click="toMap" class="details m-l">查看地图</a>
+									</td>
 								    <td>渠道ID</td>
-								    <td class="noborder" colspan="2">{{list.dealerId||'--'}}</td>
+								    <td class="noborder" colspan="2">{{list.dealerId||'--'}}
+									<a  href="javascript:void(0)" @click="detailsMerchant" class="details m-l">查看详情</a>
+								    </td>
 								</tr>
 								<tr></tr>
 								<tr></tr>
@@ -341,9 +347,9 @@
           </div>
 		
   	</div>
-  <!-- <um-details-view v-if="isShowDetails" :type="typeDetails" :list="detailsList" :dealerId="list.dealerId">
+  <um-details-view v-if="isShowDetails" :type="typeDetails" :list="detailsList" :dealerId="list.dealerId">
 
-  </um-details-view> -->
+  </um-details-view>
 </section>
 </template>
 <script>
@@ -352,7 +358,7 @@ import "../assets/css/fontstyle.css";
 import ImgZoom from '../components/ImgZoom';
 import detailsView from '../components/cardOrderDetailsAlert';
 import { SDK_IMAGE_URL } from '../config/service';
-
+import '../assets/js/base64.min.js';
 export default{
 	name:'opinionDetails',
 	props:{
@@ -387,6 +393,27 @@ export default{
 		close:function(){
 			this.$parent.off.details=false
 		},
+		detailsUser:function(){//操作者详情
+		var vm=this;
+		vm.AJAX('w/audit/getUserInfo',{"userId":vm.list.userId},function(data){
+			vm.detailsList=data.data;
+			vm.isShowDetails=true;
+			vm.typeDetails=1;
+		})
+		},
+		detailsMerchant:function(){//商户详情
+			var vm=this;
+			vm.AJAX('w/audit/getMerchantInfo',{"dealerId":vm.list.dealerId},function(data){
+				vm.detailsList=data.data;
+				vm.isShowDetails=true;
+				vm.typeDetails=2;
+			})
+		},
+		toMap(){
+			var w=document.documentElement.clientWidth,url='',vm=this;
+			w<640 ? url='http://map.baidu.com/mobile/?latlng='+vm.list.latitude+','+vm.list.longitude+'' : url='http://map.baidu.com/?latlng='+vm.list.latitude+','+vm.list.longitude+'';
+			window.open(url);
+		},
 		btnDeal(btn){
 			let vm = this,
 			    acceptId = event.target.name;
@@ -398,7 +425,9 @@ export default{
 				}
 				vm.form.context1 = '';
 				vm.AJAX("w/advice/treatFeedback",json,function(data){
-					vm.AJAX("w/advice/getDetails" ,json,function(data){
+					vm.AJAX("w/advice/getDetails" ,json,function(data){	
+					  vm.$parent.detailsData=data.data.details;
+					  vm.$parent.detailsData.content = BASE64.decode(vm.$parent.detailsData.content);
 			          vm.$parent.detailsLog=data.data.process;
 			          vm.$parent.detailsLog.unshift({"acceptId": "F18010810202700000","treatNote": "已提交开发部修改！","treatTime": vm.$parent.detailsData.treattime,})
 			        },function(){
