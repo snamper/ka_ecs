@@ -391,7 +391,65 @@ export default{
 			this.con = this.list;
 		},
 		close:function(){
-			this.$parent.off.details=false
+			let vm=this,url,
+				vmPa=vm.$parent,
+				page=vmPa.pageNum;
+			vmPa.off.details=false;
+			let i=vmPa.off.whichBtn;
+			let s=vmPa.form.select;
+	        let userInfo=localStorage.getItem('KA_ECS_USER');
+	            userInfo=JSON.parse(userInfo);
+	        let customerId=userInfo.customerId,
+	        json={
+	          status:vmPa.off.type,
+	          type:vmPa.form.orderType,
+	          starttime:Date.parse(vmPa.form.startTime),
+	          endtime:Date.parse(vmPa.form.endTime),
+	          pageNum:page||'1',
+	          pageSize:'10',
+	          acceptId:'',
+	          dealerId:'',
+	          phone:'',
+	          treatUserId:'',//处理人id
+	          userId:''//反馈人id
+	        };
+
+			if(i==1){
+				 if(s==2){
+		            json.dealerId=vmPa.form.context2;
+		          }
+		          else if(s==6){
+		            json.userId=vmPa.form.context6;
+		          }
+		          else if(s==3){
+		            json.phone=vmPa.form.context3;
+		          }
+		          else if(s==4){
+		            json.treatUserId=vmPa.form.context4;
+		          }
+			}else if(i==2){
+				 json={
+		              status:vmPa.off.type,
+		              starttime:Date.parse(vmPa.form.startTime),
+		              endtime:Date.parse(vmPa.form.endTime),
+		              pageNum:page||'1',
+		              pageSize:'10',
+		              acceptId:vmPa.form.context1,
+		              dealerId:'',
+		              phone:'',
+		              treatUserId:'',
+		              treatName:''
+		          };
+			} 
+			vm.AJAX("w/advice/query",json,function(data){
+            vmPa.list=data.data.pageData;//数据
+            vmPa.total=data.data.total;//总条数
+            vmPa.maxpage=Math.ceil(parseInt(data.data.total)/10);//最大页码
+            vmPa.pageNum=page||1;
+            vmPa.callback=function(v){vm.searchList(index,v)};
+          },function(){
+            vmPa.off.isLoad=false;
+          })
 		},
 		detailsUser:function(){//操作者详情
 		var vm=this;
@@ -429,7 +487,7 @@ export default{
 					  vm.$parent.detailsData=data.data.details;
 					  vm.$parent.detailsData.content = BASE64.decode(vm.$parent.detailsData.content);
 			          vm.$parent.detailsLog=data.data.process;
-			          vm.$parent.detailsLog.unshift({"acceptId": "F18010810202700000","treatNote": "已提交开发部修改！","treatTime": vm.$parent.detailsData.treattime,})
+			          // vm.$parent.detailsLog.unshift({"acceptId": "F18010810202700000","treatNote": "已提交开发部修改！","treatTime": vm.$parent.detailsData.treattime,})
 			        },function(){
 			          vm.$parent.off.isLoad=false;
 			        })
