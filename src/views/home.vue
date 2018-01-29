@@ -66,12 +66,14 @@
 					<ul class="g-side-subul nav1">
 						<li v-if="userInfo.isadmin.indexOf('0')>-1||userInfo.isadmin.indexOf('1')>-1">
 							<router-link :to="{name:'audit_card',params:{source:'realtime'}}">
-								<b></b>开卡实时审核<span>{{auditCount.opencard+auditCount.transfer}}</span>
+								<b></b>开卡实时审核<span>{{auditCount.opencard+auditCount.transfer+auditCount.sdkRealTime
+}}</span>
 							</router-link>
 						</li>
 						<li v-if="userInfo.isadmin.indexOf('0')>-1||userInfo.isadmin.indexOf('1')>-1">
 							<router-link :to="{name:'audit_card',params:{source:'afterwards'}}">
-								<b></b>开卡事后审核<span>{{auditCount.opencardAfterwards}}</span>
+								<b></b>开卡事后审核<span>{{auditCount.opencardAfterwards+auditCount.tfOpenCard
+}}</span>
 							</router-link>
 						</li>
 						<li v-if="userInfo.isadmin.indexOf('6')>-1||userInfo.isadmin.indexOf('5')>-1||userInfo.isadmin.indexOf('1')>-1">
@@ -229,14 +231,15 @@ export default{
 
 			vm.windowChange();//浏览器窗口变化
 			vm.routeChange();//头部面包屑
-
+			vm.getAuditStatisticsInfo();
+            vm.getOpinionCountInfo();
 			vm.timer.count=setInterval(function(){
 				vm.getAuditStatisticsInfo();
 			},3000);
 
 			vm.timer.OpcountT=setInterval(function(){
 				vm.getOpinionCountInfo();
-			},600);
+			},60000);
 			vm.SET_ONLINE_TIME();
 
 			let userInfo=getStore("KA_ECS_USER");

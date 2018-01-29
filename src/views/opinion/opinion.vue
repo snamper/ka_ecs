@@ -131,6 +131,7 @@
           isLoad:0,//加载条
           details:0,//详情页面开关
           number:'',//第几条详情
+          whichBtn:'',
         },
         form:{
           orderType:1,//1功能异常;2其他问题;
@@ -147,37 +148,6 @@
         detailsData:{},
         detailsLog:[],
         con:'',
-         //[{
-        //     "acceptId": "F18010810202700000",
-        //     "dealerId": "A100304020",
-        //     "companyName": "运维-测试（卡盟-商户）",
-        //     "creattime": 1515378027521,
-        //     "type": 1,
-        //     "userId": "123456",
-        //     "userName": "wang",
-        //     "phone": "1390000000",
-        //     "content": "sfgjasgsajgasjldkgdjhgasldkhgahg",
-        //     "treatUserId": "test2", 
-        //     "treatName": "test2",
-        //     "treattime": 1515486132111,
-        //     "showLevel": "普通商户",
-        //     "longitude": "104",
-        //     "latitude": "30",
-        //     "status": 3
-        //     },[{
-        //     "acceptId": "F18010810202700000",
-        //     "treatNote": "已提交开发部修改！",
-        //     "treatTime": 1515486132111,
-        //     "treaterId": "test2",
-        //     "treaterName": "二狗"
-        //       },{
-        //     "acceptId": "F18010810202700000",
-        //     "treatNote": "已提交开发部修改！",
-        //     "treatTime": 1515486132111,
-        //     "treaterId": "test2",
-        //     "treaterName": "鸭蛋"
-        //       }]
-        //     ],//详情数据
         total:0,//总查询条数
         pageNum:1,//当前页数
         pageSize:10,//显示条数
@@ -221,6 +191,7 @@
           userId:''//反馈人id
         };
         if(index===1){//条件查询
+          vm.off.whichBtn=1;
           if(s==2&&vm.form.context2===''){
             layer.open({
               content:"请输入要查询的商户ID",
@@ -271,6 +242,7 @@
           }
         }
         else if(index==='order'){//订单号查询
+          vm.off.whichBtn=2;
           if(!vm.form.context1){
             layer.open({
               content:'请输入要查询的反馈单号',
@@ -322,7 +294,7 @@
           vm.detailsData=data.data.details;
           vm.detailsData.content = BASE64.decode(vm.detailsData.content);
           vm.detailsLog=data.data.process;
-          vm.detailsLog.unshift({"acceptId":vm.detailsData.acceptId,"treatNote": "已提交开发部修改！","treatTime": vm.detailsData.creattime,})
+          // vm.detailsLog.unshift({"acceptId":vm.detailsData.acceptId,"treatNote": "已提交开发部修改！","treatTime": vm.detailsData.creattime,})
           vm.detailsData?vm.off.details=true:vm.off.details=false;
         },function(){
           vm.off.isLoad=false;
