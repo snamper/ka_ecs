@@ -29,41 +29,6 @@ input:focus {outline: none;border-color: #20a0ff}
 
 #search, #merchantSearch{padding: 0.15rem;position: relative;}
 #search.active{width:100%;height:100%;position:absolute;padding: 0;}
-.m-scroll-bar{
-  position: absolute;
-  width:0;
-  height: 4px;
-  margin:auto;
-  border-radius: 100%;
-  /*background-image: -webkit-linear-gradient(to right, #40C4FF 0,#3E88FA 50%, #40C4FF 100%);
-  background-image: -moz-linear-gradient(to right, #40C4FF 0,#3E88FA 50%, #40C4FF 100%);
-  background-image: linear-gradient(to right, #40C4FF 0,#3E88FA 50%, #40C4FF 100%);
-  background-image: -ms-linear-gradient(to right, #40C4FF 0,#3E88FA 50%, #40C4FF 100%);*/
-  background-color:#20a0ff;
-  left: 0;
-  right:0;
-  top:0;
-  z-index: 888;
-}
-.m-scroll-bar.active{
-  -webkit-animation-name: scrollBar;-webkit-animation-timing-function:ease-in-out;
-    -moz-animation-name: scrollBar;-moz-animation-timing-function:ease-in-out;
-    animation-name: scrollBar;animation-timing-function:ease-in-out;
-    -moz-animation-direction:alternate;
-    -webkit-animation-direction:alternate;
-    animation-direction:alternate;
-    -moz-animation-duration: 1s;
-    -webkit-animation-duration: 1s;
-    animation-duration: 1s;
-}
-@-webkit-keyframes scrollBar{
-  0%{width: 0%;}
-  100%{width: 100%;}
-}
-@keyframes scrollBar{
-  0%{width: 0%;}
-  100%{width: 100%;}
-}
 
 .g-search-menu, .m-search-menu *{width: 100%;height: 100%;}
 .g-search-menu{display: table;position: relative;}
@@ -106,7 +71,7 @@ border-left:10px solid #20a0ff;border-top: 7px solid transparent;border-bottom: 
   margin-right:7px;
 }
 .m-time-area{ display: inline-block;}
-.m-time-area>input{text-align: center;font-size: 14px;width: auto;}
+.m-time-area>input{text-align: center;font-size: 14px;width: auto;cursor: pointer;}
 .m-time-area>input:first-child{
   border-radius:7px 0 0 7px;
 }

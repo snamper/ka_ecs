@@ -60,7 +60,6 @@ export default async(url = '', data = {}, type = 'GET', load, method = 'fetch') 
 	        	errorDeal(responseJson);
 	        }
 		} catch (errorText) {
-			
 			throw new Error(errorText);
 		}
 	} else {//XHR对象
