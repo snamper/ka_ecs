@@ -19,11 +19,12 @@
 								<tr><td>商户：</td><td>{{ list.dealer_id }}（{{ list.company_name }}）</td></tr>
 								<tr><td>工号：</td><td>{{ list.user_id }}（{{ list.user_name }}）</td></tr>
 								<tr><td>预占号码：</td><td>{{ list.occupy_phone }}（<span v-show="list.phone_type==1">远特</span><span v-show="list.phone_type==2">联通</span>，{{list.occupy_city_name}}，{{$parent.translateData(5,list.big_number_level)}}）</td></tr>
-								<tr><td>占用费：</td><td>{{ parseInt(list.phone_money)/100 }}元</td></tr>
-								<tr><td>占用保证金：</td><td>{{ parseInt(list.occupy_money)/100 }}元</td></tr>
-								<tr><td>退回金额：</td><td>{{ parseInt(list.order_refund_money)/100 }}元</td></tr>
-								<tr><td>退保证金扣除：</td><td>{{ parseInt(list.order_deduct_money)/100 }}元</td></tr>
-								<tr><td>号码被调价格：</td><td>{{ parseInt(list.occupy_price)/100 }}元</td></tr>
+								<tr><td>系统号码占用费：</td><td>{{ parseInt(list.phone_money)/100 }}元</td></tr>
+								<tr><td>商家自定占用费：</td><td>{{ parseInt(list.occupy_price)/100 }}元</td></tr>
+								<tr><td>预占保证金：</td><td>{{ parseInt(list.occupy_money)/100 }}元</td></tr>
+								<tr><td>退回预占保证金：</td><td>{{ parseInt(list.order_refund_money)/100 }}元</td></tr>
+								<tr><td>扣除预占保证金：</td><td>{{ parseInt(list.order_deduct_money)/100 }}元</td></tr>
+								
 								<tr v-show="list.cancel_user_id"><td>解除操作人：</td><td>{{ list.cancel_user_id }}（{{ list.cancel_user_name }}）</td></tr>
 								<tr><td>终端类型：</td><td>
 									<span v-show="list.terminal_type==1">ios</span>
@@ -62,7 +63,7 @@ export default{
 		}
 	},
 	created:function(){
-
+		
 	},
 	methods:{
 		close:function(){

@@ -331,9 +331,9 @@ export default{
 					str+='<p>'+list.optionalPackage[i].title+'</p>';
 				}
 				if(list.payed==1){
-					payed+='<li class="clr"><div class="fl">实付价格：</div><div class="fright">'+(parseFloat(list.actualPrice)/100).toFixed(2)+'元<b class="f-c-grey">（号码占用费'+(parseFloat(list.actualPrice_x)/10000).toFixed(2)+'元+调节占用费'+(parseFloat(list.updPrice)/100).toFixed(2)+'元+预存话费'+(parseFloat(list.actualPrice_y)/10000).toFixed(2)+'元）</b></div></li>'+
+					payed+='<li class="clr"><div class="fl">实付价格：</div><div class="fright">'+(parseFloat(list.actualPrice)/100).toFixed(2)+'元<b class="f-c-grey">（系统号码占用费'+(parseFloat(list.actualPrice_x)/10000).toFixed(2)+'元+商家自定占用费'+(parseFloat(list.updPrice)/100).toFixed(2)+'元+预存话费'+(parseFloat(list.actualPrice_y)/10000).toFixed(2)+'元）</b></div></li>'+
 						   '<li class="clr"><div class="fl">抵扣金额：</div><div class="fright">'+(parseFloat(list.deductionMoney)/100).toFixed(2)+'元</div></li>'+
-						   '<li class="clr"><div class="fl">开卡返佣：</div><div class="fright">'+(parseFloat(list.commission)/100).toFixed(2)+'元<b class="f-c-grey">（号码占用费'+(parseFloat(list.commission_x)/100).toFixed(2)+'元+调节占用费'+(parseFloat(list.updPrice)/100).toFixed(2)+'元+预存话费'+(parseFloat(list.commission_y)/100).toFixed(2)+'元）</b></div></li>'+
+						   '<li class="clr"><div class="fl">开卡返佣：</div><div class="fright">'+(parseFloat(list.commission)/100).toFixed(2)+'元<b class="f-c-grey">（系统号码占用费'+(parseFloat(list.commission_x)/100).toFixed(2)+'元+商家自定占用费'+(parseFloat(list.updPrice)/100).toFixed(2)+'元+预存话费'+(parseFloat(list.commission_y)/100).toFixed(2)+'元）</b></div></li>'+
 						   '<li class="clr"><div class="fl">支付模式：</div><div class="fright">'+list.payChannel+'</div></li>';
 				}
 				layer.open({
@@ -345,9 +345,9 @@ export default{
 								'<li class="clr"><div class="fl">ICCID：</div><div class="fright">'+list.ICCID+'</div></li>'+
 								'<li class="clr"><div class="fl">IMSI卡号：</div><div class="fright">'+list.esim+'</div></li>'+
 								'<li class="clr"><div class="fl">状态修改时间：</div><div class="fright">'+vm.$parent.getDateTime(list.timestamp)[6]+'</div></li>'+
-								'<li class="clr"><div class="fl">应付价格：</div><div class="fright">'+((parseFloat(list.price_x)/100)+(parseFloat(list.price_y)/100)+(parseFloat(list.updPrice)/100)).toFixed(2)+'元<b class="f-c-grey">（号码占用费'+(parseFloat(list.price_x)/100).toFixed(2)+'元+调节占用费'+(parseFloat(list.updPrice)/100).toFixed(2)+'元+预存话费'+(parseFloat(list.price_y)/100).toFixed(2)+'元）</b></div></li>'+payed+
+								'<li class="clr"><div class="fl">应付价格：</div><div class="fright">'+((parseFloat(list.price_x)/100)+(parseFloat(list.price_y)/100)+(parseFloat(list.updPrice)/100)).toFixed(2)+'元<b class="f-c-grey">（系统号码占用费'+(parseFloat(list.price_x)/100).toFixed(2)+'元+商家自定占用费'+(parseFloat(list.updPrice)/100).toFixed(2)+'元+预存话费'+(parseFloat(list.price_y)/100).toFixed(2)+'元）</b></div></li>'+payed+
 								'<li class="clr"><div class="fl">预占保证金：</div><div class="fright">'+(parseFloat(list.occupy)/100).toFixed(2)+'元</div></li>'+
-								'<li class="clr"><div class="fl">返回预占保证金：</div><div class="fright">'+(parseFloat(list.occupyReturn)/100).toFixed(2)+'元</div></li>'+
+								'<li class="clr"><div class="fl">退回预占保证金：</div><div class="fright">'+(parseFloat(list.occupyReturn)/100).toFixed(2)+'元</div></li>'+
 								'<li class="clr"><div class="fl">扣除预占保证金：</div><div class="fright">'+(parseFloat(list.occupyDeduct)/100).toFixed(2)+'元</div></li>'+
 								'<li class="clr"><div class="fl">已选套餐：</div><div class="fright">'+list.package+'</div></li>'+
 								'<li class="clr"><div class="fl">已选可选包：</div><div class="fright">'+str+'</div></li></ul>',
