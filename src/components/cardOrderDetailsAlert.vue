@@ -147,7 +147,9 @@ export default{
 	methods:{
 		toMap:function(){
 			var w=document.documentElement.clientWidth,url='',vm=this;
-			w<640 ? url='http://map.baidu.com/mobile/?latlng='+vm.list.latitude+','+vm.list.longitude+'' : url='http://map.baidu.com/?latlng='+vm.list.latitude+','+vm.list.longitude+'';
+			let latitude=parseFloat(vm.list.latitude);
+			let longitude=parseFloat(vm.list.longitude);
+			w<640 ? url='http://map.baidu.com/mobile/?latlng='+latitude+','+longitude+'' : url='http://map.baidu.com/?latlng='+latitude+','+longitude+'';
 			window.open(url);
 		},
 		toUserList:function(){
