@@ -17,7 +17,6 @@ export default {
 				count = auditCount.opencard+auditCount.opencardAfterwards+auditCount.attribute+auditCount.transfer+auditCount.sdkRealTime+auditCount.tfOpenCard+auditCount.registerMerchantRealTime+auditCount.registerMerchantAfter;
 			}
 			return count;
-			debugger;
 		}else{
 			return 0;
 		}

@@ -24,7 +24,7 @@ const Home = resolve => {
     resolve(require("@/views/home"));
   });
 };
-const Dashboard = resolve => {
+const Dashboard = resolve => {//首页-数据面板
   load(true);
   require.ensure(["@/views/dashboard"], () => {
     resolve(require("@/views/dashboard"));
@@ -39,21 +39,21 @@ const Audit = resolve => {
     load();
   });
 };
-const Audit_card = resolve => {
+const Audit_card = resolve => {//开卡
   load(true);
   require.ensure(["@/views/audit/card"], () => {
     resolve(require("@/views/audit/card"));
     load();
   });
 };
-const Audit_cardItem = resolve => {
+const Audit_cardItem = resolve => {//开卡子模块
   load(true);
   require.ensure(["@/views/audit/cardItem"], () => {
     resolve(require("@/views/audit/cardItem"));
     load();
   });
 };
-const Audit_registMerchant = resolve => {
+const Audit_registMerchant = resolve => {//激活商户
   load(true);
   require.ensure(["@/views/audit/registMerchant"], () => {
     resolve(require("@/views/audit/registMerchant"));
@@ -68,59 +68,66 @@ const OrderSearch = resolve => {
     load();
   });
 };
-const OrderSearch_card = resolve => {
+const OrderSearch_card = resolve => {//开卡订单
   load(true);
   require.ensure(["@/views/orderSearch/card"], () => {
     resolve(require("@/views/orderSearch/card"));
     load();
   });
 };
-const OrderSearch_cardItem = resolve => {
+const OrderSearch_cardItem = resolve => {//开卡订单子模块
   load(true);
   require.ensure(["@/views/orderSearch/cardItem"], () => {
     resolve(require("@/views/orderSearch/cardItem"));
     load();
   });
 };
-const OrderSearch_businessPower = resolve => {
+const OrderSearch_businessPower = resolve => {//售卡范围
   load(true);
   require.ensure(["@/views/orderSearch/businessPower"], () => {
     resolve(require("@/views/orderSearch/businessPower"));
     load();
   });
 };
-const OrderSearch_onlineHall = resolve => {
+const OrderSearch_onlineHall = resolve => {//网厅订单
   load(true);
   require.ensure(["@/views/orderSearch/onlineHall"], () => {
     resolve(require("@/views/orderSearch/onlineHall"));
     load();
   });
 };
-const OrderSearch_busCard = resolve => {
+const OrderSearch_busCard = resolve => {//公交一卡通
   load(true);
   require.ensure(["@/views/orderSearch/busCard"], () => {
     resolve(require("@/views/orderSearch/busCard"));
     load();
   });
 };
-const OrderSearch_busCardItem = resolve => {
+const OrderSearch_busCardItem = resolve => {//公交一卡通子模块
   load(true);
   require.ensure(["@/views/orderSearch/busCardItem"], () => {
     resolve(require("@/views/orderSearch/busCardItem"));
     load();
   });
 };
-const OrderSearch_recharge = resolve => {
+const OrderSearch_recharge = resolve => {//充值订单
   load(true);
   require.ensure(["@/views/orderSearch/recharge"], () => {
     resolve(require("@/views/orderSearch/recharge"));
     load();
   });
 };
-const OrderSearch_registMerchant = resolve => {
+const OrderSearch_registMerchant = resolve => {//激活商户
   load(true);
   require.ensure(["@/views/orderSearch/registMerchant"], () => {
     resolve(require("@/views/orderSearch/registMerchant"));
+    load();
+  });
+};
+const OrderSearch_reserve = resolve => {//预占号码
+  load(true);
+  require.ensure(["@/views/orderSearch/reserve"], () => {
+    resolve(require("@/views/orderSearch/reserve"));
     load();
   });
 };
@@ -132,28 +139,28 @@ const Resource = resolve => {
     load();
   });
 };
-const Resource_merchant = resolve => {
+const Resource_merchant = resolve => {//商户查询
   load(true);
   require.ensure(["@/views/resource/merchant"], () => {
     resolve(require("@/views/resource/merchant"));
     load();
   });
 };
-const Resource_numberRelease = resolve => {
+const Resource_numberRelease = resolve => {//号码冻结/解冻
   load(true);
   require.ensure(["@/views/resource/numberRelease"], () => {
     resolve(require("@/views/resource/numberRelease"));
     load();
   });
 };
-const Resource_promoter = resolve => {
+const Resource_promoter = resolve => {//推广方查询
   load(true);
   require.ensure(["@/views/resource/promoter"], () => {
     resolve(require("@/views/resource/promoter"));
     load();
   });
 };
-const Resource_device = resolve => {
+const Resource_device = resolve => {//设备查询
   load(true);
   require.ensure(["@/views/resource/device"], () => {
     resolve(require("@/views/resource/device"));
@@ -169,14 +176,14 @@ const Statistics = resolve => {
     load();
   });
 };
-const Statistics_cardOrder = resolve => {
+const Statistics_cardOrder = resolve => {//开卡统计
   load(true);
   require.ensure(["@/views/statistics/cardOrder"], () => {
     resolve(require("@/views/statistics/cardOrder"));
     load();
   });
 };
-const Statistics_softwareUseTimes= resolve => {
+const Statistics_softwareUseTimes= resolve => {//身份证识别/活体识别统计
   load(true);
   require.ensure(["@/views/statistics/softwareUseTimes"], () => {
     resolve(require("@/views/statistics/softwareUseTimes"));
@@ -198,6 +205,14 @@ const Opinion_item = resolve => {
     load();
   });
 };
+/*区域管理*/
+// const Fence = resolve =>{
+//   load(true);
+//   require.ensure(["@/views/fence"], () => {
+//     resolve(require("@/views/fence"));
+//     load();
+//   });
+// };
 const router=new Router({
   routes: [
     {
@@ -273,6 +288,10 @@ const router=new Router({
             path:"registMerchant/:type",
             name:'registMerchantSearch',
             component:OrderSearch_registMerchant,
+          },{//预占号码
+            path:"reserve",
+            name:'reserveSearch',
+            component:OrderSearch_reserve,
           }]
         },
 		    {//资源查询
@@ -318,7 +337,12 @@ const router=new Router({
             component:Opinion_item,
             name:"opinion_item"
           }]
-        }
+        },
+        // {//区域管理
+        //   path:"fence",
+        //   component:Fence,
+        //   name:"fence"
+        // }
       ]
     }
   ]

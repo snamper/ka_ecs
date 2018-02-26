@@ -1,16 +1,16 @@
-@font-face{
-  /*font-family:'Farrington7B';
-  src:url('../assets/fonts/Farrington7B.otf');
-  src:url('../assets/fonts/Farrington7B.eot?#iefix') format('embedded-opentype'),
-    url('../assets/fonts/Farrington7B.woff2') format('woff2'),
-    url('../assets/fonts/Farrington7B.woff') format('woff'),
-    url('../assets/fonts/Farrington7B.ttf') format('truetype'),
-    url('../assets/fonts/Farrington7B.svg#webfont') format('svg');  
+/*@font-face{
+  font-family:'fantasy_d';
+  src:url('../assets/fonts/fantasy/fantasy.otf');
+  src:url('../assets/fonts/fantasy/fantasy.eot?#iefix') format('embedded-opentype'),
+    url('../assets/fonts/fantasy/fantasy.woff2') format('woff2'),
+    url('../assets/fonts/fantasy/fantasy.woff') format('woff'),
+    url('../assets/fonts/fantasy/fantasy.ttf') format('truetype'),
+    url('../assets/fonts/fantasy/fantasy.svg#webfont') format('svg');  
 
   font-weight:normal;
   font-style:normal;
-  font-display: swap;*/
-}
+  font-display: swap;
+}*/
 .dashboard-box {
   position: relative;
   width: 100%;
@@ -42,11 +42,12 @@
 .map-box>.inner-total>b, .statistics>.col>b{
   /*font-family:'Farrington7B';*/
   color: #4b3887;
-  font-size: 0.28rem;
+  font-size: 0.3rem;
   letter-spacing: 1px;
 }
 .fsfantasy{
-  font-family: fantasy;
+  /*font-family: 'fantasy_d';*/
+  font-weight: bold;
 }
 .map-box>.inner-total.total-1{
   right: 60%;

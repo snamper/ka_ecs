@@ -308,6 +308,11 @@
   width: 0.17rem;
   height: 0.17rem;
 }
+.u-icon-fence {
+  background-image: url(../assets/images/fence.png);
+  width: 0.17rem;
+  height: 0.17rem;
+}
 .u-icon-menu2 {
   background-image: url(../assets/images/menu2.png);
   width: 0.2rem;
@@ -490,7 +495,42 @@
   margin-top: -3px;
 }
 
-
+/*加载条*/
+.m-scroll-bar{
+  position: absolute;
+  width:0;
+  height: 4px;
+  margin:auto;
+  border-radius: 100%;
+  /*background-image: -webkit-linear-gradient(to right, #40C4FF 0,#3E88FA 50%, #40C4FF 100%);
+  background-image: -moz-linear-gradient(to right, #40C4FF 0,#3E88FA 50%, #40C4FF 100%);
+  background-image: linear-gradient(to right, #40C4FF 0,#3E88FA 50%, #40C4FF 100%);
+  background-image: -ms-linear-gradient(to right, #40C4FF 0,#3E88FA 50%, #40C4FF 100%);*/
+  background-color:#20a0ff;
+  left: 0;
+  right:0;
+  top:0;
+  z-index: 888;
+}
+.m-scroll-bar.active{
+  -webkit-animation-name: scrollBar;-webkit-animation-timing-function:ease-in-out;
+    -moz-animation-name: scrollBar;-moz-animation-timing-function:ease-in-out;
+    animation-name: scrollBar;animation-timing-function:ease-in-out;
+    -moz-animation-direction:alternate;
+    -webkit-animation-direction:alternate;
+    animation-direction:alternate;
+    -moz-animation-duration: 1s;
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+}
+@-webkit-keyframes scrollBar{
+  0%{width: 0%;}
+  100%{width: 100%;}
+}
+@keyframes scrollBar{
+  0%{width: 0%;}
+  100%{width: 100%;}
+}
 /*响应式*/
 
 @media screen and (max-width: 960px) {

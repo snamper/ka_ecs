@@ -45,7 +45,7 @@
 		<nav class="g-side-nav">
 			<header class="g-side-head">卡盟</header>
 			<ul class="g-side-ul">
-				<li :class="{active:$route.path.indexOf('/home/dashboard')>-1}">
+				<li :class="{active:crumb[0].name=='首页'}">
 					<b></b>
 					<router-link to="/home/dashboard">
 						<div>
@@ -54,7 +54,7 @@
 						</div>
 					</router-link>
 				</li>
-				<li :class="{active:$route.path.indexOf('/home/audit')>-1}">
+				<li :class="{active:crumb[0].name=='订单审核'}">
 					<b></b>
 					<router-link to="/home/audit">
 						<div>
@@ -93,7 +93,7 @@
 						</li>
 					</ul>
 				</li>
-				<li :class="{active:$route.path.indexOf('/home/orderSearch')>-1}"
+				<li :class="{active:crumb[0].name=='订单查询'}"
 					v-if="userInfo.isadmin.indexOf('2')>-1||userInfo.isadmin.indexOf('1')>-1">
 					<b></b>
 					<router-link to="/home/orderSearch">
@@ -108,10 +108,11 @@
 						<li><router-link to="/home/orderSearch/onlineHall"><b></b>网厅订单</router-link></li>
 						<li><router-link :to="{name:'businessPowerSearch',params:{type:'audited'}}"><b></b>售卡范围</router-link></li>
 						<li><router-link :to="{name:'registMerchantSearch',params:{type:'search'}}"><b></b>激活商户</router-link></li>
+						<li><router-link to="/home/orderSearch/reserve"><b></b>预占号码</router-link></li>
 						<!-- <li><router-link to="/home/orderSearch/busCard"><b></b>公交一卡通</router-link></li> -->
 					</ul>
 				</li>
-				<li :class="{active:$route.path.indexOf('/home/resource')>-1}">
+				<li :class="{active:crumb[0].name=='资源查询'}">
 					<b></b>
 					<router-link to="/home/resource">
 						<div>
@@ -124,10 +125,10 @@
 						<li><router-link :to="{name:'device',params:{val:'null'}}"><b></b>设备查询</router-link></li>
 						<li><router-link :to="{name:'promoter',params:{val:'null'}}"><b></b>推广方查询</router-link></li>
 						
-						<li v-if="userInfo.isadmin.indexOf('7')>-1||userInfo.isadmin.indexOf('1')>-1"><router-link to="/home/resource/numberRelease"><b></b>号码占用/解冻</router-link></li>
+						<li v-if="userInfo.isadmin.indexOf('7')>-1||userInfo.isadmin.indexOf('1')>-1"><router-link to="/home/resource/numberRelease"><b></b>号码冻结/解冻</router-link></li>
 					</ul>
 				</li>
-				<li :class="{active:$route.path.indexOf('/home/statistics')>-1}">
+				<li :class="{active:crumb[0].name=='统计报表'}">
 					<b></b>
 					<router-link to="/home/statistics">
 						<div>
@@ -141,7 +142,7 @@
 						<li><router-link :to="{name:'softwareUseTimes',params:{type:'faceConfirm'}}"><b></b>活体识别统计</router-link></li>
 					</ul>
 				</li>
-				<li :class="{active:$route.path.indexOf('/home/opinion')>-1}">
+				<li :class="{active:crumb[0].name=='意见反馈'}">
 					<b></b>
 					<router-link to="/home/opinion">
 						<div>
@@ -151,6 +152,15 @@
 						</div>
 					</router-link>
 				</li>
+				<!-- <li :class="{active:$route.path.indexOf('/home/fence')>-1}">
+					<b></b>
+					<router-link to="/home/fence">
+						<div>
+							<i class="u-icon-fence"></i>
+							<span>区域管理</span>
+						</div>
+					</router-link>
+				</li> -->
 			</ul>
 		</nav>
 	</aside>
@@ -188,9 +198,10 @@ export default{
 	data (){
 		return {
 			off:{
-				headMenu:false,
-				window:0,
-				userMenu:0,
+				headMenu:true,//导航栏开关
+				window:0,//浏览器窗口宽度
+				userMenu:0,//用户菜单开关
+
 			},
 			userInfo:{isadmin:''},
 			crumb:[{'name':''},{'name':''},{'name':''}],//面包屑
@@ -229,22 +240,19 @@ export default{
 		async init(){//页面初始化
 			const vm=this;
 
-			vm.windowChange();//浏览器窗口变化
 			vm.routeChange();//头部面包屑
 			vm.getAuditStatisticsInfo();
             vm.getOpinionCountInfo();
-			vm.timer.count=setInterval(function(){
-				vm.getAuditStatisticsInfo();
-			},3000);
+            window.onresize=()=>vm.debounce(300,vm.windowChange());
 
-			vm.timer.OpcountT=setInterval(function(){
-				vm.getOpinionCountInfo();
-			},60000);
+			vm.timer.count=setInterval(()=>vm.getAuditStatisticsInfo(),5000);
+			vm.timer.OpcountT=setInterval(()=>vm.getOpinionCountInfo(),60000);
 			vm.SET_ONLINE_TIME();
 
 			let userInfo=getStore("KA_ECS_USER");
 			vm.userInfo=userInfo;
 			vm.SET_USERINFO(userInfo);
+
 			document.attachEvent ? doucument.body.attachEvent("onclick",function(event){
 				vm.off.userMenu=false;
 				window.event.cacenlBubble=false;
@@ -257,14 +265,14 @@ export default{
 			this.off.headMenu?this.off.headMenu=false:this.off.headMenu=true;
 		},
 		routeChange:function(){//路由变化
-			this.off.window<=960?this.off.headMenu=false:void 0;
+			this.windowChange();
 			var path=this.$route.path,
 				crumb=[{"name":""},{"name":""},{"name":""}],
 				mainDom=document.getElementById("main");
-			if(path.indexOf('dashboard')>-1){
-				this.off.headMenu=false;
-			}
-			if(path.indexOf("/home/audit")>-1){
+
+			if(path.indexOf("/home/dashboard")>-1){
+				crumb[0]={"name":"首页"};
+			}else if(path.indexOf("/home/audit")>-1){
 				crumb[0]={"name":"订单审核"}
 				if(path.indexOf("card/realtime")>-1){
 					crumb[1]={"name":"开卡实时审核","href":"/home/audit/card/realtime"}
@@ -321,7 +329,10 @@ export default{
 					crumb[1]={"name":"激活商户","href":""};
 				}else if(path.indexOf("recharge")>-1){
 					crumb[1]={"name":"充值订单","href":""}
+				}else if(path.indexOf("reserve")>-1){
+					crumb[1]={"name":"预占号码","href":""}
 				}
+
 			}else if(path.indexOf("/home/resource")>-1){
 				crumb[0]={"name":"资源查询"}
 				if(path.indexOf("merchant")>-1){
@@ -355,24 +366,32 @@ export default{
 		
 			this.crumb=crumb;
 			mainDom.style.overflowY='hidden';
-			var timer=setTimeout(function(){
-				mainDom.style.overflowY='';
-			},500);
+			var timer=setTimeout(()=>mainDom.style.overflowY='',500);
 		},
 		userMenu:function(e){//用户菜单show or hide
 			this.off.userMenu?this.off.userMenu=false:this.off.userMenu=true;
 			e.stopPropagation();
 		},
 		windowChange:function(){//窗口改变
-			const vm=this,change=function(){
-				var w=window.innerWidth;
-				vm.off.window=w;
-				w<=960?vm.off.headMenu=false:void 0;
-			};
-			change();
-			window.onresize=function(){
-				change();
-			};
+			const vm=this;
+			let w=window.innerWidth;
+			let href=window.location.href;
+
+			if(href.indexOf('dashboard')>-1||w<=960){
+				vm.off.headMenu=false;
+			}
+
+			vm.off.window=w;
+		},
+		debounce:function(time,action){//节流函数
+		  let last;
+		  return function(){
+		    let ctx=this, args=arguments
+		    clearTimeout(last)
+		    last=setTimeout(function(){
+		        action.apply(ctx,args)
+		    },time)
+		  }
 		},
 		clickSignOut:function(){
 			var vm=this;

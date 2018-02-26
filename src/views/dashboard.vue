@@ -290,7 +290,7 @@ import CountUp from 'vue-countup-v2';
           }
         }
       },
-      getLatelyTime(now,type,num){//获取最近日期
+      getLatelyTime(now,type,num){//获取最近7天、12个小时、6个月
         let dateArr=[];
         for(let i=(num-1);i>=0;i--){
           if(type=='hour'){
@@ -304,8 +304,19 @@ import CountUp from 'vue-countup-v2';
             
           };
           if(type=='day')dateArr.push(getDateTime(now-1000*60*60*24*i)[4]);
-          if(type=='month')dateArr.push(getDateTime(now-1000*60*60*24*30*i)[1]);
         }
+
+        if(type=='month'){
+          let year=getDateTime(now)[0],month=getDateTime(now)[1];
+          for(let i=0;i<num;i++){
+            let mm=month-i,yy=year;
+            mm<=0&&(mm=12-Math.abs(mm),yy=year-1);
+            mm<10&&(mm='0'+mm);
+            dateArr[i]=mm;
+          }
+          dateArr=dateArr.reverse();
+        }
+
         return dateArr
       },
       getnotice(){//获取公告
