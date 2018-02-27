@@ -105,9 +105,6 @@
 		width: 88%;
 		margin:0 auto;
 	}
-	.disposeInput input{
-	
-	}
 	.borderR{
 		border-right: 1px solid #dfe6ec;
 	}
@@ -445,8 +442,8 @@ export default{
             vmPa.list=data.data.pageData;//数据
             vmPa.total=data.data.total;//总条数
             vmPa.maxpage=Math.ceil(parseInt(data.data.total)/10);//最大页码
-            vmPa.pageNum=page||1;
-            vmPa.callback=function(v){vm.searchList(index,v)};
+            vm.index=vmPa.off.whichBtn;
+            vmPa.callback=function(v){vmPa.searchList(vm.index,v)};
           },function(){
             vmPa.off.isLoad=false;
           })

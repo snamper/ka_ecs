@@ -85,7 +85,7 @@
             </thead>
             <tbody>
             <!--查询结果表格-->
-            <tr v-for="(todo,index) in list">
+            <tr v-for="(todo,index) in list" :key="index">
               <td>{{((pageNum-1)*10+(index+1))}}</td>
               <td>{{todo.acceptId||'--'}}</td>
               <td>{{new Date(todo.creattime).toLocaleString()||'--'}}</td>
