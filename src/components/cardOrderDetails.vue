@@ -282,8 +282,14 @@ export default{
 	methods:{
 		toMap(){
 			var w=document.documentElement.clientWidth,url='',vm=this;
-			let latitude=parseFloat(vm.list.latitude);
-			let longitude=parseFloat(vm.list.longitude);
+			var latitude,longitude;
+			if(vm.source==8){
+				latitude=parseFloat(vm.userMoreInfo.latitude);
+				longitude=parseFloat(vm.userMoreInfo.longitude);
+			}else{
+				latitude=parseFloat(vm.list.latitude);
+				longitude=parseFloat(vm.list.longitude);
+			}
 			w<640 ? url='http://map.baidu.com/mobile/?latlng='+latitude+','+longitude+'' : url='http://map.baidu.com/?latlng='+latitude+','+longitude+'';
 			window.open(url);
 		},
