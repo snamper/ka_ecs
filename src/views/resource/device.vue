@@ -110,6 +110,7 @@ export default{
 			},function(){
 				vm.off.isLoad=false;
 			}).then(res=>{
+				console.log(res);
 				if(res.data.list.length){
 					vm.deviceList=res.data.list;	
 				}else{

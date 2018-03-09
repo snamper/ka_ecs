@@ -50,18 +50,32 @@ export default async(url = '', data = {}, type = 'GET', load, method = 'fetch') 
 			});
 		}
 		
-		try {
-			const response = await fetch(url, requestConfig);
-			const responseJson = await response;
+		return await fetch(url,requestConfig).then((response)=>{
 			closeLoadLayout();
-	        if(responseJson.status=="200"){
-	        	return responseJson.json();
+			if(response.status=="200"){
+	        	return response;
 	        }else{
-	        	errorDeal(responseJson);
+	        	errorDeal(response);
 	        }
-		} catch (errorText) {
-			throw new Error(errorText);
-		}
+		}).then((response)=>{
+	        return response.json();
+		}).then(data=>{
+			//console.log(data);
+			return data;
+		}).catch(error=>errorDeal(error));
+		// try {
+		// 	const response = await fetch(url, requestConfig);
+		// 	const responseJson = await response;
+		// 	closeLoadLayout();
+	 //        if(responseJson.status=="200"){
+	 //        	console.log(responseJson.status)
+	 //        	return responseJson.json();
+	 //        }else{
+	 //        	errorDeal(responseJson);
+	 //        }
+		// } catch (errorText) {
+		// 	throw new Error(errorText);
+		// }
 	} else {//XHR对象
 		return new Promise((resolve, reject) => {
 			let requestObj;
