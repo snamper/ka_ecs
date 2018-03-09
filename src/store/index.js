@@ -29,12 +29,15 @@ const state = {
 		opinionTotal3:0,//意见反馈已完成
 	},
 	countTotal:0,//审核总待审核数
-	OpcountTotal:0,//意见反馈数统计
+    OpcountTotal:0,//意见反馈数统计
+    auditCountYm:0,//ym审核总待审核数
 	offCountChange:true,//统计变化开关
 	onlineTime:'00:00:00',//在线时间
 	timer:{//定时器对象
 		online:null,
-		count:null
+        count:null,
+        OpcountT:null,
+        countYm:null,        
 	},
 };
 

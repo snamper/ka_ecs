@@ -34,136 +34,136 @@ const Dashboard = resolve => {//首页-数据面板
 /*审核*/
 const Audit = resolve => {
   load(true);
-  require.ensure(["@/views/audit/index"], () => {
-    resolve(require("@/views/audit/index"));
+  require.ensure(["@/views/km/audit/index"], () => {
+    resolve(require("@/views/km/audit/index"));
     load();
   });
 };
 const Audit_card = resolve => {//开卡
   load(true);
-  require.ensure(["@/views/audit/card"], () => {
-    resolve(require("@/views/audit/card"));
+  require.ensure(["@/views/km/audit/card"], () => {
+    resolve(require("@/views/km/audit/card"));
     load();
   });
 };
 const Audit_cardItem = resolve => {//开卡子模块
   load(true);
-  require.ensure(["@/views/audit/cardItem"], () => {
-    resolve(require("@/views/audit/cardItem"));
+  require.ensure(["@/views/km/audit/cardItem"], () => {
+    resolve(require("@/views/km/audit/cardItem"));
     load();
   });
 };
 const Audit_registMerchant = resolve => {//激活商户
   load(true);
-  require.ensure(["@/views/audit/registMerchant"], () => {
-    resolve(require("@/views/audit/registMerchant"));
+  require.ensure(["@/views/km/audit/registMerchant"], () => {
+    resolve(require("@/views/km/audit/registMerchant"));
     load();
   });
 };
 /*订单查询*/
 const OrderSearch = resolve => {
   load(true);
-  require.ensure(["@/views/orderSearch/index"], () => {
-    resolve(require("@/views/orderSearch/index"));
+  require.ensure(["@/views/km/orderSearch/index"], () => {
+    resolve(require("@/views/km/orderSearch/index"));
     load();
   });
 };
 const OrderSearch_card = resolve => {//开卡订单
   load(true);
-  require.ensure(["@/views/orderSearch/card"], () => {
-    resolve(require("@/views/orderSearch/card"));
+  require.ensure(["@/views/km/orderSearch/card"], () => {
+    resolve(require("@/views/km/orderSearch/card"));
     load();
   });
 };
 const OrderSearch_cardItem = resolve => {//开卡订单子模块
   load(true);
-  require.ensure(["@/views/orderSearch/cardItem"], () => {
-    resolve(require("@/views/orderSearch/cardItem"));
+  require.ensure(["@/views/km/orderSearch/cardItem"], () => {
+    resolve(require("@/views/km/orderSearch/cardItem"));
     load();
   });
 };
 const OrderSearch_businessPower = resolve => {//售卡范围
   load(true);
-  require.ensure(["@/views/orderSearch/businessPower"], () => {
-    resolve(require("@/views/orderSearch/businessPower"));
+  require.ensure(["@/views/km/orderSearch/businessPower"], () => {
+    resolve(require("@/views/km/orderSearch/businessPower"));
     load();
   });
 };
 const OrderSearch_onlineHall = resolve => {//网厅订单
   load(true);
-  require.ensure(["@/views/orderSearch/onlineHall"], () => {
-    resolve(require("@/views/orderSearch/onlineHall"));
+  require.ensure(["@/views/km/orderSearch/onlineHall"], () => {
+    resolve(require("@/views/km/orderSearch/onlineHall"));
     load();
   });
 };
 const OrderSearch_busCard = resolve => {//公交一卡通
   load(true);
-  require.ensure(["@/views/orderSearch/busCard"], () => {
-    resolve(require("@/views/orderSearch/busCard"));
+  require.ensure(["@/views/km/orderSearch/busCard"], () => {
+    resolve(require("@/views/km/orderSearch/busCard"));
     load();
   });
 };
 const OrderSearch_busCardItem = resolve => {//公交一卡通子模块
   load(true);
-  require.ensure(["@/views/orderSearch/busCardItem"], () => {
-    resolve(require("@/views/orderSearch/busCardItem"));
+  require.ensure(["@/views/km/orderSearch/busCardItem"], () => {
+    resolve(require("@/views/km/orderSearch/busCardItem"));
     load();
   });
 };
 const OrderSearch_recharge = resolve => {//充值订单
   load(true);
-  require.ensure(["@/views/orderSearch/recharge"], () => {
-    resolve(require("@/views/orderSearch/recharge"));
+  require.ensure(["@/views/km/orderSearch/recharge"], () => {
+    resolve(require("@/views/km/orderSearch/recharge"));
     load();
   });
 };
 const OrderSearch_registMerchant = resolve => {//激活商户
   load(true);
-  require.ensure(["@/views/orderSearch/registMerchant"], () => {
-    resolve(require("@/views/orderSearch/registMerchant"));
+  require.ensure(["@/views/km/orderSearch/registMerchant"], () => {
+    resolve(require("@/views/km/orderSearch/registMerchant"));
     load();
   });
 };
 const OrderSearch_reserve = resolve => {//预占号码
   load(true);
-  require.ensure(["@/views/orderSearch/reserve"], () => {
-    resolve(require("@/views/orderSearch/reserve"));
+  require.ensure(["@/views/km/orderSearch/reserve"], () => {
+    resolve(require("@/views/km/orderSearch/reserve"));
     load();
   });
 };
 /*资源查询*/
 const Resource = resolve => {
   load(true);
-  require.ensure(["@/views/resource/index"], () => {
-    resolve(require("@/views/resource/index"));
+  require.ensure(["@/views/km/resource/index"], () => {
+    resolve(require("@/views/km/resource/index"));
     load();
   });
 };
 const Resource_merchant = resolve => {//商户查询
   load(true);
-  require.ensure(["@/views/resource/merchant"], () => {
-    resolve(require("@/views/resource/merchant"));
+  require.ensure(["@/views/km/resource/merchant"], () => {
+    resolve(require("@/views/km/resource/merchant"));
     load();
   });
 };
 const Resource_numberRelease = resolve => {//号码冻结/解冻
   load(true);
-  require.ensure(["@/views/resource/numberRelease"], () => {
-    resolve(require("@/views/resource/numberRelease"));
+  require.ensure(["@/views/km/resource/numberRelease"], () => {
+    resolve(require("@/views/km/resource/numberRelease"));
     load();
   });
 };
 const Resource_promoter = resolve => {//推广方查询
   load(true);
-  require.ensure(["@/views/resource/promoter"], () => {
-    resolve(require("@/views/resource/promoter"));
+  require.ensure(["@/views/km/resource/promoter"], () => {
+    resolve(require("@/views/km/resource/promoter"));
     load();
   });
 };
 const Resource_device = resolve => {//设备查询
   load(true);
-  require.ensure(["@/views/resource/device"], () => {
-    resolve(require("@/views/resource/device"));
+  require.ensure(["@/views/km/resource/device"], () => {
+    resolve(require("@/views/km/resource/device"));
     load();
   });
 };
@@ -171,37 +171,37 @@ const Resource_device = resolve => {//设备查询
 /*统计报表*/
 const Statistics = resolve => {
   load(true);
-  require.ensure(["@/views/statistics/index"], () => {
-    resolve(require("@/views/statistics/index"));
+  require.ensure(["@/views/km/statistics/index"], () => {
+    resolve(require("@/views/km/statistics/index"));
     load();
   });
 };
 const Statistics_cardOrder = resolve => {//开卡统计
   load(true);
-  require.ensure(["@/views/statistics/cardOrder"], () => {
-    resolve(require("@/views/statistics/cardOrder"));
+  require.ensure(["@/views/km/statistics/cardOrder"], () => {
+    resolve(require("@/views/km/statistics/cardOrder"));
     load();
   });
 };
 const Statistics_softwareUseTimes= resolve => {//身份证识别/活体识别统计
   load(true);
-  require.ensure(["@/views/statistics/softwareUseTimes"], () => {
-    resolve(require("@/views/statistics/softwareUseTimes"));
+  require.ensure(["@/views/km/statistics/softwareUseTimes"], () => {
+    resolve(require("@/views/km/statistics/softwareUseTimes"));
     load();
   });
 };
 /*意见反馈*/
 const Opinion = resolve =>{
   load(true);
-  require.ensure(["@/views/opinion/index"], () => {
-    resolve(require("@/views/opinion/index"));
+  require.ensure(["@/views/km/opinion/index"], () => {
+    resolve(require("@/views/km/opinion/index"));
     load();
   });
 };
 const Opinion_item = resolve => {
   load(true);
-  require.ensure(["@/views/opinion/opinion"], () => {
-    resolve(require("@/views/opinion/opinion"));
+  require.ensure(["@/views/km/opinion/opinion"], () => {
+    resolve(require("@/views/km/opinion/opinion"));
     load();
   });
 };
@@ -213,6 +213,27 @@ const Opinion_item = resolve => {
 //     load();
 //   });
 // };
+const Audity = resolve => {
+    load(true);
+    require.ensure(["@/views/ym/audit"], () => {
+      resolve(require("@/views/ym/audit"));
+      load();
+    });
+  };
+  const Wsimy = resolve => {
+    load(true);
+    require.ensure(["@/views/ym/wsim"], () => {
+      resolve(require("@/views/ym/wsim"));
+      load();
+    });
+  };
+  const AuditListy = resolve => {
+    load(true);
+    require.ensure(["@/views/ym/auditList"], () => {
+      resolve(require("@/views/ym/auditList"));
+      load();
+    });
+  };
 const router=new Router({
   routes: [
     {
@@ -220,9 +241,58 @@ const router=new Router({
       component:Login
     },
     {
-      path:"/home",
+        path:"/homey",
+        component:Home,
+        redirect:"homey/audit/yuanmeng",
+        children:[{
+            path:"audit/:source",
+            name:"audit",
+            component:Audity,
+            children:[{
+                path:":type",
+                component:AuditListy,
+                name:"card",
+            }]
+        },{
+            path:"wsim",
+            component:Wsimy,
+        },{
+            path:'search',
+            component:resolve => require(['@/views/ym/search'], resolve),
+            name:'search',
+            children:[{path:':type',component:resolve => require(['@/views/ym/searchList'], resolve),name:'order'}]
+          },
+          {
+            path:'pointsSearch',
+            component:resolve => require(['@/views/ym/pointsSearch'],resolve),
+          },
+          {
+            path:'pointsEx',
+            component:resolve => require(['@/views/ym/pointsEx'],resolve),
+          },
+          {
+            path:'pointsGain',
+            component:resolve => require(['@/views/ym/pointsGain'],resolve),
+          },
+          {
+            path:'pointsManage',
+            component:resolve => require(['@/views/ym/pointsManage'],resolve),
+          },
+          {
+              path:'exceldownload',
+              component:resolve => require(['@/views/ym/Excel'],resolve),
+            },
+          {
+            path:'illegalSearch',
+            component:resolve => require(['@/views/ym/illegalSearch'],resolve),
+          }]
+
+    }
+    ,{
+      path:"/homek",
       component:Home,
-      redirect:"home/dashboard",
+      redirect:"homek/dashboard",
+      // redirect:"home/dashboard",
       // redirect:"home/audit/card/realtime",
       children:[{
         path:"dashboard",
@@ -350,13 +420,12 @@ const router=new Router({
 
 
 router.beforeEach((to, from, next) => {
-
     var token = localStorage.getItem("KA_ECS_USER");
     if (!token&&to.path!=="/login"||to.path=="/"){
         next({path:"/login"});
         return false;
     }
-    next();
+     next();
 });
 export default router;
 

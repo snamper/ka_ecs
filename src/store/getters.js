@@ -34,5 +34,20 @@ export default {
 		}else{
 			return 0;
 		}
+	},
+	getCountTotalYm:state=>{
+        let auditCount=state.auditCount;
+		Object.keys(auditCount).forEach(function(key){
+			auditCount[key]=parseInt(auditCount[key]);
+		});
+        let isadmin=state.userInfo.isadmin;
+        
+		if(isadmin){
+			let countYm=0;
+			countYm += auditCount[0]+auditCount[1]+auditCount[2];
+            return countYm;
+		}else{
+			return 0;
+		}
 	}
 };

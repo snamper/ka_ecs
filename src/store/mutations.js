@@ -1,16 +1,18 @@
 import {
-	SET_AUDIT_STATISTICS_INFO,
+    SET_AUDIT_STATISTICS_INFO,
 	SET_COUNT_TOTAL,
 	SET_COUNT_TOTAL_CHANGE,
 	SET_ONLINE_TIME,
 	CLEAR_TIMER,
 	SIGN_OUT,
 	SET_USERINFO,
-	SET_OPINION_COUNT
+    SET_OPINION_COUNT,
+    SET_AUDIT_STATISTICS_INFO_YM
 } from './mutation-types.js';
 import {
 	getAuditStatistics,
-	getOpinionCount
+    getOpinionCount,
+    getAuditStatisticsYm,
 } from '../config/service';
 import {setStore, getStore, removeStore, secondsFormat} from '../config/utils';
 
@@ -36,6 +38,17 @@ export default {
 			state.offCountChange=false;
 		}
 		state.OpcountTotal=Opcount;
+    },
+    //获取YM审核统计信息
+	[SET_AUDIT_STATISTICS_INFO_YM](state,res) {
+        state.auditCount = Object.assign({}, state.auditCount,res.data);
+        let count=this.getters.getCountTotalYm;
+		if(count!=state.countTotal){
+			state.offCountChange=true;
+		}else{
+			state.offCountChange=false;
+		}
+        state.auditCountYm=count;
 	},
 	//设置在线时间
 	[SET_ONLINE_TIME](state){
