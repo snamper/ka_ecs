@@ -11,15 +11,23 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-        '/w':{
+        '/km-ecs/w':{
             target:'http://192.168.10.24:6086',
             changeOrigin:true,
             pathRewrite:{
-                '^/w':'/ecs/w'
+                // '^/w':'/ecs/w'
+                '^/km-ecs/w':'/ecs/w'
             }
-        }
+        },
+        '/ym-ecs/c':{
+            target:'http://192.168.10.24:6086',
+            changeOrigin:true,
+            pathRewrite:{
+                // '^/w':'/ecs/w'
+                '^/ym-ecs/c':'/ecs/c'
+            }
+        },
     },
-
     // Various Dev Server settings
     host:"192.168.10.24",
     port: 8081, // can be overwritten by process.env.HOST, if port is in use, a free one will be determined

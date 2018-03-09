@@ -1,5 +1,5 @@
 <style scoped>
-  @import "../assets/css/dashboard.css";
+  @import "../assets/km/css/dashboard.css";
 </style>
 <template>
   <section class="dashboard-box">
@@ -175,6 +175,7 @@
   </section>
 </template>
 <script type="text/javascript">
+import {reqCommonMethod} from "../config/service.js";
 import { getDateTime,getUnixTime } from "../config/utils.js";
 import CountUp from 'vue-countup-v2';
   export default {
@@ -321,8 +322,25 @@ import CountUp from 'vue-countup-v2';
       },
       getnotice(){//获取公告
         var vm=this;
-        vm.AJAX('w/statistics/realtimenotice',{"maxId":vm.noticelatestMaxid},function(data){
-          if(data.code==200){
+        // vm.AJAX('w/statistics/realtimenotice',{"maxId":vm.noticelatestMaxid},function(data){
+        //   if(data.code==200){
+        //     data.data.list.reverse();
+        //     for(let i=0;i<data.data.list.length;i++){
+        //       vm.notice.push(data.data.list[i]);
+        //     }
+
+        //     setTimeout(function(){
+        //       vm.noticeScroll();
+        //     },30)
+            
+        //     if(data.data.list[0]){
+        //       vm.noticelatestMaxid=data.data.list[0].maxId;
+        //     }
+        //   }
+        // },true);
+        reqCommonMethod({"maxId":vm.noticelatestMaxid},function(){vm.off.isLoad=false;},"km-ecs/w/statistics/realtimenotice")
+        .then((data)=>{
+            if(data.code==200){
             data.data.list.reverse();
             for(let i=0;i<data.data.list.length;i++){
               vm.notice.push(data.data.list[i]);
@@ -336,7 +354,12 @@ import CountUp from 'vue-countup-v2';
               vm.noticelatestMaxid=data.data.list[0].maxId;
             }
           }
-        },true);
+          if(data.data.list[0]){
+            vm.noticelatestMaxid=data.data.list[0].maxId;
+          }
+        }) .catch(()=>{
+
+        })       
       },
       noticeScroll(){//消息滚动执行
         var vm=this,noticeBox=document.getElementById("notice-box");
@@ -347,108 +370,214 @@ import CountUp from 'vue-countup-v2';
       },
       getamount(){//获取第一屏右边总数
         var vm=this;
-        vm.AJAX('w/statistics/homepagedrawline',{"type":1},function(data){
-          if(data.code==200){
-            vm.phoneTotal = [
-              data.data.YT_sellbleGeneralNum,
-              data.data.YT_sellblePrettyNum,
-              data.data.LT_sellbleGeneralNum,
-              data.data.LT_sellblePrettyNum
-            ];
-            vm.userTotal = [
-              data.data.visitor,
-              data.data.YT_merch,
-              data.data.LT_merch,
-              data.data.device,
-              data.data.YT_userNum,
-              data.data.LT_userNum
-            ];
-          }
-        },true);
+        // vm.AJAX('w/statistics/homepagedrawline',{"type":1},function(data){
+        //   if(data.code==200){
+        //     vm.phoneTotal = [
+        //       data.data.YT_sellbleGeneralNum,
+        //       data.data.YT_sellblePrettyNum,
+        //       data.data.LT_sellbleGeneralNum,
+        //       data.data.LT_sellblePrettyNum
+        //     ];
+        //     vm.userTotal = [
+        //       data.data.visitor,
+        //       data.data.YT_merch,
+        //       data.data.LT_merch,
+        //       data.data.device,
+        //       data.data.YT_userNum,
+        //       data.data.LT_userNum
+        //     ];
+        //   }
+        // },true);
+         reqCommonMethod({"type":1},function(){vm.off.isLoad=false;},"km-ecs/w/statistics/homepagedrawline")
+         .then((data)=>{
+            if(data.code==200){
+                vm.phoneTotal = [
+                data.data.YT_sellbleGeneralNum,
+                data.data.YT_sellblePrettyNum,
+                data.data.LT_sellbleGeneralNum,
+                data.data.LT_sellblePrettyNum
+                ];
+                vm.userTotal = [
+                data.data.visitor,
+                data.data.YT_merch,
+                data.data.LT_merch,
+                data.data.device,
+                data.data.YT_userNum,
+                data.data.LT_userNum
+                ];
+            }
+         }).catch(()=>{
+
+         });
       },
       getcreatecardAmount(){//总开卡成功数
         var vm=this;
-        vm.AJAX('w/statistics/homepagedrawline',{"type":2},function(data){
-          vm.initMap({
-            id: "amount",
-            name: "总开卡成功数",
-            index:0,
-            legend: ["天"],
-            category: [vm.getLatelyTime(data.data.lasttime,'day',7)],
-            lineData: [data.data.day]
-          });
-          vm.amountCard[0]=data.data.day[6];
-        },true);
+        // vm.AJAX('w/statistics/homepagedrawline',{"type":2},function(data){
+        //   vm.initMap({
+        //     id: "amount",
+        //     name: "总开卡成功数",
+        //     index:0,
+        //     legend: ["天"],
+        //     category: [vm.getLatelyTime(data.data.lasttime,'day',7)],
+        //     lineData: [data.data.day]
+        //   });
+        //   vm.amountCard[0]=data.data.day[6];
+        // },true);
+         reqCommonMethod({"type":2},function(){vm.off.isLoad=false;},"km-ecs/w/statistics/homepagedrawline")
+        .then((data)=>{
+            vm.initMap({
+                id: "amount",
+                name: "总开卡成功数",
+                index:0,
+                legend: ["天"],
+                category: [vm.getLatelyTime(data.data.lasttime,'day',7)],
+                lineData: [data.data.day]
+            });
+            vm.amountCard[0]=data.data.day[6];
+        }) .catch(()=>{
+
+        })       
       },
       getmerchant(){//获取签约商户数和激活商户
         var vm=this;
-        vm.AJAX('w/statistics/homepagedrawline',{"type":3},function(data){
-          vm.initMap({
-            id: "merchant",
-            name: "",
-            index:0,
-            legend: ["签约商户","激活商户"],
-            category: [vm.getLatelyTime(data.data.lasttime,'day',7),vm.getLatelyTime(data.data.lasttime,'day',7)],
-            lineData: [data.data.signMerch,data.data.activeMerch]
-          });
-          vm.merchantTotal=[data.data.totalSign,data.data.totalActive]
-        },true);
+        // vm.AJAX('w/statistics/homepagedrawline',{"type":3},function(data){
+        //   vm.initMap({
+        //     id: "merchant",
+        //     name: "",
+        //     index:0,
+        //     legend: ["签约商户","激活商户"],
+        //     category: [vm.getLatelyTime(data.data.lasttime,'day',7),vm.getLatelyTime(data.data.lasttime,'day',7)],
+        //     lineData: [data.data.signMerch,data.data.activeMerch]
+        //   });
+        //   vm.merchantTotal=[data.data.totalSign,data.data.totalActive]
+        // },true);
+         reqCommonMethod({"type":2},function(){vm.off.isLoad=false;},"km-ecs/w/statistics/homepagedrawline")
+          .then((data)=>{
+               vm.initMap({
+                    id: "merchant",
+                    name: "",
+                    index:0,
+                    legend: ["签约商户","激活商户"],
+                    category: [vm.getLatelyTime(data.data.lasttime,'day',7),vm.getLatelyTime(data.data.lasttime,'day',7)],
+                    lineData: [data.data.signMerch,data.data.activeMerch]
+                });
+                vm.merchantTotal=[data.data.totalSign,data.data.totalActive]
+          }) .catch(()=>{
+
+          });       
       },
       getcardCreate(){//开卡尝试数
         var vm=this;
-        vm.AJAX('w/statistics/homepagedrawline',{"type":5},function(data){
-          vm.secondViewTotal[0] = data.data.total;
-          vm.initMap({
-            id: "cardCreate",
-            name: "开卡尝试",
-            legend: ["时", "天", "月"],
-            category: [vm.getLatelyTime(data.data.lasttime[0],'hour',12),vm.getLatelyTime(data.data.lasttime[1],'day',7),vm.getLatelyTime(data.data.lasttime[2],'month',6)],
-            lineData: [data.data.hour,data.data.day,data.data.month],
-            index:vm.off.cardTry_index
-          });
-        },true);
+        // vm.AJAX('w/statistics/homepagedrawline',{"type":5},function(data){
+        //   vm.secondViewTotal[0] = data.data.total;
+        //   vm.initMap({
+        //     id: "cardCreate",
+        //     name: "开卡尝试",
+        //     legend: ["时", "天", "月"],
+        //     category: [vm.getLatelyTime(data.data.lasttime[0],'hour',12),vm.getLatelyTime(data.data.lasttime[1],'day',7),vm.getLatelyTime(data.data.lasttime[2],'month',6)],
+        //     lineData: [data.data.hour,data.data.day,data.data.month],
+        //     index:vm.off.cardTry_index
+        //   });
+        // },true);
+         reqCommonMethod({"type":5},function(){vm.off.isLoad=false;},"km-ecs/w/statistics/homepagedrawline")
+          .then((data)=>{
+            vm.secondViewTotal[0] = data.data.total;
+            vm.initMap({
+                id: "cardCreate",
+                name: "开卡尝试",
+                legend: ["时", "天", "月"],
+                category: [vm.getLatelyTime(data.data.lasttime[0],'hour',12),vm.getLatelyTime(data.data.lasttime[1],'day',7),vm.getLatelyTime(data.data.lasttime[2],'month',6)],
+                lineData: [data.data.hour,data.data.day,data.data.month],
+                index:vm.off.cardTry_index
+            });
+          }).catch(()=>{
+
+          })       
       },
       getonlineUser(){//用户在线数
         var vm=this;
-        vm.AJAX('w/statistics/homepagedrawline',{"type":6},function(data){
-          vm.secondViewTotal[2] = data.data.total;
-          vm.initMap({
-            id: "onlineUser",
-            name: "在线用户",
-            legend: ["时","天"],
-            index:vm.off.onlineUser_index,
-            category: [vm.getLatelyTime(data.data.lasttime[0],'hour',12),vm.getLatelyTime(data.data.lasttime[1],'day',7)],
-            lineData: [data.data.hour,data.data.day]
-          });
-        },true);
+        // vm.AJAX('w/statistics/homepagedrawline',{"type":6},function(data){
+        //   vm.secondViewTotal[2] = data.data.total;
+        //   vm.initMap({
+        //     id: "onlineUser",
+        //     name: "在线用户",
+        //     legend: ["时","天"],
+        //     index:vm.off.onlineUser_index,
+        //     category: [vm.getLatelyTime(data.data.lasttime[0],'hour',12),vm.getLatelyTime(data.data.lasttime[1],'day',7)],
+        //     lineData: [data.data.hour,data.data.day]
+        //   });
+        // },true);
+         reqCommonMethod({"type":6},function(){vm.off.isLoad=false;},"km-ecs/w/statistics/homepagedrawline")
+          .then((data)=>{
+              vm.secondViewTotal[2] = data.data.total;
+              vm.initMap({
+                id: "onlineUser",
+                name: "在线用户",
+                legend: ["时","天"],
+                index:vm.off.onlineUser_index,
+                category: [vm.getLatelyTime(data.data.lasttime[0],'hour',12),vm.getLatelyTime(data.data.lasttime[1],'day',7)],
+                lineData: [data.data.hour,data.data.day]
+              });
+          }).catch(()=>{
+
+          })       
       },
       getrechargeMoney(){//充值金额
         var vm=this;
-        vm.AJAX('w/statistics/homepagedrawline',{"type":7},function(data){
-          vm.secondViewTotal[3] = data.data.total;
-          vm.initMap({
-            id: "rechargeMoney",
-            name: "充值金额",
-            index:vm.off.recharge_index,
-            legend: ["时", "天", "月"],
-            category: [vm.getLatelyTime(data.data.lasttime[0],'hour',12),vm.getLatelyTime(data.data.lasttime[1],'day',7),vm.getLatelyTime(data.data.lasttime[2],'month',6)],
-            lineData: [data.data.hour,data.data.day,data.data.month]
-          });
-        },true);
+        // vm.AJAX('w/statistics/homepagedrawline',{"type":7},function(data){
+        //   vm.secondViewTotal[3] = data.data.total;
+        //   vm.initMap({
+        //     id: "rechargeMoney",
+        //     name: "充值金额",
+        //     index:vm.off.recharge_index,
+        //     legend: ["时", "天", "月"],
+        //     category: [vm.getLatelyTime(data.data.lasttime[0],'hour',12),vm.getLatelyTime(data.data.lasttime[1],'day',7),vm.getLatelyTime(data.data.lasttime[2],'month',6)],
+        //     lineData: [data.data.hour,data.data.day,data.data.month]
+        //   });
+        // },true);
+         reqCommonMethod({"type":7},function(){vm.off.isLoad=false;},"km-ecs/w/statistics/homepagedrawline")
+          .then((data)=>{
+              vm.secondViewTotal[3] = data.data.total;
+              vm.initMap({
+                id: "rechargeMoney",
+                name: "充值金额",
+                index:vm.off.recharge_index,
+                legend: ["时", "天", "月"],
+                category: [vm.getLatelyTime(data.data.lasttime[0],'hour',12),vm.getLatelyTime(data.data.lasttime[1],'day',7),vm.getLatelyTime(data.data.lasttime[2],'month',6)],
+                lineData: [data.data.hour,data.data.day,data.data.month]
+              });
+          }).catch(()=>{
+
+          })
+
       },
       getOpenCardSuccess(){//开卡成功数
         var vm=this;
-        vm.AJAX('w/statistics/homepagedrawline',{"type":4},function(data){
-          vm.secondViewTotal[1] = data.data.total;
-          vm.initMap({
-            id: "openCardSuccess",
-            name: "开卡成功数",
-            legend: ["时", "天", "月"],
-            index:vm.off.cardSuccess_index,
-            category: [vm.getLatelyTime(data.data.lasttime[0],'hour',12),vm.getLatelyTime(data.data.lasttime[1],'day',7),vm.getLatelyTime(data.data.lasttime[2],'month',6)],
-            lineData: [data.data.hour,data.data.day,data.data.month],
-          });
-        },true);
+        // vm.AJAX('w/statistics/homepagedrawline',{"type":4},function(data){
+        //   vm.secondViewTotal[1] = data.data.total;
+        //   vm.initMap({
+        //     id: "openCardSuccess",
+        //     name: "开卡成功数",
+        //     legend: ["时", "天", "月"],
+        //     index:vm.off.cardSuccess_index,
+        //     category: [vm.getLatelyTime(data.data.lasttime[0],'hour',12),vm.getLatelyTime(data.data.lasttime[1],'day',7),vm.getLatelyTime(data.data.lasttime[2],'month',6)],
+        //     lineData: [data.data.hour,data.data.day,data.data.month],
+        //   });
+        // },true);
+         reqCommonMethod({"type":4},function(){vm.off.isLoad=false;},"km-ecs/w/statistics/homepagedrawline")
+          .then((data)=>{
+            vm.secondViewTotal[1] = data.data.total;
+            vm.initMap({
+                id: "openCardSuccess",
+                name: "开卡成功数",
+                legend: ["时", "天", "月"],
+                index:vm.off.cardSuccess_index,
+                category: [vm.getLatelyTime(data.data.lasttime[0],'hour',12),vm.getLatelyTime(data.data.lasttime[1],'day',7),vm.getLatelyTime(data.data.lasttime[2],'month',6)],
+                lineData: [data.data.hour,data.data.day,data.data.month],
+            });
+          }).catch(()=>{
+
+          });     
       },
       filterNumber(num){//数字格式化
         // num=num.toString();

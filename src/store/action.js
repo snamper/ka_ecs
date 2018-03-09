@@ -1,10 +1,12 @@
 import {
 	getAuditStatistics,
-	getOpinionCount
+    getOpinionCount,
+    getAuditStatisticsYm,
 } from '../config/service';
 import {
 	SET_AUDIT_STATISTICS_INFO,
-	SET_OPINION_COUNT
+    SET_OPINION_COUNT,
+	SET_AUDIT_STATISTICS_INFO_YM,    
 } from './mutation-types.js';
 
 
@@ -25,5 +27,13 @@ export default {
 	}){
 		let res = await getOpinionCount();
 		res&&commit(SET_OPINION_COUNT, res)
+    },
+    
+    async getAuditStatisticsInfoYm({
+		commit,
+        state
+	}) {
+        let res = await getAuditStatisticsYm();
+		res&&commit(SET_AUDIT_STATISTICS_INFO_YM, res)
 	}
 }

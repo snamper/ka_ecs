@@ -1,6 +1,6 @@
 import {getStore,errorDeal} from '../config/utils';
 
-require('../assets/js/base64.min.js');
+require('../assets/km/js/base64.min.js');
 export default async(url = '', data = {}, type = 'GET', load, method = 'fetch') => {
 	if(!load){
 		var layerIndex=layer.open({type: 2,shadeClose:false});
@@ -12,7 +12,7 @@ export default async(url = '', data = {}, type = 'GET', load, method = 'fetch') 
 	
 //--------------------------------------------------------------------
 	let userInfo=getStore("KA_ECS_USER");
-	if(url!="w/user/getSmsCode"&&url!="w/user/login"){//排除登录
+    if(url!="km-ecs/w/user/getSmsCode"&&url!="km-ecs/w/user/login"){//排除登录
 		if(userInfo){
 	        data.customerId=userInfo.customerId;
 	        data.codeId=userInfo.codeId;
@@ -48,20 +48,67 @@ export default async(url = '', data = {}, type = 'GET', load, method = 'fetch') 
 			Object.defineProperty(requestConfig, 'body', {
 				value: BASE64.encode(JSON.stringify(data))
 			});
-		}
-		
-		try {
-			const response = await fetch(url, requestConfig);
-			const responseJson = await response;
+        }
+        return await fetch(url,requestConfig).then((response)=>{
 			closeLoadLayout();
-	        if(responseJson.status=="200"){
-	        	return responseJson.json();
-	        }else{
-	        	errorDeal(responseJson);
+			if(response.status=="200"){
+                return response.json();
+	        }else {
+                
+                return response.status;
 	        }
-		} catch (errorText) {
-			throw new Error(errorText);
-		}
+        })
+       
+        .then(data=>{
+			if(data.code==200){
+                return data;
+            }else{
+                errorDeal(data);
+                return false;
+            }
+        })
+        .catch(error=>errorDeal(error));
+		// try {
+		// 	const response = await fetch(url, requestConfig);
+		// 	const responseJson = await response;
+        //     closeLoadLayout();
+        //     // responseJson.json().then((data)=>{
+        //     //     if(data.code==200){
+        //     //         return data
+        //     //     }
+        //     // }).then((res)=>{
+        //     //     debugger;
+        //     //     return res;
+        //     // }).catch((res)=>{
+        //     //     errorDeal(res);
+        //     // })
+	    //     if(responseJson.status=="200"){
+        //         return responseJson.json();
+        //         // responseJson.json().then((data)=>{
+        //         //     if(data.code==200){
+        //         //         console.log(data);
+        //         //         return data;
+        //         //     }
+        //         // }).catch((res)=>{
+        //         //     errorDeal(res);
+        //         // })
+        //         // var res = responseJson.json();           
+        //         // res.json().then((data)=>{
+        //         //     return res2=data;
+        //         // }).then((res2)=>{
+        //         //     if(res2.code==200){
+        //         //         var pp = new Promise(resolve => resolve(res2));
+        //         //         console.log(pp);
+        //         //     }else if(res2.code!=200){
+        //         //         errorDeal(res2);
+        //         //     }
+        //         // });
+	    //     }else{
+	    //     	errorDeal(res2);
+	    //     }
+		// } catch (errorText) {
+		// 	throw new Error(errorText);
+		// }
 	} else {//XHR对象
 		return new Promise((resolve, reject) => {
 			let requestObj;

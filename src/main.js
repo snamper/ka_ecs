@@ -11,11 +11,12 @@ import App from './App';
 
 Vue.config.debug = true;
 
-require("./assets/css/style.css");
-require('./assets/js/layer/layer.js');
-require("./assets/js/layer/need/layer.css");
-require("./assets/js/ajax.js");
-require("./assets/js/base64.min.js");
+require("./assets/km/css/style.css");
+require('./assets/km/js/layer/layer.js');
+require("./assets/km/js/layer/need/layer.css");
+require("./assets/km/js/ajax.js");
+require("./assets/km/js/base64.min.js");
+require("./config/service.js");
 
 
 
