@@ -1,8 +1,8 @@
 import fetch from "./fetch";
 
-export const signIn=(data,load)=>fetch("km_centre_ecs/user/login",data,"POST",load);//登录
-export const getSignCode=(data,load)=>fetch("km_centre_ecs/user/getSmsCode",data,"POST",load);//获取登录验证码
-export const signOut=(data)=>fetch("km_centre_ecs/user/loginout",data,"POST");//登出
+export const signIn=(data,load)=>fetch("km_center_ecs/user/login",data,"POST",load);//登录
+export const getSignCode=(data,load)=>fetch("km_center_ecs/user/getSmsCode",data,"POST",load);//获取登录验证码
+export const signOut=(data)=>fetch("km_center_ecs/user/loginout",data,"POST");//登出
 export const getAuditStatistics=(data)=>fetch("km-ecs/w/audit/statisticsaudit",data,"POST",true);//获取审核统计
 export const unifySearchApi=(data,load)=>fetch("km-ecs/w/handler/query",data,"POST",load);//统一查询接口
 export const getOpinionCount=(data)=>fetch("km-ecs/w/advice/countNum",data,"POST",true);//查询意见反馈统计数
