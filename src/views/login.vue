@@ -14,7 +14,7 @@
             <div class="loginInput fr">
                 <div class="form-controll user"><label></label><div class="input-outter"><input v-model="user" type="text" maxlength="11" name="" placeholder="输入管理员账号"><transition name="shake"><b v-if="message[0].off">{{message[0].text}}</b></transition></div></div>
                 <div class="form-controll password"><label class="letter-space2"></label><div class="input-outter"><input maxlength="6" type="password" v-model="password" placeholder="输入密码"><transition name="shake"><b v-if="message[1].off">{{message[1].text}}</b></transition></div></div>
-                <div class="form-controll reg"><label></label><div class="input-outter"><input @keydown="toLogin" v-model="validCode" type="text" maxlength="4" name="" placeholder="输入验证码"><img :src="list.ValidateCode" @click="getVlidateCode"><transition name="shake"><b v-if="message[2].off">{{message[2].text}}</b></transition></div></div>
+                <div class="form-controll reg"><label></label><div class="input-outter"><input @keydown="toLogin" v-model="validCode" type="text" maxlength="4" name="" placeholder="输入验证码"><img :src="list.validateCode" @click="getVlidateCode"><transition name="shake"><b v-if="message[2].off">{{message[2].text}}</b></transition></div></div>
                 <a href="javascript:void(0)" @click="login" class="btn bg-b">登录<div class="loading-spinner" v-if="load"><svg viewBox="25 25 50 50" class="circular"><circle cx="50" cy="50" r="20" fill="none" class="path"></circle></svg></div></a>
             </div>
         </div>
