@@ -21,7 +21,7 @@ module.exports = {
       // repo : 'git@github.com:thinkmix/ka_ecs.git',
       repo : 'https://github.com/thinkmix/ka_ecs.git',
       path : '/root/nginx/html/ka_ecs',
-      'post-deploy' : 'pm2 reload ecosystem.config.js --env production'
+      'post-deploy' : 'npm run build && pm2 reload ecosystem.config.js --env production'
     },
   }
 };
