@@ -12,7 +12,7 @@ export default async(url = '', data = {}, type = 'GET', load, method = 'fetch') 
 	
 //--------------------------------------------------------------------
 	let userInfo=getStore("KA_ECS_USER");
-    if(url!="km_centre_ecs/user/getSmsCode"&&url!="km_centre_ecs/user/login"){//排除登录
+    if(url!="km_center_ecs/user/getSmsCode"&&url!="km_center_ecs/user/login"){//排除登录
 		if(userInfo){
 	        data.customerId=userInfo.customerId;
 	        data.codeId=userInfo.codeId;
