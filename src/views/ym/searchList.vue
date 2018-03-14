@@ -257,7 +257,7 @@
 <script>
 require("../../assets/ym/js/laydate/laydate.js");
 require("../../assets/ym/js/laydate/skins/default/laydate.css");
-import pagination from "../../componentskm/Page.vue";
+import pagination from "../../componentskm/page.vue";
 import details from "../ym/searchListDetails.vue";
 import auditdetails from "../ym/auditList.vue";
 import { setStore, getStore, createDownload,errorDeal } from "../../config/utils";
