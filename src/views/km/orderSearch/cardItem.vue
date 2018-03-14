@@ -248,7 +248,7 @@ require("../../../assets/km/js/laydate/laydate.js");
 require("../../../assets/km/js/laydate/skins/default/laydate.css");
 require('../../../assets/km/js/base64.min.js');
 import {searchAuditList,reAudit,reqCommonMethod} from "../../../config/service.js"
-import pagination from "../../../componentskm/Page.vue";
+import pagination from "../../../componentskm/page.vue";
 import details from "../../../componentskm/cardOrderDetails.vue";
 import { getDateTime,translateData,secondsFormat,getUnixTime,createDownload,setStore, getStore, errorDeal } from "../../../config/utils.js";
 export default{

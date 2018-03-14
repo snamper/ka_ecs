@@ -379,7 +379,7 @@
 </template>
 <script>
 import {reqCommonMethod} from "../../../config/service.js";  
-import pagination from "../../../componentskm/Page.vue";
+import pagination from "../../../componentskm/page.vue";
 import { getDateTime,errorDeal } from "../../../config/utils.js"
 export default{
 	name:'merchantSearch',

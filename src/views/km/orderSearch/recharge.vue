@@ -150,7 +150,7 @@
 require("../../../assets/km/js/laydate/laydate.js");
 require("../../../assets/km/js/laydate/skins/default/laydate.css");
 import {reqCommonMethod} from "../../../config/service.js";
-import pagination from "../../../componentskm/Page.vue";
+import pagination from "../../../componentskm/page.vue";
 import details from "../../../componentskm/rechargeOrderDetails.vue";
 import { getDateTime,getUnixTime ,errorDeal} from "../../../config/utils.js";
 export default{

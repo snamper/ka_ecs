@@ -119,7 +119,7 @@
   require("../../../assets/km/js/laydate/skins/default/laydate.css");
   import {reqCommonMethod} from "../../../config/service.js";
   import {errorDeal} from "../../../config/utils.js";  
-  import pagination from "../../../componentskm/Page.vue";
+  import pagination from "../../../componentskm/page.vue";
   import details from "../../../componentskm/opinionDetails.vue";
   import {createDownload} from '../../../config/utils';
   import "../../../assets/km/css/search.css";
