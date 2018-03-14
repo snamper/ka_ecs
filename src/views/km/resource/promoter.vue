@@ -135,7 +135,7 @@
 	</div>
 </template>
 <script>
-import pagination from "../../../componentskm/Page.vue";
+import pagination from "../../../componentskm/page.vue";
 import { getDateTime } from "../../../config/utils.js";
 import { unifySearchApi } from '../../../config/service';
 export default{
