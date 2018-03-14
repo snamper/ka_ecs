@@ -89,7 +89,6 @@ export default {
            vm.load=false;
         }
       }).catch(res=>{
-          debugger;
         vm.getVlidateCode();
         vm.showMessage(2,'服务器异常');
         vm.load=false;
