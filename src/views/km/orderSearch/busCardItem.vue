@@ -182,7 +182,8 @@
 <script>
 require("../../../assets/km/js/laydate/laydate.js");
 require("../../../assets/km/js/laydate/skins/default/laydate.css");
-import {reqCommonMethod} from "../../../config/service.js";  
+import {reqCommonMethod} from "../../../config/service.js"; 
+import {errorDeal} from "../../../config/utils";  
 import pagination from "../../../componentskm/Page.vue";
 import details from "../../../componentskm/cardOrderDetails.vue";
 import { getDateTime,getUnixTime } from "../../../config/utils.js";
@@ -291,10 +292,9 @@ export default{
 				vm.form.lastIndex=data.data.list.pop().id;
 				vm.maxpage=Math.ceil(parseInt(data.data.total)/10);
 				vm.pageIndex=page||1;
-				vm.callback=function(v){vm.searchRechargeList(index,v)};
-            }).then(()=>{
+                vm.callback=function(v){vm.searchRechargeList(index,v)};
                 vm.off.isLoad=false;
-            });
+            }).catch(error=>errorDeal(error)); 	
 		},
 		searchExchangeList(page){//交易信息查询
 			var vm=this,url,json={"pageSize":vm.pageSize,"pageIndex":page||1,"startTime":vm.getUnixTime(vm.form.startTime),"lastIndex":vm.form.lastIndex,"endTime":vm.getUnixTime(vm.form.endTime),"tradeType":vm.form.tradeType,'searchType':vm.form.searchType};
@@ -320,10 +320,9 @@ export default{
 				vm.form.lastIndex=data.data.list.pop().id;
 				vm.maxpage=Math.ceil(parseInt(data.data.total)/10);
 				vm.pageIndex=page||1;
-				vm.callback=function(v){vm.searchExchangeList(v)};
-            }).then(()=>{
+                vm.callback=function(v){vm.searchExchangeList(v)};
                 vm.off.isLoad=false;
-            });            
+            }).catch(error=>errorDeal(error)); 	            
 		},
 		details:function(e){//详情
 			var vm=this,url,sysOrderId=e.target.name;
@@ -335,10 +334,9 @@ export default{
             reqCommonMethod({"sysOrderId":sysOrderId},function(){vm.off.isLoad=false;},"km-ecs/w/bus/rechInfo")
             .then((data)=>{
                 vm.detailsData=data.data;
-				vm.off.details=true;
-            }).then(()=>{
+                vm.off.details=true;
                 vm.off.isLoad=false;
-            });            
+            }).catch(error=>errorDeal(error)); 	            
 		},
 		to_laydate:function(v){
 			var vm=this;

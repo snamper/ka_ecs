@@ -355,6 +355,7 @@ import "../assets/km/css/fontstyle.css";
 import ImgZoom from '../componentskm/ImgZoom';
 import detailsView from '../componentskm/cardOrderDetailsAlert';
 import { reqCommonMethod,SDK_IMAGE_URL } from '../config/service';
+import {errorDeal} from "../config/utils.js";
 import '../assets/km/js/base64.min.js';
 export default{
 	name:'opinionDetails',
@@ -454,9 +455,7 @@ export default{
             vmPa.maxpage=Math.ceil(parseInt(data.data.total)/10);//最大页码
             vm.index=vmPa.off.whichBtn;
             vmPa.callback=function(v){vmPa.searchList(vm.index,v)};
-        }).then(()=>{
-            vmPa.off.isLoad=false;
-        })
+        }).catch(error=>errorDeal(error));
 		},
 		detailsUser:function(){//操作者详情
 		var vm=this;
@@ -470,7 +469,7 @@ export default{
             vm.detailsList=data.data;
 			vm.isShowDetails=true;
 			vm.typeDetails=1;
-        });
+        }).catch(error=>errorDeal(error));;
 		},
 		detailsMerchant:function(){//商户详情
 			var vm=this;
@@ -484,7 +483,7 @@ export default{
                 vm.detailsList=data.data;
 				vm.isShowDetails=true;
 				vm.typeDetails=2;
-            })
+            }).catch(error=>errorDeal(error));
 		},
 		toMap(){
 			var w=document.documentElement.clientWidth,url='',vm=this;
@@ -517,15 +516,11 @@ export default{
                 .then((data)=>{
                     reqCommonMethod(json,function(){vm.$parent.off.isLoad=false;},"km-ecs/w/advice/getDetails")
                     .then((data)=>{
-                    debugger;
                     vm.$parent.detailsData=data.data.details;
 					vm.$parent.detailsData.content = BASE64.decode(vm.$parent.detailsData.content);
 			        vm.$parent.detailsLog=data.data.process;
-                    })
-                })
-                .then(()=>{
-			        vm.$parent.off.isLoad=false;
-                })
+                    }).catch(error=>errorDeal(error));
+                }).catch(error=>errorDeal(error));
 		}
 	}
 }

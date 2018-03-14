@@ -70,7 +70,7 @@ require("../../assets/ym/js/laydate/skins/default/laydate.css");
 import pagination from "../ym/page.vue";
 import details from "../ym/searchListDetails.vue";
 import layerForm from '../ym/layerForm.vue'
-import {setStore, getStore, createDownload} from '../../config/utils';
+import {setStore, getStore, createDownload,errorDeal} from '../../config/utils';
 import {reqCommonMethod} from "../../config/service.js";
 import axios from 'axios';
 export default{
@@ -169,7 +169,6 @@ export default{
 		    vm.ydh = parseInt(theData.creditAlready);
 			vm.dh = parseInt(theBtn.parentNode.firstChild.value);
             if(v=="ex"){
-                debugger;
                  if(!isNaN(vm.dh)){
 				   if(vm.dh==''){
 						layer.open({
@@ -275,10 +274,9 @@ export default{
 			            vm.off.getPoints='1';	
 					}else{
 						return false;
-					}
-                }).catch(()=>{
-
-                });                
+                    }
+                    vm.off.isLoad=false;
+                }).catch(error=>errorDeal(error));                   
 			}
 		}
 	}

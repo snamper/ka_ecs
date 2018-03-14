@@ -248,10 +248,9 @@
 				vm.total=data.data.total;
 				vm.maxpage=Math.ceil(parseInt(data.data.total)/10);
 				vm.pageNum=page||1;
-				vm.callback=function(v){vm.searchList(v)};  
-            }).catch(()=>{
-                vm.off.isLoad=false;
-            })
+                vm.callback=function(v){vm.searchList(v)}; 
+                vm.off.isLoad=false; 
+            }).catch(error=>errorDeal(error)); 	 
         }
         //如果index===2则导出excel
         if(index===2){
@@ -318,9 +317,8 @@
         .then((data)=>{
             vm.detailsData=data.data.list[0];
             vm.off.details=true;
-        }).catch(()=>{
             vm.off.isLoad=false;
-        })
+        }).catch(error=>errorDeal(error)); 	 
       }
       ,to_laydate:function(v){
         var vm=this;

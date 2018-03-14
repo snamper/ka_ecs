@@ -185,6 +185,7 @@
 <script>
 import "../assets/km/css/cardOrderDetails.css";
 import {reqCommonMethodNoLoad} from "../config/service.js";
+import {errorDeal} from "../config/utils.js";
 import ImgZoom from '../componentskm/ImgZoom';
 import detailsView from '../componentskm/cardOrderDetailsAlert';
 export default{
@@ -330,7 +331,7 @@ export default{
 			//         })
 			// 	}
             // });
-            reqCommonMethodNoLoad({"opKey":"order.time.details","params":['sys_order_id="'+vm.list.orderId+'"'],"pageSize":"10","pageNum":"-1"},"km-ecs/w/handler/query")
+            reqCommonMethodNoLoad({"opKey":"order.time.details","params":['sys_order_id="'+vm.list.orderId+'"'],"pageSize":"10","pageNum":"-1"},function(){vm.off.isLoad=false},"km-ecs/w/handler/query")
             .then((data)=>{
 				var list_item= data.data.list[0],str='',str2='';
 				if(list_item){
@@ -367,7 +368,7 @@ export default{
 			            msgSkin:'error',
 			        })
 				}
-            });            
+            }).catch(error=>errorDeal(error))            
 		},
 		detailsOrder:function(){//开卡订单详情
 			var vm=this;
@@ -403,7 +404,7 @@ export default{
 			// 		style:'width:auto;'
 			// 	});
             // });
-            reqCommonMethodNoLoad({"transactionId":vm.list.orderId},"km-ecs/w/audit/openCardInfo")
+            reqCommonMethodNoLoad({"transactionId":vm.list.orderId},function(){vm.off.isLoad=false},"km-ecs/w/audit/openCardInfo")
             .then((data)=>{
 				var list= data.data,str='',payed='';
 				for(let i in list.optionalPackage){
@@ -435,7 +436,8 @@ export default{
 					btn:0,
 					style:'width:auto;'
 				});
-            });            
+            }).catch(error=>errorDeal(error)
+      );            
 		},
 		detailsPayOrder:function(){//支付订单详情
 			var vm=this;
@@ -454,7 +456,7 @@ export default{
 			// 		style:'width:auto;'
 			// 	});
             // });
-            reqCommonMethodNoLoad({"payId":vm.list.payOrderId},"km-ecs/w/audit/payInfo")
+            reqCommonMethodNoLoad({"payId":vm.list.payOrderId},function(){vm.off.isLoad=false},"km-ecs/w/audit/payInfo")
             .then((data)=>{
 				var list= data.data;
 				layer.open({
@@ -469,7 +471,7 @@ export default{
 					btn:0,
 					style:'width:auto;'
 				});
-            });
+            }).catch(error=>errorDeal(error));
 		},
 		detailsUser:function(){//操作者详情
 			var vm=this;
@@ -478,12 +480,12 @@ export default{
 			// 	vm.isShowDetails=true;
 			// 	vm.typeDetails=1;
             // });
-            reqCommonMethodNoLoad({"userId":vm.list.operatorId},"km-ecs/w/audit/getUserInfo")
+            reqCommonMethodNoLoad({"userId":vm.list.operatorId},function(){vm.off.isLoad=false},"km-ecs/w/audit/getUserInfo")
             .then((data)=>{
                 vm.detailsList=data.data;
 				vm.isShowDetails=true;
 				vm.typeDetails=1;
-            });            
+            }).catch(error=>errorDeal(error));            
 		},
 		detailsMerchant:function(){//商户详情
 			var vm=this;
@@ -492,12 +494,12 @@ export default{
 			// 	vm.isShowDetails=true;
 			// 	vm.typeDetails=2;
             // });
-            reqCommonMethodNoLoad({"dealerId":vm.list.dealerId},"km-ecs/w/audit/getMerchantInfo")
+            reqCommonMethodNoLoad({"dealerId":vm.list.dealerId},function(){vm.off.isLoad=false},"km-ecs/w/audit/getMerchantInfo")
             .then((data)=>{
                 vm.detailsList=data.data;
 				vm.isShowDetails=true;
 				vm.typeDetails=2;
-            });          
+            }).catch(error=>errorDeal(error));          
 		},
 		autoAuditInfo(){//自动审核详情
 			var vm=this;
@@ -553,7 +555,7 @@ export default{
 			// 		style:'width:auto;'
 			// 	});
             // });
-            reqCommonMethodNoLoad({"opKey":"order.autoAudit.details","params":['order_id="'+vm.list.orderId+'"'],"pageSize":"10","pageNum":"-1"},"km-ecs/w/handler/query")
+            reqCommonMethodNoLoad({"opKey":"order.autoAudit.details","params":['order_id="'+vm.list.orderId+'"'],"pageSize":"10","pageNum":"-1"},function(){vm.off.isLoad=false},"km-ecs/w/handler/query")
             .then((data)=>{
 				var list_item1= data.data.list[0];
 				layer.open({
@@ -605,7 +607,7 @@ export default{
 					btn:0,
 					style:'width:auto;'
 				});
-            })
+            }).catch(error=>errorDeal(error))
 		},
 		agree:function(){//复审同意
 			var vm=this;
@@ -621,7 +623,7 @@ export default{
 			// 	vm.$parent.list[parseInt(vm.number)].status=4;
 			// 	vm.$parent.list[parseInt(vm.number)].cardStatus=1;
             // });
-            reqCommonMethodNoLoad({"orderId":vm.list.orderId},"km-ecs/w/audit/reAudit")
+            reqCommonMethodNoLoad({"orderId":vm.list.orderId},function(){vm.off.isLoad=false},"km-ecs/w/audit/reAudit")
             .then((data)=>{
                 layer.open({
 		            content:'复审成功',
@@ -633,7 +635,7 @@ export default{
 				vm.list.cardStatus=1
 				vm.$parent.list[parseInt(vm.number)].status=4;
 				vm.$parent.list[parseInt(vm.number)].cardStatus=1;
-            });            
+            }).catch(error=>errorDeal(error));            
 		},
 		orderLog:function(){//审核日志
 			var vm=this;
@@ -650,7 +652,7 @@ export default{
 			// 		style:'width:auto;'
 			// 	});
             // });
-            reqCommonMethodNoLoad({"orderId":vm.list.orderId},"km-ecs/w/audit/log")
+            reqCommonMethodNoLoad({"orderId":vm.list.orderId},function(){vm.off.isLoad=false},"km-ecs/w/audit/log")
             .then((data)=>{
                 var str='',list= data.data;
 				for(var i in list){
@@ -663,7 +665,7 @@ export default{
 					btn:0,
 					style:'width:auto;'
 				});
-            })            
+            }).catch(error=>errorDeal(error))            
 		},
 		integralLog:function(){//积分详情
 			var vm=this;
@@ -678,7 +680,7 @@ export default{
 			// 		style:'width:auto;'
 			// 	});
             // });
-            reqCommonMethodNoLoad({"orderId":vm.list.orderId},"km-ecs/c/audit/searchIntegration")
+            reqCommonMethodNoLoad({"orderId":vm.list.orderId},function(){vm.off.isLoad=false},"km-ecs/c/audit/searchIntegration")
             .then((data)=>{
                 var statusStr='',reasonStr='';
 				if(data.data.cardStatus!="1")reasonStr+='<li><span>原因：</span>'+data.data.cardStatusReason+'</li>';
@@ -689,7 +691,7 @@ export default{
 					btn:0,
 					style:'width:auto;'
 				});
-            });            
+            }).catch(error=>errorDeal(error));            
 		},
 		filterReason:function(reason){
 			var reasonArr=reason.split('|'),str=[];

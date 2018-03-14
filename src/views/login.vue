@@ -23,7 +23,7 @@
   </section>
 </template>
 <script type="text/javascript">
-import {removeStore} from '../config/utils';
+import {removeStore,errorDeal} from '../config/utils';
 import {getSignCode,signIn} from '../config/service.js';
 import {mapMutations} from 'vuex';
 import hexMD5 from "../assets/km/js/md5.min.js";
@@ -54,7 +54,9 @@ export default {
         vm.load=false;
       }).then(function(res){
         res?vm.list=res.data:void 0;
-      });
+      }).catch(
+          error=>errorDeal(error)
+      );
     },
     login:function(){
       var vm=this;
@@ -74,19 +76,23 @@ export default {
       signIn({"userId":vm.user,"pwd":hexMD5(vm.password),"validCode":vm.validCode,"codeId":vm.list.codeId},function(){
         vm.load=false;
       }).then(res=>{
+          console.log(res);
         if(res.code=="200"){
           removeStore("KA_ECS_ONLINE_TIME");
-          let userInfo=res.data.staffInfo;
+          let userInfo=res.data;
           userInfo.codeId=vm.list.codeId;
           vm.SET_USERINFO(userInfo);
           window.location.href="#/homek";
         }else{
           vm.getVlidateCode();
-          vm.showMessage(2,res.msg)
+          vm.showMessage(2,res.msg);
+           vm.load=false;
         }
       }).catch(res=>{
+          debugger;
         vm.getVlidateCode();
         vm.showMessage(2,'服务器异常');
+        vm.load=false;
       })
     },
     toLogin:function(e){

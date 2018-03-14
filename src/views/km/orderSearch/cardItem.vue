@@ -386,10 +386,9 @@ export default{
 				vm.total=data.data.total;
 				vm.maxpage=Math.ceil(parseInt(data.data.total)/10);
 				vm.pageNum=page||1;
-				vm.callback=function(v){vm.searchList(v)};
-            }).catch(()=>{
+                vm.callback=function(v){vm.searchList(v)};
                 vm.off.isLoad=false;
-            }) 
+            }).catch(error=>errorDeal(error)); 	 
 		},
 		searchClosedAndDoing:function(page){//进行中,已关闭
 			var vm=this,url,json={"source":vm.form.source,"type":vm.form.orderType,"pageSize":vm.pageSize,"pageNum":page||1,"startTime":vm.form.startTime,"endTime":vm.form.endTime,"status":vm.off.type,"statusDetail":vm.form.orderStatus,"cardType":vm.form.cardType};
@@ -437,7 +436,6 @@ export default{
 			}
 			json.context=context;
 			json.searchtype=vm.form.select;
-
 			if(vm.off.isLoad)return false;
 			vm.off.isLoad=true;
 			// vm.AJAX('w/audit/getOrderList',json,function(data){
@@ -456,12 +454,10 @@ export default{
 			    	vm.total=data.data.total;
 			        vm.maxpage=Math.ceil(parseInt(data.data.total)/10);
 			        vm.pageNum=page||1;
-			        vm.callback=function(v){vm.searchClosedAndDoing(v)};
+                    vm.callback=function(v){vm.searchClosedAndDoing(v)};
+                    vm.off.isLoad=false;
                  }
-             ).catch(()=>{
-                 vm.off.isLoad=false;
-                 }
-             );
+             ).catch(error=>errorDeal(error)); 	
 		},
 		// 导出查询结果excel
 		downLoadList:function(page){
@@ -692,10 +688,9 @@ export default{
 		            msgSkin:'success',
 		        })
 				vm.list[number].status=4
-				vm.list[number].cardStatus=1
-            }).catch(()=>{
-                return;
-            })
+                vm.list[number].cardStatus=1
+                vm.off.isLoad=false;
+            }).catch(error=>errorDeal(error)); 	
 		},
 		details:function(e){//详情
 			var vm=this,url,
@@ -767,10 +762,9 @@ export default{
 				}else{
 					vm.detailsData=data.data;
 				}
-				vm.off.details=true;
-            }).catch(()=>{
+                vm.off.details=true;
                 vm.off.isLoad=false;
-            })
+            }).catch(error=>errorDeal(error)); 	
 		},
 		to_laydate:function(v){
 

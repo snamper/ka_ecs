@@ -143,6 +143,7 @@
 </template>
 <script>
 import {reqCommonMethod} from "../../config/service.js";
+import {errorDeal} from "../../config/utils.js";
 export default{
 	// name:'detailsView',
 	props:{
@@ -249,7 +250,7 @@ export default{
 						vm.exchangeRes="成功"
 				     }else{
 						vm.exchangeRes="失败"
-				     }
+                     }
 					new Promise(function(resolve,reject){
 			        	resolve('success')
 					}).then(function(reso){
@@ -268,10 +269,8 @@ export default{
                         //   })
                           reqCommonMethod(data,function(){vm.off.isLoad=false;},"ym-ecs/c/user/userCredits")
                           .then((data)=>{
-				        	 vm.$parent.detailsData=response.data.list;
-                          }).catch(()=>{
-                              
-                          })
+				        	 vm.$parent.detailsData=data.data.list;
+                          }).catch(error=>errorDeal(error));    
                        }else if(v=="add"){
                            data={"type": "","orderId": "","phone": "","startTime": "","endTime": "","staffNo":""};
                            let context = vm.$parent.form['context'+vm.$parent.form.select];
@@ -295,15 +294,11 @@ export default{
                           reqCommonMethod(data,function(){vm.off.isLoad=false;},"ym-ecs/c/user/queryOrderFill")
                           .then((data)=>{
                               vm.$parent.detailsData=response.data.list;
-                          }).catch(()=>{
-
-                          });                          
+                          }).catch(error=>errorDeal(error));                             
                        }
 					})     
 				}
-            }).catch(()=>{
-
-            });
+            }).catch(error=>errorDeal(error));    
 		}
 	}
 }

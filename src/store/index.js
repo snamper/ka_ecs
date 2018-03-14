@@ -27,10 +27,22 @@ const state = {
 		opinionTotal1:0,//意见反馈未处理
 		opinionTotal2:0,//意见反馈处理中
 		opinionTotal3:0,//意见反馈已完成
-	},
+    },
+    auditCountYm:{
+        "whiteCard": "0",
+        "readyCard": "0",
+        "newChangeCard": "0",
+        "realNameCollection": "0",
+        "fill": "0",
+        "whiteCard_1": "0",
+        "readyCard_1": "0",
+        "newChangeCard_1": "0",
+        "realNameCollection_1": "0",
+        "fill_1": "0"
+    },
 	countTotal:0,//审核总待审核数
     OpcountTotal:0,//意见反馈数统计
-    auditCountYm:0,//ym审核总待审核数
+    // auditCountYm:0,//ym审核总待审核数
 	offCountChange:true,//统计变化开关
 	onlineTime:'00:00:00',//在线时间
 	timer:{//定时器对象

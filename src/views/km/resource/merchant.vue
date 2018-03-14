@@ -380,7 +380,7 @@
 <script>
 import {reqCommonMethod} from "../../../config/service.js";  
 import pagination from "../../../componentskm/Page.vue";
-import { getDateTime } from "../../../config/utils.js"
+import { getDateTime,errorDeal } from "../../../config/utils.js"
 export default{
 	name:'merchantSearch',
 	data (){
@@ -445,9 +445,7 @@ export default{
             reqCommonMethod({},function(){vm.off.isLoad=false;},"km-ecs/w/merchant/statistics")
             .then((data)=>{
                 vm.totalInfo=data.data;
-            }).catch(()=>{
-                vm.off.isLoad=false;
-            })
+            }).catch(error=>errorDeal(error)); 	
 		},
 		shiftType(){//radio切换
 			this.ajaxData={
@@ -516,10 +514,9 @@ export default{
             reqCommonMethod(json,function(){vm.off.isLoad=false;},url)
             .then((data)=>{
                 vm.ajaxData.details=data.data;
-				vm.getList();
-            }).catch(()=>{
+                vm.getList();
                 vm.off.isLoad=false;
-            })
+            }).catch(error=>errorDeal(error)); 	
 		},
 		getList(page){//获取第三方支付订单列表/获取用户列表
 			var vm=this,type=vm.form.type,url,json;
@@ -543,10 +540,9 @@ export default{
 				vm.ajaxData.total=data.data.total||0;
 				vm.ajaxData.maxpage=Math.ceil(parseInt(data.data.total)/10);
 				vm.ajaxData.pageNum=page||1;
-				vm.ajaxData.callback=function(v){vm.getList(v)};
-             }).catch(()=>{
+                vm.ajaxData.callback=function(v){vm.getList(v)};
                 vm.off.isLoad=false;
-             })
+             }).catch(error=>errorDeal(error)); 	
 		},
 		getDateTime:function(e) {
 			return getDateTime(e);

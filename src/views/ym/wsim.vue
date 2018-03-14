@@ -53,6 +53,7 @@
 </template>
 <script>
 import {reqCommonMethod} from "../../config/service.js";
+import {errorDeal} from "../../config/utils.js";
 export default{
 	name:'auditList',
 	data (){
@@ -107,9 +108,7 @@ export default{
 							layer.close(popIndex);
 						}
 					})
-                }).catch(()=>{
-
-                });                
+                }).catch(error=>errorDeal(error));                    
 				}
 			});
 		},
@@ -145,9 +144,7 @@ export default{
 								layer.close(popIndex);
 							}
 						})
-                    }).catch(()=>{
-
-                    });    
+                    }).catch(error=>errorDeal(error));       
 				}
 			})
 			
@@ -169,12 +166,9 @@ export default{
                 vm.list[0]=data.data;
 				vm.off.auditIndex=0;
 				vm.dealAuditList();
-				vm.timeDown();
-            }).then(()=>{
-                vm.off.isLoad=0;
-            }).catch(()=>{
-
-            });
+                vm.timeDown();
+                vm.off.isLoad=false;
+            }).catch(error=>errorDeal(error));    
 		},
 		dealAuditList:function(){//处理分配的订单
 			const vm=this,len=vm.list.length;

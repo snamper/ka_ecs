@@ -193,7 +193,7 @@ export default{
 						vm.dealAuditList();
 					}
 				}) 
-            })            
+            }).catch(error=>errorDeal(error));             
 		},
 		refuse:function(obj){//审核拒绝
 			var str='',vm=this,orderId=vm.auditData.orderId,popIndex,ww=window.innerWidth,wwSet;
@@ -244,7 +244,7 @@ export default{
 								layer.close(popIndex);
 							}
 						})
-                    });					
+                    }).catch(error=>errorDeal(error)); 					
 				}
 			})
 		},
@@ -269,10 +269,9 @@ export default{
 				vm.off.auditIndex=0;
 				vm.dealAuditList();
 				window.clearInterval(vm.timer);
-				vm.timeDown(parseInt(vm.list[0].peirod));
-            }).then(()=>{
-                vm.off.isLoad=0;
-            });	
+                vm.timeDown(parseInt(vm.list[0].peirod));
+                vm.off.isLoad=false;
+            }).catch(error=>errorDeal(error)); 	
 		},
 		// 激活审核国政通校验
 		gztBtn:function(){
@@ -302,9 +301,7 @@ export default{
 				        })
 				    }
 				}
-            }).then(()=>{
-                vm.off.isLoad=0;
-            });         
+            }).catch(error=>errorDeal(error)); 	        
 		}
 		,
 		dealAuditList:function(){//处理分配的订单

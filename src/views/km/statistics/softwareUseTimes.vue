@@ -1,3 +1,4 @@
+
 <!--**
   *@info 统计下载模块-软件使用次数统计
   *@author: thinkmix
@@ -271,10 +272,9 @@ export default{
 				vm.total=data.data.total;
 				vm.maxpage=Math.ceil(parseInt(data.data.total)/10);
 				vm.pageNum=page||1;
-				vm.callback=function(v){vm.searchList(index,v)};
-            }).catch(()=>{
+                vm.callback=function(v){vm.searchList(index,v)};
                 vm.off.isLoad=false;
-            });            
+            }).catch(error=>errorDeal(error)); 	            
 		},
 		downLoadList:function(){//导出EXCEL
 			var vm=this,url,userInfo=getStore("KA_ECS_USER");

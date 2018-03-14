@@ -63,6 +63,7 @@
 <script>
 import "../assets/km/css/cardOrderDetails.css";
 import {reqCommonMethod} from "../config/service.js";
+import {errolDeal} from "../config/utils.js";
 import ImgZoom from '../componentskm/ImgZoom';
 import detailsView from '../componentskm/cardOrderDetailsAlert';
 export default{
@@ -116,7 +117,7 @@ export default{
 				vm.list.status=result;
 				vm.$parent.list.splice((parseInt(vm.number)+1),1);
 				cb&&cb();
-            })            
+            }).catch(error=>errorDeal(error));            
 		},
 		refuse:function(){
 			var vm=this,ww=window.innerWidth,wwSet,popIndex;
@@ -148,7 +149,7 @@ export default{
                 vm.detailsList=data.data;
 				vm.isShowDetails=true;
 				vm.typeDetails=1;
-            });            
+            }).catch(error=>errorDeal(error));;            
 		},
 		detailsMerchant:function(){//商户详情
 			var vm=this;
@@ -162,7 +163,7 @@ export default{
                 vm.detailsList=data.data;
 				vm.isShowDetails=true;
 				vm.typeDetails=2;
-            });            
+            }).catch(error=>errorDeal(error));;            
 		},
 	}
 }

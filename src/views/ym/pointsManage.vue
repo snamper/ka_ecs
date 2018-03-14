@@ -96,7 +96,7 @@ require("../../assets/ym/js/laydate/skins/default/laydate.css");
 import pagination from "../ym/page.vue";
 import details from "../ym/searchListDetails.vue";
 import layerForm from '../ym/layerForm.vue'
-import {setStore, getStore, createDownload} from '../../config/utils';
+import {setStore, getStore, createDownload,errorDeal} from '../../config/utils';
 import {reqCommonMethod} from "../../config/service.js";
 import axios from 'axios';
 export default{
@@ -219,10 +219,9 @@ export default{
                      vm.off.isLoad = false;
 			      	}else if(response.code!=200){
 				     vm.off.getPoints='0';
-			      	}
-                }).catch(()=>{
-
-                });                 
+                      }
+                      vm.off.isLoad=false;
+                }).catch(error=>errorDeal(error));                   
 				}else{
 					layer.open({
 			          content:'请输入订单号码',
@@ -300,10 +299,9 @@ export default{
                      vm.off.isLoad = false;
 			      	}else if(response.code!=200){
 				     vm.off.getPoints='0';
-			      	}
-                }).catch(()=>{
-
-                });                
+                      }
+                      vm.off.isLoad=false;
+                }).catch(error=>errorDeal(error));                    
 			}
         },
 	}

@@ -189,10 +189,6 @@
 				<li :class="{active:$route.path.indexOf('/homey/audit')>-1||$route.path=='/homey/wsim'}" v-if="off.power0">
 					<b></b>
 					<router-link to="/homey/audit/yuanmeng"><div><i class="u-icon-audit"></i><span>订单审核</span><b class="animated infinite bounce m-lighter" v-if="count.total">{{count.total}}</b></div></router-link>
-					<ul class="g-side-subul">
-						<li><router-link :to="{name:'audit',params:{source:'yuanmeng'}}"><b></b>远盟</router-link></li>
-						<li><router-link to="/homey/wsim"><b></b>WSIM卡</router-link></li>
-					</ul>
 				</li>
 				<li :class="{active:$route.path.indexOf('/homey/search')>-1}" v-if="off.power">
 					<b></b>
@@ -493,7 +489,7 @@ export default{
 		},
 		clickSignOut:function(){
 			var vm=this;
-			signOut().then(function(res){
+			signOut({},function(){vm.load=false}).then(function(res){
 				vm.SIGN_OUT();
 				vm.CLEAR_TIMER();
 			});

@@ -345,7 +345,6 @@ import CountUp from 'vue-countup-v2';
             for(let i=0;i<data.data.list.length;i++){
               vm.notice.push(data.data.list[i]);
             }
-
             setTimeout(function(){
               vm.noticeScroll();
             },30)
@@ -357,9 +356,7 @@ import CountUp from 'vue-countup-v2';
           if(data.data.list[0]){
             vm.noticelatestMaxid=data.data.list[0].maxId;
           }
-        }) .catch(()=>{
-
-        })       
+        }).catch(error=>errorDeal(error));  
       },
       noticeScroll(){//消息滚动执行
         var vm=this,noticeBox=document.getElementById("notice-box");
@@ -406,9 +403,7 @@ import CountUp from 'vue-countup-v2';
                 data.data.LT_userNum
                 ];
             }
-         }).catch(()=>{
-
-         });
+         }).catch(error=>errorDeal(error));     
       },
       getcreatecardAmount(){//总开卡成功数
         var vm=this;
@@ -434,9 +429,7 @@ import CountUp from 'vue-countup-v2';
                 lineData: [data.data.day]
             });
             vm.amountCard[0]=data.data.day[6];
-        }) .catch(()=>{
-
-        })       
+        }).catch(error=>errorDeal(error));
       },
       getmerchant(){//获取签约商户数和激活商户
         var vm=this;
@@ -462,9 +455,7 @@ import CountUp from 'vue-countup-v2';
                     lineData: [data.data.signMerch,data.data.activeMerch]
                 });
                 vm.merchantTotal=[data.data.totalSign,data.data.totalActive]
-          }) .catch(()=>{
-
-          });       
+          }).catch(error=>errorDeal(error));     
       },
       getcardCreate(){//开卡尝试数
         var vm=this;
@@ -490,9 +481,7 @@ import CountUp from 'vue-countup-v2';
                 lineData: [data.data.hour,data.data.day,data.data.month],
                 index:vm.off.cardTry_index
             });
-          }).catch(()=>{
-
-          })       
+          }).catch(error=>errorDeal(error));     
       },
       getonlineUser(){//用户在线数
         var vm=this;
@@ -518,9 +507,7 @@ import CountUp from 'vue-countup-v2';
                 category: [vm.getLatelyTime(data.data.lasttime[0],'hour',12),vm.getLatelyTime(data.data.lasttime[1],'day',7)],
                 lineData: [data.data.hour,data.data.day]
               });
-          }).catch(()=>{
-
-          })       
+          }).catch(error=>errorDeal(error));      
       },
       getrechargeMoney(){//充值金额
         var vm=this;
@@ -546,10 +533,7 @@ import CountUp from 'vue-countup-v2';
                 category: [vm.getLatelyTime(data.data.lasttime[0],'hour',12),vm.getLatelyTime(data.data.lasttime[1],'day',7),vm.getLatelyTime(data.data.lasttime[2],'month',6)],
                 lineData: [data.data.hour,data.data.day,data.data.month]
               });
-          }).catch(()=>{
-
-          })
-
+          }).catch(error=>errorDeal(error));
       },
       getOpenCardSuccess(){//开卡成功数
         var vm=this;
@@ -575,9 +559,7 @@ import CountUp from 'vue-countup-v2';
                 category: [vm.getLatelyTime(data.data.lasttime[0],'hour',12),vm.getLatelyTime(data.data.lasttime[1],'day',7),vm.getLatelyTime(data.data.lasttime[2],'month',6)],
                 lineData: [data.data.hour,data.data.day,data.data.month],
             });
-          }).catch(()=>{
-
-          });     
+          }).catch(error=>errorDeal(error));    
       },
       filterNumber(num){//数字格式化
         // num=num.toString();

@@ -2,22 +2,21 @@ import {getStore,errorDeal} from '../config/utils';
 
 require('../assets/km/js/base64.min.js');
 export default async(url = '', data = {}, type = 'GET', load, method = 'fetch') => {
-	if(!load){
+    if(!load){
 		var layerIndex=layer.open({type: 2,shadeClose:false});
 	}
 	type = type.toUpperCase();
 	const closeLoadLayout=()=>{
         typeof load==='function' ? load() : layer.close(layerIndex);
     };
-	
 //--------------------------------------------------------------------
 	let userInfo=getStore("KA_ECS_USER");
     if(url!="km_center_ecs/user/getSmsCode"&&url!="km_center_ecs/user/login"){//排除登录
 		if(userInfo){
-	        data.customerId=userInfo.customerId;
+            data.customerId=userInfo.customerId;
 	        data.codeId=userInfo.codeId;
 	    }else{
-	         errorDeal({'code':648},closeLoadLayout);
+            errorDeal({'code':648},closeLoadLayout);
 	         return false;
 	    }
 	}
@@ -38,7 +37,9 @@ export default async(url = '', data = {}, type = 'GET', load, method = 'fetch') 
 			credentials: 'include',
 			method: type,
 			headers: {
-				'Content-Type': 'application/x-www-form-urlencoded'
+                // 'Content-Type': 'application/x-www-form-urlencoded',
+                 'Content-type': 'application/x-www-form-urlencoded;charset=utf-8',
+				//'Content-Type': 'application/json'
 			},
 			mode: "cors",
 			cache: "force-cache"
@@ -49,66 +50,44 @@ export default async(url = '', data = {}, type = 'GET', load, method = 'fetch') 
 				value: BASE64.encode(JSON.stringify(data))
 			});
         }
-        return await fetch(url,requestConfig).then((response)=>{
-			closeLoadLayout();
-			if(response.status=="200"){
-                return response.json();
-	        }else {
-                
-                return response.status;
-	        }
-        })
-       
-        .then(data=>{
-			if(data.code==200){
-                return data;
-            }else{
-                errorDeal(data);
-                return false;
-            }
-        })
-        .catch(error=>errorDeal(error));
-		// try {
-		// 	const response = await fetch(url, requestConfig);
-		// 	const responseJson = await response;
-        //     closeLoadLayout();
-        //     // responseJson.json().then((data)=>{
-        //     //     if(data.code==200){
-        //     //         return data
-        //     //     }
-        //     // }).then((res)=>{
-        //     //     debugger;
-        //     //     return res;
-        //     // }).catch((res)=>{
-        //     //     errorDeal(res);
-        //     // })
-	    //     if(responseJson.status=="200"){
-        //         return responseJson.json();
-        //         // responseJson.json().then((data)=>{
-        //         //     if(data.code==200){
-        //         //         console.log(data);
-        //         //         return data;
-        //         //     }
-        //         // }).catch((res)=>{
-        //         //     errorDeal(res);
-        //         // })
-        //         // var res = responseJson.json();           
-        //         // res.json().then((data)=>{
-        //         //     return res2=data;
-        //         // }).then((res2)=>{
-        //         //     if(res2.code==200){
-        //         //         var pp = new Promise(resolve => resolve(res2));
-        //         //         console.log(pp);
-        //         //     }else if(res2.code!=200){
-        //         //         errorDeal(res2);
-        //         //     }
-        //         // });
-	    //     }else{
-	    //     	errorDeal(res2);
+        // return await fetch(url,requestConfig).then((response)=>{
+		// 	closeLoadLayout();
+		// 	if(response.status=="200"){
+        //         return response.json();
+	    //     }else {
+        //         // return response.status;
+        //         throw `${res.status}, ${res.statusText}`;
 	    //     }
-		// } catch (errorText) {
-		// 	throw new Error(errorText);
-		// }
+        // }).then(data=>{
+		// 	if(data.code==200){
+        //         return data;
+        //     }else{
+        //         errorDeal(data);
+        //         return false;
+        //     }
+        // }).catch(error=>errorDeal(error));
+        //-----------------------------
+        return new Promise((resolve, reject) => {
+            fetch(url, requestConfig)
+              .then(response => {
+                return response.json()
+              })
+              .then(data => {
+                if (data.code == 200) {
+                  resolve(data) //返回成功数据
+                } else {
+                    if (data.code == 401) {
+                    
+                    } else {
+                    
+                    }
+                  reject(data)//返回非200情况
+                }
+              })
+              .catch(error => {
+                error=>errorDeal(error)
+              })
+          })
 	} else {//XHR对象
 		return new Promise((resolve, reject) => {
 			let requestObj;

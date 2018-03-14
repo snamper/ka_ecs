@@ -117,7 +117,8 @@
 <script>
   require("../../../assets/km/js/laydate/laydate.js");
   require("../../../assets/km/js/laydate/skins/default/laydate.css");
-  import {reqCommonMethod} from "../../../config/service.js";  
+  import {reqCommonMethod} from "../../../config/service.js";
+  import {errorDeal} from "../../../config/utils.js";  
   import pagination from "../../../componentskm/Page.vue";
   import details from "../../../componentskm/opinionDetails.vue";
   import {createDownload} from '../../../config/utils';
@@ -275,9 +276,7 @@
             vm.maxpage=Math.ceil(parseInt(data.data.total)/10);//最大页码
             vm.pageNum=page||1;
             vm.callback=function(v){vm.searchList(index,v)};
-        }).then(()=>{
-            vm.off.isLoad=false;
-        });  
+        }).catch(error=>errorDeal(error)); 	  
         }
       }
       //按钮
@@ -299,10 +298,9 @@
             vm.detailsData=data.data.details;
             vm.detailsData.content = BASE64.decode(vm.detailsData.content);
             vm.detailsLog=data.data.process;
-            vm.detailsData?vm.off.details=true:vm.off.details=false;          
-        }).then(()=>{
-            vm.off.isLoad=false;
-        });        
+            vm.detailsData?vm.off.details=true:vm.off.details=false; 
+            vm.off.isLoad=false;         
+        }).catch(error=>errorDeal(error)); 	        
       }
       ,to_laydate:function(v){
         var vm=this;

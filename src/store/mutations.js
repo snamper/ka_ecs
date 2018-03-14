@@ -41,7 +41,7 @@ export default {
     },
     //获取YM审核统计信息
 	[SET_AUDIT_STATISTICS_INFO_YM](state,res) {
-        state.auditCount = Object.assign({}, state.auditCount,res.data);
+        state.auditCount = Object.assign({}, state.auditCountYm,res.data);
         let count=this.getters.getCountTotalYm;
 		if(count!=state.countTotal){
 			state.offCountChange=true;

@@ -240,10 +240,9 @@ export default{
 				vm.total=data.data.total;
 				vm.maxpage=Math.ceil(parseInt(data.data.total)/10);
 				vm.pageNum=page||1;
-				vm.callback=function(v){vm.searchList(v)};
-             }).catch(()=>{
+                vm.callback=function(v){vm.searchList(v)};
                 vm.off.isLoad=false;
-             })
+             }).catch(error=>errorDeal(error)); 	
 		},
 		details:function(e){//详情
 			var vm=this,
@@ -261,10 +260,9 @@ export default{
             reqCommonMethod(json,function(){vm.off.isLoad=false;},"km-ecs/w/handler/query")
             .then((data)=>{
 	            vm.detailsData=data.data.list[0];
-				vm.off.details=true;
-            }).catch(()=>{
+                vm.off.details=true;
                 vm.off.isLoad=false;
-            })
+            }).catch(error=>errorDeal(error)); 	
 		},
 		ispShiftClick(){
 			var vm=this;

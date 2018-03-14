@@ -45,6 +45,7 @@
 </template>
 <script>
 import {reqCommonMethod} from "../../config/service.js";
+import {errorDeal} from "../../config/utils";
 export default{
 	name:'illegalSearch',
 	data (){
@@ -86,10 +87,9 @@ export default{
             reqCommonMethod({staffNo:vm.form.user},function(){vm.off.isLoad=false;},"ym-ecs/c/user/queryBlack")
             .then((data)=>{
                 vm.off.isRelieve=false;
-				vm.resData=data.data;
-            }).catch(()=>{
-
-            });          
+                vm.resData=data.data;
+                vm.off.isLoad=false;
+            }).catch(error=>errorDeal(error));              
 		},
 		relieve:function(){
 			let vm=this;
@@ -115,10 +115,9 @@ export default{
 		            skin: 'msg',
 		            time: 3,
 		            msgSkin:'success',
-		        });
-            }).catch(()=>{
-
-            });            
+                });
+                vm.off.isLoad=false;
+            }).catch(error=>errorDeal(error));               
 		},
 	}
 }

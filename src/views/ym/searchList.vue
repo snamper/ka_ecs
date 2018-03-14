@@ -257,10 +257,10 @@
 <script>
 require("../../assets/ym/js/laydate/laydate.js");
 require("../../assets/ym/js/laydate/skins/default/laydate.css");
-import pagination from "../ym/page.vue";
+import pagination from "../../componentskm/Page.vue";
 import details from "../ym/searchListDetails.vue";
 import auditdetails from "../ym/auditList.vue";
-import { setStore, getStore, createDownload } from "../../config/utils";
+import { setStore, getStore, createDownload,errorDeal } from "../../config/utils";
 import {reqCommonMethod} from "../../config/service.js";
 export default {
   name: "search",
@@ -323,7 +323,6 @@ export default {
       vm.userInfo.isadmin&&(vm.userInfo.isadmin.indexOf('1')>-1||vm.userInfo.isadmin.indexOf('3')>-1) ? vm.off.power3=true : vm.off.power3=false;
       var type = this.$route.params.type;
       type == "auditing" ? (vm.off.type = 1) : (vm.off.type = 2);
-      debugger;
       vm.form.startTime = laydate.now(0, "YYYY-MM-DD 00:00:00");
       vm.form.endTime = laydate.now(0, "YYYY-MM-DD 23:59:59");
       vm.off.type == 1 ? (vm.form.select = 5) : (vm.form.select = 7);
@@ -418,8 +417,6 @@ export default {
       vm.off.type == 1
         ? (url = "ym-ecs/c/audit/auditOrderSearch")
         : (url = "ym-ecs/c/audit/orderSearch");
-      if (vm.off.isLoad) return false;
-      vm.off.isLoad = true;
     //   vm.AJAX(url,json,function(data) {
     //       vm.list = data.data.list;
     //       vm.total = data.data.total;
@@ -433,8 +430,8 @@ export default {
     //       vm.off.isLoad = false;
     //     }
     //   );
-      reqCommonMethod(json,function(){vm.off.isLoad=false;},url)
-      .then((response)=>{
+      reqCommonMethod(json,function(){return vm.off.isL==true},url)
+      .then((data)=>{
           vm.list = data.data.list;
           vm.total = data.data.total;
           vm.maxpage = Math.ceil(parseInt(data.data.total) / 10);
@@ -442,11 +439,8 @@ export default {
           vm.callback = function(v) {
             vm.searchList(index, v);
           };
-      }).then(()=>{
-           vm.off.isLoad = false;
-      }).catch(()=>{
-
-      })
+          vm.off.isLoad=false;
+      }).catch(error=>errorDeal(error));    
     },
     downLoadList: function(index, page) {
       //导出EXCEL
@@ -583,9 +577,8 @@ export default {
             });
             vm.list[number].result = 3;
             vm.list[number].cardStatus = 1;
-      }).catch(()=>{
-
-      });      
+            vm.off.isLoad=false;
+      }).catch(error=>errorDeal(error));         
     },
     details: function(e) {
       var vm = this,
@@ -610,13 +603,12 @@ export default {
     //     }
     //   );
       reqCommonMethod({ orderId: orderId },function(){vm.off.isLoad=false;},url)
-      .then((response)=>{
+      .then((data)=>{
           vm.detailsData = data.data;
           vm.off.details = true;
           vm.off.detailsList = true;
-      }).catch(()=>{
-
-      });      
+          vm.off.isLoad=false;
+      }).catch(error=>errorDeal(error));          
     },
     to_laydate: function(v) {
       var vm = this,

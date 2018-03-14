@@ -17,6 +17,7 @@ require("./assets/km/js/layer/need/layer.css");
 require("./assets/km/js/ajax.js");
 require("./assets/km/js/base64.min.js");
 require("./config/service.js");
+require("./assets/ym/js/trim.js")
 
 
 

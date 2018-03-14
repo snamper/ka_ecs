@@ -98,6 +98,7 @@
 </template>
 <script>
 import {reqCommonMethod} from "../../../config/service.js";
+import {errorDeal} from "../../../config/utils.js";
 import "../../../assets/km/css/cardOrderDetails.css";
 import "../../../assets/km/css/audit.css";
 import ImgZoom from '../../../componentskm/ImgZoom';
@@ -133,9 +134,7 @@ export default{
         reqCommonMethod({"auditType":vm.off.auditType},function(){vm.off.isLoad=false;},"km-ecs/w/audit/getRefuseReasons")
         .then((data)=>{
             vm.refuseArr=data.data;
-        }).catch(()=>{
-
-        });
+        }).catch(error=>errorDeal(error));              
 		vm.getAuditList();
 	},
 	methods:{
@@ -163,9 +162,7 @@ export default{
 						vm.dealAuditList();
 					}
 				})
-            }).catch(()=>{
-
-            });
+            }).catch(error=>errorDeal(error)); 
 		},
 		refuse:function(obj){//审核拒绝
 			var str='',vm=this,orderId=vm.auditData.orderId,popIndex,ww=window.innerWidth,wwSet,auditType=vm.off.auditType;
@@ -226,9 +223,7 @@ export default{
 								layer.close(popIndex);
 							}
 						})
-                    }).catch(()=>{
-
-                    });
+                    }).catch(error=>errorDeal(error)); 
 				}
 			})
 		},
@@ -262,11 +257,7 @@ export default{
 				vm.dealAuditList();
 				window.clearInterval(vm.timer)
 				vm.timeDown(parseInt(vm.list[0].expireTime));
-            }).then(()=>{
-                vm.off.isLoad=0;
-            }).catch(()=>{
-
-            });
+            }).catch(error=>errorDeal(error)); 
 		},
 		dealAuditList:function(){//处理分配的订单
 			const vm=this,len=vm.list.length;

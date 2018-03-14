@@ -1,5 +1,6 @@
 <style scoped>
   @import "../../assets/ym/css/searchDetails.css";
+  /* @import "../../assets/km/css/cardOrderDetails.css"; */
 </style>
 <template>
 <section class="g-list-box" id="details">
@@ -37,7 +38,6 @@
 								</td></tr>
 								<tr v-if="type==2"><td>开卡状态说明：</td><td>{{ list.cardStatusReason }}</td></tr>
 								<tr><td>用户姓名：</td><td>
-									
 									<span class="o-order-modify" v-if="list.result==4&&list.updName==0">
 										<span v-if="!modify.off1">{{ list.userName }}</span>
 										<input v-if="modify.off1" maxlength="30" type="text" v-model="modify.userName">
@@ -51,7 +51,6 @@
 								</td></tr>
 								<tr><td>电话号码：</td><td>{{ list.userPhone }}（{{ typeCheck(4,list.phoneLevel) }}）</td></tr>
 								<tr><td>{{ typeCheck(list.papersType)[2] }}：</td><td>
-
 									<span class="o-order-modify" v-if="list.result==4&&list.updPapersCode==0">
 										<span v-if="!modify.off3">{{ list.papersCode }}</span>
 										<input v-if="modify.off3" maxlength="30" type="text" v-model="modify.papersCode">
@@ -131,8 +130,8 @@
 							<input v-if="modify.off1" maxlength="30" type="text" v-model="modify.userName">
 							<div class="btn-group">
 								<a href="javascript:void(0)" v-if="!modify.off1" @click="modifyOrder(1,1)" title="修改" class="modify"></a>
-								<a href="javascript:void(0)" v-if="modify.off1" @click="modifyOrder(2,1)" title="完成" class="myicon-success-circle f-c-green complete"></a>
-								<a href="javascript:void(0)" v-if="modify.off1" @click="modifyOrder(3,1)" title="取消" class="myicon-cancel f-c-red cancel"></a>
+								<a href="javascript:void(0)" v-if="modify.off1" @click="modifyOrder(2,1)" title="完成" class="myicon-success-circle f-c-green complete">x</a>
+								<a href="javascript:void(0)" v-if="modify.off1" @click="modifyOrder(3,1)" title="取消" class="myicon-cancel f-c-red cancel">xx</a>
 							</div>
 						</span>
 						<span v-else>{{ list.userName }}</span>
@@ -179,7 +178,6 @@
 					<td><span>Mac地址：</span>{{list.devMacAddr}}</td>
 					<td><span>证件期限：</span>{{list.validityPeriodOld}}</td>
 					<td><span>证件期限：</span>{{list.validityPeriod}}</td>
-					
 				</tr>
 				<tr>
 					<td><span>操作人：</span>{{list.operatorName}}【操作人工号：{{list.operatorId}}】</td>
@@ -235,7 +233,7 @@
 </template>
 <script>
 import {reqCommonMethod} from "../../config/service.js";
-import {setStore, getStore, createDownload} from '../../config/utils';
+import {setStore, getStore, createDownload,errorDeal} from '../../config/utils';
 export default{
 	name:'pagination',
 	props:{
@@ -326,9 +324,7 @@ export default{
 				vm.list.cardStatus=1;
 				vm.$parent.list[parseInt(vm.number)].result=3;
 				vm.$parent.list[parseInt(vm.number)].cardStatus=1;
-            }).catch(()=>{
-
-            });
+            }).catch(error=>errorDeal(error));    
 		},
 		modifyOrder(state,type){//state：1、修改；2、完成；3、取消，type：1、用户姓名修改；2、地址修改；3、身份证号
 			var vm=this;
@@ -352,9 +348,7 @@ export default{
 						vm.$parent.list[parseInt(vm.number)].updName=1;
 						vm.$parent.list[parseInt(vm.number)].updPapersCode=1;
 					}
-                }).catch(()=>{
-
-                });
+                }).catch(error=>errorDeal(error));    
 			}else if(state==3){
 				type==1 ? (vm.modify.off1=false) : type==2 ? (vm.modify.off2=false) : (vm.modify.off3=false);
 			}
@@ -387,10 +381,7 @@ export default{
 					btn:0,
 					style:'width:auto;'
 				});
-            }).catch(()=>{
-
-            });
-            
+            }).catch(error=>errorDeal(error));    
 		},
 		integralLog:function(){
 			var vm=this;
@@ -416,9 +407,7 @@ export default{
 					btn:0,
 					style:'width:auto;'
 				});
-            }).catch(()=>{
-
-            });            
+            }).catch(error=>errorDeal(error));               
 		},
 		autoAuditInfo(){//自动审核详情
 			var vm=this;
@@ -538,9 +527,7 @@ export default{
 					btn:0,
 					style:'width:auto;'
 				});
-            }).catch(()=>{
-
-            });            
+            }).catch(error=>errorDeal(error));                
 		},
 		filterReason:function(reason){
 			var reasonArr=reason.split('|'),str=[];

@@ -41,8 +41,7 @@ export default {
 			auditCount[key]=parseInt(auditCount[key]);
 		});
         let isadmin=state.userInfo.isadmin;
-        
-		if(isadmin){
+        		if(isadmin){
 			let countYm=0;
 			countYm += auditCount[0]+auditCount[1]+auditCount[2];
             return countYm;

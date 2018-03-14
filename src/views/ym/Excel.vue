@@ -76,7 +76,7 @@ select {
 </div>
 </template>
 <script>
-import { setStore, getStore, createDownload } from "../../config/utils";
+import { setStore, getStore, createDownload ,errorDeal } from "../../config/utils";
 import {reqCommonMethod} from "../../config/service.js";
 require("../../assets/ym/js/laydate/laydate.js");
 require("../../assets/ym/js/laydate/skins/default/laydate.css");
@@ -145,9 +145,8 @@ export default {
           if(data.code==200){
               vm.downloadDate=data.data.dailyAudits;
           }
-      }).catch(()=>{
-
-      });
+          vm.off.isLoad=false;
+      }).catch(error=>errorDeal(error)); 
       if (initYear >= 2018) {
         for (let i = 2018; i <= initYear; i++) {
           vm.timeyear.push(i + "年");
@@ -231,9 +230,8 @@ export default {
           if(data.code==200){
              vm.downloadDate=data.data.dailyAudits;
           }
-      }).catch(()=>{
-
-      });        
+          vm.off.isLoad=false;          
+      }).catch(error=>errorDeal(error));        
     //   var dn = new Date(),
     //     dny = dn.getFullYear(),
     //     dnm = dn.getMonth() + 1,

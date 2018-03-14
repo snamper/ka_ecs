@@ -43,6 +43,7 @@
 <script>
   import "../assets/km/css/cardOrderDetails.css";
   import {reqCommonMethod} from "../config/service.js";  
+  import {errcrDeal} from "../config/utils.js";
   import ImgZoom from '../componentskm/ImgZoom';
   import detailsView from '../componentskm/cardOrderDetailsAlert';
   export default{
@@ -136,7 +137,7 @@
             btn:0,
             style:'width:auto;'
           });
-        });
+        }).catch(error=>errorDeal(error));;
       },
       detailsPayOrder:function(){//支付订单详情
         var vm=this;
@@ -170,7 +171,7 @@
             btn:0,
             style:'width:auto;'
           });
-        });        
+        }).catch(error=>errorDeal(error));;        
       },
       detailsUser:function(){//操作者详情
         var vm=this;
@@ -184,7 +185,7 @@
            vm.detailsList=data.data;
            vm.isShowDetails=true;
            vm.typeDetails=1;
-        });        
+        }).catch(error=>errorDeal(error));;        
       },
       detailsMerchant:function(){//商户详情
         var vm=this;
@@ -198,7 +199,7 @@
             vm.detailsList=data.data;
           vm.isShowDetails=true;
           vm.typeDetails=2;
-        });        
+        }).catch(error=>errorDeal(error));;        
       },
       agree:function(){//复审同意
         var vm=this;
@@ -226,7 +227,7 @@
           vm.list.cardStatus=1
           vm.$parent.list[parseInt(vm.number)].status=4;
           vm.$parent.list[parseInt(vm.number)].cardStatus=1;
-        });        
+        }).catch(error=>errorDeal(error));;        
       },
       orderLog:function(){//审核日志
         var vm=this;
@@ -256,7 +257,7 @@
             btn:0,
             style:'width:auto;'
           });
-        });        
+        }).catch(error=>errorDeal(error));;        
       },
       integralLog:function(){//积分详情
         var vm=this;
@@ -282,7 +283,7 @@
             btn:0,
             style:'width:auto;'
           });
-        });        
+        }).catch(error=>errorDeal(error));;        
       },
       filterReason:function(reason){
         var reasonArr=reason.split('|'),str=[];

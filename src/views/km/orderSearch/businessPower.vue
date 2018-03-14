@@ -178,6 +178,7 @@ import "../../../assets/km/css/search.css";
 require("../../../assets/km/js/laydate/laydate.js");
 require("../../../assets/km/js/laydate/skins/default/laydate.css");
 import {reqCommonMethod} from "../../../config/service.js";
+import {errorDeal} from "../../../config/utils.js";
 import pagination from "../../../componentskm/Page.vue";
 import details from "../../../componentskm/merchantAuditOrderDetails.vue";
 import { getDateTime } from "../../../config/utils.js";
@@ -284,10 +285,9 @@ export default{
 				vm.total=data.data.total;
 				vm.maxpage=Math.ceil(parseInt(data.data.total)/10);
 				vm.pageNum=page||1;
-				vm.callback=function(v){vm.searchList(index,v)};
-            }).catch(()=>{
-                vm.off.isLoad=false;
-            })
+                vm.callback=function(v){vm.searchList(index,v)};
+                vm.off.isLoad=false
+            }).catch(error=>errorDeal(error)); 	
 		},
 		details:function(e){//详情
 			var vm=this,url,orderId=e.target.name;
@@ -303,10 +303,9 @@ export default{
              reqCommonMethod({"orderId":orderId},function(){vm.off.isLoad=false;},"km-ecs/w/attribute/detail")
              .then((data)=>{
 	            vm.detailsData=data.data;
-				vm.off.details=true;
-             }).catch(()=>{
+                vm.off.details=true;
                 vm.off.isLoad=false;
-             })
+             }).catch(error=>errorDeal(error)); 	
 		},
 		downLoadList:function(){//导出EXCEL
 			var vm=this,json={"startTime":vm.form.startTime,"endTime":vm.form.endTime,"status":vm.form.status,'type':vm.form.type,'orderId':'','customerPhone':vm.form.customerPhone,'dealerId':vm.form.dealerId,'userPhone':vm.form.userPhone};
