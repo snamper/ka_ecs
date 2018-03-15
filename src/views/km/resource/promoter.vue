@@ -178,7 +178,6 @@ export default{
 		searchClick(){
 			var vm=this;
 			if(vm.off.isLoad)return false;
-			
 			vm.promoterData={};
 			vm.deviceList=[];
 			if(!vm.form.dealerId){
@@ -190,7 +189,7 @@ export default{
 		        });
 		        return false;
 			}
-			// vm.off.isLoad=true;
+			vm.off.isLoad=true;
 			unifySearchApi({
 					"opKey":"info.promoter.search",
 					"params":["'"+vm.form.dealerId+"'"],
@@ -210,11 +209,12 @@ export default{
 			            msgSkin:'error',
 			        });
 				}
-			});
+            });
+            vm.off.isLoad=false;
 		},
 		getDeviceList(page,dealerId){
 			var vm=this;
-			// vm.off.isLoad=true;
+			vm.off.isLoad=true;
 			unifySearchApi({
 					"opKey":"info.promoterDevice.list",
 					"params":["'"+dealerId+"'"],
@@ -230,7 +230,8 @@ export default{
 					pageNum:page||1,
 					callback:function(v){vm.getDeviceList(v,dealerId)}
 				}
-				vm.getMerchantList(1,dealerId)
+                vm.getMerchantList(1,dealerId);
+				vm.off.isLoad=false;                
 			});
 		},
 		getMerchantList(page,dealerId){

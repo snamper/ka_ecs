@@ -293,7 +293,7 @@ export default{
                         //   })
                           reqCommonMethod(data,function(){vm.off.isLoad=false;},"ym-ecs/c/user/queryOrderFill")
                           .then((data)=>{
-                              vm.$parent.detailsData=response.data.list;
+                              vm.$parent.detailsData=data.data.list;
                           }).catch(error=>errorDeal(error));                             
                        }
 					})     

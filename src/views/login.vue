@@ -124,7 +124,6 @@ export default {
           IsInArray(isadmin,'7')>-1?vm.off.powerkm7=true : vm.off.powerkm7=false;
           IsInArray(isadmin,'11')>-1?vm.off.powerkm11=true : vm.off.powerkm11=false;
           IsInArray(isadmin,'21')>-1?vm.off.powerkm21=true : vm.off.powerkm21=false;
-        console.log(vm.off);
         if(vm.off.power1||vm.off.power0){
             debugger;
             window.location.href="#/homey/audit/yuanmeng";
@@ -165,14 +164,9 @@ export default {
           vm.showMessage(2,res.msg);
            vm.load=false;
         }
-      }).catch(error=>errorDeal(error)); 
-    //   .catch(res=>{
-    //       console.log(res);
-    //     res=>{errorDeal(res)}
-    //     vm.getVlidateCode();
-    //     //vm.showMessage(2,'服务器异常');
-    //     vm.load=false;
-    //   })
+      })
+      .catch(error=>errorDeal(error))
+      .then(this.getVlidateCode()); 
     },
     toLogin:function(e){
       e.keyCode==13&&this.login();
