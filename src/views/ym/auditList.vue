@@ -161,10 +161,10 @@ export default{
         }
 	},
 	created:function(){
-		// var userInfo=localStorage.getItem('ECS_INFO');
-		// userInfo.isadmin&&userInfo.isadmin.indexOf('4')>-1 ? this.off.isBugginPower=true : this.off.isBugginPower=false;
+		var userInfo=localStorage.getItem('ECS_INFO');
+		userInfo.isadmin&&userInfo.isadmin.indexOf('4')>-1 ? this.off.isBugginPower=true : this.off.isBugginPower=false;
 		this.getAuditList();
-		//this.dealAuditList();
+		this.dealAuditList();
 	},
 	mounted:function(){
 		var vm=this;
@@ -429,8 +429,10 @@ export default{
             }).catch(error=>errorDeal(error)); 
 		},
 		getAuditList:function(){//获取订单
-            var vm=this,orderId,url,json={},type=vm.$route.params.type;
+            var vm=this,orderId,url,json={},type=parseInt(vm.$route.params.type);
+            console.log(type);
             if(typeof type=="number"){
+                debugger;
                 type==3&&(type=6);
                 url="ym-ecs/c/audit/toaudit";
                 json.type=type;

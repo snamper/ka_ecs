@@ -54,7 +54,7 @@
 					<td>{{todo.creditOriginal}}</td>
 					<td class="fRed">{{todo.creditAlready}}</td>
 					<td>{{todo.creditRemain}}</td>
-					<th v-if="off.power5||off.power1" colspan="2"><input  maxlength="15" class="active" name="" type="text" placeholder="请输入要兑换的积分"><button class="btnPoints" @click="openinput('ex')" >兑换</button></th>
+					<th colspan="2"><input  maxlength="15" class="active" name="" type="text" placeholder="请输入要兑换的积分"><button class="btnPoints" @click="openinput('ex')" >兑换</button></th>
 				</tr>
 			</tbody>
 		</table>

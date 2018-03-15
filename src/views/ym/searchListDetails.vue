@@ -268,7 +268,7 @@ export default{
 		const vm=this;
         let userInfo=getStore("KA_ECS_USER");
         vm.userInfo=userInfo;
-        var isadmin=vm.userInfo.isadmin.split(","); 
+        var isadmin=vm.userInfo.isadminYm.split(","); 
         function IsInArray(arr,val){ 
             var testStr=','+arr.join(",")+","; 
             return testStr.indexOf(","+val+","); 
