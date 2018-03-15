@@ -7,7 +7,7 @@ export default async(url = '', data = {}, type = 'GET', load, method = 'fetch') 
 	}
 	type = type.toUpperCase();
 	const closeLoadLayout=()=>{
-        typeof load==='function' ? load() : layer.close(layerIndex);
+        typeof load=='function' ? load() : layer.close(layerIndex);
     };
 //--------------------------------------------------------------------
 	let userInfo=getStore("KA_ECS_USER");
@@ -78,9 +78,9 @@ export default async(url = '', data = {}, type = 'GET', load, method = 'fetch') 
                   resolve(data) //返回成功数据
                 } else {
                     if (data.code == 401) {
-                    
+                        closeLoadLayout()
                     } else {
-                    
+                        closeLoadLayout()
                     }
                   reject(data)//返回非200情况
                 }

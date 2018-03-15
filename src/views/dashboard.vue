@@ -176,7 +176,7 @@
 </template>
 <script type="text/javascript">
 import {reqCommonMethod} from "../config/service.js";
-import { getDateTime,getUnixTime ,errorDeal} from "../config/utils.js";
+import { getDateTime,getUnixTime ,errorDeal,getStore} from "../config/utils.js";
 import CountUp from 'vue-countup-v2';
   export default {
     name: "dashboard",
@@ -228,6 +228,10 @@ import CountUp from 'vue-countup-v2';
       this.intervalGetLine();
     },
     mounted() {
+      let userInfo=getStore("KA_ECS_USER");
+     if(userInfo.isadmin.length<=0){
+         return false;
+     }
       //   ajax请求获取数据统计
       var vm=this;
       

@@ -29,16 +29,16 @@ const state = {
 		opinionTotal3:0,//意见反馈已完成
     },
     auditCountYm:{
-        "whiteCard": "0",
-        "readyCard": "0",
-        "newChangeCard": "0",
-        "realNameCollection": "0",
-        "fill": "0",
-        "whiteCard_1": "0",
-        "readyCard_1": "0",
-        "newChangeCard_1": "0",
-        "realNameCollection_1": "0",
-        "fill_1": "0"
+        "whiteCard": 0,//开白卡待审核数
+        "readyCard": 0,//开成卡待审核数
+        "newChangeCard": 0,//补换卡待审核数
+        "realNameCollection": 0,//实名补录待审核数
+        "fill": 0,
+        "whiteCard_1": 0,
+        "readyCard_1": 0,
+        "newChangeCard_1": 0,
+        "realNameCollection_1": 0,
+        "fill_1": 0
     },
 	countTotal:0,//审核总待审核数
     OpcountTotal:0,//意见反馈数统计

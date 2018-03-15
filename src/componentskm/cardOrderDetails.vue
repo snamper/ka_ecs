@@ -371,7 +371,6 @@ export default{
             }).catch(error=>errorDeal(error))            
 		},
         detailsOrder:function(){//开卡订单详情
-        debugger;
 			var vm=this;
 			// vm.AJAX('w/audit/openCardInfo',{"transactionId":vm.list.orderId},function(data){
 			// 	var list= data.data,str='',payed='';

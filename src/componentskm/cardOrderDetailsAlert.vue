@@ -211,7 +211,7 @@ export default{
 			// 	});
             // });
             reqCommonMethodNoLoad({"dealerId":vm.dealerId},function(){vm.off.isLoad=false;},"km-ecs/w/audit/getIncomeDetail")
-            .then((data)=>{               
+            .then((data)=>{           
                 var list= data.data;
 				layer.open({
 					content:'<ul class="f-scroll-lt lay-details light">'+

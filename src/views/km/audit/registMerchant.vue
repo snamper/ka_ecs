@@ -197,7 +197,6 @@ export default{
 		},
 		refuse:function(obj){//审核拒绝
 			var str='',vm=this,orderId=vm.auditData.orderId,popIndex,ww=window.innerWidth,wwSet;
-		
 			for(let i=0;i<vm.refuseArr.list.length;i++){
 				var b='';
 				if(vm.refuseArr.list[i].stopCard==1)b='<b class="f-c-red">★</b>';
@@ -262,7 +261,8 @@ export default{
 			            skin: 'msg',
 			            time: 4,
 			            msgSkin:'error',
-			        })
+                    })
+                    vm.off.isLoad=false;
 			        return false;
 				}
 				vm.list=data.data.list;

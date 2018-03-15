@@ -179,9 +179,7 @@
                 <li  :class="{'active':isChecky}" @click="isCheck('y')">
                     <div class="mainCataDiv">
                         <span class="fl">远盟</span>
-						<b class="animated m-lighter countIcon" :class="{bounce:offCountChange}" v-show="auditCountYm.readyCard+auditCountYm.whiteCard+auditCountYm.newChangeCard+auditCountYm.realNameCollection+auditCountYm.fill">
-                            {{auditCountYm.readyCard+auditCountYm.whiteCard+auditCountYm.newChangeCard+auditCountYm.realNameCollection+auditCountYm.fill}}
-                        </b>                                                
+						<b class="animated m-lighter countIcon" :class="{bounce:offCountChange}" v-show="auditCountYm.readyCard+auditCountYm.whiteCard+auditCountYm.newChangeCard+auditCountYm.realNameCollection+auditCountYm.fill">{{auditCountYm.readyCard+auditCountYm.whiteCard+auditCountYm.newChangeCard+auditCountYm.realNameCollection+auditCountYm.fill}}</b>                                                
                         <i v-if="!isChecky" class="u-icon-switchup "></i>
                         <i v-if="isChecky" class="u-icon-switchdown "></i>
                     </div>
@@ -287,7 +285,7 @@ export default{
     },
 	mounted:function(){
         this.init();
-        this.initMenu();
+        // this.initMenu();
 	},
 	computed:{
 		...mapState([
@@ -338,15 +336,20 @@ export default{
             if(vm.userInfo.isadmin.length==0){//无卡盟权限
                 window.location.href="#/homey";
                 vm.off.powerKmHidden=1;
-                vm.isChecky=false;
                 vm.isChecky=true;
             }else if(vm.userInfo.isadminYm.length==0){//无远盟权限
                 window.location.href="#/homek";                
                 vm.off.powerYmHidden=1;
-                vm.isCheckk=false;
                 vm.isCheckk=true;
             }
-            
+             let path=window.location.hash;
+            if(path.indexOf("homek")>-1){
+                vm.isCheckk=true;
+                vm.isChecky=false;
+            }else if(path.indexOf("homey")>-1){
+                vm.isChecky=true;
+                vm.isChecky=false;
+            }
             //远盟权限
             vm.userInfo.isadminYm&&vm.userInfo.isadminYm.indexOf('1')>-1? vm.off.power1=true : vm.off.power1=false;
 			vm.userInfo.isadminYm&&(vm.userInfo.isadminYm.indexOf('1')>-1||vm.userInfo.isadmin.indexOf('2')>-1) ? vm.off.power=true : vm.off.power=false;
@@ -359,6 +362,7 @@ export default{
             　　var testStr=','+arr.join(",")+","; 
             　　return testStr.indexOf(","+val+","); 
             } 
+            console.log(IsInArray(isadmin,'2'));
             IsInArray(isadmin,'0')>-1?vm.off.powerkm0=true : vm.off.powerkm0=false;
             IsInArray(isadmin,'1')>-1?vm.off.powerkm1=true : vm.off.powerkm1=false;
             IsInArray(isadmin,'2')>-1?vm.off.powerkm2=true : vm.off.powerkm2=false;
@@ -371,6 +375,7 @@ export default{
             IsInArray(isadmin,'21')>-1?vm.off.powerkm21=true : vm.off.powerkm21=false;
             Promise.all([kmAuditInfo,kmOpinionInfo,ymAuditInfo]).then(()=>{
                 vm.initMenu();
+
             });
         },
 		headMenu:function(){//侧边导航show or hide
@@ -499,21 +504,23 @@ export default{
         },
       
         initMenu:function(){
-            // debugger;
-            const vm=this;
-            if(this.countTotalYm){
-                window.location.href="#/homey";
-                vm.isCheckk=false;
-                vm.isChecky=true;
-            }else if(this.countTotal){
-                window.location.href="#/homek";                
-                vm.isChecky=false;
-                vm.isCheckk=true;
-            }else{
-                window.location.href="#/homey";                
-                vm.isCheckk=false;
-                vm.isChecky=true;
-            }
+            let path=window.location.hash;
+            if(path=="#/homey/audit/yuanmeng"||path=="#/homek/dashboard"){
+                const vm=this;
+                if(this.countTotalYm){
+                    window.location.href="#/homey";
+                    vm.isCheckk=false;
+                    vm.isChecky=true;
+                }else if(this.countTotal){
+                    window.location.href="#/homek";                
+                    vm.isChecky=false;
+                    vm.isCheckk=true;
+                }else{
+                    window.location.href="#/homey";                
+                    vm.isCheckk=false;
+                    vm.isChecky=true;
+                }
+            }           
         },
 		userMenu:function(e){//用户菜单show or hide
 			this.off.userMenu?this.off.userMenu=false:this.off.userMenu=true;

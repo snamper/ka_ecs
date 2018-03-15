@@ -38,7 +38,7 @@
 			<div class="row clr m-col-2">
 				<span class="dp col-l">操作人ID：</span>
 				<div class="col-r">
-					<div class="input-box"><input v-model="form.userId" maxlength="16" type="tel" placeholder="请输入查询的用户工号"></div>
+					<div class="input-box"><input v-model="form.userId" maxlength="16" type="tel" placeholder="请输入查询的操作人ID"></div>
 				</div>
 			</div>
 			<div class="row clr m-col-2">
@@ -50,13 +50,13 @@
 			<div class="row clr m-col-2" v-show="off.type==1||off.type==2">
 				<span class="dp col-l">身份证号：</span>
 				<div class="col-r">
-					<div class="input-box"><input v-model="form.idCardNo" maxlength="18" type="tel" placeholder="请输入查询的用户工号"></div>
+					<div class="input-box"><input v-model="form.idCardNo" maxlength="18" type="tel" placeholder="请输入查询的身份证号"></div>
 				</div>
 			</div>
 			<div class="row clr m-col-2">
 				<span class="dp col-l">操作号码：</span>
 				<div class="col-r">
-					<div class="input-box"><input v-model="form.phoneNo" maxlength="11" type="tel" placeholder="请输入查询的订单号码"></div>
+					<div class="input-box"><input v-model="form.phoneNo" maxlength="11" type="tel" placeholder="请输入查询的操作号码"></div>
 				</div>
 			</div>
 			<div class="row">
@@ -275,7 +275,7 @@ export default{
 				vm.maxpage=Math.ceil(parseInt(data.data.total)/10);
 				vm.pageNum=page||1;
                 vm.callback=function(v){vm.searchList(index,v)};
-                //vm.off.isLoad=false;
+                vm.off.isLoad=false;
             }).catch(error=>errorDeal(error)); 	            
 		},
 		downLoadList:function(){//导出EXCEL

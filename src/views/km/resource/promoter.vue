@@ -190,7 +190,7 @@ export default{
 		        });
 		        return false;
 			}
-			vm.off.isLoad=true;
+			// vm.off.isLoad=true;
 			unifySearchApi({
 					"opKey":"info.promoter.search",
 					"params":["'"+vm.form.dealerId+"'"],

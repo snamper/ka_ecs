@@ -90,7 +90,6 @@ export default{
 		searchClick(){
 			var vm=this;
 			if(vm.off.isLoad)return false;
-			
 			vm.deviceList=[];
 			if(!vm.form.deviceNumber){
 				layer.open({
@@ -101,7 +100,7 @@ export default{
 		        });
 		        return false;
 			}
-			vm.off.isLoad=true;
+			// vm.off.isLoad=true;
 			unifySearchApi({
 					"opKey":"info.device.search",
 					"params":["'"+vm.form.deviceNumber+"'"],
@@ -120,7 +119,6 @@ export default{
 			            msgSkin:'error',
 			        });
 				}
-				
 			});
 		},
 		getDateTime(v){

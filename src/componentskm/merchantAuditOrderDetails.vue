@@ -63,7 +63,7 @@
 <script>
 import "../assets/km/css/cardOrderDetails.css";
 import {reqCommonMethod} from "../config/service.js";
-import {errolDeal} from "../config/utils.js";
+import {errorDeal} from "../config/utils.js";
 import ImgZoom from '../componentskm/ImgZoom';
 import detailsView from '../componentskm/cardOrderDetailsAlert';
 export default{
