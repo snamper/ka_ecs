@@ -104,7 +104,7 @@
 						</li>
 					</ul>
 				</li>
-				<li :class="{active:crumb[0].name=='订单查询'}" v-if="off.powerkm2||off.powerkm1">
+				<li :class="{active:crumb[0].name=='订单查询'}" v-if="off.powerkm1||off.powerkm2||off.powerkm3">
 					<b></b>
 					<router-link to="/homek/orderSearch">
 						<div>
@@ -122,7 +122,7 @@
 						<!-- <li><router-link to="/home/orderSearch/busCard"><b></b>公交一卡通</router-link></li> -->
 					</ul>
 				</li>
-				<li :class="{active:crumb[0].name=='资源查询'}" v-if="off.powerkm2||off.powerkm1">
+				<li :class="{active:crumb[0].name=='资源查询'}" v-if="off.powerkm1||off.powerkm2||off.powerkm7">
 					<b></b>
 					<router-link to="/homek/resource">
 						<div>
@@ -138,7 +138,7 @@
 						<li v-if="off.powerkm1||off.powerkm7"><router-link to="/homek/resource/numberRelease"><b></b>号码冻结/解冻</router-link></li>
 					</ul>
 				</li>
-				<li :class="{active:crumb[0].name=='统计报表'}" v-if="off.powerkm2||off.powerkm1">
+				<li :class="{active:crumb[0].name=='统计报表'}" v-if="off.powerkm1||off.powerkm2">
 					<b></b>
 					<router-link to="/homek/statistics">
 						<div>
@@ -153,7 +153,7 @@
 						<li><router-link :to="{name:'softwareUseTimes',params:{type:'writeCard'}}"><b></b>写卡记录统计</router-link></li>
 					</ul>
 				</li>
-				<li :class="{active:crumb[0].name=='意见反馈'}" v-if="off.powerkm11||off.powerkm1">
+				<li :class="{active:crumb[0].name=='意见反馈'}" v-if="off.powerkm1||off.powerkm11">
 					<b></b>
 					<router-link to="/homek/opinion">
 						<div>
@@ -189,7 +189,6 @@
 				<li :class="{active:$route.path.indexOf('/homey/audit')>-1||$route.path=='/homey/wsim'}" v-if="off.power0||off.power1">
 					<b></b>
 					<router-link to="/homey/audit/yuanmeng"><div><i class="u-icon-audit"></i><span>订单审核</span><b class="animated infinite bounce m-lighter" ></b></div></router-link>                                                
-                    <!-- <span>{{auditCountYm}}</span> -->
                 </li>
 				<li :class="{active:$route.path.indexOf('/homey/search')>-1}" v-if="off.power2||off.power1">
 					<b></b>
@@ -332,24 +331,16 @@ export default{
 				vm.off.userMenu=false;
 				event.stopPropagation();
             },false);
-
-            if(vm.userInfo.isadmin.length==0){//无卡盟权限
-                window.location.href="#/homey";
-                vm.off.powerKmHidden=1;
-                vm.isChecky=true;
-            }else if(vm.userInfo.isadminYm.length==0){//无远盟权限
-                window.location.href="#/homek";                
-                vm.off.powerYmHidden=1;
-                vm.isCheckk=true;
-            }
-             let path=window.location.hash;
-            if(path.indexOf("homek")>-1){
-                vm.isCheckk=true;
-                vm.isChecky=false;
-            }else if(path.indexOf("homey")>-1){
-                vm.isChecky=true;
-                vm.isChecky=false;
-            }
+            //console.log(vm.userInfo.isadmin.length+"----"+vm.userInfo.isadminYm.length);
+            
+            // let path=window.location.hash;
+            // if(path.indexOf("homek")>-1){
+            //     vm.isCheckk=true;
+            //     vm.isChecky=false;
+            // }else if(path.indexOf("homey")>-1){
+            //     vm.isChecky=true;
+            //     vm.isChecky=false;
+            // }
             //远盟权限
             vm.userInfo.isadminYm&&vm.userInfo.isadminYm.indexOf('1')>-1? vm.off.power1=true : vm.off.power1=false;
 			vm.userInfo.isadminYm&&(vm.userInfo.isadminYm.indexOf('1')>-1||vm.userInfo.isadmin.indexOf('2')>-1) ? vm.off.power=true : vm.off.power=false;
@@ -362,7 +353,6 @@ export default{
             　　var testStr=','+arr.join(",")+","; 
             　　return testStr.indexOf(","+val+","); 
             } 
-            console.log(IsInArray(isadmin,'2'));
             IsInArray(isadmin,'0')>-1?vm.off.powerkm0=true : vm.off.powerkm0=false;
             IsInArray(isadmin,'1')>-1?vm.off.powerkm1=true : vm.off.powerkm1=false;
             IsInArray(isadmin,'2')>-1?vm.off.powerkm2=true : vm.off.powerkm2=false;
@@ -375,7 +365,6 @@ export default{
             IsInArray(isadmin,'21')>-1?vm.off.powerkm21=true : vm.off.powerkm21=false;
             Promise.all([kmAuditInfo,kmOpinionInfo,ymAuditInfo]).then(()=>{
                 vm.initMenu();
-
             });
         },
 		headMenu:function(){//侧边导航show or hide
@@ -481,7 +470,6 @@ export default{
 					crumb[1]={"name":"已完成","href":""}
 				}
 			}
-		
 			this.crumb=crumb;
 			mainDom.style.overflowY='hidden';
 			var timer=setTimeout(()=>mainDom.style.overflowY='',500);
@@ -507,20 +495,33 @@ export default{
             let path=window.location.hash;
             if(path=="#/homey/audit/yuanmeng"||path=="#/homek/dashboard"){
                 const vm=this;
-                if(this.countTotalYm){
+                if(vm.userInfo.isadmin.length==0){//无卡盟权限
+                window.location.href="#/homey";
+                vm.off.powerKmHidden=1;
+                vm.isCheckk=false;
+                vm.isChecky=true;
+                }else if(vm.userInfo.isadminYm.length==0){//无远盟权限
+                window.location.href="#/homek";                
+                vm.off.powerYmHidden=1;
+                vm.isChecky=false;
+                vm.isCheckk=true;
+                }
+                if(vm.userInfo.isadmin.length>0&&vm.userInfo.isadminYm.length>0){
+                    if(this.countTotalYm){
                     window.location.href="#/homey";
                     vm.isCheckk=false;
                     vm.isChecky=true;
-                }else if(this.countTotal){
-                    window.location.href="#/homek";                
-                    vm.isChecky=false;
-                    vm.isCheckk=true;
-                }else{
-                    window.location.href="#/homey";                
-                    vm.isCheckk=false;
-                    vm.isChecky=true;
+                    }else if(this.countTotal){
+                        window.location.href="#/homek";                
+                        vm.isChecky=false;
+                        vm.isCheckk=true;
+                    }else{
+                        window.location.href="#/homey";                
+                        vm.isCheckk=false;
+                        vm.isChecky=true;
+                    }
                 }
-            }           
+            }
         },
 		userMenu:function(e){//用户菜单show or hide
 			this.off.userMenu?this.off.userMenu=false:this.off.userMenu=true;

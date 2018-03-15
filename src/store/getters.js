@@ -44,7 +44,9 @@ export default {
 		if(isadmin){
             var countYm=0;
 			for(let i in auditCountYm){
-                countYm=countYm+auditCountYm[i];
+                if(!isNaN(auditCountYm[i])){
+                    countYm=countYm+auditCountYm[i];
+                }
             }
             return countYm;
 		}else{
