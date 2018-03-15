@@ -162,11 +162,12 @@ export default {
         }else{
           vm.getVlidateCode();
           vm.showMessage(2,res.msg);
-           vm.load=false;
+          vm.load=false;
         }
-      })
-      .catch(error=>errorDeal(error))
-      .then(this.getVlidateCode()); 
+      }).catch(error=>{
+          vm.getVlidateCode();
+          errorDeal(error)
+      });
     },
     toLogin:function(e){
       e.keyCode==13&&this.login();
