@@ -422,26 +422,7 @@ const router=new Router({
 
 
 router.beforeEach((to, from, next) => {
-    let userInfo=getStore("KA_ECS_USER");
-    var isadmin=userInfo.isadmin.split(","); 
-    function IsInArray(arr,val){ 
-    　　var testStr=','+arr.join(",")+","; 
-    　　return testStr.indexOf(","+val+","); 
-    } 
-    var powerkm0,powerkm1,powerkm2,powerkm3,powerkm4,powerkm5,powerkm6,powerkm7,powerkm11,powerkm21;
-    IsInArray(isadmin,'0')>-1?powerkm0=true : powerkm0=false;
-    IsInArray(isadmin,'1')>-1?powerkm1=true : powerkm1=false;
-    IsInArray(isadmin,'2')>-1?powerkm2=true : powerkm2=false;
-    IsInArray(isadmin,'3')>-1?powerkm3=true : powerkm3=false;
-    IsInArray(isadmin,'4')>-1?powerkm4=true : powerkm4=false;
-    IsInArray(isadmin,'5')>-1?powerkm5=true : powerkm5=false;
-    IsInArray(isadmin,'6')>-1?powerkm6=true : powerkm6=false;
-    IsInArray(isadmin,'7')>-1?powerkm7=true : powerkm7=false;
-    IsInArray(isadmin,'11')>-1?powerkm11=true : powerkm11=false;
-    IsInArray(isadmin,'21')>-1?powerkm21=true : powerkm21=false;
-    if(!powerkm2&&!powerkm1){
-        next({path:"audit/card/realtime"})
-    }
+    
     var token = localStorage.getItem("KA_ECS_USER");
     if (!token&&to.path!=="/login"||to.path=="/"){
         next({path:"/login"});

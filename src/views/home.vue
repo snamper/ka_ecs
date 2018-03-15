@@ -358,26 +358,36 @@ export default{
             });
         },
          initMenu:function(){
+            let vm=this;
             let path=window.location.hash;
-            if(path=="#/homey/audit/yuanmeng"||path=="#/homek/dashboard"){
+            if(vm.off.powerkm1){
+                var initPath="#/homek/dashboard"
+            }else if(!vm.off.powerkm2){
+                var initPath="#/homek/audit/card/realtime"
+            }
+            if(path=="#/homey/audit/yuanmeng"||path==initPath){
                 const vm=this;
-                if(vm.userInfo.isadmin.length==0){//无卡盟权限
+                if(vm.userInfo.isadmin.length==0&&vm.userInfo.isadminYm>0){//有远盟无卡盟权限
                 window.location.href="#/homey";
                 vm.off.powerKmHidden=1;
-                vm.isCheckk=false;
                 vm.isChecky=true;
-                }else if(vm.userInfo.isadminYm.length==0){//无远盟权限
-                window.location.href="#/homek";                
-                vm.off.powerYmHidden=1;
-                vm.isChecky=false;
-                vm.isCheckk=true;
+                }else if(vm.userInfo.isadminYm.length==0&&vm.userInfo.isadmin>0){//有卡盟无远盟权限
+                    if(vm.off.powerkm1||vm.off.powerkm2){
+                        window.location.href="#/homek";                
+                        vm.off.powerYmHidden=1;
+                        vm.isCheckk=true;
+                    }else{
+                        window.location.href="#/homek/audit/card/realtime";                
+                        vm.off.powerYmHidden=1;
+                        vm.isCheckk=true;
+                    }
                 }
                 if(vm.userInfo.isadmin.length>0&&vm.userInfo.isadminYm.length>0){
                     if(this.countTotalYm){
                     window.location.href="#/homey";
                     vm.isCheckk=false;
                     vm.isChecky=true;
-                    }else if(this.countTotal){
+                    }else if(this.countTotal&&!this.countTotalYm){
                         window.location.href="#/homek";                
                         vm.isChecky=false;
                         vm.isCheckk=true;

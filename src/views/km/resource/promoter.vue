@@ -210,12 +210,11 @@ export default{
 			            msgSkin:'error',
 			        });
 				}
-				
 			});
 		},
 		getDeviceList(page,dealerId){
 			var vm=this;
-			vm.off.isLoad=true;
+			// vm.off.isLoad=true;
 			unifySearchApi({
 					"opKey":"info.promoterDevice.list",
 					"params":["'"+dealerId+"'"],

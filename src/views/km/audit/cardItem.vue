@@ -258,6 +258,7 @@ export default{
 				vm.dealAuditList();
 				window.clearInterval(vm.timer)
                 vm.timeDown(parseInt(vm.list[0].expireTime));
+                vm.off.isLoad=false;                  
             }).catch(error=>errorDeal(error)); 
 		},
 		dealAuditList:function(){//处理分配的订单
