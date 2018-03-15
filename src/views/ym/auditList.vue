@@ -136,7 +136,8 @@
 </template>
 <script>
 import {reqCommonMethod} from "../../config/service.js";
-import {errorDeal} from "../../config/utils.js";
+import {errorDeal,getStore} from "../../config/utils.js";
+import {mapState, mapMutations, mapActions} from 'vuex';
 export default{
 	name:'auditList',
 	data (){
@@ -161,7 +162,9 @@ export default{
         }
 	},
 	created:function(){
-		var userInfo=localStorage.getItem('ECS_INFO');
+        var userInfo=localStorage.getItem('ECS_INFO');
+        
+        userInfo=getStore("KA_ECS_USER");
 		userInfo.isadmin&&userInfo.isadmin.indexOf('4')>-1 ? this.off.isBugginPower=true : this.off.isBugginPower=false;
 		this.getAuditList();
 		this.dealAuditList();
@@ -432,7 +435,6 @@ export default{
             var vm=this,orderId,url,json={},type=parseInt(vm.$route.params.type);
             console.log(type);
             if(typeof type=="number"){
-                debugger;
                 type==3&&(type=6);
                 url="ym-ecs/c/audit/toaudit";
                 json.type=type;
