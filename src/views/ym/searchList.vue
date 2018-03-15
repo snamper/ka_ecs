@@ -320,7 +320,7 @@ export default {
       const vm=this;
       let userInfo=getStore("KA_ECS_USER");
 	  vm.userInfo=userInfo;
-      vm.userInfo.isadmin&&(vm.userInfo.isadmin.indexOf('1')>-1||vm.userInfo.isadmin.indexOf('3')>-1) ? vm.off.power3=true : vm.off.power3=false;
+      vm.userInfo.isadminYm&&(vm.userInfo.isadminYm.indexOf('1')>-1||vm.userInfo.isadminYm.indexOf('3')>-1) ? vm.off.power3=true : vm.off.power3=false;
       var type = this.$route.params.type;
       type == "auditing" ? (vm.off.type = 1) : (vm.off.type = 2);
       vm.form.startTime = laydate.now(0, "YYYY-MM-DD 00:00:00");
