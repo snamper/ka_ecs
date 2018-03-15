@@ -23,7 +23,7 @@
   </section>
 </template>
 <script type="text/javascript">
-import {removeStore,errorDeal} from '../config/utils';
+import {removeStore,errorDeal,getStore} from '../config/utils';
 import {getSignCode,signIn} from '../config/service.js';
 import {mapMutations} from 'vuex';
 import hexMD5 from "../assets/km/js/md5.min.js";
@@ -32,6 +32,27 @@ export default {
   name: 'login',
   data () {
     return {
+        off:{
+            powerKmHidden:0,//卡盟隐藏
+            powerYmHidden:0,//远盟隐藏
+            headMenu:true,//导航栏开关
+            window:0,//浏览器窗口宽度
+            userMenu:0,//用户菜单开关
+            power:0,
+            power0:0,
+            power5:0,
+            power6:0,
+            powerkm0:0,
+            powerkm1:0,
+            powerkm2:0,
+            powerkm3:0,
+            powerkm4:0, 
+            powerkm5:0,
+            powerkm6:0,
+            powerkm7:0,
+            powerkm11:0,
+            powerkm21:0,
+		},
       user:'',
       password:'',
       validCode:'',
@@ -81,7 +102,64 @@ export default {
           let userInfo=res.data;
           userInfo.codeId=vm.list.codeId;
           vm.SET_USERINFO(userInfo);
-          window.location.href="#/homek";
+          let isadmin = userInfo.isadmin;
+          let isadminYm = userInfo.isadminYm;
+          isadminYm&&isadminYm.indexOf('1')>-1? vm.off.power1=true : vm.off.power1=false;
+		  isadminYm&&(isadminYm.indexOf('1')>-1||isadminYm.indexOf('2')>-1) ? vm.off.power2=true : vm.off.power2=false;
+		  isadminYm&&(isadminYm.indexOf('1')>-1||isadminYm.indexOf('0')>-1) ? vm.off.power0=true : vm.off.power0=false;
+		  isadminYm&&(isadminYm.indexOf('1')>-1||isadminYm.indexOf('5')>-1) ? vm.off.power5=true : vm.off.power5=false;
+		  isadminYm&&(isadminYm.indexOf('1')>-1||isadminYm.indexOf('6')>-1) ? vm.off.power6=true : vm.off.power6=false;
+          var isadmin=isadmin.split(","); 
+          function IsInArray(arr,val){ 
+        　　var testStr=','+arr.join(",")+","; 
+        　　return testStr.indexOf(","+val+","); 
+          } 
+          IsInArray(isadmin,'0')>-1?vm.off.powerkm0=true : vm.off.powerkm0=false;
+          IsInArray(isadmin,'1')>-1?vm.off.powerkm1=true : vm.off.powerkm1=false;
+          IsInArray(isadmin,'2')>-1?vm.off.powerkm2=true : vm.off.powerkm2=false;
+          IsInArray(isadmin,'3')>-1?vm.off.powerkm3=true : vm.off.powerkm3=false;
+          IsInArray(isadmin,'4')>-1?vm.off.powerkm4=true : vm.off.powerkm4=false;
+          IsInArray(isadmin,'5')>-1?vm.off.powerkm5=true : vm.off.powerkm5=false;
+          IsInArray(isadmin,'6')>-1?vm.off.powerkm6=true : vm.off.powerkm6=false;
+          IsInArray(isadmin,'7')>-1?vm.off.powerkm7=true : vm.off.powerkm7=false;
+          IsInArray(isadmin,'11')>-1?vm.off.powerkm11=true : vm.off.powerkm11=false;
+          IsInArray(isadmin,'21')>-1?vm.off.powerkm21=true : vm.off.powerkm21=false;
+        console.log(vm.off);
+        if(vm.off.power1||vm.off.power0){
+            debugger;
+            window.location.href="#/homey/audit/yuanmeng";
+            return false;
+        }else if(vm.off.power1||vm.off.power2){
+            window.location.href="#/homey/search";
+            return false;            
+        }else if(vm.off.power1||vm.off.power5){
+            window.location.href="#/homey/pointsSearch";
+            return false;
+        } else if(vm.off.power1||vm.off.power6){
+            window.location.href="#/homey/excelDownload";
+             return false;
+        } else if(vm.off.powerkm1||vm.off.powerkm11){
+            window.location.href="#/homey/illegalSearch";
+            return false;
+        }
+          
+
+         if(vm.off.powerkm1||vm.off.powerkm2){
+           window.location.href="#/homek/dashboard"
+            return false;
+        }else if( vm.off.powerkm0||vm.off.powerkm1||vm.off.powerkm2||vm.off.powerkm4||vm.off.powerkm5||vm.off.powerkm6){
+            window.location.href="#/homek/audit";
+            return false;            
+        }else if(vm.off.powerkm1||vm.off.powerkm2||vm.off.powerkm3){
+            window.location.href="#/homek/orderSearch"
+            return false;
+        } else if(vm.off.powerkm1||vm.off.powerkm2||vm.off.powerkm7){
+            window.location.href="#/homek/resource"
+             return false;
+        } else if(vm.off.powerkm1||vm.off.powerkm11){
+            window.location.href="#/homek/opinion"
+            return false;
+        }
         }else{
           vm.getVlidateCode();
           vm.showMessage(2,res.msg);

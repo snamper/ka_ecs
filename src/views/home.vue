@@ -284,7 +284,7 @@ export default{
     },
 	mounted:function(){
         this.init();
-        // this.initMenu();
+        //this.initMenu();
 	},
 	computed:{
 		...mapState([
@@ -310,9 +310,9 @@ export default{
             "getOpinionCountInfo",
             "getAuditStatisticsInfoYm",
         ]),
-		async init(){//页面初始化
-			const vm=this;
-			vm.routeChange();//头部面包屑导航
+        async init(){//页面初始化
+            let vm = this;
+            vm.routeChange();//头部面包屑导航
 			let kmAuditInfo=vm.getAuditStatisticsInfo();//km订单审核数统计
             let kmOpinionInfo=vm.getOpinionCountInfo();//km意见反馈数统计
             let ymAuditInfo=vm.getAuditStatisticsInfoYm();//ym订单审核数统计
@@ -333,11 +333,12 @@ export default{
             },false);
             //远盟权限
             vm.userInfo.isadminYm&&vm.userInfo.isadminYm.indexOf('1')>-1? vm.off.power1=true : vm.off.power1=false;
-			vm.userInfo.isadminYm&&(vm.userInfo.isadminYm.indexOf('1')>-1||vm.userInfo.isadmin.indexOf('2')>-1) ? vm.off.power2=true : vm.off.power2=false;
-			vm.userInfo.isadminYm&&(vm.userInfo.isadminYm.indexOf('1')>-1||vm.userInfo.isadmin.indexOf('0')>-1) ? vm.off.power0=true : vm.off.power0=false;
-			vm.userInfo.isadminYm&&(vm.userInfo.isadminYm.indexOf('1')>-1||vm.userInfo.isadmin.indexOf('5')>-1) ? vm.off.power5=true : vm.off.power5=false;
-			vm.userInfo.isadminYm&&(vm.userInfo.isadminYm.indexOf('1')>-1||vm.userInfo.isadmin.indexOf('6')>-1) ? vm.off.power6=true : vm.off.power6=false;
+			vm.userInfo.isadminYm&&(vm.userInfo.isadminYm.indexOf('1')>-1||vm.userInfo.isadminYm.indexOf('2')>-1) ? vm.off.power2=true : vm.off.power2=false;
+			vm.userInfo.isadminYm&&(vm.userInfo.isadminYm.indexOf('1')>-1||vm.userInfo.isadminYm.indexOf('0')>-1) ? vm.off.power0=true : vm.off.power0=false;
+			vm.userInfo.isadminYm&&(vm.userInfo.isadminYm.indexOf('1')>-1||vm.userInfo.isadminYm.indexOf('5')>-1) ? vm.off.power5=true : vm.off.power5=false;
+			vm.userInfo.isadminYm&&(vm.userInfo.isadminYm.indexOf('1')>-1||vm.userInfo.isadminYm.indexOf('6')>-1) ? vm.off.power6=true : vm.off.power6=false;
             //卡盟权限
+            console.log(vm.userInfo.isadminYm.indexOf('2')>-1);
             var isadmin=vm.userInfo.isadmin.split(","); 
             function IsInArray(arr,val){ 
             　　var testStr=','+arr.join(",")+","; 
@@ -353,53 +354,52 @@ export default{
             IsInArray(isadmin,'7')>-1?vm.off.powerkm7=true : vm.off.powerkm7=false;
             IsInArray(isadmin,'11')>-1?vm.off.powerkm11=true : vm.off.powerkm11=false;
             IsInArray(isadmin,'21')>-1?vm.off.powerkm21=true : vm.off.powerkm21=false;
-            Promise.all([kmAuditInfo,kmOpinionInfo,ymAuditInfo]).then(()=>{
+            //Promise.all([kmAuditInfo,kmOpinionInfo,ymAuditInfo]).then(()=>{
                 vm.initMenu();
-            });
+           // });
         },
-         initMenu:function(){
+        initMenu:function(){
             let vm=this;
-            debugger;
-            var initPath;
-            let path=window.location.hash;
-            if(vm.off.powerkm1||vm.off.powerkm2){
-                initPath="#/homek/dashboard"
-            }else if(!vm.off.powerkm2){
-                initPath="#/homek/audit/card/realtime"
-            }
-            if(path=="#/homey/audit/yuanmeng"||path==initPath){
-                const vm=this;
-                if(vm.userInfo.isadmin.length==0&&vm.userInfo.isadminYm>0){//有远盟无卡盟权限
-                window.location.href="#/homey";
+            if(!vm.userInfo.isadmin){
                 vm.off.powerKmHidden=1;
-                vm.isChecky=true;
-                }else if(vm.userInfo.isadminYm.length==0&&vm.userInfo.isadmin>0){//有卡盟无远盟权限
-                    if(vm.off.powerkm1||vm.off.powerkm2){
-                        window.location.href="#/homek";                
-                        vm.off.powerYmHidden=1;
-                        vm.isCheckk=true;
-                    }else{
-                        window.location.href="#/homek/audit/card/realtime";                
-                        vm.off.powerYmHidden=1;
-                        vm.isCheckk=true;
-                    }
-                }
-                if(vm.userInfo.isadmin.length>0&&vm.userInfo.isadminYm.length>0){
-                    if(this.countTotalYm){
-                    window.location.href="#/homey";
-                    vm.isCheckk=false;
-                    vm.isChecky=true;
-                    }else if(this.countTotal&&!this.countTotalYm){
-                        window.location.href="#/homek";                
-                        vm.isChecky=false;
-                        vm.isCheckk=true;
-                    }else{
-                        window.location.href="#/homey";                
-                        vm.isCheckk=false;
-                        vm.isChecky=true;
-                    }
-                }
+                vm.isChecky=1;
+            }else if(!vm.userInfo.isadminYm){
+                vm.off.powerYmHidden=1;
+                vm.isCheckk=1;
             }
+            // if(path=="#/homey/audit/yuanmeng"||path==initPath){
+            //     const vm=this;
+            //     if(vm.userInfo.isadmin.length==0&&vm.userInfo.isadminYm.length>0){//有远盟无卡盟权限
+            //     window.location.href="#/homey";
+            //     vm.off.powerKmHidden=1;
+            //     vm.isChecky=true;
+            //     }else if(vm.userInfo.isadminYm.length==0&&vm.userInfo.isadmin>0){//有卡盟无远盟权限
+            //         if(vm.off.powerkm1||vm.off.powerkm2){
+            //             window.location.href="#/homek";                
+            //             vm.off.powerYmHidden=1;
+            //             vm.isCheckk=true;
+            //         }else{
+            //             window.location.href="#/homek/audit/card/realtime";                
+            //             vm.off.powerYmHidden=1;
+            //             vm.isCheckk=true;
+            //         }
+            //     }
+            //     if(vm.userInfo.isadmin.length>0&&vm.userInfo.isadminYm.length>0){
+            //         if(this.countTotalYm){
+            //         window.location.href="#/homey";
+            //         vm.isCheckk=false;
+            //         vm.isChecky=true;
+            //         }else if(this.countTotal&&!this.countTotalYm){
+            //             window.location.href="#/homek";                
+            //             vm.isChecky=false;
+            //             vm.isCheckk=true;
+            //         }else{
+            //             window.location.href="#/homey";                
+            //             vm.isCheckk=false;
+            //             vm.isChecky=true;
+            //         }
+            //     }
+            // }
         },
 		headMenu:function(){//侧边导航show or hide
 			this.off.headMenu?this.off.headMenu=false:this.off.headMenu=true;
@@ -512,13 +512,13 @@ export default{
             const vm=this;
             if(i==='k'){
                 if(vm.isCheckk===false){
-                    window.location.href="#/homek";
+                    // window.location.href="#/homek";
                 }
                 vm.isCheckk=!vm.isCheckk;
                 vm.isChecky=false;
             }else if(i==='y'){
                 if(vm.isChecky===false){
-                    window.location.href="#/homey";
+                    // window.location.href="#/homey";
                 }
                 vm.isChecky=!vm.isChecky
                 vm.isCheckk=false;

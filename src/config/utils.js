@@ -3,7 +3,6 @@ import store from '../store';
  * http错误处理
  */
 export const errorDeal=(res,cb)=>{
-    console.log(res);
     typeof cb==="function"&&cb();
     res.code=="648"||res.code=="671" ? (layer.open({
         content:'登录已过期，请重新登录',

@@ -245,7 +245,7 @@ const router=new Router({
     {
         path:"/homey",
         component:Home,
-        redirect:"homey/audit/yuanmeng",
+        // redirect:"homey/audit/yuanmeng",
         children:[{
             path:"audit/:source",
             name:"audit",
@@ -293,7 +293,7 @@ const router=new Router({
     ,{
       path:"/homek",
       component:Home,
-      redirect:"homek/dashboard",
+    //   redirect:"homek/dashboard",
       // redirect:"home/dashboard",
       // redirect:"home/audit/card/realtime",
       children:[{
