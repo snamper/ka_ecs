@@ -359,11 +359,13 @@ export default{
         },
          initMenu:function(){
             let vm=this;
+            debugger;
+            var initPath;
             let path=window.location.hash;
-            if(vm.off.powerkm1){
-                var initPath="#/homek/dashboard"
+            if(vm.off.powerkm1||vm.off.powerkm2){
+                initPath="#/homek/dashboard"
             }else if(!vm.off.powerkm2){
-                var initPath="#/homek/audit/card/realtime"
+                initPath="#/homek/audit/card/realtime"
             }
             if(path=="#/homey/audit/yuanmeng"||path==initPath){
                 const vm=this;
