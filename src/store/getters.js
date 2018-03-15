@@ -1,12 +1,12 @@
 export default {
-	getCountTotal:state=>{
+	getCountTotal:state=>{//卡盟总计
 		let auditCount=state.auditCount;
 		Object.keys(auditCount).forEach(function(key){
 			auditCount[key]=parseInt(auditCount[key]);
 		});
 		let isadmin=state.userInfo.isadmin;
 		if(isadmin){
-			let count=0;
+			var count=0;
 			if(isadmin.indexOf("0")>-1){//开卡审核权限
 				count += auditCount.opencard+auditCount.opencardAfterwards+auditCount.transfer+auditCount.sdkRealTime+auditCount.tfOpenCard;
 			}
@@ -21,7 +21,7 @@ export default {
 			return 0;
 		}
 	},
-	getOpinionTotal:state=>{
+	getOpinionTotal:state=>{//卡盟意见反馈总计
 		let auditCount=state.auditCount;
 		Object.keys(auditCount).forEach(function(key){
 			auditCount[key]=parseInt(auditCount[key]);
@@ -35,15 +35,17 @@ export default {
 			return 0;
 		}
 	},
-	getCountTotalYm:state=>{
-        let auditCount=state.auditCount;
-		Object.keys(auditCount).forEach(function(key){
-			auditCount[key]=parseInt(auditCount[key]);
+	getCountTotalYm:state=>{//远盟总计
+        let auditCountYm=state.auditCountYm;
+		Object.keys(auditCountYm).forEach(function(key){
+			auditCountYm[key]=parseInt(auditCountYm[key]);
 		});
-        let isadmin=state.userInfo.isadmin;
-        		if(isadmin){
-			let countYm=0;
-			countYm += auditCount[0]+auditCount[1]+auditCount[2];
+		let isadmin=state.userInfo.isadmin;
+		if(isadmin){
+            var countYm=0;
+			for(let i in auditCountYm){
+                countYm=countYm+auditCountYm[i];
+            }
             return countYm;
 		}else{
 			return 0;

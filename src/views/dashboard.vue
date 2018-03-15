@@ -176,7 +176,7 @@
 </template>
 <script type="text/javascript">
 import {reqCommonMethod} from "../config/service.js";
-import { getDateTime,getUnixTime } from "../config/utils.js";
+import { getDateTime,getUnixTime ,errorDeal} from "../config/utils.js";
 import CountUp from 'vue-countup-v2';
   export default {
     name: "dashboard",

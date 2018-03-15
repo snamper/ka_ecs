@@ -45,17 +45,17 @@
   	<aside class="g-side">
 		<nav class="g-side-nav">
 			<header class="g-side-head"><img src="../assets/km/images/logo_page.png" alt="titleLogo"></header>
-            <ul class="mainCatalog">
+            <ul class="mainCatalog" v-if="!off.powerKmHidden">
                 <li :class="{'active':isCheckk}" @click="isCheck('k')">
                     <div class="mainCataDiv">
                         <span class="fl">卡盟</span>
-						<b class="animated m-lighter countIcon" :class="{bounce:offCountChange}" v-show="countTotal">{{countTotal+auditCount[0]}}</b>                        
+						<b class="animated m-lighter countIcon" :class="{bounce:offCountChange}" v-show="countTotal||auditCount[0]">{{countTotal+auditCount[0]}}</b>                        
                         <i v-if="!isCheckk" class="u-icon-switchup "></i>
                         <i v-if="isCheckk" class="u-icon-switchdown "></i>
                     </div>
 				</li>
             </ul>
-			<ul class="g-side-ul" :class="{'hide':!isCheckk}">
+			<ul class="g-side-ul" :class="{'hide':!isCheckk}" v-if="!off.powerKmHidden">
 				<li :class="{active:crumb[0].name=='首页'}">
 					<b></b>
 					<router-link to="/homek/dashboard">
@@ -65,7 +65,7 @@
 						</div>
 					</router-link>
 				</li>
-				<li :class="{active:crumb[0].name=='订单审核'}">
+				<li :class="{active:crumb[0].name=='订单审核'}" v-if="off.powerkm0||off.powerkm1||off.powerkm4||off.powerkm5||off.powerkm6">
 					<b></b>
 					<router-link to="/homek/audit">
 						<div>
@@ -104,8 +104,7 @@
 						</li>
 					</ul>
 				</li>
-				<li :class="{active:crumb[0].name=='订单查询'}"
-					v-if="userInfo.isadmin.indexOf('2')>-1||userInfo.isadmin.indexOf('1')>-1">
+				<li :class="{active:crumb[0].name=='订单查询'}" v-if="off.powerkm2||off.powerkm1">
 					<b></b>
 					<router-link to="/homek/orderSearch">
 						<div>
@@ -123,7 +122,7 @@
 						<!-- <li><router-link to="/home/orderSearch/busCard"><b></b>公交一卡通</router-link></li> -->
 					</ul>
 				</li>
-				<li :class="{active:crumb[0].name=='资源查询'}">
+				<li :class="{active:crumb[0].name=='资源查询'}" v-if="off.powerkm2||off.powerkm1">
 					<b></b>
 					<router-link to="/homek/resource">
 						<div>
@@ -136,10 +135,10 @@
 						<li><router-link :to="{name:'device',params:{val:'null'}}"><b></b>设备查询</router-link></li>
 						<li><router-link :to="{name:'promoter',params:{val:'null'}}"><b></b>推广方查询</router-link></li>
 						
-						<li v-if="userInfo.isadmin.indexOf('7')>-1||userInfo.isadmin.indexOf('1')>-1"><router-link to="/homek/resource/numberRelease"><b></b>号码冻结/解冻</router-link></li>
+						<li v-if="off.powerkm1||off.powerkm7"><router-link to="/homek/resource/numberRelease"><b></b>号码冻结/解冻</router-link></li>
 					</ul>
 				</li>
-				<li :class="{active:crumb[0].name=='统计报表'}">
+				<li :class="{active:crumb[0].name=='统计报表'}" v-if="off.powerkm2||off.powerkm1">
 					<b></b>
 					<router-link to="/homek/statistics">
 						<div>
@@ -151,9 +150,10 @@
 						<li><router-link to="/homek/statistics/cardOrder"><b></b>开卡统计下载</router-link></li>
 						<li><router-link :to="{name:'softwareUseTimes',params:{type:'idCard'}}"><b></b>身份证识别统计</router-link></li>
 						<li><router-link :to="{name:'softwareUseTimes',params:{type:'faceConfirm'}}"><b></b>活体识别统计</router-link></li>
+						<li><router-link :to="{name:'softwareUseTimes',params:{type:'writeCard'}}"><b></b>写卡记录统计</router-link></li>
 					</ul>
 				</li>
-				<li :class="{active:crumb[0].name=='意见反馈'}">
+				<li :class="{active:crumb[0].name=='意见反馈'}" v-if="off.powerkm11||off.powerkm1">
 					<b></b>
 					<router-link to="/homek/opinion">
 						<div>
@@ -175,29 +175,32 @@
 			</ul>
 
             <!-- 远盟目录 -->
-            <ul class="mainCatalog">
+            <ul class="mainCatalog" v-if="!off.powerYmHidden">
                 <li  :class="{'active':isChecky}" @click="isCheck('y')">
                     <div class="mainCataDiv">
                         <span class="fl">远盟</span>
-						<b class="animated m-lighter countIcon" :class="{bounce:offCountChange}" v-show="auditCountYm">{{auditCountYm}}</b>                                                
+						<b class="animated m-lighter countIcon" :class="{bounce:offCountChange}" v-show="auditCountYm.readyCard+auditCountYm.whiteCard+auditCountYm.newChangeCard+auditCountYm.realNameCollection+auditCountYm.fill">
+                            {{auditCountYm.readyCard+auditCountYm.whiteCard+auditCountYm.newChangeCard+auditCountYm.realNameCollection+auditCountYm.fill}}
+                        </b>                                                
                         <i v-if="!isChecky" class="u-icon-switchup "></i>
                         <i v-if="isChecky" class="u-icon-switchdown "></i>
                     </div>
 				</li>
             </ul>
-            <ul class="g-side-ul-ym" :class="{'hide':!isChecky}">
-				<li :class="{active:$route.path.indexOf('/homey/audit')>-1||$route.path=='/homey/wsim'}" v-if="off.power0">
+            <ul class="g-side-ul-ym" :class="{'hide':!isChecky}" v-if="!off.powerYmHidden">
+				<li :class="{active:$route.path.indexOf('/homey/audit')>-1||$route.path=='/homey/wsim'}" v-if="off.power0||off.power1">
 					<b></b>
-					<router-link to="/homey/audit/yuanmeng"><div><i class="u-icon-audit"></i><span>订单审核</span><b class="animated infinite bounce m-lighter" v-if="count.total">{{count.total}}</b></div></router-link>
-				</li>
-				<li :class="{active:$route.path.indexOf('/homey/search')>-1}" v-if="off.power">
+					<router-link to="/homey/audit/yuanmeng"><div><i class="u-icon-audit"></i><span>订单审核</span><b class="animated infinite bounce m-lighter" ></b></div></router-link>                                                
+                    <!-- <span>{{auditCountYm}}</span> -->
+                </li>
+				<li :class="{active:$route.path.indexOf('/homey/search')>-1}" v-if="off.power2||off.power1">
 					<b></b>
 					<router-link to="/homey/search"><div><i class="u-icon-search"></i><span>订单查询</span></div></router-link>
 				</li>
 				<li :class="{active:$route.path=='/homey/pointsSearch'||$route.path=='/homey/pointsEx'||$route.path=='/homey/pointsGain'||$route.path=='/homey/pointsManage'}">
 					<b></b>
 					<router-link to="/homey/pointsSearch"><div><i class="u-icon-points"></i><span>积分管理</span></div></router-link>
-					<ul class="g-side-subul" :class="off.power5?'Tall':'Talls'">
+					<ul class="g-side-subul" :class="off.power5||off.power1?'Tall':'Talls'">
 						<li><router-link to="/homey/pointsSearch"><b></b>用户积分查询</router-link></li>
 						<li><router-link to="/homey/pointsGain"><b></b>积分获取详情</router-link></li>
 						<li><router-link to="/homey/pointsEx"><b></b>积分兑换详情</router-link></li>
@@ -249,6 +252,8 @@ export default{
 	data (){
 		return {
 			off:{
+                powerKmHidden:0,//卡盟隐藏
+                powerYmHidden:0,//远盟隐藏
 				headMenu:true,//导航栏开关
 				window:0,//浏览器窗口宽度
                 userMenu:0,//用户菜单开关
@@ -256,6 +261,16 @@ export default{
                 power0:0,
                 power5:0,
                 power6:0,
+                powerkm0:0,
+                powerkm1:0,
+                powerkm2:0,
+                powerkm3:0,
+                powerkm4:0, 
+                powerkm5:0,
+                powerkm6:0,
+                powerkm7:0,
+                powerkm11:0,
+                powerkm21:0,
 			},
 			userInfo:{isadmin:''},
             crumb:[{'name':''},{'name':''},{'name':''}],//面包屑
@@ -280,9 +295,10 @@ export default{
             "timer",
             "auditCount",
             "countTotal",
+            "auditCountYm",
             "offCountChange",
             "OpcountTotal",
-            "auditCountYm",
+            "countTotalYm",
         ]),
 	},
 	methods:{
@@ -318,11 +334,41 @@ export default{
 				vm.off.userMenu=false;
 				event.stopPropagation();
             },false);
-            vm.userInfo.isadmin&&vm.userInfo.isadmin.indexOf('1')>-1? vm.off.power1=true : vm.off.power1=false;
-			vm.userInfo.isadmin&&(vm.userInfo.isadmin.indexOf('1')>-1||vm.userInfo.isadmin.indexOf('2')>-1) ? vm.off.power=true : vm.off.power=false;
-			vm.userInfo.isadmin&&(vm.userInfo.isadmin.indexOf('1')>-1||vm.userInfo.isadmin.indexOf('0')>-1) ? vm.off.power0=true : vm.off.power0=false;
-			vm.userInfo.isadmin&&(vm.userInfo.isadmin.indexOf('1')>-1||vm.userInfo.isadmin.indexOf('5')>-1) ? vm.off.power5=true : vm.off.power5=false;
-			vm.userInfo.isadmin&&(vm.userInfo.isadmin.indexOf('1')>-1||vm.userInfo.isadmin.indexOf('6')>-1) ? vm.off.power6=true : vm.off.power6=false;
+
+            if(vm.userInfo.isadmin.length==0){//无卡盟权限
+                window.location.href="#/homey";
+                vm.off.powerKmHidden=1;
+                vm.isChecky=false;
+                vm.isChecky=true;
+            }else if(vm.userInfo.isadminYm.length==0){//无远盟权限
+                window.location.href="#/homek";                
+                vm.off.powerYmHidden=1;
+                vm.isCheckk=false;
+                vm.isCheckk=true;
+            }
+            
+            //远盟权限
+            vm.userInfo.isadminYm&&vm.userInfo.isadminYm.indexOf('1')>-1? vm.off.power1=true : vm.off.power1=false;
+			vm.userInfo.isadminYm&&(vm.userInfo.isadminYm.indexOf('1')>-1||vm.userInfo.isadmin.indexOf('2')>-1) ? vm.off.power=true : vm.off.power=false;
+			vm.userInfo.isadminYm&&(vm.userInfo.isadminYm.indexOf('1')>-1||vm.userInfo.isadmin.indexOf('0')>-1) ? vm.off.power0=true : vm.off.power0=false;
+			vm.userInfo.isadminYm&&(vm.userInfo.isadminYm.indexOf('1')>-1||vm.userInfo.isadmin.indexOf('5')>-1) ? vm.off.power5=true : vm.off.power5=false;
+			vm.userInfo.isadminYm&&(vm.userInfo.isadminYm.indexOf('1')>-1||vm.userInfo.isadmin.indexOf('6')>-1) ? vm.off.power6=true : vm.off.power6=false;
+            //卡盟权限
+            var isadmin=vm.userInfo.isadmin.split(","); 
+            function IsInArray(arr,val){ 
+            　　var testStr=','+arr.join(",")+","; 
+            　　return testStr.indexOf(","+val+","); 
+            } 
+            IsInArray(isadmin,'0')>-1?vm.off.powerkm0=true : vm.off.powerkm0=false;
+            IsInArray(isadmin,'1')>-1?vm.off.powerkm1=true : vm.off.powerkm1=false;
+            IsInArray(isadmin,'2')>-1?vm.off.powerkm2=true : vm.off.powerkm2=false;
+            IsInArray(isadmin,'3')>-1?vm.off.powerkm3=true : vm.off.powerkm3=false;
+            IsInArray(isadmin,'4')>-1?vm.off.powerkm4=true : vm.off.powerkm4=false;
+            IsInArray(isadmin,'5')>-1?vm.off.powerkm5=true : vm.off.powerkm5=false;
+            IsInArray(isadmin,'6')>-1?vm.off.powerkm6=true : vm.off.powerkm6=false;
+            IsInArray(isadmin,'7')>-1?vm.off.powerkm7=true : vm.off.powerkm7=false;
+            IsInArray(isadmin,'11')>-1?vm.off.powerkm11=true : vm.off.powerkm11=false;
+            IsInArray(isadmin,'21')>-1?vm.off.powerkm21=true : vm.off.powerkm21=false;
             Promise.all([kmAuditInfo,kmOpinionInfo,ymAuditInfo]).then(()=>{
                 vm.initMenu();
             });
@@ -417,6 +463,8 @@ export default{
 					crumb[1]={"name":"身份识别统计下载","href":""}
 				}else if(path.indexOf("softwareUseTimes/faceConfirm")>-1){
 					crumb[1]={"name":"活体识别统计下载","href":""}
+				}else if(path.indexOf("softwareUseTimes/writeCard")>-1){
+					crumb[1]={"name":"写卡记录统计","href":""}
 				}
 			}else if(path.indexOf("/homek/opinion")>-1){
 				crumb[0]={"name":"意见反馈"};
@@ -449,17 +497,22 @@ export default{
                 vm.isCheckk=false;
             }
         },
+      
         initMenu:function(){
+            // debugger;
             const vm=this;
-            if(this.auditCountYm){
+            if(this.countTotalYm){
                 window.location.href="#/homey";
                 vm.isCheckk=false;
+                vm.isChecky=true;
             }else if(this.countTotal){
                 window.location.href="#/homek";                
                 vm.isChecky=false;
+                vm.isCheckk=true;
             }else{
                 window.location.href="#/homey";                
                 vm.isCheckk=false;
+                vm.isChecky=true;
             }
         },
 		userMenu:function(e){//用户菜单show or hide
@@ -496,6 +549,5 @@ export default{
 		},
 	}
 }
-
 </script>
 

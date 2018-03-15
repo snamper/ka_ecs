@@ -1,5 +1,6 @@
 <style scoped>
-  @import "../../assets/ym/css/audit.css";
+  /* @import "../../assets/km/css/cardOrderDetails.css"; */
+  @import "../../assets/ym/css/audit.css"; 
 	.redF{
 		color: #AE0B39;
 		font-weight: bold;
@@ -188,7 +189,7 @@ export default{
 			// 		}
 			// 	})
             // });
-            reqCommonMethod({"orderId":orderId,"result":1,"remark":'',"reason": ''},function(){vm.off.isLoad=false;},"ym-ecs/c/audit/audit")
+            reqCommonMethod({"orderId":orderId,"result":1,"remark":'',"reason": ''},function(){vm.off.isLoad=false;console.log(1111)},"ym-ecs/c/audit/audit")
             .then((data)=>{
                 layer.open({
 					content:data.msg,
@@ -427,7 +428,7 @@ export default{
 		},
 		getAuditList:function(){//获取订单
             var vm=this,orderId,url,json={},type=vm.$route.params.type;
-            if(typeof(type)=="number"){
+            if(typeof type=="number"){
                 type==3&&(type=6);
                 url="ym-ecs/c/audit/toaudit";
                 json.type=type;

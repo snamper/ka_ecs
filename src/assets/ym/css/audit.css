@@ -1,3 +1,4 @@
+.g-list-box,#auditList,.g-list-table,.g-inner-table,.g-box{width: 100%; height: 100% ;}
 .g-audit-menu{width: 100%;height: 100%; padding:0.15rem; display: table; word-break: break-word;word-wrap: break-word;white-space: normal;}
 .g-audit-menu>.g-audit-menu-c{ text-align: center;display: table-cell; vertical-align: middle;}
 .m-menu-div{display: inline-block;width:1.6rem; height:1.6rem; margin:0.2rem;}
@@ -61,7 +62,6 @@
 
 /*审核列表*/
 #auditList{display: table-cell;position: relative; }
-.g-list-box, #auditList, .g-list-table, .g-inner-table ,.g-box{width: 100%; height: 100%;}
 .g-list-box, .g-lis-head{position: absolute;}
 .g-box{padding-top: 0.6rem;}
 .g-lis-head{background-color: #fff;width: 100%;padding:0.15rem 0.1rem;box-shadow: 0 0 10px rgba(0,0,0,0.1);border-radius: 4px;}
@@ -82,8 +82,7 @@
 .g-list-table>tbody>tr>td{border:1px solid #dfe6ec;}
 
 .g-inner-table>tbody>tr{border-bottom:1px solid #dfe6ec; }
-.g-inner-table{}
-.g-inner-table>tbody>tr{}
+
 .g-inner-table>tbody>tr:nth-child(even){background-color: #fafafa;}
 .g-inner-table>tbody>tr>td:first-child, .g-list-table.transfer td span:first-child{width:1rem;text-align:right;color:#666;}
 .g-inner-table>tbody>tr>td:last-child{padding-left: 0.1rem;}

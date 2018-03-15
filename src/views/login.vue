@@ -76,7 +76,6 @@ export default {
       signIn({"userId":vm.user,"pwd":hexMD5(vm.password),"validCode":vm.validCode,"codeId":vm.list.codeId},function(){
         vm.load=false;
       }).then(res=>{
-          console.log(res);
         if(res.code=="200"){
           removeStore("KA_ECS_ONLINE_TIME");
           let userInfo=res.data;

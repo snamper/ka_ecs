@@ -19,6 +19,7 @@ import {setStore, getStore, removeStore, secondsFormat} from '../config/utils';
 export default {
 	//获取审核统计信息
 	[SET_AUDIT_STATISTICS_INFO](state,res) {
+        // console.log("kmaudit");
 		state.auditCount = Object.assign({}, state.auditCount,res.data);
 		let count=this.getters.getCountTotal;
 		if(count!=state.countTotal){
@@ -30,6 +31,7 @@ export default {
 	},
 	// 获取意见反馈统计数
 	[SET_OPINION_COUNT](state,res){
+        // console.log("kmopinion");    
 		state.auditCount = Object.assign({}, state.auditCount,res.data);
 		let Opcount=this.getters.getOpinionTotal;
 		if(Opcount!=state.OpcountTotal){
@@ -41,14 +43,15 @@ export default {
     },
     //获取YM审核统计信息
 	[SET_AUDIT_STATISTICS_INFO_YM](state,res) {
-        state.auditCount = Object.assign({}, state.auditCountYm,res.data);
+        // console.log("ymaudit");        
+        state.auditCountYm = Object.assign({}, state.auditCountYm,res.data);
         let count=this.getters.getCountTotalYm;
-		if(count!=state.countTotal){
+		if(count!=state.countTotalYm){
 			state.offCountChange=true;
 		}else{
 			state.offCountChange=false;
 		}
-        state.auditCountYm=count;
+        state.countTotalYm=count;
 	},
 	//设置在线时间
 	[SET_ONLINE_TIME](state){
@@ -61,7 +64,7 @@ export default {
 		},1000);
 	},
 	[SET_COUNT_TOTAL](state,val){
-		state.countTotal=val;
+        state.countTotal=val;
 	},
 	[SET_COUNT_TOTAL_CHANGE](state,val){
 		state.offCountChange=val;

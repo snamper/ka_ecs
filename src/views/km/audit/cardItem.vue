@@ -250,13 +250,14 @@ export default{
 			            time: 4,
 			            msgSkin:'error',
 			        })
-			        return false;
+                vm.off.isLoad=false;  
+                return false;                                  
 				}
 				vm.list=data.data.list;
 				vm.off.auditIndex=0;
 				vm.dealAuditList();
 				window.clearInterval(vm.timer)
-				vm.timeDown(parseInt(vm.list[0].expireTime));
+                vm.timeDown(parseInt(vm.list[0].expireTime));
             }).catch(error=>errorDeal(error)); 
 		},
 		dealAuditList:function(){//处理分配的订单

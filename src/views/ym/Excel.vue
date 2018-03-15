@@ -166,7 +166,10 @@ export default {
       }, 1000);
     },
     downLoadExcel: function(v) {
+    let userInfo=getStore("KA_ECS_USER");
     var vm = this,url,json={'date':''};
+        json.customerId=userInfo.customerId;
+	    json.codeId=userInfo.codeId;
         url = "ym-ecs/c/audit/downloadDailyAudit";
         v=v.replace(/[^0-9]/ig,"");
         vm.off.load = true;

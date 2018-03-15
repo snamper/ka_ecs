@@ -22,7 +22,6 @@
   	<!--查询-->
   	<section v-if="!off.details">
   	<div class="g-search-form">
-		
 		<div class="m-tag"><b></b>条件查询</div>
 		<section class="form-c">	
 			<div class="row fullRow">
@@ -48,7 +47,7 @@
 					<div class="input-box"><input v-model="form.orderId" maxlength="32" type="tel" placeholder="请输入查询的订单号码"></div>
 				</div>
 			</div>
-			<div class="row clr m-col-2">
+			<div class="row clr m-col-2" v-show="off.type==1||off.type==2">
 				<span class="dp col-l">身份证号：</span>
 				<div class="col-r">
 					<div class="input-box"><input v-model="form.idCardNo" maxlength="18" type="tel" placeholder="请输入查询的用户工号"></div>
@@ -68,7 +67,7 @@
 			</div>
 			<div class="row">
 				<span class="dp">设备类型：</span>
-				<div class="m-form-radio" v-show="off.type==1">
+				<div class="m-form-radio" v-show="off.type==1||off.type==3">
 					<label><span class="radio"><input type="radio" value="0" v-model="form.deviceId"><span></span></span><span class="text">全部</span></label>
 					<label><span class="radio"><input type="radio" value="1" v-model="form.deviceId"><span></span></span><span class="text">森锐</span></label>
 					<label><span class="radio"><input type="radio" value="2" v-model="form.deviceId"><span></span></span><span class="text">握奇</span></label>
@@ -244,16 +243,19 @@ export default{
 					"deviceId":vm.form.deviceId,
 					"result":vm.form.result,
 					"orderId":vm.form.orderId,
-					"idCardNo":vm.form.idCardNo,
 					"phoneNo":vm.form.phoneNo,
 					"operation":vm.form.operation,
 					"appType":vm.form.appType,
 				};
 			if(vm.off.type==1){
-				url="km-ecs/w/statistics/identifier";
+                url="km-ecs/w/statistics/identifier";
+                json.idCardNo=vm.form.idCardNo;
 			}else if(vm.off.type==2){
-				url="km-ecs/w/statistics/identifierLive";
-			}
+                url="km-ecs/w/statistics/identifierLive";
+                json.idCardNo=vm.form.idCardNo;
+			}else if(vm.off.type==3){
+				url="km-ecs/w/statistics/writecard";
+            }
 
 			if(vm.off.isLoad)return false;
 			vm.off.isLoad=true;
@@ -273,7 +275,7 @@ export default{
 				vm.maxpage=Math.ceil(parseInt(data.data.total)/10);
 				vm.pageNum=page||1;
                 vm.callback=function(v){vm.searchList(index,v)};
-                vm.off.isLoad=false;
+                //vm.off.isLoad=false;
             }).catch(error=>errorDeal(error)); 	            
 		},
 		downLoadList:function(){//导出EXCEL
@@ -304,16 +306,19 @@ export default{
 					"customerId":userInfo.customerId,
 					"codeId":userInfo.codeId,
 					"orderId":vm.form.orderId,
-					"idCardNo":vm.form.idCardNo,
 					"phoneNo":vm.form.phoneNo,
 					"operation":vm.form.operation,
 					"appType":vm.form.appType,
 				};
 			if(vm.off.type==1){
-				url="km-ecs/w/statistics/identifierListdown";
+                url="km-ecs/w/statistics/identifierListdown";
+                 json.idCardNo=vm.form.idCardNo;
 			}else if(vm.off.type==2){
-				url="km-ecs/w/statistics/identifierLivedown";
-			}
+                url="km-ecs/w/statistics/identifierLivedown";
+                 json.idCardNo=vm.form.idCardNo;
+			}else if(vm.off.type==3){
+				url="km-ecs/w/statistics/writecarddown";
+            }
 			vm.off.load=true;
 			createDownload(url,BASE64.encode(JSON.stringify(json)),function(){
 				vm.off.load=false;
@@ -340,7 +345,9 @@ export default{
 				this.off.type=1;
 			}else if(type=="faceConfirm"){
 				this.off.type=2;
-			}
+			}else if(type=="writeCard"){
+				this.off.type=3;                
+            }
 		     this.list='';
 		}
 	}

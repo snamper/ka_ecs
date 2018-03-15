@@ -73,6 +73,7 @@ export default async(url = '', data = {}, type = 'GET', load, method = 'fetch') 
                 return response.json()
               })
               .then(data => {
+                //closeLoadLayout()
                 if (data.code == 200) {
                   resolve(data) //返回成功数据
                 } else {
@@ -85,7 +86,7 @@ export default async(url = '', data = {}, type = 'GET', load, method = 'fetch') 
                 }
               })
               .catch(error => {
-                error=>errorDeal(error)
+                error=>errorDeal(error,closeLoadLayout)
               })
           })
 	} else {//XHR对象
