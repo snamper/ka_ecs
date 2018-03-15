@@ -241,7 +241,8 @@ export default{
 							msgSkin:'success',
 							success:function(){
 								layer.close(popIndex);
-								vm.dealAuditList();
+                                vm.dealAuditList();
+                                vm.off.isLoad=false;                                
 							}
                         });
                         vm.off.isLoad=false;
@@ -296,7 +297,8 @@ export default{
 							msgSkin:'success',
 							success:function(){
 								vm.dealAuditList();
-								layer.close(popIndex);
+                                layer.close(popIndex);
+                                vm.off.isLoad=false;                                
 							}
                         });
                         vm.off.isLoad=false;

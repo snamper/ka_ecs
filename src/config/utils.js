@@ -3,6 +3,7 @@ import store from '../store';
  * http错误处理
  */
 export const errorDeal=(res,cb)=>{
+    console.log(res);
     typeof cb==="function"&&cb();
     res.code=="648"||res.code=="671" ? (layer.open({
         content:'登录已过期，请重新登录',
@@ -14,7 +15,7 @@ export const errorDeal=(res,cb)=>{
             layer.closeAll();
         }
     }),store.commit("CLEAR_TIMER")) : layer.open({
-        content:res.msg||res.statusText||res,
+        content:res.msg||res.statusText||res.message||res,
         skin: 'msg',
         time: 4,
         msgSkin:'error',

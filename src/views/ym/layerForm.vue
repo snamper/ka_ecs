@@ -268,8 +268,8 @@ export default{
 				        // 	 vm.$parent.detailsData=response.data.list;
                         //   })
                           reqCommonMethod(data,function(){vm.off.isLoad=false;},"ym-ecs/c/user/userCredits")
-                          .then((data)=>{
-				        	 vm.$parent.detailsData=data.data.list;
+                          .then((response)=>{
+				        	 vm.$parent.detailsData=response.data.list;
                           }).catch(error=>errorDeal(error));    
                        }else if(v=="add"){
                            data={"type": "","orderId": "","phone": "","startTime": "","endTime": "","staffNo":""};

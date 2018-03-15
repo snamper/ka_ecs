@@ -87,11 +87,14 @@ export default {
           vm.showMessage(2,res.msg);
            vm.load=false;
         }
-      }).catch(res=>{
-        vm.getVlidateCode();
-        vm.showMessage(2,'服务器异常');
-        vm.load=false;
-      })
+      }).catch(error=>errorDeal(error)); 
+    //   .catch(res=>{
+    //       console.log(res);
+    //     res=>{errorDeal(res)}
+    //     vm.getVlidateCode();
+    //     //vm.showMessage(2,'服务器异常');
+    //     vm.load=false;
+    //   })
     },
     toLogin:function(e){
       e.keyCode==13&&this.login();

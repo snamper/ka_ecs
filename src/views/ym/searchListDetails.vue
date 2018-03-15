@@ -41,7 +41,7 @@
 									<span class="o-order-modify" v-if="list.result==4&&list.updName==0">
 										<span v-if="!modify.off1">{{ list.userName }}</span>
 										<input v-if="modify.off1" maxlength="30" type="text" v-model="modify.userName">
-										<span class="btn-group" v-if="off.power4">
+										<span class="btn-group" v-if="off.power4||off.power1">
 											<a href="javascript:void(0)" v-if="!modify.off1" @click="modifyOrder(1,1)" title="修改" class="modify"></a>
 											<a href="javascript:void(0)" v-if="modify.off1" @click="modifyOrder(2,1)" title="完成" class="myicon-success-circle f-c-green complete"></a>
 											<a href="javascript:void(0)" v-if="modify.off1" @click="modifyOrder(3,1)" title="取消" class="myicon-cancel f-c-red cancel"></a>
@@ -54,7 +54,7 @@
 									<span class="o-order-modify" v-if="list.result==4&&list.updPapersCode==0">
 										<span v-if="!modify.off3">{{ list.papersCode }}</span>
 										<input v-if="modify.off3" maxlength="30" type="text" v-model="modify.papersCode">
-										<span class="btn-group" v-if="off.power4">
+										<span class="btn-group" v-if="off.power4||off.power1">
 											<a href="javascript:void(0)" v-if="!modify.off3" @click="modifyOrder(1,3)" title="修改" class="modify"></a>
 											<a href="javascript:void(0)" v-if="modify.off3" @click="modifyOrder(2,3)" title="完成" class="myicon-success-circle f-c-green complete"></a>
 											<a href="javascript:void(0)" v-if="modify.off3" @click="modifyOrder(3,3)" title="取消" class="myicon-cancel f-c-red cancel"></a>
@@ -67,7 +67,7 @@
 									<span class="o-order-modify" v-if="list.result==4&&list.updAddress==0">
 										<span v-if="!modify.off2">{{ list.userAddress }}</span>
 										<textarea v-if="modify.off2" maxlength="50" type="text" v-model="modify.userAddress">{{modify.userAddress}}</textarea>
-										<span class="btn-group" v-if="off.power4">
+										<span class="btn-group" v-if="off.power4||off.power1">
 											<a href="javascript:void(0)" v-if="!modify.off2" @click="modifyOrder(1,2)" title="修改" class="modify"></a>
 											<a href="javascript:void(0)" v-if="modify.off2" @click="modifyOrder(2,2)" title="完成" class="myicon-success-circle f-c-green complete"></a>
 											<a href="javascript:void(0)" v-if="modify.off2" @click="modifyOrder(3,2)" title="取消" class="myicon-cancel f-c-red cancel"></a>
@@ -260,15 +260,21 @@ export default{
             },
             off:{
                 power4:0,
+                power1:0,
             }
 		};
 	},
 	created:function(){
 		const vm=this;
-         let userInfo=getStore("KA_ECS_USER");
-	     vm.userInfo=userInfo;
-         vm.userInfo.isadmin&&(vm.userInfo.isadmin.indexOf('1')>-1||vm.userInfo.isadmin.indexOf('4')>-1) ? vm.off.power4=true : vm.off.power4=false;
-        
+        let userInfo=getStore("KA_ECS_USER");
+        vm.userInfo=userInfo;
+        var isadmin=vm.userInfo.isadmin.split(","); 
+        function IsInArray(arr,val){ 
+            var testStr=','+arr.join(",")+","; 
+            return testStr.indexOf(","+val+","); 
+        }
+        IsInArray(isadmin,'1')>-1?vm.off.power1=true : vm.off.power1=false;
+        IsInArray(isadmin,'4')>-1?vm.off.power4=true : vm.off.power4=false;
 		if(vm.list.operatorType==6){
 			vm.imgData[0]={'src':vm.list.frontImageOld||'../../assets/ym/img/no-img.png','name':'原机主正面照片'};
 			vm.imgData[1]={'src':vm.list.transferFrontImageOld||'../../assets/ym/img/no-img.png','name':'原机主过户正面照片'};

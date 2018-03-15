@@ -539,6 +539,9 @@ export default {
         url = "ym-ecs/c/audit/downloadOrderSearch";
       }
       vm.off.load = true;
+      let userInfo=getStore("KA_ECS_USER");
+      json.customerId=userInfo.customerId;
+	  json.codeId=userInfo.codeId;
       createDownload(url, JSON.stringify(json), function() {
         vm.off.load = false;
       });

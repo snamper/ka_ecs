@@ -48,7 +48,7 @@ export default async(url = '', data = {}, type = 'GET', load, method = 'fetch') 
 		if (type == 'POST') {
 			Object.defineProperty(requestConfig, 'body', {
 				value: BASE64.encode(JSON.stringify(data))
-			});
+            });
         }
         // return await fetch(url,requestConfig).then((response)=>{
 		// 	closeLoadLayout();

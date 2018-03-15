@@ -14,7 +14,7 @@ module.exports = {
     },
   ],
   deploy : {
-    production : {
+    test : {
       user : 'root',
       host : '192.168.10.11',
       ref  : 'origin/master',
@@ -23,5 +23,16 @@ module.exports = {
       path : '/root/nginx/html/ka_ecs',
       'post-deploy' : 'cnpm install && npm run build && pm2 reload ecosystem.config.js --env production'
     },
+    production : {
+        user : 'root',
+        host : '47.97.198.73',
+        ref  : 'origin/master',
+        // repo : 'git@github.com:thinkmix/ka_ecs.git',
+        repo : 'https://github.com/thinkmix/ka_ecs.git',
+        path : '/usr/local/nginx/html/ka_ecs',
+        'post-deploy' : 'cnpm install && npm run build && pm2 reload ecosystem.config.js --env production'
+      },
+  
   }
 };
+
