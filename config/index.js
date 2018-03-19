@@ -20,8 +20,7 @@ module.exports = {
                 // '^km_center_ecs/user':'/ecs/w'
                 '^/km_center_ecs/user':'/km_center_ecs/user'
             }
-        }
-        ,
+        },
         '/km-ecs/w':{
             target:'http://192.168.10.117:6086',
             // target:'http://192.168.10.24:6086',
