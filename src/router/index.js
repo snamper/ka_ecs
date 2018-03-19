@@ -293,9 +293,6 @@ const router=new Router({
     ,{
       path:"/homek",
       component:Home,
-    //   redirect:"homek/dashboard",
-      // redirect:"home/dashboard",
-      // redirect:"home/audit/card/realtime",
       children:[{
         path:"dashboard",
         component:Dashboard

@@ -125,7 +125,6 @@ export default {
           IsInArray(isadmin,'11')>-1?vm.off.powerkm11=true : vm.off.powerkm11=false;
           IsInArray(isadmin,'21')>-1?vm.off.powerkm21=true : vm.off.powerkm21=false;
         if(vm.off.power1||vm.off.power0){
-            debugger;
             window.location.href="#/homey/audit/yuanmeng";
             return false;
         }else if(vm.off.power1||vm.off.power2){

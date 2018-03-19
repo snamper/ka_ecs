@@ -14,7 +14,7 @@
 	  	  	<div class="m-time-down"  style="display:none">审核计时：<span class="f-c-red">{{off.time}}</span></div>
 	  	  	<div class="m-foot-btn" :class="{scroll:off.isScroll}">
 	  	  		<a class="f-btn f-btn-success" @click="agree">同意</a>
-				<a v-if="off.isBugginPower" class="f-btn f-btn-warning" @click="agree2">准同意</a>
+				<a class="f-btn f-btn-warning" @click="agree2">准同意</a>
 				<a class="f-btn f-btn-danger" @click="refuse">拒绝</a>
 		  	</div>
 	  	  </header>
@@ -206,7 +206,7 @@ export default{
                 vm.off.isLoad=false;
             }).catch(error=>errorDeal(error)); 
 		},
-		agree2:function(){//准同意
+        agree2:function(){//准同意
 			var vm=this,orderId=vm.auditData.orderId,popIndex,ww=window.innerWidth,wwSet;
 			ww<=640 ? wwSet='width:98%' : wwSet='max-width:610px';
 			popIndex=layer.open({
@@ -431,9 +431,8 @@ export default{
                 vm.off.isLoad=false;
             }).catch(error=>errorDeal(error)); 
 		},
-		getAuditList:function(){//获取订单
-            var vm=this,orderId,url,json={},type=parseInt(vm.$route.params.type);
-            console.log(type);
+        getAuditList:function(){//获取订单
+            var vm=this,orderId,url,json={},type=vm.$route.params.type;
             if(typeof type=="number"){
                 type==3&&(type=6);
                 url="ym-ecs/c/audit/toaudit";
