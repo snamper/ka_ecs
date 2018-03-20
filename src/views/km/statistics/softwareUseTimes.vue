@@ -119,7 +119,7 @@
 					<th>订单号码</th>
 					<th>系统类型</th>
 					<th>操作类型</th>
-					<th>身份证号码</th>
+					<th v-show="off.type==1||off.type==2">身份证号码</th>
 					<th>用户号码</th>
 					<th>状态</th>
 				</tr>
@@ -128,13 +128,16 @@
 				<tr v-for="(todo,index) in list">
 					<td>{{ (pageNum-1)*pageSize+(index+1) }}</td>
 					<td>{{ todo.userId }}<br/>（{{todo.userName}}）</td>
-					<td>{{ getDateTime(todo.readTime)[6] }}</td>
+                    <td>
+                        <span v-show="off.type==1||off.type==2">{{ getDateTime(todo.readTime)[6] }}</span>
+                        <span v-show="off.type==3">{{ getDateTime(todo.writeTime)[6] }}</span>
+                    </td>
 					<td>
 						<span v-show="todo.terminalType==1">IOS</span>
 						<span v-show="todo.terminalType==2">Android</span>
 					</td>
 					<td>
-						<span v-show="off.type==1">
+						<span v-show="off.type==1||off.type==3">
 							<b v-show="todo.deviceId==1">森锐</b>
 							<b v-show="todo.deviceId==2">握奇</b>
 						</span>
@@ -155,7 +158,7 @@
 						<span v-show="todo.operation==2">激活商户</span>
 						<span v-show="todo.operation==3">过户办理</span>
 					</td>
-					<td>{{ todo.idCardNo }}</td>
+					<td v-show="off.type==1||off.type==2">{{ todo.idCardNo }}</td>
 					<td>{{ todo.phoneNo }}</td>
 					<td>
 						<span v-show="todo.result==0" class="f-c-red">失败</span>
