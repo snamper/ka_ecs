@@ -700,7 +700,7 @@ export default{
 			sql='A.sys_order_id="'+orderId+'"';
 			vm.off.number=e.target.title;
 			if(vm.form.source==7){//SDK
-				url="w/handler/query";
+				url="km-ecs/w/handler/query";
 				if(type==1||type==2){
 					json.opKey="sdk.orderAudit.details";
 					if(type==2){
@@ -720,7 +720,7 @@ export default{
 				json.pageSize="10";
 				json.pageNum="-1";
 			}else if(vm.form.source==8){//通服
-				url="w/handler/query";
+				url="km-ecs/w/handler/query";
 				if(type==1||type==2){
 					json.opKey="tf.orderAudit.details";
 					if(type==2){
