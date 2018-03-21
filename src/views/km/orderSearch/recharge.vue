@@ -15,18 +15,18 @@
 			<div class="row">
 				<span class="dp">充值类型：</span>
 				<div class="m-form-radio">
-					<label @click="ispShiftClick"><span class="radio"><input value="1" type="radio" v-model="form.rechargeType"><span></span></span><span class="text">流量</span></label>
-					<label @click="ispShiftClick"><span class="radio"><input value="2" type="radio" v-model="form.rechargeType"><span></span></span><span class="text">话费</span></label>
+					<label><span class="radio"><input value="1" type="radio" v-model="form.rechargeType"><span></span></span><span class="text">流量</span></label>
+					<label><span class="radio"><input value="2" type="radio" v-model="form.rechargeType"><span></span></span><span class="text">话费</span></label>
 				</div>
 			</div>
 			<div class="row">
 				<span class="dp"><i class="m-one-font"></i>运营商：</span>
 				<div class="m-form-radio">
-					<label v-show="form.rechargeType==1"><span class="radio"><input type="radio" value="0" v-model="form.isp"><span></span></span><span class="text">全部</span></label>
+					<label><span class="radio"><input type="radio" value="0" v-model="form.isp"><span></span></span><span class="text">全部</span></label>
 					<label v-show="form.rechargeType==2"><span class="radio"><input type="radio" value="4" v-model="form.isp"><span></span></span><span class="text">远特</span></label>
-					<label v-show="form.rechargeType==1"><span class="radio"><input type="radio" value="1" v-model="form.isp"><span></span></span><span class="text">移动</span></label>
-					<label v-show="form.rechargeType==1"><span class="radio"><input type="radio" value="2" v-model="form.isp"><span></span></span><span class="text">联通</span></label>
-					<label v-show="form.rechargeType==1"><span class="radio"><input type="radio" value="3" v-model="form.isp"><span></span></span><span class="text">电信</span></label>
+					<label><span class="radio"><input type="radio" value="1" v-model="form.isp"><span></span></span><span class="text">移动</span></label>
+					<label><span class="radio"><input type="radio" value="2" v-model="form.isp"><span></span></span><span class="text">联通</span></label>
+					<label><span class="radio"><input type="radio" value="3" v-model="form.isp"><span></span></span><span class="text">电信</span></label>
 				</div>
 			</div>
 			<div class="row">
@@ -262,6 +262,9 @@ export default{
 				}
 			}else if(vm.form.rechargeType==2){
 				json.opKey="order.rechargePhone.list";
+				if(vm.form.isp!=0){
+					sql+=" AND A.isp="+vm.form.isp;
+				}
 			}
 			json.params.push(sql);
 			if(vm.off.isLoad)return false;
@@ -308,16 +311,6 @@ export default{
                  vm.off.details=true;
                  vm.off.isLoad=false;
             }).catch(error=>errorDeal(error)); 	
-		},
-		ispShiftClick(){
-			var vm=this;
-			setTimeout(function(){
-				if(vm.form.rechargeType==1){
-					vm.form.isp=0;
-				}else if(vm.form.rechargeType==2){
-					vm.form.isp=4;
-				}
-			},300)
 		},
 		to_laydate:function(v){
 			var vm=this;
