@@ -361,10 +361,10 @@ export default{
 			json.context=context;
 			json.searchtype=vm.form.select;
 			if(vm.form.source==7){
-				url="w/handler/query";
+				url="km-ecs/w/handler/query";
 				json=vm.getSdkJson(json);
 			}else if(vm.form.source==8){
-				url="w/handler/query";
+				url="km-ecs/w/handler/query";
 				json=vm.getTfJson(json);
 			}else{
 				vm.off.type==1 ? url='km-ecs/w/audit/ingList' : url='km-ecs/w/audit/edList';
