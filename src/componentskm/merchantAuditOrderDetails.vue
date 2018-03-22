@@ -95,17 +95,6 @@ export default{
 		},
 		audit:function(result,reason,cb){//复审同意
 			var vm=this;
-			// vm.AJAX('w/attribute/audit',{"orderId":vm.list.orderId,"result":result,"reason":reason||''},function(data){
-			// 	layer.open({
-		    //         content:'操作成功',
-		    //         skin: 'msg',
-		    //         time: 4,
-		    //         msgSkin:'success',
-		    //     });
-			// 	vm.list.status=result;
-			// 	vm.$parent.list.splice((parseInt(vm.number)+1),1);
-			// 	cb&&cb();
-            // });
             reqCommonMethod({"orderId":vm.list.orderId,"result":result,"reason":reason||''},function(){vm.off.isLoad=false;},"km-ecs/w/attribute/audit")
             .then((data)=>{
                 layer.open({
