@@ -338,7 +338,6 @@ export default{
 			vm.userInfo.isadminYm&&(vm.userInfo.isadminYm.indexOf('1')>-1||vm.userInfo.isadminYm.indexOf('5')>-1) ? vm.off.power5=true : vm.off.power5=false;
 			vm.userInfo.isadminYm&&(vm.userInfo.isadminYm.indexOf('1')>-1||vm.userInfo.isadminYm.indexOf('6')>-1) ? vm.off.power6=true : vm.off.power6=false;
             //卡盟权限
-            console.log(vm.userInfo.isadminYm.indexOf('2')>-1);
             var isadmin=vm.userInfo.isadmin.split(","); 
             function IsInArray(arr,val){ 
             　　var testStr=','+arr.join(",")+","; 

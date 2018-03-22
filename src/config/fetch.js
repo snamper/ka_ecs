@@ -2,7 +2,7 @@ import {getStore,errorDeal} from '../config/utils';
 
 require('../assets/km/js/base64.min.js');
 export default async(url = '', data = {}, type = 'GET', load, method = 'fetch') => {
-    console.log(typeof load);
+
     if(!load){
 		var layerIndex=layer.open({type: 2,shadeClose:false});
 	}

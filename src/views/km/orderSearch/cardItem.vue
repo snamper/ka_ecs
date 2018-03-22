@@ -630,9 +630,9 @@ export default{
 			}else if(type==3||type==4){
 				resJson.opKey="tf.orderApp.list";
 				if(type==3){
-					sql+=" AND B.result=6";
+					sql+=" AND A.order_status=1";
 				}else if(type==4){
-					sql+=" AND B.result=3";
+					sql+=" AND A.order_status=4";
 				}
 
 				if(json.status!=0&&json.searchtype!=1){
@@ -731,9 +731,9 @@ export default{
 				}else if(type==3||type==4){
 					json.opKey="tf.orderApp.details";
 					if(type==3){
-						sql+=" AND B.result=1";
+						sql+=" AND A.order_status=1";
 					}else if(type==4){
-						sql+=" AND B.result=4";
+						sql+=" AND A.order_status=4";
 					}
 				}
 				json.params=[sql];
