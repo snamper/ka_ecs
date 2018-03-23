@@ -20,7 +20,6 @@ Vue.prototype.AJAX=function(url,data,success,load){
     }
 
     axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
-
     axios.post(url,data).then((response) => {
         closeLoadLayout();
         if(typeof response.data==='string'){

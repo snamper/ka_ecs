@@ -93,7 +93,8 @@ export default{
             // })
             reqCommonMethod({"phone":vm.form.phone},function(){vm.off.isLoad=false;},"km-ecs/w/frozen/getPhone")
             .then((data)=>{
-                if(typeof data==object){
+                console.log(typeof data)
+                if(typeof data=='object'){
                     vm.phoneList=data.data;
                 }
                 vm.off.isLoad=false;

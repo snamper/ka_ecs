@@ -2,7 +2,6 @@ import {getStore,errorDeal} from '../config/utils';
 
 require('../assets/km/js/base64.min.js');
 export default async(url = '', data = {}, type = 'GET', load, method = 'fetch') => {
-
     if(!load){
 		var layerIndex=layer.open({type: 2,shadeClose:false});
 	}
@@ -71,16 +70,13 @@ export default async(url = '', data = {}, type = 'GET', load, method = 'fetch') 
         return new Promise((resolve, reject) => {
             fetch(url, requestConfig)
             .then(response => {
-                closeLoadLayout()
                 return response.json()
               })
               .then(data => {
                 if (data.code == 200) {
                   resolve(data) //返回成功数据
                 } else {
-                    if (data.code == 401) {
-                        closeLoadLayout()
-                    } else {
+                    if (data.code !== 200) {
                         closeLoadLayout()
                     }
                   reject(data)//返回非200情况

@@ -24,7 +24,6 @@ Vue.prototype.AJAX=function(url,data,success,closeLoad){
             msgSkin:'error',
         })
     }
-
     var userInfo=localStorage.getItem('ECS_INFO');
     if(userInfo){
         data.customerId=JSON.parse(userInfo).customerId;
