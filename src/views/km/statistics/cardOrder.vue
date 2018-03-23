@@ -83,7 +83,6 @@ export default{
 			}
 			vm.tabType==2 ? url='km-ecs/w/audit/orderListDown' : url='km-ecs/w/audit/getFreezonOrder'
 			vm.AJAX(url,json,function(data){
-                debugger;
 				var frame=document.getElementById('downloadFrame');
 				frame.setAttribute('src',data.data.url);
             });
