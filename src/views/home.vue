@@ -23,14 +23,14 @@
 					</td>
 					<td class="f-tar">
 						<div class="m-user-online">Online <b>{{onlineTime}}</b></div>
-						<div class="m-info-user"><i></i><span>{{userInfo.name}}</span></div>
+						<div class="m-info-user"><i></i><span>{{userInfo.customerName}}</span></div>
 						<div class="m-menu-user">
 							<a @click="userMenu"><i class="u-icon-menu2"></i></a>
 							<ul class="m-user-dropdown f-tas" :class="{active:off.userMenu}">
 								<li>
 									<a class="user clr">
 										<div class="logo fl"></div>
-										<div class="info f-tal"><div class="author">{{userInfo.name}}</div><time class="online">online：<b>{{onlineTime}}</b></time></div>
+										<div class="info f-tal"><div class="author">{{userInfo.customerName}}</div><time class="online">online：<b>{{onlineTime}}</b></time></div>
 									</a>
 								</li>
 								<li><a @click="clickSignOut">退出</a></li>
@@ -353,9 +353,7 @@ export default{
             IsInArray(isadmin,'7')>-1?vm.off.powerkm7=true : vm.off.powerkm7=false;
             IsInArray(isadmin,'11')>-1?vm.off.powerkm11=true : vm.off.powerkm11=false;
             IsInArray(isadmin,'21')>-1?vm.off.powerkm21=true : vm.off.powerkm21=false;
-            //Promise.all([kmAuditInfo,kmOpinionInfo,ymAuditInfo]).then(()=>{
-                vm.initMenu();
-           // });
+            vm.initMenu();
         },
         initMenu:function(){
             let vm=this;
@@ -366,39 +364,14 @@ export default{
                 vm.off.powerYmHidden=1;
                 vm.isCheckk=1;
             }
-            // if(path=="#/homey/audit/yuanmeng"||path==initPath){
-            //     const vm=this;
-            //     if(vm.userInfo.isadmin.length==0&&vm.userInfo.isadminYm.length>0){//有远盟无卡盟权限
-            //     window.location.href="#/homey";
-            //     vm.off.powerKmHidden=1;
-            //     vm.isChecky=true;
-            //     }else if(vm.userInfo.isadminYm.length==0&&vm.userInfo.isadmin>0){//有卡盟无远盟权限
-            //         if(vm.off.powerkm1||vm.off.powerkm2){
-            //             window.location.href="#/homek";                
-            //             vm.off.powerYmHidden=1;
-            //             vm.isCheckk=true;
-            //         }else{
-            //             window.location.href="#/homek/audit/card/realtime";                
-            //             vm.off.powerYmHidden=1;
-            //             vm.isCheckk=true;
-            //         }
-            //     }
-            //     if(vm.userInfo.isadmin.length>0&&vm.userInfo.isadminYm.length>0){
-            //         if(this.countTotalYm){
-            //         window.location.href="#/homey";
-            //         vm.isCheckk=false;
-            //         vm.isChecky=true;
-            //         }else if(this.countTotal&&!this.countTotalYm){
-            //             window.location.href="#/homek";                
-            //             vm.isChecky=false;
-            //             vm.isCheckk=true;
-            //         }else{
-            //             window.location.href="#/homey";                
-            //             vm.isCheckk=false;
-            //             vm.isChecky=true;
-            //         }
-            //     }
-            // }
+            let path=vm.$route.path;
+            if(path.indexOf('homek')>-1){
+            	vm.isCheckk=1;
+            	vm.isChecky=0;
+            }else{
+            	vm.isCheckk=0;
+            	vm.isChecky=1;
+            }
         },
 		headMenu:function(){//侧边导航show or hide
 			this.off.headMenu?this.off.headMenu=false:this.off.headMenu=true;

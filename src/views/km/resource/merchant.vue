@@ -514,14 +514,14 @@ export default{
             reqCommonMethod(json,function(){vm.off.isLoad=false;},url)
             .then((data)=>{
                 vm.ajaxData.details=data.data;
-                vm.getList();
                 vm.off.isLoad=false;
+                vm.getList();
             }).catch(error=>errorDeal(error)); 	
 		},
 		getList(page){//获取第三方支付订单列表/获取用户列表
 			var vm=this,type=vm.form.type,url,json;
 			type==1 ? (json={dealerId:vm.form.context},url='km-ecs/w/audit/getUsersDetail') : (json={phone:vm.form.context,pageNum:page||1,pageSize:10,type:vm.form.paySource},url='km-ecs/w/user/paymengList');
-
+			console.log(1)
 			if(vm.off.isLoad)return false;
 			vm.off.isLoad=true;
 			vm.ajaxData.list=[];

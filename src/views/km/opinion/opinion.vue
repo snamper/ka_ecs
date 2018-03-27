@@ -21,6 +21,7 @@
             <div class="row">
               <span class="dp">问题类型：</span>
               <div class="m-form-radio">
+                <label><span class="radio"><input value="0" type="radio" v-model="form.orderType"><span></span></span><span class="text">全部</span></label>
                 <label><span class="radio"><input value="1" type="radio" v-model="form.orderType"><span></span></span><span class="text">功能异常</span></label>
                 <label ><span class="radio"><input value="2" type="radio" v-model="form.orderType"><span></span></span><span class="text">其他问题</span></label>
               </div>
@@ -115,8 +116,6 @@
   </section>
 </template>
 <script>
-  require("../../../assets/km/js/laydate/laydate.js");
-  require("../../../assets/km/js/laydate/skins/default/laydate.css");
   import {reqCommonMethod} from "../../../config/service.js";
   import {errorDeal} from "../../../config/utils.js";  
   import pagination from "../../../componentskm/page.vue";
@@ -136,7 +135,7 @@
           whichBtn:'',
         },
         form:{
-          orderType:1,//1功能异常;2其他问题;
+          orderType:0,//0全部;1功能异常;2其他问题;
           context1:'',//反馈单号
           context2:'',//商户ID
           context3:'',//手机号码

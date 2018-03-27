@@ -12,38 +12,29 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
         '/km_center_ecs/user':{
-            // target:'http://192.168.10.117:8081',
-            target:'http://192.168.10.24:8088',
+            target:'http://192.168.10.117:8081',
             changeOrigin:true,
             pathRewrite:{
-                // '^/w':'/ecs/w'
-                // '^km_center_ecs/user':'/ecs/w'
                 '^/km_center_ecs/user':'/km_center_ecs/user'
             }
         },
         '/km-ecs/w':{
-            // target:'http://192.168.10.117:6086',
-            target:'http://192.168.10.24:6086',
+            target:'http://192.168.10.167:6086',
             changeOrigin:true,
             pathRewrite:{
-                // '^/w':'/ecs/w'
-                // '^/km-ecs/w':'/ecs/w'
                 '^/km-ecs/w':'/ecs/w'
             }
         },
         '/ym-ecs/c':{
-            // target:'http://192.168.10.117:8080',
-            target:'http://192.168.10.24:8087',
+            target:'http://192.168.10.117:8080',
             changeOrigin:true,
             pathRewrite:{
-                // '^/w':'/ecs/w'
-                // '^/ym-ecs/c':'/ecs/c'
                 '^/ym-ecs/c':'/yuangmeng_ecs/c'
             }
         },
     },
     // Various Dev Server settings
-    host:"192.168.10.24",
+    host:"192.168.10.44",
     port: 8081, // can be overwritten by process.env.HOST, if port is in use, a free one will be determined
     autoOpenBrowser: true,
     errorOverlay: true,

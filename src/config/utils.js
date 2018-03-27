@@ -38,12 +38,14 @@ export const createDownload=(url,data,cb)=>{
     	cb();
     	try{
             var res = ifr.contentWindow.document.body.textContent;
-            if(res!=''&&res.hasOwnProperty('code')){
+            if(res!=''&&res.indexOf('code')>-1){
                var result=JSON.parse(res);
                if(res.code!=200){
-                  errorDeal(res);
+                  errorDeal(result);
                } 
-            };	
+            }else{
+                errorDeal(res);
+            }
     	}catch(error){
     		errorDeal(error);
     	}

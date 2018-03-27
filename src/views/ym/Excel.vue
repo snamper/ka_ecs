@@ -78,8 +78,6 @@ select {
 <script>
 import { setStore, getStore, createDownload ,errorDeal } from "../../config/utils";
 import {reqCommonMethod} from "../../config/service.js";
-require("../../assets/ym/js/laydate/laydate.js");
-require("../../assets/ym/js/laydate/skins/default/laydate.css");
 import pagination from "../ym/page.vue";
 import details from "../ym/searchListDetails.vue";
 import layerForm from "../ym/layerForm.vue";

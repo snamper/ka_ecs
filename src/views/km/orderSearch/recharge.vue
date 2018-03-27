@@ -83,7 +83,7 @@
 		</section>
   	</div>
   	<div class="m-total-table" v-if="list">
-		<div class="total-head">统计结果<b>{{total}}</b></div>
+		<div class="total-head">统计结果<b>{{total}}</b> <button class="btn_export_excel" v-if="maxpage"  @click="downLoadList">导出excel</button></div>
 		<table>
 			<thead>
 				<tr>
@@ -147,12 +147,10 @@
 </section>
 </template>
 <script>
-require("../../../assets/km/js/laydate/laydate.js");
-require("../../../assets/km/js/laydate/skins/default/laydate.css");
 import {reqCommonMethod} from "../../../config/service.js";
 import pagination from "../../../componentskm/page.vue";
 import details from "../../../componentskm/rechargeOrderDetails.vue";
-import { getDateTime,getUnixTime ,errorDeal} from "../../../config/utils.js";
+import { getDateTime,getUnixTime ,errorDeal,createDownload,getStore} from "../../../config/utils.js";
 export default{
 	data (){
 		return {
@@ -196,7 +194,7 @@ export default{
 			vm.form.startTime=laydate.now(0,'YYYY-MM-DD 00:00:00');
 			vm.form.endTime=laydate.now(0,'YYYY-MM-DD 23:59:59');
 		},
-		searchList:function(page){
+		getForm(page){
 			var vm=this,select=vm.form.select,
 			   sql="A.create_time BETWEEN "+getUnixTime(vm.form.startTime)+" AND "+getUnixTime(vm.form.endTime)+"",
 			  json={"pageSize":vm.pageSize,"pageNum":page||1,"params":[]};
@@ -267,17 +265,15 @@ export default{
 				}
 			}
 			json.params.push(sql);
+			return json;
+		},
+		searchList:function(page){
+			const vm=this;
+			let json=vm.getForm(page);
+			if(!json)return false;
+
 			if(vm.off.isLoad)return false;
 			vm.off.isLoad=true;
-			// vm.AJAX("w/handler/query",json,function(data){
-			// 	vm.list=data.data.list
-			// 	vm.total=data.data.total;
-			// 	vm.maxpage=Math.ceil(parseInt(data.data.total)/10);
-			// 	vm.pageNum=page||1;
-			// 	vm.callback=function(v){vm.searchList(v)};
-			// },function(){
-			// 	vm.off.isLoad=false;
-            // })
             reqCommonMethod(json,function(){vm.off.isLoad=false;},"km-ecs/w/handler/query")
             .then((data)=>{
               	vm.list=data.data.list
@@ -286,7 +282,25 @@ export default{
 				vm.pageNum=page||1;
                 vm.callback=function(v){vm.searchList(v)};
                 vm.off.isLoad=false;  
-            }).catch(error=>errorDeal(error)); 	
+            }).catch(error=>errorDeal(error));
+		},
+		// 导出查询结果excel
+		downLoadList:function(){
+			const vm=this;
+			let json=vm.getForm();
+			if(!json)return false;
+			if(vm.form.rechargeType==1)json.exportType=2;
+			if(vm.form.rechargeType==2)json.exportType=1;
+			json.pageNum="-1";
+			let userInfo = getStore("KA_ECS_USER");
+			json.customerId = userInfo.customerId;
+			json.codeId = userInfo.codeId;;
+
+			if(vm.off.isLoad)return false;
+			vm.off.isLoad=true;
+			createDownload('km-ecs/w/handler/queryExport',BASE64.encode(JSON.stringify(json)),  function(){
+		        vm.off.isLoad=false;
+	      	});
 		},
 		details:function(e){//详情
 			var vm=this,

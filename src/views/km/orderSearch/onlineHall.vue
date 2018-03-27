@@ -60,7 +60,7 @@
         <div class="m-total-table" v-if="list">
           <div class="total-head">
               统计结果<b>{{total}}</b>
-              <button class="export_excel" v-if="list.length==0?false :true "  :disabled="list.length==0? true : false " @click="searchList(2)">导出excel</button>
+              <button class="btn_export_excel" v-if="list.length==0?false :true "  :disabled="list.length==0? true : false " @click="searchList(2)">导出excel</button>
           </div>
           <table>
             <thead>
@@ -102,8 +102,6 @@
   </section>
 </template>
 <script>
-  require("../../../assets/km/js/laydate/laydate.js");
-  require("../../../assets/km/js/laydate/skins/default/laydate.css");
   import {reqCommonMethod} from "../../../config/service.js";  
   import pagination from "../../../componentskm/page.vue";
   import details from "../../../componentskm/onlineHallOrderDetails.vue";

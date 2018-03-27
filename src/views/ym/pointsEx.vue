@@ -100,8 +100,6 @@
   </div>
 </template>
 <script>
-require("../../assets/ym/js/laydate/laydate.js");
-require("../../assets/ym/js/laydate/skins/default/laydate.css");
 import {reqCommonMethod} from "../../config/service.js";
 import pagination from "../ym/page.vue";
 import details from "../ym/searchListDetails.vue";

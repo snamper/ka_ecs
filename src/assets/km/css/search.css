@@ -250,11 +250,13 @@ display:inline-block;position: absolute;right: 5px;top:50%;width:0.18rem;height:
 /*导出excel的按钮*/
 .btn_export_excel{
   padding:5px;
-  background: #29b024;
-  border:1px solid #29b024;
-  border-radius: 4px;
+  color: white;
+  background: #13ce66;
+  border:1px solid #13ce66;
+  border-radius: 4px ;
   float: right;
   margin-right:20px;
+  margin-top:-4px;
 }
 .btn_export_excel:active{
   -webkit-box-shadow: 0 0 5px #29b024;
