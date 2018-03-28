@@ -83,7 +83,11 @@
 		</section>
   	</div>
   	<div class="m-total-table" v-if="list">
-		<div class="total-head">统计结果<b>{{total}}</b> <button class="btn_export_excel" v-if="maxpage"  @click="downLoadList">导出excel</button></div>
+		<div class="total-head clr">
+			<span>统计结果<b>{{total}}</b></span>
+			<span>总价格:<b class="bg-purple">{{ sumPrice }}</b></span>
+			<button class="btn_export_excel" v-if="maxpage"  @click="downLoadList">导出excel</button>
+		</div>
 		<table>
 			<thead>
 				<tr>
@@ -174,6 +178,7 @@ export default{
 			list:'',//查询数据
 			detailsData:'',//详情数据
 			total:0,//总查询条数
+			sumPrice:0,//总价格
 			pageNum:1,//当前页数
 			pageSize:10,//显示条数
 			maxpage:1,//最大页数
@@ -258,11 +263,13 @@ export default{
 				if(vm.form.isp!=0){
 					sql+=" AND A.info_isp="+vm.form.isp;
 				}
+				json.sum='A.info_price';
 			}else if(vm.form.rechargeType==2){
 				json.opKey="order.rechargePhone.list";
 				if(vm.form.isp!=0){
 					sql+=" AND A.isp="+vm.form.isp;
 				}
+				json.sum='A.info_fee';
 			}
 			json.params.push(sql);
 			return json;
@@ -278,10 +285,11 @@ export default{
             .then((data)=>{
               	vm.list=data.data.list
 				vm.total=data.data.total;
+				vm.sumPrice=(parseFloat(data.data.sum)/100).toFixed(2);
 				vm.maxpage=Math.ceil(parseInt(data.data.total)/10);
 				vm.pageNum=page||1;
                 vm.callback=function(v){vm.searchList(v)};
-                vm.off.isLoad=false;  
+                vm.off.isLoad=false;
             }).catch(error=>errorDeal(error));
 		},
 		// 导出查询结果excel

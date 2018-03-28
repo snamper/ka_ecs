@@ -558,7 +558,7 @@ b.countIcon{
 
 /*加载条*/
 .m-scroll-bar{
-  position: absolute;
+  position: fixed;
   width:0;
   height: 4px;
   margin:auto;
@@ -570,7 +570,7 @@ b.countIcon{
   background-color:#20a0ff;
   left: 0;
   right:0;
-  top:0;
+  top:0.6rem;
   z-index: 888;
 }
 .m-scroll-bar.active{

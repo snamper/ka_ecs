@@ -231,24 +231,18 @@
         }
         //如果index===1||index==='order'就发送ajax请求
         if(index===1||index==='order'){
-        //   vm.AJAX('w/boss/order/query',json,function(data){
-        //     vm.list=data.data.list;//数据
-        //     vm.total=data.data.total;//总条数
-        //     vm.maxpage=Math.ceil(parseInt(data.data.total)/10);//最大页码
-        //     vm.pageNum=page||1;
-        //     vm.callback=function(v){vm.searchList(index,v)};
-        //   },function(){
-        //     vm.off.isLoad=false;
-        //   })
-        reqCommonMethod(json,function(){vm.off.isLoad=false;},"km-ecs/w/boss/order/query")
-            .then((data)=>{
-              	vm.list=data.data.list
-				vm.total=data.data.total;
-				vm.maxpage=Math.ceil(parseInt(data.data.total)/10);
-				vm.pageNum=page||1;
-                vm.callback=function(v){vm.searchList(v)}; 
-                vm.off.isLoad=false; 
-            }).catch(error=>errorDeal(error)); 	 
+          vm.off.isLoad=true;
+          reqCommonMethod(json,function(){
+            vm.off.isLoad=false;
+          },"km-ecs/w/boss/order/query")
+              .then((data)=>{
+                	vm.list=data.data.list
+          				vm.total=data.data.total;
+          				vm.maxpage=Math.ceil(parseInt(data.data.total)/10);
+          				vm.pageNum=page||1;
+                  vm.callback=function(v){vm.searchList(v)}; 
+                  vm.off.isLoad=false; 
+              }).catch(error=>errorDeal(error)); 	 
         }
         //如果index===2则导出excel
         if(index===2){
