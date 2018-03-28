@@ -42,9 +42,7 @@ export const createDownload=(url,data,cb)=>{
                var result=JSON.parse(res);
                if(res.code!=200){
                   errorDeal(result);
-               } 
-            }else{
-                errorDeal(res);
+               }
             }
     	}catch(error){
     		errorDeal(error);
