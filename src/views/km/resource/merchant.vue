@@ -158,12 +158,12 @@
 								</tr>
 								<tr>
 									<td><span>设备信息：</span>
-										<a :href="'#/home/resource/device/'+ajaxData.details.devMac" title="点击查看详情" class="details m-l">{{ ajaxData.details.devMac }}</a></td>
+										<a :href="'#/homek/resource/device/'+ajaxData.details.devMac" title="点击查看详情" class="details m-l">{{ ajaxData.details.devMac }}</a></td>
 									<td><span>基础分值：</span>{{ ajaxData.details.btScore }}</td>
 								</tr>
 								<tr>
 									<td><span>上级商户：</span>
-										<a v-show="ajaxData.details.superDealerId" :href="'#/home/resource/promoter/'+ajaxData.details.superDealerId" title="点击查看详情" class="details">{{ajaxData.details.superDealerId}}</a>【名称：{{ ajaxData.details.superDealerName||'--' }}】</td>
+										<a v-show="ajaxData.details.superDealerId" :href="'#/homek/resource/promoter/'+ajaxData.details.superDealerId" title="点击查看详情" class="details">{{ajaxData.details.superDealerId}}</a>【名称：{{ ajaxData.details.superDealerName||'--' }}】</td>
 									<td><span>基础总次数：</span>{{ ajaxData.details.btFrequency }}</td>
 								</tr>
 								<tr>
@@ -173,7 +173,7 @@
 								</tr>
 								<tr>
 									<td><span>上级推广渠道ID：</span>
-										<a v-show="ajaxData.details.superDealerId" :href="'#/home/resource/promoter/'+ajaxData.details.superDealerId" title="点击查看详情" class="details">{{ajaxData.details.popDealerId}}</a>【名称：{{ ajaxData.details.popDealerName||'--' }}】</td>
+										<a v-show="ajaxData.details.superDealerId" :href="'#/homek/resource/promoter/'+ajaxData.details.superDealerId" title="点击查看详情" class="details">{{ajaxData.details.popDealerId}}</a>【名称：{{ ajaxData.details.popDealerName||'--' }}】</td>
 									<td><span>推广渠道：</span>{{ ajaxData.details.popDealerId||'--' }}【名称：{{ ajaxData.details.popDealerName||'--' }}】</td>
 									
 								</tr>
@@ -423,7 +423,8 @@ export default{
 			vm.getTotal();
 			let val=vm.$route.params.val;
 			if(val!='null'){
-				vm.form.context=val;
+				if(val.indexOf('phone')>-1)vm.form.type=2;
+				vm.form.context=parseInt(val);
 				vm.getDetails();
 			}
 		},300);

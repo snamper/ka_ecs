@@ -27,6 +27,9 @@
 								</td></tr>
 								<tr><td>商户号：</td><td>{{ list.dealerId }}</td></tr>
 								<tr><td>操作人ID：</td><td>{{ list.userId }}</td></tr>
+								<tr><td>操作人号码：</td><td>
+									<a :href="'#/homek/resource/merchant/'+list.userPhone+'_phone'" title="点击查看详情" class="details">{{ list.userPhone }}</a>
+								</td></tr>
 								<tr><td>充值类型：</td><td>
 									<span v-show="list.rechargeType==1">流量</span>
 									<span v-show="list.rechargeType==2">话费</span>
