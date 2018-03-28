@@ -34,8 +34,8 @@ export const createDownload=(url,data,cb)=>{
     	ifr.setAttribute("name","downLoadForm");
     	ifr.setAttribute("style","display:none");
     }
+    cb();
     ifr.addEventListener("load",function(e){
-    	cb();
     	try{
             var res = ifr.contentWindow.document.body.textContent;
             if(res!=''&&res.indexOf('code')>-1){
