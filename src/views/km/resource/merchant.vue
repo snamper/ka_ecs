@@ -10,8 +10,8 @@
   .total-head{position: relative;}
   .total-head>span{margin-right: 10px;}
   .total-head>span>b{font-weight: bold;}
-  .total-head>.f-btn-group{position: absolute;width:3.5rem;left: 50%;margin-left:-1.75rem;top:50%;margin-top: -0.16rem;}
-  .total-head>.f-btn-group>button{height:0.32rem;color:#717171 !important;border-radius: 5px; border-bottom-color:#ccc;-webkit-box-shadow:0 1px 1px rgba(90, 90, 90, 0.1);box-shadow:0 1px 1px rgba(90, 90, 90, 0.1);display:inline-block;padding: 0 3px;font-size:12px;line-height:1.428571429;cursor:pointer;background-color:#fff;border:1px solid transparent;border-color:#dadada;}
+  .total-head>.f-btn-group{position: absolute;width:4rem;left: 50%;margin-left:-2rem;top:50%;margin-top: -0.15rem;}
+  .total-head>.f-btn-group>button{height:0.3rem;line-height:0.3rem;color:#717171 !important;border-radius: 5px; border-bottom-color:#ccc;-webkit-box-shadow:0 1px 1px rgba(90, 90, 90, 0.1);box-shadow:0 1px 1px rgba(90, 90, 90, 0.1);display:inline-block;padding: 0 3px;font-size:12px;cursor:pointer;background-color:#fff;border:1px solid transparent;border-color:#dadada;}
   .total-head>.f-btn-group>button:hover{color:#333333;background-color:#f1f1f1;}
   .total-head>.f-btn-group>button.active{color:#717171 !important;background-color:#F9F9F9;border-color:#c6c6c6;box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);}
   .total-head>.m-select{display: none;margin-left:0.1rem;}
@@ -423,8 +423,11 @@ export default{
 			vm.getTotal();
 			let val=vm.$route.params.val;
 			if(val!='null'){
-				if(val.indexOf('phone')>-1)vm.form.type=2;
-				vm.form.context=parseInt(val);
+				if(val.indexOf('phone')>-1){
+					vm.form.type=2;
+					val=parseInt(val);
+				}
+				vm.form.context=val;
 				vm.getDetails();
 			}
 		},300);
