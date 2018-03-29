@@ -435,7 +435,7 @@ export default {
     //     }
     //   );
       vm.off.isLoad=true;
-      reqCommonMethod(json,function(){vm.off.isLoad=true},url)
+      reqCommonMethod(json,function(){vm.off.isLoad=false},url)
       .then((data)=>{
           vm.list = data.data.list;
           vm.total = data.data.total;
