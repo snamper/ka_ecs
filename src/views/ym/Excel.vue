@@ -141,6 +141,8 @@ export default {
       reqCommonMethod(data,function(){vm.off.isLoad=false;},"ym-ecs/c/audit/dailyAudits")    
       .then((data)=>{
           if(data.code==200){
+            let arr=[];
+              data.data.dailyAudits.sort((a,b)=> parseInt(a.replace(/[^0-9]/ig,"")) > parseInt(b.replace(/[^0-9]/ig,"")) ? 1 : -1);
               vm.downloadDate=data.data.dailyAudits;
           }
           vm.off.isLoad=false;
@@ -221,14 +223,11 @@ export default {
       }
       let date=""+y+m;
       let data={date:date};
-    //   vm.AJAX("c/audit/dailyAudits",data,function(data){
-    //       if(data.code==200){
-    //          vm.downloadDate=data.data.dailyAudits;
-    //       }
-    //   })
+
       reqCommonMethod(data,function(){vm.off.isLoad=false;},"ym-ecs/c/audit/dailyAudits")
       .then((data)=>{
           if(data.code==200){
+            data.data.dailyAudits.sort((a,b)=> parseInt(a.replace(/[^0-9]/ig,"")) > parseInt(b.replace(/[^0-9]/ig,"")) ? 1 : -1);
              vm.downloadDate=data.data.dailyAudits;
           }
           vm.off.isLoad=false;          
