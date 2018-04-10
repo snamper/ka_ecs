@@ -12,24 +12,16 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
         '/km_center_ecs/user':{
-<<<<<<< HEAD
             // target:'http://192.168.10.117:8081',
             target:'http://192.168.10.24:8081',
-=======
-            target:'http://192.168.10.117:8081',
->>>>>>> 076c28cc5865ae85f13cb0ee471712da82321362
             changeOrigin:true,
             pathRewrite:{
                 '^/km_center_ecs/user':'/km_center_ecs/user'
             }
         },
         '/km-ecs/w':{
-<<<<<<< HEAD
             target:'http://192.168.10.117:6086',
             // target:'http://192.168.10.24:6086',
-=======
-            target:'http://192.168.10.44:6086',
->>>>>>> 076c28cc5865ae85f13cb0ee471712da82321362
             changeOrigin:true,
             pathRewrite:{
                 '^/km-ecs/w':'/ecs/w'
@@ -44,13 +36,8 @@ module.exports = {
         },
     },
     // Various Dev Server settings
-<<<<<<< HEAD
     host:"192.168.10.24",
     port: 8090, // can be overwritten by process.env.HOST, if port is in use, a free one will be determined
-=======
-    host:"192.168.10.44",
-    port: 8081, // can be overwritten by process.env.HOST, if port is in use, a free one will be determined
->>>>>>> 076c28cc5865ae85f13cb0ee471712da82321362
     autoOpenBrowser: true,
     errorOverlay: true,
     notifyOnErrors: true,
