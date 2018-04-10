@@ -23,7 +23,7 @@ table.g-inner-table tbody tr td:first-child{
   <div v-if="auditData" class="divApply">
       	<header class="g-lis-head">
 		<a class="m-details-back" ></a>
-  	  	<div class="m-footD-btn">
+  	  	<div class=" m-footD-btn ">
             <a class="f-btn f-btn-success" @click="agree()" style="margin-right:20px">通过</a>
 			<a class="f-btn f-btn-danger" @click="refuse()">拒绝</a>
 	  	</div>
@@ -35,7 +35,7 @@ table.g-inner-table tbody tr td:first-child{
                         <table  class="g-inner-table">
                             <tbody>
                                 <tr><td>订单号:</td><td>{{auditData.orderId}}</td></tr>
-                                <tr><td>原业务范围:</td><td><span v-for="x in auditData.openedScopes">{{x.areas}}(<span v-if="x.type==1">远特售卡</span><span v-if="x.type==2">联通售卡</span><span v-if="x.type==3">移动售卡</span><span v-if="x.type==4">电信售卡</span>)<br></span></td></tr>
+                                <tr><td>原业务范围:</td><td><span v-for="x in auditData.openedScopes" :key="x">{{x.areas}}(<span v-if="x.type==1">远特售卡</span><span v-if="x.type==2">联通售卡</span><span v-if="x.type==3">移动售卡</span><span v-if="x.type==4">电信售卡</span>)<br></span></td></tr>
                                 <tr><td>申请业务范围:</td><td>
                                 <span v-if="auditData.operateType==2"><span>{{auditData.openingArea}}</span>(<span v-if="auditData.type==1">远特售卡</span><span v-if="auditData.type==2">联通售卡</span><span v-if="auditData.type==3">移动售卡</span><span v-if="auditData.type==4">电信售卡</span>)</span>
                                 <span v-if="auditData.operateType==1"><span v-if="auditData.type==1">远特售卡</span><span v-if="auditData.type==2">联通售卡</span><span v-if="auditData.type==3">移动售卡</span><span v-if="auditData.type==4">电信售卡</span>(<span>{{auditData.openingArea}}</span>)</span>
@@ -98,7 +98,8 @@ export default{
 	},
 	created:function(){
 		var vm=this;
-        vm.imgData=[{'src':"../../../assets/images/admin.png",'name':'手签名'}];
+        // vm.imgData=[{'src':vm.auditData.img,'name':'手签名'}];
+        vm.imgData=[{'src':"ka_ecs/src/assets/images/admin.png",'name':'手签名qqqq'}];
         vm.getAuditList();
 	},
 	methods:{

@@ -89,7 +89,9 @@ export default{
 	},
 	created:function(){
 		var vm=this;
-		vm.imgData=[{'src':vm.list.img,'name':'手签名'}];
+        vm.imgData=[{'src':vm.list.img,'name':'手签名'}];
+        // vm.imgData=[{'src':"ka_ecs/src/assets/images/admin.png",'name':'手签名qqqq'}];
+        
 	},
 	methods:{
 		close:function(){
