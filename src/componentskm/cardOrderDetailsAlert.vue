@@ -197,7 +197,7 @@ export default{
 				});
             }).catch(error=>errorDeal(error));
 		},
-		toIncome:function(){
+		toIncome:function(index){
             var vm=this;
 			// vm.AJAX('w/audit/getIncomeDetail',{"dealerId":vm.dealerId},function(data){
 			// 	var list= data.data;
@@ -214,7 +214,7 @@ export default{
 			// 	});
             // });
             debugger;
-            reqCommonMethodNoLoad({"dealerId":vm.dealerId},function(){vm.off.isLoad=false;},"km-ecs/w/audit/getIncomeDetail")
+            reqCommonMethodNoLoad({"dealerId":vm.dealerId,"type":index},function(){vm.off.isLoad=false;},"km-ecs/w/audit/getIncomeDetail")
             .then((data)=>{           
                 var list= data.data;
 				layer.open({
