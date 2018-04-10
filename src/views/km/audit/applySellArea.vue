@@ -98,9 +98,9 @@ export default{
 	},
 	created:function(){
 		var vm=this;
-        vm.imgData=[{'src':vm.auditData.img,'name':'手签名'}];
         // vm.imgData=[{'src':"ka_ecs/src/assets/images/admin.png",'name':'手签名qqqq'}];
         vm.getAuditList();
+        vm.imgData=[{'src':vm.auditData.img,'name':'手签名'}];
 	},
 	methods:{
           getAuditList:function(){//获取订单
