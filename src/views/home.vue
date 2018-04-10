@@ -77,29 +77,34 @@
 					<ul class="g-side-subul nav1">
 						<li v-if="userInfo.isadmin.indexOf('0')>-1||userInfo.isadmin.indexOf('1')>-1">
 							<router-link :to="{name:'audit_card',params:{source:'realtime'}}">
-								<b></b>开卡实时审核<span>{{auditCount.opencard+auditCount.transfer+auditCount.sdkRealTime
+								<b></b>开卡实时审核<span v-if="auditCount.opencard+auditCount.transfer+auditCount.sdkRealTime!=0">{{auditCount.opencard+auditCount.transfer+auditCount.sdkRealTime
 }}</span>
 							</router-link>
 						</li>
 						<li v-if="userInfo.isadmin.indexOf('0')>-1||userInfo.isadmin.indexOf('1')>-1">
 							<router-link :to="{name:'audit_card',params:{source:'afterwards'}}">
-								<b></b>开卡事后审核<span>{{auditCount.opencardAfterwards+auditCount.tfOpenCard
+								<b></b>开卡事后审核<span v-if="auditCount.opencardAfterwards+auditCount.tfOpenCard!=0">{{auditCount.opencardAfterwards+auditCount.tfOpenCard
 }}</span>
 							</router-link>
 						</li>
 						<li v-if="userInfo.isadmin.indexOf('6')>-1||userInfo.isadmin.indexOf('5')>-1||userInfo.isadmin.indexOf('1')>-1">
 							<router-link :to="{name:'businessPowerAudit',params:{type:'auditing'}}">
-								<b></b>售卡范围审核<span>{{auditCount.attribute}}</span>
+								<b></b>售卡范围审核<span v-if="auditCount.attribute!=0">{{auditCount.attribute}}</span>
 							</router-link>
 						</li>
 						<li v-if="userInfo.isadmin.indexOf('6')>-1||userInfo.isadmin.indexOf('5')>-1||userInfo.isadmin.indexOf('1')>-1">
 							<router-link :to="{name:'registMerchantAudit',params:{type:'realtime'}}">
-								<b></b>激活商户实时<span>{{auditCount.registerMerchantRealTime}}</span>
+								<b></b>激活商户实时<span v-if="auditCount.registerMerchantRealTime!=0">{{auditCount.registerMerchantRealTime}}</span>
 							</router-link>
 						</li>
 						<li v-if="userInfo.isadmin.indexOf('6')>-1||userInfo.isadmin.indexOf('5')>-1||userInfo.isadmin.indexOf('1')>-1">
 							<router-link :to="{name:'registMerchantAudit',params:{type:'afterwards'}}">
-								<b></b>激活商户事后<span>{{auditCount.registerMerchantAfter}}</span>
+								<b></b>激活商户事后<span v-if="auditCount.registerMerchantAfter!=0">{{auditCount.registerMerchantAfter}}</span>
+							</router-link>
+						</li>
+                        <li v-if="userInfo.isadmin.indexOf('6')>-1||userInfo.isadmin.indexOf('5')>-1||userInfo.isadmin.indexOf('1')>-1">
+							<router-link :to="{name:'applySellArea'}">
+								<b></b>申请区域审核<span v-if="auditCount.attribute!=0">{{auditCount.attribute}}</span>
 							</router-link>
 						</li>
 					</ul>
@@ -443,7 +448,9 @@ export default{
 					if(path.indexOf("_get")>-1){
 						crumb[2]={"name":"审核"};
 					}
-				}
+				}else if(path.indexOf("applySellArea")>-1){
+                    crumb[1]={"name":"申请区域审核","href":"/homek/audit/applySellArea"};
+                }
 			}else if(path.indexOf("/homek/orderSearch")>-1){
 				crumb[0]={"name":"订单查询","href":"/homek/orderSearch"}
 				if(path.indexOf("card")>-1){

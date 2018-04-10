@@ -62,6 +62,13 @@ const Audit_registMerchant = resolve => {//激活商户
     load();
   });
 };
+const Audit_applySellArea = resolve => {//申请区域审核
+    load(true);
+    require.ensure(["@/views/km/audit/applySellArea"], () => {
+      resolve(require("@/views/km/audit/applySellArea"));
+      load();
+    });
+  };
 /*订单查询*/
 const OrderSearch = resolve => {
   load(true);
@@ -322,7 +329,11 @@ const router=new Router({
             path:"registMerchant/:type",
             name:'registMerchantAudit',
             component:Audit_registMerchant,
-          }]
+        },{//激活商户
+            path:"applySellArea",
+            name:'applySellArea',
+            component:Audit_applySellArea,
+        }]
         },
         {//订单查询
           path:"orderSearch",
@@ -419,7 +430,6 @@ const router=new Router({
 
 
 router.beforeEach((to, from, next) => {
-    
     var token = localStorage.getItem("KA_ECS_USER");
     if (!token&&to.path!=="/login"||to.path=="/"){
         next({path:"/login"});

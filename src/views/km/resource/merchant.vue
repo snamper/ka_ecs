@@ -137,10 +137,13 @@
 								</tr>
 								<tr>
 									<td><span>售卡范围：</span>
-										<b v-if="ajaxData.details.attribute==1">A（远特售卡）</b>
+										<!-- <b v-if="ajaxData.details.attribute==1">A（远特售卡）</b>
 										<b v-if="ajaxData.details.attribute==2">B（联通售卡）</b>
 										<b v-if="ajaxData.details.attribute==3">C（远特售卡+联通售卡）</b>
-										<b v-if="ajaxData.details.attribute==4">D（联通售卡+远特售卡）</b>
+										<b v-if="ajaxData.details.attribute==4">D（联通售卡+远特售卡）</b> -->
+                                        <b v-for="auditData in ajaxData.details.openedScopes">
+                                            <span v-if="auditData.type==1">远特售卡</span><span v-if="auditData.type==2">联通售卡</span><span v-if="auditData.type==3">移动售卡</span><span v-if="auditData.type==4">电信售卡</span>(<span>{{auditData.areas}}</span>)
+                                        </b>
 									</td>
 									<td><span>真实信用积分：</span>{{ ajaxData.details.realCreditNums }}</td>
 								</tr>

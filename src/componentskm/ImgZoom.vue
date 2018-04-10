@@ -29,7 +29,7 @@ export default{
 		}
 	},
 	created:function(){
-		this.initSet();
+        this.initSet();
 	},
 	watch:{
 		imgData:'initSet'

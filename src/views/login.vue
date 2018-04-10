@@ -140,9 +140,8 @@ export default {
             window.location.href="#/homey/illegalSearch";
             return false;
         }
-          
-
-         if(vm.off.powerkm1||vm.off.powerkm2){
+        
+        if(vm.off.powerkm1||vm.off.powerkm2){
            window.location.href="#/homek/dashboard"
             return false;
         }else if( vm.off.powerkm0||vm.off.powerkm1||vm.off.powerkm2||vm.off.powerkm4||vm.off.powerkm5||vm.off.powerkm6){

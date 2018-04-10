@@ -38,8 +38,8 @@ export default async(url = '', data = {}, type = 'GET', load, method = 'fetch') 
 			method: type,
 			headers: {
                 // 'Content-Type': 'application/x-www-form-urlencoded',
-                 'Content-type': 'application/x-www-form-urlencoded;charset=utf-8',
-				//'Content-Type': 'application/json'
+                //  'Content-type': 'application/x-www-form-urlencoded;charset=utf-8',
+				'Content-Type': 'application/json;charset=utf-8'
 			},
 			mode: "cors",
 			cache: "force-cache"
@@ -76,15 +76,12 @@ export default async(url = '', data = {}, type = 'GET', load, method = 'fetch') 
                 if (data.code == 200) {
                   resolve(data) //返回成功数据
                 } else {
-                    if (data.code !== 200) {
+                    if(data.code !== 200) {
                         closeLoadLayout()
                     }
                   reject(data)//返回非200情况
                 }
-              })
-              .catch(error => {
-                error=>errorDeal(error,closeLoadLayout)
-              })
+              }).catch(error=>errorDeal(error,closeLoadLayout))
           })
 	} else {//XHR对象
 		return new Promise((resolve, reject) => {

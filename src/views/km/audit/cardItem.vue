@@ -149,7 +149,6 @@ export default{
 			}else{
 				url="km-ecs/w/audit/audit";
 			}
-
 			//vm.AJAX(url,{"orderId":orderId,"result":1,"remark":"","reason":"","refuseReasonCode":"","auditType":auditType},function(data){layer.open({content:data.msg,skin:"msg",time:4,msgSkin:"success",success:function(){vm.dealAuditList()}})});
             reqCommonMethod({"orderId":orderId,"result":1,"remark":'',"reason": '',"refuseReasonCode":"","auditType":auditType},function(){vm.off.isLoad=false;},url)
             .then((data)=>{

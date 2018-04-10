@@ -8,11 +8,11 @@
 #detailsView table td>.fl{width:1rem;text-align: right;}
 #detailsView table td>.fright{margin-left: 1.05rem;text-align: left; }
 .lay-mask{position:absolute;background-color: rgba(0,0,0,0.3);z-index: -1;width: 100%;height: 100%;top: 0;left: 0;}
-
 </style>
 <template>
 <section id="detailsView">
 	<div>
+  	    <header class="m-scroll-bar animated infinite" :class="{active:off.isLoad}"></header>        
 		<table>
 			<thead>
 				<tr>
@@ -140,7 +140,10 @@ export default{
 	data (){
 		return {
 			title:''
-		}
+            ,off:{
+                isLoad:false
+            }
+        }
 	},
 	created:function(){
 		var vm=this;
@@ -210,6 +213,7 @@ export default{
 			// 		style:'width:auto;'
 			// 	});
             // });
+            debugger;
             reqCommonMethodNoLoad({"dealerId":vm.dealerId},function(){vm.off.isLoad=false;},"km-ecs/w/audit/getIncomeDetail")
             .then((data)=>{           
                 var list= data.data;

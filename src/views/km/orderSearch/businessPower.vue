@@ -71,6 +71,14 @@
 					<label><span class="radio"><input type="radio" value="3" v-model="form.status"><span></span></span><span class="text">拒绝</span></label>
 				</div>
 			</div>
+            <div class="row">
+				<span class="dp">操作类型：</span>
+				<div class="m-form-radio">
+					<label><span class="radio"><input type="radio" value="0" v-model="form.opType"><span></span></span><span class="text">全部</span></label>
+					<label><span class="radio"><input type="radio" value="1" v-model="form.opType"><span></span></span><span class="text">开通权限</span></label>
+					<label><span class="radio"><input type="radio" value="2" v-model="form.opType"><span></span></span><span class="text">扩展区域</span></label>
+				</div>
+			</div>
 			<button class="f-btn f-btn-line" @click="searchList(2)">查询</button>
 		</section>
 
@@ -112,6 +120,7 @@
 					<th>商户ID</th>
 					<th>申请人</th>
 					<th>申请业务</th>
+                    <th>操作类型</th>
 					<th>申请时间</th>
 					<th>审核人</th>
 					<th>审核时间</th>
@@ -121,7 +130,7 @@
 			</thead>
 			<tbody>
 				<!--待审核-->
-				<tr v-if="off.type==1" v-for="(todo,index) in list">
+				<tr v-if="off.type==1" v-for="(todo,index) in list" :key="index">
 					<td>{{ (pageNum-1)*pageSize+(index+1) }}</td>
 					<td>{{ todo.orderId }}</td>
 					<td>{{ todo.companyName }}</td>
@@ -135,16 +144,20 @@
 					<td><a :name="todo.orderId" @click="details" href="javascript:void(0)" class="details">详情</a></td>
 				</tr>
 				<!--已审核-->
-				<tr v-if="off.type==2" v-for="(todo,index) in list">
+				<tr v-if="off.type==2" v-for="(todo,index) in list" :key="index">
 					<td>{{ (pageNum-1)*pageSize+(index+1) }}</td>
 					<td>{{ todo.orderId }}</td>
 					<td>{{ todo.companyName }}</td>
 					<td>{{ todo.dealerId }}</td>
 					<td>{{ todo.userId }}<br/>（{{ todo.userName }}）</td>
 					<td>
-						<span v-if="todo.type==3">联通售卡</span>
-						<span v-if="todo.type==4">远特售卡</span>
+						<span v-if="todo.type==3">联通售卡<span>({{todo.areaName}})</span></span>
+						<span v-if="todo.type==4">远特售卡<span>({{todo.areaName}})</span></span>
 					</td>
+                    <th>
+                        <span v-if="todo.operateType==1">开通权限</span>
+                        <span v-if="todo.operateType==2">扩展区域</span>
+                    </th>
 					<td>{{ getDateTime(todo.createTime)[6] }}</td>
 					<td>{{ todo.customerId }}<br/>（{{ todo.customerName }}）</td>
 					<td>{{ getDateTime(todo.modifyTime)[6] }}</td>
@@ -199,7 +212,8 @@ export default{
 				userPhone:'',//申请人ID
 				startTime:'',
 				endTime:'',
-				select:6,//条件查询，选择的条件
+                select:6,//条件查询，选择的条件
+                opType:0,//操作类型
 			},
 			list:'',//列表数据
 			detailsData:'',//详情数据
@@ -225,7 +239,7 @@ export default{
 			vm.form.endTime=laydate.now(0,'YYYY-MM-DD 23:59:59');
 		},
 		searchList(index,page){//充值订单
-			var vm=this,url,json={"pageSize":vm.pageSize,"pageNum":page||1,"startTime":vm.form.startTime,"endTime":vm.form.endTime,"status":vm.form.status,'type':vm.form.type,'orderId':'','customerPhone':vm.form.customerPhone,'dealerId':'','userPhone':''};
+			var vm=this,url,json={"pageSize":vm.pageSize,"pageNum":page||1,"startTime":vm.form.startTime,"endTime":vm.form.endTime,"operateType":vm.form.opType,"status":vm.form.status,'type':vm.form.type,'orderId':'','customerPhone':vm.form.customerPhone,'dealerId':'','userPhone':''};
 			if(index=='order'){
 				if(vm.form.orderId.length==0){
 					layer.open({

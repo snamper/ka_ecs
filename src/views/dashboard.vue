@@ -463,7 +463,6 @@ import CountUp from 'vue-countup-v2';
                 category: [vm.getLatelyTime(data.data.lasttime[0],'hour',12),vm.getLatelyTime(data.data.lasttime[1],'day',7),vm.getLatelyTime(data.data.lasttime[2],'month',6)],
                 lineData: [data.data.hour,data.data.day,data.data.month],
             });
-                debugger;
           }).catch(error=>errorDeal(error));    
       },
       filterNumber(num){//数字格式化
