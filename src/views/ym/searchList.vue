@@ -11,6 +11,9 @@
 .g-search-menu #search #auditList {
   display: block;
 }
+.m-sub-page>.fl{
+	padding: 20px;
+}
 </style>
 <template>
   <div id="search" :class="{active:off.details}">
@@ -238,11 +241,14 @@
 				</tr>
 			</tbody>
 		</table>
-		<my-page :page="pageNum" :maxpage="maxpage" :callback="callback"></my-page>
-		<div v-if="form.orderStatus==4&&list.length" class="o-export-excel">
-			<a href="javascript:void(0)" @click="downloadBugOrder" class="f-btn-success">导出全部数据</a>
-			<iframe src="" frameborder="0" id="downloadFrame" style="width:0;height:0;opacity:0"></iframe>
-		</div>
+		<section class="m-sub-page clr">
+			<div v-if="form.orderStatus==4&&list.length" class="o-export-excel fl">
+				<a href="javascript:void(0)" @click="downloadBugOrder" class="f-btn-success">导出准同意数据</a>
+				<iframe src="" frameborder="0" id="downloadFrame" style="width:0;height:0;opacity:0"></iframe>
+			</div>
+			<my-page :page="pageNum" :maxpage="maxpage" :callback="callback"></my-page>
+		</section>
+		
 	</div>
 	</section>
 	<!--详情-->
@@ -255,8 +261,6 @@
   </div>
 </template>
 <script>
-require("../../assets/ym/js/laydate/laydate.js");
-require("../../assets/ym/js/laydate/skins/default/laydate.css");
 import pagination from "../../componentskm/page.vue";
 import details from "../ym/searchListDetails.vue";
 import auditdetails from "../ym/auditList.vue";
@@ -431,7 +435,7 @@ export default {
     //     }
     //   );
       vm.off.isLoad=true;
-      reqCommonMethod(json,function(){vm.off.isLoad=true},url)
+      reqCommonMethod(json,function(){vm.off.isLoad=false},url)
       .then((data)=>{
           vm.list = data.data.list;
           vm.total = data.data.total;
@@ -550,11 +554,18 @@ export default {
     downloadBugOrder() {
       //下载准同意excel
       var vm = this;
-      vm.AJAX("ym-ecs/c/audit/exportBuggingOrder",{startTime: vm.form.startTime,endTime: vm.form.endTime,cardStatus: vm.form.context7},function(data) {
-          var frame = document.getElementById("downloadFrame");
-          frame.setAttribute("src", data.data.exportUrl);
-        }
-      );     
+
+      vm.off.load = true;
+      let userInfo=getStore("KA_ECS_USER"),json={
+      	startTime: vm.form.startTime,
+      	endTime: vm.form.endTime,
+      	cardStatus: vm.form.context7,
+      	customerId:userInfo.customerId,
+	  	codeId:userInfo.codeId
+      };
+      createDownload("ym-ecs/c/audit/exportBuggingOrder", JSON.stringify(json), function() {
+        vm.off.load = false;
+      });
     },
     agree: function(e) {
       var vm = this,

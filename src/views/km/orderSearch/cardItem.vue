@@ -244,8 +244,6 @@
   </div>
 </template>
 <script>
-require("../../../assets/km/js/laydate/laydate.js");
-require("../../../assets/km/js/laydate/skins/default/laydate.css");
 require('../../../assets/km/js/base64.min.js');
 import {searchAuditList,reAudit,reqCommonMethod} from "../../../config/service.js"
 import pagination from "../../../componentskm/page.vue";

@@ -43,11 +43,11 @@
 						<td>{{ todo.createTime }}</td>
 						<td>{{ todo.activationTime }}</td>
 						<td>
-							<a :href="'#/home/resource/promoter/'+todo.protomerDealerId" title="点击查看详情" class="details">{{todo.protomerDealerId}}</a><br/>
+							<a :href="'#/homek/resource/promoter/'+todo.protomerDealerId" title="点击查看详情" class="details">{{todo.protomerDealerId}}</a><br/>
 							<span v-show="todo.protomerName">（{{todo.protomerName}}）</span></td>
 						<td>
 							<span v-if="todo.merchantDealerId!='null'">
-								<a :href="'#/home/resource/merchant/'+todo.merchantDealerId" title="点击查看详情" class="details">{{todo.merchantDealerId}}</a><br/>
+								<a :href="'#/homek/resource/merchant/'+todo.merchantDealerId" title="点击查看详情" class="details">{{todo.merchantDealerId}}</a><br/>
 								<span>（{{todo.merchantName}}）</span>
 							</span>
 							<span v-else class="f-c-red">未绑定</span>

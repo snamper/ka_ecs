@@ -184,8 +184,6 @@
 </section>
 </template>
 <script>
-require("../../../assets/km/js/laydate/laydate.js");
-require("../../../assets/km/js/laydate/skins/default/laydate.css");
 import {reqCommonMethod} from "../../../config/service.js";
 import pagination from "../../../componentskm/page.vue";
 import { getDateTime,getUnixTime } from "../../../config/utils.js";

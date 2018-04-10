@@ -66,7 +66,7 @@
 				<tbody>
 					<tr v-for="(todo,index) in deviceList">
 						<td>{{((devicePageParam.pageNum-1)*10+(index+1))}}</td>
-						<td><a :href="'#/home/resource/device/'+todo.deviceNumber" title="点击查看详情" class="details m-l">{{todo.deviceNumber}}</a></td>
+						<td><a :href="'#/homek/resource/device/'+todo.deviceNumber" title="点击查看详情" class="details m-l">{{todo.deviceNumber}}</a></td>
 						<td>
 							<span class="f-c-green" v-show="todo.state==1">已激活</span>
 							<span class="f-c-red" v-show="todo.state==0">未激活</span>
@@ -104,7 +104,7 @@
 					<tr v-for="(todo,index) in merchantList">
 						<td>{{((merchantPageParam.pageNum-1)*10+(index+1))}}</td>
 						<td>
-							<a :href="'#/home/resource/merchant/'+todo.dealerId" title="点击查看详情" class="details m-l">{{todo.dealerId}}</a>
+							<a :href="'#/homek/resource/merchant/'+todo.dealerId" title="点击查看详情" class="details m-l">{{todo.dealerId}}</a>
 						</td>
 						<td>{{ todo.companyName }}</td>
 						<td>

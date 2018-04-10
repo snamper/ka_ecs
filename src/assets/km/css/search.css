@@ -189,14 +189,22 @@ display:inline-block;position: absolute;right: 5px;top:50%;width:0.18rem;height:
 
 /*表格*/
 .m-total-table{background-color: #fff;}
-.total-head{  padding: 10px 0px;padding-left: 15px; margin-top: 20px; border:1px solid #dfe6ec;border-bottom: none; font-size: 14px;border-radius: 3px 3px 0 0;}
 .export_excel{width:80px; height:30px;border-radius:7px;border:1px solid forestgreen;background:forestgreen;float:right;
   margin:0 20px 10px 0}
 .export_excel:active{box-shadow: 0 0 4px green}
 .enable{width:80px; height:30px;border-radius:7px;border:1px solid grey;background:grey;float:right;
   color: white;
   margin:0 20px 10px 0;}
-.total-head>b{display:inline-block;background-color:#20a0ff;border-radius:5px;font-weight: normal;color: #fff;vertical-align: top;margin-left:10px;padding:2px 4px;font-size: 12px;}
+.total-head{  padding: 10px 0px;padding-left: 15px; margin-top: 20px; border:1px solid #dfe6ec;border-bottom: none; font-size: 14px;border-radius: 3px 3px 0 0;}
+.total-head span{
+  padding-right: 0.3rem;
+  display: inline-block;
+  vertical-align: middle;
+}
+.total-head b{background-color:#20a0ff;border-radius:5px;font-weight: normal;color: #fff;margin-left:5px;padding:2px 4px;font-size: 12px;}
+.total-head .bg-purple{
+  background-color:#4b3887!important;
+}
 .m-total-table table, .g-base-table{width: 100%;word-break:break-all;word-wrap: break-word;white-space: normal;table-layout:fixed;border-spacing:0px; border-collapse: collapse;  border:1px solid #dfe6ec; background-color: transparent;  text-align: center; }
 .m-total-table table thead{  }
 .m-total-table table thead th, .g-base-table thead th{ height: 35px; background-color: #eef1f6;font-weight: normal;}
@@ -250,11 +258,13 @@ display:inline-block;position: absolute;right: 5px;top:50%;width:0.18rem;height:
 /*导出excel的按钮*/
 .btn_export_excel{
   padding:5px;
-  background: #29b024;
-  border:1px solid #29b024;
-  border-radius: 4px;
+  color: white;
+  background: #13ce66;
+  border:1px solid #13ce66;
+  border-radius: 4px ;
   float: right;
   margin-right:20px;
+  margin-top:-4px;
 }
 .btn_export_excel:active{
   -webkit-box-shadow: 0 0 5px #29b024;

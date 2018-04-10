@@ -188,8 +188,6 @@
 </template>
 <script>
 import "../../../assets/km/css/search.css";
-require("../../../assets/km/js/laydate/laydate.js");
-require("../../../assets/km/js/laydate/skins/default/laydate.css");
 import {reqCommonMethod} from "../../../config/service.js";
 import {errorDeal} from "../../../config/utils.js";
 import pagination from "../../../componentskm/page.vue";
