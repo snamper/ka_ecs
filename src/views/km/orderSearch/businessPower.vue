@@ -56,7 +56,7 @@
 				</div>
 			</div>
 			<div class="row">
-				<span class="dp">申请业务：</span>
+				<span class="dp">业务范围：</span>
 				<div class="m-form-radio">
 					<label><span class="radio"><input type="radio" value="0" v-model="form.type"><span></span></span><span class="text">全部</span></label>
 					<label><span class="radio"><input type="radio" value="4" v-model="form.type"><span></span></span><span class="text">远特售卡</span></label>
@@ -109,7 +109,8 @@
 					<th>商户名称</th>
 					<th>商户ID</th>
 					<th>申请人</th>
-					<th>申请业务</th>
+					<th>业务范围</th>
+					<th>操作类型</th>
 					<th>申请时间</th>
 					<th></th>
 				</tr>
@@ -119,7 +120,7 @@
 					<th>商户名称</th>
 					<th>商户ID</th>
 					<th>申请人</th>
-					<th>申请业务</th>
+					<th>业务范围</th>
                     <th>操作类型</th>
 					<th>申请时间</th>
 					<th>审核人</th>
@@ -139,7 +140,12 @@
 					<td>
 						<span v-if="todo.type==3">联通售卡</span>
 						<span v-if="todo.type==4">远特售卡</span>
+						<span>({{ todo.areaName }})</span>
 					</td>
+					<td>
+                        <span v-if="todo.operateType==1">开通权限</span>
+                        <span v-if="todo.operateType==2">扩展区域</span>
+                    </td>
 					<td>{{ getDateTime(todo.createTime)[6] }}</td>
 					<td><a :name="todo.orderId" @click="details" href="javascript:void(0)" class="details">详情</a></td>
 				</tr>
@@ -154,10 +160,10 @@
 						<span v-if="todo.type==3">联通售卡<span>({{todo.areaName}})</span></span>
 						<span v-if="todo.type==4">远特售卡<span>({{todo.areaName}})</span></span>
 					</td>
-                    <th>
+                    <td>
                         <span v-if="todo.operateType==1">开通权限</span>
                         <span v-if="todo.operateType==2">扩展区域</span>
-                    </th>
+                    </td>
 					<td>{{ getDateTime(todo.createTime)[6] }}</td>
 					<td>{{ todo.customerId }}<br/>（{{ todo.customerName }}）</td>
 					<td>{{ getDateTime(todo.modifyTime)[6] }}</td>
@@ -204,7 +210,7 @@ export default{
 			form:{
 				orderId:'',//订单号码
 				status:0,//订单状态
-				type:0,//申请业务
+				type:0,//业务范围
 				customerPhone:'',//审核人ID
 				dealerId:'',//商户号
 				userPhone:'',//申请人ID
