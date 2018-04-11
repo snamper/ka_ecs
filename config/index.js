@@ -12,8 +12,8 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
         '/km_center_ecs/user':{
-            // target:'http://192.168.10.117:8081',
-            target:'http://192.168.10.24:8081',
+            target:'http://192.168.10.117:8081',
+            // target:'http://192.168.10.24:8081',
             changeOrigin:true,
             pathRewrite:{
                 '^/km_center_ecs/user':'/km_center_ecs/user'

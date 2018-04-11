@@ -102,11 +102,11 @@
 								<b></b>激活商户事后<span v-if="auditCount.registerMerchantAfter!=0">{{auditCount.registerMerchantAfter}}</span>
 							</router-link>
 						</li>
-                        <li v-if="userInfo.isadmin.indexOf('6')>-1||userInfo.isadmin.indexOf('5')>-1||userInfo.isadmin.indexOf('1')>-1">
+                        <!-- <li v-if="userInfo.isadmin.indexOf('6')>-1||userInfo.isadmin.indexOf('5')>-1||userInfo.isadmin.indexOf('1')>-1">
 							<router-link :to="{name:'applySellArea'}">
 								<b></b>申请区域审核<span v-if="auditCount.attribute!=0">{{auditCount.attribute}}</span>
 							</router-link>
-						</li>
+						</li> -->
 					</ul>
 				</li>
 				<li :class="{active:crumb[0].name=='订单查询'}" v-if="off.powerkm1||off.powerkm2||off.powerkm3">
