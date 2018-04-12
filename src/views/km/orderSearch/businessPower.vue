@@ -157,8 +157,10 @@
 					<td>{{ todo.dealerId }}</td>
 					<td>{{ todo.userId }}<br/>（{{ todo.userName }}）</td>
 					<td>
-						<span v-if="todo.type==3">联通售卡<span>({{todo.areaName}})</span></span>
-						<span v-if="todo.type==4">远特售卡<span>({{todo.areaName}})</span></span>
+						<span v-if="todo.type==2">联通售卡<span>({{todo.areaName}})</span></span>
+						<span v-if="todo.type==1">远特售卡<span>({{todo.areaName}})</span></span>
+						<span v-if="todo.type==3">移动售卡<span>({{todo.areaName}})</span></span>
+						<span v-if="todo.type==4">电信售卡<span>({{todo.areaName}})</span></span>
 					</td>
                     <td>
                         <span v-if="todo.operateType==1">开通权限</span>
