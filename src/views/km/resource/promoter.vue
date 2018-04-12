@@ -113,10 +113,10 @@
 							<span v-show="todo.merchantType==2">个人</span>
 						</td>
 						<td>
-							<div v-show="promoterData.t1!='null'">远特（{{ promoterData.t1 }}）</div>
-							<div v-show="promoterData.t2!='null'">联通（{{ promoterData.t2 }}）</div>
-							<div v-show="promoterData.t3!='null'">移动（{{ promoterData.t3 }}）</div>
-							<div v-show="promoterData.t4!='null'">电信（{{ promoterData.t4 }}）</div>
+							<div v-show="todo.t1!='null'">远特（{{ todo.t1 }}）</div>
+							<div v-show="todo.t2!='null'">联通（{{ todo.t2 }}）</div>
+							<div v-show="todo.t3!='null'">移动（{{ todo.t3 }}）</div>
+							<div v-show="todo.t4!='null'">电信（{{ todo.t4 }}）</div>
 						</td>
 						<td>
 							<span class="f-c-green" v-show="todo.isSignAgreement==1">已签约</span>
