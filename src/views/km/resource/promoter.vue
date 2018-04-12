@@ -26,7 +26,7 @@
 						<th>创建时间</th>
 						<th>创建人</th>
 						<th>推广码</th>
-						<th>业务范围</th>
+						
 						<th>号码模式</th>
 						<th>折扣模式</th>
 						<th>转账模式</th>
@@ -39,12 +39,6 @@
 						<td>{{ getDateTime(promoterData.createTime)[6] }}</td>
 						<td>{{ promoterData.modifyUser||'--' }}</td>
 						<td>{{ promoterData.referralCode||'--' }}</td>
-						<td>
-							<div v-show="promoterData.t1!='null'">远特（{{ promoterData.t1 }}）</div>
-							<div v-show="promoterData.t2!='null'">联通（{{ promoterData.t2 }}）</div>
-							<div v-show="promoterData.t3!='null'">移动（{{ promoterData.t3 }}）</div>
-							<div v-show="promoterData.t4!='null'">电信（{{ promoterData.t4 }}）</div>
-						</td>
 						<td>{{ promoterData.phoneModel }}</td>
 						<td>{{ promoterData.discountModel }}</td>
 						<td>{{ promoterData.transterModel }}</td>
@@ -61,6 +55,7 @@
 						<th>设备编号</th>
 						<th>激活状态</th>
 						<th>MAC地址</th>
+						<th>业务范围</th>
 						<th>创建时间</th>
 						<th>激活时间</th>
 					</tr>
@@ -74,6 +69,13 @@
 							<span class="f-c-red" v-show="todo.state==0">未激活</span>
 						</td>
 						<td>{{ todo.mac }}</td>
+						<td>
+							<span v-show="todo.isp==1">远特</span>
+							<span v-show="todo.isp==2">联通</span>
+							<span v-show="todo.isp==3">移动</span>
+							<span v-show="todo.isp==4">电信</span>
+							<span>（{{ todo.area }}）</span>
+						</td>
 						<td>{{ todo.createTime }}</td>
 						<td>{{ todo.activationTime }}</td>
 					</tr>
