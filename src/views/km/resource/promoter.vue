@@ -26,8 +26,10 @@
 						<th>创建时间</th>
 						<th>创建人</th>
 						<th>推广码</th>
+						<th>业务范围</th>
 						<th>号码模式</th>
 						<th>折扣模式</th>
+						<th>转账模式</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -37,14 +39,15 @@
 						<td>{{ getDateTime(promoterData.createTime)[6] }}</td>
 						<td>{{ promoterData.modifyUser||'--' }}</td>
 						<td>{{ promoterData.referralCode||'--' }}</td>
-						<td>{{promoterData.phoneModel}}
-							<!-- <b v-if="promoterData.phoneModel=='basemodel'||promoterData.phoneModel==''">基本模式</b>
-							<b v-else>其它模式</b> -->
+						<td>
+							<div v-show="promoterData.t1!='null'">远特（{{ promoterData.t1 }}）</div>
+							<div v-show="promoterData.t2!='null'">联通（{{ promoterData.t2 }}）</div>
+							<div v-show="promoterData.t3!='null'">移动（{{ promoterData.t3 }}）</div>
+							<div v-show="promoterData.t4!='null'">电信（{{ promoterData.t4 }}）</div>
 						</td>
-						<td>{{promoterData.discountModel}}
-							<!-- <b v-if="promoterData.discountModel=='basemodel'||promoterData.discountModel==''">基本模式</b>
-							<b v-else>其它模式</b> -->
-						</td>
+						<td>{{ promoterData.phoneModel }}</td>
+						<td>{{ promoterData.discountModel }}</td>
+						<td>{{ promoterData.transterModel }}</td>
 					</tr>
 				</tbody>
 			</table>
@@ -58,7 +61,6 @@
 						<th>设备编号</th>
 						<th>激活状态</th>
 						<th>MAC地址</th>
-						<th>业务范围</th>
 						<th>创建时间</th>
 						<th>激活时间</th>
 					</tr>
@@ -72,11 +74,6 @@
 							<span class="f-c-red" v-show="todo.state==0">未激活</span>
 						</td>
 						<td>{{ todo.mac }}</td>
-						<td>
-							<span v-show="todo.businessPower==1">远特售卡</span>
-							<span v-show="todo.businessPower==2">联通售卡</span>
-							<span>（{{ todo.area }}）</span>
-						</td>
 						<td>{{ todo.createTime }}</td>
 						<td>{{ todo.activationTime }}</td>
 					</tr>
@@ -116,9 +113,10 @@
 							<span v-show="todo.merchantType==2">个人</span>
 						</td>
 						<td>
-							<span v-show="todo.businessPower==1">远特售卡</span>
-							<span v-show="todo.businessPower==2">联通售卡</span>
-							<span>（{{ todo.area }}）</span>
+							<div v-show="promoterData.t1!='null'">远特（{{ promoterData.t1 }}）</div>
+							<div v-show="promoterData.t2!='null'">联通（{{ promoterData.t2 }}）</div>
+							<div v-show="promoterData.t3!='null'">移动（{{ promoterData.t3 }}）</div>
+							<div v-show="promoterData.t4!='null'">电信（{{ promoterData.t4 }}）</div>
 						</td>
 						<td>
 							<span class="f-c-green" v-show="todo.isSignAgreement==1">已签约</span>
