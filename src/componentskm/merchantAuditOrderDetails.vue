@@ -73,7 +73,7 @@ export default{
 	props:{
 		list:Object,
 		type:Number,
-		number:String,
+		number:Number,
 	},
 	data(){
 		return{
@@ -99,7 +99,9 @@ export default{
 		},
 		audit:function(result,reason,cb){//复审同意
 			var vm=this;
-            reqCommonMethod({"orderId":vm.list.orderId,"result":result,"reason":reason||''},function(){vm.off.isLoad=false;},"km-ecs/w/attribute/audit")
+            reqCommonMethod({"orderId":vm.list.orderId,"result":result,"reason":reason||''},function(){
+
+            },"km-ecs/w/attribute/audit")
             .then((data)=>{
                 layer.open({
 		            content:'操作成功',
@@ -108,7 +110,8 @@ export default{
 		            msgSkin:'success',
 		        });
                 vm.list.status=result;
-				vm.$parent.list.splice(parseInt(vm.number),1);
+				vm.$parent.searchList(2);
+				vm.$parent.off.details=false;
 				cb&&cb();
             }).catch(error=>errorDeal(error));            
 		},

@@ -217,7 +217,6 @@ export default{
 					"pageNum":page||1
 			},function(){
 				vm.off.isLoad=false;
-				console.log(1);
 			}).then(res=>{
 				vm.deviceList=res.data.list;
 				vm.devicePageParam={

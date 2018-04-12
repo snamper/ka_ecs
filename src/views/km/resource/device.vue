@@ -53,10 +53,11 @@
 							<span v-else class="f-c-red">未绑定</span>
 						</td>
 						<td>
-							<div v-show="todo.t1!='null'">远特（{{ todo.t1 }}）</div>
-							<div v-show="todo.t2!='null'">联通（{{ todo.t2 }}）</div>
-							<div v-show="todo.t3!='null'">移动（{{ todo.t3 }}）</div>
-							<div v-show="todo.t4!='null'">电信（{{ todo.t4 }}）</div>
+							<span v-show="todo.isp==1">远特</span>
+							<span v-show="todo.isp==2">联通</span>
+							<span v-show="todo.isp==3">移动</span>
+							<span v-show="todo.isp==4">电信</span>
+							<span>（{{ todo.area }}）</span>
 						</td>
 					</tr>
 				</tbody>
