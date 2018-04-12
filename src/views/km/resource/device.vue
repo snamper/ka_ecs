@@ -28,7 +28,7 @@
 						<th>激活时间</th>
 						<th>推广方</th>
 						<th>绑定商户</th>
-						<th>售卡范围</th>
+						<th>业务范围</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -53,10 +53,9 @@
 							<span v-else class="f-c-red">未绑定</span>
 						</td>
 						<td>
-							<span v-show="todo.businessPower==1">A（远特售卡）</span>
-							<span v-show="todo.businessPower==2">B（联通售卡）</span>
-							<span v-show="todo.businessPower==3">C（远特售卡+联通售卡）</span>
-							<span v-show="todo.businessPower==4">D（联通售卡+远特售卡）</span>
+							<span v-show="todo.businessPower==1">远特售卡</span>
+							<span v-show="todo.businessPower==2">联通售卡</span>
+							<span>（{{ todo.area }}）</span>
 						</td>
 					</tr>
 				</tbody>

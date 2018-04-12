@@ -58,7 +58,7 @@
 						<th>设备编号</th>
 						<th>激活状态</th>
 						<th>MAC地址</th>
-						<th>售卡范围</th>
+						<th>业务范围</th>
 						<th>创建时间</th>
 						<th>激活时间</th>
 					</tr>
@@ -73,10 +73,9 @@
 						</td>
 						<td>{{ todo.mac }}</td>
 						<td>
-							<span v-show="todo.businessPower==1">A（远特售卡）</span>
-							<span v-show="todo.businessPower==2">B（联通售卡）</span>
-							<span v-show="todo.businessPower==3">C（远特售卡+联通售卡）</span>
-							<span v-show="todo.businessPower==4">D（联通售卡+远特售卡）</span>
+							<span v-show="todo.businessPower==1">远特售卡</span>
+							<span v-show="todo.businessPower==2">联通售卡</span>
+							<span>（{{ todo.area }}）</span>
 						</td>
 						<td>{{ todo.createTime }}</td>
 						<td>{{ todo.activationTime }}</td>
@@ -95,7 +94,7 @@
 						<th>网点名称</th>
 						<th>总部推广渠道</th>
 						<th>商户类型</th>
-						<th>售卡范围</th>
+						<th>业务范围</th>
 						<th>签约状态</th>
 						<th>创建时间</th>
 					</tr>
@@ -117,10 +116,9 @@
 							<span v-show="todo.merchantType==2">个人</span>
 						</td>
 						<td>
-							<span v-show="todo.businessPower==1">A（远特售卡）</span>
-							<span v-show="todo.businessPower==2">B（联通售卡）</span>
-							<span v-show="todo.businessPower==3">C（远特售卡+联通售卡）</span>
-							<span v-show="todo.businessPower==4">D（联通售卡+远特售卡）</span>
+							<span v-show="todo.businessPower==1">远特售卡</span>
+							<span v-show="todo.businessPower==2">联通售卡</span>
+							<span>（{{ todo.area }}）</span>
 						</td>
 						<td>
 							<span class="f-c-green" v-show="todo.isSignAgreement==1">已签约</span>

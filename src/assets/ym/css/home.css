@@ -79,7 +79,7 @@ background-image:-ms-linear-gradient(to right, #258766 0, #5FF1B5 100%);transiti
 .m-user-dropdown>li>.user>.info>.online{}
 .m-user-online{color: #fff;margin-right: 0.4rem;}
 
-.m-crumb>a{color: #fff; /*display: inline-block;vertical-align: middle;height: 0.2rem; line-height: 1.1;*/font-size: 0.16rem;cursor: pointer;}
+.m-crumb>a{color: #fff; /*display: inline-block;vertical-align: middle;height: 0.2rem; line-height: 1.1;*/cursor: pointer;}
 .m-crumb>a:last-child{font-size: 0.15rem;}
 .m-crumb>.mid{padding: 0 7px; position: relative;margin:0 3px;margin-top: -3px;}
 /*响应式*/

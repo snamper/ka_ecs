@@ -45,14 +45,14 @@
   	<aside class="g-side">
 		<nav class="g-side-nav">
 			<header class="g-side-head"><img src="../assets/km/images/logo_page.png" alt="titleLogo"></header>
-            <ul class="mainCatalog" v-if="!off.powerKmHidden">
-                <li :class="{'active':isCheckk}" @click="isCheck('k')">
-                    <div class="mainCataDiv">
-                        <span class="fl">卡盟</span>
-						<b class="animated m-lighter countIcon" :class="{bounce:offCountChange}" v-show="countTotal||auditCount[0]">{{countTotal+auditCount[0]}}</b>                        
-                        <i v-if="!isCheckk" class="u-icon-switchup "></i>
-                        <i v-if="isCheckk" class="u-icon-switchdown "></i>
-                    </div>
+            <ul class="m-mainCatalog">
+                <li :class="{'active':isCheckk}" @click="isCheck('k')" v-if="!off.powerKmHidden">
+                    <span>卡盟</span>
+					<b class="animated m-lighter" :class="{bounce:offCountChange}" v-show="countTotal||auditCount[0]">{{countTotal+auditCount[0]}}</b> 
+				</li>
+				<li  :class="{'active':isChecky}" @click="isCheck('y')" v-if="!off.powerYmHidden">
+                    <span>远盟</span>
+					<b class="animated m-lighter" :class="{bounce:offCountChange}" v-show="auditCountYm.readyCard+auditCountYm.whiteCard+auditCountYm.newChangeCard+auditCountYm.realNameCollection+auditCountYm.fill">{{auditCountYm.readyCard+auditCountYm.whiteCard+auditCountYm.newChangeCard+auditCountYm.realNameCollection+auditCountYm.fill}}</b>
 				</li>
             </ul>
 			<ul class="g-side-ul" :class="{'hide':!isCheckk}" v-if="!off.powerKmHidden">
@@ -89,7 +89,7 @@
 						</li>
 						<li v-if="userInfo.isadmin.indexOf('6')>-1||userInfo.isadmin.indexOf('5')>-1||userInfo.isadmin.indexOf('1')>-1">
 							<router-link :to="{name:'businessPowerAudit',params:{type:'auditing'}}">
-								<b></b>售卡范围审核<span v-if="auditCount.attribute!=0">{{auditCount.attribute}}</span>
+								<b></b>业务范围审核<span v-if="auditCount.attribute!=0">{{auditCount.attribute}}</span>
 							</router-link>
 						</li>
 						<li v-if="userInfo.isadmin.indexOf('6')>-1||userInfo.isadmin.indexOf('5')>-1||userInfo.isadmin.indexOf('1')>-1">
@@ -121,7 +121,7 @@
 						<li><router-link to="/homek/orderSearch/card"><b></b>开卡订单</router-link></li>
 						<li><router-link to="/homek/orderSearch/recharge"><b></b>充值订单</router-link></li>
 						<li><router-link to="/homek/orderSearch/onlineHall"><b></b>网厅订单</router-link></li>
-						<li><router-link :to="{name:'businessPowerSearch',params:{type:'audited'}}"><b></b>售卡范围</router-link></li>
+						<li><router-link :to="{name:'businessPowerSearch',params:{type:'audited'}}"><b></b>业务范围</router-link></li>
 						<li><router-link :to="{name:'registMerchantSearch',params:{type:'search'}}"><b></b>激活商户</router-link></li>
 						<li><router-link to="/homek/orderSearch/reserve"><b></b>预占号码</router-link></li>
 						<!-- <li><router-link to="/home/orderSearch/busCard"><b></b>公交一卡通</router-link></li> -->
@@ -179,16 +179,6 @@
 			</ul>
 
             <!-- 远盟目录 -->
-            <ul class="mainCatalog" v-if="!off.powerYmHidden">
-                <li  :class="{'active':isChecky}" @click="isCheck('y')">
-                    <div class="mainCataDiv">
-                        <span class="fl">远盟</span>
-						<b class="animated m-lighter countIcon" :class="{bounce:offCountChange}" v-show="auditCountYm.readyCard+auditCountYm.whiteCard+auditCountYm.newChangeCard+auditCountYm.realNameCollection+auditCountYm.fill">{{auditCountYm.readyCard+auditCountYm.whiteCard+auditCountYm.newChangeCard+auditCountYm.realNameCollection+auditCountYm.fill}}</b>                                                
-                        <i v-if="!isChecky" class="u-icon-switchup "></i>
-                        <i v-if="isChecky" class="u-icon-switchdown "></i>
-                    </div>
-				</li>
-            </ul>
             <ul class="g-side-ul-ym" :class="{'hide':!isChecky}" v-if="!off.powerYmHidden">
 				<li :class="{active:$route.path.indexOf('/homey/audit')>-1||$route.path=='/homey/wsim'}" v-if="off.power0||off.power1">
 					<b></b>
@@ -407,7 +397,7 @@ export default{
 						crumb[2]={"name":"通服开卡"}
 					}
 				}else if(path.indexOf("businessPower")>-1){
-					crumb[1]={"name":"售卡范围","href":""};
+					crumb[1]={"name":"业务范围","href":""};
 					if(path.indexOf("auditing")>-1){
 						crumb[2]={"name":"待审核"}
 					}
@@ -439,7 +429,7 @@ export default{
 				}else if(path.indexOf("onlineHall")>-1){
 					crumb[1]={"name":"网厅订单","href":""}
 				}else if(path.indexOf("businessPower")>-1){
-					crumb[1]={"name":"售卡范围","href":""};
+					crumb[1]={"name":"业务范围","href":""};
 					if(path.indexOf("audited")>-1){
 						crumb[2]={"name":"已审核"}
 					}
@@ -489,16 +479,10 @@ export default{
         isCheck:function(i){//远盟卡盟运维中心切换
             const vm=this;
             if(i==='k'){
-                if(vm.isCheckk===false){
-                    // window.location.href="#/homek";
-                }
-                vm.isCheckk=!vm.isCheckk;
+                vm.isCheckk=true;
                 vm.isChecky=false;
             }else if(i==='y'){
-                if(vm.isChecky===false){
-                    // window.location.href="#/homey";
-                }
-                vm.isChecky=!vm.isChecky
+                vm.isChecky=true;
                 vm.isCheckk=false;
             }
         },

@@ -12,7 +12,7 @@
 .g-side{width: 1.80rem;background-color:#405364;height: 100%;left:-1.8rem; z-index: 901}
 .g-side-nav{}
 .g-side-head{ height: 0.6rem;line-height: 0.6rem;text-align: center;font-size: 0.32rem;font-weight: bold;color: #3DD79B;letter-spacing: 5px;}
-.g-side-ul-ym{border-bottom: 1px solid #4C6174;overflow: hidden;  -moz-user-select: -moz-none;-khtml-user-select: none;-webkit-user-select: none;-ms-user-select: none;user-select: none;}
+.g-side-ul-ym{border-top:1px solid #2C3A4A;border-bottom: 1px solid #4C6174;overflow: hidden;  -moz-user-select: -moz-none;-khtml-user-select: none;-webkit-user-select: none;-ms-user-select: none;user-select: none;}
 .g-side-ul-ym>li{border-bottom: 1px solid #2C3A4A;border-top: 1px solid #4C6174;position:relative;}
 .g-side-ul-ym>li.active{background-color:#3F5062;border-top-color:inherit;
 /*background-image:-webkit-linear-gradient(to bottom, #556A7F 0, #4D6275 100%);
@@ -27,7 +27,7 @@ box-shadow: inset 0 0 7px rgba(0,0,0,0.3);
 .g-side-ul-ym>li:hover{background-color:#556A7F;border-top-color:#6F8395;}
 .g-side-ul-ym>li.active:hover{background-color:#3F5062;border-top-color:inherit;}
 .g-side-ul-ym>li.active>b, .g-side-ul-ym>li:hover>b{ width: 6px;}
-.g-side-ul-ym>li>a{display:block;color:#fff;font-size: 0.14rem;font-weight: bold;letter-spacing: 1px; }
+.g-side-ul-ym>li>a{display:block;color:#fff;font-size: 0.14rem;letter-spacing: 1px; }
 .g-side-ul-ym>li>a>div{padding:0.18rem 0;position: relative;}
 .g-side-ul-ym>li>a>div>span{display: inline-block;vertical-align: middle;}
 .g-side-ul-ym>li>a>div>i{margin-left: 0.2rem;margin-right: 0.15rem}
@@ -79,7 +79,7 @@ background-image:-ms-linear-gradient(to right, #258766 0, #5FF1B5 100%);transiti
 .m-user-dropdown>li>.user>.info>.online{}
 .m-user-online{color: #fff;margin-right: 0.4rem;}
 
-.m-crumb>a{color: #fff; /*display: inline-block;vertical-align: middle;height: 0.2rem; line-height: 1.1;*/font-size: 0.16rem;cursor: pointer;}
+.m-crumb>a{color: #fff; /*display: inline-block;vertical-align: middle;height: 0.2rem; line-height: 1.1;*/cursor: pointer;}
 .m-crumb>a:last-child{font-size: 0.15rem;}
 .m-crumb>.mid{padding: 0 7px; position: relative;margin:0 3px;margin-top: -3px;}
 /*响应式*/

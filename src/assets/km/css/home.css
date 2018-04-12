@@ -78,34 +78,8 @@
   cursor: pointer;
 }
 .g-side-head img{
-    width: 88%;
+    width: 80%;
     margin-top: 10px;
-}
-b.countIcon{
-    right: 1rem;
-}
-.mainCatalog li{
-    border-bottom: 1px solid #2C3A4A;
-    border-top: 1px solid #4C6174;
-    position: relative;
-    overflow: hidden;
-    display: block;
-    font-size: 0.16rem;
-    letter-spacing: 1px;
-    text-align: center;
-    background-color: #3A4A58;
-}
-.mainCatalog .mainCataDiv{
-    padding-left: 16px;
-    padding-right:16px; 
-    height: 60px;
-}
-.mainCatalog li span{
-    color: #fff;
-}
-.mainCatalog li div{
-    padding: 0.18rem 0;
-    position: relative;
 }
 .g-side-ul {
   border-bottom: 1px solid #4C6174;
@@ -119,8 +93,7 @@ b.countIcon{
   -webkit-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  /* border-top: 1px solid #4C6174; */
-  /* height: 465px; */
+  border-top:1px solid #2C3A4A;
 }
 
 .g-side-ul>li {
@@ -137,31 +110,16 @@ b.countIcon{
 }
 .g-side-ul>li.active {
   background-color: #3F5062;
-  border-top-color: inherit;
+  border-top: none;
   box-shadow: inset 0 0 7px rgba(0, 0, 0, 0.3);
 }
-.mainCatalog>li.active{
-  border-top-color: inherit;
-  box-shadow: inset 0 0 7px rgba(88, 88, 88, 0.3);
-}
+
 
 .g-side-ul>li.active>.g-side-subul {
   margin-bottom: 0.2rem;
   opacity: 1;
   height:auto;
 }
-/*.g-side-ul>li.active>.nav1{
-	height: 1.38rem;
-}
-.g-side-ul>li.active>.nav2{
-	height: 1.01rem;
-}
-.g-side-ul>li.active>.nav3{
-	height: 0.64rem;
-}
-.g-side-ul>li.active>.nav4{
-	height: 0.27rem;
-}*/
 .g-side-ul>li.active:hover {
   background-color: #3F5062;
   border-top-color: inherit;
@@ -306,6 +264,43 @@ b.countIcon{
 .g-audit-menu{width: 100%;height: 100%; padding:0.15rem; display: table; word-break: break-word;word-wrap: break-word;white-space: normal;}
 .g-audit-menu>.g-audit-menu-c{ text-align: center;display: table-cell; vertical-align: middle;}
 
+/*头部系统切换*/
+.m-mainCatalog{
+  display: flex;
+}
+.m-mainCatalog>li{
+  position: relative;
+  cursor: pointer;
+  flex: 1;
+  color: #fff;
+  text-align: center;
+  padding: 0.2rem 0;
+  font-size: 0.14rem;
+}
+.m-mainCatalog>li:before{
+  content: '';
+  display: block;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 3px;
+  width: 0;
+  background-color: #3DD79B;
+  transition: width .3s linear;
+}
+.m-mainCatalog>.active{
+  color: #3DD79B;
+}
+.m-mainCatalog>.active:before{
+  width: 100%;
+}
+.m-mainCatalog>li>.m-lighter{
+  right: 5px;
+  top: 0.22rem;
+}
+.m-mainCatalog>li>span{
+  letter-spacing: 1px;
+}
 
 /*背景图元件*/
 
@@ -317,20 +312,6 @@ b.countIcon{
   background-size: 100%;
   vertical-align: middle;
 }
-.u-icon-switchup {
-    background-image: url(../assets/km/images/up.png);
-    width: 0.2rem;
-    height: 0.2rem;
-    margin-left: 60px;
-    color: white;
-  }
-
-.u-icon-switchdown {
-    background-image: url(../assets/km/images/down.png);
-    width: 0.2rem;
-    height: 0.2rem;
-    margin-left: 60px;
-  }
 
 .u-icon-menu {
   background-image: url(../assets/km/images/menu.png);
