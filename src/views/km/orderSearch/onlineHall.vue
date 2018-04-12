@@ -236,11 +236,11 @@
             vm.off.isLoad=false;
           },"km-ecs/w/boss/order/query")
               .then((data)=>{
-                	vm.list=data.data.list
-          				vm.total=data.data.total;
-          				vm.maxpage=Math.ceil(parseInt(data.data.total)/10);
-          				vm.pageNum=page||1;
-                  vm.callback=function(v){vm.searchList(v)}; 
+                  vm.list=data.data.list
+                  vm.total=data.data.total;
+                  vm.maxpage=Math.ceil(parseInt(data.data.total)/10);
+                  vm.pageNum=page||1;
+                  vm.callback=function(v){vm.searchList(index,v)}; 
                   vm.off.isLoad=false; 
               }).catch(error=>errorDeal(error)); 	 
         }
