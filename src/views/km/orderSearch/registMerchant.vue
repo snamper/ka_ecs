@@ -108,10 +108,10 @@
 						<span v-show="todo.merchantType==2">个人</span>
 					</td>
 					<td>
-						<span v-show="todo.merchantAttribute==1">A（远特售卡）</span>
-						<span v-show="todo.merchantAttribute==2">B（联通售卡）</span>
-						<span v-show="todo.merchantAttribute==3">C（远特售卡+联通售卡）</span>
-						<span v-show="todo.merchantAttribute==4">D（联通售卡+远特售卡）</span>
+						<span v-show="todo.openingType==1">远特卡<span v-if="todo.openingArea">({{todo.openingArea}})</span></span>
+                        <span v-show="todo.openingType==2">联通卡<span v-if="todo.openingArea">({{todo.openingArea}})</span></span>
+                        <span v-show="todo.openingType==3">移动卡<span v-if="todo.openingArea">({{todo.openingArea}})</span></span>
+                        <span v-show="todo.openingType==4">电信卡<span v-if="todo.openingArea">({{todo.openingArea}})</span></span>
 					</td>
 					<td>{{todo.phone}}</td>
 					<td>

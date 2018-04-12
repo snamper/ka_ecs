@@ -23,8 +23,8 @@
 									<td><span v-for="x in list.openedScopes">{{x.areas}}(<span v-if="x.type==1">远特售卡</span><span v-if="x.type==2">联通售卡</span><span v-if="x.type==3">移动售卡</span><span v-if="x.type==4">电信售卡</span>)<br></span></td>
 								</tr>
 								<tr><td>申请业务范围:</td><td>
-                                <span v-if="list.operateType==2"><span>{{list.openingArea}}</span>(<span v-if="list.type==1">远特售卡</span><span v-if="list.type==2">联通售卡</span><span v-if="list.type==3">移动售卡</span><span v-if="list.type==4">电信售卡</span>)</span>
-                                <span v-if="list.operateType==1"><span v-if="list.type==1">远特售卡</span><span v-if="list.type==2">联通售卡</span><span v-if="list.type==3">移动售卡</span><span v-if="list.type==4">电信售卡</span>(<span>{{list.openingArea}}</span>)</span>
+                                <span v-if="list.operateType==2"><span>{{list.openingArea}}</span>(<span v-if="list.openingType==1">远特售卡</span><span v-if="list.openingType==2">联通售卡</span><span v-if="list.openingType==3">移动售卡</span><span v-if="list.openingType==4">电信售卡</span>)</span>
+                                <span v-if="list.operateType==1"><span v-if="list.openingType==1">远特售卡</span><span v-if="list.openingType==2">联通售卡</span><span v-if="list.openingType==3">移动售卡</span><span v-if="list.openingType==4">电信售卡</span>(<span>{{list.openingArea}}</span>)</span>
                                 </td>
 								</tr>
                                 <tr><td>操作类型:</td><td><span v-if="list.operateType==1">开通权限</span><span v-if="list.operateType==2">扩展区域</span></td></tr>
@@ -107,8 +107,8 @@ export default{
 		            time: 4,
 		            msgSkin:'success',
 		        });
-				vm.list.status=result;
-				vm.$parent.list.splice((parseInt(vm.number)+1),1);
+                vm.list.status=result;
+				vm.$parent.list.splice(parseInt(vm.number),1);
 				cb&&cb();
             }).catch(error=>errorDeal(error));            
 		},

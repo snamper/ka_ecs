@@ -57,10 +57,10 @@
 										<span v-show="list.merchantType==2">个人</span>
 									</td></tr>
 									<tr><td>售卡权限：</td><td>
-										<span v-show="list.merchantAttribute==1">远特卡</span>
-										<span v-show="list.merchantAttribute==2">联通卡</span>
-										<span v-show="list.merchantAttribute==3">远特卡+联通卡</span>
-										<span v-show="list.merchantAttribute==4">联通卡+远特卡</span>
+										 <span v-show="list.openingType==1">远特卡<span v-if="list.openingArea">({{list.openingArea}})</span></span>
+										<span v-show="list.openingType==2">联通卡<span v-if="list.openingArea">({{list.openingArea}})</span></span>
+										<span v-show="list.openingType==3">移动卡<span v-if="list.openingArea">({{list.openingArea}})</span></span>
+										<span v-show="list.openingType==4">电信卡<span v-if="list.openingArea">({{list.openingArea}})</span></span>
 									</td></tr>
 									<tr><td>折扣模式：</td><td>{{list.discountModel}}</td></tr>
 									<tr><td>号码模式：</td><td>{{list.phoneModel}}</td></tr>

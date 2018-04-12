@@ -138,9 +138,10 @@
 					<td>{{ todo.dealerId }}</td>
 					<td>{{ todo.userId }}<br/>（{{ todo.userName }}）</td>
 					<td>
-						<span v-if="todo.type==3">联通售卡</span>
-						<span v-if="todo.type==4">远特售卡</span>
-						<span>({{ todo.areaName }})</span>
+						<span v-if="todo.openingType==2">联通售卡<span>({{todo.openingArea}})</span></span>
+						<span v-if="todo.openingType==1">远特售卡<span>({{todo.openingArea}})</span></span>
+						<span v-if="todo.openingType==3">移动售卡<span>({{todo.openingArea}})</span></span>
+						<span v-if="todo.openingType==4">电信售卡<span>({{todo.openingArea}})</span></span>
 					</td>
 					<td>
                         <span v-if="todo.operateType==1">开通权限</span>
@@ -157,10 +158,10 @@
 					<td>{{ todo.dealerId }}</td>
 					<td>{{ todo.userId }}<br/>（{{ todo.userName }}）</td>
 					<td>
-						<span v-if="todo.type==2">联通售卡<span>({{todo.areaName}})</span></span>
-						<span v-if="todo.type==1">远特售卡<span>({{todo.areaName}})</span></span>
-						<span v-if="todo.type==3">移动售卡<span>({{todo.areaName}})</span></span>
-						<span v-if="todo.type==4">电信售卡<span>({{todo.areaName}})</span></span>
+						<span v-if="todo.openingType==2">联通售卡<span>({{todo.openingArea}})</span></span>
+						<span v-if="todo.openingType==1">远特售卡<span>({{todo.openingArea}})</span></span>
+						<span v-if="todo.openingType==3">移动售卡<span>({{todo.openingArea}})</span></span>
+						<span v-if="todo.openingType==4">电信售卡<span>({{todo.openingArea}})</span></span>
 					</td>
                     <td>
                         <span v-if="todo.operateType==1">开通权限</span>
@@ -207,7 +208,8 @@ export default{
 			off:{
 				type:1,//1，待审核；2，已审核
 				isLoad:0,//加载条
-				details:0,//详情页面开关
+                details:0,//详情页面开关
+                number:'',
 			},
 			form:{
 				orderId:'',//订单号码
@@ -301,7 +303,7 @@ export default{
             // });
             reqCommonMethod(json,function(){vm.off.isLoad=false;},"km-ecs/w/attribute/search")
             .then((data)=>{
-	            vm.list=data.data.list;
+                vm.list=data.data.list;
 				vm.total=data.data.total;
 				vm.maxpage=Math.ceil(parseInt(data.data.total)/10);
 				vm.pageNum=page||1;
@@ -322,7 +324,12 @@ export default{
             // });
              reqCommonMethod({"orderId":orderId},function(){vm.off.isLoad=false;},"km-ecs/w/attribute/detail")
              .then((data)=>{
-	            vm.detailsData=data.data;
+                vm.detailsData=data.data;
+                for(let i=0;i<vm.list.length;i++){
+                    if(vm.list[i].orderId==orderId){
+                        vm.off.number=i;
+                    }
+                };
                 vm.off.details=true;
                 vm.off.isLoad=false;
              }).catch(error=>errorDeal(error)); 	

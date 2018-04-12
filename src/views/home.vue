@@ -56,12 +56,12 @@
 				</li>
             </ul>
 			<ul class="g-side-ul" :class="{'hide':!isCheckk}" v-if="!off.powerKmHidden">
-				<li :class="{active:crumb[0].name=='首页'}" v-if="off.powerkm2||off.powerkm1">
+				<li :class="{active:crumb[0].name=='数据统计'}" v-if="off.powerkm2||off.powerkm1">
 					<b></b>
 					<router-link to="/homek/dashboard">
 						<div>
 							<i class="u-icon-home"></i>
-							<span>首页</span>
+							<span>数据统计</span>
 						</div>
 					</router-link>
 				</li>
@@ -377,7 +377,7 @@ export default{
 				mainDom=document.getElementById("main");
             
             if(path.indexOf("/homek/dashboard")>-1){
-				crumb[0]={"name":"首页"};
+				crumb[0]={"name":"数据统计"};
 			}else if(path.indexOf("/homek/audit")>-1){
 				crumb[0]={"name":"订单审核"}
 				if(path.indexOf("card/realtime")>-1){

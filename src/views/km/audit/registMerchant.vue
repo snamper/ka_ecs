@@ -83,16 +83,14 @@
 										<span v-show="auditData.merchantType==2">个人</span>
 									</td></tr>
 									<tr><td>售卡权限：</td><td>
-										<span v-show="auditData.merchantAttribute==1">远特卡</span>
-										<span v-show="auditData.merchantAttribute==2">联通卡</span>
-										<span v-show="auditData.merchantAttribute==3">远特卡+联通卡</span>
-										<span v-show="auditData.merchantAttribute==4">联通卡+远特卡</span>
+                                        <span v-show="auditData.openingType==1">远特卡<span v-if="auditData.openingArea">({{auditData.openingArea}})</span></span>
+										<span v-show="auditData.openingType==2">联通卡<span v-if="auditData.openingArea">({{auditData.openingArea}})</span></span>
+										<span v-show="auditData.openingType==3">移动卡<span v-if="auditData.openingArea">({{auditData.openingArea}})</span></span>
+										<span v-show="auditData.openingType==4">电信卡<span v-if="auditData.openingArea">({{auditData.openingArea}})</span></span>
 									</td></tr>
 									<tr><td>折扣模式：</td><td>{{auditData.discountModel}}</td></tr>
 									<tr><td>号码模式：</td><td>{{auditData.phoneModel}}</td></tr>
 									<tr><td>转账模式：</td><td>{{auditData.transferModel}}</td></tr>
-									
-									
 									<tr><td>设备编号：</td><td>{{auditData.devMac}}</td></tr>
 									<tr><td>设备MAC：</td><td>{{auditData.devMacAddress}}</td></tr>
 									<tr><td>推广渠道ID：</td><td>{{auditData.popchannel}}</td></tr>
