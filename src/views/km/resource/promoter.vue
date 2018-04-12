@@ -174,8 +174,6 @@ export default{
 		searchClick(){
 			var vm=this;
 			if(vm.off.isLoad)return false;
-			vm.promoterData={};
-			vm.deviceList=[];
 			if(!vm.form.dealerId){
 				layer.open({
 		            content:'请输入查询的推广方ID',
@@ -186,6 +184,9 @@ export default{
 		        return false;
 			}
 			vm.off.isLoad=true;
+			vm.promoterData={};
+			vm.deviceList=[];
+			vm.merchantList=[];
 			unifySearchApi({
 					"opKey":"info.promoter.search",
 					"params":["'"+vm.form.dealerId+"'"],
