@@ -294,44 +294,7 @@ export default{
 		},
 		detailsTime(){//用时信息
 			var vm=this;
-			// vm.AJAX("w/handler/query",{"opKey":"order.time.details","params":['sys_order_id="'+vm.list.orderId+'"'],"pageSize":"10","pageNum":"-1"},function(data){
-			// 	var list_item= data.data.list[0],str='',str2='';
-			// 	if(list_item){
-			// 		if(list_item.card_type==1){
-			// 			str+=`<li class="clr"><div class="fl">实时审核时间：</div><div class="fright">${vm.$parent.getDateTime(list_item.time_real_audited)[6]}</div></li>`;
-			// 			str2+=`<li class="clr"><div class="fl">开卡保存订单时间：</div><div class="fright">${vm.$parent.getDateTime(list_item.time_save_order)[6]}</div></li>`;
-			// 		}else if(list_item.card_type==2){
-			// 			str+=`<li class="clr"><div class="fl">开户成功时间：</div><div class="fright">${vm.$parent.getDateTime(list_item.time_serverice_open)[6]}</div></li>`;
-			// 		}
-			// 		layer.open({
-			// 			content:`<ul class="f-scroll-lt lay-details">
-			// 			<li class="clr"><div class="fl">生成时间：</div><div class="fright">${vm.$parent.getDateTime(list_item.time_create_order)[6]}</div></li>
-			// 			<li class="clr"><div class="fl">保存套餐时间：</div><div class="fright">${vm.$parent.getDateTime(list_item.time_set_business)[6]}</div></li>
-			// 			<li class="clr"><div class="fl">保存身份信息时间：</div><div class="fright">${vm.$parent.getDateTime(list_item.time_set_user_info)[6]}</div></li>
-			// 			<li class="clr"><div class="fl">支付时间：</div><div class="fright">${vm.$parent.getDateTime(list_item.time_payed)[6]}</div></li>
-			// 			<li class="clr"><div class="fl">自动审核时间：</div><div class="fright">${vm.$parent.getDateTime(list_item.time_auto_audited)[6]}</div></li>${str}
-			// 			<li class="clr"><div class="fl">受理单提交时间：</div><div class="fright">${vm.$parent.getDateTime(list_item.time_accepted)[6]}</div></li>
-			// 			<li class="clr"><div class="fl">请求IMSI时间：</div><div class="fright">${vm.$parent.getDateTime(list_item.time_imsi_request)[6]}</div></li>
-			// 			<li class="clr"><div class="fl">拿到IMSI时间：</div><div class="fright">${vm.$parent.getDateTime(list_item.time_imsi_got)[6]}</div></li>
-			// 			<li class="clr"><div class="fl">提交写卡结果时间：</div><div class="fright">${vm.$parent.getDateTime(list_item.time_write_card)[6]}</div></li>${str2}
-			// 			<li class="clr"><div class="fl">提交到BOSS时间：</div><div class="fright">${vm.$parent.getDateTime(list_item.time_submit_order)[6]}</div></li>
-			// 			<li class="clr"><div class="fl">开卡异步结果时间：</div><div class="fright">${vm.$parent.getDateTime(list_item.time_order_result)[6]}</div></li>
-			// 			<li class="clr"><div class="fl">事后审核时间：</div><div class="fright">${vm.$parent.getDateTime(list_item.time_after_audit)[6]}</div></li></ul>`,
-			// 			type:0,
-			// 			title:'开卡时间详情',
-			// 			btn:0,
-			// 			style:'width:auto;'
-			// 		});
-			// 	}else{
-			// 		layer.open({
-			//             content:'暂无该订单时间详情',
-			//             skin: 'msg',
-			//             time: 2,
-			//             msgSkin:'error',
-			//         })
-			// 	}
-            // });
-            reqCommonMethod({"opKey":"order.time.details","params":['sys_order_id="'+vm.list.orderId+'"'],"pageSize":"10","pageNum":"-1"},function(){vm.off.isLoad=false},"km-ecs/w/handler/query")
+            reqCommonMethod({"opKey":"order.time.details","params":['sys_order_id="'+vm.list.orderId+'"'],"pageSize":"10","pageNum":"-1"},false,"km-ecs/w/handler/query")
             .then((data)=>{
 				var list_item= data.data.list[0],str='',str2='';
 				if(list_item){
@@ -372,39 +335,7 @@ export default{
 		},
         detailsOrder:function(){//开卡订单详情
             var vm=this;
-			// vm.AJAX('km-ecs/w/audit/openCardInfo',{"transactionId":vm.list.orderId},function(data){
-			// 	var list= data.data,str='',payed='';
-			// 	for(let i in list.optionalPackage){
-			// 		str+='<p>'+list.optionalPackage[i].title+'</p>';
-			// 	}
-			// 	if(list.payed==1){
-			// 		payed+='<li class="clr"><div class="fl">实付价格：</div><div class="fright">'+(parseFloat(list.actualPrice)/100).toFixed(2)+'元<b class="f-c-grey">（系统号码占用费'+(parseFloat(list.actualPrice_x)/10000).toFixed(2)+'元+商家自定占用费'+(parseFloat(list.updPrice)/100).toFixed(2)+'元+预存话费'+(parseFloat(list.actualPrice_y)/10000).toFixed(2)+'元）</b></div></li>'+
-			// 			   '<li class="clr"><div class="fl">抵扣金额：</div><div class="fright">'+(parseFloat(list.deductionMoney)/100).toFixed(2)+'元</div></li>'+
-			// 			   '<li class="clr"><div class="fl">开卡返佣：</div><div class="fright">'+(parseFloat(list.commission)/100).toFixed(2)+'元<b class="f-c-grey">（系统号码占用费'+(parseFloat(list.commission_x)/100).toFixed(2)+'元+商家自定占用费'+(parseFloat(list.updPrice)/100).toFixed(2)+'元+预存话费'+(parseFloat(list.commission_y)/100).toFixed(2)+'元）</b></div></li>'+
-			// 			   '<li class="clr"><div class="fl">支付模式：</div><div class="fright">'+list.payChannel+'</div></li>';
-			// 	}
-			// 	layer.open({
-			// 		content:'<ul class="f-scroll-lt lay-details">'+
-			// 					'<li class="clr"><div class="fl">订单号：</div><div class="fright">'+list.sysOrderId+'</div></li>'+
-			// 					'<li class="clr"><div class="fl">BOSS流水号：</div><div class="fright">'+list.transactionId+'</div></li>'+
-			// 					'<li class="clr"><div class="fl">用户姓名：</div><div class="fright">'+list.userName+'</div></li>'+
-			// 					'<li class="clr"><div class="fl">电话号码：</div><div class="fright">'+list.phoneNumber+'（<b class="f-c-grey">'+vm.$parent.translateData(5,list.phoneLevel)+'</b>，'+list.phoneHome+'）</div></li>'+
-			// 					'<li class="clr"><div class="fl">ICCID：</div><div class="fright">'+list.ICCID+'</div></li>'+
-			// 					'<li class="clr"><div class="fl">IMSI卡号：</div><div class="fright">'+list.esim+'</div></li>'+
-			// 					'<li class="clr"><div class="fl">状态修改时间：</div><div class="fright">'+vm.$parent.getDateTime(list.timestamp)[6]+'</div></li>'+
-			// 					'<li class="clr"><div class="fl">应付价格：</div><div class="fright">'+((parseFloat(list.price_x)/100)+(parseFloat(list.price_y)/100)+(parseFloat(list.updPrice)/100)).toFixed(2)+'元<b class="f-c-grey">（系统号码占用费'+(parseFloat(list.price_x)/100).toFixed(2)+'元+商家自定占用费'+(parseFloat(list.updPrice)/100).toFixed(2)+'元+预存话费'+(parseFloat(list.price_y)/100).toFixed(2)+'元）</b></div></li>'+payed+
-			// 					'<li class="clr"><div class="fl">预占保证金：</div><div class="fright">'+(parseFloat(list.occupy)/100).toFixed(2)+'元</div></li>'+
-			// 					'<li class="clr"><div class="fl">退回预占保证金：</div><div class="fright">'+(parseFloat(list.occupyReturn)/100).toFixed(2)+'元</div></li>'+
-			// 					'<li class="clr"><div class="fl">扣除预占保证金：</div><div class="fright">'+(parseFloat(list.occupyDeduct)/100).toFixed(2)+'元</div></li>'+
-			// 					'<li class="clr"><div class="fl">已选套餐：</div><div class="fright">'+list.package+'</div></li>'+
-			// 					'<li class="clr"><div class="fl">已选可选包：</div><div class="fright">'+str+'</div></li></ul>',
-			// 		type:0,
-			// 		title:'开卡订单详情',
-			// 		btn:0,
-			// 		style:'width:auto;'
-			// 	});
-            // });
-            reqCommonMethod({"transactionId":vm.list.orderId},function(){vm.off.isLoad=false},"km-ecs/w/audit/openCardInfo")
+            reqCommonMethod({"transactionId":vm.list.orderId},false,"km-ecs/w/audit/openCardInfo")
             .then((data)=>{
 				var list= data.data,str='',payed='';
 				for(let i in list.optionalPackage){
@@ -440,22 +371,7 @@ export default{
 		},
 		detailsPayOrder:function(){//支付订单详情
 			var vm=this;
-			// vm.AJAX('w/audit/payInfo',{"payId":vm.list.payOrderId},function(data){
-			// 	var list= data.data;
-			// 	layer.open({
-			// 		content:'<ul class="f-scroll-lt lay-details">'+
-			// 		'<li class="clr"><div class="fl">系统流水号：</div><div class="fright">'+list.sysPayId+'</div></li>'+
-			// 		'<li class="clr"><div class="fl">第三方流水号：</div><div class="fright">'+list.payId+'</div></li>'+
-			// 		'<li class="clr"><div class="fl">支付渠道：</div><div class="fright">'+list.payChannel+'</div></li>'+
-			// 		'<li class="clr"><div class="fl">支付方式：</div><div class="fright">'+list.payType+'</div></li>'+
-			// 		'<li class="clr"><div class="fl">支付金额：</div><div class="fright">'+list.payMoney+'元</div></li></ul>',
-			// 		type:0,
-			// 		title:'支付订单详情',
-			// 		btn:0,
-			// 		style:'width:auto;'
-			// 	});
-            // });
-            reqCommonMethod({"payId":vm.list.payOrderId},function(){vm.off.isLoad=false},"km-ecs/w/audit/payInfo")
+            reqCommonMethod({"payId":vm.list.payOrderId},false,"km-ecs/w/audit/payInfo")
             .then((data)=>{
 				var list= data.data;
 				layer.open({
@@ -474,12 +390,7 @@ export default{
 		},
 		detailsUser:function(){//操作者详情
 			var vm=this;
-			// vm.AJAX('w/audit/getUserInfo',{"userId":vm.list.operatorId},function(data){
-			// 	vm.detailsList=data.data;
-			// 	vm.isShowDetails=true;
-			// 	vm.typeDetails=1;
-            // });
-            reqCommonMethod({"userId":vm.list.operatorId},function(){vm.off.isLoad=false},"km-ecs/w/audit/getUserInfo")
+            reqCommonMethod({"userId":vm.list.operatorId},false,"km-ecs/w/audit/getUserInfo")
             .then((data)=>{
                 vm.detailsList=data.data;
 				vm.isShowDetails=true;
@@ -488,12 +399,7 @@ export default{
 		},
 		detailsMerchant:function(){//商户详情
 			var vm=this;
-			// vm.AJAX('w/audit/getMerchantInfo',{"dealerId":vm.list.dealerId},function(data){
-			// 	vm.detailsList=data.data;
-			// 	vm.isShowDetails=true;
-			// 	vm.typeDetails=2;
-            // });
-            reqCommonMethod({"dealerId":vm.list.dealerId},function(){vm.off.isLoad=false},"km-ecs/w/audit/getMerchantInfo")
+            reqCommonMethod({"dealerId":vm.list.dealerId},false,"km-ecs/w/audit/getMerchantInfo")
             .then((data)=>{
                 vm.detailsList=data.data;
 				vm.isShowDetails=true;
@@ -502,59 +408,7 @@ export default{
 		},
 		autoAuditInfo(){//自动审核详情
 			var vm=this;
-			// vm.AJAX("w/handler/query",{"opKey":"order.autoAudit.details","params":['order_id="'+vm.list.orderId+'"'],"pageSize":"10","pageNum":"-1"},function(data){
-			// 	var list_item1= data.data.list[0];
-			// 	layer.open({
-			// 		content:`<ul class="f-scroll-lt lay-details o-fl-w">
-			// 		<li class="clr"><div class="fl">正面与手持对比相似度：</div><div class="fright">${list_item1.frontHandImageSimilarity}%</div></li>
-			// 		<li class="clr"><div class="fl">正面与第三方对比相似度：</div><div class="fright">${list_item1.frontImageSimilarity}%</div></li>
-			// 		<li class="clr"><div class="fl">手持与第三方相似度：</div><div class="fright">${list_item1.handImageSimilarity}%</div></li>
-			// 		<li class="clr"><div class="fl">活体识别照相似度：</div><div class="fright">${list_item1.livingImageSimilarity}%</div></li>
-			// 		<li class="clr"><div class="fl">年龄校验结果：</div><div class="fright">${
-			// 			list_item1.ageCheck==1?'<span class="fCGreen">成功</span>':
-			// 			list_item1.ageCheck==2?'<span class="fCRed">失败</span>':
-			// 			list_item1.ageCheck==3?'<span class="fCYellow">未定</span>':	'--'
-			// 		}</div></li>
-			// 		<li class="clr"><div class="fl">地址校验结果：</div><div class="fright">${
-			// 			list_item1.addressCheck==1?'<span class="fCGreen">成功</span>':
-			// 			list_item1.addressCheck==2?'<span class="fCRed">失败</span>':
-			// 			list_item1.addressCheck==3?'<span class="fCYellow">未定</span>':	'--'
-			// 		}</div></li>
-			// 		<li class="clr"><div class="fl">身份证有效期校验结果：</div><div class="fright">${
-			// 			list_item1.periodCheck==1?'<span class="fCGreen">成功</span>':
-			// 			list_item1.periodCheck==2?'<span class="fCRed">失败</span>':
-			// 			list_item1.periodCheck==3?'<span class="fCYellow">未定</span>':	'--'
-			// 		}</div></li>
-			// 		<li class="clr"><div class="fl">身份证号与正面OCR匹配结果：</div><div class="fright">${
-			// 			list_item1.ocrIdCardNoCheck==1?'<span class="fCGreen">成功</span>':
-			// 			list_item1.ocrIdCardNoCheck==2?'<span class="fCRed">失败</span>':
-			// 			list_item1.ocrIdCardNoCheck==3?'<span class="fCYellow">未定</span>':	'--'
-			// 		}</div></li>
-			// 		<li class="clr"><div class="fl">有效期与背面OCR匹配结果：</div><div class="fright">${
-			// 			list_item1.ocrIdCardPeriodCheck==1?'<span class="fCGreen">成功</span>':
-			// 			list_item1.ocrIdCardPeriodCheck==2?'<span class="fCRed">失败</span>':
-			// 			list_item1.ocrIdCardPeriodCheck==3?'<span class="fCYellow">未定</span>':	'--'
-			// 		}</div></li>
-			// 		<li class="clr"><div class="fl">上传身份证号与OCR对比相似度：</div><div class="fright">${list_item1.idCardNoSimilarity}%</div></li>
-			// 		<li class="clr"><div class="fl">上传姓名与OCR对比相似度：</div><div class="fright">${list_item1.idCardNameSimilarity}%</div></li>
-			// 		<li class="clr"><div class="fl">上传地址与OCR对比相似度：</div><div class="fright">${list_item1.idCardAddressSimilarity}%</div></li>
-			// 		<li class="clr"><div class="fl">上传有效期与OCR对比相似度：</div><div class="fright">${list_item1.idCardPeriodSimilarity}%</div></li>
-			// 		<li class="clr"><div class="fl">审核结果：</div><div class="fright">${
-			// 			list_item1.result==1?'<span class="fCGreen">成功</span>':
-			// 			list_item1.result==2?'<span class="fCRed">拒绝</span>':
-			// 			list_item1.result==3?'<span class="fCYellow">转人工审核</span>':	'--'
-			// 		}</div></li>
-			// 		<li class="clr"><div class="fl">拒绝理由：</div><div class="fright">${
-			// 			list_item1.code==1018?'<span class="fCRed">远特开卡超过上限</span>':
-			// 			list_item1.code==1019?'<span class="fCRed">联通开卡超过上限</span>':'--'
-			// 		}</div></li></ul>`,
-			// 		type:0,
-			// 		title:'自动审核详情',
-			// 		btn:0,
-			// 		style:'width:auto;'
-			// 	});
-            // });
-            reqCommonMethod({"opKey":"order.autoAudit.details","params":['order_id="'+vm.list.orderId+'"'],"pageSize":"10","pageNum":"-1"},function(){vm.off.isLoad=false},"km-ecs/w/handler/query")
+            reqCommonMethod({"opKey":"order.autoAudit.details","params":['order_id="'+vm.list.orderId+'"'],"pageSize":"10","pageNum":"-1"},false,"km-ecs/w/handler/query")
             .then((data)=>{
 				var list_item1= data.data.list[0];
 				layer.open({
@@ -610,19 +464,7 @@ export default{
 		},
 		agree:function(){//复审同意
 			var vm=this;
-			// vm.AJAX('w/audit/reAudit',{"orderId":vm.list.orderId},function(data){
-			// 	layer.open({
-		    //         content:'复审成功',
-		    //         skin: 'msg',
-		    //         time: 4,
-		    //         msgSkin:'success',
-		    //     })
-			// 	vm.list.status=4;
-			// 	vm.list.cardStatus=1
-			// 	vm.$parent.list[parseInt(vm.number)].status=4;
-			// 	vm.$parent.list[parseInt(vm.number)].cardStatus=1;
-            // });
-            reqCommonMethod({"orderId":vm.list.orderId},function(){vm.off.isLoad=false},"km-ecs/w/audit/reAudit")
+            reqCommonMethod({"orderId":vm.list.orderId},false,"km-ecs/w/audit/reAudit")
             .then((data)=>{
                 layer.open({
 		            content:'复审成功',
@@ -638,20 +480,7 @@ export default{
 		},
 		orderLog:function(){//审核日志
 			var vm=this;
-			// vm.AJAX('w/audit/log',{"orderId":vm.list.orderId},function(data){
-			// 	var str='',list= data.data;
-			// 	for(var i in list){
-			// 		str+='<li><time><b></b>'+vm.$parent.getDateTime(list[i].modifyTime)[6]+'</time><div>'+list[i].context+'</div></li>'
-			// 	}
-			// 	layer.open({
-			// 		content:'<ul class="lay-log">'+str+'</ul>',
-			// 		type:0,
-			// 		title:'审核日志',
-			// 		btn:0,
-			// 		style:'width:auto;'
-			// 	});
-            // });
-            reqCommonMethod({"orderId":vm.list.orderId},function(){vm.off.isLoad=false},"km-ecs/w/audit/log")
+            reqCommonMethod({"orderId":vm.list.orderId},false,"km-ecs/w/audit/log")
             .then((data)=>{
                 var str='',list= data.data;
 				for(var i in list){
@@ -668,18 +497,7 @@ export default{
 		},
 		integralLog:function(){//积分详情
 			var vm=this;
-			// vm.AJAX('c/audit/searchIntegration',{"orderId":vm.list.orderId},function(data){
-			// 	var statusStr='',reasonStr='';
-			// 	if(data.data.cardStatus!="1")reasonStr+='<li><span>原因：</span>'+data.data.cardStatusReason+'</li>';
-			// 	layer.open({
-			// 		content:'<ul class="lay-integralLog"><li><span>本级获得积分：</span>'+data.data.integration+'积分</li><li><span>上级获得积分：</span>'+data.data.superiorIntegration+'积分</li>'+reasonStr+'</ul>',
-			// 		type:0,
-			// 		title:'积分查询',
-			// 		btn:0,
-			// 		style:'width:auto;'
-			// 	});
-            // });
-            reqCommonMethod({"orderId":vm.list.orderId},function(){vm.off.isLoad=false},"km-ecs/c/audit/searchIntegration")
+            reqCommonMethod({"orderId":vm.list.orderId},false,"km-ecs/c/audit/searchIntegration")
             .then((data)=>{
                 var statusStr='',reasonStr='';
 				if(data.data.cardStatus!="1")reasonStr+='<li><span>原因：</span>'+data.data.cardStatusReason+'</li>';

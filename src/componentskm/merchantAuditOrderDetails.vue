@@ -3,7 +3,6 @@
 </style>
 <template>
 <section class="g-list-box" id="details">
-    <!-- <header class="m-scroll-bar animated infinite" :class="{active:off.isLoad}"></header> -->
 	<header class="g-lis-head">
 		<a class="m-details-back u-icon-back" @click="close"></a>
   	  	<div class="m-footD-btn" v-if="list.status==1">
@@ -135,12 +134,7 @@ export default{
 		},
 		detailsUser:function(){//申请人详情
 			var vm=this;
-			// vm.AJAX('w/audit/getUserInfo',{"userId":vm.list.userId},function(data){
-			// 	vm.detailsList=data.data;
-			// 	vm.isShowDetails=true;
-			// 	vm.typeDetails=1;
-            // });
-            reqCommonMethod({"userId":vm.list.userId},function(){vm.$parent.off.isLoad=false;},"km-ecs/w/audit/getUserInfo")
+            reqCommonMethod({"userId":vm.list.userId},false,"km-ecs/w/audit/getUserInfo")
             .then((data)=>{
                 vm.detailsList=data.data;
 				vm.isShowDetails=true;
@@ -149,12 +143,7 @@ export default{
 		},
 		detailsMerchant:function(){//商户详情
 			var vm=this;
-			// vm.AJAX('w/audit/getMerchantInfo',{"dealerId":vm.list.dealerId},function(data){
-			// 	vm.detailsList=data.data;
-			// 	vm.isShowDetails=true;
-			// 	vm.typeDetails=2;
-            // });
-            reqCommonMethod({"dealerId":vm.list.dealerId},function(){vm.$parent.off.isLoad=false;},"km-ecs/w/audit/getMerchantInfo")
+            reqCommonMethod({"dealerId":vm.list.dealerId},false,"km-ecs/w/audit/getMerchantInfo")
             .then((data)=>{
                 vm.detailsList=data.data;
 				vm.isShowDetails=true;

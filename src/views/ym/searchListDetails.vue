@@ -306,19 +306,7 @@ export default{
 		},
 		agree:function(e){
 			var vm=this,url,orderId=e.target.name;
-			// vm.AJAX('c/audit/orderRecheck',{"orderId":orderId},function(data){
-			// 	layer.open({
-		    //         content:'复审成功',
-		    //         skin: 'msg',
-		    //         time: 4,
-		    //         msgSkin:'success',
-		    //     });
-			// 	vm.list.result=3;
-			// 	vm.list.cardStatus=1;
-			// 	vm.$parent.list[parseInt(vm.number)].result=3;
-			// 	vm.$parent.list[parseInt(vm.number)].cardStatus=1;
-            // });
-            reqCommonMethod({"orderId":orderId},function(){vm.off.isLoad=false;},"ym-ecs/c/audit/orderRecheck")
+            reqCommonMethod({"orderId":orderId},false,"ym-ecs/c/audit/orderRecheck")
             .then((response)=>{
                 layer.open({
 		            content:'复审成功',
@@ -338,15 +326,8 @@ export default{
 				type==1 ? (vm.modify.userName=vm.list.userName,vm.modify.off1=true) : type==2 ? (vm.modify.userAddress=vm.list.userAddress,vm.modify.off2=true) : (vm.modify.papersCode=vm.list.papersCode,vm.modify.off3=true);
 			}else if(state==2){
 				let content = type==1 ? vm.modify.userName : type==2 ? vm.modify.userAddress : vm.modify.papersCode;
-				// vm.AJAX('c/audit/updateBuggingOrder',{"type":type,"content":content,"orderId":vm.list.orderId},function(data){
-				// 	type==1 ? (vm.list.userName=vm.modify.userName,vm.modify.off1=false) : type==2 ? (vm.list.userAddress=vm.modify.userAddress,vm.modify.off2=false) : (vm.list.papersCode=vm.modify.papersCode,vm.modify.off3=false);
-				// 	if(vm.modify.off1&&vm.modify.off2&&vm.modify.off3){
-				// 		vm.$parent.list[parseInt(vm.number)].updAddress=1;
-				// 		vm.$parent.list[parseInt(vm.number)].updName=1;
-				// 		vm.$parent.list[parseInt(vm.number)].updPapersCode=1;
-				// 	}
-                // });
-                reqCommonMethod({"type":type,"content":content,"orderId":vm.list.orderId},function(){vm.off.isLoad=false;},"ym-ecs/c/audit/updateBuggingOrder")
+
+                reqCommonMethod({"type":type,"content":content,"orderId":vm.list.orderId},false,"ym-ecs/c/audit/updateBuggingOrder")
                 .then((data)=>{
                     type==1 ? (vm.list.userName=vm.modify.userName,vm.modify.off1=false) : type==2 ? (vm.list.userAddress=vm.modify.userAddress,vm.modify.off2=false) : (vm.list.papersCode=vm.modify.papersCode,vm.modify.off3=false);
 					if(vm.modify.off1&&vm.modify.off2&&vm.modify.off3){
@@ -361,20 +342,7 @@ export default{
 		},
 		orderLog:function(){
 			var vm=this;
-			// vm.AJAX('c/audit/orderLogSearch',{"orderId":vm.list.orderId},function(data){
-			// 	var str='',list= data.data;
-			// 	for(var i in list){
-			// 		str+='<li><time><b></b>'+vm.$parent.getDateTime(list[i].modifyTime)[6]+'</time><div>'+list[i].context+'</div></li>'
-			// 	}
-			// 	layer.open({
-			// 		content:'<ul class="lay-log">'+str+'</ul>',
-			// 		type:0,
-			// 		title:'审核日志',
-			// 		btn:0,
-			// 		style:'width:auto;'
-			// 	});
-            // });
-            reqCommonMethod({"orderId":vm.list.orderId},function(){vm.off.isLoad=false;},"ym-ecs/c/audit/orderLogSearch")
+            reqCommonMethod({"orderId":vm.list.orderId},false,"ym-ecs/c/audit/orderLogSearch")
             .then((data)=>{
                 var str='',list= data.data;
 				for(var i in list){
@@ -391,18 +359,7 @@ export default{
 		},
 		integralLog:function(){
 			var vm=this;
-			// vm.AJAX('c/audit/searchIntegration',{"orderId":vm.list.orderId},function(data){
-			// 	var statusStr='',reasonStr='';
-			// 	if(data.data.cardStatus!="1")reasonStr+='<li><span>原因：</span>'+data.data.cardStatusReason+'</li>';
-			// 	layer.open({
-			// 		content:'<ul class="lay-integralLog"><li><span>本级获得积分：</span>'+data.data.integration+'积分</li><li><span>上级获得积分：</span>'+data.data.superiorIntegration+'积分</li>'+reasonStr+'</ul>',
-			// 		type:0,
-			// 		title:'积分查询',
-			// 		btn:0,
-			// 		style:'width:auto;'
-			// 	});
-            // });
-            reqCommonMethod({"orderId":vm.list.orderId},function(){vm.off.isLoad=false;},"ym-ecs/c/audit/searchIntegration")
+            reqCommonMethod({"orderId":vm.list.orderId},false,"ym-ecs/c/audit/searchIntegration")
             .then((data)=>{
                 var statusStr='',reasonStr='';
 				if(data.data.cardStatus!="1")reasonStr+='<li><span>原因：</span>'+data.data.cardStatusReason+'</li>';
@@ -417,65 +374,7 @@ export default{
 		},
 		autoAuditInfo(){//自动审核详情
 			var vm=this;
-			// vm.AJAX("c/audit/automaticDetails",{"orderId":vm.list.orderId},function(data){
-			// 	var list_item1= data.data;
-			// 	layer.open({
-			// 		content:`<ul class="f-scroll-lt lay-details o-fl-w">
-			// 		<li class="clr"><div class="fl">正面与手持对比相似度：</div><div class="fright">${list_item1.front_hand_image_similarity}%</div></li>
-			// 		<li class="clr"><div class="fl">正面与第三方对比相似度：</div><div class="fright">${list_item1.front_image_similarity}%</div></li>
-			// 		<li class="clr"><div class="fl">手持与第三方相似度：</div><div class="fright">${list_item1.hand_image_similarity}%</div></li>
-			// 		<li class="clr"><div class="fl">活体识别照相似度：</div><div class="fright">${list_item1.living_image_similarity}%</div></li>
-			// 		<li class="clr"><div class="fl">年龄校验结果：</div><div class="fright">${
-			// 			list_item1.age_check==1?'<span class="fCGreen">成功</span>':
-			// 			list_item1.age_check==2?'<span class="fCRed">失败</span>':
-			// 			list_item1.age_check==3?'<span class="fCYellow">未定</span>':	'--'
-			// 		}</div></li>
-			// 		<li class="clr"><div class="fl">地址校验结果：</div><div class="fright">${
-			// 			list_item1.address_check==1?'<span class="fCGreen">成功</span>':
-			// 			list_item1.address_check==2?'<span class="fCRed">失败</span>':
-			// 			list_item1.address_check==3?'<span class="fCYellow">未定</span>':	'--'
-			// 		}</div></li>
-			// 		<li class="clr"><div class="fl">身份证有效期校验结果：</div><div class="fright">${
-			// 			list_item1.period_check==1?'<span class="fCGreen">成功</span>':
-			// 			list_item1.period_check==2?'<span class="fCRed">失败</span>':
-			// 			list_item1.period_check==3?'<span class="fCYellow">未定</span>':	'--'
-			// 		}</div></li>
-			// 		<li class="clr"><div class="fl">身份证号与正面OCR匹配结果：</div><div class="fright">${
-			// 			list_item1.ocr_id_card_no_check==1?'<span class="fCGreen">成功</span>':
-			// 			list_item1.ocr_id_card_no_check==2?'<span class="fCRed">失败</span>':
-			// 			list_item1.ocr_id_card_no_check==3?'<span class="fCYellow">未定</span>':	'--'
-			// 		}</div></li>
-			// 		<li class="clr"><div class="fl">有效期与背面OCR匹配结果：</div><div class="fright">${
-			// 			list_item1.ocr_id_card_period_check==1?'<span class="fCGreen">成功</span>':
-			// 			list_item1.ocr_id_card_period_check==2?'<span class="fCRed">失败</span>':
-			// 			list_item1.ocr_id_card_period_check==3?'<span class="fCYellow">未定</span>':	'--'
-			// 		}</div></li>
-			// 		<li class="clr"><div class="fl">上传身份证号与OCR对比相似度：</div><div class="fright">${list_item1.id_card_no_similarity}%</div></li>
-			// 		<li class="clr"><div class="fl">上传姓名与OCR对比相似度：</div><div class="fright">${list_item1.id_card_name_similarity}%</div></li>
-			// 		<li class="clr"><div class="fl">上传地址与OCR对比相似度：</div><div class="fright">${list_item1.id_card_address_similarity}%</div></li>
-			// 		<li class="clr"><div class="fl">上传有效期与OCR对比相似度：</div><div class="fright">${list_item1.id_card_period_similarity}%</div></li>
-			// 		<li class="clr"><div class="fl">国政通校验结果：</div><div class="fright">${
-  			// 			list_item1.gzt_check==1?'<span class="fCGreen">成功</span>':
-			// 			list_item1.gzt_check==2?'<span class="fCRed">失败</span>':
- 			// 			list_item1.gzt_check==3?'<span class="fCYellow">未定</span>':'--'
-  			// 		}</div></li>			
-  			// 		<li class="clr"><div class="fl">审核结果：</div><div class="fright">${
-  			// 			list_item1.result==1?'<span class="fCGreen">成功</span>':
-  			// 			list_item1.result==2?'<span class="fCRed">拒绝</span>':
-  			// 			list_item1.result==3?'<span class="fCYellow">转人工审核</span>':	'--'
-  			// 		}</div></li>
-			// 		<li class="clr"><div class="fl">审核结果描述：</div><div class="fright">${list_item1.desc}</div></li>
-			// 		<li class="clr"><div class="fl">拒绝理由：</div><div class="fright">${
-			// 			list_item1.code==1018?'<span class="fCGreen">远特开卡超过上限</span>':
-			// 			list_item1.code==1019?'<span class="fCRed">联通开卡超过上限</span>':'--'
-			// 		}</div></li></ul>`,
-			// 		type:0,
-			// 		title:'自动审核详情',
-			// 		btn:0,
-			// 		style:'width:auto;'
-			// 	});
-			// });
-            reqCommonMethod({"orderId":vm.list.orderId},function(){vm.off.isLoad=false;},"ym-ecs/c/audit/automaticDetails")
+            reqCommonMethod({"orderId":vm.list.orderId},false,"ym-ecs/c/audit/automaticDetails")
             .then((data)=>{
                 var list_item1= data.data;
 				layer.open({
