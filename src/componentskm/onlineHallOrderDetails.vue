@@ -108,7 +108,7 @@
         //     style:'width:auto;'
         //   });
         // });
-        reqCommonMethod({"transactionId":vm.list.orderId},function(){vm.off.isLoad=false;},"km-ecs/w/audit/openCardInfo")
+        reqCommonMethod({"transactionId":vm.list.orderId},false,"km-ecs/w/audit/openCardInfo")
         .then((data)=>{
             var list= data.data,str='',payed='';
           for(let i in list.optionalPackage){
@@ -156,7 +156,7 @@
         //     style:'width:auto;'
         //   });
         // });
-        reqCommonMethod({"payId":vm.list.payOrderId},function(){vm.off.isLoad=false;},"km-ecs/w/audit/payInfo")
+        reqCommonMethod({"payId":vm.list.payOrderId},false,"km-ecs/w/audit/payInfo")
         .then((data)=>{
           var list= data.data;
           layer.open({
@@ -180,7 +180,7 @@
         //   vm.isShowDetails=true;
         //   vm.typeDetails=1;
         // });
-        reqCommonMethod({"userId":vm.list.operatorId},function(){vm.off.isLoad=false;},"km-ecs/w/audit/getUserInfo")
+        reqCommonMethod({"userId":vm.list.operatorId},false,"km-ecs/w/audit/getUserInfo")
         .then((data)=>{
            vm.detailsList=data.data;
            vm.isShowDetails=true;
@@ -194,7 +194,7 @@
         //   vm.isShowDetails=true;
         //   vm.typeDetails=2;
         // });
-        reqCommonMethod({"dealerId":vm.list.dealerId},function(){vm.off.isLoad=false;},"km-ecs/w/audit/getMerchantInfo")
+        reqCommonMethod({"dealerId":vm.list.dealerId},false,"km-ecs/w/audit/getMerchantInfo")
         .then((data)=>{
             vm.detailsList=data.data;
           vm.isShowDetails=true;
@@ -215,7 +215,7 @@
         //   vm.$parent.list[parseInt(vm.number)].status=4;
         //   vm.$parent.list[parseInt(vm.number)].cardStatus=1;
         // });
-        reqCommonMethod({"orderId":vm.list.orderId},function(){vm.off.isLoad=false;},"km-ecs/w/audit/reAudit")
+        reqCommonMethod({"orderId":vm.list.orderId},false,"km-ecs/w/audit/reAudit")
         .then((data)=>{
             layer.open({
             content:'复审成功',
@@ -244,7 +244,7 @@
         //     style:'width:auto;'
         //   });
         // });
-        reqCommonMethod({"orderId":vm.list.orderId},function(){vm.off.isLoad=false;},"km-ecs/w/audit/log")
+        reqCommonMethod({"orderId":vm.list.orderId},false,"km-ecs/w/audit/log")
         .then((data)=>{
           var str='',list= data.data;
           for(var i in list){
@@ -272,7 +272,7 @@
         //     style:'width:auto;'
         //   });
         // });
-        reqCommonMethod({"orderId":vm.list.orderId},function(){vm.off.isLoad=false;},"km-ecs/c/audit/searchIntegration")
+        reqCommonMethod({"orderId":vm.list.orderId},false,"km-ecs/c/audit/searchIntegration")
         .then((data)=>{
           var statusStr='',reasonStr='';
           if(data.data.cardStatus!="1")reasonStr+='<li><span>原因：</span>'+data.data.cardStatusReason+'</li>';

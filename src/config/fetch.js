@@ -73,12 +73,10 @@ export default async(url = '', data = {}, type = 'GET', load, method = 'fetch') 
                 return response.json()
               })
               .then(data => {
+              	closeLoadLayout()
                 if (data.code == 200) {
                   resolve(data) //返回成功数据
                 } else {
-                    if(data.code !== 200) {
-                        closeLoadLayout()
-                    }
                   reject(data)//返回非200情况
                 }
               }).catch(error=>errorDeal(error,closeLoadLayout))

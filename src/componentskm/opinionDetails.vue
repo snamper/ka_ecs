@@ -448,7 +448,7 @@ export default{
         //   },function(){
         //     vmPa.off.isLoad=false;
         //   });
-        reqCommonMethod(json,function(){vm.off.isLoad=false;},"km-ecs/w/advice/query")
+        reqCommonMethod(json,false,"km-ecs/w/advice/query")
         .then((data)=>{
             vmPa.list=data.data.pageData;//数据
             vmPa.total=data.data.total;//总条数
@@ -464,7 +464,7 @@ export default{
 		// 	vm.isShowDetails=true;
 		// 	vm.typeDetails=1;
         // });
-        reqCommonMethod({"userId":vm.list.userId},function(){vm.off.isLoad=false;},"km-ecs/w/audit/getUserInfo")
+        reqCommonMethod({"userId":vm.list.userId},false,"km-ecs/w/audit/getUserInfo")
         .then((data)=>{
             vm.detailsList=data.data;
 			vm.isShowDetails=true;
@@ -478,7 +478,7 @@ export default{
 			// 	vm.isShowDetails=true;
 			// 	vm.typeDetails=2;
             // });
-            reqCommonMethod({"dealerId":vm.list.dealerId},function(){vm.off.isLoad=false;},"km-ecs/w/audit/getMerchantInfo")
+            reqCommonMethod({"dealerId":vm.list.dealerId},false,"km-ecs/w/audit/getMerchantInfo")
             .then((data)=>{
                 vm.detailsList=data.data;
 				vm.isShowDetails=true;

@@ -61,7 +61,7 @@
 					<router-link to="/homek/dashboard">
 						<div>
 							<i class="u-icon-home"></i>
-							<span>数据统计</span>
+							<span>数据面板</span>
 						</div>
 					</router-link>
 				</li>

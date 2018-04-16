@@ -181,7 +181,7 @@
 						<span v-else>--</span>
 					</td>
 					<td>{{todo.userName}}</td>
-					<td>{{todo.phoneNumber}}<div>（{{ todo.phoneHome }}）</div></td>
+					<td>{{todo.phoneNumber}}<div><span v-show="todo.phoneHome">（{{ todo.phoneHome }}）</span></div></td>
 					<!-- <td>{{translateData(5,todo.phoneLevel)}}</td> -->
 					<td>{{todo.identityCard}}</td>
 					<td v-if="off.type==1||off.type==2">{{todo.customerName}}</td>

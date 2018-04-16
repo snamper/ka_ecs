@@ -53,8 +53,10 @@
 							<span v-else class="f-c-red">未绑定</span>
 						</td>
 						<td>
-							<span v-show="todo.businessPower==1">远特售卡</span>
-							<span v-show="todo.businessPower==2">联通售卡</span>
+							<span v-show="todo.isp==1">远特</span>
+							<span v-show="todo.isp==2">联通</span>
+							<span v-show="todo.isp==3">移动</span>
+							<span v-show="todo.isp==4">电信</span>
 							<span>（{{ todo.area }}）</span>
 						</td>
 					</tr>
