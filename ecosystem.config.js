@@ -25,7 +25,7 @@ module.exports = {
     },
     production : {
         user : 'root',
-        host : '47.97.198.73',
+        host : '47.98.43.180',
         ref  : 'origin/master',
         // repo : 'git@github.com:thinkmix/ka_ecs.git',
         repo : 'https://github.com/thinkmix/ka_ecs.git',
