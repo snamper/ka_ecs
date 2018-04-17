@@ -221,17 +221,12 @@ export default{
 			vm.imgData[6]={'src':vm.list.signImage,'name':'过户人手签名照片'};
 		}else{
 			if(vm.source==7||vm.source==8){
-				let imgUrl='',userMoreInfo=JSON.parse(decodeURIComponent(vm.list.userMoreInfo));
-				
-				if(_CONFIG.prod_env){//是否为开发环境
-					imgUrl=_CONFIG.prod.SDK_IMAGE_URL;
-				}else imgUrl=_CONFIG.dev.SDK_IMAGE_URL;
+				let imgUrl=_CONFIG[_CONFIG.env].SDK_IMAGE_URL,
+				userMoreInfo=JSON.parse(decodeURIComponent(vm.list.userMoreInfo));
 
 				if(vm.source==8){
 					Object.assign(userMoreInfo,JSON.parse(decodeURIComponent(vm.list.tokenInfo)));
-					if(_CONFIG.prod_env){//是否为开发环境
-						imgUrl=_CONFIG.prod.TF_IMAGE_URL;
-					}else imgUrl=_CONFIG.dev.TF_IMAGE_URL;
+					imgUrl=_CONFIG[_CONFIG.env].TF_IMAGE_URL;
 				}
 				if(userMoreInfo){
 					vm.userMoreInfo=userMoreInfo;
@@ -262,17 +257,16 @@ export default{
 			
 			if(vm.type==2){//已审核
 				if(vm.source==7){
+					let imgUrl=_CONFIG[_CONFIG.env].SDK_IMAGE_URL;
+
 					if(vm.list.acceptanceImg){
-						vm.imgData.push({'src':SDK_IMAGE_URL+vm.list.acceptanceImg,'name':'受理单'});
+						vm.imgData.push({'src':imgUrl+vm.list.acceptanceImg,'name':'受理单'});
 					}else{
 						vm.imgData.push({'src':'','name':'受理单'});
 					}
 				}else{
 					if(vm.source==8){
-						let imgUrl='';
-						if(_CONFIG.prod_env){//是否为开发环境
-							imgUrl=_CONFIG.prod.TF_IMAGE_URL;
-						}else imgUrl=_CONFIG.dev.TF_IMAGE_URL;
+						let imgUrl=_CONFIG[_CONFIG.env].TF_IMAGE_URL;
 						vm.imgData.push({'src':imgUrl+vm.list.acceptanceImg,'name':'受理单'});
 					}else{
 						vm.imgData.push({'src':vm.list.acceptanceImg,'name':'受理单'});
@@ -286,6 +280,10 @@ export default{
 			var w=document.documentElement.clientWidth,url='',vm=this;
 			let latitude=parseFloat(vm.list.latitude);
 			let longitude=parseFloat(vm.list.longitude);
+			if(vm.source==8){
+				latitude=parseFloat(vm.userMoreInfo.latitude);
+				longitude=parseFloat(vm.userMoreInfo.longitude);
+			}
 			w<640 ? url='http://map.baidu.com/mobile/?latlng='+latitude+','+longitude+'' : url='http://map.baidu.com/?latlng='+latitude+','+longitude+'';
 			window.open(url);
 		},

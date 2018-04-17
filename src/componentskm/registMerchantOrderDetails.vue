@@ -108,10 +108,7 @@ export default{
 	},
 
 	created:function(){
-		let vm=this,imgUrl='';
-		if(_CONFIG.prod_env){//是否为开发环境
-			imgUrl=_CONFIG.prod.REGISTER_MERCHANT_IMAGE_URL;
-		}else imgUrl=_CONFIG.dev.REGISTER_MERCHANT_IMAGE_URL;
+		let vm=this,imgUrl=_CONFIG[_CONFIG.env].REGISTER_MERCHANT_IMAGE_URL;
 
 		vm.imgData=[
 			{'src':vm.list.doorPictureLeft?imgUrl+vm.list.doorPictureLeft:'','name':'门店照片-左'},
