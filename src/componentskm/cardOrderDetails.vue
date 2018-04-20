@@ -11,12 +11,12 @@
 		<a class="m-details-back u-icon-back" @click="close"></a>
   	  	<div class="m-footD-btn">
   	  		<!-- <a v-if="type==2&&list.cardStatus==2" class="f-btn f-btn-warning" @click="integralLog">查看积分</a> -->
-			<a class="f-btn f-btn-success" @click="orderLog">查看审核日志</a>
+			<a class="f-btn f-btn-success" v-if="list.operatorType!=5" @click="orderLog">查看审核日志</a>
 	  	</div>
   	</header>
 	<div class="g-box">
 		<table class="g-list-table">
-			<tbody>
+			<tbody v-if="list.operatorType!=5">
 				<tr>
 					<td>
 						<table class="g-inner-table">
@@ -24,9 +24,9 @@
 								<tr v-if="list.operatorType!=7"><td>订单号码：</td><td>{{list.orderId}}<a href="javascript:void(0)" @click="detailsOrder" class="details m-l">查看详情</a></td></tr>
 								<tr v-if="list.payOrderId&&list.operatorType!=7"><td>支付流水号：</td><td>{{list.payOrderId}}<a href="javascript:void(0)" @click="detailsPayOrder" class="details m-l">查看详情</a></td></tr>
 
-								<tr><td>生成时间：</td><td>{{$parent.getDateTime(list.createTime)[6]}}</td></tr>
+								<tr><td>生成时间：</td><td>{{getDateTime(list.createTime)[6]}}</td></tr>
 								<tr v-if="type==1||type==2"><td>状态修改时间：</td>
-									<td>{{$parent.getDateTime(list.modifyTime)[6]}}<a href="javascript:void(0)" @click="detailsTime" class="details m-l">查看详情</a></td>
+									<td>{{getDateTime(list.modifyTime)[6]}}<a href="javascript:void(0)" @click="detailsTime" class="details m-l">查看详情</a></td>
 								</tr>
 								<tr v-show="type==2"><td>审核用时：</td>
 									<td>
@@ -54,7 +54,7 @@
 										</span>
 									</td>
 								</tr>
-								<tr v-if="type==4"><td>关闭时间：</td><td>{{$parent.getDateTime(list.modifyTime)[6]}}</td></tr>
+								<tr v-if="type==4"><td>关闭时间：</td><td>{{getDateTime(list.modifyTime)[6]}}</td></tr>
 								<tr v-if="type==4"><td>关闭原因：</td><td>{{list.closeReason}}</td></tr>
 								
 								<tr v-if="type==3||type==4"><td>订单状态：</td><td>{{ $parent.translateData(7,list.statusDetail) }}</td></tr>
@@ -175,6 +175,8 @@
 					<img v-for="item in imgData" :src="item.src">
 				</tr>
 			</tbody>
+			<!--实名补登-->
+			<RealTimeCollection v-if="list.operatorType==5" :auditStatus="type" :auditData="list" :imgData="imgData"></RealTimeCollection>
   		</table>
   	</div>
   <um-details-view v-if="isShowDetails" :type="typeDetails" :list="detailsList" :dealerId="list.dealerId">
@@ -185,14 +187,15 @@
 <script>
 import "../assets/km/css/cardOrderDetails.css";
 import {reqCommonMethod} from "../config/service.js";
-import {errorDeal} from "../config/utils.js";
+import {errorDeal,getDateTime} from "../config/utils.js";
 import ImgZoom from '../componentskm/ImgZoom';
+import RealTimeCollection from './audit/realTimeCollection';
 import detailsView from '../componentskm/cardOrderDetailsAlert';
 export default{
 	name:'cardOrderDetails',
 	props:{
-		list:Object,//1，待审核;2，已审核;3，进行中;4，已关闭
-		type:Number,
+		list:Object,
+		type:Number,//1，待审核;2，已审核;3，进行中;4，已关闭
 		number:String,
 		source:String//订单来源，6、卡盟APP；7、卡盟SDK；8卡盟通服
 	},
@@ -207,7 +210,8 @@ export default{
 	},
 	components:{
 		'um-details-view':detailsView,
-		'ImgZoom':ImgZoom
+		'ImgZoom':ImgZoom,
+		RealTimeCollection
 	},
 	created:function(){
 		var vm=this;
@@ -219,6 +223,14 @@ export default{
 			vm.imgData[4]={'src':vm.list.backImage,'name':'过户人反面照片'};
 			vm.imgData[5]={'src':vm.list.handImage,'name':'过户人手持照片'};
 			vm.imgData[6]={'src':vm.list.signImage,'name':'过户人手签名照片'};
+		}else if(vm.list.operatorType==5){//实名补登
+			vm.imgData[0]={'src':vm.list.oldReqParam.imageName,'name':'原正面照片'};
+			vm.imgData[1]={'src':vm.list.oldReqParam.backImageName,'name':'原反面照片'};//
+			vm.imgData[2]={'src':vm.list.oldReqParam.handImageName,'name':'原手持照片'};
+			vm.imgData[3]={'src':vm.list.reqParam.imageName,'name':'正面照片'};
+			vm.imgData[4]={'src':vm.list.reqParam.backImageName,'name':'反面照片'};
+			vm.imgData[5]={'src':vm.list.reqParam.handImageName,'name':'手持照片'};
+			vm.imgData[6]={'src':vm.list.reqParam.signImageName,'name':'手签名照片'};
 		}else{
 			if(vm.source==7||vm.source==8){
 				let imgUrl=_CONFIG[_CONFIG.env].SDK_IMAGE_URL,
@@ -297,25 +309,25 @@ export default{
 				var list_item= data.data.list[0],str='',str2='';
 				if(list_item){
 					if(list_item.card_type==1){
-						str+=`<li class="clr"><div class="fl">实时审核时间：</div><div class="fright">${vm.$parent.getDateTime(list_item.time_real_audited)[6]}</div></li>`;
-						str2+=`<li class="clr"><div class="fl">开卡保存订单时间：</div><div class="fright">${vm.$parent.getDateTime(list_item.time_save_order)[6]}</div></li>`;
+						str+=`<li class="clr"><div class="fl">实时审核时间：</div><div class="fright">${vm.getDateTime(list_item.time_real_audited)[6]}</div></li>`;
+						str2+=`<li class="clr"><div class="fl">开卡保存订单时间：</div><div class="fright">${vm.getDateTime(list_item.time_save_order)[6]}</div></li>`;
 					}else if(list_item.card_type==2){
-						str+=`<li class="clr"><div class="fl">开户成功时间：</div><div class="fright">${vm.$parent.getDateTime(list_item.time_serverice_open)[6]}</div></li>`;
+						str+=`<li class="clr"><div class="fl">开户成功时间：</div><div class="fright">${vm.getDateTime(list_item.time_serverice_open)[6]}</div></li>`;
 					}
 					layer.open({
 						content:`<ul class="f-scroll-lt lay-details">
-						<li class="clr"><div class="fl">生成时间：</div><div class="fright">${vm.$parent.getDateTime(list_item.time_create_order)[6]}</div></li>
-						<li class="clr"><div class="fl">保存套餐时间：</div><div class="fright">${vm.$parent.getDateTime(list_item.time_set_business)[6]}</div></li>
-						<li class="clr"><div class="fl">保存身份信息时间：</div><div class="fright">${vm.$parent.getDateTime(list_item.time_set_user_info)[6]}</div></li>
-						<li class="clr"><div class="fl">支付时间：</div><div class="fright">${vm.$parent.getDateTime(list_item.time_payed)[6]}</div></li>
-						<li class="clr"><div class="fl">自动审核时间：</div><div class="fright">${vm.$parent.getDateTime(list_item.time_auto_audited)[6]}</div></li>${str}
-						<li class="clr"><div class="fl">受理单提交时间：</div><div class="fright">${vm.$parent.getDateTime(list_item.time_accepted)[6]}</div></li>
-						<li class="clr"><div class="fl">请求IMSI时间：</div><div class="fright">${vm.$parent.getDateTime(list_item.time_imsi_request)[6]}</div></li>
-						<li class="clr"><div class="fl">拿到IMSI时间：</div><div class="fright">${vm.$parent.getDateTime(list_item.time_imsi_got)[6]}</div></li>
-						<li class="clr"><div class="fl">提交写卡结果时间：</div><div class="fright">${vm.$parent.getDateTime(list_item.time_write_card)[6]}</div></li>${str2}
-						<li class="clr"><div class="fl">提交到BOSS时间：</div><div class="fright">${vm.$parent.getDateTime(list_item.time_submit_order)[6]}</div></li>
-						<li class="clr"><div class="fl">开卡异步结果时间：</div><div class="fright">${vm.$parent.getDateTime(list_item.time_order_result)[6]}</div></li>
-						<li class="clr"><div class="fl">事后审核时间：</div><div class="fright">${vm.$parent.getDateTime(list_item.time_after_audit)[6]}</div></li></ul>`,
+						<li class="clr"><div class="fl">生成时间：</div><div class="fright">${vm.getDateTime(list_item.time_create_order)[6]}</div></li>
+						<li class="clr"><div class="fl">保存套餐时间：</div><div class="fright">${vm.getDateTime(list_item.time_set_business)[6]}</div></li>
+						<li class="clr"><div class="fl">保存身份信息时间：</div><div class="fright">${vm.getDateTime(list_item.time_set_user_info)[6]}</div></li>
+						<li class="clr"><div class="fl">支付时间：</div><div class="fright">${vm.getDateTime(list_item.time_payed)[6]}</div></li>
+						<li class="clr"><div class="fl">自动审核时间：</div><div class="fright">${vm.getDateTime(list_item.time_auto_audited)[6]}</div></li>${str}
+						<li class="clr"><div class="fl">受理单提交时间：</div><div class="fright">${vm.getDateTime(list_item.time_accepted)[6]}</div></li>
+						<li class="clr"><div class="fl">请求IMSI时间：</div><div class="fright">${vm.getDateTime(list_item.time_imsi_request)[6]}</div></li>
+						<li class="clr"><div class="fl">拿到IMSI时间：</div><div class="fright">${vm.getDateTime(list_item.time_imsi_got)[6]}</div></li>
+						<li class="clr"><div class="fl">提交写卡结果时间：</div><div class="fright">${vm.getDateTime(list_item.time_write_card)[6]}</div></li>${str2}
+						<li class="clr"><div class="fl">提交到BOSS时间：</div><div class="fright">${vm.getDateTime(list_item.time_submit_order)[6]}</div></li>
+						<li class="clr"><div class="fl">开卡异步结果时间：</div><div class="fright">${vm.getDateTime(list_item.time_order_result)[6]}</div></li>
+						<li class="clr"><div class="fl">事后审核时间：</div><div class="fright">${vm.getDateTime(list_item.time_after_audit)[6]}</div></li></ul>`,
 						type:0,
 						title:'开卡时间详情',
 						btn:0,
@@ -353,7 +365,7 @@ export default{
 								'<li class="clr"><div class="fl">电话号码：</div><div class="fright">'+list.phoneNumber+'（<b class="f-c-grey">'+vm.$parent.translateData(5,list.phoneLevel)+'</b>，'+list.phoneHome+'）</div></li>'+
 								'<li class="clr"><div class="fl">ICCID：</div><div class="fright">'+list.ICCID+'</div></li>'+
 								'<li class="clr"><div class="fl">IMSI卡号：</div><div class="fright">'+list.esim+'</div></li>'+
-								'<li class="clr"><div class="fl">状态修改时间：</div><div class="fright">'+vm.$parent.getDateTime(list.timestamp)[6]+'</div></li>'+
+								'<li class="clr"><div class="fl">状态修改时间：</div><div class="fright">'+vm.getDateTime(list.timestamp)[6]+'</div></li>'+
 								'<li class="clr"><div class="fl">应付价格：</div><div class="fright">'+((parseFloat(list.price_x)/100)+(parseFloat(list.price_y)/100)+(parseFloat(list.updPrice)/100)).toFixed(2)+'元<b class="f-c-grey">（系统号码占用费'+(parseFloat(list.price_x)/100).toFixed(2)+'元+商家自定占用费'+(parseFloat(list.updPrice)/100).toFixed(2)+'元+预存话费'+(parseFloat(list.price_y)/100).toFixed(2)+'元）</b></div></li>'+payed+
 								'<li class="clr"><div class="fl">预占保证金：</div><div class="fright">'+(parseFloat(list.occupy)/100).toFixed(2)+'元</div></li>'+
 								'<li class="clr"><div class="fl">退回预占保证金：</div><div class="fright">'+(parseFloat(list.occupyReturn)/100).toFixed(2)+'元</div></li>'+
@@ -405,11 +417,14 @@ export default{
             }).catch(error=>errorDeal(error));          
 		},
 		autoAuditInfo(){//自动审核详情
-			var vm=this;
-            reqCommonMethod({"opKey":"order.autoAudit.details","params":['order_id="'+vm.list.orderId+'"'],"pageSize":"10","pageNum":"-1"},false,"km-ecs/w/handler/query")
+			var vm=this,orderId=vm.list.orderId;
+			if(vm.list.sysOrderId){
+				orderId=vm.list.sysOrderId;
+			}
+            reqCommonMethod({"opKey":"order.autoAudit.details","params":['order_id="'+orderId+'"'],"pageSize":"10","pageNum":"-1"},false,"km-ecs/w/handler/query")
             .then((data)=>{
 				var list_item1= data.data.list[0];
-				layer.open({
+				list_item1 ? layer.open({
 					content:`<ul class="f-scroll-lt lay-details o-fl-w">
 					<li class="clr"><div class="fl">正面与手持对比相似度：</div><div class="fright">${list_item1.frontHandImageSimilarity}%</div></li>
 					<li class="clr"><div class="fl">正面与第三方对比相似度：</div><div class="fright">${list_item1.frontImageSimilarity}%</div></li>
@@ -449,15 +464,17 @@ export default{
 						list_item1.result==2?'<span class="fCRed">拒绝</span>':
 						list_item1.result==3?'<span class="fCYellow">转人工审核</span>':	'--'
 					}</div></li>
-					<li class="clr"><div class="fl">拒绝理由：</div><div class="fright">${
-						list_item1.code==1018?'<span class="fCRed">远特开卡超过上限</span>':
-						list_item1.code==1019?'<span class="fCRed">联通开卡超过上限</span>':'--'
-					}</div></li></ul>`,
+					<li class="clr"><div class="fl">拒绝理由：</div><div class="fright">${list_item1.desc}</div></li></ul>`,
 					type:0,
 					title:'自动审核详情',
 					btn:0,
 					style:'width:auto;'
-				});
+				}) : layer.open({
+		            content:'未查到审核信息',
+		            skin: 'msg',
+		            time: 4,
+		            msgSkin:'error',
+		        });
             }).catch(error=>errorDeal(error))
 		},
 		agree:function(){//复审同意
@@ -482,7 +499,7 @@ export default{
             .then((data)=>{
                 var str='',list= data.data;
 				for(var i in list){
-					str+='<li><time><b></b>'+vm.$parent.getDateTime(list[i].modifyTime)[6]+'</time><div>'+list[i].context+'</div></li>'
+					str+='<li><time><b></b>'+vm.getDateTime(list[i].modifyTime)[6]+'</time><div>'+list[i].context+'</div></li>'
 				}
 				layer.open({
 					content:'<ul class="lay-log">'+str+'</ul>',
@@ -522,6 +539,9 @@ export default{
 				}
 			}
 			return str;
+		},
+		getDateTime(v){
+			return getDateTime(v);
 		},
 	}
 }

@@ -159,24 +159,6 @@ export default{
 		},
 		toUserList:function(){
 			var vm=this;
-			// vm.AJAX('w/audit/getUsersDetail',{"dealerId":vm.dealerId},function(data){
-			// 	var list= data.data.list;
-			// 	var str='';
-			// 	for(let i in list){
-			// 		if(list[i].isMain==1){
-			// 			str+='<tr><td><span class="u-icon-main"></span></td><td>'+list[i].createTime+'</td><td>'+list[i].userName+'</td><td>'+list[i].phone+'</td><td>'+list[i].cityName+'</td></tr>';
-			// 		}else{
-			// 			str+='<tr><td>'+i+'</td><td>'+list[i].createTime+'</td><td>'+list[i].userName+'</td><td>'+list[i].phone+'</td><td>'+list[i].cityName+'</td></tr>';
-			// 		}
-			// 	}
-			// 	layer.open({
-			// 		content:'<div class="f-scroll-lt" style="max-height:430px;overflow-y:scroll"><table><thead><tr><th>序号</th><th>创建时间</th><th>用户姓名</th><th>电话号码</th><th>当前城市</th></tr></thead><tbody>'+str+'</tbody></table></div>',
-			// 		type:0,
-			// 		title:'用户列表',
-			// 		btn:0,
-			// 		style:'width:auto;'
-			// 	});
-            // });
             reqCommonMethodNoLoad({"dealerId":vm.dealerId},function(){vm.off.isLoad=false;},"km-ecs/w/audit/getUsersDetail")
             .then((data)=>{
                 var list= data.data.list;
@@ -199,21 +181,6 @@ export default{
 		},
 		toIncome:function(index){
             var vm=this;
-			// vm.AJAX('w/audit/getIncomeDetail',{"dealerId":vm.dealerId},function(data){
-			// 	var list= data.data;
-			// 	layer.open({
-			// 		content:'<ul class="f-scroll-lt lay-details light">'+
-			// 		'<li class="clr"><div class="fl">当前余额：</div><div class="fright">￥'+parseFloat(list.leftIncome)/100+'</div></li>'+
-			// 		'<li class="clr"><div class="fl">可转额度：</div><div class="fright">￥'+parseFloat(list.livingIncome)/100+'</div></li>'+
-			// 		'<li class="clr"><div class="fl">上月佣金：</div><div class="fright">￥'+parseFloat(list.monthIncome)/100+'</div></li>'+
-			// 		'<li class="clr"><div class="fl">历史总计：</div><div class="fright">￥'+parseFloat(list.totalIncome)/100+'</div></li></ul>',
-			// 		type:0,
-			// 		title:'话分佣金详情',
-			// 		btn:0,
-			// 		style:'width:auto;'
-			// 	});
-            // });
-            debugger;
             reqCommonMethodNoLoad({"dealerId":vm.dealerId,"type":index},function(){vm.off.isLoad=false;},"km-ecs/w/audit/getIncomeDetail")
             .then((data)=>{           
                 var list= data.data;
@@ -237,21 +204,6 @@ export default{
 			}else{
 				title='自推广激励详情';
 			}
-			// vm.AJAX('w/audit/getCreditDetail',{"dealerId":vm.dealerId,"type":index},function(data){
-			// 	var list= data.data;
-			// 	layer.open({
-			// 		content:'<ul class="f-scroll-lt lay-details light">'+
-			// 		'<li class="clr"><div class="fl">当前余额：</div><div class="fright">￥'+parseFloat(list.leftCredit)/100+'</div></li>'+
-			// 		'<li class="clr"><div class="fl">可转额度：</div><div class="fright">￥'+parseFloat(list.livingCredit)/100+'</div></li>'+
-			// 		'<li class="clr"><div class="fl">昨日激励：</div><div class="fright">￥'+parseFloat(list.dayCredit)/100+'</div></li>'+
-			// 		'<li class="clr"><div class="fl">上月激励：</div><div class="fright">￥'+parseFloat(list.monthCredit)/100+'</div></li>'+
-			// 		'<li class="clr"><div class="fl">历史总计：</div><div class="fright">￥'+parseFloat(list.totalCredit)/100+'</div></li></ul>',
-			// 		type:0,
-			// 		title:title,
-			// 		btn:0,
-			// 		style:'width:auto;'
-			// 	});
-            // });
             reqCommonMethodNoLoad({"dealerId":vm.dealerId,"type":index},function(){vm.off.isLoad=false;},"km-ecs/w/audit/getCreditDetail")
             .then((data)=>{
                 var list= data.data;

@@ -214,6 +214,14 @@ const Opinion_item = resolve => {
     load();
   });
 };
+/*更多功能*/
+const More = resolve =>{
+  load(true);
+  require.ensure(["@/views/km/more/index"], () => {
+    resolve(require("@/views/km/more/index"));
+    load();
+  });
+};
 /*区域管理*/
 // const Fence = resolve =>{
 //   load(true);
@@ -418,6 +426,11 @@ const router=new Router({
             name:"opinion_item"
           }]
         },
+        {//更多功能
+          path:"more",
+          component:More,
+          name:"more"
+        }
         // {//区域管理
         //   path:"fence",
         //   component:Fence,

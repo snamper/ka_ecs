@@ -18,6 +18,8 @@ const state = {
 		"registerMerchantRealTime_":0,//激活商户实时已分配
 		"registerMerchantAfter":0,//激活商户事后待审核
 		"registerMerchantAfter_":0,//激活商户事后已分配
+		"realNameCollection":0,//实名补录待审核
+		"realNameCollection_":0,//实名补录已分配
 		"transfer":0,//过户办理待审核
 		"transfer_":0,//过户办理已分配
 		"sdkRealTime":0,//sdk开卡实时待审核

@@ -77,7 +77,7 @@
 					<ul class="g-side-subul nav1">
 						<li v-if="userInfo.isadmin.indexOf('0')>-1||userInfo.isadmin.indexOf('1')>-1">
 							<router-link :to="{name:'audit_card',params:{source:'realtime'}}">
-								<b></b>开卡实时审核<span v-if="auditCount.opencard+auditCount.transfer+auditCount.sdkRealTime!=0">{{auditCount.opencard+auditCount.transfer+auditCount.sdkRealTime
+								<b></b>开卡实时审核<span v-if="auditCount.opencard+auditCount.transfer+auditCount.realNameCollection+auditCount.sdkRealTime!=0">{{auditCount.opencard+auditCount.transfer+auditCount.realNameCollection+auditCount.sdkRealTime
 }}</span>
 							</router-link>
 						</li>
@@ -164,6 +164,15 @@
 							<i class="u-icon-opinion"></i>
 							<span>意见反馈</span>
 							<b class="animated m-lighter" :class="{bounce:offCountChange}" v-show="auditCount[0]">{{auditCount[0]}}</b>
+						</div>
+					</router-link>
+				</li>
+				<li :class="{active:crumb[0].name=='更多功能'}" v-if="off.powerkm1||off.powerkm31">
+					<b></b>
+					<router-link to="/homek/more">
+						<div>
+							<i class="u-icon-morefn"></i>
+							<span>更多功能</span>
 						</div>
 					</router-link>
 				</li>
@@ -262,6 +271,7 @@ export default{
                 powerkm7:0,
                 powerkm11:0,
                 powerkm21:0,
+                powerkm31:0,
 			},
 			userInfo:{isadmin:''},
             crumb:[{'name':''},{'name':''},{'name':''}],//面包屑
@@ -347,6 +357,7 @@ export default{
             IsInArray(isadmin,'7')>-1?vm.off.powerkm7=true : vm.off.powerkm7=false;
             IsInArray(isadmin,'11')>-1?vm.off.powerkm11=true : vm.off.powerkm11=false;
             IsInArray(isadmin,'21')>-1?vm.off.powerkm21=true : vm.off.powerkm21=false;
+            IsInArray(isadmin,'31')>-1?vm.off.powerkm31=true : vm.off.powerkm31=false;
             vm.initMenu();
         },
         initMenu:function(){
@@ -471,6 +482,8 @@ export default{
 				}else if(path.indexOf("finish")>-1){
 					crumb[1]={"name":"已完成","href":""}
 				}
+			}else if(path.indexOf("/homek/more")>-1){
+				crumb[0]={"name":"更多功能"};
 			}
 			this.crumb=crumb;
 			mainDom.style.overflowY='hidden';
