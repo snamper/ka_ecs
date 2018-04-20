@@ -319,11 +319,11 @@ export default{
             vm.routeChange();//头部面包屑导航
 			let kmAuditInfo=vm.getAuditStatisticsInfo();//km订单审核数统计
             let kmOpinionInfo=vm.getOpinionCountInfo();//km意见反馈数统计
-            //let ymAuditInfo=vm.getAuditStatisticsInfoYm();//ym订单审核数统计
+            let ymAuditInfo=vm.getAuditStatisticsInfoYm();//ym订单审核数统计
             window.onresize=()=>vm.debounce(300,vm.windowChange());
 			vm.timer.count=setInterval(()=>vm.getAuditStatisticsInfo(),5000);
             vm.timer.OpcountT=setInterval(()=>vm.getOpinionCountInfo(),60000);
-			//vm.timer.countYm=setInterval(()=>vm.getAuditStatisticsInfoYm(),5000);            
+			vm.timer.countYm=setInterval(()=>vm.getAuditStatisticsInfoYm(),5000);            
 			vm.SET_ONLINE_TIME();
 			let userInfo=getStore("KA_ECS_USER");
 			vm.userInfo=userInfo;
