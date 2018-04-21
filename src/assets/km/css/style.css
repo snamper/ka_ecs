@@ -333,8 +333,8 @@ body::-webkit-scrollbar-resizer, .f-scroll-lt::-webkit-scrollbar-resizer{
 /*.navBg3>div{background-image:url(../../assets/images/icon_yuanmeng_baika.png);background-color:#FC7F53;}
 .navBg3>p{background-color:#FC7F53; color:#FC7F53;}*/
 /*实名补录*/
-/*.navBg4>div{background-image:url(../../assets/images/icon_yuanmeng_bulu.png);background-color: #FF9800;}
-.navBg4>p{background-color:#FF9800; color:#FF9800;}*/
+.navBg4>div{background-image:url(../images/icon_yuanmeng_bulu.png);background-color: #FF9800;}
+.navBg4>p{background-color:#FF9800; color:#FF9800;}
 /*过户*/
 .navBg5>div{background-image:url(../images/icon_yuanmeng_guohu.png);background-color:#4D96F5;}
 .navBg5>p{background-color:#4D96F5; color:#4D96F5;}

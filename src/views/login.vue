@@ -52,6 +52,7 @@ export default {
             powerkm7:0,
             powerkm11:0,
             powerkm21:0,
+            powerkm31:0,
 		},
       user:'',
       password:'',
@@ -124,6 +125,7 @@ export default {
           IsInArray(isadmin,'7')>-1?vm.off.powerkm7=true : vm.off.powerkm7=false;
           IsInArray(isadmin,'11')>-1?vm.off.powerkm11=true : vm.off.powerkm11=false;
           IsInArray(isadmin,'21')>-1?vm.off.powerkm21=true : vm.off.powerkm21=false;
+          IsInArray(isadmin,'31')>-1?vm.off.powerkm31=true : vm.off.powerkm31=false;
         if(vm.off.power1||vm.off.power0){
             window.location.href="#/homey/audit/yuanmeng";
             return false;

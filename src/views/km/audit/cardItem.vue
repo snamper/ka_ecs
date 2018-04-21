@@ -23,7 +23,7 @@
 	  	  </header>
 	  	  <div class="g-box">
 			  <table class="g-list-table">
-				<tbody>
+				<tbody v-if="off.itemType!=10">
 					<tr>
 						<td>
 							<table class="g-inner-table">
@@ -90,6 +90,8 @@
 						<img v-for="item in imgData" :src="item.src">
 					</tr>
 				</tbody>
+				<!--实名补登-->
+				<RealTimeCollection v-if="off.itemType==10" :auditStatus="1" :auditData="auditData" :imgData="imgData"></RealTimeCollection>
 			  </table>
 		  </div>
 	  </section>
@@ -97,12 +99,13 @@
   </div>
 </template>
 <script>
-import {reqCommonMethod} from "../../../config/service.js";
-import {errorDeal} from "../../../config/utils.js";
 import "../../../assets/km/css/cardOrderDetails.css";
 import "../../../assets/km/css/audit.css";
+import {reqCommonMethod} from "../../../config/service.js";
+import {errorDeal,getDateTime} from "../../../config/utils.js";
+
 import ImgZoom from '../../../componentskm/ImgZoom';
-import { getDateTime } from "../../../config/utils.js";
+import RealTimeCollection from '../../../componentskm/audit/realTimeCollection';
 export default{
 	data (){
 		return {
@@ -121,7 +124,8 @@ export default{
 		}
 	},
 	components:{
-		'ImgZoom':ImgZoom
+		ImgZoom,
+		RealTimeCollection
 	},
 	beforeDestroy:function(){
 		window.clearInterval(this.timer)
@@ -141,16 +145,28 @@ export default{
 		agree:function(){//审核同意
 			var vm=this,auditType=vm.off.auditType,url='';
 			var orderId=vm.auditData.orderId;
+			let json={
+				"orderId":orderId,
+				"result":1,"remark":'',
+				"reason": '',
+				"refuseReasonCode":"",
+				"auditType":auditType
+			}
 
 			if(vm.off.itemType==8){
 				url="km-ecs/w/sdk/auditOrder";
 			}else if(vm.off.itemType==9){
 				url="km-ecs/w/tongfu/auditOrder";
+			}else if(vm.off.itemType==10){
+				url="km-ecs/w/audit/auditOfReinput";
+				json.result=2;
+				json.phone=vm.auditData.phoneNumber;
+				json.orderId=vm.auditData.sysOrderId;
 			}else{
 				url="km-ecs/w/audit/audit";
 			}
 			//vm.AJAX(url,{"orderId":orderId,"result":1,"remark":"","reason":"","refuseReasonCode":"","auditType":auditType},function(data){layer.open({content:data.msg,skin:"msg",time:4,msgSkin:"success",success:function(){vm.dealAuditList()}})});
-            reqCommonMethod({"orderId":orderId,"result":1,"remark":'',"reason": '',"refuseReasonCode":"","auditType":auditType},function(){vm.off.isLoad=false;},url)
+            reqCommonMethod(json,false,url)
             .then((data)=>{
                 layer.open({
 					content:data.msg,
@@ -202,15 +218,28 @@ export default{
 					reason=document.getElementById('reason').value;
 					if(remark==''&&reason=='')return false;
 
+					let json={
+						"orderId":orderId,
+						"result":2,
+						"remark":remark,
+						"refuseReasonCode":refuseReasonCode,
+						"reason": reason,
+						"stopCard":stopCard,
+						"auditType":auditType
+					}
 					if(vm.off.itemType==8){
 						url="km-ecs/w/sdk/auditOrder";
 					}else if(vm.off.itemType==9){
 						url="km-ecs/w/tongfu/auditOrder";
+					}else if(vm.off.itemType==10){
+						url="km-ecs/w/audit/auditOfReinput";
+						json.result=3;
+						json.phone=vm.auditData.phoneNumber;
+						json.orderId=vm.auditData.sysOrderId;
 					}else{
 						url="km-ecs/w/audit/audit";
 					}
-					//vm.AJAX(url,{"orderId":orderId,"result":2,"remark":remark,"refuseReasonCode":refuseReasonCode,"reason":reason,"stopCard":stopCard,"auditType":auditType},function(data){layer.open({content:data.msg,skin:"msg",time:4,msgSkin:"success",success:function(){vm.dealAuditList();layer.close(popIndex)}})});
-                    reqCommonMethod({"orderId":orderId,"result":2,"remark":remark,"refuseReasonCode":refuseReasonCode,"reason": reason,"stopCard":stopCard,"auditType":auditType},function(){vm.off.isLoad=false;},url)
+                    reqCommonMethod(json,false,url)
 					.then((data)=>{
                         layer.open({
 							content:data.msg,
@@ -236,6 +265,8 @@ export default{
 				url="km-ecs/w/sdk/distributeOrder";
 			}else if(vm.off.itemType==9){
 				url="km-ecs/w/tongfu/distributeOrder";
+			}else if(vm.off.itemType==10){
+				url="km-ecs/w/audit/getAuditOfReinput";
 			}else{
 				url="km-ecs/w/audit/toaudit";
 			}
@@ -273,6 +304,14 @@ export default{
 					vm.imgData[4]={'src':vm.auditData.backImageUrl,'name':'过户人反面照片'};
 					vm.imgData[5]={'src':vm.auditData.handImage,'name':'过户人手持照片'};
 					vm.imgData[6]={'src':vm.auditData.signImage,'name':'过户人手签名照片'};
+				}else if(vm.off.itemType==10){//实名补登
+					vm.imgData[0]={'src':vm.auditData.oldReqParam.imageName,'name':'原正面照片'};
+					vm.imgData[1]={'src':vm.auditData.oldReqParam.backImageName,'name':'原反面照片'};//
+					vm.imgData[2]={'src':vm.auditData.oldReqParam.handImageName,'name':'原手持照片'};
+					vm.imgData[3]={'src':vm.auditData.reqParam.imageName,'name':'正面照片'};
+					vm.imgData[4]={'src':vm.auditData.reqParam.backImageName,'name':'反面照片'};
+					vm.imgData[5]={'src':vm.auditData.reqParam.handImageName,'name':'手持照片'};
+					vm.imgData[6]={'src':vm.auditData.reqParam.signImageName,'name':'手签名照片'};
 				}else{//开卡
 					vm.imgData=[
 						{'src':vm.auditData.imageUrl,'name':'正面'},
@@ -281,7 +320,6 @@ export default{
 						{'src':vm.auditData.livingImgUrl,'name':'活体识别'},
 						{'src':vm.auditData.signImageUrl,'name':'手签名'}
 					];
-					console.log(vm.imgData[0].src)
 				}
 				vm.off.auditIndex++;
 			}

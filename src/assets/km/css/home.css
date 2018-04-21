@@ -388,7 +388,11 @@
   padding:0.1rem;
   display: inline;
 }
-
+.u-icon-morefn{
+  background-image: url(../assets/images/more.png);
+  width: 0.17rem;
+  height: 0.17rem;
+}
 
 
 /*头部用户组件*/
@@ -541,16 +545,16 @@
 .m-scroll-bar{
   position: fixed;
   width:0;
-  height: 4px;
+  height: 3px;
   margin:auto;
-  border-radius: 100%;
+  
   /*background-image: -webkit-linear-gradient(to right, #40C4FF 0,#3E88FA 50%, #40C4FF 100%);
   background-image: -moz-linear-gradient(to right, #40C4FF 0,#3E88FA 50%, #40C4FF 100%);
   background-image: linear-gradient(to right, #40C4FF 0,#3E88FA 50%, #40C4FF 100%);
   background-image: -ms-linear-gradient(to right, #40C4FF 0,#3E88FA 50%, #40C4FF 100%);*/
   background-color:#20a0ff;
   left: 0;
-  right:0;
+  /*right:0;*/
   top:0.6rem;
   z-index: 888;
 }
