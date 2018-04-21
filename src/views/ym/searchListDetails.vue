@@ -3,237 +3,240 @@
   /* @import "../../assets/km/css/cardOrderDetails.css"; */
 </style>
 <template>
-<section class="g-list-box" id="details">
-	<header class="g-lis-head">
-		<a class="m-details-back" @click="close"></a>
-  	  	<div class="m-footD-btn">
-  	  		<a v-if="type==2&&list.cardStatus==2" class="f-btn f-btn-warning" @click="integralLog">查看积分</a>
-			<a class="f-btn f-btn-success" @click="orderLog">查看审核日志</a>
-	  	</div>
-  	</header>
-	<div class="g-box">
-		<table class="g-list-table" :class="{transfer:list.operatorType==6}">
-			<tbody v-if="list.operatorType!=6">
-				<tr>
-					<td>
-						<table class="g-inner-table">
-							<tbody>
-								<tr><td>订单号码：</td><td>{{list.orderId}}</td></tr>
-								<tr><td>生成时间：</td><td>{{$parent.getDateTime(list.createTime)[6]}}</td></tr>
-								<tr v-if="type==2"><td>开卡状态：</td><td>{{ $parent.translateData(4,list.cardStatus) }}</td></tr>
-								<tr v-if="type==2"><td>订单状态：</td>
-									<td v-if="list.result==1"><b class="f-c-green">通过</b></td>
-									<td v-if="list.result==3"><b class="f-c-blue">复审同意</b></td>
-									<td v-if="list.result==4"><b class="f-c-purple">准同意</b></td>
-									<td v-if="list.result==2&&parseInt(list.recheckLastTime)<new Date().getTime()"><b class="f-c-red" style="padding-right:10px">拒绝</b><span class="red">超过复审时间</span></td>
-									<td v-if="list.result==2&&parseInt(list.recheckLastTime)>=new Date().getTime()"><b class="f-c-red" style="padding-right:10px">拒绝</b><a :name="list.orderId" @="agree" class="agree" href="javascript:void(0)" @click="agree">同意</a></td>
-								</tr>
-								<tr v-if="type==2"><td>审核方式：</td><td>
-									<span v-show="list.auditType==1">实时审核</span>
-									<span v-show="list.auditType==2">自动审核</span>
-									<a href="javascript:void(0)" @click="autoAuditInfo" class="details m-l">查看详情</a>
-								</td></tr>
-								<tr v-if="type==1"><td>自动审核详情：</td><td>
-									<a href="javascript:void(0)" @click="autoAuditInfo" class="details m-l">点击查看</a>
-								</td></tr>
-								<tr v-if="type==2"><td>开卡状态说明：</td><td>{{ list.cardStatusReason }}</td></tr>
-								<tr><td>用户姓名：</td><td>
-									<span class="o-order-modify" v-if="list.result==4&&list.updName==0">
-										<span v-if="!modify.off1">{{ list.userName }}</span>
-										<input v-if="modify.off1" maxlength="30" type="text" v-model="modify.userName">
-										<span class="btn-group" v-if="off.power4||off.power1">
-											<a href="javascript:void(0)" v-if="!modify.off1" @click="modifyOrder(1,1)" title="修改" class="modify"></a>
-											<a href="javascript:void(0)" v-if="modify.off1" @click="modifyOrder(2,1)" title="完成" class="myicon-success-circle f-c-green complete"></a>
-											<a href="javascript:void(0)" v-if="modify.off1" @click="modifyOrder(3,1)" title="取消" class="myicon-cancel f-c-red cancel"></a>
-										</span>
-									</span>
-									<span v-else>{{ list.userName }}</span>
-								</td></tr>
-								<tr><td>电话号码：</td><td>{{ list.userPhone }}（{{ typeCheck(4,list.phoneLevel) }}）</td></tr>
-								<tr><td>{{ typeCheck(list.papersType)[2] }}：</td><td>
-									<span class="o-order-modify" v-if="list.result==4&&list.updPapersCode==0">
-										<span v-if="!modify.off3">{{ list.papersCode }}</span>
-										<input v-if="modify.off3" maxlength="30" type="text" v-model="modify.papersCode">
-										<span class="btn-group" v-if="off.power4||off.power1">
-											<a href="javascript:void(0)" v-if="!modify.off3" @click="modifyOrder(1,3)" title="修改" class="modify"></a>
-											<a href="javascript:void(0)" v-if="modify.off3" @click="modifyOrder(2,3)" title="完成" class="myicon-success-circle f-c-green complete"></a>
-											<a href="javascript:void(0)" v-if="modify.off3" @click="modifyOrder(3,3)" title="取消" class="myicon-cancel f-c-red cancel"></a>
-										</span>
-									</span>
-									<span v-else>{{ list.papersCode }}</span>
-								</td></tr>
-								<tr><td>证件类型：</td><td>{{ typeCheck(list.papersType)[0] }}</td></tr>
-								<tr><td>{{ typeCheck(list.papersType)[1] }}：</td><td>
-									<span class="o-order-modify" v-if="list.result==4&&list.updAddress==0">
-										<span v-if="!modify.off2">{{ list.userAddress }}</span>
-										<textarea v-if="modify.off2" maxlength="50" type="text" v-model="modify.userAddress">{{modify.userAddress}}</textarea>
-										<span class="btn-group" v-if="off.power4||off.power1">
-											<a href="javascript:void(0)" v-if="!modify.off2" @click="modifyOrder(1,2)" title="修改" class="modify"></a>
-											<a href="javascript:void(0)" v-if="modify.off2" @click="modifyOrder(2,2)" title="完成" class="myicon-success-circle f-c-green complete"></a>
-											<a href="javascript:void(0)" v-if="modify.off2" @click="modifyOrder(3,2)" title="取消" class="myicon-cancel f-c-red cancel"></a>
-										</span>
-									</span>
-									<span v-else>{{ list.userAddress }}</span>
-								</td></tr>
-								<tr><td>证件期限：</td><td>{{ list.validityPeriod}}</td></tr>
-								<tr><td>号码归属部门：</td><td>{{ list.phone_depName }}</td></tr>
-								<tr><td>UCCID：</td><td>{{ list.cardNumber }}</td></tr>
-								<tr><td>Mac地址：</td><td>{{ list.devMacAddr }}</td></tr>
-								<tr><td>终端类型：</td><td>{{ list.terminalType }}</td></tr>
-								<tr><td>识别仪名称：</td><td>{{ list.devSN }}</td></tr>
-								<tr><td>识别模式：</td><td>{{ list.openMode }}</td></tr>
-								<tr><td>照片模式：</td><td>{{ list.photoMode }}</td></tr>
-								<tr v-if="type==2"><td>审核人姓名：</td><td>{{ list.customerName }}</td></tr>
-								<tr><td>操作人：</td><td>{{ list.operatorName }}【操作人工号：{{ list.operatorId }}】</td></tr>
-								<tr><td>操作人部门：</td><td>{{ list.depName }}</td></tr>
-								<tr v-if="type==2&&list.result==2"><td>拒绝原因：</td><td><ul><li v-for="todo in filterReason(list.reason)"><b v-if="todo.star" class="f-c-red">*</b>{{todo.text}}</li></ul></td></tr>
-								<tr v-if="type==2&&list.result==2"><td>备注：</td><td>{{ list.comment }}</td></tr>
-								<tr v-if="type==2&&list.result==4"><td>准同意理由：</td><td>{{ list.buggingReason }}</td></tr>
-							</tbody>
-						</table>
-					</td>
-					<td class="m-box-img m-meida-640up">
-						<div class="m-zoomContent zoom-c">
-							<div class="m-img-c"><div id="imgContent" class="fGrab" :class="{fGrabbing:mouse.off}" :style="zoomStyle" @mousemove="mouseOn" @mousedown="mouseOn" @mouseup="mouseOn" @mouseout="mouseOn" @mousewheel="mouseOn"></div></div>
-							<a href="javascript:void(0)" class="slide slide-left" @click="slide(1)"></a>
-							<a href="javascript:void(0)" class="slide slide-right" @click="slide(2)"></a>
-							<a href="javascript:void(0)" class="rotate" @click="rotate"><span></span></a>
-							<div class="text">{{imgData[imgIndex].name}}</div>
-						</div>
-					</td>
-				</tr>
-				<tr class="m-box-img m-meida-640down">
-					<img :src="imgData[0].src">
-					<img :src="imgData[1].src">
-					<img :src="imgData[2].src">
-					<img :src="imgData[3].src">
-					<img :src="imgData[4].src">
-				</tr>
-			</tbody>
-			<!--过户办理-->
-			<tbody v-if="list.operatorType==6">
-				<tr>
-					<td><span>订单号码：</span>{{list.orderId}}</td>
-					<td><span>电话号码：</span>{{list.userPhone}}（{{typeCheck(4,list.phoneLevel)}}）</td>
-					<td><span>审核方式：</span>
-						<b v-show="list.auditType==1">实时审核</b>
-						<b v-show="list.auditType==2">自动审核<a href="javascript:void(0)" @click="autoAuditInfo" class="details m-l">查看详情</a></b>
-					</td>
-				</tr>
-				<tr>
-					<td><span>生成时间：</span>{{$parent.getDateTime(list.createTime)[6]}}</td>
-					<td><span>原机主姓名：</span>{{list.userNameOld}}</td>
-					<td class="clr"><span class="fl">过户人姓名：</span>
-						
-						<span class="o-order-modify" v-if="list.result==4&&list.updName==0">
-							<i v-if="!modify.off1">{{ list.userName }}</i>
-							<input v-if="modify.off1" maxlength="30" type="text" v-model="modify.userName">
-							<div class="btn-group">
-								<a href="javascript:void(0)" v-if="!modify.off1" @click="modifyOrder(1,1)" title="修改" class="modify"></a>
-								<a href="javascript:void(0)" v-if="modify.off1" @click="modifyOrder(2,1)" title="完成" class="myicon-success-circle f-c-green complete">x</a>
-								<a href="javascript:void(0)" v-if="modify.off1" @click="modifyOrder(3,1)" title="取消" class="myicon-cancel f-c-red cancel">xx</a>
-							</div>
-						</span>
-						<span v-else>{{ list.userName }}</span>
-					</td>
-				</tr>
-				<tr>
-					<td><span>终端类型：</span>{{list.terminalType}}</td>
-					<td><span>证件类型：</span>{{typeCheck(list.papersTypeOld)[0]}}</td>
-					<td><span>证件类型：</span>{{typeCheck(list.papersType)[0]}}</td>
-				</tr>
-				<tr>
-					<td><span>识别仪名称：</span>{{list.devSN}}</td>
-					<td><span>{{ typeCheck(list.papersTypeOld)[2] }}：</span>{{list.papersCodeOld}}</td>
-					<td class="clr"><span class="fl">{{ typeCheck(list.papersType)[2] }}：</span>
-						<span class="o-order-modify" v-if="list.result==4&&list.updPapersCode==0">
-							<i v-if="!modify.off3">{{ list.papersCode }}</i>
-							<input v-if="modify.off3" maxlength="30" type="text" v-model="modify.papersCode">
-							<div class="btn-group">
-								<a href="javascript:void(0)" v-if="!modify.off3" @click="modifyOrder(1,3)" title="修改" class="modify"></a>
-								<a href="javascript:void(0)" v-if="modify.off3" @click="modifyOrder(2,3)" title="完成" class="myicon-success-circle f-c-green complete"></a>
-								<a href="javascript:void(0)" v-if="modify.off3" @click="modifyOrder(3,3)" title="取消" class="myicon-cancel f-c-red cancel"></a>
-							</div>
-						</span>
-						<span v-else>{{ list.papersCode }}</span>
-					</td>
-				</tr>
-				<tr>
-					<td><span>识别模式：</span>{{list.openMode}}</td>
-					<td><span>{{ typeCheck(list.papersTypeOld)[1] }}：</span>{{list.userAddressOld}}</td>
-					<td class="clr"><span class="fl">{{ typeCheck(list.papersType)[1] }}：</span>
-						<span class="o-order-modify" v-if="list.result==4&&list.updAddress==0">
-							<i v-if="!modify.off2">{{ list.userAddress }}</i>
-							<input v-if="modify.off2" maxlength="50" type="text" v-model="modify.userAddress">
-							<div class="btn-group">
-								<a href="javascript:void(0)" v-if="!modify.off2" @click="modifyOrder(1,2)" title="修改" class="modify"></a>
-								<a href="javascript:void(0)" v-if="modify.off2" @click="modifyOrder(2,2)" title="完成" class="myicon-success-circle f-c-green complete"></a>
-								<a href="javascript:void(0)" v-if="modify.off2" @click="modifyOrder(3,2)" title="取消" class="myicon-cancel f-c-red cancel"></a>
-							</div>
-						</span>
-						<span v-else>{{ list.userAddress }}</span>
-					</td>
-				</tr>
-				<tr>
-					<td><span>Mac地址：</span>{{list.devMacAddr}}</td>
-					<td><span>证件期限：</span>{{list.validityPeriodOld}}</td>
-					<td><span>证件期限：</span>{{list.validityPeriod}}</td>
-				</tr>
-				<tr>
-					<td><span>操作人：</span>{{list.operatorName}}【操作人工号：{{list.operatorId}}】</td>
-					<td colspan="2"><span>操作人部门：</span>{{list.depName}}</td>
-				</tr>
-				<tr>
-					<td><span>备注：</span>{{list.comment}}</td>
-					<td colspan="2"><span>号码归属部门：</span>{{list.phone_depName}}</td>
-				</tr>
-				<tr v-if="type==2">
-					<td><span>开卡状态：</span>{{ $parent.translateData(4,list.cardStatus) }}</td>
-					<td><span>订单状态：</span>
-						<i v-if="list.result==1"><b class="f-c-green">通过</b></i>
-						<i v-if="list.result==3"><b class="f-c-blue">复审同意</b></i>
-						<i v-if="list.result==4"><b class="f-c-yellow">准同意</b></i>
-						<i v-if="list.result==2&&parseInt(list.recheckLastTime)<new Date().getTime()"><b class="f-c-red" style="padding-right:10px">拒绝</b><span class="red">超过复审时间</span></i>
-						<i v-if="list.result==2&&parseInt(list.recheckLastTime)>=new Date().getTime()"><b class="f-c-red" style="padding-right:10px">拒绝</b><a :name="list.orderId" @="agree" class="agree" href="javascript:void(0)" @click="agree">同意</a></i>
-					</td>
-					<td><span>开卡状态说明：</span>{{ list.cardStatusReason }}</td>
-				</tr>
-				<tr v-if="type==2&&list.result==2">
-					<td colspan="3">
-						<span>拒绝原因：</span>
-						<ul><li v-for="todo in filterReason(list.reason)"><b v-if="todo.star" class="f-c-red">*</b>{{todo.text}}</li></ul>
-					</td>
-				</tr>
-				<tr v-if="type==2&&list.result==4">
-					<td colspan="3">
-						<span>准同意理由：</span>
-						{{ list.buggingReason }}
-					</td>
-				</tr>
-			</tbody>
-  		</table>
-  		<div class="g-transfer-img" v-if="list.operatorType==6">
-			<div class="m-zoomContent zoom-c">
-				<div class="m-img-c"><div id="imgContent" title="1" class="fGrab" :class="{fGrabbing:mouse.off}" :style="zoomStyle_1" @mousemove="mouseOn" @mousedown="mouseOn" @mouseup="mouseOn" @mouseout="mouseOn" @mousewheel="mouseOn"></div></div>
-				<a href="javascript:void(0)" class="slide slide-left" @click="slide(1)"></a>
-				<!-- <a href="javascript:void(0)" class="slide slide-right" @click="slide(2)"></a> -->
-				<a href="javascript:void(0)" name="1" class="rotate" @click="rotate"><span></span></a>
-				<div class="text">{{imgData[imgIndex*2].name}}</div>
-			</div>
-			<div class="m-zoomContent zoom-c">
-				<div class="m-img-c"><div id="imgContent" title="2" class="fGrab" :class="{fGrabbing:mouse.off}" :style="zoomStyle_2" @mousemove="mouseOn" @mousedown="mouseOn" @mouseup="mouseOn" @mouseout="mouseOn" @mousewheel="mouseOn"></div></div>
-				<!-- <a href="javascript:void(0)" class="slide slide-left" @click="slide(1)"></a> -->
-				<a href="javascript:void(0)" class="slide slide-right" @click="slide(2)"></a>
-				<a href="javascript:void(0)" name="2" class="rotate" @click="rotate"><span></span></a>
-				<div class="text">{{imgData[(imgIndex*2+1)].name}}</div>
-			</div>
-		</div>
-  </div>
-</section>
+    <section class="g-list-box" id="details">
+        <header class="g-lis-head">
+            <a class="m-details-back" @click="close"></a>
+            <div class="m-footD-btn">
+                <a v-if="type==2&&list.cardStatus==2" class="f-btn f-btn-warning" @click="integralLog">查看积分</a>
+                <a class="btn-modify" @click="modifyInfo">修改准同意信息</a>
+                <a class="f-btn f-btn-success" @click="orderLog">查看审核日志</a>
+            </div>
+        </header>
+        <div class="g-box">
+            <table class="g-list-table" :class="{transfer:list.operatorType==6}">
+                <tbody v-if="list.operatorType!=6">
+                    <tr>
+                        <td>
+                            <table class="g-inner-table">
+                                <tbody>
+                                    <tr><td>订单号码：</td><td>{{list.orderId}}</td></tr>
+                                    <tr><td>生成时间：</td><td>{{$parent.getDateTime(list.createTime)[6]}}</td></tr>
+                                    <tr v-if="type==2"><td>开卡状态：</td><td>{{ $parent.translateData(4,list.cardStatus) }}</td></tr>
+                                    <tr v-if="type==2"><td>订单状态：</td>
+                                        <td v-if="list.result==1"><b class="f-c-green">通过</b></td>
+                                        <td v-if="list.result==3"><b class="f-c-blue">复审同意</b></td>
+                                        <td v-if="list.result==4"><b class="f-c-purple">准同意</b></td>
+                                        <td v-if="list.result==2&&parseInt(list.recheckLastTime)<new Date().getTime()"><b class="f-c-red" style="padding-right:10px">拒绝</b><span class="red">超过复审时间</span></td>
+                                        <td v-if="list.result==2&&parseInt(list.recheckLastTime)>=new Date().getTime()"><b class="f-c-red" style="padding-right:10px">拒绝</b><a :name="list.orderId" @="agree" class="agree" href="javascript:void(0)" @click="agree">同意</a></td>
+                                    </tr>
+                                    <tr v-if="type==2"><td>审核方式：</td><td>
+                                        <span v-show="list.auditType==1">实时审核</span>
+                                        <span v-show="list.auditType==2">自动审核</span>
+                                        <a href="javascript:void(0)" @click="autoAuditInfo" class="details m-l">查看详情</a>
+                                    </td></tr>
+                                    <tr v-if="type==1"><td>自动审核详情：</td><td>
+                                        <a href="javascript:void(0)" @click="autoAuditInfo" class="details m-l">点击查看</a>
+                                    </td></tr>
+                                    <tr v-if="type==2"><td>开卡状态说明：</td><td>{{ list.cardStatusReason }}</td></tr>
+                                    <tr><td>用户姓名：</td><td>
+                                        <span class="o-order-modify" v-if="list.result==4&&list.updName==0">
+                                            <span v-if="!modify.off1">{{ list.userName }}</span>
+                                            <input v-if="modify.off1" maxlength="30" type="text" v-model="modify.userName">
+                                            <!-- <span class="btn-group" v-if="off.power4||off.power1">
+                                                <a href="javascript:void(0)" v-if="!modify.off1" @click="modifyOrder(1,1)" title="修改" class="modify"></a>
+                                                <a href="javascript:void(0)" v-if="modify.off1" @click="modifyOrder(2,1)" title="完成" class="myicon-success-circle f-c-green complete"></a>
+                                                <a href="javascript:void(0)" v-if="modify.off1" @click="modifyOrder(3,1)" title="取消" class="myicon-cancel f-c-red cancel"></a>
+                                            </span> -->
+                                        </span>
+                                        <span v-else>{{ list.userName }}</span>
+                                    </td></tr>
+                                    <tr><td>电话号码：</td><td>{{ list.userPhone }}（{{ typeCheck(4,list.phoneLevel) }}）</td></tr>
+                                    <tr><td>{{ typeCheck(list.papersType)[2] }}：</td><td>
+                                        <span class="o-order-modify" v-if="list.result==4&&list.updPapersCode==0">
+                                            <span v-if="!modify.off3">{{ list.papersCode }}</span>
+                                            <input v-if="modify.off3" maxlength="30" type="text" v-model="modify.papersCode">
+                                            <!-- <span class="btn-group" v-if="off.power4||off.power1">
+                                                <a href="javascript:void(0)" v-if="!modify.off3" @click="modifyOrder(1,3)" title="修改" class="modify"></a>
+                                                <a href="javascript:void(0)" v-if="modify.off3" @click="modifyOrder(2,3)" title="完成" class="myicon-success-circle f-c-green complete"></a>
+                                                <a href="javascript:void(0)" v-if="modify.off3" @click="modifyOrder(3,3)" title="取消" class="myicon-cancel f-c-red cancel"></a>
+                                            </span> -->
+                                        </span>
+                                        <span v-else>{{ list.papersCode }}</span>
+                                    </td></tr>
+                                    <tr><td>证件类型：</td><td>{{ typeCheck(list.papersType)[0] }}</td></tr>
+                                    <tr><td>{{ typeCheck(list.papersType)[1] }}：</td><td>
+                                        <span class="o-order-modify" v-if="list.result==4&&list.updAddress==0">
+                                            <span v-if="!modify.off2">{{ list.userAddress }}</span>
+                                            <textarea v-if="modify.off2" maxlength="50" type="text" v-model="modify.userAddress">{{modify.userAddress}}</textarea>
+                                            <!-- <span class="btn-group" v-if="off.power4||off.power1">
+                                                <a href="javascript:void(0)" v-if="!modify.off2" @click="modifyOrder(1,2)" title="修改" class="modify"></a>
+                                                <a href="javascript:void(0)" v-if="modify.off2" @click="modifyOrder(2,2)" title="完成" class="myicon-success-circle f-c-green complete"></a>
+                                                <a href="javascript:void(0)" v-if="modify.off2" @click="modifyOrder(3,2)" title="取消" class="myicon-cancel f-c-red cancel"></a>
+                                            </span> -->
+                                        </span>
+                                        <span v-else>{{ list.userAddress }}</span>
+                                    </td></tr>
+                                    <tr><td>证件期限：</td><td>{{ list.validityPeriod}}</td></tr>
+                                    <tr><td>号码归属部门：</td><td>{{ list.phone_depName }}</td></tr>
+                                    <tr><td>UCCID：</td><td>{{ list.cardNumber }}</td></tr>
+                                    <tr><td>Mac地址：</td><td>{{ list.devMacAddr }}</td></tr>
+                                    <tr><td>终端类型：</td><td>{{ list.terminalType }}</td></tr>
+                                    <tr><td>识别仪名称：</td><td>{{ list.devSN }}</td></tr>
+                                    <tr><td>识别模式：</td><td>{{ list.openMode }}</td></tr>
+                                    <tr><td>照片模式：</td><td>{{ list.photoMode }}</td></tr>
+                                    <tr v-if="type==2"><td>审核人姓名：</td><td>{{ list.customerName }}</td></tr>
+                                    <tr><td>操作人：</td><td>{{ list.operatorName }}【操作人工号：{{ list.operatorId }}】</td></tr>
+                                    <tr><td>操作人部门：</td><td>{{ list.depName }}</td></tr>
+                                    <tr v-if="type==2&&list.result==2"><td>拒绝原因：</td><td><ul><li v-for="todo in filterReason(list.reason)"><b v-if="todo.star" class="f-c-red">*</b>{{todo.text}}</li></ul></td></tr>
+                                    <tr v-if="type==2&&list.result==2"><td>备注：</td><td>{{ list.comment }}</td></tr>
+                                    <tr v-if="type==2&&list.result==4"><td>准同意理由：</td><td>{{ list.buggingReason }}</td></tr>
+                                </tbody>
+                            </table>
+                        </td>
+                        <td class="m-box-img m-meida-640up">
+                            <div class="m-zoomContent zoom-c">
+                                <div class="m-img-c"><div id="imgContent" class="fGrab" :class="{fGrabbing:mouse.off}" :style="zoomStyle" @mousemove="mouseOn" @mousedown="mouseOn" @mouseup="mouseOn" @mouseout="mouseOn" @mousewheel="mouseOn"></div></div>
+                                <a href="javascript:void(0)" class="slide slide-left" @click="slide(1)"></a>
+                                <a href="javascript:void(0)" class="slide slide-right" @click="slide(2)"></a>
+                                <a href="javascript:void(0)" class="rotate" @click="rotate"><span></span></a>
+                                <div class="text">{{imgData[imgIndex].name}}</div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="m-box-img m-meida-640down">
+                        <img :src="imgData[0].src">
+                        <img :src="imgData[1].src">
+                        <img :src="imgData[2].src">
+                        <img :src="imgData[3].src">
+                        <img :src="imgData[4].src">
+                    </tr>
+                </tbody>
+                <!--过户办理-->
+                <tbody v-if="list.operatorType==6">
+                    <tr>
+                        <td><span>订单号码：</span>{{list.orderId}}</td>
+                        <td><span>电话号码：</span>{{list.userPhone}}（{{typeCheck(4,list.phoneLevel)}}）</td>
+                        <td><span>审核方式：</span>
+                            <b v-show="list.auditType==1">实时审核</b>
+                            <b v-show="list.auditType==2">自动审核<a href="javascript:void(0)" @click="autoAuditInfo" class="details m-l">查看详情</a></b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><span>生成时间：</span>{{$parent.getDateTime(list.createTime)[6]}}</td>
+                        <td><span>原机主姓名：</span>{{list.userNameOld}}</td>
+                        <td class="clr"><span class="fl">过户人姓名：</span>
+                            
+                            <span class="o-order-modify" v-if="list.result==4&&list.updName==0">
+                                <i v-if="!modify.off1">{{ list.userName }}</i>
+                                <input v-if="modify.off1" maxlength="30" type="text" v-model="modify.userName">
+                                <!-- <div class="btn-group">
+                                    <a href="javascript:void(0)" v-if="!modify.off1" @click="modifyOrder(1,1)" title="修改" class="modify"></a>
+                                    <a href="javascript:void(0)" v-if="modify.off1" @click="modifyOrder(2,1)" title="完成" class="myicon-success-circle f-c-green complete">x</a>
+                                    <a href="javascript:void(0)" v-if="modify.off1" @click="modifyOrder(3,1)" title="取消" class="myicon-cancel f-c-red cancel">xx</a>
+                                </div> -->
+                            </span>
+                            <span v-else>{{ list.userName }}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><span>终端类型：</span>{{list.terminalType}}</td>
+                        <td><span>证件类型：</span>{{typeCheck(list.papersTypeOld)[0]}}</td>
+                        <td><span>证件类型：</span>{{typeCheck(list.papersType)[0]}}</td>
+                    </tr>
+                    <tr>
+                        <td><span>识别仪名称：</span>{{list.devSN}}</td>
+                        <td><span>{{ typeCheck(list.papersTypeOld)[2] }}：</span>{{list.papersCodeOld}}</td>
+                        <td class="clr"><span class="fl">{{ typeCheck(list.papersType)[2] }}：</span>
+                            <span class="o-order-modify" v-if="list.result==4&&list.updPapersCode==0">
+                                <i v-if="!modify.off3">{{ list.papersCode }}</i>
+                                <input v-if="modify.off3" maxlength="30" type="text" v-model="modify.papersCode">
+                                <!-- <div class="btn-group">
+                                    <a href="javascript:void(0)" v-if="!modify.off3" @click="modifyOrder(1,3)" title="修改" class="modify"></a>
+                                    <a href="javascript:void(0)" v-if="modify.off3" @click="modifyOrder(2,3)" title="完成" class="myicon-success-circle f-c-green complete"></a>
+                                    <a href="javascript:void(0)" v-if="modify.off3" @click="modifyOrder(3,3)" title="取消" class="myicon-cancel f-c-red cancel"></a>
+                                </div> -->
+                            </span>
+                            <span v-else>{{ list.papersCode }}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><span>识别模式：</span>{{list.openMode}}</td>
+                        <td><span>{{ typeCheck(list.papersTypeOld)[1] }}：</span>{{list.userAddressOld}}</td>
+                        <td class="clr"><span class="fl">{{ typeCheck(list.papersType)[1] }}：</span>
+                            <span class="o-order-modify" v-if="list.result==4&&list.updAddress==0">
+                                <i v-if="!modify.off2">{{ list.userAddress }}</i>
+                                <input v-if="modify.off2" maxlength="50" type="text" v-model="modify.userAddress">
+                                <!-- <div class="btn-group">
+                                    <a href="javascript:void(0)" v-if="!modify.off2" @click="modifyOrder(1,2)" title="修改" class="modify"></a>
+                                    <a href="javascript:void(0)" v-if="modify.off2" @click="modifyOrder(2,2)" title="完成" class="myicon-success-circle f-c-green complete"></a>
+                                    <a href="javascript:void(0)" v-if="modify.off2" @click="modifyOrder(3,2)" title="取消" class="myicon-cancel f-c-red cancel"></a>
+                                </div> -->
+                            </span>
+                            <span v-else>{{ list.userAddress }}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><span>Mac地址：</span>{{list.devMacAddr}}</td>
+                        <td><span>证件期限：</span>{{list.validityPeriodOld}}</td>
+                        <td><span>证件期限：</span>{{list.validityPeriod}}</td>
+                    </tr>
+                    <tr>
+                        <td><span>操作人：</span>{{list.operatorName}}【操作人工号：{{list.operatorId}}】</td>
+                        <td colspan="2"><span>操作人部门：</span>{{list.depName}}</td>
+                    </tr>
+                    <tr>
+                        <td><span>备注：</span>{{list.comment}}</td>
+                        <td colspan="2"><span>号码归属部门：</span>{{list.phone_depName}}</td>
+                    </tr>
+                    <tr v-if="type==2">
+                        <td><span>开卡状态：</span>{{ $parent.translateData(4,list.cardStatus) }}</td>
+                        <td><span>订单状态：</span>
+                            <i v-if="list.result==1"><b class="f-c-green">通过</b></i>
+                            <i v-if="list.result==3"><b class="f-c-blue">复审同意</b></i>
+                            <i v-if="list.result==4"><b class="f-c-yellow">准同意</b></i>
+                            <i v-if="list.result==2&&parseInt(list.recheckLastTime)<new Date().getTime()"><b class="f-c-red" style="padding-right:10px">拒绝</b><span class="red">超过复审时间</span></i>
+                            <i v-if="list.result==2&&parseInt(list.recheckLastTime)>=new Date().getTime()"><b class="f-c-red" style="padding-right:10px">拒绝</b><a :name="list.orderId" @="agree" class="agree" href="javascript:void(0)" @click="agree">同意</a></i>
+                        </td>
+                        <td><span>开卡状态说明：</span>{{ list.cardStatusReason }}</td>
+                    </tr>
+                    <tr v-if="type==2&&list.result==2">
+                        <td colspan="3">
+                            <span>拒绝原因：</span>
+                            <ul><li v-for="todo in filterReason(list.reason)"><b v-if="todo.star" class="f-c-red">*</b>{{todo.text}}</li></ul>
+                        </td>
+                    </tr>
+                    <tr v-if="type==2&&list.result==4">
+                        <td colspan="3">
+                            <span>准同意理由：</span>
+                            {{ list.buggingReason }}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="g-transfer-img" v-if="list.operatorType==6">
+                <div class="m-zoomContent zoom-c">
+                    <div class="m-img-c"><div id="imgContent" title="1" class="fGrab" :class="{fGrabbing:mouse.off}" :style="zoomStyle_1" @mousemove="mouseOn" @mousedown="mouseOn" @mouseup="mouseOn" @mouseout="mouseOn" @mousewheel="mouseOn"></div></div>
+                    <a href="javascript:void(0)" class="slide slide-left" @click="slide(1)"></a>
+                    <!-- <a href="javascript:void(0)" class="slide slide-right" @click="slide(2)"></a> -->
+                    <a href="javascript:void(0)" name="1" class="rotate" @click="rotate"><span></span></a>
+                    <div class="text">{{imgData[imgIndex*2].name}}</div>
+                </div>
+                <div class="m-zoomContent zoom-c">
+                    <div class="m-img-c"><div id="imgContent" title="2" class="fGrab" :class="{fGrabbing:mouse.off}" :style="zoomStyle_2" @mousemove="mouseOn" @mousedown="mouseOn" @mouseup="mouseOn" @mouseout="mouseOn" @mousewheel="mouseOn"></div></div>
+                    <!-- <a href="javascript:void(0)" class="slide slide-left" @click="slide(1)"></a> -->
+                    <a href="javascript:void(0)" class="slide slide-right" @click="slide(2)"></a>
+                    <a href="javascript:void(0)" name="2" class="rotate" @click="rotate"><span></span></a>
+                    <div class="text">{{imgData[(imgIndex*2+1)].name}}</div>
+                </div>
+            </div>
+        </div>
+        <modi-layer v-if="off.modifyBox==true" :phone="list.userPhone" :papers="list" ></modi-layer>
+    </section>
 </template>
 <script>
 import {reqCommonMethod} from "../../config/service.js";
 import {setStore, getStore, createDownload,errorDeal} from '../../config/utils';
+import modifyLayer from "./modifyInfo";
 export default{
 	name:'pagination',
 	props:{
@@ -261,9 +264,13 @@ export default{
             off:{
                 power4:0,
                 power1:0,
+                modifyBox:'',
             }
 		};
-	},
+    },
+    components:{
+        "modi-layer":modifyLayer
+    },
 	created:function(){
 		const vm=this;
         let userInfo=getStore("KA_ECS_USER");
@@ -294,8 +301,6 @@ export default{
 			vm.imgData=[{'src':vm.list.handImage||'../../assets/ym/img/no-img.png','name':'手持'},{'src':vm.list.papersImage||'../../assets/ym/img/no-img.png','name':'正面'},{'src':vm.list.backImage||'../../assets/ym/img/no-img.png','name':'反面'},{'src':vm.list.avatarImage||'../../assets/ym/img/no-img.png','name':'头像'},{'src':vm.list.signImage||'../../assets/ym/img/no-img.png','name':'手签名'}];
 				vm.zoomStyle.backgroundImage='url('+vm.imgData[0].src+')';
 		}
-
-		    
 	},
 	methods:{
 		close:function(){
@@ -547,7 +552,10 @@ export default{
 	   	 			return l ? level[parseInt(l)] : '未知等级';
 					break;
 			}
-		}
+		},modifyInfo(){
+            let vm=this;
+            vm.off.modifyBox=true;
+        }
 	}
 }
 </script>

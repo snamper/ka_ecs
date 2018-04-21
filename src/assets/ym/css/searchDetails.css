@@ -85,3 +85,5 @@
   .m-footD-btn{ position: absolute;bottom: 8px;right: 20px;text-align: center;}
   .m-footD-btn>a{padding: 8px 7px;font-size: 0.12rem;}
 }
+.btn-modify{display: inline-block;background: #20a0ff;font-size: 0.14rem;line-height: 1;color: #fff;cursor: pointer;}
+.btn-modify:active{box-shadow: 0 0 4px #20a0ff}
