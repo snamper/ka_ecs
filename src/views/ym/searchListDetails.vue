@@ -8,7 +8,7 @@
             <a class="m-details-back" @click="close"></a>
             <div class="m-footD-btn">
                 <a v-if="type==2&&list.cardStatus==2" class="f-btn f-btn-warning" @click="integralLog">查看积分</a>
-                <a class="btn-modify" @click="modifyInfo">修改准同意信息</a>
+                <a class="btn-modify" @click="modifyInfo" v-if="list.result==4">修改准同意信息</a>
                 <a class="f-btn f-btn-success" @click="orderLog">查看审核日志</a>
             </div>
         </header>
