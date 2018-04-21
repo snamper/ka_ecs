@@ -64,8 +64,19 @@ export default{
             reqCommonMethod(json,false,"ym-ecs/c/audit/updateBuggingOrde")
             .then((data)=>{
                 if(data.code==200){
-
+                    layer.open({
+			            content:'准同意信息修改成功',
+			            skin: 'msg',
+			            time: 4,
+			            msgSkin:'success',
+			        })
                 }else{
+                    layer.open({
+			            content:'准同意信息修改失败',
+			            skin: 'msg',
+			            time: 4,
+			            msgSkin:'error',
+			        })
                     vm.ifFaild();
                 }
             }).catch(e=>errorDeal(e),this.ifFaild())

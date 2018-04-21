@@ -29,7 +29,7 @@ module.exports = {
         },
         '/ym-ecs/c':{
             // target:'http://192.168.10.117:8080',
-            // target:'http://192.168.10.110:8080',
+            target:'http://192.168.10.110:8080',
             changeOrigin:true,
             pathRewrite:{
                 // '^/ym-ecs/c':'/yuangmeng_ecs/c'
@@ -38,7 +38,7 @@ module.exports = {
         },
     },
     // Various Dev Server settings
-    host:"192.168.10.6",
+    host:"192.168.10.24",
     port: 8090, // can be overwritten by process.env.HOST, if port is in use, a free one will be determined
     autoOpenBrowser: true,
     errorOverlay: true,

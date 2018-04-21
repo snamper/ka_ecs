@@ -48,7 +48,7 @@
             <ul class="m-mainCatalog">
                 <li :class="{'active':isCheckk}" @click="isCheck('k')" v-if="!off.powerKmHidden">
                     <span>卡盟</span>
-					<b class="animated m-lighter" :class="{bounce:offCountChange}" v-show="countTotal||auditCount[0]">{{countTotal+auditCount[0]}}</b> 
+					<b class="animated m-lighter" :class="{bounce:offCountChange}" v-show="countTotal">{{countTotal}}</b> 
 				</li>
 				<li  :class="{'active':isChecky}" @click="isCheck('y')" v-if="!off.powerYmHidden">
                     <span>远盟</span>
@@ -66,7 +66,7 @@
 					</router-link>
 				</li>
 				<li :class="{active:crumb[0].name=='订单审核'}" v-if="off.powerkm0||off.powerkm1||off.powerkm4||off.powerkm5||off.powerkm6">
-					<b></b>
+					<b>{{countTotal}}</b>
 					<router-link to="/homek/audit">
 						<div>
 							<i class="u-icon-audit"></i>
@@ -110,7 +110,7 @@
 					</ul>
 				</li>
 				<li :class="{active:crumb[0].name=='订单查询'}" v-if="off.powerkm1||off.powerkm2||off.powerkm3">
-					<b></b>
+					<b>{{countTotal}}</b>
 					<router-link to="/homek/orderSearch">
 						<div>
 							<i class="u-icon-search"></i>
@@ -191,7 +191,7 @@
             <ul class="g-side-ul-ym" :class="{'hide':!isChecky}" v-if="!off.powerYmHidden">
 				<li :class="{active:$route.path.indexOf('/homey/audit')>-1||$route.path=='/homey/wsim'}" v-if="off.power0||off.power1">
 					<b></b>
-					<router-link to="/homey/audit/yuanmeng"><div><i class="u-icon-audit"></i><span>订单审核</span><b class="animated infinite bounce m-lighter" ></b></div></router-link>                                                
+					<router-link to="/homey/audit/yuanmeng"><div><i class="u-icon-audit"></i><span>订单审核</span><b class="animated infinite bounce m-lighter" >{{auditCountYm.readyCard+auditCountYm.whiteCard+auditCountYm.newChangeCard+auditCountYm.realNameCollection+auditCountYm.fill}}</b></div></router-link>                                                
                 </li>
 				<li :class="{active:$route.path.indexOf('/homey/search')>-1}" v-if="off.power2||off.power1">
 					<b></b>
