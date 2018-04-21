@@ -230,7 +230,7 @@
                 </div>
             </div>
         </div>
-        <modi-layer v-if="off.modifyBox==true" :phone="list.userPhone" :papers="list" ></modi-layer>
+        <modi-layer v-if="off.modifyBox==true" :phone="list.userPhone" :papers="list" :index="number"></modi-layer>
     </section>
 </template>
 <script>

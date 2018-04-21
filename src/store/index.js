@@ -42,10 +42,14 @@ const state = {
         "realNameCollection_1": 0,
         "fill_1": 0
     },
+    ymAuditedSearchList:{//远盟已审核订单信息
+
+    },
 	countTotal:0,//审核总待审核数
     OpcountTotal:0,//意见反馈数统计
     countTotalYm:0,//远盟总待审核数
-	offCountChange:true,//统计变化开关
+    offCountChange:true,//统计变化开关
+    offGetSearchListAuditYm:true,//查询远盟已审核订单结果
 	onlineTime:'00:00:00',//在线时间
 	timer:{//定时器对象
 		online:null,

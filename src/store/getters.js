@@ -52,5 +52,9 @@ export default {
 		}else{
 			return 0;
 		}
-	}
+    },
+    getAuditedSearchListYm:state=>{
+        let searchListYm=sate.ymAuditedSearchList;
+        return searchListYm;
+    }
 };

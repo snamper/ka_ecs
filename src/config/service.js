@@ -11,5 +11,6 @@ export const searchAuditList=(data,load,url)=>fetch(url,data,"POST",load)//开�
 export const reAudit=(data,url)=>fetch(url,data,"POST")//复审
 export const reqCommonMethodNoLoad=(data,load,url)=>fetch(url,data,"POST",load)//无加载条通用请求
 export const reqCommonMethod=(data,load,url)=>fetch(url,data,"POST",load)//通用请求方式
+export const getSearchListAuditYm=(data,load,url)=>fetch(url,data,"POST",load)//获取远盟已审核订单查询结果
 /*export const getCityAreaPoint=(data,load)=>fetch("w/cityArea/pointList",data,"POST",load);//获取城市区域点坐标
 export const setCityAreaPoint=(data,load)=>fetch("w/cityArea/newPointList",data,"POST",load);//设置城市区域点坐标*/

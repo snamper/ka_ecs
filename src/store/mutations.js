@@ -7,7 +7,8 @@ import {
 	SIGN_OUT,
 	SET_USERINFO,
     SET_OPINION_COUNT,
-    SET_AUDIT_STATISTICS_INFO_YM
+    SET_AUDIT_STATISTICS_INFO_YM,
+    SET_AUDITED_SEARCHLIST_YM
 } from './mutation-types.js';
 import {
 	getAuditStatistics,
@@ -52,7 +53,17 @@ export default {
 			state.offCountChange=false;
 		}
         state.countTotalYm=count;
-	},
+    },
+    [SET_AUDITED_SEARCHLIST_YM](state,res){//获取远盟已审核订单查询结果
+        state.ymAuditedSearchList=Object.assign({},state.ymAuditedSearchList,res.data);
+        let searchRes=this.getters.getAuditedSearchListYm;
+        if(searchRes!=sate.ymAuditedSearchList){
+            state.off.offGetSearchListAuditYm=true;
+        }else{
+            state.off.offGetSearchListAuditYm=false;           
+        }
+        state.ymAuditedSearchList=searchRes;
+    },
 	//设置在线时间
 	[SET_ONLINE_TIME](state){
 		state.timer.online=setInterval(function(){

@@ -18,7 +18,7 @@ border:1px solid grey;border-radius: 4px;}
         <p>准同意信息修改</p>
         <p><span>姓名&nbsp;:&nbsp;</span><input type="text" v-model=papers.userName></p>
         <p><span>地址&nbsp;:&nbsp;</span><input type="text" v-model=papers.userAddress></p>
-        <p><span>证件号码&nbsp;:&nbsp;</span><input type="text" v-model=papers.papersCode></p>
+        <p v-if="false">{{papers.papersCode}}</p>
         <button class="mr" @click="btnYes">修改</button><button class="ml" @click="close">取消</button>
     </div>
 </section>
@@ -28,12 +28,12 @@ import {reqCommonMethod} from "../../config/service.js";
 import {errorDeal} from "../../config/utils.js";
 export default{
 	// name:'detailsView',
-	props:['phone','papers'],
+	props:['phone','papers','index'],
 	data (){
 		return {
             olduserName:"",
             olduserAddress:"",
-            oldpapersCode:"",
+            oldPapersCode:"",
 		}
 	},
 	created:function(){
@@ -41,7 +41,7 @@ export default{
         let info=vm.papers;
         vm.olduserName=info.userName;
         vm.olduserAddress=info.userAddress;
-        vm.oldpapersCode=info.papersCode;
+        vm.oldPapersCode=info.papersCode;
 	},
 	methods:{
         ifFaild(){
@@ -49,7 +49,6 @@ export default{
             vm.$parent.off.modifyBox=false;
             vm.papers.userName=vm.olduserName;
             vm.papers.userAddress=vm.olduserAddress;
-            vm.papers.papersCode=vm.oldpapersCode;
         },
 		close:function(){
 			var vm=this;
@@ -57,9 +56,10 @@ export default{
         },
         btnYes(){
             let vm=this;
+            vm.$parent.$parent.searchList(1);
+                vm.$parent.$parent.details();
             if(vm.papers.userName==vm.olduserName&&
-            vm.papers.userAddress==vm.olduserAddress&&
-            vm.papers.papersCode==vm.oldpapersCode){
+            vm.papers.userAddress==vm.olduserAddress){
                 layer.open({
                     content:'与原信息一致,无需修改',
                     skin: 'msg',
@@ -71,7 +71,7 @@ export default{
             }
             let info=vm.papers;
             let json={orderId:info.orderId,userName:info.userName,userAddress:info.userAddress,papersCode:info.papersCode};
-            reqCommonMethod(json,false,"ym-ecs/c/audit/updateBuggingOrde")
+            reqCommonMethod(json,false,"ym-ecs/c/audit/updateBuggingOrder")
             .then((data)=>{
                 if(data.code==200){
                     layer.open({
@@ -79,7 +79,7 @@ export default{
 			            skin: 'msg',
 			            time: 4,
 			            msgSkin:'success',
-			        })
+                    })
                 }else{
                     layer.open({
 			            content:'准同意信息修改失败',
@@ -89,14 +89,18 @@ export default{
 			        })
                     vm.ifFaild();
                 }
-            }).catch(e=>errorDeal(e),
-            this.ifFaild(),
-            layer.open({
-                content:'准同意信息修改失败',
-			    skin: 'msg',
-			    time: 4,
-                msgSkin:'error'
-            }))
+                this.$parent.$parent.details();
+                this.$parent.$parent.searchList(1)
+                vm.close();
+            }).catch(e=>{
+                layer.open({
+                    content:'准同意信息修改失败',
+                    skin: 'msg',
+                    time: 4,
+                    msgSkin:'error',
+                })
+                vm.ifFaild();
+            })
         }
 	}
 }

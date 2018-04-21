@@ -266,6 +266,7 @@ import details from "../ym/searchListDetails.vue";
 import auditdetails from "../ym/auditList.vue";
 import { setStore, getStore, createDownload,errorDeal } from "../../config/utils";
 import {reqCommonMethod} from "../../config/service.js";
+import { mapActions } from '../../../node_modules/_vuex@3.0.1@vuex';
 export default {
   name: "search",
   data() {
@@ -309,6 +310,8 @@ export default {
       cardT: "",
       orderId: "",
       info:'',
+      searchListData:"",//查询参数
+      auditDetailsData:""//获取详情参数
     };
   },
   components: {
@@ -318,6 +321,9 @@ export default {
   },
   created: function() {
     this.init();
+  },
+  computed:{
+
   },
   methods: {
     init: function() {
@@ -435,7 +441,8 @@ export default {
     //     }
     //   );
       vm.off.isLoad=true;
-      reqCommonMethod(json,function(){vm.off.isLoad=false},url)
+      vm.searchListData=json;
+      reqCommonMethod(vm.searchListData,function(){vm.off.isLoad=false},url)
       .then((data)=>{
           vm.list = data.data.list;
           vm.total = data.data.total;
@@ -554,7 +561,6 @@ export default {
     downloadBugOrder() {
       //下载准同意excel
       var vm = this;
-
       vm.off.load = true;
       let userInfo=getStore("KA_ECS_USER"),json={
       	startTime: vm.form.startTime,
@@ -596,11 +602,14 @@ export default {
       }).catch(error=>errorDeal(error));         
     },
     details: function(e) {
-      var vm = this,
-        url,
-        orderId = e.target.name;
-      vm.off.number = e.target.title;
-      vm.off.type == 1
+    var vm = this,
+        orderId,
+        url;
+        if(typeof(e)!="undefined"){
+            orderId = e.target.name;
+            vm.off.number = e.target.title;
+        }
+        vm.off.type == 1
         ? (url = "ym-ecs/c/audit/auditOrderDetails")
         : (url = "ym-ecs/c/audit/orderDetails");
       if (vm.off.isLoad) return false;
@@ -617,7 +626,10 @@ export default {
     //       vm.off.isLoad = false;
     //     }
     //   );
-      reqCommonMethod({ orderId: orderId },function(){vm.off.isLoad=false;},url)
+    if(typeof(orderId)!="undefined"){
+        vm.auditDetailsData={orderId:orderId}
+    }
+      reqCommonMethod(vm.auditDetailsData,function(){vm.off.isLoad=false;},url)
       .then((data)=>{
           vm.detailsData = data.data;
           vm.off.details = true;
