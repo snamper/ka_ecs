@@ -34,9 +34,7 @@ export default{
             olduserName:"",
             olduserAddress:"",
             oldpapersCode:"",
-            
 		}
-		
 	},
 	created:function(){
         let vm=this;
@@ -59,6 +57,18 @@ export default{
         },
         btnYes(){
             let vm=this;
+            if(vm.papers.userName==vm.olduserName&&
+            vm.papers.userAddress==vm.olduserAddress&&
+            vm.papers.papersCode==vm.oldpapersCode){
+                layer.open({
+                    content:'与原信息一致,无需修改',
+                    skin: 'msg',
+                    time: 4,
+                    msgSkin:'error',
+                })
+                vm.close();
+                return false;
+            }
             let info=vm.papers;
             let json={orderId:info.orderId,userName:info.userName,userAddress:info.userAddress,papersCode:info.papersCode};
             reqCommonMethod(json,false,"ym-ecs/c/audit/updateBuggingOrde")
@@ -79,7 +89,14 @@ export default{
 			        })
                     vm.ifFaild();
                 }
-            }).catch(e=>errorDeal(e),this.ifFaild())
+            }).catch(e=>errorDeal(e),
+            this.ifFaild(),
+            layer.open({
+                content:'准同意信息修改失败',
+			    skin: 'msg',
+			    time: 4,
+                msgSkin:'error'
+            }))
         }
 	}
 }
