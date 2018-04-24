@@ -302,7 +302,7 @@ export default{
 			vm.form.endTime=laydate.now(0,'YYYY-MM-DD 23:59:59');
 		},
 		searchList:function(page){
-            var vm=this,url,json={"source":vm.form.source,"type":vm.form.orderType,"pageSize":vm.pageSize,"pageNum":page||1,"startTime":vm.form.startTime,"endTime":vm.form.endTime,"status":vm.form.orderStatus,'auditType':vm.form.auditType,"cardType":vm.form.cardType};
+            var vm=this,url,json={"source":vm.form.source,"type":vm.form.orderType,"pageSize":vm.pageSize,"pageNum":page||1,"startTime":vm.form.startTime,"endTime":vm.form.endTime,"status":vm.form.orderStatus,'auditType':vm.form.auditType,"cardType":vm.form.cardType,"periodType":vm.off.type};
 
 			//进行中，已关闭
 			if(json.source!=7&&json.source!=8&&(vm.off.type==3||vm.off.type==4)){
