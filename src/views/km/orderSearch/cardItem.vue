@@ -29,7 +29,7 @@
 				<div class="m-form-radio">
 					<label><span class="radio"><input value="6" type="radio" v-model="form.orderType"><span></span></span><span class="text">空卡</span></label>
 					<label v-show="form.source==6&&(off.type==2||off.type==1)"><span class="radio"><input value="7" type="radio" v-model="form.orderType"><span></span></span><span class="text">过户办理</span></label>
-					<label v-show="form.source==6&&(off.type==2||off.type==1)"><span class="radio"><input value="5" type="radio" v-model="form.orderType"><span></span></span><span class="text">实名补登</span></label>
+					<label v-show="form.source==6&&(off.type==2||off.type==1)"><span class="radio"><input value="4" type="radio" v-model="form.orderType"><span></span></span><span class="text">实名补登</span></label>
 				</div>
 			</div>
 			<div class="row">
@@ -37,7 +37,7 @@
 				<div class="m-form-radio">
 					<label><span class="radio"><input type="radio" value="0" v-model="form.cardType"><span></span></span><span class="text">全部</span></label>
 					<label><span class="radio"><input type="radio" value="1" v-model="form.cardType"><span></span></span><span class="text">远特</span></label>
-					<label v-show="form.source!=8&&form.orderType!=5"><span class="radio"><input type="radio" value="2" v-model="form.cardType"><span></span></span><span class="text">联通</span></label>
+					<label v-show="form.source!=8&&form.orderType!=4"><span class="radio"><input type="radio" value="2" v-model="form.cardType"><span></span></span><span class="text">联通</span></label>
 				</div>
 			</div>
 			<div class="row" v-if="off.type==2">
@@ -53,7 +53,7 @@
 				<div class="m-form-radio">
 					<label><span class="radio"><input type="radio" value="9" v-model="form.auditType"><span></span></span><span class="text">全部</span></label>
 					<label><span class="radio"><input type="radio" value="0" v-model="form.auditType"><span></span></span><span class="text">实时审核</span></label>
-					<label v-if="form.orderType!=5"><span class="radio"><input type="radio" value="1" v-model="form.auditType"><span></span></span><span class="text">事后审核</span></label>
+					<label v-if="form.orderType!=4"><span class="radio"><input type="radio" value="1" v-model="form.auditType"><span></span></span><span class="text">事后审核</span></label>
 					<label><span class="radio"><input type="radio" value="2" v-model="form.auditType"><span></span></span><span class="text">自动审核</span></label>
 				</div>
 			</div>
@@ -122,7 +122,7 @@
 					<label><span class="radio"><input value="1" type="radio" v-model="form.context6"><span></span></span><span class="text">成功</span></label>
 					<label><span class="radio"><input value="2" type="radio" v-model="form.context6"><span></span></span><span class="text">失败</span></label>
 					<label><span class="radio"><input value="3" type="radio" v-model="form.context6"><span></span></span><span class="text">处理中</span></label>
-					<label v-if="form.orderType!=5"><span class="radio"><input value="4" type="radio" v-model="form.context6"><span></span></span><span class="text">关闭</span></label>
+					<label v-if="form.orderType!=4"><span class="radio"><input value="4" type="radio" v-model="form.context6"><span></span></span><span class="text">关闭</span></label>
 				</div>
 			</div>
 			<div class="row fullRow" :class="{active:form.select==6}" v-if="off.type==3||off.type==4">
@@ -263,7 +263,7 @@ export default{
 			},
 			form:{
 				source:'6',//订单来源，6、卡盟APP；7、卡盟SDK；8卡盟通服
-				orderType:6,//操作类型,5、实名补录；6、空卡；7、过户办理
+				orderType:6,//操作类型,4、实名补录；6、空卡；7、过户办理
 				cardType:0,//运营商
 				orderStatus:0,//订单状态
 				auditType:9,//审核方式
@@ -368,20 +368,14 @@ export default{
 				url="km-ecs/w/handler/query";
 				json=vm.getTfJson(json);
 			}else{
-				vm.off.type==1 ? url='km-ecs/w/audit/ingList' : url='km-ecs/w/audit/edList';
+				if(json.type==4||json.type==9){
+					url='km-ecs/w/audit/ingList4Reinput';
+				}else vm.off.type==1 ? url='km-ecs/w/audit/ingList' : url='km-ecs/w/audit/edList';
 			}
 
 			if(vm.off.isLoad)return false;
 			vm.off.isLoad=true;
-			// vm.AJAX(url,json,function(data){
-			// 	vm.list=data.data.list
-			// 	vm.total=data.data.total;
-			// 	vm.maxpage=Math.ceil(parseInt(data.data.total)/10);
-			// 	vm.pageNum=page||1;
-			// 	vm.callback=function(v){vm.searchList(v)};
-			// },function(){
-			// 	vm.off.isLoad=false;
-            // })
+
             reqCommonMethod(json,function(){vm.off.isLoad=false;},url)
             .then((data)=>{
 	            vm.list=data.data.list
@@ -734,10 +728,10 @@ export default{
 			}else{
 				if(type==1){
 					url='km-ecs/w/audit/ingInfo';
-					if(vm.form.orderType==5)url='km-ecs/w/audit/getReinputInfo';
+					if(vm.form.orderType==4)url='km-ecs/w/audit/getReinputInfo';
 				}else if(type==2){
 					url='km-ecs/w/audit/edInfo';
-					if(vm.form.orderType==5)url='km-ecs/w/audit/getReinputInfo';
+					if(vm.form.orderType==4)url='km-ecs/w/audit/getReinputInfo';
 				}else{
 					url='km-ecs/w/audit/getOrderInfo';
 				}
