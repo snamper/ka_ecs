@@ -145,7 +145,7 @@ export const translateData=(type,v)=> {
 	v=parseInt(v);
 	switch(type){
 		case 1://操作类型
-				return v==1 ? '开成卡' : v==2 ? '开白卡' : v==4 ? '实名补录' : v==7 ? '过户办理' : v==5 ? '实名登记' : v==6 ? '空卡' : '--';
+				return v==1 ? '开成卡' : v==2 ? '开白卡' : v==4 ? '实名补录' : v==7 ? '过户办理' : v==8 ? '补换卡' : v==5 ? '实名登记' : v==6 ? '空卡' : '--';
 			break;
 		case 2://证件类型
 				return v==1 ? '身份证' : v==2 ? '军官证' : v==3 ? '护照' :void 0;

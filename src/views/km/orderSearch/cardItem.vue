@@ -30,6 +30,7 @@
 					<label><span class="radio"><input value="6" type="radio" v-model="form.orderType"><span></span></span><span class="text">空卡</span></label>
 					<label v-show="form.source==6&&(off.type==2||off.type==1)"><span class="radio"><input value="7" type="radio" v-model="form.orderType"><span></span></span><span class="text">过户办理</span></label>
 					<label v-show="form.source==6&&(off.type==2||off.type==1)"><span class="radio"><input value="4" type="radio" v-model="form.orderType"><span></span></span><span class="text">实名补登</span></label>
+					<label v-show="form.source==6"><span class="radio"><input value="8" type="radio" v-model="form.orderType"><span></span></span><span class="text">补换卡</span></label>
 				</div>
 			</div>
 			<div class="row">
@@ -263,7 +264,7 @@ export default{
 			},
 			form:{
 				source:'6',//订单来源，6、卡盟APP；7、卡盟SDK；8卡盟通服
-				orderType:6,//操作类型,4、实名补录；6、空卡；7、过户办理
+				orderType:6,//操作类型,4、实名补录；6、空卡；7、过户办理；8、补换卡
 				cardType:0,//运营商
 				orderStatus:0,//订单状态
 				auditType:9,//审核方式
@@ -368,7 +369,7 @@ export default{
 				url="km-ecs/w/handler/query";
 				json=vm.getTfJson(json);
 			}else{
-				if(json.type==4||json.type==9){
+				if(json.type==4||json.type==8){
 					url='km-ecs/w/audit/ingList4Reinput';
 				}else vm.off.type==1 ? url='km-ecs/w/audit/ingList' : url='km-ecs/w/audit/edList';
 			}
