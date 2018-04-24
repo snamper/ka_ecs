@@ -16,11 +16,11 @@ module.exports = {
   deploy : {
     test : {
       user : 'root',
-      host : '192.168.10.11',
+      host : '192.168.10.110',
       ref  : 'origin/master',
       // repo : 'git@github.com:thinkmix/ka_ecs.git',
       repo : 'https://github.com/thinkmix/ka_ecs.git',
-      path : '/root/nginx/html/ka_ecs',
+      path : '/home/nginx/html/ka_ecs',
       'post-deploy' : 'cnpm install && npm run build && pm2 reload ecosystem.config.js --env test'
     },
     onlineTest : {
