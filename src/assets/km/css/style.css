@@ -357,7 +357,10 @@ body::-webkit-scrollbar-resizer, .f-scroll-lt::-webkit-scrollbar-resizer{
 /*激活商户*/
 .navBg10>div{background-image:url(../images/icon_jihuo_audit.png);background-color: #FFB300;}
 .navBg10>p{background-color:#FF8F00; color:#FF8F00;}
+/* 补换卡 */
 /*卡盟穿戴*/
+.navBg12>div{background-image:url(../images/icon_buhuanka.png);background-color: #E18383;}
+.navBg12>p{background-color:#E18383; color:#E18383;}
 .u-icon-back{background-image: url("../images/left.png");background-size: contain;}
 .u-icon-success-no-circle{
     background-image: url("../images/rightssss.png");

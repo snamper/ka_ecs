@@ -22,6 +22,10 @@
 				<router-link :to="{name:'realtime',params:{type:10}}" class="u-bg navBg4"><div>实名补录</div><p><span>点击审核</span></p></router-link>
 				<div class="navInfoDiv"><p>待审核<span>{{auditCount.realNameCollection}}</span></p><p>已分配<span>{{auditCount.realNameCollection_}}</span></p></div>
 			</div>
+            <div class="m-menu-div">
+				<router-link :to="{name:'realtime',params:{type:11}}" class="u-bg navBg12"><div>补换卡</div><p><span>点击审核</span></p></router-link>
+				<div class="navInfoDiv"><p>待审核<span>{{auditCount.realNameCollection}}</span></p><p>已分配<span>{{auditCount.realNameCollection_}}</span></p></div>
+			</div>
 		</div>
 		<div v-if="off.source==4&&off.auditType==1" class="g-audit-menu-c">
 			<div class="m-menu-div">

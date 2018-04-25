@@ -4,9 +4,9 @@
   *@date 2017-11-6
 * *-->
 <style scoped>
-  .g-search-form>.form-c>.row{width:auto}
-  .m-col-2>.col-l{display: none;}
-  .m-col-2>.col-r{margin-left: 0;width: 2.5rem;}
+  /* .g-search-form>.form-c>.row{width:auto} */
+  /* .m-col-2>.col-l{display: none;} */
+  /* .m-col-2>.col-r{margin-left: 0;width: 2.5rem;} */
   .total-head{position: relative;}
   .total-head>span{margin-right: 10px;}
   .total-head>span>b{font-weight: bold;}
@@ -78,23 +78,53 @@
 			</table>
 			<!--基础条件-->
 			<section class="form-c">
-				<div class="row">
-					<span class="dp">类型：</span>
+                <div>
+					<span class="dp">查询内容：</span>
 					<div class="m-form-radio">
-						<label><span class="radio"><input @click="shiftType" maxlength="20" type="radio" value="1" v-model="form.type" checked="checked"><span></span></span><span class="text">商户ID</span></label>
-						<label><span class="radio"><input @click="shiftType" maxlength="11" type="radio" value="2" v-model="form.type" checked="checked"><span></span></span><span class="text">登录手机号码</span></label>
+						<label><span class="radio"><input type="radio" value="1" v-model="form.content" ><span></span></span><span class="text">商户</span></label>
+						<label><span class="radio"><input type="radio" value="2" v-model="form.content" ><span></span></span><span class="text">工号</span></label>
 					</div>
 				</div>
-				<div class="row clr m-col-2">
-					<span class="dp col-l">订单号码：</span>
-					<div class="col-r m-input-button">
-						<input v-model="form.context" maxlength="24" type="tel" :placeholder="form.type==1 ? '请输入查询的商户ID' : '请输入查询的登录手机号码'"/><button @click="getDetails(1)">查询</button>
-					</div>
+				<div class="row">
+					<span class="dp">查询类型：</span>
+					<div class="m-form-radio">
+						<label><span class="radio"><input type="radio" value="1" v-model="form.searchType" checked="checked"><span></span></span><span class="text">商户ID</span></label>
+						<label><span class="radio"><input type="radio" value="2" v-model="form.searchType" checked="checked"><span></span></span><span class="text">商户名称</span></label>
+						<label><span class="radio"><input type="radio" value="3" v-model="form.searchType" checked="checked"><span></span></span><span class="text">员工手机号码</span></label>
+                        <div style="display:inline-block" class="col-r m-input">
+                            <input v-model="form.context" maxlength="24" type="tel" :placeholder="form.searchType==1 ? '请输入查询的商户ID' :form.searchType==2? '请输入查询的商户名称':'请输入查询的手机号码'"/>
+                        </div>
+                    </div>
 				</div>
+                <div class="row" v-if="form.content==1">
+					<span class="dp">激活状态：</span>
+					<div class="m-form-radio">
+						<label><span class="radio"><input maxlength="20" type="radio" value="1" v-model="form.activationState" checked="checked"><span></span></span><span class="text">全部</span></label>
+						<label><span class="radio"><input maxlength="20" type="radio" value="2" v-model="form.activationState" checked="checked"><span></span></span><span class="text">已激活</span></label>
+						<label><span class="radio"><input maxlength="11" type="radio" value="3" v-model="form.activationState" checked="checked"><span></span></span><span class="text">待激活</span></label>
+						<label><span class="radio"><input maxlength="11" type="radio" value="4" v-model="form.activationState" checked="checked"><span></span></span><span class="text">激活审核中</span></label>
+                    </div>
+				</div>
+                <div class="row clr m-col-2">
+                    <div class="dp col-l">创建时间：</div>
+                    <div class="col-r">
+                        <span class="m-time-area"><input @click="to_laydate(1)" v-model="form.startTime" type="text" readonly="readonly"><input @click="to_laydate(2)" v-model="form.endTime" type="text" readonly="readonly"></span>
+                    </div>
+                </div>
+                <div class="row"  v-if="form.content==1">
+					<span class="dp">业务范围：</span>
+					<div class="m-form-radio">
+						<label><span class="radio"><input maxlength="20" type="radio" value="1" v-model="form.businessScope" checked="checked"><span></span></span><span class="text">全部</span></label>
+						<label><span class="radio"><input maxlength="20" type="radio" value="2" v-model="form.businessScope" checked="checked"><span></span></span><span class="text">远特售卡</span></label>
+						<label><span class="radio"><input maxlength="11" type="radio" value="3" v-model="form.businessScope" checked="checked"><span></span></span><span class="text">联通售卡</span></label>
+                    </div>
+				</div>
+                 <button class="f-btn f-btn-line" @click="searchList(1)">查询</button>
 			</section>
 	  	</section>
 		<!--商户ID-->
-	  	<div class="m-total-table" style="margin-top: 0.2rem;" v-if="form.type==1">
+	  	<!-- <div class="m-total-table" style="margin-top: 0.2rem;" v-if="form.type==1"> -->
+	  	<div class="m-total-table" style="margin-top: 0.2rem;">
 			<table class="merchant-total g-list-table" v-if="ajaxData.details">
 			<thead>
 				<tr>
@@ -235,8 +265,7 @@
 									</td>
 								</tr>
 							</tbody>
-						</table>
-						
+						</table>	
 					</td>
 				</tr>
 			</tbody>
@@ -265,7 +294,48 @@
 				</table>
 				<div class="m-no-data" v-if="!ajaxData.list.length">该商户暂无工号列表数据</div>
 			</section>
-			
+            <!-- 查询结果列表 -->
+            <!-- <section v-if="ajaxData.details"> -->
+            <section>
+				<table>
+					<thead>
+                        <tr>
+                            <th colspan="11" style="background-color:#fff;text-align:left;padding-left:20px;">
+                                统计结果
+                            </th>
+                        </tr>
+						<tr>
+							<th>序号</th>
+							<th>创建时间</th>
+							<th>商户ID</th>
+							<th>商户名称</th>
+							<th>商户属性</th>
+							<th>商户类型</th>
+							<th>商户等级</th>
+							<th>激活状态</th>
+							<th>业务范围</th>
+							<th>签约状态</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr v-for="(item,index) in ajaxData.list">
+							<td>{{ ((ajaxData.pageNum-1)*10+(index+1)) }}</td>
+							<td>{{ getDateTime(item.createTime)[6] }}</td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td><a>详情</a></td>
+						</tr>
+					</tbody>
+				</table>
+				<my-page :page="ajaxData.pageNum" :maxpage="ajaxData.maxpage" :callback="ajaxData.callback"></my-page>
+			</section>
 		</div>
 		<!--工号ID-->
 		<div class="m-total-table" style="margin-top: 0.2rem;" v-if="form.type==2">
@@ -377,6 +447,7 @@
 				</table>
 				<my-page :page="ajaxData.pageNum" :maxpage="ajaxData.maxpage" :callback="ajaxData.callback"></my-page>
 			</section>
+
 		</div>
   	</div>
 </template>
@@ -392,10 +463,17 @@ export default{
 				isLoad:!1,//ajax加载控制
 			},
 			form:{
-				type:1,//1:商户，2:工号
+				content:1,//1:商户，2:工号
+                searchType:1,//查询类型
 				context:'',//输入内容
+                activationState:1,
+                businessScope:1,
+                startTime:'',
+                endTime:'',
 				time:'',//点击时间控制
 				paySource:2//第三方流水号，来源(1:保证金,2:充值,3:开卡,4:代充)
+                ,startTime:'',
+                endTime:'',
 			},
 			ajaxData:{//ajax响应数据
 				details:'',//商户/工号详情
@@ -434,8 +512,29 @@ export default{
 				vm.getDetails();
 			}
 		},300);
-	},
+        vm.init();
+    },
 	methods:{
+        init:function(){
+            var vm=this,
+            type=this.$route.params.type;
+            type=='pending' ? vm.off.type=1 : type=='processing' ? vm.off.type=2 : type=='finish' ? vm.off.type=3 : void(0);
+            vm.form.startTime=laydate.now(0,'YYYY-MM-DD 00:00:00');
+            vm.form.endTime=laydate.now(0,'YYYY-MM-DD 23:59:59');
+        },
+        searchList(){
+            let vm=this,
+            searchData={
+            content:vm.form.content,
+            searchType:vm.form.searchType,
+            context:vm.form.context,
+            startTime:new Date(vm.form.startTime).getTime(),
+            endTime:new Date(vm.form.endTime).getTime()};
+            if(vm.form.content==1){
+               Object.assign(searchData,{activationState:vm.form.activationState,businessScope:vm.form.businessScope}) 
+            }
+            console.log(searchData);   
+        },
 		toMap(){
 			var w=document.documentElement.clientWidth,url='',vm=this;
 			w<640 ? url='http://map.baidu.com/mobile/?latlng='+vm.ajaxData.details.latitude+','+vm.ajaxData.details.longitude+'' : url='http://map.baidu.com/?latlng='+vm.ajaxData.details.latitude+','+vm.ajaxData.details.longitude+'';
