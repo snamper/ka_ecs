@@ -91,7 +91,7 @@ const OrderSearch_cardItem = resolve => {//开卡订单子模块
     load();
   });
 };
-const OrderSearch_businessPower = resolve => {//业务范围
+const OrderSearch_businessPower = resolve => {//售卡范围
   load(true);
   require.ensure(["@/views/km/orderSearch/businessPower"], () => {
     resolve(require("@/views/km/orderSearch/businessPower"));

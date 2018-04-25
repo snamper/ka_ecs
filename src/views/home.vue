@@ -77,19 +77,19 @@
 					<ul class="g-side-subul nav1">
 						<li v-if="userInfo.isadmin.indexOf('0')>-1||userInfo.isadmin.indexOf('1')>-1">
 							<router-link :to="{name:'audit_card',params:{source:'realtime'}}">
-								<b></b>开卡实时审核<span v-if="auditCount.opencard+auditCount.transfer+auditCount.realNameCollection+auditCount.sdkRealTime!=0">{{auditCount.opencard+auditCount.transfer+auditCount.realNameCollection+auditCount.sdkRealTime
+								<b></b>业务实时审核<span v-if="auditCount.opencard+auditCount.transfer+auditCount.realNameCollection+auditCount.sdkRealTime!=0">{{auditCount.opencard+auditCount.transfer+auditCount.realNameCollection+auditCount.sdkRealTime
 }}</span>
 							</router-link>
 						</li>
 						<li v-if="userInfo.isadmin.indexOf('0')>-1||userInfo.isadmin.indexOf('1')>-1">
 							<router-link :to="{name:'audit_card',params:{source:'afterwards'}}">
-								<b></b>开卡事后审核<span v-if="auditCount.opencardAfterwards+auditCount.tfOpenCard!=0">{{auditCount.opencardAfterwards+auditCount.tfOpenCard
+								<b></b>业务事后审核<span v-if="auditCount.opencardAfterwards+auditCount.tfOpenCard!=0">{{auditCount.opencardAfterwards+auditCount.tfOpenCard
 }}</span>
 							</router-link>
 						</li>
 						<li v-if="userInfo.isadmin.indexOf('6')>-1||userInfo.isadmin.indexOf('5')>-1||userInfo.isadmin.indexOf('1')>-1">
 							<router-link :to="{name:'businessPowerAudit',params:{type:'auditing'}}">
-								<b></b>业务范围审核<span v-if="auditCount.attribute!=0">{{auditCount.attribute}}</span>
+								<b></b>售卡范围审核<span v-if="auditCount.attribute!=0">{{auditCount.attribute}}</span>
 							</router-link>
 						</li>
 						<li v-if="userInfo.isadmin.indexOf('6')>-1||userInfo.isadmin.indexOf('5')>-1||userInfo.isadmin.indexOf('1')>-1">
@@ -121,7 +121,7 @@
 						<li><router-link to="/homek/orderSearch/card"><b></b>开卡订单</router-link></li>
 						<li><router-link to="/homek/orderSearch/recharge"><b></b>充值订单</router-link></li>
 						<li><router-link to="/homek/orderSearch/onlineHall"><b></b>网厅订单</router-link></li>
-						<li><router-link :to="{name:'businessPowerSearch',params:{type:'audited'}}"><b></b>业务范围</router-link></li>
+						<li><router-link :to="{name:'businessPowerSearch',params:{type:'audited'}}"><b></b>售卡范围</router-link></li>
 						<li><router-link :to="{name:'registMerchantSearch',params:{type:'search'}}"><b></b>激活商户</router-link></li>
 						<li><router-link to="/homek/orderSearch/reserve"><b></b>预占号码</router-link></li>
 						<!-- <li><router-link to="/home/orderSearch/busCard"><b></b>公交一卡通</router-link></li> -->
@@ -392,7 +392,7 @@ export default{
 			}else if(path.indexOf("/homek/audit")>-1){
 				crumb[0]={"name":"订单审核"}
 				if(path.indexOf("card/realtime")>-1){
-					crumb[1]={"name":"开卡实时审核","href":"/homek/audit/card/realtime"}
+					crumb[1]={"name":"业务实时审核","href":"/homek/audit/card/realtime"}
 					if(path.indexOf("6")>-1){
 						crumb[2]={"name":"开卡"}
 					}else if(path.indexOf("7")>-1){
@@ -401,14 +401,14 @@ export default{
 						crumb[2]={"name":"SDK开卡"}
 					}
 				}else if(path.indexOf("card/afterwards")>-1){
-					crumb[1]={"name":"开卡事后审核","href":"/homek/audit/card/afterwards"}
+					crumb[1]={"name":"业务事后审核","href":"/homek/audit/card/afterwards"}
 					if(path.indexOf("6")>-1){
 						crumb[2]={"name":"开卡"}
 					}else if(path.indexOf("9")>-1){
 						crumb[2]={"name":"通服开卡"}
 					}
 				}else if(path.indexOf("businessPower")>-1){
-					crumb[1]={"name":"业务范围","href":""};
+					crumb[1]={"name":"售卡范围","href":""};
 					if(path.indexOf("auditing")>-1){
 						crumb[2]={"name":"待审核"}
 					}
@@ -440,7 +440,7 @@ export default{
 				}else if(path.indexOf("onlineHall")>-1){
 					crumb[1]={"name":"网厅订单","href":""}
 				}else if(path.indexOf("businessPower")>-1){
-					crumb[1]={"name":"业务范围","href":""};
+					crumb[1]={"name":"售卡范围","href":""};
 					if(path.indexOf("audited")>-1){
 						crumb[2]={"name":"已审核"}
 					}
