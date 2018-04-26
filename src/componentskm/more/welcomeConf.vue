@@ -47,7 +47,7 @@
 					<div :style="{backgroundImage:uploadThumb[index].thumb}" class="img" @click="setUploadIndex(index)">
 						<FileUpload
 						  text=""
-						  inputAccept="image/*"
+						  inputAccept="image/png,image/jpeg,image/jpg"
 				          v-bind:crop="false"
 				          v-bind:autoUpload="true"
 				          v-bind:headers="userInfo"
@@ -189,7 +189,7 @@
 					<div :style="{backgroundImage:'url('+modifyInfo.imageUrl+')'}" class="img" @click="setUploadIndex(998)">
 						<FileUpload
 						  text=""
-						  inputAccept="image/*"
+						  inputAccept="image/png,image/jpeg,image/jpg"
 						  v-bind:headers="userInfo"
 				          v-bind:crop="false"
 				          v-bind:autoUpload="true"
