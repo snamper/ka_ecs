@@ -4,92 +4,71 @@
   *@date 2017-11-6
 * *-->
 <template>
-	<ul class="g-more-menu">
-		<li class="u-black-phone">
-			<i class="icon"></i>
-			<span class="dp">号码黑名单</span>
-			<FileUpload
-			  text=""
-			  inputAccept=".txt"
-	          v-bind:crop="false" 
-	          v-bind:url=upload.action
-	          v-on:imageuploaded="imageuploaded"
-	          v-on:imagechanged="imagechanged"
-	          v-on:onprogress="onprogress"
-	          v-on:errorhandle="errorhandle"
-	          class="m-upload"/>
-	        </FileUpload>
-	        <span class="progress" :style="{height:progress}"></span>
-		</li>
-	</ul>
+	<section id="more">
+		<ul class="g-more-menu" v-show="!off.fn">
+			<li v-if="off.power.powerkm1||off.power.powerkm31" class="u-black-phone" @click="showFn(1)">
+				<i class="icon"></i>
+				<span class="dp">号码黑名单</span>
+			</li>
+			<li v-if="off.power.powerkm1||off.power.powerkm41" class="u-welcome-conf" @click="showFn(2)">
+				<i class="icon"></i>
+				<span class="dp">欢迎页管理</span>
+			</li>
+		</ul>
+		<div class="g-more-fn" v-show="off.fn">
+			<header class="clr">
+				<a href="javascript:;" @click="showFn(0)" class="fl u-icon-backleft">返回菜单</a>
+				<div class="dp">
+					<b v-show="off.fn==1">号码黑名单</b>
+					<b v-show="off.fn==2">欢迎页管理</b>
+				</div>
+			</header>
+			<PhoneBlackList v-if="off.fn==1"></PhoneBlackList>
+			<WelcomeConf v-if="off.fn==2"></WelcomeConf>
+		</div>
+	</section>
 </template>
 <script>
-import FileUpload  from '../../../componentskm/fileUpload';
-import { errorDeal } from '../../../config/utils'
+import "../../../assets/km/css/search.css";
+import PhoneBlackList from '../../../componentskm/more/phoneBlackList';
+import WelcomeConf from '../../../componentskm/more/welcomeConf';
 export default{
 	name:'more',
 	data (){
 		return {
-			upload:{
-				files:'',
-				action:'km-ecs/w/msgFile/freezen',
-				response:''
+			off:{
+				power:'',
+				fn:0
 			},
-			progress:'0%',
 		}
 	},
 	components:{
-		FileUpload
+		PhoneBlackList,
+		WelcomeConf
+	},
+	created(){
+		this.off.power=this.$parent.off;
 	},
 	methods:{
-		imageuploaded(res,data) {
-			var vm=this;
-			setTimeout(function(){
-				vm.progress='0%';
-			},300)
-	       	if(res&&res.code=="200"){
-	       		layer.open({
-			        content:'号码黑名单上传成功',
-			        skin: 'msg',
-			        time: 3,
-			        msgSkin:'success',
-			    });
-	       	}else if(res){
-	       		errorDeal(res)
-	       	}
-	    },
-	    imagechanged(res) {
-			var vm=this;
-			vm.progress=0;
-			vm.upload.files=res;
-		},
-		onprogress(res){
-			this.progress=(res.loaded/res.total*100).toFixed(2)+'%';
-		},
-		errorhandle(err) {
-		  var vm=this;
-		  vm.upload.files='';
-		  setTimeout(function(){
-		  	vm.progress='0%';
-		  },300)
-		  
-		  errorDeal('上传失败')
-		},
+		showFn(off){
+			this.off.fn=off;
+		}
 	}
 }
 </script>
 <style scpoed>
+
 .u-black-phone>.icon{background-image: url(../../../assets/images/black_phone.png);}
 .u-black-phone>.dp{color: #107792;}
-.u-black-phone>.progress{
-	position:absolute;
-	right:0;
-	bottom: 0;
-	width: 5px;
-	background-color:#3DD79B;
-	transition: height .3s linear;
-}
+.u-welcome-conf>.icon{background-image: url(../../../assets/images/welcome.png);}
+.u-welcome-conf>.dp{color: #60A9D1;}
 
+#more{
+	width: 100%;
+	height: 100%;
+	padding:0.2rem;
+	position: relative;
+}
 .g-more-menu{
 	padding:0.4rem;
 	display: flex;
@@ -104,6 +83,7 @@ export default{
 	border:1px solid transparent;
 	border-color:#ddd;
 	border-radius: 3px;
+	margin-right: 0.2rem;
 }
 .g-more-menu>li>.icon{
 	display: inline-block;
@@ -124,13 +104,26 @@ export default{
 	font-weight: bold;
 	letter-spacing: 1px;
 }
-
-.m-upload{
-	position: absolute;
-	width: 100%;
-	height: 100%;
-	top: 0;
-	left: 0;
-
+.g-more-fn>header{
+	position: relative;
+	padding:0.1rem 5px;
+	background-color: #fff;
+}
+.g-more-fn>header>.dp{
+	margin-left:0.75rem;
+	text-align: center;
+}
+.g-more-fn>header>a{
+	font-weight: bold;
+	padding-left: 0.2rem;
+	background-image:url(../../../assets/images/page-left.png);
+	background-position: left center;
+	background-size: 0.17rem;
+	color: inherit;
+}
+.g-more-fn>header b{
+	font-weight: bold;
+	position: relative;
+	margin-left: -0.75rem;
 }
 </style>

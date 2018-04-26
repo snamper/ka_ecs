@@ -40,9 +40,24 @@ input, button{ -webkit-appearance: none;-moz-appearance: none;-ms-appearance: no
 .f-btn-danger:hover, .f-btn-danger:active{background-color:#ff6d6d;}
 .f-btn-line{border:1px solid transparent;border-color: #8391a5;background-color:#fff;color: #1f2d3d;}
 .f-btn-line:hover{border-color: #20a0ff;color: #20a0ff;}
-.f-btn-warning{background-color: #f7ba2a;}
+.f-btn-warning{background-color: #f7ba2a;color: #fff;}
 .f-btn-warning:active, .f-btn-warning:hover { background-color: #f9c855;}
-
+.f-no-data{
+    padding:0.2rem;
+    text-align: center;
+    background-color: #fff;
+    border:1px solid #dfe6ec;
+    border-top: none;
+}
+.f-mask{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    z-index: -1;
+}
 
 [class*=" u-icon"],
 [class^="u-icon-"] {

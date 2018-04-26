@@ -17,6 +17,7 @@
   export default {
     props: {
       url:String,
+      autoUpload:Boolean,
       text: {
         type:String,
         default:  'Upload Image'
@@ -115,7 +116,10 @@
         this.files = e.target.files;
 
         this. __dispatch('imagechanged', this.files.length > 1 ? this.files : this.files[0]);
-        this.tryAjaxUpload();
+        if(this.autoUpload){
+          this.tryAjaxUpload();
+        }
+        
       },
 
       __readFiles() {
