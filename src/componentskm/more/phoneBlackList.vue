@@ -5,7 +5,6 @@
 		  text=""
 		  inputAccept=".txt"
           v-bind:crop="false"
-          v-bind:autoUpload="true"
           v-bind:url=upload.action
           v-on:imageuploaded="imageuploaded"
           v-on:imagechanged="imagechanged"

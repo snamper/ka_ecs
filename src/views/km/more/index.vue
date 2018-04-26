@@ -14,6 +14,10 @@
 				<i class="icon"></i>
 				<span class="dp">欢迎页管理</span>
 			</li>
+			<li v-if="off.power.powerkm1||off.power.powerkm7" class="u-number-release" @click="showFn(3)">
+				<i class="icon"></i>
+				<span class="dp">号码占用/解冻</span>
+			</li>
 		</ul>
 		<div class="g-more-fn" v-show="off.fn">
 			<header class="clr">
@@ -25,6 +29,7 @@
 			</header>
 			<PhoneBlackList v-if="off.fn==1"></PhoneBlackList>
 			<WelcomeConf v-if="off.fn==2"></WelcomeConf>
+			<NumberRelease v-if="off.fn==3"></NumberRelease>
 		</div>
 	</section>
 </template>
@@ -32,6 +37,7 @@
 import "../../../assets/km/css/search.css";
 import PhoneBlackList from '../../../componentskm/more/phoneBlackList';
 import WelcomeConf from '../../../componentskm/more/welcomeConf';
+import NumberRelease from '../../../componentskm/more/numberRelease';
 export default{
 	name:'more',
 	data (){
@@ -44,7 +50,8 @@ export default{
 	},
 	components:{
 		PhoneBlackList,
-		WelcomeConf
+		WelcomeConf,
+		NumberRelease
 	},
 	created(){
 		this.off.power=this.$parent.off;
@@ -62,6 +69,8 @@ export default{
 .u-black-phone>.dp{color: #107792;}
 .u-welcome-conf>.icon{background-image: url(../../../assets/images/welcome.png);}
 .u-welcome-conf>.dp{color: #60A9D1;}
+.u-number-release>.icon{background-image: url(../../../assets/images/numberRelease.png);}
+.u-number-release>.dp{color: #1A75F2;}
 
 #more{
 	width: 100%;

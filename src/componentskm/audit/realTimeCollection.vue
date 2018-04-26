@@ -24,11 +24,7 @@
 					<tr><td>原开卡方式：</td><td>{{auditData.oldSource}}</td></tr>
 					<tr><td>原用户姓名：</td><td>{{auditData.oldUserName||auditData.oldReqParam.username||'--'}}</td></tr>
 					<tr><td>原证件号码：</td><td>{{auditData.oldIdCard||auditData.oldReqParam.IDcard||'--'}}</td></tr>
-					<tr><td>原证件类型：</td><td>
-						<span v-show="auditData.old_papers_type==1">身份证</span>
-						<span v-show="auditData.old_papers_type==2">护照</span>
-						<span v-show="auditData.old_papers_type==3">军官证</span>
-					</td></tr>
+					<tr><td>原证件类型：</td><td>{{auditData.oldPapersType}}</td></tr>
 					<tr><td>原证件地址：</td><td>{{auditData.oldUserAddress||auditData.oldReqParam.userAddress||'--'}}</td></tr>
 					<tr><td>原证件有效期：</td><td>{{auditData.oldPeriod||auditData.oldReqParam.period||'--'}}</td></tr>
 				</tbody>

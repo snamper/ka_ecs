@@ -155,13 +155,6 @@ const Resource_merchant = resolve => {//商户查询
     load();
   });
 };
-const Resource_numberRelease = resolve => {//号码冻结/解冻
-  load(true);
-  require.ensure(["@/views/km/resource/numberRelease"], () => {
-    resolve(require("@/views/km/resource/numberRelease"));
-    load();
-  });
-};
 const Resource_promoter = resolve => {//推广方查询
   load(true);
   require.ensure(["@/views/km/resource/promoter"], () => {
@@ -390,9 +383,6 @@ const router=new Router({
             path:"merchant/:val",
             component:Resource_merchant,
             name:"merchant"
-          },{//号码解冻
-            path:"numberRelease",
-            component:Resource_numberRelease
           },{//推广方查询
             path:"promoter/:val",
             component:Resource_promoter,

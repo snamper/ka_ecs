@@ -8,6 +8,7 @@
 				
 			</div>
 		</header>
+		<!--新建欢迎页-->
 		<section class="m-create-box" v-if="off.create">
 			<div class="item clr" v-for="(item,index) in form">
 				<div class="m-form-line fl">
@@ -29,19 +30,20 @@
 						<div class="inner"><input type="number" v-model="item.power" max="10"></div>
 					</div>
 					<div class="form-c">
-						<label>默认：</label>
-						<div class="inner m-form-radio">
-							<label><span class="radio"><input @click="shiftLock(index)" v-model="item.isDefault" type="radio" value="1"><span></span></span><span class="text">是</span></label>
-							<label><span class="radio"><input @click="shiftLock(index)" v-model="item.isDefault" type="radio" value="0"><span></span></span><span class="text">否</span></label>
-						</div>
-					</div>
-					<div class="form-c">
 						<label>可用：</label>
 						<div class="inner m-form-radio">
 							<label><span class="radio"><input @click="shiftLock(index)" v-model="item.lock" type="radio" value="0"><span></span></span><span class="text">是</span></label>
 							<label><span class="radio"><input @click="shiftLock(index)" v-model="item.lock" type="radio" value="1"><span></span></span><span class="text">否</span></label>
 						</div>
 					</div>
+					<div class="form-c">
+						<label>默认：</label>
+						<div class="inner m-form-radio">
+							<label><span class="radio"><input @click="shiftLock(index)" v-model="item.isDefault" type="radio" value="1"><span></span></span><span class="text">是</span></label>
+							<label><span class="radio"><input @click="shiftLock(index)" v-model="item.isDefault" type="radio" value="0"><span></span></span><span class="text">否</span></label>
+						</div>
+					</div>
+					
 				</div>
 				<div class="m-upload-box fl">
 					<div :style="{backgroundImage:uploadThumb[index].thumb}" class="img" @click="setUploadIndex(index)">
@@ -49,7 +51,6 @@
 						  text=""
 						  inputAccept="image/png,image/jpeg,image/jpg"
 				          v-bind:crop="false"
-				          v-bind:autoUpload="true"
 				          v-bind:headers="userInfo"
 				          v-bind:url=upload.action
 				          v-on:imageuploaded="imageuploaded"
@@ -64,6 +65,7 @@
 				</div>
 			</div>
 		</section>
+		<!--欢迎页列表-->
 		<section class="m-total-table" v-if="!off.create">
 			<div class="total-head">欢迎页列表<b>{{ list.length }}</b></div>
 			<table>
@@ -103,6 +105,7 @@
 			</table>
 			<div class="f-no-data" v-if="!list.length">暂无数据</div>
 		</section>
+		<!--上传历史记录-->
 		<section class="m-total-table" v-if="!off.create">
 			<div class="total-head clr">
 				<div class="fl"><i>上传历史记录</i><b>{{ uploadLogList.length }}</b></div>
@@ -112,6 +115,7 @@
 					  text=""
 					  inputAccept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
 			          v-bind:crop="false"
+			          v-bind:autoUpload="false"
 			          v-bind:headers="userInfo"
 			          v-bind:url=upload.action
 			          v-on:imageuploaded="imageuploaded"
@@ -149,6 +153,7 @@
 			</table>
 			<div class="f-no-data" v-if="!uploadLogList.length">暂无数据</div>
 		</section>
+		<!--编辑欢迎页项-->
 		<Pop v-if="off.pop" :callBack="closePop" :width="700">
 	      <div slot="content" class="m-create-box m-pop-createbox">
 	        <div class="item clr">
@@ -171,17 +176,17 @@
 						<div class="inner"><input type="number" v-model="modifyInfo.power" max="10"></div>
 					</div>
 					<div class="form-c">
-						<label>默认：</label>
-						<div class="inner m-form-radio">
-							<label><span class="radio"><input @click="shiftLock()" v-model="modifyInfo.isDefault" type="radio" value="1"><span></span></span><span class="text">是</span></label>
-							<label><span class="radio"><input @click="shiftLock()" v-model="modifyInfo.isDefault" type="radio" value="0"><span></span></span><span class="text">否</span></label>
-						</div>
-					</div>
-					<div class="form-c">
 						<label>可用：</label>
 						<div class="inner m-form-radio">
 							<label><span class="radio"><input @click="shiftLock()" v-model="modifyInfo.lock" type="radio" value="0"><span></span></span><span class="text">是</span></label>
 							<label><span class="radio"><input @click="shiftLock()" v-model="modifyInfo.lock" type="radio" value="1"><span></span></span><span class="text">否</span></label>
+						</div>
+					</div>
+					<div class="form-c">
+						<label>默认：</label>
+						<div class="inner m-form-radio">
+							<label><span class="radio"><input @click="shiftLock()" v-model="modifyInfo.isDefault" type="radio" value="1"><span></span></span><span class="text">是</span></label>
+							<label><span class="radio"><input @click="shiftLock()" v-model="modifyInfo.isDefault" type="radio" value="0"><span></span></span><span class="text">否</span></label>
 						</div>
 					</div>
 				</div>
@@ -192,7 +197,6 @@
 						  inputAccept="image/png,image/jpeg,image/jpg"
 						  v-bind:headers="userInfo"
 				          v-bind:crop="false"
-				          v-bind:autoUpload="true"
 				          v-bind:url=upload.action
 				          v-on:imageuploaded="imageuploaded"
 				          v-on:imagechanged="imagechanged"
@@ -340,9 +344,14 @@ export default{
 			}
 	    },
 	    closePop(off){
+	     
+	      if(!off){
+	      	this.modifyInfo='';
+	      	this.off.uploadIndex=0;
+	      }
 	      this.off.pop=off;
-	      if(!off)this.modifyInfo='';
 	      this.upload.files='';
+
 	    },
 	    modifyPop(index){
 	    	this.closePop(true);
