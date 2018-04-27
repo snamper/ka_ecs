@@ -111,7 +111,7 @@ span.dp{
                                 <label><span class="radio"><input @click="changeSearchType" type="radio" value="2" v-model="form.searchType" checked="checked"><span></span></span><span class="text">商户名称</span></label>
                                 <label><span class="radio"><input @click="changeSearchType" type="radio" value="3" v-model="form.searchType" checked="checked"><span></span></span><span class="text">员工手机号码</span></label>
                                 <div style="display:inline-block" class="col-r m-input">
-                                    <input v-model="form.searchContext" maxlength="24" type="tel" :placeholder="form.searchType==1 ? '请输入查询的商户ID' :form.searchType==2? '请输入查询的商户名称':'请输入查询的手机号码'"/>
+                                    <input @focus="inpFocus" @blur="inpBlur" v-model="form.searchContext" maxlength="24" type="tel" :placeholder="form.searchType==1 ? '请输入查询的商户ID' :form.searchType==2? '请输入查询的商户名称':'请输入查询的手机号码'"/>
                                 </div>
                             </div>
                         </div>
@@ -122,7 +122,7 @@ span.dp{
                                 <label><span class="radio"><input @click="changeSearchType" type="radio" value="2" v-model="form.searchType" checked="checked"><span></span></span><span class="text">用户姓名</span></label>
                                 <label><span class="radio"><input @click="changeSearchType" type="radio" value="3" v-model="form.searchType" checked="checked"><span></span></span><span class="text">手机号码</span></label>
                                 <div style="display:inline-block" class="col-r m-input">
-                                    <input v-model="form.searchContext" maxlength="24" type="tel" :placeholder="form.searchType==1 ? '请输入查询的卡盟ID' :form.searchType==2? '请输入查询的姓名':'请输入查询的手机号码'"/>
+                                    <input @focus="inpFocus" @blur="inpBlur" v-model="form.searchContext" maxlength="24" type="tel" :placeholder="form.searchType==1 ? '请输入查询的卡盟ID' :form.searchType==2? '请输入查询的姓名':'请输入查询的手机号码'"/>
                                 </div>
                             </div>
                         </div>
@@ -155,7 +155,7 @@ span.dp{
             </section>
             <!-- 商户查询结果列表 -->
             <div class="m-total-table" style="margin-top: 0.2rem;" v-if="form.content==1">
-                <section v-if="searchResultList.list">
+                <section v-if="searchResultList.list.length">
                     <table>
                         <thead>
                             <tr>
@@ -213,7 +213,7 @@ span.dp{
             </div>
             <!-- 工号查询结果列表 -->
             <div class="m-total-table" style="margin-top: 0.2rem;" v-if="form.content==2">
-                <section v-if="searchResultList.list">
+                <section v-if="searchResultList.list.length">
                     <table>
                         <thead>
                             <tr>
@@ -254,11 +254,10 @@ span.dp{
             <header class="g-lis-head">
                 <a class="m-details-back u-icon-back" style="width:20px;height:20px;" @click="close('dealerId')"></a>
                 <div class="m-footD-btn">
-                    <!-- <a v-if="type==2&&list.cardStatus==2" class="f-btn f-btn-warning" @click="integralLog">查看积分</a> -->
                 </div>
             </header>
-            <div class="g-box">
-                <table class="merchant-total g-list-table" v-if="ajaxData.details">
+            <div class="g-box" v-if="ajaxData.details">
+                <table class="merchant-total g-list-table">
                     <thead>
                         <tr>
                             <th style="width:70%;">商户基本信息</th>
@@ -304,7 +303,7 @@ span.dp{
                                                 <b v-if="ajaxData.details.attribute==2">B（联通售卡）</b>
                                                 <b v-if="ajaxData.details.attribute==3">C（远特售卡+联通售卡）</b>
                                                 <b v-if="ajaxData.details.attribute==4">D（联通售卡+远特售卡）</b> -->
-                                                <b v-for="auditData in ajaxData.details.openedScopes" :key="auditData">
+                                                <b v-for="auditData in ajaxData.details.openedScopes" >
                                                     <span v-if="auditData.type==1">远特售卡</span><span v-if="auditData.type==2">联通售卡</span><span v-if="auditData.type==3">移动售卡</span><span v-if="auditData.type==4">电信售卡</span>(<span>{{auditData.areas}}</span>)
                                                 </b>
                                             </td>
@@ -437,8 +436,8 @@ span.dp{
                 <div class="m-footD-btn">
                 </div>
             </header>
-            <div class="g-box">	
-                <table class="merchant-total g-list-table" v-if="ajaxData2.details">
+            <div class="g-box"  v-if="ajaxData2.details">	
+                <table class="merchant-total g-list-table">
                     <thead>
                         <tr>
                             <th style="width:70%;">工号基本信息</th>
@@ -545,13 +544,11 @@ span.dp{
                 <my-page :page="ajaxData2.pageNum" :maxpage="ajaxData2.maxpage1" :callback="ajaxData2.callback"></my-page>
             </section>
 		</div>
-        <!-- <wd :dataList="ajaxData2"></wd>   -->
   	</div>
 </template>
 <script>
 import {reqCommonMethod,requestGetMerchantList} from "../../../config/service.js";  
 import pagination from "../../../componentskm/page.vue";
-// import wd from "../../../componentskm/merchantWorkNumDetails.vue";
 import { getDateTime,errorDeal } from "../../../config/utils.js"
 export default{
 	name:'merchantSearch',
@@ -589,7 +586,7 @@ export default{
 			},
 			ajaxData:{//ajax响应数据
 				details:'',//商户/工号详情
-				list:'',//第三方流水号列表/用户列表
+				list:[],//第三方流水号列表/用户列表
                 maxpage:0,//最大页数
                 maxpage1:0,//第三方支付查询结果页码
 				pageNum:1,//当前页
@@ -598,7 +595,7 @@ export default{
             },
             ajaxData2:{//ajax响应数据
 				details:'',//商户/工号详情
-				list:'',//第三方流水号列表/用户列表
+				list:[],//第三方流水号列表/用户列表
                 maxpage:0,//最大页数
                 maxpage1:0,//第三方支付查询结果页码
 				pageNum:1,//当前页
@@ -619,7 +616,6 @@ export default{
     },
 	components:{
         'my-page':pagination,
-        // 'wd':wd
 	},
 	created(){
 		var vm=this;
@@ -645,10 +641,16 @@ export default{
             vm.form.startTime=laydate.now(0,'YYYY-MM-DD 00:00:00');
             vm.form.endTime=laydate.now(0,'YYYY-MM-DD 23:59:59');
         },
+        inpFocus(){
+            
+        },
+        inpBlur(){
+            
+        },
         searchList(index,page){
             let vm=this,
             searchData={
-                getListType:vm.form.content,
+            getListType:vm.form.content,
             typeKey:vm.form.searchType,
             typeValue:vm.form.searchContext,
             timeStar:new Date(vm.form.startTime).getTime(),
@@ -707,12 +709,14 @@ export default{
 		},
         details(context,type,i){//商户上用户列表查看用户，用户上查看商户
             let vm=this;
-            // vm.shiftType();
+            console.log(vm.ajaxData,vm.ajaxData2)
             vm.searchRoad.push({'vm.form.type':vm.form.type})
             vm.i=vm.searchRoad.length;           
             vm.off.detailskind=i;
             vm.form.type=type;
             vm.form.context=context;
+            vm.ajaxData.list=[];
+            vm.ajaxData2.list=[];
             vm.getDetails();
 		},
 		getDetails(isBtn){//获取商户/工号基本信息
@@ -770,12 +774,14 @@ export default{
             // });
              reqCommonMethod(json,function(){vm.off.isLoad=false;},url)
              .then((data)=>{
-	            vm.form.type==1?vm.ajaxData.list=data.data.list:vm.ajaxData2.list=data.data.list;
-				vm.form.type==1?vm.ajaxData.total=data.data.total||0:vm.ajaxData2.total=data.data.total||0;
-				vm.form.type==1?vm.ajaxData.maxpage1=Math.ceil(parseInt(data.data.list.length)/10):vm.ajaxData2.maxpage1=Math.ceil(parseInt(data.data.list.length)/10);
-				vm.form.type==1?vm.ajaxData.pageNum=page||1:vm.ajaxData2.pageNum=page||1;
-                vm.form.type==1?vm.ajaxData.callback=function(v){vm.getList(v)}:vm.ajaxData2.callback=function(v){vm.getList(v)};
+                 debugger;
+	            type==1?vm.$set(vm.ajaxData,'list',data.data.list):vm.$set(vm.ajaxData2,'list',data.data.list);
+				type==1?vm.ajaxData.total=data.data.total||0:vm.ajaxData2.total=data.data.total||0;
+				type==1?vm.ajaxData.maxpage1=Math.ceil(parseInt(data.data.list.length)/10):vm.ajaxData2.maxpage1=Math.ceil(parseInt(data.data.list.length)/10);
+				type==1?vm.ajaxData.pageNum=page||1:vm.ajaxData2.pageNum=page||1;
+                type==1?vm.ajaxData.callback=function(v){vm.getList(v)}:vm.ajaxData2.callback=function(v){vm.getList(v)};
                 vm.off.isLoad=false;
+                console.log(vm.ajaxData);
              }).catch(error=>errorDeal(error)); 	
 		},
 		getDateTime:function(e) {
@@ -794,7 +800,7 @@ export default{
         },
         replacedian(str){
             var index = str .lastIndexOf("\.");  
-            return str .substring(index + 1, str .length);
+            return str.substring(index + 1, str.length);
         },
         close(v){
             let vm=this,
@@ -810,16 +816,29 @@ export default{
         changeSearchType(){
             let vm=this;
             vm.searchResultList={
-                list:'',
+                list:[],
                 maxpage:0,//最大页数
 				pageNum:1,//当前页
 				callback:Function,//分页响应函数
             },
-            vm.form.searchContext='';
-            vm.ajaxData={
-				maxpage:0,
-				pageNum:1,
-				callback:Function,
+            vm.form.searchContext='',
+            vm.ajaxData={//ajax响应数据
+				details:'',//商户/工号详情
+				list:[],//第三方流水号列表/用户列表
+                maxpage:0,//最大页数
+                maxpage1:0,//第三方支付查询结果页码
+				pageNum:1,//当前页
+				callback:Function,//分页响应函数
+				total:0,//列表总条数
+            },
+            vm.ajaxData2={//ajax响应数据
+				details:'',//商户/工号详情
+				list:[],//第三方流水号列表/用户列表
+                maxpage:0,//最大页数
+                maxpage1:0,//第三方支付查询结果页码
+				pageNum:1,//当前页
+				callback:Function,//分页响应函数
+				total:0,//列表总条数
 			};
         }
 	}
