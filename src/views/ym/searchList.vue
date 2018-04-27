@@ -266,7 +266,6 @@ import details from "../ym/searchListDetails.vue";
 import auditdetails from "../ym/auditList.vue";
 import { setStore, getStore, createDownload,errorDeal } from "../../config/utils";
 import {reqCommonMethod} from "../../config/service.js";
-import { mapActions } from '../../../node_modules/_vuex@3.0.1@vuex';
 export default {
   name: "search",
   data() {
