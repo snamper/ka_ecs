@@ -15,15 +15,15 @@
 					<header><b>{{ index+1 }}</b>NEW WELCOME PAGE<a href="javascript:;" @click="deleteCreate(index)" class="u-icon-close"></a></header>
 					<div class="form-c">
 						<label>欢迎页ID：</label>
-						<div class="inner"><input type="text" v-model="item.bannerId" maxlength="15"></div>
+						<div class="inner"><input type="text" v-model="item.bannerId" maxlength="20"></div>
 					</div>
 					<div class="form-c">
 						<label>欢迎页名称：</label>
-						<div class="inner"><input type="text" v-model="item.bannerName" maxlength="15"></div>
+						<div class="inner"><input type="text" v-model="item.bannerName" maxlength="32"></div>
 					</div>
 					<div class="form-c">
 						<label>跳转地址：</label>
-						<div class="inner"><input type="text" v-model="item.linkUrl" maxlength="50"></div>
+						<div class="inner"><input type="text" v-model="item.linkUrl" maxlength="100"></div>
 					</div>
 					<div class="form-c">
 						<label>权重：</label>
@@ -67,7 +67,7 @@
 		</section>
 		<!--欢迎页列表-->
 		<section class="m-total-table" v-if="!off.create">
-			<div class="total-head">欢迎页列表<b>{{ list.length }}</b></div>
+			<div class="total-head">欢迎页列表<b>{{ list.length }}</b><span class="f-c-red">Tips：欢迎页最多可设置1至3个默认页面,不可用状态时页面不可设为默认</span></div>
 			<table>
 				<thead>
 					<tr>
@@ -154,7 +154,7 @@
 			<div class="f-no-data" v-if="!uploadLogList.length">暂无数据</div>
 		</section>
 		<!--编辑欢迎页项-->
-		<Pop v-if="off.pop" :callBack="closePop" :width="700">
+		<Pop v-if="off.pop" :callBack="closePop" :width="900">
 	      <div slot="content" class="m-create-box m-pop-createbox">
 	        <div class="item clr">
 				<div class="m-form-line fl">
@@ -165,15 +165,15 @@
 					</div>
 					<div class="form-c">
 						<label>欢迎页名称：</label>
-						<div class="inner"><input type="text" v-model="modifyInfo.bannerName" maxlength="15"></div>
+						<div class="inner"><input type="text" v-model="modifyInfo.bannerName" maxlength="20"></div>
 					</div>
 					<div class="form-c">
 						<label>跳转地址：</label>
-						<div class="inner"><input type="text" v-model="modifyInfo.linkUrl" maxlength="50"></div>
+						<div class="inner"><input type="text" v-model="modifyInfo.linkUrl" maxlength="32"></div>
 					</div>
 					<div class="form-c">
 						<label>权重：</label>
-						<div class="inner"><input type="number" v-model="modifyInfo.power" max="10"></div>
+						<div class="inner"><input type="number" v-model="modifyInfo.power" max="100"></div>
 					</div>
 					<div class="form-c">
 						<label>可用：</label>
@@ -206,6 +206,7 @@
 				        </FileUpload>
 				    </div>
 				    <div class="progress" :style="{width:modifyInfo.progress}"></div>
+				    <div class="o-pop-tips">点击图片进行修改</div>
 					<!-- <div class="upload"><a href="javascript:;">点击上传图片</a></div> -->
 				</div>
 			</div>
@@ -279,8 +280,14 @@ export default{
 					return _item==='';
 				}).length!=0
 			});
+			let checkBannerId=form.filter((item)=>{
+				return !item.bannerId.match(/^\w+$/)
+			});
 			if(space.length){
 				errorDeal('你有东西没填完，自己找找吧！');
+				return false;
+			}else if(checkBannerId.length){
+				errorDeal('欢迎页ID中不能出现【中文】');
 				return false;
 			}else{
 				reqCommonMethod({bannerList:form},false,'km-ecs/w/banner/addList')
@@ -355,6 +362,7 @@ export default{
 	    },
 	    modifyPop(index){
 	    	this.closePop(true);
+	    	this.off.uploadIndex=998;
 	    	this.modifyInfo=JSON.parse(JSON.stringify(this.list[index]));
 	    	this.modifyInfo.imageUrl=this.modifyInfo.imageUrl;
 	    	this.modifyInfo.progress=0;
@@ -367,7 +375,7 @@ export default{
 				this.form.push({
 		            bannerId:'',
 		            bannerName:'',
-		            imageUrl:'s',
+		            imageUrl:'',
 		            linkUrl:'',
 		            isDefault:0,
 		            lock:0,
@@ -442,6 +450,7 @@ export default{
 			        time: 3,
 			        msgSkin:'success',
 			    });
+			    vm.upload.files='';
 	       	}else if(res){
 	       		vm.errorhandle(res)
 	       	}
@@ -500,6 +509,17 @@ export default{
 .o-btn-group>a{
 	margin-right:0.1rem;
 }
+.o-pop-tips{
+	position: absolute;
+	left: 0;
+	bottom: 5px;
+	width: 100%;
+	text-align: center;
+}
+.total-head>.f-c-red{
+	font-size: 0.12rem;
+	margin-left: 0.1rem;
+}
 
 .m-create-btn{
 	
@@ -534,7 +554,7 @@ export default{
 	margin:0;
 }
 .m-pop-createbox>.f-btn-warning{
-	width: 100%;
+	width: 87%;
 	padding:0.15rem 0;
 	text-align: center;
 	margin-top: 0.2rem;
@@ -543,7 +563,7 @@ export default{
 
 
 .m-upload-box{
-	width: 2rem;
+	width: 3rem;
 	height: 3.7rem;
 	display: table;
 	text-align: center;
@@ -584,7 +604,7 @@ export default{
 	padding:8px 12px;
 }*/
 .m-create-box .m-form-line{
-	width: 3rem;
+	width: 4rem;
 }
 .m-create-box .m-form-line>header{
 	padding-bottom: 0.2rem;
