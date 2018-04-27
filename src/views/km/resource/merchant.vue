@@ -54,10 +54,12 @@
 .m-total-table{
     background: none;
 }
+span.dp{
+    display: inline-block;
+}
 </style>
 <template>
 	<div id="merchantSearch">
-      
 		<header class="m-scroll-bar animated infinite" :class="{active:off.isLoad}"></header>
             <div v-if="form.type!=1&&form.type!=2">
                 <section class="g-search-form">
@@ -101,14 +103,22 @@
                             <label><span class="radio"><input @click="changeSearchType" type="radio" value="2" v-model="form.content" checked="checked"><span></span></span><span class="text">工号</span></label>
                         </div>
                     </div>
-                    <div class="row">
-                        <span class="dp">查询类型：</span>
-                        <div class="m-form-radio">
-                            <label><span class="radio"><input @click="changeSearchType"  type="radio" value="1" v-model="form.searchType" checked="checked"><span></span></span><span class="text">商户ID</span></label>
-                            <label><span class="radio"><input @click="changeSearchType" type="radio" value="2" v-model="form.searchType" checked="checked"><span></span></span><span class="text">商户名称</span></label>
-                            <label><span class="radio"><input @click="changeSearchType" type="radio" value="3" v-model="form.searchType" checked="checked"><span></span></span><span class="text">员工手机号码</span></label>
-                            <div style="display:inline-block" class="col-r m-input">
-                                <input v-model="form.searchContext" maxlength="24" type="tel" :placeholder="form.searchType==1 ? '请输入查询的商户ID' :form.searchType==2? '请输入查询的商户名称':'请输入查询的手机号码'"/>
+                    <div class="row" >
+                        <div v-if="form.content==1">
+                            <span class="dp" >查询类型：</span>
+                            <div class="m-form-radio">
+                                <label><span class="radio"><input @click="changeSearchType"  type="radio" value="1" v-model="form.searchType" checked="checked"><span></span></span><span class="text">商户ID</span></label>
+                                <label><span class="radio"><input @click="changeSearchType" type="radio" value="2" v-model="form.searchType" checked="checked"><span></span></span><span class="text">商户名称</span></label>
+                                <label><span class="radio"><input @click="changeSearchType" type="radio" value="3" v-model="form.searchType" checked="checked"><span></span></span><span class="text">员工手机号码</span></label>
+                                <div style="display:inline-block" class="col-r m-input">
+                                    <input v-model="form.searchContext" maxlength="24" type="tel" :placeholder="form.searchType==1 ? '请输入查询的商户ID' :form.searchType==2? '请输入查询的商户名称':'请输入查询的手机号码'"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div v-if="form.content==2">
+                            <span class="dp" >工<i class="m-one-font"></i><i class="m-one-font"></i>号:&nbsp;&nbsp;</span>
+                            <div style="display:inline-block;width:60%;" class="col-r m-input">
+                                <input v-model="form.searchContext" maxlength="24" type="tel" placeholder="请输入查询的工号"/>
                             </div>
                         </div>
                     </div>
@@ -175,7 +185,11 @@
                                     <span v-if="item.merchant_type==2">个人</span> -->
                                 </td>
                                 <td>{{item.user_type_name}}</td>
-                                <td>{{item.showLevel}}</td>
+                                <td>
+                                    <span v-if="item.showLevel==1">普通用户</span>
+                                    <span v-if="item.showLevel==2">白金用户</span>
+                                    <span v-if="item.showLevel==3">vip用户</span>
+                                </td>
                                 <td>
                                     <span v-if="item.status==0">已激活</span>
                                     <span v-if="item.status==1">待激活</span>
@@ -185,6 +199,7 @@
                                 <td>
                                     <span v-if="item. merchant_attribute==1">远特</span>
                                     <span v-if="item. merchant_attribute==2">联通</span>
+                                    
                                 </td>
                                 <td>{{item.isSignAgreement}}</td>
                                 <td><a :name="item.dealer_id" @click="details(item.dealer_id,form.content,1)" href="javascript:void(0)" class="details">详情</a></td>

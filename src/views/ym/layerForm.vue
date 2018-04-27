@@ -237,8 +237,8 @@ export default{
             // });
             reqCommonMethod(data,function(){vm.off.isLoad=false;},url)
             .then((data)=>{
+                vm.$parent.off.layerState=false;
                 if(data.code==200){
-					vm.$parent.off.layerState=true
 					vm.exchangeTab = data;
                     vm.$parent.whichLayer ='0';
 					if(v=='add'){
@@ -298,7 +298,7 @@ export default{
                        }
 					})     
 				}
-            }).catch(error=>errorDeal(error));    
+            }).catch(error=>errorDeal(error),);    
 		}
 	}
 }

@@ -25,7 +25,7 @@
   	    <div class="m-tag"><b></b>条件查询</div>
   	    <section class="form-c">
   	    	<div class="row40 clr m-col-2">
-				<div class="dp col-l">时间区间：</div>
+				<div class="dp col-l">时间区间:&nbsp;&nbsp;&nbsp;</div>
 				<div class="col-r">
 					<span class="m-time-area" @click="to_laydate(1)"><input id="start" v-model="form.startTime" type="text" readonly="readonly"></span>
 					<span class="m-space">一</span>
