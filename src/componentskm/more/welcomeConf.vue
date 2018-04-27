@@ -93,7 +93,7 @@
 							<span v-if="todo.lock==1">不可用</span>
 							<span v-else>
 								<em v-show="todo.isDefault==1">默认</em>
-								<em v-show="todo.isDefault==0">不默认</em>
+								<em v-show="todo.isDefault==0">可用</em>
 							</span>
 						</td>
 						<td class="o-btn-group">
@@ -161,19 +161,19 @@
 					<header>MODIFY WELCOME PAGE</header>
 					<div class="form-c">
 						<label>欢迎页ID：</label>
-						<div class="inner"><input type="text" readonly="readonly" v-model="modifyInfo.bannerId" maxlength="15"></div>
+						<div class="inner"><input type="text" readonly="readonly" v-model="modifyInfo.bannerId" maxlength="20"></div>
 					</div>
 					<div class="form-c">
 						<label>欢迎页名称：</label>
-						<div class="inner"><input type="text" v-model="modifyInfo.bannerName" maxlength="20"></div>
+						<div class="inner"><input type="text" v-model="modifyInfo.bannerName" maxlength="32"></div>
 					</div>
 					<div class="form-c">
 						<label>跳转地址：</label>
-						<div class="inner"><input type="text" v-model="modifyInfo.linkUrl" maxlength="32"></div>
+						<div class="inner"><input type="text" v-model="modifyInfo.linkUrl" maxlength="100"></div>
 					</div>
 					<div class="form-c">
 						<label>权重：</label>
-						<div class="inner"><input type="number" v-model="modifyInfo.power" max="100"></div>
+						<div class="inner"><input type="number" v-model="modifyInfo.power" max="10"></div>
 					</div>
 					<div class="form-c">
 						<label>可用：</label>
@@ -206,7 +206,6 @@
 				        </FileUpload>
 				    </div>
 				    <div class="progress" :style="{width:modifyInfo.progress}"></div>
-				    <div class="o-pop-tips">点击图片进行修改</div>
 					<!-- <div class="upload"><a href="javascript:;">点击上传图片</a></div> -->
 				</div>
 			</div>
@@ -287,7 +286,7 @@ export default{
 				errorDeal('你有东西没填完，自己找找吧！');
 				return false;
 			}else if(checkBannerId.length){
-				errorDeal('欢迎页ID中不能出现【中文】');
+				errorDeal('【欢迎页ID】只能包含数字、大小写字母和下划线哟~');
 				return false;
 			}else{
 				reqCommonMethod({bannerList:form},false,'km-ecs/w/banner/addList')
@@ -509,13 +508,13 @@ export default{
 .o-btn-group>a{
 	margin-right:0.1rem;
 }
-.o-pop-tips{
+/*.o-pop-tips{
 	position: absolute;
 	left: 0;
 	bottom: 5px;
 	width: 100%;
 	text-align: center;
-}
+}*/
 .total-head>.f-c-red{
 	font-size: 0.12rem;
 	margin-left: 0.1rem;

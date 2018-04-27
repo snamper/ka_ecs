@@ -18,8 +18,8 @@
 						<span v-else>--</span>
 						<a href="javascript:void(0)" @click="$parent.autoAuditInfo" class="details m-l">查看详情</a>
 					</td></tr>
-					<tr v-if="auditData.status==2"><td>拒绝原因：</td><td>{{auditData.remarks}}</td></tr>
-					<tr v-if="auditData.auditType==2"><td>错误码：</td><td>{{auditData.errCode}}</td></tr>
+					<tr v-if="auditData.status==2"><td>拒绝原因：</td><td>{{auditData.reason}}</td></tr>
+					<tr><td>错误码：</td><td>{{auditData.errCode}}</td></tr>
 					<tr><td>设备编码：</td><td>{{auditData.reqParam.devInfo}}</td></tr>
 					<tr><td>原开卡方式：</td><td>{{auditData.oldSource}}</td></tr>
 					<tr><td>原用户姓名：</td><td>{{auditData.oldUserName||auditData.oldReqParam.username||'--'}}</td></tr>
@@ -44,8 +44,8 @@
 						<span v-else-if="auditData.status==2" class="f-c-red">拒绝</span>
 						<span v-else>--</span>
 					</td></tr>
-					<tr v-if="auditData.status==2"><td>备注：</td><td>{{auditData.reason}}</td></tr>
-					<tr v-if="auditData.auditType==2"><td>错误描述：</td><td>{{auditData.errMsg}}</td></tr>
+					<tr v-if="auditData.status==2"><td>备注：</td><td>{{auditData.remarks}}</td></tr>
+					<tr><td>错误描述：</td><td>{{auditData.errMsg}}</td></tr>
 					<tr><td>设备MAC：</td><td>{{auditData.reqParam.devMac}}</td></tr>
 					<tr><td>新用户姓名：</td><td>{{auditData.reqParam.username}}</td></tr>
 					<tr><td>新证件号码：</td><td>{{auditData.reqParam.IDcard}}</td></tr>
