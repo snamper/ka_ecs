@@ -819,7 +819,7 @@ export default{
                 if(key==3)str+=`<li class="clr"><div class="fl">移动售卡：</div>`;
                 if(key==4)str+=`<li class="clr"><div class="fl">电信售卡：</div>`;
                 info[key].forEach((value)=>{
-                    if(value.isLocal==0)str+=`<div class="fright">${value.area!='null':value.area:''}（不限）</div></li>`;
+                    if(value.isLocal==0)str+=`<div class="fright">${value.area!='null'?value.area:''}（不限）</div></li>`;
                     if(value.isLocal==1){
                         // value.cusWhiteList.split(',').forEach((val)=>{
                         //     _str+='，'+info.whiteList[val];
