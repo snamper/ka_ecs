@@ -145,8 +145,8 @@
                     <table>
                         <thead>
                             <tr>
-                                <th colspan="11" style="background-color:#fff;text-align:left;padding-left:20px;">
-                                    统计结果
+                                <th class="total-head" colspan="11" style="background-color:#fff;text-align:left;padding-left:20px;">
+                                    统计结果<b>{{total}}</b>
                                 </th>
                             </tr>
                             <tr>
@@ -170,8 +170,9 @@
                                 <td>{{item.dealer_id}}</td>
                                 <td>{{item.company_name||"--"}}</td>
                                 <td>
-                                    <span v-if="item.merchant_type==1">企业</span>
-                                    <span v-if="item.merchant_type==2">个人</span>
+                                    <span>{{item.merchant_type}}</span>
+                                    <!-- <span v-if="item.merchant_type==1">企业</span>
+                                    <span v-if="item.merchant_type==2">个人</span> -->
                                 </td>
                                 <td>{{item.user_type_name}}</td>
                                 <td>{{item.showLevel}}</td>
@@ -199,8 +200,8 @@
                     <table>
                         <thead>
                             <tr>
-                                <th colspan="8" style="background-color:#fff;text-align:left;padding-left:20px;">
-                                    统计结果
+                                <th class="total-head" colspan="8" style="background-color:#fff;text-align:left;padding-left:20px;">
+                                    统计结果<b>{{total}}</b>
                                 </th>
                             </tr>
                             <tr>
@@ -362,19 +363,19 @@
                                             <td><span>保证金：</span>{{ parseFloat(ajaxData.details.bond)/100 }}元</td>
                                         </tr>
                                         <tr>
-                                            <td><span>号码模式：</span>{{ajaxData.details.phoneModel}}
+                                            <td><span>号码模式：</span>{{ajaxData.details.phoneModel}}【{{ajaxData.details.dealer_model_describe||'--'}}】
                                                 <!-- <b v-if="ajaxData.details.phoneModel=='basemodel'||ajaxData.details.phoneModel==''">基本模式</b>
                                                 <b v-else>其它模式</b> -->
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td><span>折扣模式：</span>{{ajaxData.details.discountModel}}
+                                            <td><span>折扣模式：</span>{{ajaxData.details.discountModel}}【{{ajaxData.details.discount_model_describe||'--'}}】
                                                 <!-- <b v-if="ajaxData.details.discountModel=='basemodel'||ajaxData.details.discountModel==''">基本模式</b>
                                                 <b v-else>其它模式</b> -->
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td><span>转账模式：</span>{{ajaxData.details.transferModel}}
+                                            <td><span>转账模式：</span>{{ajaxData.details.transferModel}}【{{ajaxData.details.model_code_describe||'--'}}】
                                                 <!-- <b v-if="ajaxData.details.transferModel=='basemodel'||ajaxData.details.transferModel==''">基本模式</b>
                                                 <b v-else>其它模式</b> -->
                                             </td>
@@ -538,6 +539,7 @@ export default{
 	name:'merchantSearch',
 	data() {
 		return {
+            total:0,
             i:0,
             searchRoad:[],
             dataList:'',
@@ -641,10 +643,10 @@ export default{
             }
             vm.searchRoad.push({'vm.form.type':vm.form.type});
             vm.i=vm.searchRoad.length;            
-            console.log(vm.searchRoad);
             requestGetMerchantList(searchData,function(){vm.off.isLoad=false;},)
             .then((data)=>{
                 if(data.code==200){
+                    vm.total=data.data.total;
                     vm.searchResultList.list=data.data.list
                     vm.searchResultList.maxpage=Math.ceil(parseInt(data.data.total)/10);
                     vm.searchResultList.pageNum=page||1;

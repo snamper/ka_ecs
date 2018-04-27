@@ -113,7 +113,7 @@ export default{
 				time:'00:00',//审核计时
 				isLoad:0,//是否ajax请求
 				auditType:1,//0,实时;1,事后;
-				itemType:6//6，APP开卡；7，过户；8，SDK开卡；9，通服开卡
+				itemType:6//6，APP开卡；7，过户；8，SDK开卡；9，通服开卡;1,实名补录；2，补换卡；
 			},
 			timer:Number,//审核倒计时
 			list:[],//分配的订单
@@ -302,7 +302,7 @@ export default{
 					vm.imgData[4]={'src':vm.auditData.backImageUrl,'name':'过户人反面照片'};
 					vm.imgData[5]={'src':vm.auditData.handImage,'name':'过户人手持照片'};
 					vm.imgData[6]={'src':vm.auditData.signImage,'name':'过户人手签名照片'};
-				}else if(vm.off.itemType==10){//实名补登
+				}else if(vm.off.itemType==1){//实名补登
 					vm.imgData[0]={'src':vm.auditData.oldReqParam.imageName,'name':'原正面照片'};
 					vm.imgData[1]={'src':vm.auditData.oldReqParam.backImageName,'name':'原反面照片'};//
 					vm.imgData[2]={'src':vm.auditData.oldReqParam.handImageName,'name':'原手持照片'};
