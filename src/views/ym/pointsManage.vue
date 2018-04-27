@@ -83,7 +83,9 @@
 				</tr>
 			</tbody>
 		</table>
-		<my-page :page="pageNum" :maxpage="maxpage" :callback="callback"></my-page>		
+        <section class="m-sub-page clr">
+		    <my-page :page="pageNum" :maxpage="maxpage" :callback="callback"></my-page>		
+        </section>
 	</div>
     </div>
 	</section>

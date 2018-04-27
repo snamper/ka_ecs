@@ -92,7 +92,9 @@
 				</tr>
 			</tbody>
 		</table>
-		<my-page :page="pageNum" :maxpage="maxpage" :callback="callback"></my-page>		
+        <section class="m-sub-page clr">
+		    <my-page :page="pageNum" :maxpage="maxpage" :callback="callback"></my-page>	
+        </section>	
 	</div>
     </div>
 	</section>
@@ -205,20 +207,21 @@ export default{
 				//      vm.off.getPoints='0';
 			    //   	}
                 //  });
-                 reqCommonMethod(json,function(){vm.off.isLoad=false;},"ym-ecs/c/user/exchangeDetails")
-                 .then((response)=>{
-                     if(response.code==200){
-			         vm.list = response.data;
-			         vm.total=response.data.total;
-					 vm.detailsData=response.data.list;
-					 vm.maxpage=Math.ceil(parseInt(response.data.total)/20);
-					 vm.pageNum=page||1;
-				     vm.callback=function(v){vm.searchList(type,v)};
-				     vm.off.getPoints='1';
-			      	}else if(response.code!=200){
-				     vm.off.getPoints='0';
-			      	}
-                 }).catch(error=>errorDeal(error));    
+                vm.off.isLoad=true;    
+                reqCommonMethod(json,function(){vm.off.isLoad=false;},"ym-ecs/c/user/exchangeDetails")
+                .then((response)=>{
+                    if(response.code==200){
+                    vm.list = response.data;
+                    vm.total=response.data.total;
+                    vm.detailsData=response.data.list;
+                    vm.maxpage=Math.ceil(parseInt(response.data.total)/20);
+                    vm.pageNum=page||1;
+                    vm.callback=function(v){vm.searchList(type,v)};
+                    vm.off.getPoints='1';
+                }else if(response.code!=200){
+                    vm.off.getPoints='0';
+                }
+                }).catch(error=>errorDeal(error));    
 				}else{
 					layer.open({
 			          content:'请输入订单号码',

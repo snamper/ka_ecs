@@ -4,7 +4,6 @@
 <template>
   <div id="search" :class="{active:off.details}">
 	<layerForm v-cloak v-if="off.layerState==true"></layerForm>	
-
   	<header class="m-scroll-bar animated infinite" :class="{active:off.isLoad}"></header>
   	<!--查询-->
   	<section>
@@ -86,7 +85,9 @@
 				</tr>
 			</tbody>
 		</table>
-		<my-page :page="pageNum" :maxpage="maxpage" :callback="callback"></my-page>		
+        <section class="m-sub-page clr">
+		    <my-page :page="pageNum" :maxpage="maxpage" :callback="callback"></my-page>
+        </section>		
 	</div>
     </div>
 	</section>
