@@ -133,7 +133,6 @@ span.dp{
                             <label><span class="radio"><input type="radio" value="-1" v-model="form.activationState" checked="checked"><span></span></span><span class="text">全部</span></label>
                             <label><span class="radio"><input type="radio" value="0" v-model="form.activationState" checked="checked"><span></span></span><span class="text">已激活</span></label>
                             <label><span class="radio"><input type="radio" value="1" v-model="form.activationState" checked="checked"><span></span></span><span class="text">待激活</span></label>
-                            <label><span class="radio"><input type="radio" value="2" v-model="form.activationState" checked="checked"><span></span></span><span class="text">已申请设备</span></label>
                             <label><span class="radio"><input type="radio" value="3" v-model="form.activationState" checked="checked"><span></span></span><span class="text">激活审核中</span></label>
                         </div>
                     </div>
@@ -198,7 +197,6 @@ span.dp{
                                 <td>
                                     <span v-if="item.status==0">已激活</span>
                                     <span v-if="item.status==1">待激活</span>
-                                    <span v-if="item.status==2">已申请设备</span>
                                     <span v-if="item.status==3">激活审核中</span>
                                 </td>
                                 <td>
@@ -316,7 +314,7 @@ span.dp{
                                             <td><span>激活状态：</span>
                                                 <b v-if="ajaxData.details.status==0" class="f-c-green">已激活</b>
                                                 <b v-if="ajaxData.details.status==1" class="f-c-yellow">待激活</b>
-                                                <b v-if="ajaxData.details.status==2" class="f-c-blue">已申请设备</b>
+                                                <b v-if="ajaxData.details.status==2" class="f-c-blue">激活待审核</b>
                                             </td>
                                             <td><span>显示等级：</span>{{ ajaxData.details.showLevel }}</td>
                                         </tr>
