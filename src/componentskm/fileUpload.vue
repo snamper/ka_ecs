@@ -17,9 +17,13 @@
   export default {
     props: {
       url:String,
+      autoUpload:{//auto upload file
+        type:Boolean,
+        default:true
+      },
       text: {
         type:String,
-        default:  'Upload Image'
+        default:  'Upload File'
       },
       inputOfFile: {
         type: String,
@@ -29,11 +33,7 @@
         type: String,
         default: ''
       },
-      isXhr: {
-        type: Boolean,
-        default: true
-      },
-      headers: {
+      headers: {//http headers
         type: Object,
         default: function() {
           return {};
@@ -84,16 +84,7 @@
         return dq.querySelector(str);
       },
       clearFileInput() {
-
         document.getElementById('uploadFileForm').reset();
-          // let file = document.querySelector('#upload-input-' + this.formID);
-
-          
-          // if(file.outerHTML){
-          //   file.outerHTML=file.outerHTML.replace(/(value=\").+\"/i,"$1\"");
-          // }else{
-          //   file.value = '';
-          // }
       },
       change(e) {
         let fileVal = document.querySelector('#upload-input-' + this.formID).value.replace(/C:\\fakepath\\/i, "");
@@ -108,14 +99,16 @@
             } else {
                 formatSize = options.maxFileSize.toFixed(2) + 'Byte';
             }
-            console.warn('FILE IS TOO LARGER MAX FILE IS ' + formatSize);
             return this.__dispatch('errorhandle','FILE IS TOO LARGER MAX FILE IS ' + formatSize);
         }
 
         this.files = e.target.files;
 
         this. __dispatch('imagechanged', this.files.length > 1 ? this.files : this.files[0]);
-        this.tryAjaxUpload();
+        if(this.autoUpload){
+          this.tryAjaxUpload();
+        }
+        
       },
 
       __readFiles() {

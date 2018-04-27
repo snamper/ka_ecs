@@ -139,7 +139,6 @@
 						<li><router-link :to="{name:'merchant',params:{val:'null'}}"><b></b>商户查询</router-link></li>
 						<li><router-link :to="{name:'device',params:{val:'null'}}"><b></b>设备查询</router-link></li>
 						<li><router-link :to="{name:'promoter',params:{val:'null'}}"><b></b>推广方查询</router-link></li>
-						<!-- <li v-if="off.powerkm1||off.powerkm7"><router-link to="/homek/resource/numberRelease"><b></b>号码冻结/解冻</router-link></li> -->
 					</ul>
 				</li>
 				<li :class="{active:crumb[0].name=='统计报表'}" v-if="off.powerkm1||off.powerkm2">
@@ -167,7 +166,7 @@
 						</div>
 					</router-link>
 				</li>
-				<li :class="{active:crumb[0].name=='更多功能'}" v-if="off.powerkm1||off.powerkm31">
+				<li :class="{active:crumb[0].name=='更多功能'}">
 					<b></b>
 					<router-link to="/homek/more">
 						<div>
@@ -272,6 +271,7 @@ export default{
                 powerkm11:0,
                 powerkm21:0,
                 powerkm31:0,
+                powerkm41:0,
 			},
 			userInfo:{isadmin:''},
             crumb:[{'name':''},{'name':''},{'name':''}],//面包屑
@@ -358,6 +358,7 @@ export default{
             IsInArray(isadmin,'11')>-1?vm.off.powerkm11=true : vm.off.powerkm11=false;
             IsInArray(isadmin,'21')>-1?vm.off.powerkm21=true : vm.off.powerkm21=false;
             IsInArray(isadmin,'31')>-1?vm.off.powerkm31=true : vm.off.powerkm31=false;
+            IsInArray(isadmin,'41')>-1?vm.off.powerkm41=true : vm.off.powerkm41=false;
             vm.initMenu();
         },
         initMenu:function(){

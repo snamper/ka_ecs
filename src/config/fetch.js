@@ -37,8 +37,6 @@ export default async(url = '', data = {}, type = 'GET', load, method = 'fetch') 
 			credentials: 'include',
 			method: type,
 			headers: {
-                // 'Content-Type': 'application/x-www-form-urlencoded',
-                //  'Content-type': 'application/x-www-form-urlencoded;charset=utf-8',
 				'Content-Type': 'application/json;charset=utf-8'
 			},
 			mode: "cors",
@@ -50,36 +48,26 @@ export default async(url = '', data = {}, type = 'GET', load, method = 'fetch') 
 				value: BASE64.encode(JSON.stringify(data))
             });
         }
-        // return await fetch(url,requestConfig).then((response)=>{
-		// 	closeLoadLayout();
-		// 	if(response.status=="200"){
-        //         return response.json();
-	    //     }else {
-        //         // return response.status;
-        //         throw `${res.status}, ${res.statusText}`;
-	    //     }
-        // }).then(data=>{
-		// 	if(data.code==200){
-        //         return data;
-        //     }else{
-        //         errorDeal(data);
-        //         return false;
-        //     }
-        // }).catch(error=>errorDeal(error));
+
         //-----------------------------
         return new Promise((resolve, reject) => {
             fetch(url, requestConfig)
             .then(response => {
-                return response.json()
-              })
-              .then(data => {
-              	closeLoadLayout()
-                if (data.code == 200) {
-                  resolve(data) //返回成功数据
-                } else {
-                    resolve(data)//返回非200情况
-                }
-              }).catch(error=>errorDeal(error,closeLoadLayout))
+				if(response.status=="200"){
+					return response.json();
+				}else {
+					return response;
+				}
+			})
+			.then(data => {
+				closeLoadLayout()
+				if(data.code == 200) {
+					resolve(data)
+				}else{
+					errorDeal(data)
+				}
+			})
+			.catch(error=>errorDeal(error,closeLoadLayout))
           })
 	} else {//XHR对象
 		return new Promise((resolve, reject) => {

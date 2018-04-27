@@ -1,16 +1,8 @@
 <!--**
-  *@info 资源查询模块-号码解冻
+  *@info 号码解冻
   *@author: thinkmix
   *@date 2017-11-8
 * *-->
-<style scoped>
-.m-total-table{margin-top: 0.2rem;}
-@media screen and (min-width: 961px){
-	.o-input-button{
-		width: 500px
-	}
-}
-</style>
 <template>
 	<div style="padding:15px;">
 		<header class="m-scroll-bar animated infinite" :class="{active:off.isLoad}"></header>
@@ -54,8 +46,8 @@
 	</div>
 </template>
 <script>
-import {reqCommonMethod} from "../../../config/service.js";
-import {errorDeal} from "../../../config/utils.js";
+import {reqCommonMethod} from "../../config/service.js";
+import {errorDeal} from "../../config/utils.js";
 export default{
 	data (){
 		return {
@@ -157,4 +149,11 @@ export default{
 	}
 };
 </script>
-
+<style scoped>
+.m-total-table{margin-top: 0.2rem;}
+@media screen and (min-width: 961px){
+	.o-input-button{
+		width: 500px
+	}
+}
+</style>
