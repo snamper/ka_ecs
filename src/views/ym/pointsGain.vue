@@ -190,7 +190,8 @@ export default{
 			    "pageSize": "20"
 			}
 			let s = this.form.select;
-			let context = vm.form['context'+vm.form.select];
+            let context = vm.form['context'+vm.form.select];
+            vm.off.isLoad=true;
 			if(type=='order'){//订单号查询
 				json.type = '1';
 				json.startTime='0';

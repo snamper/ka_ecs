@@ -185,7 +185,8 @@ export default{
 		searchList:function(type,page){//积分查询
 			let vm = this,url,json={"pageSize":vm.pageSize,"pageNum":page||1,"startTime":vm.form.startTime,"endTime":vm.form.endTime,"srcType":vm.form.orderStatus};
 			let s = this.form.select;
-			let context = vm.form['context'+vm.form.select];
+            let context = vm.form['context'+vm.form.select];
+            vm.off.isLoad=true;           
 			if(type=='order'){//订单号查询
 				json.type = '1';
 				json.startTime='0';

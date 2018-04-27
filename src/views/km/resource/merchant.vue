@@ -347,7 +347,7 @@ span.dp{
                                         </tr>
                                         <tr>
                                             <td><span>总部推广渠道：</span>{{ ajaxData.details.topDealerId||'--' }}【名称：{{ ajaxData.details.topDealerName||'--' }}】</td>
-                                            <td><span>欢迎页: </span>{{ ajaxData.details.bannerNames||'--' }}</td>
+                                            <td><span>欢迎页：</span>{{ ajaxData.details.bannerNames||'--' }}</td>
                                         </tr>
                                     </tbody>
                                 </table>

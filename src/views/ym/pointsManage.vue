@@ -288,7 +288,7 @@ export default{
 				//      vm.off.getPoints='0';
 			    //   	}						
                 // });
-                reqCommonMethod(json,function(){vm.off.isLoad=false;},"ym-ecs/c/user/queryOrderFill")
+                reqCommonMethod(json,"","ym-ecs/c/user/queryOrderFill")
                 .then((response)=>{
                     if(response.code==200){
 			         vm.list = response.data;

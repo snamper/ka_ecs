@@ -169,7 +169,7 @@ export default{
 			var vm=this;
 			vm.$parent.off.layerState=false;
 		},
-		exChangeY:function(v){//积分兑换确认
+        exChangeY:function(v){//积分兑换确认
 			var vm=this,url,data={};
             if(v=='add'){
                 url="ym-ecs/c/user/addUserCredit";
@@ -180,62 +180,7 @@ export default{
 			    data.staffNo=vm.$parent.staffNo;
 			    data.credit=points;
             }
-			// vm.AJAX(url,data,function(data){
-			// 	if(data.code==200){
-			// 		vm.$parent.off.layerState=true
-			// 		vm.exchangeTab = data;
-            //         vm.$parent.whichLayer ='0';
-			// 		if(v=='add'){
-            //             vm.exchangeDet = '2';
-            //         }else if(v=='ex'){
-            //             vm.exchangeDet = '1';
-            //         }
-			// 		if(data.msg=="success"){
-			// 			vm.exchangeRes="成功"
-			// 	     }else{
-			// 			vm.exchangeRes="失败"
-			// 	     }
-			// 		new Promise(function(resolve,reject){
-			//         	resolve('success')
-			// 		}).then(function(reso){
-			// 			// 兑换积分后重新获取积分情况
-			// 	       var data = {};
-            //            if(v=="ex"){
-            //               data.staffNo=vm.$parent.staffNo;
-            //               data.depId=vm.$parent.depId;
-            //               if(vm.$parent.form.select=='2'){
-            //                  data.type="1"
-            //               }else if(vm.$parent.form.select=='3'){
-            //                 data.type="2"
-            //               }
-            //               vm.AJAX("c/user/userCredits",data,function(response){
-			// 	        	 vm.$parent.detailsData=response.data.list;
-			// 	          })
-            //            }else if(v=="add"){
-            //                data={"type": "","orderId": "","phone": "","startTime": "","endTime": "","staffNo":""};
-            //                let context = vm.$parent.form['context'+vm.$parent.form.select];
-            //                if(vm.$parent.btntype==1){
-            //                    data.type=1;
-            //                    data.orderId=vm.$parent.form.context1;
-            //                }else if(vm.$parent.btntype==3){
-            //                    data.type='3';
-            //                    data.staffNo = context;
-            //                    data.startTime=Date.parse(vm.$parent.form.startTime);
-            //                    data.endTime=Date.parse(vm.$parent.form.endTime);
-            //                }else if(vm.$parent.btntype==2){
-            //                    data.type = '2';
-            //                    data.phone = context;
-            //                    data.startTime=Date.parse(vm.$parent.form.startTime);
-            //                    data.endTime=Date.parse(vm.$parent.form.endTime);
-            //                }
-            //                vm.AJAX("c/user/queryOrderFill",data,function(response){
-			// 	        	 vm.$parent.detailsData=response.data.list;
-			// 	          })
-            //            }
-			// 		})     
-			// 	}
-            // });
-            reqCommonMethod(data,function(){vm.off.isLoad=false;},url)
+            reqCommonMethod(data,"",url)
             .then((data)=>{
                 vm.$parent.off.layerState=false;
                 if(data.code==200){
@@ -291,7 +236,7 @@ export default{
                         //   vm.AJAX("c/user/queryOrderFill",data,function(response){
 				        // 	 vm.$parent.detailsData=response.data.list;
                         //   })
-                          reqCommonMethod(data,function(){vm.off.isLoad=false;},"ym-ecs/c/user/queryOrderFill")
+                          reqCommonMethod(data,"","ym-ecs/c/user/queryOrderFill")
                           .then((data)=>{
                               vm.$parent.detailsData=data.data.list;
                           }).catch(error=>errorDeal(error));                             
