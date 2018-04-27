@@ -23,7 +23,7 @@
 	  	  </header>
 	  	  <div class="g-box">
 			  <table class="g-list-table">
-				<tbody v-if="off.itemType!=10">
+				<tbody v-if="off.itemType!=1&&off.itemType!=2">
 					<tr>
 						<td>
 							<table class="g-inner-table">
@@ -87,11 +87,11 @@
 						</td>
 					</tr>
 					<tr class="m-box-img m-meida-640down">
-						<img v-for="item in imgData" :src="item.src">
+						<img v-for="item in imgData" :key="item" :src="item.src">
 					</tr>
 				</tbody>
 				<!--实名补登-->
-				<RealTimeCollection v-if="off.itemType==10" :auditStatus="1" :auditData="auditData" :imgData="imgData"></RealTimeCollection>
+				<RealTimeCollection v-if="off.itemType==1||off.itemType==2" :auditStatus="1" :auditData="auditData" :imgData="imgData"></RealTimeCollection>
 			  </table>
 		  </div>
 	  </section>
@@ -103,7 +103,6 @@ import "../../../assets/km/css/cardOrderDetails.css";
 import "../../../assets/km/css/audit.css";
 import {reqCommonMethod} from "../../../config/service.js";
 import {errorDeal,getDateTime} from "../../../config/utils.js";
-
 import ImgZoom from '../../../componentskm/ImgZoom';
 import RealTimeCollection from '../../../componentskm/audit/realTimeCollection';
 export default{
@@ -143,7 +142,7 @@ export default{
 	},
 	methods:{
 		agree:function(){//审核同意
-			var vm=this,auditType=vm.off.auditType,url='';
+            var vm=this,auditType=vm.off.auditType,url='';
 			var orderId=vm.auditData.orderId;
 			let json={
 				"orderId":orderId,
@@ -152,12 +151,11 @@ export default{
 				"refuseReasonCode":"",
 				"auditType":auditType
 			}
-
 			if(vm.off.itemType==8){
 				url="km-ecs/w/sdk/auditOrder";
 			}else if(vm.off.itemType==9){
 				url="km-ecs/w/tongfu/auditOrder";
-			}else if(vm.off.itemType==10){
+			}else if(vm.off.itemType==1||vm.off.itemType==2){
 				url="km-ecs/w/audit/auditOfReinput";
 				json.result=2;
 				json.phone=vm.auditData.phoneNumber;
@@ -231,7 +229,7 @@ export default{
 						url="km-ecs/w/sdk/auditOrder";
 					}else if(vm.off.itemType==9){
 						url="km-ecs/w/tongfu/auditOrder";
-					}else if(vm.off.itemType==10){
+					}else if(vm.off.itemType==1||vm.off.itemType==2){
 						url="km-ecs/w/audit/auditOfReinput";
 						json.result=3;
 						json.phone=vm.auditData.phoneNumber;
@@ -265,7 +263,7 @@ export default{
 				url="km-ecs/w/sdk/distributeOrder";
 			}else if(vm.off.itemType==9){
 				url="km-ecs/w/tongfu/distributeOrder";
-			}else if(vm.off.itemType==10){
+			}else if(vm.off.itemType==1||vm.off.itemType==2){
 				url="km-ecs/w/audit/getAuditOfReinput";
 			}else{
 				url="km-ecs/w/audit/toaudit";

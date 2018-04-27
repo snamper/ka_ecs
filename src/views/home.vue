@@ -66,7 +66,7 @@
 					</router-link>
 				</li>
 				<li :class="{active:crumb[0].name=='订单审核'}" v-if="off.powerkm0||off.powerkm1||off.powerkm4||off.powerkm5||off.powerkm6">
-					<b>{{countTotal}}</b>
+					<b></b>
 					<router-link to="/homek/audit">
 						<div>
 							<i class="u-icon-audit"></i>
@@ -77,7 +77,7 @@
 					<ul class="g-side-subul nav1">
 						<li v-if="userInfo.isadmin.indexOf('0')>-1||userInfo.isadmin.indexOf('1')>-1">
 							<router-link :to="{name:'audit_card',params:{source:'realtime'}}">
-								<b></b>业务实时审核<span v-if="auditCount.opencard+auditCount.transfer+auditCount.realNameCollection+auditCount.sdkRealTime!=0">{{auditCount.opencard+auditCount.transfer+auditCount.realNameCollection+auditCount.sdkRealTime
+								<b></b>业务实时审核<span v-if="auditCount.opencard+auditCount.transfer+auditCount.realNameCollection+auditCount.realNameRechCard+auditCount.sdkRealTime!=0">{{auditCount.opencard+auditCount.transfer+auditCount.realNameCollection+auditCount.realNameRechCard+auditCount.sdkRealTime
 }}</span>
 							</router-link>
 						</li>
@@ -110,7 +110,7 @@
 					</ul>
 				</li>
 				<li :class="{active:crumb[0].name=='订单查询'}" v-if="off.powerkm1||off.powerkm2||off.powerkm3">
-					<b>{{countTotal}}</b>
+					<b></b>
 					<router-link to="/homek/orderSearch">
 						<div>
 							<i class="u-icon-search"></i>

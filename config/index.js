@@ -20,8 +20,8 @@ module.exports = {
             }
         },
         '/km-ecs/w':{
-            // target:'http://192.168.10.5:6086',
-            target:'http://192.168.10.24:6086',
+            target:'http://192.168.10.110:6086',
+            // target:'http://192.168.10.24:6086',
             changeOrigin:true,
             pathRewrite:{
                 '^/km-ecs/w':'/ecs/w'

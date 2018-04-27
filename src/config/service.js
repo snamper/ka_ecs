@@ -19,3 +19,6 @@ export const reqCommonMethod=(data,load,url)=>fetch(url,data,"POST",load)//通�
 export const getSearchListAuditYm=(data,load,url)=>fetch(url,data,"POST",load)//获取远盟已审核订单查询结果
 /*export const getCityAreaPoint=(data,load)=>fetch("w/cityArea/pointList",data,"POST",load);//获取城市区域点坐标
 export const setCityAreaPoint=(data,load)=>fetch("w/cityArea/newPointList",data,"POST",load);//设置城市区域点坐标*/
+
+/*资源查询接口*/
+export const requestGetMerchantList=(data,load)=>fetch("km-ecs/w/merchant/getMerchantList",data,"POST",load);

@@ -170,7 +170,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr v-for="(todo,index) in list">
+				<tr v-for="(todo,index) in list" :key="index">
 					<td>{{((pageNum-1)*10+(index+1))}}</td>
 					<td>{{todo.orderId}}</td>
 					<td>{{getDateTime(todo.createTime)[6]}}</td>
@@ -303,7 +303,6 @@ export default{
 		},
 		searchList:function(page){
             var vm=this,url,json={"source":vm.form.source,"type":vm.form.orderType,"pageSize":vm.pageSize,"pageNum":page||1,"startTime":vm.form.startTime,"endTime":vm.form.endTime,"status":vm.form.orderStatus,'auditType':vm.form.auditType,"cardType":vm.form.cardType,"periodType":vm.off.type};
-
 			//进行中，已关闭
 			if(json.source!=7&&json.source!=8&&(vm.off.type==3||vm.off.type==4)){
 				vm.searchClosedAndDoing(page);
@@ -373,10 +372,8 @@ export default{
 					url='km-ecs/w/audit/ingList4Reinput';
 				}else vm.off.type==1 ? url='km-ecs/w/audit/ingList' : url='km-ecs/w/audit/edList';
 			}
-
 			if(vm.off.isLoad)return false;
 			vm.off.isLoad=true;
-
             reqCommonMethod(json,function(){vm.off.isLoad=false;},url)
             .then((data)=>{
 	            vm.list=data.data.list
@@ -679,7 +676,8 @@ export default{
                 vm.off.isLoad=false;
             }).catch(error=>errorDeal(error)); 	
 		},
-		details:function(e){//详情
+        details:function(e){//详情
+            debugger;
 			var vm=this,url,
 			orderId=e.target.name,
 			type=vm.off.type,
@@ -727,12 +725,13 @@ export default{
 				json.pageSize="10";
 				json.pageNum="-1";
 			}else{
+                console.log(type,vm.form.orderType);
 				if(type==1){
 					url='km-ecs/w/audit/ingInfo';
-					if(vm.form.orderType==4)url='km-ecs/w/audit/getReinputInfo';
+					if(vm.form.orderType==4||vm.form.orderType==8)url='km-ecs/w/audit/getReinputInfo';
 				}else if(type==2){
 					url='km-ecs/w/audit/edInfo';
-					if(vm.form.orderType==4)url='km-ecs/w/audit/getReinputInfo';
+					if(vm.form.orderType==4||vm.form.orderType==8)url='km-ecs/w/audit/getReinputInfo';
 				}else{
 					url='km-ecs/w/audit/getOrderInfo';
 				}
