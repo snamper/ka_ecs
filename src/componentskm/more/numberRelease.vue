@@ -107,7 +107,7 @@ export default{
 			// },function(){
 			// 	vm.off.isLoad=false;
             // })
-            reqCommonMethod({"phone":vm.form.phone},function(){vm.off.isLoad=false;},"km-ecs/w/frozen/getPhone")
+            reqCommonMethod({"phone":vm.form.phone,"type":0},function(){vm.off.isLoad=false;},"km-ecs/w/frozen/phoneThaw")
             .then(()=>{
                 layer.open({
                     content:'解冻成功',
