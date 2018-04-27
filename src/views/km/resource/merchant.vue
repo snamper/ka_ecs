@@ -299,6 +299,13 @@ span.dp{
                                         </tr>
                                         <tr>
                                             <td><span>售卡范围：</span>
+                                            	<em v-for="_item in ajaxData.details.openedScopes">
+                                                    <em v-show="_item.type==1">远特售卡,</em>
+                                                    <em v-show="_item.type==2">联通售卡,</em>
+                                                    <em v-show="_item.type==3">移动售卡,</em>
+                                                    <em v-show="_item.type==4">电信售卡,</em>
+                                                </em>
+                                                <a href="javascript:;" @click="sellScopePower()" class="details">详情</a>
                                                 <!-- <b v-if="ajaxData.details.attribute==1">A（远特售卡）</b>
                                                 <b v-if="ajaxData.details.attribute==2">B（联通售卡）</b>
                                                 <b v-if="ajaxData.details.attribute==3">C（远特售卡+联通售卡）</b>
@@ -801,6 +808,34 @@ export default{
         replacedian(str){
             var index = str .lastIndexOf("\.");  
             return str.substring(index + 1, str.length);
+        },
+        sellScopePower(){
+
+            let info=this.ajaxData.details.openedScopes1;
+                let str='';
+            for(let key in info){
+                if(key==1)str+=`<li class="clr"><div class="fl">远特售卡：</div>`;
+                if(key==2)str+=`<li class="clr"><div class="fl">联通售卡：</div>`;
+                if(key==3)str+=`<li class="clr"><div class="fl">移动售卡：</div>`;
+                if(key==4)str+=`<li class="clr"><div class="fl">电信售卡：</div>`;
+                info[key].forEach((value)=>{
+                    if(value.isLocal==0)str+=`<div class="fright">${value.area}（不限）</div></li>`;
+                    if(value.isLocal==1){
+                        // value.cusWhiteList.split(',').forEach((val)=>{
+                        //     _str+='，'+info.whiteList[val];
+                        // })
+                        str+=`<div class="fright">${value.area}（本地,${value.cusWhiteDes}）</div>`;
+                    }
+                })
+                str+='</li>';
+            }
+            layer.open({
+                content:`<ul class="f-scroll-lt lay-details">${str}</ul>`,
+                type:0,
+                title:'售卡区域详情',
+                btn:0,
+                style:'width:auto;'
+            });
         },
         close(v){
             let vm=this,
