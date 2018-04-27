@@ -116,9 +116,14 @@ span.dp{
                             </div>
                         </div>
                         <div v-if="form.content==2">
-                            <span class="dp" >工<i class="m-one-font"></i><i class="m-one-font"></i>号:&nbsp;&nbsp;</span>
-                            <div style="display:inline-block;width:60%;" class="col-r m-input">
-                                <input v-model="form.searchContext" maxlength="24" type="tel" placeholder="请输入查询的工号"/>
+                            <span class="dp" >查询类型：</span>
+                            <div class="m-form-radio">
+                                <label><span class="radio"><input @click="changeSearchType"  type="radio" value="1" v-model="form.searchType" checked="checked"><span></span></span><span class="text">卡盟ID</span></label>
+                                <label><span class="radio"><input @click="changeSearchType" type="radio" value="2" v-model="form.searchType" checked="checked"><span></span></span><span class="text">用户姓名</span></label>
+                                <label><span class="radio"><input @click="changeSearchType" type="radio" value="3" v-model="form.searchType" checked="checked"><span></span></span><span class="text">手机号码</span></label>
+                                <div style="display:inline-block" class="col-r m-input">
+                                    <input v-model="form.searchContext" maxlength="24" type="tel" :placeholder="form.searchType==1 ? '请输入查询的卡盟ID' :form.searchType==2? '请输入查询的姓名':'请输入查询的手机号码'"/>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -139,7 +144,7 @@ span.dp{
                         </div>
                     </div>
                     <div class="row"  v-if="form.content==1">
-                        <span class="dp">业务范围：</span>
+                        <span class="dp">售卡范围：</span>
                         <div class="m-form-radio">
                             <label><span class="radio"><input type="radio" value="-1" v-model="form.businessScope" checked="checked"><span></span></span><span class="text">全部</span></label>
                             <label><span class="radio"><input type="radio" value="1" v-model="form.businessScope" checked="checked"><span></span></span><span class="text">远特售卡</span></label>
@@ -168,7 +173,7 @@ span.dp{
                                 <th>商户类型</th>
                                 <th>商户等级</th>
                                 <th>激活状态</th>
-                                <th>业务范围</th>
+                                <th>售卡范围</th>
                                 <th>签约状态</th>
                                 <th></th>
                             </tr>
@@ -197,9 +202,8 @@ span.dp{
                                     <span v-if="item.status==3">激活审核中</span>
                                 </td>
                                 <td>
-                                    <span v-if="item. merchant_attribute==1">远特</span>
-                                    <span v-if="item. merchant_attribute==2">联通</span>
-                                    
+                                    <span v-if="item. merchant_attribute.indexOf('1')>-1">远特</span>
+                                    <span v-if="item. merchant_attribute.indexOf('2')>-1">联通</span>     
                                 </td>
                                 <td>{{item.isSignAgreement}}</td>
                                 <td><a :name="item.dealer_id" @click="details(item.dealer_id,form.content,1)" href="javascript:void(0)" class="details">详情</a></td>
@@ -342,7 +346,8 @@ span.dp{
                                             
                                         </tr>
                                         <tr>
-                                            <td colspan="2"><span>总部推广渠道：</span>{{ ajaxData.details.topDealerId||'--' }}【名称：{{ ajaxData.details.topDealerName||'--' }}】</td>
+                                            <td><span>总部推广渠道：</span>{{ ajaxData.details.topDealerId||'--' }}【名称：{{ ajaxData.details.topDealerName||'--' }}】</td>
+                                            <td><span>欢迎页: </span>{{ ajaxData.details.bannerNames||'--' }}</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -755,8 +760,8 @@ export default{
 			type==1 ? (json={dealerId:vm.form.context},url='km-ecs/w/audit/getUsersDetail') : (json={phone:vm.form.context,pageNum:page||1,pageSize:10,type:vm.form.paySource},url='km-ecs/w/user/paymengList');
 			if(vm.off.isLoad)return false;
 			vm.off.isLoad=true;
-            vm.ajaxData.list=[];
-			// vm.AJAX(url,json,function(data){
+            // vm.ajaxData.list=[];
+            // vm.AJAX(url,json,function(data){
 			// 	vm.ajaxData.list=data.data.list;
 			// 	vm.ajaxData.total=data.data.total||0;
 			// 	vm.ajaxData.maxpage=Math.ceil(parseInt(data.data.total)/10);

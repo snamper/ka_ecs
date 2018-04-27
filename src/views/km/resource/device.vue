@@ -28,7 +28,7 @@
 						<th>激活时间</th>
 						<th>推广方</th>
 						<th>绑定商户</th>
-						<th>业务范围</th>
+						<th>售卡范围</th>
 					</tr>
 				</thead>
 				<tbody>

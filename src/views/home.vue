@@ -118,7 +118,7 @@
 						</div>
 					</router-link>
 					<ul class="g-side-subul nav2">
-						<li><router-link to="/homek/orderSearch/card"><b></b>开卡订单</router-link></li>
+						<li><router-link to="/homek/orderSearch/card"><b></b>业务订单</router-link></li>
 						<li><router-link to="/homek/orderSearch/recharge"><b></b>充值订单</router-link></li>
 						<li><router-link to="/homek/orderSearch/onlineHall"><b></b>网厅订单</router-link></li>
 						<li><router-link :to="{name:'businessPowerSearch',params:{type:'audited'}}"><b></b>售卡范围</router-link></li>

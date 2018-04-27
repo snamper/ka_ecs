@@ -28,7 +28,7 @@ module.exports = {
             }
         },
         '/ym-ecs/c':{
-            target:'http://192.168.10.110:8080',
+            target:'http://192.168.10.117:8080',
             changeOrigin:true,
             pathRewrite:{
                 '^/ym-ecs/c':'/yuangmeng_ecs/c'
