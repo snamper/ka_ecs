@@ -12,8 +12,7 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
         '/km_center_ecs/user':{
-            // target:'http://192.168.10.5:8081',
-            target:'http://192.168.10.24:8091',
+            target:'http://192.168.10.5:8081',
             changeOrigin:true,
             pathRewrite:{
                 '^/km_center_ecs/user':'/km_center_ecs/user'
@@ -21,14 +20,13 @@ module.exports = {
         },
         '/km-ecs/w':{
             target:'http://192.168.10.110:6086',
-            // target:'http://192.168.10.24:6086',
             changeOrigin:true,
             pathRewrite:{
                 '^/km-ecs/w':'/ecs/w'
             }
         },
         '/ym-ecs/c':{
-            target:'http://192.168.10.117:8080',
+            target:'http://192.168.10.5:8080',
             changeOrigin:true,
             pathRewrite:{
                 '^/ym-ecs/c':'/yuangmeng_ecs/c'
