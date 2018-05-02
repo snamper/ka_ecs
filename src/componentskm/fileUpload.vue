@@ -288,7 +288,6 @@
           r.setRequestHeader('Content-Type', 'multipart/form-data; boundary=' + boundary);
           return r.sendAsBinary(data);
         }
-
         r.send(data);
         return r;
         // Headers are returned as a string
@@ -307,11 +306,11 @@
 };
 </script>
 <style scoped>
-.m-fileUpload-box{
-  /*position: relative;
+/* .m-fileUpload-box{
+  position: relative;
   overflow: hidden;
-  color: #fff;*/
-}
+  color: #fff;
+} */
 .m-fileUpload-box>label, #uploadFileForm, #uploadFileForm>input{
   position: absolute;
   width: 100%;
