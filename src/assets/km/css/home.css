@@ -544,38 +544,42 @@
 /*加载条*/
 .m-scroll-bar{
   position: fixed;
-  width:0;
-  height: 3px;
-  margin:auto;
-  
+  top: 0.6rem;
+  right: 0;
+  left: 0;
+  display: none;
+  height: 4px;
+  pointer-events: none;
+  -webkit-transform: translateX(-100%);
+  transform: translateX(-100%);
+  z-index: 888;
+  background: #20A0FF;
   /*background-image: -webkit-linear-gradient(to right, #40C4FF 0,#3E88FA 50%, #40C4FF 100%);
   background-image: -moz-linear-gradient(to right, #40C4FF 0,#3E88FA 50%, #40C4FF 100%);
   background-image: linear-gradient(to right, #40C4FF 0,#3E88FA 50%, #40C4FF 100%);
   background-image: -ms-linear-gradient(to right, #40C4FF 0,#3E88FA 50%, #40C4FF 100%);*/
-  background-color:#20a0ff;
-  left: 0;
-  /*right:0;*/
-  top:0.6rem;
-  z-index: 888;
 }
 .m-scroll-bar.active{
-  -webkit-animation-name: scrollBar;-webkit-animation-timing-function:ease-in-out;
-    -moz-animation-name: scrollBar;-moz-animation-timing-function:ease-in-out;
-    animation-name: scrollBar;animation-timing-function:ease-in-out;
-    -moz-animation-direction:alternate;
-    -webkit-animation-direction:alternate;
-    animation-direction:alternate;
-    -moz-animation-duration: 1s;
-    -webkit-animation-duration: 1s;
-    animation-duration: 1s;
+  display: block;
+  animation: LoadingBarForward 1.2s ease-in-out .8s infinite
 }
-@-webkit-keyframes scrollBar{
-  0%{width: 0%;}
-  100%{width: 100%;}
-}
-@keyframes scrollBar{
-  0%{width: 0%;}
-  100%{width: 100%;}
+@keyframes LoadingBarForward {
+    0% {
+        -webkit-transform: translateX(-100%);
+        transform: translateX(-100%)
+    }
+    40% {
+        -webkit-transform: translateX(0);
+        transform: translateX(0)
+    }
+    60% {
+        -webkit-transform: translateX(0);
+        transform: translateX(0)
+    }
+    to {
+        -webkit-transform: translateX(100%);
+        transform: translateX(100%)
+    }
 }
 /*响应式*/
 

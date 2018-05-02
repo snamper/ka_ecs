@@ -280,7 +280,9 @@
         // Set any bespoke headers
         if (headers) {
           for (x in headers) {
-            r.setRequestHeader(x, headers[x]);
+            if(x!='customerName'){
+              r.setRequestHeader(x, headers[x]);
+            }
           }
         }
         r.withCredentials = typeof withCredentials === 'undefined' ? true : withCredentials;
