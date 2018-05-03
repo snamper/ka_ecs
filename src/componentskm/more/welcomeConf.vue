@@ -10,7 +10,7 @@
 		</header>
 		<!--新建欢迎页-->
 		<section class="m-create-box" v-if="off.create">
-			<div class="item clr" v-for="(item,index) in form">
+			<div class="item clr" v-for="(item,index) in form" :key="index">
 				<div class="m-form-line fl">
 					<header><b>{{ index+1 }}</b>NEW WELCOME PAGE<a href="javascript:;" @click="deleteCreate(index)" class="u-icon-close"></a></header>
 					<div class="form-c">

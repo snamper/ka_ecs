@@ -1,20 +1,20 @@
 export default {
-	getCountTotal:state=>{//卡盟总计
+    getCountTotal:state=>{//卡盟总计
 		let auditCount=state.auditCount;
 		Object.keys(auditCount).forEach(function(key){
 			auditCount[key]=parseInt(auditCount[key]);
 		});
 		let isadmin=state.userInfo.isadmin;
 		if(isadmin){
-			var count=0;
+            var count=0;
 			if(isadmin.indexOf("0")>-1){//开卡审核权限
-				count += auditCount.opencard+auditCount.opencardAfterwards+auditCount.realNameCollection+auditCount.realNameRechCard+auditCount.transfer+auditCount.sdkRealTime+auditCount.tfOpenCard;
+				count += auditCount.opencard+auditCount.opencardAfterwards+auditCount.realNameCollection+auditCount.transfer+auditCount.sdkRealTime+auditCount.tfOpenCard;
 			}
 			if(isadmin.indexOf("5")>-1||isadmin.indexOf("6")>-1){//业务权限
 				count += auditCount.attribute+auditCount.registerMerchantRealTime+auditCount.registerMerchantAfter;
-			}
-			if(isadmin.indexOf("1")>-1){//所有权限
-				count = auditCount.opencard+auditCount.opencardAfterwards+auditCount.attribute+auditCount.realNameCollection+auditCount.realNameRechCard+auditCount.transfer+auditCount.sdkRealTime+auditCount.tfOpenCard+auditCount.registerMerchantRealTime+auditCount.registerMerchantAfter;
+            }
+            if(isadmin.indexOf("1")>-1){//所有权限
+				count = auditCount.opencard+auditCount.opencardAfterwards+auditCount.attribute+auditCount.realNameCollection+auditCount.transfer+auditCount.sdkRealTime+auditCount.tfOpenCard+auditCount.registerMerchantRealTime+auditCount.registerMerchantAfter;
 			}
 			return count;
 		}else{
@@ -22,7 +22,7 @@ export default {
 		}
 	},
 	getOpinionTotal:state=>{//卡盟意见反馈总计
-		let auditCount=state.auditCount;
+		let auditCount=state.opinionCount;
 		Object.keys(auditCount).forEach(function(key){
 			auditCount[key]=parseInt(auditCount[key]);
 		});

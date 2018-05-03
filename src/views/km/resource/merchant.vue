@@ -50,12 +50,16 @@
 }
 .g-box {
     padding-top: 0.2rem;
+    height:auto;
 }
 .m-total-table{
     background: none;
 }
 span.dp{
     display: inline-block;
+}
+div.border-bottom{
+    border-bottom:1px solid rgb(221, 220, 220);
 }
 </style>
 <template>
@@ -96,11 +100,11 @@ span.dp{
                 </table>
                 <!--基础条件-->
                 <section class="form-c">
-                    <div>
-                        <span class="dp">查询内容：</span>
+                    <div class="border-bottom">
+                        <!-- <span class="dp">查询内容：</span> -->
                         <div class="m-form-radio">
-                            <label><span class="radio"><input @click="changeSearchType" type="radio" value="1" v-model="form.content" checked="checked"><span></span></span><span class="text">商户</span></label>
-                            <label><span class="radio"><input @click="changeSearchType" type="radio" value="2" v-model="form.content" checked="checked"><span></span></span><span class="text">工号</span></label>
+                            <label><span class="radio"><input @click="changeSearchType" type="radio" value="1" v-model="form.content" checked="checked"><span></span></span><span class="text">商户查询</span></label>
+                            <label><span class="radio"><input @click="changeSearchType" type="radio" value="2" v-model="form.content" checked="checked"><span></span></span><span class="text">工号查询</span></label>
                         </div>
                     </div>
                     <div class="row" >
@@ -155,8 +159,8 @@ span.dp{
             </section>
             <!-- 商户查询结果列表 -->
             <div class="m-total-table" style="margin-top: 0.2rem;" v-if="form.content==1">
-                <section v-if="searchResultList.list.length">
-                    <table>
+                <section v-if="searchResultList.list">
+                    <table v-if="searchResultList.list.length">
                         <thead>
                             <tr>
                                 <th class="total-head" colspan="11" style="background-color:#fff;text-align:left;padding-left:20px;">
@@ -213,8 +217,8 @@ span.dp{
             </div>
             <!-- 工号查询结果列表 -->
             <div class="m-total-table" style="margin-top: 0.2rem;" v-if="form.content==2">
-                <section v-if="searchResultList.list.length">
-                    <table>
+                <section v-if="searchResultList2.list">
+                    <table v-if="searchResultList2.list.length">
                         <thead>
                             <tr>
                                 <th class="total-head" colspan="8" style="background-color:#fff;text-align:left;padding-left:20px;">
@@ -233,8 +237,8 @@ span.dp{
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="(item,index) in searchResultList.list" :key="index">
-                                <td>{{ ((searchResultList.pageNum-1)*10+(index+1)) }}</td>
+                            <tr v-for="(item,index) in searchResultList2.list" :key="index">
+                                <td>{{ ((searchResultList2.pageNum-1)*10+(index+1)) }}</td>
                                 <td>{{ getDateTime(item.createtime)[6]||'--' }}</td>
                                 <td>{{item.customerName||'--'}}</td>
                                 <td>{{item.userid||"--"}}</td>
@@ -245,18 +249,18 @@ span.dp{
                             </tr>
                         </tbody>
                     </table>
-                    <my-page :page="searchResultList.pageNum" :maxpage="searchResultList.maxpage" :callback="searchResultList.callback"></my-page>
+                    <my-page :page="searchResultList2.pageNum" :maxpage="searchResultList2.maxpage" :callback="searchResultList2.callback"></my-page>
                 </section>
             </div>
         </div>
 		<!--商户ID-->
-	  	<div class="m-total-table g-list-box"  v-if="form.type==1">
+	  	<div class="m-total-table g-list-box"  v-if="form.type==1&&ajaxData.details">
             <header class="g-lis-head">
                 <a class="m-details-back u-icon-back" style="width:20px;height:20px;" @click="close('dealerId')"></a>
                 <div class="m-footD-btn">
                 </div>
             </header>
-            <div class="g-box" v-if="ajaxData.details">
+            <div class="g-box" >
                 <table class="merchant-total g-list-table">
                     <thead>
                         <tr>
@@ -437,13 +441,13 @@ span.dp{
             </section>
         </div>
 		<!--工号ID-->
-        <div class="m-total-table g-list-box"  v-if="form.type==2">
+        <div class="m-total-table g-list-box"  v-if="form.type==2&&ajaxData2.details">
             <header class="g-lis-head">
                 <a class="m-details-back u-icon-back" style="width:20px;height:20px;" @click="close('workNum')"></a>
                 <div class="m-footD-btn">
                 </div>
             </header>
-            <div class="g-box"  v-if="ajaxData2.details">	
+            <div class="g-box" >	
                 <table class="merchant-total g-list-table">
                     <thead>
                         <tr>
@@ -571,6 +575,12 @@ export default{
 				pageNum:1,//当前页
 				callback:Function,//分页响应函数
             },
+            searchResultList2:{
+                list:'',
+                maxpage:0,//最大页数
+				pageNum:1,//当前页
+				callback:Function,//分页响应函数
+            },
 			off:{
                 isLoad:!1,//ajax加载控制
                 detailskind:'',
@@ -630,6 +640,7 @@ export default{
 			vm.getTotal();
 			let val=vm.$route.params.val;
 			if(val!='null'){
+                vm.form.type=1;
 				if(val.indexOf('phone')>-1){
 					vm.form.type=2;
 					val=parseInt(val);
@@ -660,8 +671,8 @@ export default{
             getListType:vm.form.content,
             typeKey:vm.form.searchType,
             typeValue:vm.form.searchContext,
-            timeStar:new Date(vm.form.startTime).getTime(),
-            timeEnd:new Date(vm.form.endTime).getTime(),
+            timeStar:new Date(vm.form.startTime.replace(/-/g,'/')).getTime(),
+            timeEnd:new Date(vm.form.endTime.replace(/-/g,'/')).getTime(),
             pageSize:10,
             pageNum:page||1
             }
@@ -674,10 +685,10 @@ export default{
             .then((data)=>{
                 if(data.code==200){
                     vm.total=data.data.total;
-                    vm.searchResultList.list=data.data.list
-                    vm.searchResultList.maxpage=Math.ceil(parseInt(data.data.total)/10);
-                    vm.searchResultList.pageNum=page||1;
-                    vm.searchResultList.callback=function(v){vm.searchList(index,v)};
+                    vm.form.content==1?vm.searchResultList.list=data.data.list:vm.searchResultList2.list=data.data.list;
+                    vm.form.content==1?vm.searchResultList.maxpage=Math.ceil(parseInt(data.data.total)/10):vm.searchResultList2.maxpage=Math.ceil(parseInt(data.data.total)/10);
+                    vm.form.content==1?vm.searchResultList.pageNum=page||1:vm.searchResultList2.pageNum=page||1;
+                    vm.form.content==1?vm.searchResultList.callback=function(v){vm.searchList(index,v)}:vm.searchResultList2.callback=function(v){vm.searchList(index,v)};
                 }else{  
                     errorDeal(data);
                 }
@@ -690,12 +701,6 @@ export default{
 		},
 		getTotal(){//获取顶部统计数据
 			var vm=this;
-			//vm.off.isLoad=true;
-			// vm.AJAX('w/merchant/statistics',{},function(data){
-			// 	vm.totalInfo=data.data;
-			// },function(){
-			// 	//vm.off.isLoad=false;
-            // });
             reqCommonMethod({},function(){vm.off.isLoad=false;},"km-ecs/w/merchant/statistics")
             .then((data)=>{
                 vm.totalInfo=data.data;
@@ -716,7 +721,6 @@ export default{
 		},
         details(context,type,i){//商户上用户列表查看用户，用户上查看商户
             let vm=this;
-            console.log(vm.ajaxData,vm.ajaxData2)
             vm.searchRoad.push({'vm.form.type':vm.form.type})
             vm.i=vm.searchRoad.length;           
             vm.off.detailskind=i;
@@ -781,14 +785,12 @@ export default{
             // });
              reqCommonMethod(json,function(){vm.off.isLoad=false;},url)
              .then((data)=>{
-                 debugger;
 	            type==1?vm.$set(vm.ajaxData,'list',data.data.list):vm.$set(vm.ajaxData2,'list',data.data.list);
 				type==1?vm.ajaxData.total=data.data.total||0:vm.ajaxData2.total=data.data.total||0;
 				type==1?vm.ajaxData.maxpage1=Math.ceil(parseInt(data.data.list.length)/10):vm.ajaxData2.maxpage1=Math.ceil(parseInt(data.data.list.length)/10);
 				type==1?vm.ajaxData.pageNum=page||1:vm.ajaxData2.pageNum=page||1;
                 type==1?vm.ajaxData.callback=function(v){vm.getList(v)}:vm.ajaxData2.callback=function(v){vm.getList(v)};
                 vm.off.isLoad=false;
-                console.log(vm.ajaxData);
              }).catch(error=>errorDeal(error)); 	
 		},
 		getDateTime:function(e) {
@@ -810,9 +812,8 @@ export default{
             return str.substring(index + 1, str.length);
         },
         sellScopePower(){
-
             let info=this.ajaxData.details.openedScopes1;
-                let str='';
+            let str='';
             for(let key in info){
                 if(key==1)str+=`<li class="clr"><div class="fl">远特售卡：</div>`;
                 if(key==2)str+=`<li class="clr"><div class="fl">联通售卡：</div>`;
@@ -838,6 +839,7 @@ export default{
             });
         },
         close(v){
+
             let vm=this,
             road=vm.searchRoad;
             vm.i--;
@@ -845,17 +847,20 @@ export default{
                 vm.$set(vm.form,vm.replacedian(i),road[vm.i][i])
             }
         },
-        changeConten(){
-
-        },
         changeSearchType(){
             let vm=this;
-            vm.searchResultList={
-                list:[],
-                maxpage:0,//最大页数
-				pageNum:1,//当前页
-				callback:Function,//分页响应函数
-            },
+            // vm.searchResultList={
+            //     list:[],
+            //     maxpage:0,//最大页数
+			// 	pageNum:1,//当前页
+			// 	callback:Function,//分页响应函数
+            // },
+            // vm.searchResultList2={
+            //     list:[],
+            //     maxpage:0,//最大页数
+			// 	pageNum:1,//当前页
+			// 	callback:Function,//分页响应函数
+            // },
             vm.form.searchContext='',
             vm.ajaxData={//ajax响应数据
 				details:'',//商户/工号详情

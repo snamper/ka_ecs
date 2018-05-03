@@ -20,7 +20,6 @@ import {setStore, getStore, removeStore, secondsFormat} from '../config/utils';
 export default {
 	//获取审核统计信息
 	[SET_AUDIT_STATISTICS_INFO](state,res) {
-        // console.log("kmaudit");
 		state.auditCount = Object.assign({}, state.auditCount,res.data);
 		let count=this.getters.getCountTotal;
 		if(count!=state.countTotal){
@@ -32,8 +31,7 @@ export default {
 	},
 	// 获取意见反馈统计数
 	[SET_OPINION_COUNT](state,res){
-        // console.log("kmopinion");    
-		state.auditCount = Object.assign({}, state.auditCount,res.data);
+        state.opinionCount = Object.assign({}, state.opinionCount,res.data);
 		let Opcount=this.getters.getOpinionTotal;
 		if(Opcount!=state.OpcountTotal){
 			state.offCountChange=true;
@@ -44,7 +42,6 @@ export default {
     },
     //获取YM审核统计信息
 	[SET_AUDIT_STATISTICS_INFO_YM](state,res) {
-        // console.log("ymaudit");        
         state.auditCountYm = Object.assign({}, state.auditCountYm,res.data);
         let count=this.getters.getCountTotalYm;
 		if(count!=state.countTotalYm){

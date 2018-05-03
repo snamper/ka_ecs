@@ -31,7 +31,7 @@ export default async(url = '', data = {}, type = 'GET', load, method = 'fetch') 
 			dataStr = dataStr.substr(0, dataStr.lastIndexOf('&'));
 			url = url + '?' + dataStr;
 		}
-	}
+    }
 	if (window.fetch && method == 'fetch') {//FETCH
 		let requestConfig = {
 			credentials: 'include',
@@ -69,28 +69,25 @@ export default async(url = '', data = {}, type = 'GET', load, method = 'fetch') 
 			})
 			.catch(error=>errorDeal(error,closeLoadLayout))
           })
-	} else {//XHR对象
+    } else {//XHR对象
 		return new Promise((resolve, reject) => {
 			let requestObj;
 			if (window.XMLHttpRequest) {
-				requestObj = new XMLHttpRequest();
+                requestObj = new XMLHttpRequest();
 			} else {
-				requestObj = new ActiveXObject;
+                requestObj = new ActiveXObject;
 			}
-
 			let sendData = '';
 			if (type == 'POST') {
-				sendData = BASE64.encode(JSON.stringify(data));
+                sendData = BASE64.encode(JSON.stringify(data));
 			}
-
 			requestObj.open(type, url, true);
 			requestObj.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 			requestObj.send(sendData);
-
 			requestObj.onreadystatechange = () => {
-				if (requestObj.readyState == 4) {
+                if (requestObj.readyState == 4) {
 					if (requestObj.status == 200) {
-						let response = requestObj.response;
+                        let response = requestObj.response;
 						if (typeof response !== 'object') {
 							response = JSON.parse(response);
 						}
@@ -101,8 +98,7 @@ export default async(url = '', data = {}, type = 'GET', load, method = 'fetch') 
 				        	resolve(response);
 				        }else{
 				        	errorDeal(response);
-				        }
-						
+				        }	
 					} else {
 						reject(requestObj);
 					}

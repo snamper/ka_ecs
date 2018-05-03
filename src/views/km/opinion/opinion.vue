@@ -173,6 +173,7 @@
       }
 //查询按钮
       ,searchList:function(index,page){
+          debugger;
         var s=this.form.select;
         var userInfo=localStorage.getItem('KA_ECS_USER');
             userInfo=JSON.parse(userInfo);
@@ -181,8 +182,8 @@
         json={
           status:vm.off.type,
           type:vm.form.orderType,
-          starttime:Date.parse(vm.form.startTime),
-          endtime:Date.parse(vm.form.endTime),
+          starttime:vm.form.startTime,
+          endtime:vm.form.endTime,
           pageNum:page||'1',
           pageSize:'10',
           acceptId:'',
@@ -255,8 +256,8 @@
           }
           json={
               status:vm.off.type,
-              starttime:Date.parse(vm.form.startTime),
-              endtime:Date.parse(vm.form.endTime),
+              starttime:vm.form.startTime,
+              endtime:vm.form.endTime,
               pageNum:page||'1',
               pageSize:'10',
               acceptId:vm.form.context1,

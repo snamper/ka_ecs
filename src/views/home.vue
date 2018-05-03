@@ -48,9 +48,9 @@
             <ul class="m-mainCatalog">
                 <li :class="{'active':isCheckk}" @click="isCheck('k')" v-if="!off.powerKmHidden">
                     <span>卡盟</span>
-					<b class="animated m-lighter" :class="{bounce:offCountChange}" v-show="countTotal">{{countTotal}}</b> 
+					<b class="animated m-lighter" :class="{bounce:offCountChange}" v-show="countTotal||opinionCount[0]">{{countTotal+opinionCount[0]}}</b> 
 				</li>
-				<li  :class="{'active':isChecky}" @click="isCheck('y')" v-if="!off.powerYmHidden">
+				<li :class="{'active':isChecky}" @click="isCheck('y')" v-if="!off.powerYmHidden">
                     <span>远盟</span>
 					<b class="animated m-lighter" :class="{bounce:offCountChange}" v-show="auditCountYm.readyCard+auditCountYm.whiteCard+auditCountYm.newChangeCard+auditCountYm.realNameCollection+auditCountYm.fill">{{auditCountYm.readyCard+auditCountYm.whiteCard+auditCountYm.newChangeCard+auditCountYm.realNameCollection+auditCountYm.fill}}</b>
 				</li>
@@ -77,14 +77,13 @@
 					<ul class="g-side-subul nav1">
 						<li v-if="userInfo.isadmin.indexOf('0')>-1||userInfo.isadmin.indexOf('1')>-1">
 							<router-link :to="{name:'audit_card',params:{source:'realtime'}}">
-								<b></b>业务实时审核<span v-if="auditCount.opencard+auditCount.transfer+auditCount.realNameCollection+auditCount.realNameRechCard+auditCount.sdkRealTime!=0">{{auditCount.opencard+auditCount.transfer+auditCount.realNameCollection+auditCount.realNameRechCard+auditCount.sdkRealTime
-}}</span>
-							</router-link>
+								<!-- <b></b>业务实时审核<span v-if="auditCount.opencard+auditCount.transfer+auditCount.realNameCollection+auditCount.realNameRechCard+auditCount.sdkRealTime!=0">{{auditCount.opencard+auditCount.transfer+auditCount.realNameCollection+auditCount.realNameRechCard+auditCount.sdkRealTime}}</span> -->
+                                <b></b>业务实时审核<span v-if="auditCount.opencard+auditCount.transfer+auditCount.realNameCollection+auditCount.sdkRealTime!=0">{{auditCount.opencard+auditCount.transfer+auditCount.realNameCollection+auditCount.sdkRealTime}}</span>
+                            </router-link>
 						</li>
 						<li v-if="userInfo.isadmin.indexOf('0')>-1||userInfo.isadmin.indexOf('1')>-1">
 							<router-link :to="{name:'audit_card',params:{source:'afterwards'}}">
-								<b></b>业务事后审核<span v-if="auditCount.opencardAfterwards+auditCount.tfOpenCard!=0">{{auditCount.opencardAfterwards+auditCount.tfOpenCard
-}}</span>
+								<b></b>业务事后审核<span v-if="auditCount.opencardAfterwards+auditCount.tfOpenCard!=0">{{auditCount.opencardAfterwards+auditCount.tfOpenCard}}</span>
 							</router-link>
 						</li>
 						<li v-if="userInfo.isadmin.indexOf('6')>-1||userInfo.isadmin.indexOf('5')>-1||userInfo.isadmin.indexOf('1')>-1">
@@ -162,7 +161,7 @@
 						<div>
 							<i class="u-icon-opinion"></i>
 							<span>意见反馈</span>
-							<b class="animated m-lighter" :class="{bounce:offCountChange}" v-show="auditCount[0]">{{auditCount[0]}}</b>
+							<b class="animated m-lighter" :class="{bounce:offCountChange}" v-show="opinionCount[0]">{{opinionCount[0]}}</b>
 						</div>
 					</router-link>
 				</li>
@@ -295,6 +294,7 @@ export default{
             "onlineTime",
             "timer",
             "auditCount",
+            "opinionCount",
             "countTotal",
             "auditCountYm",
             "offCountChange",
