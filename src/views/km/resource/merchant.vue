@@ -58,6 +58,9 @@
 span.dp{
     display: inline-block;
 }
+div.border-bottom{
+    border-bottom:1px solid rgb(221, 220, 220);
+}
 </style>
 <template>
 	<div id="merchantSearch">
@@ -97,11 +100,11 @@ span.dp{
                 </table>
                 <!--基础条件-->
                 <section class="form-c">
-                    <div>
-                        <span class="dp">查询内容：</span>
+                    <div class="border-bottom">
+                        <!-- <span class="dp">查询内容：</span> -->
                         <div class="m-form-radio">
-                            <label><span class="radio"><input @click="changeSearchType" type="radio" value="1" v-model="form.content" checked="checked"><span></span></span><span class="text">商户</span></label>
-                            <label><span class="radio"><input @click="changeSearchType" type="radio" value="2" v-model="form.content" checked="checked"><span></span></span><span class="text">工号</span></label>
+                            <label><span class="radio"><input @click="changeSearchType" type="radio" value="1" v-model="form.content" checked="checked"><span></span></span><span class="text">商户查询</span></label>
+                            <label><span class="radio"><input @click="changeSearchType" type="radio" value="2" v-model="form.content" checked="checked"><span></span></span><span class="text">工号查询</span></label>
                         </div>
                     </div>
                     <div class="row" >
@@ -718,7 +721,6 @@ export default{
 		},
         details(context,type,i){//商户上用户列表查看用户，用户上查看商户
             let vm=this;
-            console.log(vm.ajaxData,vm.ajaxData2)
             vm.searchRoad.push({'vm.form.type':vm.form.type})
             vm.i=vm.searchRoad.length;           
             vm.off.detailskind=i;
@@ -789,7 +791,6 @@ export default{
 				type==1?vm.ajaxData.pageNum=page||1:vm.ajaxData2.pageNum=page||1;
                 type==1?vm.ajaxData.callback=function(v){vm.getList(v)}:vm.ajaxData2.callback=function(v){vm.getList(v)};
                 vm.off.isLoad=false;
-                console.log(vm.ajaxData);
              }).catch(error=>errorDeal(error)); 	
 		},
 		getDateTime:function(e) {
@@ -838,6 +839,7 @@ export default{
             });
         },
         close(v){
+
             let vm=this,
             road=vm.searchRoad;
             vm.i--;
