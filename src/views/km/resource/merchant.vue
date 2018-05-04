@@ -183,7 +183,7 @@ div.border-bottom{
                         <thead>
                             <tr>
                                 <th class="total-head" colspan="11" style="background-color:#fff;text-align:left;padding-left:20px;">
-                                    统计结果<b>{{total}}</b>
+                                    统计结果<b>{{total}}</b><button class="btn_export_excel" v-if="searchResultList.maxpage"  @click="downLoadList">导出excel</button>
                                 </th>
                             </tr>
                             <tr>
@@ -241,7 +241,7 @@ div.border-bottom{
                         <thead>
                             <tr>
                                 <th class="total-head" colspan="8" style="background-color:#fff;text-align:left;padding-left:20px;">
-                                    统计结果<b>{{total}}</b>
+                                    统计结果<b>{{total}}</b><button class="btn_export_excel" v-if="searchResultList2.maxpage"  @click="downLoadList">导出excel</button>
                                 </th>
                             </tr>
                             <tr>
@@ -579,11 +579,12 @@ div.border-bottom{
 <script>
 import {reqCommonMethod,requestGetMerchantList} from "../../../config/service.js";  
 import pagination from "../../../componentskm/page.vue";
-import { getDateTime,errorDeal } from "../../../config/utils.js"
+import { getDateTime,errorDeal,createDownload,getStore } from "../../../config/utils.js"
 export default{
 	name:'merchantSearch',
 	data() {
 		return {
+            downLoadData:'',
             total:0,
             i:0,
             searchRoad:[],
@@ -740,7 +741,7 @@ export default{
 		        });
 		        return false;
             }
-            console.log(searchData);
+            vm.downLoadData=searchData;
             vm.searchRoad.push({'vm.form.type':vm.form.type});
             vm.i=vm.searchRoad.length;            
             requestGetMerchantList(searchData,function(){vm.off.isLoad=false;},)
@@ -755,6 +756,21 @@ export default{
                     errorDeal(data);
                 }
             }).catch(e=>errorDeal(e));
+        },
+        downLoadList(){
+            let vm=this,
+                url="km-ecs/w/merchant/listDownload",
+                userInfo = getStore("KA_ECS_USER"),
+			    customerId = userInfo.customerId,
+			    codeId = userInfo.codeId;
+				vm.downLoadData.customerId = customerId;
+                vm.downLoadData.codeId = codeId;
+            delete vm.downLoadData.pageSize;
+            delete vm.downLoadData.pageNum;
+            console.log(vm.downLoadData);
+            createDownload(url,BASE64.encode(JSON.stringify(vm.downLoadData)),function(){
+		        vm.off.isLoad=false;
+	      	});
         },
 		toMap(){
 			var w=document.documentElement.clientWidth,url='',vm=this;
