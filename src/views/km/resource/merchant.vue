@@ -41,6 +41,7 @@
   	.g-in-table.col-l td>span, .g-in-table.col-r td>span{width:auto;}
   }
   .g-lis-head {
+    height: 45px;
     background-color: #fff;
     width: 100%;
     padding: 0.12rem 0.1rem;
@@ -60,6 +61,12 @@ span.dp{
 }
 div.border-bottom{
     border-bottom:1px solid rgb(221, 220, 220);
+}
+.g-search-form>.form-c>.row{
+    width:45%;
+}
+.pdl{
+    padding-left:100px;
 }
 </style>
 <template>
@@ -103,35 +110,52 @@ div.border-bottom{
                     <div class="border-bottom">
                         <!-- <span class="dp">查询内容：</span> -->
                         <div class="m-form-radio">
-                            <label><span class="radio"><input @click="changeSearchType" type="radio" value="1" v-model="form.content" checked="checked"><span></span></span><span class="text">商户查询</span></label>
-                            <label><span class="radio"><input @click="changeSearchType" type="radio" value="2" v-model="form.content" checked="checked"><span></span></span><span class="text">工号查询</span></label>
+                            <label><span ><input @click="changeSearchType" type="radio" value="1" v-model="form.content" checked="checked"><span></span></span><span class="text" :class="{fCBlue:form.content==1}">商户查询</span></label>
+                            <label><span ><input @click="changeSearchType" type="radio" value="2" v-model="form.content" checked="checked"><span></span></span><span class="text" :class="{fCBlue:form.content==2}">工号查询</span></label>
                         </div>
                     </div>
-                    <div class="row" >
+                    <div >
                         <div v-if="form.content==1">
-                            <span class="dp" >查询类型：</span>
+                            <div class="m-form-radio">
+                                <label><span class="radioYes"><input @click="changeSearchType" type="radio" value="1" v-model="form.searchKind" checked="checked"><span></span></span><span class="text">精确查找：</span></label>                            
+                            </div>
                             <div class="m-form-radio">
                                 <label><span class="radio"><input @click="changeSearchType"  type="radio" value="1" v-model="form.searchType" checked="checked"><span></span></span><span class="text">商户ID</span></label>
-                                <label><span class="radio"><input @click="changeSearchType" type="radio" value="2" v-model="form.searchType" checked="checked"><span></span></span><span class="text">商户名称</span></label>
-                                <label><span class="radio"><input @click="changeSearchType" type="radio" value="3" v-model="form.searchType" checked="checked"><span></span></span><span class="text">员工手机号码</span></label>
+                                <label><span class="radio"><input @click="changeSearchType" type="radio" value="2" v-model="form.searchType" checked="checked"><span></span></span><span class="text">员工手机号码</span></label>
                                 <div style="display:inline-block" class="col-r m-input">
-                                    <input @focus="inpFocus" @blur="inpBlur" v-model="form.searchContext" maxlength="24" type="tel" :placeholder="form.searchType==1 ? '请输入查询的商户ID' :form.searchType==2? '请输入查询的商户名称':'请输入查询的手机号码'"/>
+                                    <input @focus="inpFocus" @blur="inpBlur" v-model="form.searchContext" maxlength="24" type="tel" :placeholder="form.searchType==1 ? '请输入查询的商户ID':'请输入查询的手机号码'"/>
                                 </div>
                             </div>
                         </div>
                         <div v-if="form.content==2">
-                            <span class="dp" >查询类型：</span>
+                            <div class="m-form-radio">
+                                <label><span class="radioYes"><input @click="changeSearchType" type="radio" value="1" v-model="form.searchKind" checked="checked"><span></span></span><span class="text">精确查找：</span></label>                            
+                            </div>
                             <div class="m-form-radio">
                                 <label><span class="radio"><input @click="changeSearchType"  type="radio" value="1" v-model="form.searchType" checked="checked"><span></span></span><span class="text">卡盟ID</span></label>
-                                <label><span class="radio"><input @click="changeSearchType" type="radio" value="2" v-model="form.searchType" checked="checked"><span></span></span><span class="text">用户姓名</span></label>
-                                <label><span class="radio"><input @click="changeSearchType" type="radio" value="3" v-model="form.searchType" checked="checked"><span></span></span><span class="text">手机号码</span></label>
+                                <label><span class="radio"><input @click="changeSearchType" type="radio" value="2" v-model="form.searchType" checked="checked"><span></span></span><span class="text">手机号码</span></label>
                                 <div style="display:inline-block" class="col-r m-input">
-                                    <input @focus="inpFocus" @blur="inpBlur" v-model="form.searchContext" maxlength="24" type="tel" :placeholder="form.searchType==1 ? '请输入查询的卡盟ID' :form.searchType==2? '请输入查询的姓名':'请输入查询的手机号码'"/>
+                                    <input @focus="inpFocus" @blur="inpBlur" v-model="form.searchContext" maxlength="24" type="tel" :placeholder="form.searchType==1 ? '请输入查询的卡盟ID':'请输入查询的手机号码'"/>
                                 </div>
                             </div>
                         </div>
+                    </div>        
+                    <div class="m-form-radio">
+                        <label><span class="radioYes"><input @click="changeSearchType" type="radio" value="2" v-model="form.searchKind" checked="checked"><span></span></span><span class="text">组合查找：</span></label>                            
                     </div>
-                    <div class="row" v-if="form.content==1">
+                    <div class="row clr m-col-2">
+                        <div class="dp col-l">创建时间：</div>
+                        <div class="col-r">
+                            <span class="m-time-area"><input @click="to_laydate(1)" v-model="form.startTime" type="text" readonly="readonly"><input @click="to_laydate(2)" v-model="form.endTime" type="text" readonly="readonly"></span>
+                        </div>
+                    </div>
+                    <div  class="row clr m-col-2">
+                        <span class="dp" >商户名称：</span>
+                        <div style="display:inline-block;width:60%;">
+                            <input @focus="inpFocus" @blur="inpBlur" v-model="form.searchDealerName" maxlength="24" type="tel" placeholder="请输入查询的商户名称"/>
+                        </div>
+                    </div>
+                    <div class="row pdl" v-if="form.content==1">
                         <span class="dp">激活状态：</span>
                         <div class="m-form-radio">
                             <label><span class="radio"><input type="radio" value="-1" v-model="form.activationState" checked="checked"><span></span></span><span class="text">全部</span></label>
@@ -140,13 +164,8 @@ div.border-bottom{
                             <label><span class="radio"><input type="radio" value="3" v-model="form.activationState" checked="checked"><span></span></span><span class="text">激活审核中</span></label>
                         </div>
                     </div>
-                    <div class="row clr m-col-2">
-                        <div class="dp col-l">创建时间：</div>
-                        <div class="col-r">
-                            <span class="m-time-area"><input @click="to_laydate(1)" v-model="form.startTime" type="text" readonly="readonly"><input @click="to_laydate(2)" v-model="form.endTime" type="text" readonly="readonly"></span>
-                        </div>
-                    </div>
-                    <div class="row"  v-if="form.content==1">
+
+                    <div class="row pdl"  v-if="form.content==1">
                         <span class="dp">售卡范围：</span>
                         <div class="m-form-radio">
                             <label><span class="radio"><input type="radio" value="-1" v-model="form.businessScope" checked="checked"><span></span></span><span class="text">全部</span></label>
@@ -239,7 +258,7 @@ div.border-bottom{
                         <tbody>
                             <tr v-for="(item,index) in searchResultList2.list" :key="index">
                                 <td>{{ ((searchResultList2.pageNum-1)*10+(index+1)) }}</td>
-                                <td>{{ getDateTime(item.createtime)[6]||'--' }}</td>
+                                <td>{{ getDateTime(item.create_time)[6]||'--' }}</td>
                                 <td>{{item.customerName||'--'}}</td>
                                 <td>{{item.userid||"--"}}</td>
                                 <td>{{item.phone||'--'}}</td>
@@ -256,7 +275,7 @@ div.border-bottom{
 		<!--商户ID-->
 	  	<div class="m-total-table g-list-box"  v-if="form.type==1&&ajaxData.details">
             <header class="g-lis-head">
-                <a class="m-details-back u-icon-back" style="width:20px;height:20px;" @click="close('dealerId')"></a>
+                <a v-if="searchRoad.length" class="m-details-back u-icon-back" style="width:20px;height:20px;" @click="close('dealerId')"></a>
                 <div class="m-footD-btn">
                 </div>
             </header>
@@ -443,7 +462,7 @@ div.border-bottom{
 		<!--工号ID-->
         <div class="m-total-table g-list-box"  v-if="form.type==2&&ajaxData2.details">
             <header class="g-lis-head">
-                <a class="m-details-back u-icon-back" style="width:20px;height:20px;" @click="close('workNum')"></a>
+                <a v-if="searchRoad.length" class="m-details-back u-icon-back" style="width:20px;height:20px;" @click="close('workNum')"></a>
                 <div class="m-footD-btn">
                 </div>
             </header>
@@ -600,6 +619,8 @@ export default{
                 ,startTime:'',
                 endTime:'',
                 type:"3",
+                searchKind:"1",//true:精确查找false:组合查找
+                searchDealerName:"",//商户名称
 			},
 			ajaxData:{//ajax响应数据
 				details:'',//商户/工号详情
@@ -668,17 +689,58 @@ export default{
         searchList(index,page){
             let vm=this,
             searchData={
-            getListType:vm.form.content,
-            typeKey:vm.form.searchType,
-            typeValue:vm.form.searchContext,
-            timeStar:new Date(vm.form.startTime.replace(/-/g,'/')).getTime(),
-            timeEnd:new Date(vm.form.endTime.replace(/-/g,'/')).getTime(),
-            pageSize:10,
-            pageNum:page||1
+                chooseSearch:vm.form.searchKind, //精确查找,组合查找
+                getListType:vm.form.content,//商户查询，工号查询
+                userName:"",//商户名称
+                typeKey:"",//商户id，手机号码
+                typeValue:"",//商户id,手机号码的值
+                timeStar:"",
+                timeEnd:"",
+                status:"",
+                merchant_attribute:"",
+                pageSize:10,
+                pageNum:page||1
+            }    
+
+            let searchDatajq={
+                typeKey:vm.form.searchType,
+                typeValue:vm.form.searchContext,                
             }
-            if(vm.form.content==1){
+
+            let searchDatazh={
+                timeStar:new Date(vm.form.startTime.replace(/-/g,'/')).getTime(),
+                timeEnd:new Date(vm.form.endTime.replace(/-/g,'/')).getTime(),
+                username:vm.form.searchDealerName,//商户名称
+            }
+            if(vm.form.searchKind=="1"){
+                Object.assign(searchData,searchDatajq)
+            }else if(vm.form.searchKind=="2"){
+                Object.assign(searchData,searchDatazh)               
+            }
+            // searchData={
+            //     chooseSearch:vm.form.searchKind,
+            //     username:vm.form.searchDealerName,
+            //     getListType:vm.form.content,
+            //     typeKey:vm.form.searchType,
+            //     typeValue:vm.form.searchContext,
+            //     timeStar:new Date(vm.form.startTime.replace(/-/g,'/')).getTime(),
+            //     timeEnd:new Date(vm.form.endTime.replace(/-/g,'/')).getTime(),
+            //     pageSize:10,
+            //     pageNum:page||1
+            // }
+            if(vm.form.content==1&&vm.form.searchKind=="2"){
                 Object.assign(searchData,{status:vm.form.activationState,merchant_attribute:vm.form.businessScope}) 
             }
+            if(vm.form.searchKind=="1"&&vm.form.searchContext==''){
+                layer.open({
+		            content:'请输入查询内容',
+		            skin: 'msg',
+		            time: 2,
+		            msgSkin:'error',
+		        });
+		        return false;
+            }
+            console.log(searchData);
             vm.searchRoad.push({'vm.form.type':vm.form.type});
             vm.i=vm.searchRoad.length;            
             requestGetMerchantList(searchData,function(){vm.off.isLoad=false;},)
@@ -839,12 +901,14 @@ export default{
             });
         },
         close(v){
-
             let vm=this,
             road=vm.searchRoad;
             vm.i--;
             for(let i in road[vm.i]){
                 vm.$set(vm.form,vm.replacedian(i),road[vm.i][i])
+            }
+            if(vm.i==0){
+                vm.searchRoad=[];
             }
         },
         changeSearchType(){
@@ -862,6 +926,7 @@ export default{
 			// 	callback:Function,//分页响应函数
             // },
             vm.form.searchContext='',
+            vm.form.searchDealerName="",
             vm.ajaxData={//ajax响应数据
 				details:'',//商户/工号详情
 				list:[],//第三方流水号列表/用户列表
@@ -884,4 +949,3 @@ export default{
 	}
 };
 </script>
-

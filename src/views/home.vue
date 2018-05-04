@@ -52,7 +52,7 @@
 				</li>
 				<li :class="{'active':isChecky}" @click="isCheck('y')" v-if="!off.powerYmHidden">
                     <span>远盟</span>
-					<b class="animated m-lighter" :class="{bounce:offCountChange}" v-show="auditCountYm.readyCard+auditCountYm.whiteCard+auditCountYm.newChangeCard+auditCountYm.realNameCollection+auditCountYm.fill">{{auditCountYm.readyCard+auditCountYm.whiteCard+auditCountYm.newChangeCard+auditCountYm.realNameCollection+auditCountYm.fill}}</b>
+					<b class="animated m-lighter" :class="{bounce:offCountChange}" v-if="off.power0||off.power1" v-show="auditCountYm.readyCard+auditCountYm.whiteCard+auditCountYm.newChangeCard+auditCountYm.realNameCollection+auditCountYm.fill">{{auditCountYm.readyCard+auditCountYm.whiteCard+auditCountYm.newChangeCard+auditCountYm.realNameCollection+auditCountYm.fill}}</b>
 				</li>
             </ul>
 			<ul class="g-side-ul" :class="{'hide':!isCheckk}" v-if="!off.powerKmHidden">

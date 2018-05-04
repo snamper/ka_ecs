@@ -495,12 +495,17 @@ export default{
 				json.customerId = customerId;
 				json.codeId = codeId;
 				json.context=context;
-				json.searchtype=vm.form.select;
-			if(vm.form.source==7){
-				return false;
-			}else{
-				url='km-ecs/w/audit/downloadEdList';
+                json.searchtype=vm.form.select;
+			if(vm.form.orderType==7||vm.off.orderType==6){
+                url='km-ecs/w/audit/downloadEdList';
+            }else if(vm.form.orderType==4||vm.form.orderType==8){
+				url='km-ecs/w/audit/downloadReinput';
+                Object.assign(json,{"periodType":vm.off.type});  
 			}
+            else{
+				return false;
+            }
+            console.log(JSON.stringify(json));
 			createDownload(url,  BASE64.encode(JSON.stringify(json)),  function(){
 		        vm.off.isLoad=false;
 	      	});
