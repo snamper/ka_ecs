@@ -20,7 +20,7 @@ module.exports = {
             }
         },
         '/km-ecs/w':{
-            // target:'http://192.168.10.110:6086',
+            // target:'https://192.168.10.98:6086',
             target:'http://192.168.10.167:6086',            
             changeOrigin:true,
             pathRewrite:{
