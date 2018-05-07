@@ -150,10 +150,16 @@ div.border-bottom{
                             <span class="m-time-area"><input @click="to_laydate(1)" v-model="form.startTime" type="text" readonly="readonly"><input @click="to_laydate(2)" v-model="form.endTime" type="text" readonly="readonly"></span>
                         </div>
                     </div>
-                    <div  class="row clr m-col-2">
+                    <div class="row clr m-col-2"   v-if="form.content==1">
                         <span class="dp" >商户名称：</span>
                         <div style="display:inline-block;width:60%;">
                             <input @focus="inpFocus" @blur="inpBlur" v-model="form.searchDealerName" maxlength="24" type="tel" placeholder="请输入查询的商户名称"/>
+                        </div>
+                    </div>
+                    <div class="row clr m-col-2"   v-if="form.content==2">
+                        <span class="dp" >用户名称：</span>
+                        <div style="display:inline-block;width:60%;">
+                            <input @focus="inpFocus" @blur="inpBlur" v-model="form.searchDealerName" maxlength="24" type="tel" placeholder="请输入查询的用户名称"/>
                         </div>
                     </div>
                     <div class="row pdl" v-if="form.content==1">
@@ -324,10 +330,10 @@ div.border-bottom{
                                         <tr>
                                             <td><span>售卡范围：</span>
                                             	<em v-for="_item in ajaxData.details.openedScopes">
-                                                    <em v-show="_item.type==1">远特售卡,</em>
-                                                    <em v-show="_item.type==2">联通售卡,</em>
-                                                    <em v-show="_item.type==3">移动售卡,</em>
-                                                    <em v-show="_item.type==4">电信售卡,</em>
+                                                    <em v-show="_item.type==1">远特售卡</em>
+                                                    <em v-show="_item.type==2">,联通售卡</em>
+                                                    <em v-show="_item.type==3">,移动售卡</em>
+                                                    <em v-show="_item.type==4">,电信售卡</em>
                                                 </em>
                                                 <a href="javascript:;" @click="sellScopePower()" class="details">详情</a>
                                                 <!-- <b v-if="ajaxData.details.attribute==1">A（远特售卡）</b>
@@ -359,7 +365,8 @@ div.border-bottom{
                                         </tr>
                                         <tr>
                                             <td><span>上级商户：</span>
-                                                <a v-show="ajaxData.details.superDealerId" :href="'#/homek/resource/promoter/'+ajaxData.details.superDealerId" title="点击查看详情" class="details">{{ajaxData.details.superDealerId}}</a>【名称：{{ ajaxData.details.superDealerName||'--' }}】</td>
+                                            <!-- :href="'#/homek/resource/promoter/'+ajaxData.details.superDealerId" -->
+                                                <a v-show="ajaxData.details.superDealerId" @click="details(ajaxData.details.superDealerId,1,'x')"  title="点击查看详情" class="details">{{ajaxData.details.superDealerId}}</a>【名称：{{ ajaxData.details.superDealerName||'--' }}】</td>
                                             <td><span>基础总次数：</span>{{ ajaxData.details.btFrequency }}</td>
                                         </tr>
                                         <tr>
@@ -585,6 +592,7 @@ export default{
 	name:'merchantSearch',
 	data() {
 		return {
+            dealerInfo:'',
             downLoadData:'',
             total:0,
             i:0,
@@ -744,7 +752,7 @@ export default{
             }
             vm.downLoadData=searchData;
             vm.searchRoad.push({'vm.form.type':vm.form.type});
-            vm.i=vm.searchRoad.length;            
+            vm.i=vm.searchRoad.length;    
             requestGetMerchantList(searchData,function(){vm.off.isLoad=false;},)
             .then((data)=>{
                 if(data.code==200){
@@ -768,7 +776,6 @@ export default{
                 vm.downLoadData.codeId = codeId;
             delete vm.downLoadData.pageSize;
             delete vm.downLoadData.pageNum;
-            console.log(vm.downLoadData);
             createDownload(url,BASE64.encode(JSON.stringify(vm.downLoadData)),function(){
 		        vm.off.isLoad=false;
 	      	});
@@ -800,7 +807,9 @@ export default{
 		},
         details(context,type,i){//商户上用户列表查看用户，用户上查看商户
             let vm=this;
-            vm.searchRoad.push({'vm.form.type':vm.form.type})
+            if(i!=='x'){
+                vm.searchRoad.push({'vm.form.type':vm.form.type})
+            }
             vm.i=vm.searchRoad.length;           
             vm.off.detailskind=i;
             vm.form.type=type;
@@ -865,11 +874,12 @@ export default{
              reqCommonMethod(json,function(){vm.off.isLoad=false;},url)
              .then((data)=>{
 	            type==1?vm.$set(vm.ajaxData,'list',data.data.list):vm.$set(vm.ajaxData2,'list',data.data.list);
-				type==1?vm.ajaxData.total=data.data.total||0:vm.ajaxData2.total=data.data.total||0;
+                type==1?vm.ajaxData.total=data.data.total||0:vm.ajaxData2.total=data.data.total||0;
 				type==1?vm.ajaxData.maxpage1=Math.ceil(parseInt(data.data.list.length)/10):vm.ajaxData2.maxpage1=Math.ceil(parseInt(data.data.list.length)/10);
 				type==1?vm.ajaxData.pageNum=page||1:vm.ajaxData2.pageNum=page||1;
                 type==1?vm.ajaxData.callback=function(v){vm.getList(v)}:vm.ajaxData2.callback=function(v){vm.getList(v)};
                 vm.off.isLoad=false;
+                type==1?vm.dealerInfo=vm.ajaxData:vm.dealerInfo=vm.ajaxData2;
              }).catch(error=>errorDeal(error)); 	
 		},
 		getDateTime:function(e) {
@@ -904,7 +914,7 @@ export default{
                         // value.cusWhiteList.split(',').forEach((val)=>{
                         //     _str+='，'+info.whiteList[val];
                         // })
-                        str+=`<div class="fright">${value.area}（本地,${value.cusWhiteDes=='null'?'':value.cusWhiteDes}）</div>`;
+                        str+=`<div class="fright">${value.area}（本地${value.cusWhiteDes=='null'?'':value.cusWhiteDes}）</div>`;
                     }
                 })
                 str+='</li>';
