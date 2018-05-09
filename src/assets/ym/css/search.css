@@ -25,18 +25,6 @@
 
 #search{width:100%;height:100%;padding: 0.15rem;position: relative;}
 #search.active{width:100%;height:100%;position:absolute;padding: 0;}
-.m-scroll-bar{position: fixed;width:0;height: 4px;border-radius: 10px;background-color:#20a0ff;left: 0;top:0.6rem;z-index: 888;}
-.m-scroll-bar.active{-webkit-animation-name: scrollBar;
-    -moz-animation-name: scrollBar;
-    animation-name: scrollBar;}
-@-webkit-keyframes scrollBar{
-  0%{width: 0}
-  100%{width: 100%;}
-}
-@keyframes scrollBar{
-  0%{width: 0}
-  100%{width: 100%;}
-}
 
 .g-search-menu, .m-search-menu *{width: 100%;height: 100%;}
 .g-search-menu{display: table;position: relative;}
