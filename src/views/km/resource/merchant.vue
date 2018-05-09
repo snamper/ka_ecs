@@ -376,7 +376,7 @@ div.border-bottom{
                                         </tr>
                                         <tr>
                                             <td><span>上级推广渠道ID：</span>
-                                                <a v-show="ajaxData.details.superDealerId" :href="'#/homek/resource/promoter/'+ajaxData.details.superDealerId" title="点击查看详情" class="details">{{ajaxData.details.popDealerId}}</a>【名称：{{ ajaxData.details.popDealerName||'--' }}】</td>
+                                                <a v-show="ajaxData.details.superDealerId" :href="'#/homek/resource/promoter/'+ajaxData.details.popDealerId" title="点击查看详情" class="details">{{ajaxData.details.popDealerId}}</a>【名称：{{ ajaxData.details.popDealerName||'--' }}】</td>
                                             <td><span>推广渠道：</span>{{ ajaxData.details.popDealerId||'--' }}【名称：{{ ajaxData.details.popDealerName||'--' }}】</td>
                                             
                                         </tr>
