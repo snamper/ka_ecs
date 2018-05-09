@@ -39,7 +39,7 @@
 									<span v-show="list.payType==2" class="u-icon-wechat"></span>
 									<span v-show="list.payType==3" class="u-icon-alipay"></span>
 								</td></tr>
-								<tr><td>支付方式：</td><td>
+								<tr><td>支付状态：</td><td>
 									<span v-show="list.payStatus==1" class="f-c-yellow">待支付</span>
 									<span v-show="list.payStatus==2" class="f-c-green">支付成功</span>
 									<span v-show="list.payStatus==3" class="f-c-red">支付失败</span>

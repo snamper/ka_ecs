@@ -50,7 +50,7 @@
     border-radius: 4px;
 }
 .g-box {
-    padding-top: 0.2rem;
+    /*padding-top: 0.2rem;*/
     height:auto;
 }
 .m-total-table{
@@ -366,7 +366,7 @@ div.border-bottom{
                                         <tr>
                                             <td><span>上级商户：</span>
                                             <!-- :href="'#/homek/resource/promoter/'+ajaxData.details.superDealerId" -->
-                                                <a v-show="ajaxData.details.superDealerId" @click="details(ajaxData.details.superDealerId,1,'x')"  title="点击查看详情" class="details">{{ajaxData.details.superDealerId}}</a>【名称：{{ ajaxData.details.superDealerName||'--' }}】</td>
+                                                <a href="javascript:;" v-show="ajaxData.details.superDealerId" @click="details(ajaxData.details.superDealerId,1,'x')"  title="点击查看详情" class="details">{{ajaxData.details.superDealerId}}</a>【名称：{{ ajaxData.details.superDealerName||'--' }}】</td>
                                             <td><span>基础总次数：</span>{{ ajaxData.details.btFrequency }}</td>
                                         </tr>
                                         <tr>
@@ -442,7 +442,7 @@ div.border-bottom{
                     </tbody>
                 </table>
             </div>
-            <section v-if="ajaxData.details">
+            <section v-if="ajaxData.details" class="m-total-table">
                 <div class="total-head">商户下所有工号列表</div>
                 <table>
                     <thead>
@@ -542,7 +542,7 @@ div.border-bottom{
                     </tbody>
                 </table>
             </div>
-            <section v-if="ajaxData2.details">
+            <section v-if="ajaxData2.details"class="m-total-table">
                 <div class="total-head">第三方支付流水号列表<b>{{ajaxData2.total}}</b>
                     <div class="f-btn-group">
                         <button :class="{active:form.paySource==2}" @click="shiftPaySource(2)">账户充值成功</button>
@@ -814,8 +814,8 @@ export default{
             vm.off.detailskind=i;
             vm.form.type=type;
             vm.form.context=context;
-            vm.ajaxData.list=[];
-            vm.ajaxData2.list=[];
+            // vm.ajaxData.list=[];
+            // vm.ajaxData2.list=[];
             vm.getDetails();
 		},
 		getDetails(isBtn){//获取商户/工号基本信息
@@ -934,6 +934,7 @@ export default{
             for(let i in road[vm.i]){
                 vm.$set(vm.form,vm.replacedian(i),road[vm.i][i])
             }
+
             if(vm.i==0){
                 vm.searchRoad=[];
             }
