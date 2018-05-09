@@ -99,6 +99,12 @@
 				</span>
 				<div class="input-box"><input v-model="form.context5" :readonly="form.select!=5" maxlength="12" type="tel" placeholder="请输入查询的操作者ID"></div>
 			</div>
+            <div class="row" :class="{active:form.select==5}" v-show="form.source!=7&&form.source!=8">
+				<span class="m-form-radio">
+					<label><span class="radio"><input type="radio" value="7" v-model="form.select"><span></span></span><span class="text">用户姓名：</span></label>
+				</span>
+				<div class="input-box"><input v-model="form.context7" :readonly="form.select!=7" maxlength="12" type="tel" placeholder="请输入查询的开卡身份证姓名"></div>
+			</div>
 			<div class="row" :class="{active:form.select==6}" v-if="off.type==1">
 				<span class="m-form-radio">
 					<label><span class="radio"><input type="radio" value="6" :readonly="form.select!=6" v-model="form.select"><span></span></span><span class="text">订单状态：</span></label>
@@ -273,7 +279,8 @@ export default{
 				context3:'',//审核人ID
 				context4:'',//身份证号
 				context5:'',// 操作者ID
-				context6:0,//号卡状态
+                context6:0,//号卡状态
+                context7:'',//开卡者姓名
 				startTime:'',
 				endTime:'',
 				select:6//条件查询，选择的条件
@@ -353,6 +360,14 @@ export default{
 			}else if(vm.form.select==5&&(!context)){
 				layer.open({
 		            content:'请输入操作者ID',
+		            skin: 'msg',
+		            time: 2,
+		            msgSkin:'error',
+		        });
+		        return false;
+			}else if(vm.form.select==7&&(!context)){
+				layer.open({
+		            content:'请输入查询的用户姓名',
 		            skin: 'msg',
 		            time: 2,
 		            msgSkin:'error',
@@ -495,12 +510,16 @@ export default{
 				json.customerId = customerId;
 				json.codeId = codeId;
 				json.context=context;
-				json.searchtype=vm.form.select;
-			if(vm.form.source==7){
-				return false;
-			}else{
-				url='km-ecs/w/audit/downloadEdList';
+                json.searchtype=vm.form.select;
+			if(vm.form.orderType==7||vm.off.orderType==6){
+                url='km-ecs/w/audit/downloadEdList';
+            }else if(vm.form.orderType==4||vm.form.orderType==8){
+				url='km-ecs/w/audit/downloadReinput';
+                Object.assign(json,{"periodType":vm.off.type});  
 			}
+            else{
+				return false;
+            }
 			createDownload(url,  BASE64.encode(JSON.stringify(json)),  function(){
 		        vm.off.isLoad=false;
 	      	});

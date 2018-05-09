@@ -118,6 +118,12 @@
 				</span>
 				<div class="input-box"><input v-model="form.context6" :readonly="form.select!=6" maxlength="11" type="tel" placeholder="请输入查询的操作者工号"></div>
 			</div>
+            <div class="row" :class="{active:form.select==6}">
+				<span class="m-form-radio">
+					<label><span class="radio"><input type="radio" value="8" v-model="form.select"><span></span></span><span class="text">用户姓名：</span></label>
+				</span>
+				<div class="input-box"><input v-model="form.context8" :readonly="form.select!=8" maxlength="11" type="tel" placeholder="请输入查询的开卡身份证姓名"></div>
+			</div>
 			<div class="row" :class="{active:form.select==5}" v-if="off.type==1">
 				<span class="m-form-radio">
 					<label><span class="radio"><input type="radio" value="5" :readonly="form.select!=5" v-model="form.select"><span></span></span><span class="text">订单状态：</span></label>
@@ -292,6 +298,7 @@ export default {
         context5: "", // type=5时订单状态
         context6: "", //操作者工号
         context7: 9, //开卡状态
+        context8:'',//开卡人姓名
         startTime: "",
         endTime: "",
         select: 7, //条件查询，选择的条件
@@ -414,6 +421,14 @@ export default {
         } else if (vm.form.select == 6 && !context) {
           layer.open({
             content: "请输入操作者工号",
+            skin: "msg",
+            time: 2,
+            msgSkin: "error"
+          });
+          return false;
+        }else if (vm.form.select == 8 && !context) {
+          layer.open({
+            content: "请输入查询的用户姓名",
             skin: "msg",
             time: 2,
             msgSkin: "error"

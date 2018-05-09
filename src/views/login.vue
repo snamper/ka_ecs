@@ -143,7 +143,6 @@ export default {
             window.location.href="#/homey/illegalSearch";
             return false;
         }
-        
         if(vm.off.powerkm1||vm.off.powerkm2){
            window.location.href="#/homek/dashboard"
             return false;

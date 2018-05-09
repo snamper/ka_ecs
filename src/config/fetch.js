@@ -64,7 +64,10 @@ export default async(url = '', data = {}, type = 'GET', load, method = 'fetch') 
 				if(data.code == 200) {
 					resolve(data)
 				}else{
-					errorDeal(data)
+                    errorDeal(data)
+                    if(url.indexOf("user/login")>-1){
+                        resolve(data)
+                    }
 				}
 			})
 			.catch(error=>errorDeal(error,closeLoadLayout))

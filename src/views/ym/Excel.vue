@@ -29,8 +29,8 @@ ul > li {
   display: inline-block;
 }
 ul > li > span > img {
-  width: 50px;
-  height: 50px;
+  width: .6rem;
+  height: .6rem;
 }
 label {
   display: block;
@@ -67,7 +67,7 @@ select {
         </p>
         <ul > 
             <li v-for="(v,index) in downloadDate">
-                <span><img src="../../assets/ym/images/excelIcon.jpg" alt="icon"></span>
+                <span><img src="../../assets/ym/images/excel.svg" alt="icon"></span>
                 <span> <label v-cloak for="">{{v}}</label> <label for=""> <a href="javascript:void(0)" @click="downLoadExcel(v)"> 下载报表</a></label></span>
             </li>
         </ul>
