@@ -39,6 +39,13 @@
 									<span v-show="list.payType==2" class="u-icon-wechat"></span>
 									<span v-show="list.payType==3" class="u-icon-alipay"></span>
 								</td></tr>
+								<tr><td>支付方式：</td><td>
+									<span v-show="list.payStatus==1" class="f-c-yellow">待支付</span>
+									<span v-show="list.payStatus==2" class="f-c-green">支付成功</span>
+									<span v-show="list.payStatus==3" class="f-c-red">支付失败</span>
+									<span v-show="list.payStatus==4" class="f-c-red">关闭订单</span>
+								</td></tr>
+								
 								<tr v-show="list.rechargeType==1"><td>产品号：</td><td>{{ list.productId }}</td></tr>
 								<tr><td>充值面额：</td><td>
 									<span v-if="list.rechargeType==1">{{ list.flowNum+list.flowUnit }}</span>

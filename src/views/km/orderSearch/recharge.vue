@@ -97,6 +97,7 @@
 					<th>充值面额</th>
 					<th>运营商</th>
 					<th>支付方式</th>
+					<th>支付状态</th>
 					<th>充值时间</th>
 					<th>操作人</th>
 					<th>订单状态</th>
@@ -122,6 +123,12 @@
 						<span v-show="todo.payType==1" class="u-icon-yuantelrecharge"></span>
 						<span v-show="todo.payType==2" class="u-icon-wechat"></span>
 						<span v-show="todo.payType==3" class="u-icon-alipay"></span>
+					</td>
+					<td>
+						<span v-show="todo.pay_status==1" class="f-c-yellow">待支付</span>
+						<span v-show="todo.pay_status==2" class="f-c-green">支付成功</span>
+						<span v-show="todo.pay_status==3" class="f-c-red">支付失败</span>
+						<span v-show="todo.pay_status==4" class="f-c-red">关闭订单</span>
 					</td>
 					<td>{{getDateTime(todo.rechargeTime)[6]}}</td>
 					<td>{{todo.userId}}<br/>（{{todo.userName}}）</td>
