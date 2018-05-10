@@ -161,7 +161,7 @@
         var userInfo=localStorage.getItem('KA_ECS_USER');
         userInfo=JSON.parse(userInfo);
         var customerId=userInfo.customerId;
-        var vm=this,url,whichBtn,json={"customerId": customerId,"orderId":'','phoneNumber':'',"cardNumber":'',"pageNum": "1","pageSize": "10","userName":'',"papersCode":'',"opTimeStart":vm.form.startTime,"opTimeEnd":vm.form.endTime};
+        var vm=this,url,whichBtn,json={"customerId": customerId,"orderId":'','phoneNumber':'',"cardNumber":'',"pageNum": page||1,"pageSize": "10","userName":'',"papersCode":'',"opTimeStart":vm.form.startTime,"opTimeEnd":vm.form.endTime};
 //单条件查询,构造发送给后台的json
         if(index===1){
           vm.off.buttonState=1;
