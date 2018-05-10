@@ -744,7 +744,6 @@ export default{
 				json.pageSize="10";
 				json.pageNum="-1";
 			}else{
-                console.log(type,vm.form.orderType);
 				if(type==1){
 					url='km-ecs/w/audit/ingInfo';
 					if(vm.form.orderType==4||vm.form.orderType==8)url='km-ecs/w/audit/getReinputInfo';

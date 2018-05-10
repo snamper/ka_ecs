@@ -97,7 +97,6 @@ export default{
 		        return false;
 			}
 			vm.AJAX('km-ecs/w/audit/dealerListDown',json,function(data){
-                console.log(data);
 				var frame=document.getElementById('downloadFrame');
 				frame.setAttribute('src',data.data.url);
 			})

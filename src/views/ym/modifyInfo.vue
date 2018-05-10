@@ -73,7 +73,6 @@ export default{
             let json={orderId:info.orderId,userName:info.userName,userAddress:info.userAddress,papersCode:info.papersCode};
             reqCommonMethod(json,false,"ym-ecs/c/audit/updateBuggingOrder")
             .then((data)=>{
-                console.log(data);                
                 if(data.code==200){
                     layer.open({
 			            content:'准同意信息修改成功',

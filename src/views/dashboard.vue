@@ -531,7 +531,6 @@ import CountUp from 'vue-countup-v2';
             min[j]=num;
           };
         }
-        //console.log(params.category[0])
         // option
         var option = {
           title: {

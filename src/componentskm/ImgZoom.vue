@@ -44,7 +44,7 @@ export default{
 		},
 		rotate:function(e){//旋转
 			var deg=parseInt(this.zoomStyle.transform.match(/\((\S*)deg/)[1]);
-			deg+=90;
+			deg-=90;
 			this.transformStyle.r=deg;
 			var transform='translate3d(0,0,0) scale(1) rotate('+deg+'deg)';
 			this.zoomStyle.transform=transform;
