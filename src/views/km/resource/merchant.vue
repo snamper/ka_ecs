@@ -501,7 +501,7 @@ div.border-bottom{
                                         </tr>
                                         <tr>
                                             <td><span>所属商户渠道ID：</span>{{ ajaxData2.details.dealerId }}（{{ ajaxData2.details.companyName }}<a  class="details" @click="details(ajaxData2.details.dealerId,1,4)" href="javascript:void(0)">详情</a>）</td>
-                                            <td><span>经纬度：</span>{{ ajaxData2.details.longitude }},{{ ajaxData2.details.latitude }}<a href="javascript:void(0)" @click="toMap" class="details m-l">查看地图</a></td>
+                                            <td><span>经纬度：</span>{{ ajaxData2.details.latitude}},{{ ajaxData2.details.longitude}}<a href="javascript:void(0)" @click="toMap" class="details m-l">查看地图</a></td>
                                         </tr>
                                         <tr>
                                             <td><span>当前城市：</span>{{ ajaxData2.details.cityName }}</td>
@@ -782,7 +782,7 @@ export default{
         },
 		toMap(){
 			var w=document.documentElement.clientWidth,url='',vm=this;
-			w<640 ? url='http://map.baidu.com/mobile/?latlng='+vm.ajaxData.details.latitude+','+vm.ajaxData.details.longitude+'' : url='http://map.baidu.com/?latlng='+vm.ajaxData.details.latitude+','+vm.ajaxData.details.longitude+'';
+			w<640 ? url='http://map.baidu.com/mobile/?latlng='+vm.ajaxData2.details.latitude+','+vm.ajaxData2.details.longitude+'' : url='http://map.baidu.com/?latlng='+vm.ajaxData2.details.latitude+','+vm.ajaxData2.details.longitude+'';
 			window.open(url);
 		},
 		getTotal(){//获取顶部统计数据
