@@ -142,7 +142,6 @@ export default{
 	},
 	methods:{
         agree:function(){//审核同意
-            debugger;
             var vm=this,auditType=vm.off.auditType,url='';
 			var orderId=vm.auditData.orderId;
 			let json={
@@ -289,28 +288,43 @@ export default{
                 vm.off.isLoad=false;                  
             }).catch(error=>errorDeal(error)); 
 		},
-		dealAuditList:function(){//处理分配的订单
+        dealAuditList:function(){//处理分配的订单
+        debugger;
 			const vm=this,len=vm.list.length;
             vm.auditData='';
             vm.imgData=[];
 			if(len&&(vm.off.auditIndex+1)<=len){
 				vm.auditData=vm.list[vm.off.auditIndex];
-				if(vm.off.itemType==7){//过户办理
-					vm.imgData[0]={'src':vm.auditData.frontImageOld,'name':'原机主正面照片'};
-					vm.imgData[1]={'src':vm.auditData.backImageOld,'name':'原机主反面照片'};//
-					vm.imgData[2]={'src':vm.auditData.handImageOld,'name':'原机主手持照片'};
-					vm.imgData[3]={'src':vm.auditData.imageUrl,'name':'过户人正面照片'};
-					vm.imgData[4]={'src':vm.auditData.backImageUrl,'name':'过户人反面照片'};
-					vm.imgData[5]={'src':vm.auditData.handImage,'name':'过户人手持照片'};
-					vm.imgData[6]={'src':vm.auditData.signImage,'name':'过户人手签名照片'};
-				}else if(vm.off.itemType==1){//实名补登
-					vm.imgData[0]={'src':vm.auditData.oldReqParam.imageName,'name':'原正面照片'};
-					vm.imgData[1]={'src':vm.auditData.oldReqParam.backImageName,'name':'原反面照片'};//
-					vm.imgData[2]={'src':vm.auditData.oldReqParam.handImageName,'name':'原手持照片'};
-					vm.imgData[3]={'src':vm.auditData.reqParam.imageName,'name':'正面照片'};
-					vm.imgData[4]={'src':vm.auditData.reqParam.backImageName,'name':'反面照片'};
-					vm.imgData[5]={'src':vm.auditData.reqParam.handImageName,'name':'手持照片'};
-					vm.imgData[6]={'src':vm.auditData.reqParam.signImageName,'name':'手签名照片'};
+                if(vm.off.itemType==7){//过户办理
+                    this.$set(vm.imgData,0,{'src':vm.auditData.frontImageOld,'name':'原机主正面照片'})
+                    this.$set(vm.imgData,1,{'src':vm.auditData.backImageOld,'name':'原机主反面照片'})
+                    this.$set(vm.imgData,2,{'src':vm.auditData.handImageOld,'name':'原机主手持照片'})
+                    this.$set(vm.imgData,3,{'src':vm.auditData.imageUrl,'name':'过户人正面照片'})
+                    this.$set(vm.imgData,4,{'src':vm.auditData.backImageUrl,'name':'过户人反面照片'})
+                    this.$set(vm.imgData,5,{'src':vm.auditData.handImage,'name':'过户人手持照片'})
+                    this.$set(vm.imgData,6,{'src':vm.auditData.signImage,'name':'过户人手签名照片'})
+					// vm.imgData[0]={'src':vm.auditData.frontImageOld,'name':'原机主正面照片'};
+					// vm.imgData[1]={'src':vm.auditData.backImageOld,'name':'原机主反面照片'};//
+					// vm.imgData[2]={'src':vm.auditData.handImageOld,'name':'原机主手持照片'};
+					// vm.imgData[3]={'src':vm.auditData.imageUrl,'name':'过户人正面照片'};
+					// vm.imgData[4]={'src':vm.auditData.backImageUrl,'name':'过户人反面照片'};
+					// vm.imgData[5]={'src':vm.auditData.handImage,'name':'过户人手持照片'};
+					// vm.imgData[6]={'src':vm.auditData.signImage,'name':'过户人手签名照片'};
+                }else if(vm.off.itemType==1){//实名补登
+                    this.$set(vm.imgData,0,{'src':vm.auditData.oldReqParam.imageName,'name':'原正面照片'})
+                    this.$set(vm.imgData,1,{'src':vm.auditData.oldReqParam.backImageName,'name':'原反面照片'})
+                    this.$set(vm.imgData,2,{'src':vm.auditData.oldReqParam.handImageName,'name':'原手持照片'})
+                    this.$set(vm.imgData,3,{'src':vm.auditData.reqParam.imageName,'name':'正面照片'})
+                    this.$set(vm.imgData,4,{'src':vm.auditData.reqParam.backImageName,'name':'反面照片'})
+                    this.$set(vm.imgData,5,{'src':vm.auditData.reqParam.handImageName,'name':'手持照片'})
+                    this.$set(vm.imgData,6,{'src':vm.auditData.reqParam.signImageName,'name':'手签名照片'})
+					// vm.imgData[0]={'src':vm.auditData.oldReqParam.imageName,'name':'原正面照片'};
+					// vm.imgData[1]={'src':vm.auditData.oldReqParam.backImageName,'name':'原反面照片'};//
+					// vm.imgData[2]={'src':vm.auditData.oldReqParam.handImageName,'name':'原手持照片'};
+					// vm.imgData[3]={'src':vm.auditData.reqParam.imageName,'name':'正面照片'};
+					// vm.imgData[4]={'src':vm.auditData.reqParam.backImageName,'name':'反面照片'};
+					// vm.imgData[5]={'src':vm.auditData.reqParam.handImageName,'name':'手持照片'};
+					// vm.imgData[6]={'src':vm.auditData.reqParam.signImageName,'name':'手签名照片'};
 				}else{//开卡
 					vm.imgData=[
 						{'src':vm.auditData.imageUrl,'name':'正面'},
