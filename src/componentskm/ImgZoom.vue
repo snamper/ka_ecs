@@ -9,6 +9,7 @@
 		<a href="javascript:void(0)" class="slide slide-left" @click="slide(1)"></a>
 		<a href="javascript:void(0)" class="slide slide-right" @click="slide(2)"></a>
 		<a href="javascript:void(0)" class="rotate" @click="rotate"><span></span></a>
+		<a href="javascript:void(0)" class="rotate rotate2" @click="rotate2"><span></span></a>
 		<div class="text">{{imgData[imgIndex].name}}</div>
 	</div>
 </template>
@@ -45,6 +46,13 @@ export default{
 		rotate:function(e){//旋转
 			var deg=parseInt(this.zoomStyle.transform.match(/\((\S*)deg/)[1]);
 			deg-=90;
+			this.transformStyle.r=deg;
+			var transform='translate3d(0,0,0) scale(1) rotate('+deg+'deg)';
+			this.zoomStyle.transform=transform;
+        },
+        rotate2:function(e){//旋转
+			var deg=parseInt(this.zoomStyle.transform.match(/\((\S*)deg/)[1]);
+			deg+=90;
 			this.transformStyle.r=deg;
 			var transform='translate3d(0,0,0) scale(1) rotate('+deg+'deg)';
 			this.zoomStyle.transform=transform;
@@ -126,5 +134,7 @@ export default{
 .zoom-c>a{outline: none;}
 .m-zoomContent:hover .rotate, .m-zoomContent:hover .delete{ display: block;}
 .m-zoomContent>.text{position: absolute;top: 6px;left: 0;width: 100%;text-align: center;font-size: 0.16rem;font-weight:bold;}
+.zoom-c>.rotate2{position: absolute; display: none;left: 50%;margin-left: 0.15rem; bottom:5px;text-align: center; width:0.25rem;height: 0.25rem;}
+.zoom-c>.rotate2>span{background-image:url(../assets/km/images/rotates.png);background-repeat: no-repeat;background-size:0.25rem;background-position: center;display: inline-block;height: 0.25rem;width: 0.25rem;cursor: pointer;}
 </style>
 
