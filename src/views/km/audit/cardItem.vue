@@ -141,7 +141,8 @@ export default{
 		vm.getAuditList();
 	},
 	methods:{
-		agree:function(){//审核同意
+        agree:function(){//审核同意
+            debugger;
             var vm=this,auditType=vm.off.auditType,url='';
 			var orderId=vm.auditData.orderId;
 			let json={
@@ -179,7 +180,6 @@ export default{
 		},
 		refuse:function(obj){//审核拒绝
 			var str='',vm=this,orderId=vm.auditData.orderId,popIndex,ww=window.innerWidth,wwSet,auditType=vm.off.auditType;
-		
 			for(let i=0;i<vm.refuseArr.list.length;i++){
 				var b='';
 				if(vm.refuseArr.list[i].stopCard==1)b='<b class="f-c-red">★</b>';
@@ -291,7 +291,8 @@ export default{
 		},
 		dealAuditList:function(){//处理分配的订单
 			const vm=this,len=vm.list.length;
-			vm.auditData='';
+            vm.auditData='';
+            vm.imgData=[];
 			if(len&&(vm.off.auditIndex+1)<=len){
 				vm.auditData=vm.list[vm.off.auditIndex];
 				if(vm.off.itemType==7){//过户办理
