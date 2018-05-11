@@ -32,6 +32,11 @@ export default {
 	// 获取意见反馈统计数
 	[SET_OPINION_COUNT](state,res){
         state.opinionCount = Object.assign({}, state.opinionCount,res.data);
+		let isadmin=state.userInfo.isadmin; 
+        isadmin=isadmin.split(',');  
+        if(isadmin.indexOf("1")==-1&&isadmin.indexOf("11")==-1){
+            state.opinionCount = Object.assign({}, state.opinionCount,[0,0,0]);
+        }
 		let Opcount=this.getters.getOpinionTotal;
 		if(Opcount!=state.OpcountTotal){
 			state.offCountChange=true;

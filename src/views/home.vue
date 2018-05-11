@@ -48,7 +48,9 @@
             <ul class="m-mainCatalog">
                 <li :class="{'active':isCheckk}" @click="isCheck('k')" v-if="!off.powerKmHidden">
                     <span>卡盟</span>
-					<b class="animated m-lighter" :class="{bounce:offCountChange}" v-show="countTotal||opinionCount[0]">{{countTotal+opinionCount[0]}}</b> 
+					<b class="animated m-lighter" :class="{bounce:offCountChange}" v-if="countTotal||opinionCount[0]">{{countTotal+opinionCount[0]}}</b> 
+					<!-- <b class="animated m-lighter" :class="{bounce:offCountChange}" v-if="off.powerkm0||off.powerkm4||off.powerkm5||off.powerkm6">{{countTotal}}</b>  -->
+					<!-- <b class="animated m-lighter" :class="{bounce:offCountChange}" v-if="off.powerkm11">{{opinionCount[0]}}</b>  -->
 				</li>
 				<li :class="{'active':isChecky}" @click="isCheck('y')" v-if="!off.powerYmHidden">
                     <span>远盟</span>
@@ -276,7 +278,7 @@ export default{
             crumb:[{'name':''},{'name':''},{'name':''}],//面包屑
             isCheckk:false,
             isChecky:true,
-            count:'',
+            count:''
 		}
 	},
 	watch:{
@@ -359,6 +361,13 @@ export default{
             IsInArray(isadmin,'21')>-1?vm.off.powerkm21=true : vm.off.powerkm21=false;
             IsInArray(isadmin,'31')>-1?vm.off.powerkm31=true : vm.off.powerkm31=false;
             IsInArray(isadmin,'41')>-1?vm.off.powerkm41=true : vm.off.powerkm41=false;
+            if(IsInArray(isadmin,'0')==-1&&IsInArray(isadmin,'1')==-1&&IsInArray(isadmin,'4')==-1&&IsInArray(isadmin,'5')==-1||IsInArray(isadmin,'6')==-1){
+                vm.countTotal=0;
+            }
+            if(IsInArray(isadmin,'1')==-1&&IsInArray(isadmin,'11')==-1){
+                vm.opinionCount[0]=0;
+            }
+            console.log(vm.countTotal,vm.opinionCount[0]);
             vm.initMenu();
         },
         initMenu:function(){
