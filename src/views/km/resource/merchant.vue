@@ -174,10 +174,9 @@ div.border-bottom{
 
                     <div class="row pdl"  v-if="form.content==1">
                         <span class="dp">售卡范围：</span>
-                        <div class="m-form-radio">
-                            <label><span class="radio"><input type="radio" value="-1" v-model="form.businessScope" checked="checked"><span></span></span><span class="text">全部</span></label>
-                            <label><span class="radio"><input type="radio" value="1" v-model="form.businessScope" checked="checked"><span></span></span><span class="text">远特售卡</span></label>
-                            <label><span class="radio"><input type="radio" value="2" v-model="form.businessScope" checked="checked"><span></span></span><span class="text">联通售卡</span></label>
+                        <div class="m-form-checkbox">
+                            <label><span class="checkbox"><input type="checkbox" value="1" v-model="form.businessScope" checked="checked"><span></span></span><span class="text">远特售卡</span></label>
+                            <label><span class="checkbox"><input type="checkbox" value="2" v-model="form.businessScope" checked="checked"><span></span></span><span class="text">联通售卡</span></label>
                         </div>
                     </div>
                     <button class="f-btn f-btn-line" @click="searchList(1)">查询</button>
@@ -621,7 +620,7 @@ export default{
                 inputContext:'',//输入内容
                 context:"",
                 activationState:-1,
-                businessScope:-1,
+                businessScope:[1,2],
                 startTime:'',
                 endTime:'',
 				time:'',//点击时间控制
@@ -739,7 +738,8 @@ export default{
             //     pageNum:page||1
             // }
             if(vm.form.content==1&&vm.form.searchKind=="2"){
-                Object.assign(searchData,{status:vm.form.activationState,merchant_attribute:vm.form.businessScope}) 
+                let businessScope=vm.form.businessScope.join(',');
+                Object.assign(searchData,{status:vm.form.activationState,merchant_attribute:businessScope}) 
             }
             if(vm.form.searchKind=="1"&&vm.form.searchContext==''){
                 layer.open({
@@ -776,6 +776,7 @@ export default{
                 vm.downLoadData.codeId = codeId;
             delete vm.downLoadData.pageSize;
             delete vm.downLoadData.pageNum;
+            console.log(vm.downLoadData);
             createDownload(url,BASE64.encode(JSON.stringify(vm.downLoadData)),function(){
 		        vm.off.isLoad=false;
 	      	});
