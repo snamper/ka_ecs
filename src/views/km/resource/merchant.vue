@@ -382,7 +382,7 @@ div.border-bottom{
                                                 <a v-show="ajaxData.details.superDealerId" :href="'#/homek/resource/promoter/'+ajaxData.details.popDealerId" title="点击查看详情" class="details">{{ajaxData.details.popDealerId}}</a>【名称：{{ ajaxData.details.popDealerName||'--' }}】</td>
                                         </tr>
                                         <tr>
-                                            <td><span>证件照片：</span><a href="javascript:;" @click="closePop(1)" class="details">查看图片信息</a></td>
+                                            <td><span>证件照片：</span><a href="javascript:;" @click="lookMerchantImg" class="details">查看图片信息</a></td>
                                             <td><span>总部推广渠道：</span>{{ ajaxData.details.topDealerId||'--' }}【名称：{{ ajaxData.details.topDealerName||'--' }}】</td>
                                         </tr>
                                     </tbody>
@@ -619,7 +619,7 @@ export default{
             total:0,
             i:0,
             searchRoad:[],
-            merchantImgData:[{src:'',name:'手持证件照'},{src:'',name:'手签名'},],//商户照片存储
+            merchantImgData:[],//商户照片存储
             dataList:'',
             searchResultList:{
                 list:'',
@@ -970,6 +970,18 @@ export default{
 				callback:Function,//分页响应函数
 				total:0,//列表总条数
 			};
+        },
+        lookMerchantImg(){
+            const vm=this;
+
+            let imgUrl=_CONFIG ? _CONFIG[_CONFIG.env].REGISTER_MERCHANT_IMAGE_URL : '';
+            vm.merchantImgData=[
+                {'src':vm.ajaxData.details.frontImageUrl?imgUrl+vm.ajaxData.details.frontImageUrl:'','name':'正面照片'},
+                {'src':vm.ajaxData.details.backImageUrl?imgUrl+vm.ajaxData.details.backImageUrl:'','name':'反面照片'},
+                {'src':vm.ajaxData.details.handImageUrl?imgUrl+vm.ajaxData.details.handImageUrl:'','name':'手持照片'}
+            ]
+
+            vm.closePop(1);
         }
 	}
 };
