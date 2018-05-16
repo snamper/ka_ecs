@@ -3,44 +3,47 @@
   *@author: thinkmix
   *@date 2017-11-6
 * *-->
+<!--
+    模块待重构
+-->
 <style scoped>
-  /* .g-search-form>.form-c>.row{width:auto} */
-  /* .m-col-2>.col-l{display: none;} */
-  /* .m-col-2>.col-r{margin-left: 0;width: 2.5rem;} */
-  .total-head{position: relative;}
-  .total-head>span{margin-right: 10px;}
-  .total-head>span>b{font-weight: bold;}
-  .total-head>.f-btn-group{position: absolute;width:4rem;left: 50%;margin-left:-2rem;top:50%;margin-top: -0.15rem;}
-  .total-head>.f-btn-group>button{height:0.3rem;line-height:0.3rem;color:#717171 !important;border-radius: 5px; border-bottom-color:#ccc;-webkit-box-shadow:0 1px 1px rgba(90, 90, 90, 0.1);box-shadow:0 1px 1px rgba(90, 90, 90, 0.1);display:inline-block;padding: 0 3px;font-size:12px;cursor:pointer;background-color:#fff;border:1px solid transparent;border-color:#dadada;}
-  .total-head>.f-btn-group>button:hover{color:#333333;background-color:#f1f1f1;}
-  .total-head>.f-btn-group>button.active{color:#717171 !important;background-color:#F9F9F9;border-color:#c6c6c6;box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);}
-  .total-head>.m-select{display: none;margin-left:0.1rem;}
+/* .g-search-form>.form-c>.row{width:auto} */
+/* .m-col-2>.col-l{display: none;} */
+/* .m-col-2>.col-r{margin-left: 0;width: 2.5rem;} */
+.total-head{position: relative;}
+.total-head>span{margin-right: 10px;}
+.total-head>span>b{font-weight: bold;}
+.total-head>.f-btn-group{position: absolute;width:4rem;left: 50%;margin-left:-2rem;top:50%;margin-top: -0.15rem;}
+.total-head>.f-btn-group>button{height:0.3rem;line-height:0.3rem;color:#717171 !important;border-radius: 5px; border-bottom-color:#ccc;-webkit-box-shadow:0 1px 1px rgba(90, 90, 90, 0.1);box-shadow:0 1px 1px rgba(90, 90, 90, 0.1);display:inline-block;padding: 0 3px;font-size:12px;cursor:pointer;background-color:#fff;border:1px solid transparent;border-color:#dadada;}
+.total-head>.f-btn-group>button:hover{color:#333333;background-color:#f1f1f1;}
+.total-head>.f-btn-group>button.active{color:#717171 !important;background-color:#F9F9F9;border-color:#c6c6c6;box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);}
+.total-head>.m-select{display: none;margin-left:0.1rem;}
 
-  .merchant-total, .g-in-table, .merchant-total>tbody>tr>td{border:none !important;border-collapse:separate !important;}
-  .merchant-total th:first-child{border-right:1px solid #dfe6ec;}
-  .merchant-total tbody tr{border-top: none !important;}
-  .merchant-total>tbody>tr>td{padding:0 !important;}
-  .merchant-total{ border:1px solid #dfe6ec !important;}
+.merchant-total, .g-in-table, .merchant-total>tbody>tr>td{border:none !important;border-collapse:separate !important;}
+.merchant-total th:first-child{border-right:1px solid #dfe6ec;}
+.merchant-total tbody tr{border-top: none !important;}
+.merchant-total>tbody>tr>td{padding:0 !important;}
+.merchant-total{ border:1px solid #dfe6ec !important;}
 
-  .o-headTotal-table tr>td, .o-headTotal-table tr>th{border-right:1px solid #dfe6ec;}
-  .o-headTotal-table tr>td:first-child{background-color: #eef1f6;}
-  .o-headTotal-table thead th{ height:0.3rem; background-color: #eef1f6;font-weight: normal;}
-  .o-headTotal-table tbody tr>td{padding: 6px 0;}
-  .g-in-table{text-align: left !important;}
-  .g-in-table tr>td:nth-child(2){border-right:1px solid #dfe6ec;border-left:1px solid #dfe6ec;}
-  .g-in-table td>span{display: inline-block;text-align:right;}
-  .g-in-table.col-l td>span{width: 1.2rem;}
-  .g-in-table.col-r td>span{width: 1.6rem;}
-  .m-no-data{text-align: center;padding:0.1rem 0;}
-  .o-clr-bd tr:nth-child(even){background: #fff !important;}
-  @media screen and (max-width: 960px){
-  	.m-col-2>.col-r{width:auto;}
-	.total-head>.m-select{display: inline-block;}
-	.total-head>.f-btn-group{display: none;}
-	.g-in-table td>span{text-align:left;margin-left: 5px;}
-  	.g-in-table.col-l td>span, .g-in-table.col-r td>span{width:auto;}
-  }
-  .g-lis-head {
+.o-headTotal-table tr>td, .o-headTotal-table tr>th{border-right:1px solid #dfe6ec;}
+.o-headTotal-table tr>td:first-child{background-color: #eef1f6;}
+.o-headTotal-table thead th{ height:0.3rem; background-color: #eef1f6;font-weight: normal;}
+.o-headTotal-table tbody tr>td{padding: 6px 0;}
+.g-in-table{text-align: left !important;}
+.g-in-table tr>td:nth-child(2){border-right:1px solid #dfe6ec;border-left:1px solid #dfe6ec;}
+.g-in-table td>span{display: inline-block;text-align:right;}
+.g-in-table.col-l td>span{width: 1.2rem;}
+.g-in-table.col-r td>span{width: 1.6rem;}
+.m-no-data{text-align: center;padding:0.1rem 0;}
+.o-clr-bd tr:nth-child(even){background: #fff !important;}
+@media screen and (max-width: 960px){
+.m-col-2>.col-r{width:auto;}
+.total-head>.m-select{display: inline-block;}
+.total-head>.f-btn-group{display: none;}
+.g-in-table td>span{text-align:left;margin-left: 5px;}
+	.g-in-table.col-l td>span, .g-in-table.col-r td>span{width:auto;}
+}
+.g-lis-head {
     height: 45px;
     background-color: #fff;
     width: 100%;
@@ -67,6 +70,10 @@ div.border-bottom{
 }
 .pdl{
     padding-left:100px;
+}
+#merchantSearch{
+    height: 100%;
+    position: relative;
 }
 </style>
 <template>
@@ -279,10 +286,11 @@ div.border-bottom{
             </div>
         </div>
 		<!--商户ID-->
-	  	<div class="m-total-table g-list-box"  v-if="form.type==1&&ajaxData.details">
+	  	<div class="m-total-table g-list-box"  v-if="form.type==1&&ajaxData.details&&!off.modifyInfo">
             <header class="g-lis-head">
                 <a v-if="searchRoad.length" class="m-details-back u-icon-back" style="width:20px;height:20px;" @click="close('dealerId')"></a>
                 <div class="m-footD-btn">
+                    <a class="f-btn f-btn-danger" @click="off.modifyInfo=true">修改商户资料</a>
                 </div>
             </header>
             <div class="g-box" >
@@ -303,15 +311,15 @@ div.border-bottom{
                                             <td><span>有效总次数：</span>{{ ajaxData.details.totalNums }}</td>
                                         </tr>
                                         <tr>
-                                            <td><span>渠道id：</span>{{ ajaxData.details.dealerId }}</td>
+                                            <td><span>渠道ID：</span>{{ ajaxData.details.dealerId }}</td>
                                             <td><span>开卡成功次数：</span>{{ ajaxData.details.successNums }}</td>
                                         </tr>
                                         <tr>
-                                            <td><span>所在地址：</span>{{ ajaxData.details.address }}</td>
+                                            <td><span>证件地址：</span>{{ ajaxData.details.address }}</td>
                                             <td><span>额外成功次数：</span>{{ ajaxData.details.extraFrequency }}</td>
                                         </tr>
                                         <tr>
-                                            <td><span>门店地址：</span>{{ ajaxData.details.storeAddress }}</td>
+                                            <td><span>门店地址：</span>{{ ajaxData.details.storeAddress||'--' }}</td>
                                             <td><span>获得分数：</span>{{ ajaxData.details.getPoints }}</td>
                                         </tr>
                                         <tr>
@@ -327,61 +335,55 @@ div.border-bottom{
                                             <td><span>信用积分：</span>{{ ajaxData.details.creditNums }}</td>
                                         </tr>
                                         <tr>
+                                            <td><span>营业执照：</span>{{ ajaxData.details.businessLicense }}</td>
+                                            <td><span>真实信用积分：</span>{{ ajaxData.details.realCreditNums }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><span>售卡城市：</span>{{ ajaxData.details.openedCity }}</td>
+                                            <td><span>显示等级：</span>{{ ajaxData.details.showLevel }}</td>
+                                        </tr>
+                                        <tr>
                                             <td><span>售卡范围：</span>
-                                            	<em v-for="_item in ajaxData.details.openedScopes">
+                                                <em v-for="_item in ajaxData.details.openedScopes">
                                                     <em v-show="_item.type==1">远特售卡</em>
                                                     <em v-show="_item.type==2">,联通售卡</em>
                                                     <em v-show="_item.type==3">,移动售卡</em>
                                                     <em v-show="_item.type==4">,电信售卡</em>
                                                 </em>
                                                 <a href="javascript:;" @click="sellScopePower()" class="details">详情</a>
-                                                <!-- <b v-if="ajaxData.details.attribute==1">A（远特售卡）</b>
-                                                <b v-if="ajaxData.details.attribute==2">B（联通售卡）</b>
-                                                <b v-if="ajaxData.details.attribute==3">C（远特售卡+联通售卡）</b>
-                                                <b v-if="ajaxData.details.attribute==4">D（联通售卡+远特售卡）</b> -->
-                                                <!-- <b v-for="auditData in ajaxData.details.openedScopes" >
-                                                    <span v-if="auditData.type==1">远特售卡</span><span v-if="auditData.type==2">联通售卡</span><span v-if="auditData.type==3">移动售卡</span><span v-if="auditData.type==4">电信售卡</span>(<span>{{auditData.areas}}</span>)
-                                                </b> -->
                                             </td>
-                                            <td><span>真实信用积分：</span>{{ ajaxData.details.realCreditNums }}</td>
+                                            <td><span>真实等级：</span>{{ ajaxData.details.realLevel }}</td>
                                         </tr>
                                         <tr>
-                                            <td><span>激活状态：</span>
+                                            <td><span>激活订单号：</span>{{ ajaxData.details.registOrderId }}
                                                 <b v-if="ajaxData.details.status==0" class="f-c-green">已激活</b>
                                                 <b v-if="ajaxData.details.status==1" class="f-c-yellow">待激活</b>
                                                 <b v-if="ajaxData.details.status==2" class="f-c-blue">激活待审核</b>
                                             </td>
-                                            <td><span>显示等级：</span>{{ ajaxData.details.showLevel }}</td>
+                                            <td><span>基础分值：</span>{{ ajaxData.details.btScore }}</td>
                                         </tr>
                                         <tr>
-                                            <td><span>签约状态：</span>{{ ajaxData.details.isSignAgreement }}[{{ ajaxData.details.signTime }}]</td>
-                                            <td><span>真实等级：</span>{{ ajaxData.details.realLevel }}</td>
+                                            <td><span>激活时间：</span>{{ ajaxData.details.registTime }}</td>
+                                            <td><span>基础总次数：</span>{{ ajaxData.details.btFrequency }}</td>
+                                        </tr>
+                                        <tr>
+                                             <td><span>签约状态：</span>{{ ajaxData.details.isSignAgreement }}[{{ ajaxData.details.signTime }}]</td>
+                                             <td><span>基础成功次数：</span>{{ ajaxData.details.bsFrequency }}</td> 
                                         </tr>
                                         <tr>
                                             <td><span>设备信息：</span>
                                                 <a :href="'#/homek/resource/device/'+ajaxData.details.devMac" title="点击查看详情" class="details m-l">{{ ajaxData.details.devMac }}</a></td>
-                                            <td><span>基础分值：</span>{{ ajaxData.details.btScore }}</td>
-                                        </tr>
-                                        <tr>
                                             <td><span>上级商户：</span>
-                                            <!-- :href="'#/homek/resource/promoter/'+ajaxData.details.superDealerId" -->
                                                 <a href="javascript:;" v-show="ajaxData.details.superDealerId" @click="details(ajaxData.details.superDealerId,1,'x')"  title="点击查看详情" class="details">{{ajaxData.details.superDealerId}}</a>【名称：{{ ajaxData.details.superDealerName||'--' }}】</td>
-                                            <td><span>基础总次数：</span>{{ ajaxData.details.btFrequency }}</td>
                                         </tr>
                                         <tr>
-                                            <td><span>上级商户名称：</span>{{ajaxData.details.superDealerName}}（{{ajaxData.details.superDealerId}}）</td>
-                                            <td><span>基础成功次数：</span>{{ ajaxData.details.bsFrequency }}</td>
-                                            
-                                        </tr>
-                                        <tr>
-                                            <td><span>上级推广渠道ID：</span>
-                                                <a v-show="ajaxData.details.superDealerId" :href="'#/homek/resource/promoter/'+ajaxData.details.popDealerId" title="点击查看详情" class="details">{{ajaxData.details.popDealerId}}</a>【名称：{{ ajaxData.details.popDealerName||'--' }}】</td>
-                                            <td><span>推广渠道：</span>{{ ajaxData.details.popDealerId||'--' }}【名称：{{ ajaxData.details.popDealerName||'--' }}】</td>
-                                            
-                                        </tr>
-                                        <tr>
-                                            <td><span>总部推广渠道：</span>{{ ajaxData.details.topDealerId||'--' }}【名称：{{ ajaxData.details.topDealerName||'--' }}】</td>
                                             <td><span>欢迎页：</span>{{ ajaxData.details.bannerNames||'--' }}</td>
+                                            <td><span>上级推广渠道：</span>
+                                                <a v-show="ajaxData.details.superDealerId" :href="'#/homek/resource/promoter/'+ajaxData.details.popDealerId" title="点击查看详情" class="details">{{ajaxData.details.popDealerId}}</a>【名称：{{ ajaxData.details.popDealerName||'--' }}】</td>
+                                        </tr>
+                                        <tr>
+                                            <td><span>证件照片：</span><a href="javascript:;" @click="closePop(1)" class="details">查看图片信息</a></td>
+                                            <td><span>总部推广渠道：</span>{{ ajaxData.details.topDealerId||'--' }}【名称：{{ ajaxData.details.topDealerName||'--' }}】</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -389,6 +391,12 @@ div.border-bottom{
                             <td>
                                 <table class="g-in-table col-r o-clr-bd">
                                     <tbody>
+                                        <tr>
+                                            <td><span>微信提现账户：</span>{{ ajaxData.details.pickMoneyWechat }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><span>支付宝提现账户：</span>{{ ajaxData.details.pickMoneyAlipay }}</td>
+                                        </tr>
                                         <tr>
                                             <td><span>话分佣金历史总金额：</span>{{ parseFloat(ajaxData.details.incomeMoneyTotal)/100 }}元</td>
                                         </tr>
@@ -418,20 +426,14 @@ div.border-bottom{
                                         </tr>
                                         <tr>
                                             <td><span>号码模式：</span>{{ajaxData.details.phoneModel}}【{{ajaxData.details.dealer_model_describe||'--'}}】
-                                                <!-- <b v-if="ajaxData.details.phoneModel=='basemodel'||ajaxData.details.phoneModel==''">基本模式</b>
-                                                <b v-else>其它模式</b> -->
                                             </td>
                                         </tr>
                                         <tr>
                                             <td><span>折扣模式：</span>{{ajaxData.details.discountModel}}【{{ajaxData.details.discount_model_describe||'--'}}】
-                                                <!-- <b v-if="ajaxData.details.discountModel=='basemodel'||ajaxData.details.discountModel==''">基本模式</b>
-                                                <b v-else>其它模式</b> -->
                                             </td>
                                         </tr>
                                         <tr>
                                             <td><span>转账模式：</span>{{ajaxData.details.transferModel}}【{{ajaxData.details.model_code_describe||'--'}}】
-                                                <!-- <b v-if="ajaxData.details.transferModel=='basemodel'||ajaxData.details.transferModel==''">基本模式</b>
-                                                <b v-else>其它模式</b> -->
                                             </td>
                                         </tr>
                                     </tbody>
@@ -441,7 +443,7 @@ div.border-bottom{
                     </tbody>
                 </table>
             </div>
-            <section v-if="ajaxData.details" class="m-total-table">
+            <section v-if="ajaxData.details&&!off.modifyInfo" class="m-total-table">
                 <div class="total-head">商户下所有工号列表</div>
                 <table>
                     <thead>
@@ -581,12 +583,33 @@ div.border-bottom{
                 <my-page :page="ajaxData2.pageNum" :maxpage="ajaxData2.maxpage1" :callback="ajaxData2.callback"></my-page>
             </section>
 		</div>
+        <!--查看商户照片-->
+        <Pop v-if="off.pop" :callBack="closePop">
+            <div slot="content" style="height:500px">
+                <ImgZoom :imgData="merchantImgData">
+
+                </ImgZoom>
+            </div>
+        </Pop>
+        <!--修改商户信息-->
+        <ModifyInfo
+            v-if="off.modifyInfo"
+            :merchantInfo="ajaxData.details"
+            v-on:details="details"
+            ref="ModifyInfoCase">
+
+        </ModifyInfo>
   	</div>
 </template>
 <script>
 import {reqCommonMethod,requestGetMerchantList} from "../../../config/service.js";  
+import { getDateTime,errorDeal,createDownload,getStore } from "../../../config/utils.js";
+
 import pagination from "../../../componentskm/page.vue";
-import { getDateTime,errorDeal,createDownload,getStore } from "../../../config/utils.js"
+import Pop from '../../../componentskm/pop';
+import ImgZoom from '../../../componentskm/ImgZoom';
+import ModifyInfo from '../../../componentskm/more/modifyMerchantInfo';
+
 export default{
 	name:'merchantSearch',
 	data() {
@@ -596,6 +619,7 @@ export default{
             total:0,
             i:0,
             searchRoad:[],
+            merchantImgData:[{src:'',name:'手持证件照'},{src:'',name:'手签名'},],//商户照片存储
             dataList:'',
             searchResultList:{
                 list:'',
@@ -612,6 +636,8 @@ export default{
 			off:{
                 isLoad:!1,//ajax加载控制
                 detailskind:'',
+                pop:0,//弹出组件开关
+                modifyInfo:0//显示修改商户资料开关
 			},
 			form:{
                 content:1,//1:商户，2:工号
@@ -650,19 +676,22 @@ export default{
 				total:0,//列表总条数
 			},
 			totalInfo:{//头部数据统计
-				"merchantTotal": "0",
-		        "merchantActiviteNum": "0",
-		        "merchantActiviteWaitNum": "0",
-		        "merchantActiviteApplyNum": "0",
-		        "userTotal": "0",
-		        "userActiviteNum": "0",
-		        "userActiviteWaitNum": "0",
-		        "userActiviteApplyNum": "0",
+				merchantTotal: 0,
+		        merchantActiviteNum: 0,
+		        merchantActiviteWaitNum: 0,
+		        merchantActiviteApplyNum: 0,
+		        userTotal: 0,
+		        userActiviteNum: 0,
+		        userActiviteWaitNum: 0,
+		        userActiviteApplyNum: 0,
 			}
 		};
     },
 	components:{
         'my-page':pagination,
+        Pop,
+        ImgZoom,
+        ModifyInfo
 	},
 	created(){
 		var vm=this;
@@ -695,6 +724,9 @@ export default{
         inpBlur(){
             
         },
+        closePop(off){
+          this.off.pop=off;
+        },
         searchList(index,page){
             let vm=this,
             searchData={
@@ -726,17 +758,7 @@ export default{
             }else if(vm.form.searchKind=="2"){
                 Object.assign(searchData,searchDatazh)               
             }
-            // searchData={
-            //     chooseSearch:vm.form.searchKind,
-            //     username:vm.form.searchDealerName,
-            //     getListType:vm.form.content,
-            //     typeKey:vm.form.searchType,
-            //     typeValue:vm.form.searchContext,
-            //     timeStar:new Date(vm.form.startTime.replace(/-/g,'/')).getTime(),
-            //     timeEnd:new Date(vm.form.endTime.replace(/-/g,'/')).getTime(),
-            //     pageSize:10,
-            //     pageNum:page||1
-            // }
+
             if(vm.form.content==1&&vm.form.searchKind=="2"){
                 let businessScope=vm.form.businessScope.join(',');
                 Object.assign(searchData,{status:vm.form.activationState,merchant_attribute:businessScope}) 
@@ -776,7 +798,7 @@ export default{
                 vm.downLoadData.codeId = codeId;
             delete vm.downLoadData.pageSize;
             delete vm.downLoadData.pageNum;
-            console.log(vm.downLoadData);
+
             createDownload(url,BASE64.encode(JSON.stringify(vm.downLoadData)),function(){
 		        vm.off.isLoad=false;
 	      	});
@@ -815,8 +837,7 @@ export default{
             vm.off.detailskind=i;
             vm.form.type=type;
             vm.form.context=context;
-            // vm.ajaxData.list=[];
-            // vm.ajaxData2.list=[];
+
             vm.getDetails();
 		},
 		getDetails(isBtn){//获取商户/工号基本信息
@@ -844,12 +865,7 @@ export default{
 			}
 			vm.form.time=time;
 			vm.off.isLoad=true;
-			// vm.AJAX(url,json,function(data){
-			// 	vm.ajaxData.details=data.data;
-			// 	vm.getList();
-			// },function(){
-			// 	vm.off.isLoad=false;
-            // });
+
             reqCommonMethod(json,function(){vm.off.isLoad=false;},url)
             .then((data)=>{
                 vm.form.type==1?vm.ajaxData.details=data.data:vm.ajaxData2.details=data.data;
@@ -862,16 +878,7 @@ export default{
 			type==1 ? (json={dealerId:vm.form.context},url='km-ecs/w/audit/getUsersDetail') : (json={phone:vm.form.context,pageNum:page||1,pageSize:10,type:vm.form.paySource},url='km-ecs/w/user/paymengList');
 			if(vm.off.isLoad)return false;
 			vm.off.isLoad=true;
-            // vm.ajaxData.list=[];
-            // vm.AJAX(url,json,function(data){
-			// 	vm.ajaxData.list=data.data.list;
-			// 	vm.ajaxData.total=data.data.total||0;
-			// 	vm.ajaxData.maxpage=Math.ceil(parseInt(data.data.total)/10);
-			// 	vm.ajaxData.pageNum=page||1;
-			// 	vm.ajaxData.callback=function(v){vm.getList(v)};
-			// },function(){
-			// 	vm.off.isLoad=false;
-            // });
+
              reqCommonMethod(json,function(){vm.off.isLoad=false;},url)
              .then((data)=>{
 	            type==1?vm.$set(vm.ajaxData,'list',data.data.list):vm.$set(vm.ajaxData2,'list',data.data.list);
@@ -942,18 +949,7 @@ export default{
         },
         changeSearchType(){
             let vm=this;
-            // vm.searchResultList={
-            //     list:[],
-            //     maxpage:0,//最大页数
-			// 	pageNum:1,//当前页
-			// 	callback:Function,//分页响应函数
-            // },
-            // vm.searchResultList2={
-            //     list:[],
-            //     maxpage:0,//最大页数
-			// 	pageNum:1,//当前页
-			// 	callback:Function,//分页响应函数
-            // },
+
             vm.form.searchContext='',
             vm.form.searchDealerName="",
             vm.ajaxData={//ajax响应数据

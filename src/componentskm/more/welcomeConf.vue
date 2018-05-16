@@ -230,17 +230,17 @@ export default{
 				pop:0
 			},
 			userInfo:'',
-			form:[],
-			uploadThumb:[],
-			upload:{
+			form:[],//创建新的欢迎页表单数据
+			uploadThumb:[],//缩略图
+			upload:{//上传组件参数
 				files:'',
 				action:'km-ecs/w/banner/fileUpload',
 				response:'',
 				progress:0
 			},
-			list:[],
-			uploadLogList:[],
-			modifyInfo:''
+			list:[],//欢迎页列表
+			uploadLogList:[],//欢迎页上传历史列表
+			modifyInfo:''//存储要修改的欢迎页项
 		}
 	},
 	components:{
@@ -254,7 +254,7 @@ export default{
 		this.getUploadLogList();
 	},
 	methods:{
-		getList(){
+		getList(){//获取欢迎页列表
 			const vm=this;
 
 			reqCommonMethod({},true,'km-ecs/w/banner/list')
@@ -262,7 +262,7 @@ export default{
 	            vm.list=data.data.bannerList;
             })
 		},
-		getUploadLogList(){
+		getUploadLogList(){//获取欢迎页历史列表
 			const vm=this;
 
 			reqCommonMethod({},true,'km-ecs/w/banner/uploadLogs')
@@ -270,7 +270,7 @@ export default{
 	            vm.uploadLogList=data.data.bannerList;
             })
 		},
-		actionCreate(){
+		actionCreate(){//提交创建欢迎页
 			const vm=this;
 
 			let form=JSON.parse(JSON.stringify(vm.form));
@@ -304,7 +304,7 @@ export default{
 	            })
 			}
 		},
-		actionDelete(index){
+		actionDelete(index){//提交删除欢迎页项
 	      const vm=this;
 	      var layerIndex=layer.open({
 	          content:'<div style="padding:10px 20px;">Are you sure ?</div>',
@@ -324,7 +324,7 @@ export default{
 	          }
 	      })
 	    },
-	    actionModify(){
+	    actionModify(){//提交修改欢迎页项
 	    	const vm=this;
 	    	let modifyInfo=JSON.parse(JSON.stringify(vm.modifyInfo));
 
@@ -349,7 +349,7 @@ export default{
 	            })
 			}
 	    },
-	    closePop(off){
+	    closePop(off){//关闭弹窗
 	     
 	      if(!off){
 	      	this.modifyInfo='';
@@ -359,17 +359,17 @@ export default{
 	      this.upload.files='';
 
 	    },
-	    modifyPop(index){
+	    modifyPop(index){//修改欢迎弹窗
 	    	this.closePop(true);
 	    	this.off.uploadIndex=998;
 	    	this.modifyInfo=JSON.parse(JSON.stringify(this.list[index]));
 	    	this.modifyInfo.imageUrl=this.modifyInfo.imageUrl;
 	    	this.modifyInfo.progress=0;
 	    },
-		actionUploadExcel(){
+		actionUploadExcel(){//确认上传excel
 			this.$refs.fileUploadCase.tryAjaxUpload();
 		},
-		showCreate(off){
+		showCreate(off){//新建欢迎页
 			if(off){
 				this.form.push({
 		            bannerId:'',
@@ -386,7 +386,7 @@ export default{
 			}
 			this.off.create=off;
 		},
-		newCreate(){
+		newCreate(){//添加欢迎页
 			let len=this.form.length;
 			if(len<3){
 				this.form.push({
@@ -403,14 +403,14 @@ export default{
 		        });
 			}else errorDeal('最多同时新增三条记录');
 		},
-		deleteCreate(index){
+		deleteCreate(index){//删除新建欢迎页
 			this.uploadThumb.splice(index,1);
 			this.form.splice(index,1);
 			if(!this.form.length){
 				this.showCreate()
 			}
 		},
-		shiftLock(index){
+		shiftLock(index){//切换欢迎页属性
 			const vm=this;
 			setTimeout(function(){
 				if(vm.off.uploadIndex==998){
@@ -422,10 +422,10 @@ export default{
 			},300)
 			
 		},
-		setUploadIndex(index){
+		setUploadIndex(index){//设置上传的index
 			this.off.uploadIndex=index;
 		},
-		imageuploaded(res,data) {
+		imageuploaded(res,data) {//上传文件完成统一回调
 			const vm=this;
 			let uploadIndex=vm.off.uploadIndex;
 			setTimeout(function(){
@@ -454,7 +454,7 @@ export default{
 	       		vm.errorhandle(res)
 	       	}
 	    },
-	    imagechanged(res) {
+	    imagechanged(res) {//上传文件添加文件统一回调
 			const vm=this;
 			let uploadIndex=vm.off.uploadIndex;
 
@@ -471,7 +471,7 @@ export default{
 			}
 			
 		},
-		onprogress(res){
+		onprogress(res){//上传文件进度条统一回调
 			let progress=(res.loaded/res.total*100).toFixed(2)+'%';
 			let uploadIndex=this.off.uploadIndex;
 
@@ -481,7 +481,7 @@ export default{
 				this.modifyInfo.progress=progress;
 			}else this.uploadThumb[uploadIndex].progress=progress;
 		},
-		errorhandle(err) {
+		errorhandle(err) {//上传文件错误统一回调
 		  var vm=this;
 		  vm.upload.files='';
 		  let uploadIndex=vm.off.uploadIndex;

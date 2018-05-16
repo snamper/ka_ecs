@@ -10,22 +10,32 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-        '/km_center_ecs/user':{
-            target:'http://192.168.10.24:8091',
+        '/km_center_ecs/':{
+            target:'http://192.168.10.24:8081',
             changeOrigin:true,
+            pathRewrite:{
+                '^/km_center_ecs/':'/km_center_ecs/'
+            }
         },
-        '/km-ecs/w':{
+        '/km-ecs/':{
             target:'http://192.168.10.24:6086',
             changeOrigin:true,
             pathRewrite:{
-                '^/km-ecs/w':'/ecs/w'
+                '^/km-ecs/':'/ecs/'
             }
         },
-        '/ym-ecs/c':{
+        '/km_ums/':{
+            target:'http://192.168.10.117:6088',
+            changeOrigin:true,
+            pathRewrite:{
+                '^/km_ums/':'/ums/'
+            }
+        },
+        '/ym-ecs/':{
             target:'http://192.168.10.110:8080',
             changeOrigin:true,
             pathRewrite:{
-                '^/ym-ecs/c':'/ecs/c'
+                '^/ym-ecs/':'/ecs/'
             }
         },
     },

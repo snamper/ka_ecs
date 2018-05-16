@@ -1,7 +1,7 @@
 <template>
   <div class="m-fileUpload-box">
     <label :for="'upload-input-' + formID">{{text}}</label>
-    <form id="uploadFileForm">
+    <form class="upload-form">
       <input
         v-bind:disabled="uploading"
         v-bind:id="'upload-input-' + formID"
@@ -84,7 +84,10 @@
         return dq.querySelector(str);
       },
       clearFileInput() {
-        document.getElementById('uploadFileForm').reset();
+        let uploadForm=document.querySelector('.upload-form');
+        for(let i=0,len=uploadForm,length;i<len;i++){
+          uploadForm[i].reset()
+        }
       },
       change(e) {
         let fileVal = document.querySelector('#upload-input-' + this.formID).value.replace(/C:\\fakepath\\/i, "");
@@ -313,7 +316,7 @@
   overflow: hidden;
   color: #fff;
 } */
-.m-fileUpload-box>label, #uploadFileForm, #uploadFileForm>input{
+.m-fileUpload-box>label, .upload-form, .upload-form>input{
   position: absolute;
   width: 100%;
   height: 100%;
@@ -326,7 +329,7 @@
   cursor: pointer;
   z-index: 999;
 }
-#uploadFileForm{
+.upload-form{
   opacity: 0;
 }
 </style>

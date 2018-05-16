@@ -1,3 +1,8 @@
+<!--**
+  *@info 弹窗外壳组件
+  *@author: thinkmix
+  *@date 2018-04-26
+* *-->
 <template>
   <div class="m-pop-box">
     <div class="box">

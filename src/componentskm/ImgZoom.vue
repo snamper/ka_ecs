@@ -6,10 +6,9 @@
 <template>
 	<div class="m-zoomContent zoom-c">
 		<div class="m-img-c"><div id="imgContent" class="fGrab" :class="{fGrabbing:mouse.off}" :style="zoomStyle" @mousemove="mouseOn" @mousedown="mouseOn" @mouseup="mouseOn" @mouseout="mouseOn" @mousewheel="mouseOn"></div></div>
-		<a href="javascript:void(0)" class="slide slide-left" @click="slide(1)"></a>
-		<a href="javascript:void(0)" class="slide slide-right" @click="slide(2)"></a>
+		<a href="javascript:void(0)" v-show="isSlide" class="slide slide-left" @click="slide(1)"></a>
+		<a href="javascript:void(0)" v-show="isSlide" class="slide slide-right" @click="slide(2)"></a>
 		<a href="javascript:void(0)" class="rotate" @click="rotate"><span></span></a>
-		<a href="javascript:void(0)" class="rotate rotate2" @click="rotate2"><span></span></a>
 		<div class="text">{{imgData[imgIndex].name}}</div>
 	</div>
 </template>
@@ -18,7 +17,14 @@ import noImage from '../assets/km/images/no-img.png';
 export default{
 	name:'pagination',
 	props:{
-		imgData:Array,
+		imgData:{
+			type: Array,
+			default: []
+		},
+		isSlide: {//是否左右滑动
+			type: Boolean,
+			default: true
+		},
 	},
 	data(){
 		return {
@@ -50,13 +56,6 @@ export default{
 			var transform='translate3d(0,0,0) scale(1) rotate('+deg+'deg)';
 			this.zoomStyle.transform=transform;
         },
-        rotate2:function(e){//旋转
-			var deg=parseInt(this.zoomStyle.transform.match(/\((\S*)deg/)[1]);
-			deg+=90;
-			this.transformStyle.r=deg;
-			var transform='translate3d(0,0,0) scale(1) rotate('+deg+'deg)';
-			this.zoomStyle.transform=transform;
-		},
 		slide:function(index){//切换
 			var len=this.imgData.length;
 			index==2?this.imgIndex<(len-1) ? this.imgIndex+=1 : this.imgIndex=0 : this.imgIndex>0 ? this.imgIndex-=1 : this.imgIndex=len-1;

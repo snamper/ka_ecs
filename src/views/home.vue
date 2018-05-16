@@ -367,7 +367,6 @@ export default{
             if(IsInArray(isadmin,'1')==-1&&IsInArray(isadmin,'11')==-1){
                 vm.opinionCount[0]=0;
             }
-            console.log(vm.countTotal,vm.opinionCount[0]);
             vm.initMenu();
         },
         initMenu:function(){

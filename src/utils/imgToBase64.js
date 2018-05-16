@@ -35,6 +35,7 @@ function imgToBase64(params) {
     });
 
     var readerOnload = function (e) {
+
         var img = new Image();
         img.src = e.target.result;
         img.onload = function () {
@@ -73,6 +74,8 @@ function imgToBase64(params) {
                 }
             }
             options.complete(canvas.toDataURL("image/jpeg",options.quality));
+            canvas = null;
+            img = null;
         };
     };
     Reader.readAsDataURL(options.file);
