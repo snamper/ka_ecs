@@ -231,7 +231,7 @@ export default{
 				 }else sql+=" AND A.order_status="+orderStatus;
 			}else if(vm.form.orderType==2){
 				if(orderStatus==0){
-					sql+=" AND (A.order_status=1 OR A.order_status=2)";
+					sql+=" AND (A.order_status=1 OR A.order_status=2 OR A.order_status=6)";
 				}else if(orderStatus==1){
 					sql+=" AND (A.order_status=1 OR A.order_status=6)";
 				}else sql+=" AND A.order_status="+orderStatus;
