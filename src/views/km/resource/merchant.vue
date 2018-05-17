@@ -360,16 +360,17 @@ div.border-bottom{
                                         </tr>
                                         <tr>
                                             <td><span>激活订单号：</span>{{ ajaxData.details.registOrderId }}
-                                                <b v-show="ajaxData.details.orderStatus==0"></b>
-                                                <b v-show="ajaxData.details.orderStatus==1" class="f-c-yellow">通过</b>
-                                                <b v-show="ajaxData.details.orderStatus==2" class="f-c-red">拒绝</b>
-                                                <b v-show="ajaxData.details.orderStatus==3" class="f-c-red">待分配</b>
-                                                <b v-show="ajaxData.details.orderStatus==4" class="f-c-yellow">已分配</b>
-                                                <b v-show="ajaxData.details.orderStatus==5" class="f-c-yellow">等待自动审核</b>
                                                 <b v-show="ajaxData.details.auditType==0"></b>
                                                 <b v-show="ajaxData.details.auditType==1">/实时审核</b>
                                                 <b v-show="ajaxData.details.auditType==2">/事后审核</b>
                                                 <b v-show="ajaxData.details.auditType==3">/自动审核</b>
+                                                <b v-show="ajaxData.details.orderStatus==0"></b>
+
+                                                <b v-show="ajaxData.details.orderStatus==1" class="f-c-green">通过</b>
+                                                <b v-show="ajaxData.details.orderStatus==2" class="f-c-red">拒绝</b>
+                                                <b v-show="ajaxData.details.orderStatus==3" class="f-c-red">待分配</b>
+                                                <b v-show="ajaxData.details.orderStatus==4" class="f-c-yellow">已分配</b>
+                                                <b v-show="ajaxData.details.orderStatus==5" class="f-c-yellow">等待自动审核</b>
                                             </td>
                                             <td><span>基础分值：</span>{{ ajaxData.details.btScore }}</td>
                                         </tr>
@@ -378,7 +379,7 @@ div.border-bottom{
                                             <td><span>基础总次数：</span>{{ ajaxData.details.btFrequency }}</td>
                                         </tr>
                                         <tr>
-                                             <td><span>签约状态：</span>{{ ajaxData.details.isSignAgreement }}[{{ ajaxData.details.signTime }}]</td>
+                                             <td><span>签约状态：</span><b :class="{fCGreen:ajaxData.details.isSignAgreement=='已签约',fCRed:ajaxData.details.isSignAgreement=='未签约'}">{{ ajaxData.details.isSignAgreement }}</b>[{{ ajaxData.details.signTime }}]</td>
                                              <td><span>基础成功次数：</span>{{ ajaxData.details.bsFrequency }}</td> 
                                         </tr>
                                         <tr>

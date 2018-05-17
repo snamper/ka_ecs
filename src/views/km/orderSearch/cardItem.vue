@@ -512,7 +512,7 @@ export default{
 				json.context=context;
                 json.searchtype=vm.form.select;
                 
-			if(vm.form.orderType==7||vm.off.orderType==6){
+			if(vm.form.orderType==7||vm.form.orderType==6){
                 url='km-ecs/w/audit/downloadEdList';
             }else if(vm.form.orderType==4||vm.form.orderType==8){
 				url='km-ecs/w/audit/downloadReinput';
