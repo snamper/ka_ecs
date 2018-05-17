@@ -124,6 +124,8 @@
 						<span v-show="todo.orderStatus==2" class="f-c-red">拒绝</span>
 						<span v-show="todo.orderStatus==3" class="f-c-yellow">待分配</span>
 						<span v-show="todo.orderStatus==4" class="f-c-green">已分配</span>
+						<span v-show="todo.orderStatus==5" class="f-c-yellow">等待自动审核</span>
+						<span v-show="todo.orderStatus==6" class="f-c-green">复审通过</span>
 					</td>
 					<td>{{todo.companyName}}</td>
 					<td>{{todo.userName}}</td>

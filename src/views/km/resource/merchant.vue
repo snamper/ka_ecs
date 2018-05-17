@@ -371,6 +371,7 @@ div.border-bottom{
                                                 <b v-show="ajaxData.details.orderStatus==3" class="f-c-red">待分配</b>
                                                 <b v-show="ajaxData.details.orderStatus==4" class="f-c-yellow">已分配</b>
                                                 <b v-show="ajaxData.details.orderStatus==5" class="f-c-yellow">等待自动审核</b>
+                                                <b v-show="ajaxData.details.orderStatus==6" class="f-c-green">复审通过</b>
                                             </td>
                                             <td><span>基础分值：</span>{{ ajaxData.details.btScore }}</td>
                                         </tr>
