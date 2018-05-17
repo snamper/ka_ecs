@@ -312,13 +312,13 @@ export default{
 				layer.open({
 					content:'修改成功',
 					skin: 'msg',
-					time: 3,
+					time: 1,
 					msgSkin:'success',
 				});
 				setTimeout(function(){
 					vm.close();
-					vm.$emit && vm.$emit('details', vm.merchantInfo.dealerId,1,1);
-				},2000)
+					vm.$emit && vm.$emit('details', vm.merchantInfo.dealerId,1,'x');
+				},1000)
 			})
 		},
 		close:function(){//关闭修改组件
