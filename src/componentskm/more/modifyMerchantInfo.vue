@@ -279,11 +279,26 @@ export default{
 
 			let json=JSON.parse(JSON.stringify(vm.modifyInfo));//深拷贝
 
-			if(!json.businessLicense){
-				errorDeal('请输入证件号码');
+			if(!json.businessLicense.match(/^\w+$/)){
+				errorDeal('证件号码格式错误');
 				return false;
 			}else if(!json.storeAddress){
 				errorDeal('请输入门店地址');
+				return false;
+			}else if(json.pickMoneyWechat&&!json.pickMoneyWechat.match(/^\w+$/)){
+				errorDeal('微信提现账户格式错误');
+				return false;
+			}else if(json.pickMoneyAlipay&&!json.pickMoneyAlipay.match(/^\w+$/)){
+				errorDeal('支付宝提现账户格式错误');
+				return false;
+			}else if(json.superDealerId&&!json.superDealerId.match(/^\w+$/)){
+				errorDeal('上级商户ID格式错误');
+				return false;
+			}else if(json.popDealerId&&!json.popDealerId.match(/^\w+$/)){
+				errorDeal('上级推广渠道ID格式错误');
+				return false;
+			}else if(json.topDealerId&&!json.topDealerId.match(/^\w+$/)){
+				errorDeal('总部推广渠道ID格式错误');
 				return false;
 			}
 

@@ -991,9 +991,10 @@ export default{
             const vm=this;
 
             let imgUrl=_CONFIG ? _CONFIG[_CONFIG.env].REGISTER_MERCHANT_IMAGE_URL : '';
+            let merchantType=vm.ajaxData.details.merchantType;
             vm.merchantImgData=[
-                {'src':vm.ajaxData.details.frontImageUrl?imgUrl+vm.ajaxData.details.frontImageUrl:'','name':'正面照片'},
-                {'src':vm.ajaxData.details.backImageUrl?imgUrl+vm.ajaxData.details.backImageUrl:'','name':'反面照片'},
+                {'src':vm.ajaxData.details.frontImageUrl?imgUrl+vm.ajaxData.details.frontImageUrl:'','name':merchantType=='企业' ? '门店左照片' : '正面照片'},
+                {'src':vm.ajaxData.details.backImageUrl?imgUrl+vm.ajaxData.details.backImageUrl:'','name':merchantType=='企业' ? '门店右照片' : '反面照片'},
                 {'src':vm.ajaxData.details.handImageUrl?imgUrl+vm.ajaxData.details.handImageUrl:'','name':'手持照片'}
             ]
 
