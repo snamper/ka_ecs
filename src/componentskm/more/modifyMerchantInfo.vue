@@ -23,7 +23,7 @@
 									<tr><td>网点名称：</td><td>{{merchantInfo.companyName}}</td></tr>
 									<tr><td>渠道ID：</td><td>{{merchantInfo.dealerId}}</td></tr>
 									<tr><td>证件地址：</td><td>{{merchantInfo.address}}</td></tr>
-									<tr><td><em class="f-c-red">*</em>营业执照：</td><td>
+									<tr><td><em class="f-c-red">*</em>证件号码：</td><td>
 										<input v-model="modifyInfo.businessLicense" type="text" maxlength="32">
 										<span class="u-icon-red_close" @click="inputClear('businessLicense')"></span>
 									</td></tr>
@@ -39,36 +39,36 @@
 							              </ul>
 							            </div>
 									</td></tr>
-									<tr><td><em class="f-c-red">*</em>微信提现账户：</td><td>
+									<tr><td>微信提现账户：</td><td>
 										<input v-model="modifyInfo.pickMoneyWechat" type="text" maxlength="32">
 										<span class="u-icon-red_close" @click="inputClear('pickMoneyWechat')"></span>
 									</td>
 									</tr>
-									<tr><td><em class="f-c-red">*</em>支付宝提现账户：</td><td>
+									<tr><td>支付宝提现账户：</td><td>
 										<input v-model="modifyInfo.pickMoneyAlipay" type="text" maxlength="32">
 										<span class="u-icon-red_close" @click="inputClear('pickMoneyAlipay')"></span>
 									</td></tr>
-									<tr><td><em class="f-c-red">*</em>上级商户名称：</td><td>
+									<tr><td>上级商户名称：</td><td>
 										<input v-model="modifyInfo.superDealerName" type="text" maxlength="32">
 										<span class="u-icon-red_close" @click="inputClear('superDealerName')"></span>
 									</td></tr>
-									<tr><td><em class="f-c-red">*</em>上级商户ID：</td><td>
+									<tr><td>上级商户ID：</td><td>
 										<input v-model="modifyInfo.superDealerId" type="text" maxlength="32">
 										<span class="u-icon-red_close" @click="inputClear('superDealerId')"></span>
 									</td></tr>
-									<tr><td><em class="f-c-red">*</em>上级推广渠道名称：</td><td>
+									<tr><td>上级推广渠道名称：</td><td>
 										<input v-model="modifyInfo.popDealerName" type="text" maxlength="32">
 										<span class="u-icon-red_close" @click="inputClear('popDealerName')"></span>
 									</td></tr>
-									<tr><td><em class="f-c-red">*</em>上级推广渠道ID：</td><td>
+									<tr><td>上级推广渠道ID：</td><td>
 										<input v-model="modifyInfo.popDealerId" type="text" maxlength="32">
 										<span class="u-icon-red_close" @click="inputClear('popDealerId')"></span>
 									</td></tr>
-									<tr><td><em class="f-c-red">*</em>总部推广渠道名称：</td><td>
+									<tr><td>总部推广渠道名称：</td><td>
 										<input v-model="modifyInfo.topDealerName" type="text" maxlength="32">
 										<span class="u-icon-red_close" @click="inputClear('topDealerName')"></span>
 									</td></tr>
-									<tr><td><em class="f-c-red">*</em>总部推广渠道ID：</td><td>
+									<tr><td>总部推广渠道ID：</td><td>
 										<input v-model="modifyInfo.topDealerId" type="text" maxlength="32">
 										<span class="u-icon-red_close" @click="inputClear('topDealerId')"></span>
 									</td></tr>
@@ -279,12 +279,11 @@ export default{
 
 			let json=JSON.parse(JSON.stringify(vm.modifyInfo));//深拷贝
 
-			let space=Object.values(json).filter((item)=>{
-				return item==='';
-			})
-
-			if(space.length){
-				errorDeal('你有东西没填完，自己找找吧！');
+			if(!json.businessLicense){
+				errorDeal('请输入证件号码');
+				return false;
+			}else if(!json.storeAddress){
+				errorDeal('请输入门店地址');
 				return false;
 			}
 

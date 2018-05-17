@@ -290,7 +290,7 @@ div.border-bottom{
             <header class="g-lis-head">
                 <a v-if="searchRoad.length" class="m-details-back u-icon-back" style="width:20px;height:20px;" @click="close('dealerId')"></a>
                 <div class="m-footD-btn">
-                    <a class="f-btn f-btn-danger" @click="off.modifyInfo=true">修改商户资料</a>
+                    <a class="f-btn f-btn-danger" @click="off.modifyInfo=true" v-show="ajaxData.details.status==0">修改商户资料</a>
                 </div>
             </header>
             <div class="g-box" >
@@ -335,7 +335,7 @@ div.border-bottom{
                                             <td><span>信用积分：</span>{{ ajaxData.details.creditNums }}</td>
                                         </tr>
                                         <tr>
-                                            <td><span>营业执照：</span>{{ ajaxData.details.businessLicense }}</td>
+                                            <td><span>证件号码：</span>{{ ajaxData.details.businessLicense }}</td>
                                             <td><span>真实信用积分：</span>{{ ajaxData.details.realCreditNums }}</td>
                                         </tr>
                                         <tr>
@@ -379,10 +379,13 @@ div.border-bottom{
                                         <tr>
                                             <td><span>欢迎页：</span>{{ ajaxData.details.bannerNames||'--' }}</td>
                                             <td><span>上级推广渠道：</span>
-                                                <a v-show="ajaxData.details.superDealerId" :href="'#/homek/resource/promoter/'+ajaxData.details.popDealerId" title="点击查看详情" class="details">{{ajaxData.details.popDealerId}}</a>【名称：{{ ajaxData.details.popDealerName||'--' }}】</td>
+                                                <a :href="'#/homek/resource/promoter/'+ajaxData.details.popDealerId" title="点击查看详情" class="details">{{ajaxData.details.popDealerId}}</a>【名称：{{ ajaxData.details.popDealerName||'--' }}】</td>
                                         </tr>
                                         <tr>
-                                            <td><span>证件照片：</span><a href="javascript:;" @click="lookMerchantImg" class="details">查看图片信息</a></td>
+                                            <td><span>证件照片：</span>
+                                                <a v-show="ajaxData.details.status==0" href="javascript:;" @click="lookMerchantImg" class="details">查看图片信息</a>
+                                                <span v-show="ajaxData.details.status!=0">暂无图片</span>
+                                            </td>
                                             <td><span>总部推广渠道：</span>{{ ajaxData.details.topDealerId||'--' }}【名称：{{ ajaxData.details.topDealerName||'--' }}】</td>
                                         </tr>
                                     </tbody>
