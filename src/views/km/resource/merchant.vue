@@ -311,7 +311,11 @@ div.border-bottom{
                                             <td><span>有效总次数：</span>{{ ajaxData.details.totalNums }}</td>
                                         </tr>
                                         <tr>
-                                            <td><span>渠道ID：</span>{{ ajaxData.details.dealerId }}</td>
+                                            <td><span>渠道ID：</span>{{ ajaxData.details.dealerId }}
+                                                <b v-if="ajaxData.details.status==0" class="f-c-green">已激活</b>
+                                                <b v-if="ajaxData.details.status==1" class="f-c-yellow">待激活</b>
+                                                <b v-if="ajaxData.details.status==2" class="f-c-blue">激活待审核</b>
+                                            </td>
                                             <td><span>开卡成功次数：</span>{{ ajaxData.details.successNums }}</td>
                                         </tr>
                                         <tr>
@@ -356,9 +360,16 @@ div.border-bottom{
                                         </tr>
                                         <tr>
                                             <td><span>激活订单号：</span>{{ ajaxData.details.registOrderId }}
-                                                <b v-if="ajaxData.details.status==0" class="f-c-green">已激活</b>
-                                                <b v-if="ajaxData.details.status==1" class="f-c-yellow">待激活</b>
-                                                <b v-if="ajaxData.details.status==2" class="f-c-blue">激活待审核</b>
+                                                <b v-show="ajaxData.details.orderStatus==0"></b>
+                                                <b v-show="ajaxData.details.orderStatus==1" class="f-c-yellow">通过</b>
+                                                <b v-show="ajaxData.details.orderStatus==2" class="f-c-red">拒绝</b>
+                                                <b v-show="ajaxData.details.orderStatus==3" class="f-c-red">待分配</b>
+                                                <b v-show="ajaxData.details.orderStatus==4" class="f-c-yellow">已分配</b>
+                                                <b v-show="ajaxData.details.orderStatus==5" class="f-c-yellow">等待自动审核</b>
+                                                <b v-show="ajaxData.details.auditType==0"></b>
+                                                <b v-show="ajaxData.details.auditType==1">/实时审核</b>
+                                                <b v-show="ajaxData.details.auditType==2">/事后审核</b>
+                                                <b v-show="ajaxData.details.auditType==3">/自动审核</b>
                                             </td>
                                             <td><span>基础分值：</span>{{ ajaxData.details.btScore }}</td>
                                         </tr>
