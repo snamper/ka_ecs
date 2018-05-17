@@ -361,9 +361,9 @@ div.border-bottom{
                                         <tr>
                                             <td><span>激活订单号：</span>{{ ajaxData.details.registOrderId }}
                                                 <b v-show="ajaxData.details.auditType==0"></b>
-                                                <b v-show="ajaxData.details.auditType==1">/实时审核</b>
-                                                <b v-show="ajaxData.details.auditType==2">/事后审核</b>
-                                                <b v-show="ajaxData.details.auditType==3">/自动审核</b>
+                                                <b v-show="ajaxData.details.auditType==1">实时审核/</b>
+                                                <b v-show="ajaxData.details.auditType==2">事后审核/</b>
+                                                <b v-show="ajaxData.details.auditType==3">自动审核/</b>
                                                 <b v-show="ajaxData.details.orderStatus==0"></b>
 
                                                 <b v-show="ajaxData.details.orderStatus==1" class="f-c-green">通过</b>
