@@ -26,6 +26,8 @@
 										<span v-show="list.orderStatus==2" class="f-c-red">拒绝</span>
 										<span v-show="list.orderStatus==3" class="f-c-yellow">待分配</span>
 										<span v-show="list.orderStatus==4" class="f-c-green">已分配</span>
+										<span v-show="list.orderStatus==5" class="f-c-yellow">等待自动审核</span>
+										<span v-show="list.orderStatus==6" class="f-c-green">复审通过</span>
 									</td></tr>
 									<tr><td>激活状态：</td><td>
 										<span v-show="list.merchantStatus==1" class="f-c-green">已激活</span>
