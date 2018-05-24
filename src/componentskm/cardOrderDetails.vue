@@ -79,6 +79,7 @@
 										<i v-if="source==8">{{ userMoreInfo.latitude }}，{{ userMoreInfo.longitude }}</i>
 										<i v-else>{{ list.latitude }}，{{ list.longitude }}</i>
 										<a href="javascript:void(0)" @click="toMap" class="details m-l">查看地图</a>
+										<em v-if="source!=8">{{ list.street }}</em>
 									</span>
 								</td></tr>
 								<tr v-if="list.operatorType==7"><td>原机主姓名：</td><td>{{ list.userNameOld }}</td></tr>
