@@ -1,5 +1,5 @@
 window._CONFIG={
-	"env":"dev",
+	"env":"prod",
 	"dev":{
 		"SDK_IMAGE_URL":"https://192.168.10.98:6087/eas/",
 		"TF_IMAGE_URL":"https://192.168.10.98:6085/ka_tas/",
