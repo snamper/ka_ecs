@@ -23,7 +23,7 @@
   </section>
 </template>
 <script type="text/javascript">
-import {removeStore,errorDeal,getStore} from '../config/utils';
+import {removeStore,errorDeal,getStore,powerKm} from '../config/utils';
 import {getSignCode,signIn} from '../config/service.js';
 import {mapMutations} from 'vuex';
 import hexMD5 from "../assets/km/js/md5.min.js";
@@ -127,6 +127,7 @@ export default {
           IsInArray(isadmin,'21')>-1?vm.off.powerkm21=true : vm.off.powerkm21=false;
           IsInArray(isadmin,'31')>-1?vm.off.powerkm31=true : vm.off.powerkm31=false;
           IsInArray(isadmin,'41')>-1?vm.off.powerkm41=true : vm.off.powerkm41=false;
+        
         if(vm.off.power1||vm.off.power0){
             window.location.href="#/homey/audit/yuanmeng";
             return false;

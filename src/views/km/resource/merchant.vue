@@ -7,74 +7,7 @@
     模块待重构
 -->
 <style scoped>
-/* .g-search-form>.form-c>.row{width:auto} */
-/* .m-col-2>.col-l{display: none;} */
-/* .m-col-2>.col-r{margin-left: 0;width: 2.5rem;} */
-.total-head{position: relative;}
-.total-head>span{margin-right: 10px;}
-.total-head>span>b{font-weight: bold;}
-.total-head>.f-btn-group{position: absolute;width:4rem;left: 50%;margin-left:-2rem;top:50%;margin-top: -0.15rem;}
-.total-head>.f-btn-group>button{height:0.3rem;line-height:0.3rem;color:#717171 !important;border-radius: 5px; border-bottom-color:#ccc;-webkit-box-shadow:0 1px 1px rgba(90, 90, 90, 0.1);box-shadow:0 1px 1px rgba(90, 90, 90, 0.1);display:inline-block;padding: 0 3px;font-size:12px;cursor:pointer;background-color:#fff;border:1px solid transparent;border-color:#dadada;}
-.total-head>.f-btn-group>button:hover{color:#333333;background-color:#f1f1f1;}
-.total-head>.f-btn-group>button.active{color:#717171 !important;background-color:#F9F9F9;border-color:#c6c6c6;box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);}
-.total-head>.m-select{display: none;margin-left:0.1rem;}
-
-.merchant-total, .g-in-table, .merchant-total>tbody>tr>td{border:none !important;border-collapse:separate !important;}
-.merchant-total th:first-child{border-right:1px solid #dfe6ec;}
-.merchant-total tbody tr{border-top: none !important;}
-.merchant-total>tbody>tr>td{padding:0 !important;}
-.merchant-total{ border:1px solid #dfe6ec !important;}
-
-.o-headTotal-table tr>td, .o-headTotal-table tr>th{border-right:1px solid #dfe6ec;}
-.o-headTotal-table tr>td:first-child{background-color: #eef1f6;}
-.o-headTotal-table thead th{ height:0.3rem; background-color: #eef1f6;font-weight: normal;}
-.o-headTotal-table tbody tr>td{padding: 6px 0;}
-.g-in-table{text-align: left !important;}
-.g-in-table tr>td:nth-child(2){border-right:1px solid #dfe6ec;border-left:1px solid #dfe6ec;}
-.g-in-table td>span{display: inline-block;text-align:right;}
-.g-in-table.col-l td>span{width: 1.2rem;}
-.g-in-table.col-r td>span{width: 1.6rem;}
-.m-no-data{text-align: center;padding:0.1rem 0;}
-.o-clr-bd tr:nth-child(even){background: #fff !important;}
-@media screen and (max-width: 960px){
-.m-col-2>.col-r{width:auto;}
-.total-head>.m-select{display: inline-block;}
-.total-head>.f-btn-group{display: none;}
-.g-in-table td>span{text-align:left;margin-left: 5px;}
-	.g-in-table.col-l td>span, .g-in-table.col-r td>span{width:auto;}
-}
-.g-lis-head {
-    height: 45px;
-    background-color: #fff;
-    width: 100%;
-    padding: 0.12rem 0.1rem;
-    -webkit-box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    border-radius: 4px;
-}
-.g-box {
-    /*padding-top: 0.2rem;*/
-    height:auto;
-}
-.m-total-table{
-    background: none;
-}
-span.dp{
-    display: inline-block;
-}
-div.border-bottom{
-    border-bottom:1px solid rgb(221, 220, 220);
-}
-.g-search-form>.form-c>.row{
-    width:45%;
-}
-.pdl{
-    padding-left:100px;
-}
-#merchantSearch{
-    height: 100%;
-    position: relative;
-}
+@import "../../../assets/km/css/merchant.css";
 </style>
 <template>
 	<div id="merchantSearch">
@@ -285,320 +218,8 @@ div.border-bottom{
                 </section>
             </div>
         </div>
-		<!--商户ID-->
-	  	<div class="m-total-table g-list-box"  v-if="form.type==1&&ajaxData.details&&!off.modifyInfo">
-            <header class="g-lis-head">
-                <a v-if="searchRoad.length" class="m-details-back u-icon-back" style="width:20px;height:20px;" @click="close('dealerId')"></a>
-                <div class="m-footD-btn">
-                    <a class="f-btn f-btn-danger" @click="off.modifyInfo=true" v-show="ajaxData.details.status==0">修改商户资料</a>
-                </div>
-            </header>
-            <div class="g-box" >
-                <table class="merchant-total g-list-table">
-                    <thead>
-                        <tr>
-                            <th style="width:70%;">商户基本信息</th>
-                            <th style="width:30%;">商户账户信息</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>
-                                <table class="g-in-table col-l">
-                                    <tbody>
-                                        <tr>
-                                            <td><span>网点名称：</span>{{ ajaxData.details.companyName }}</td>
-                                            <td><span>有效总次数：</span>{{ ajaxData.details.totalNums }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td><span>渠道ID：</span>{{ ajaxData.details.dealerId }}
-                                                <b v-if="ajaxData.details.status==0" class="f-c-green">已激活</b>
-                                                <b v-if="ajaxData.details.status==1" class="f-c-yellow">待激活</b>
-                                                <b v-if="ajaxData.details.status==2" class="f-c-blue">激活待审核</b>
-                                            </td>
-                                            <td><span>开卡成功次数：</span>{{ ajaxData.details.successNums }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td><span>证件地址：</span>{{ ajaxData.details.address }}</td>
-                                            <td><span>额外成功次数：</span>{{ ajaxData.details.extraFrequency }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td><span>门店地址：</span>{{ ajaxData.details.storeAddress||'--' }}</td>
-                                            <td><span>获得分数：</span>{{ ajaxData.details.getPoints }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td><span>创建时间：</span>{{ ajaxData.details.createtime }}</td>
-                                            <td><span>扣除分数：</span>{{ ajaxData.details.losePoints }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td><span>商户属性：</span>{{ ajaxData.details.merchantType }}</td>
-                                            <td><span>额外分值：</span>{{ ajaxData.details.extraCredit }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td><span>商户类别：</span>{{ ajaxData.details.userType }}</td>
-                                            <td><span>信用积分：</span>{{ ajaxData.details.creditNums }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td><span>证件号码：</span>{{ ajaxData.details.businessLicense }}</td>
-                                            <td><span>真实信用积分：</span>{{ ajaxData.details.realCreditNums }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td><span>售卡城市：</span>{{ ajaxData.details.openedCity }}</td>
-                                            <td><span>显示等级：</span>{{ ajaxData.details.showLevel }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td><span>售卡范围：</span>
-                                                <em v-for="_item in ajaxData.details.openedScopes">
-                                                    <em v-show="_item.type==1">远特售卡</em>
-                                                    <em v-show="_item.type==2">,联通售卡</em>
-                                                    <em v-show="_item.type==3">,移动售卡</em>
-                                                    <em v-show="_item.type==4">,电信售卡</em>
-                                                </em>
-                                                <a href="javascript:;" @click="sellScopePower()" class="details">详情</a>
-                                            </td>
-                                            <td><span>真实等级：</span>{{ ajaxData.details.realLevel }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td><span>激活订单号：</span>{{ ajaxData.details.registOrderId }}
-                                                <b v-show="ajaxData.details.auditType==0"></b>
-                                                <b v-show="ajaxData.details.auditType==1">实时审核/</b>
-                                                <b v-show="ajaxData.details.auditType==2">事后审核/</b>
-                                                <b v-show="ajaxData.details.auditType==3">自动审核/</b>
-                                                <b v-show="ajaxData.details.orderStatus==0"></b>
-
-                                                <b v-show="ajaxData.details.orderStatus==1" class="f-c-green">通过</b>
-                                                <b v-show="ajaxData.details.orderStatus==2" class="f-c-red">拒绝</b>
-                                                <b v-show="ajaxData.details.orderStatus==3" class="f-c-red">待分配</b>
-                                                <b v-show="ajaxData.details.orderStatus==4" class="f-c-yellow">已分配</b>
-                                                <b v-show="ajaxData.details.orderStatus==5" class="f-c-yellow">等待自动审核</b>
-                                                <b v-show="ajaxData.details.orderStatus==6" class="f-c-green">复审通过</b>
-                                            </td>
-                                            <td><span>基础分值：</span>{{ ajaxData.details.btScore }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td><span>激活时间：</span>{{ ajaxData.details.registTime }}</td>
-                                            <td><span>基础总次数：</span>{{ ajaxData.details.btFrequency }}</td>
-                                        </tr>
-                                        <tr>
-                                             <td><span>签约状态：</span><b :class="{fCGreen:ajaxData.details.isSignAgreement=='已签约',fCRed:ajaxData.details.isSignAgreement=='未签约'}">{{ ajaxData.details.isSignAgreement }}</b>[{{ ajaxData.details.signTime }}]</td>
-                                             <td><span>基础成功次数：</span>{{ ajaxData.details.bsFrequency }}</td> 
-                                        </tr>
-                                        <tr>
-                                            <td><span>设备信息：</span>
-                                                <a :href="'#/homek/resource/device/'+ajaxData.details.devMac" title="点击查看详情" class="details m-l">{{ ajaxData.details.devMac }}</a></td>
-                                            <td><span>上级商户：</span>
-                                                <a href="javascript:;" v-show="ajaxData.details.superDealerId" @click="details(ajaxData.details.superDealerId,1,'x')"  title="点击查看详情" class="details">{{ajaxData.details.superDealerId}}</a>【名称：{{ ajaxData.details.superDealerName||'--' }}】</td>
-                                        </tr>
-                                        <tr>
-                                            <td><span>欢迎页：</span>{{ ajaxData.details.bannerNames||'--' }}</td>
-                                            <td><span>上级推广渠道：</span>
-                                                <a :href="'#/homek/resource/promoter/'+ajaxData.details.popDealerId" title="点击查看详情" class="details">{{ajaxData.details.popDealerId}}</a>【名称：{{ ajaxData.details.popDealerName||'--' }}】</td>
-                                        </tr>
-                                        <tr>
-                                            <td><span>证件照片：</span>
-                                                <a v-show="ajaxData.details.status==0" href="javascript:;" @click="lookMerchantImg" class="details">查看图片信息</a>
-                                                <span v-show="ajaxData.details.status!=0">暂无图片</span>
-                                            </td>
-                                            <td><span>总部推广渠道：</span>{{ ajaxData.details.topDealerId||'--' }}【名称：{{ ajaxData.details.topDealerName||'--' }}】</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </td>
-                            <td>
-                                <table class="g-in-table col-r o-clr-bd">
-                                    <tbody>
-                                        <tr>
-                                            <td><span>微信提现账户：</span>{{ ajaxData.details.pickMoneyWechat }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td><span>支付宝提现账户：</span>{{ ajaxData.details.pickMoneyAlipay }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td><span>话分佣金历史总金额：</span>{{ parseFloat(ajaxData.details.incomeMoneyTotal)/100 }}元</td>
-                                        </tr>
-                                        <tr>
-                                            <td><span>话分佣金余额：</span>{{ parseFloat(ajaxData.details.incomeMoney)/100 }}元</td>
-                                        </tr>
-                                        <tr>
-                                            <td><span>开卡佣金历史总金额：</span>{{ parseFloat(ajaxData.details.commissionFeeTotal)/100 }}元</td>
-                                        </tr>
-                                        <tr>
-                                            <td><span>开卡佣金余额：</span>{{ parseFloat(ajaxData.details.commissionFee)/100 }}元</td>
-                                        </tr>
-                                        <tr>
-                                            <td><span>综合激励历史总金额：</span>{{ parseFloat(ajaxData.details.creditMoneyTotal)/100 }}元</td>
-                                        </tr>
-                                        <tr>
-                                            <td><span>综合激励余额：</span>{{ parseFloat(ajaxData.details.creditMoney)/100 }}元</td>
-                                        </tr>
-                                        <tr>
-                                            <td><span>自推广激励历史总金额：</span>{{ parseFloat(ajaxData.details.promotionTotal)/100 }}元</td>
-                                        </tr>
-                                        <tr>
-                                            <td><span>自推广激励余额：</span>{{ parseFloat(ajaxData.details.promotion)/100 }}元</td>
-                                        </tr>
-                                        <tr>
-                                            <td><span>保证金：</span>{{ parseFloat(ajaxData.details.bond)/100 }}元</td>
-                                        </tr>
-                                        <tr>
-                                            <td><span>号码模式：</span>{{ajaxData.details.phoneModel}}【{{ajaxData.details.dealer_model_describe||'--'}}】
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td><span>折扣模式：</span>{{ajaxData.details.discountModel}}【{{ajaxData.details.discount_model_describe||'--'}}】
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td><span>转账模式：</span>{{ajaxData.details.transferModel}}【{{ajaxData.details.model_code_describe||'--'}}】
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>	
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <section v-if="ajaxData.details&&!off.modifyInfo" class="m-total-table">
-                <div class="total-head">商户下所有工号列表</div>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>序号</th>
-                            <th>工号ID</th>
-                            <th>工号姓名</th>
-                            <th>登录手机号码</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="(item,index) in ajaxData.list" :key="index">
-                            <td>{{ ((ajaxData.pageNum-1)*10+(index+1)) }}</td>
-                            <td>{{ item.userId }}<span v-if="item.isMain==1">(主账号)</span></td>
-                            <td>{{ item.userName }}</td>
-                            <td>{{ item.phone }}</td>
-                            <td><a @click="details(item.phone,2,3)" class="details" href="javascript:void(0)">详情</a></td>
-                        </tr>
-                    </tbody>
-                </table>
-                <div class="m-no-data" v-if="!ajaxData.list.length">该商户暂无工号列表数据</div>
-            </section>
-        </div>
-		<!--工号ID-->
-        <div class="m-total-table g-list-box"  v-if="form.type==2&&ajaxData2.details">
-            <header class="g-lis-head">
-                <a v-if="searchRoad.length" class="m-details-back u-icon-back" style="width:20px;height:20px;" @click="close('workNum')"></a>
-                <div class="m-footD-btn">
-                </div>
-            </header>
-            <div class="g-box" >	
-                <table class="merchant-total g-list-table">
-                    <thead>
-                        <tr>
-                            <th style="width:70%;">工号基本信息</th>
-                            <th style="width:30%;">工号账户信息</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>
-                                <table class="g-in-table col-l">
-                                    <tbody>
-                                        <tr>
-                                            <td><span>卡盟ID：</span>{{ ajaxData2.details.userId }}<i v-if="ajaxData2.details.isMain==1">(主账号)</i></td>
-                                            <td><span>最近登录时间：</span>{{ getDateTime(ajaxData2.details.lastLoginTime)[6] }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td><span>用户姓名：</span>{{ ajaxData2.details.userName }}</td>
-                                            <td><span>最近操作时间：</span>{{ getDateTime(ajaxData2.details.lastReqeustTime)[6] }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td><span>登录手机号：</span>{{ ajaxData2.details.phone }}</td>
-                                            <td><span>所用机型：</span>{{ ajaxData2.details.phoneType }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td><span>所属商户渠道ID：</span>{{ ajaxData2.details.dealerId }}（{{ ajaxData2.details.companyName }}<a  class="details" @click="details(ajaxData2.details.dealerId,1,4)" href="javascript:void(0)">详情</a>）</td>
-                                            <td><span>经纬度：</span>{{ ajaxData2.details.latitude}},{{ ajaxData2.details.longitude}}<a href="javascript:void(0)" @click="toMap" class="details m-l">查看地图</a></td>
-                                        </tr>
-                                        <tr>
-                                            <td><span>当前城市：</span>{{ ajaxData2.details.cityName }}</td>
-                                            <td><span>支付宝账号：</span>{{ ajaxData2.details.alipayID }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td><span>创建时间：</span>{{ getDateTime(ajaxData2.details.createTime)[6] }}</td>
-                                            <td><span>微信账号：</span>{{ ajaxData2.details.wxID }}</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </td>
-                            <td>
-                                <table class="g-in-table col-r">
-                                    <tbody>
-                                        <tr>
-                                            <td><span>账户余额：</span>{{ parseFloat(ajaxData2.details.leftFee)/100 }}元</td>
-                                        </tr>
-                                        <tr>
-                                            <td><span>可提现额度：</span>{{ parseFloat(ajaxData2.details.allowExtractFee)/100 }}元</td>
-                                        </tr>
-                                        <tr>
-                                            <td><span>已提现金额：</span>{{ parseFloat(ajaxData2.details.alreadyExtractFee)/100 }}元</td>
-                                        </tr>
-                                        <tr>
-                                            <td><span>可退款额度：</span>{{ parseFloat(ajaxData2.details.allowRefundFee)/100 }}元</td>
-                                        </tr>
-                                        <tr>
-                                            <td><span>已退款金额：</span>--元</td>
-                                        </tr>
-                                        <tr>
-                                            <td><span>赠送金额：</span>{{ parseFloat(ajaxData2.details.giveMoney)/100 }}元（已使用：{{ parseFloat(ajaxData2.details.giveMoneyUsed)/100 }}元）</td>
-                                        </tr>
-                                    </tbody>
-                                </table>          
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <section v-if="ajaxData2.details"class="m-total-table">
-                <div class="total-head">第三方支付流水号列表<b>{{ajaxData2.total}}</b>
-                    <div class="f-btn-group">
-                        <button :class="{active:form.paySource==2}" @click="shiftPaySource(2)">账户充值成功</button>
-                        <button :class="{active:form.paySource==3}" @click="shiftPaySource(3)">开卡失败退款</button>
-                        <button :class="{active:form.paySource==4}" @click="shiftPaySource(4)">代充失败退款</button>
-                        <button :class="{active:form.paySource==1}" @click="shiftPaySource(1)">保证金充值成功</button>
-                    </div>
-                    <select class="m-select" @change="shiftPaySource">
-                        <option value="2">账户充值成功</option>
-                        <option value="3">开卡失败退款</option>
-                        <option value="4">代充失败退款</option>
-                        <option value="1">保证金充值成功</option>
-                    </select>
-                </div>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>序号</th>
-                            <th>支付时间</th>
-                            <th>订单号</th>
-                            <th>第三方流水号</th>
-                            <th>支付方式</th>
-                            <th>金额（元）</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="(item,index) in ajaxData2.list" :key="index">
-                            <td>{{ ((ajaxData2.pageNum-1)*10+(index+1)) }}</td>
-                            <td>{{ getDateTime(item.createTime)[6] }}</td>
-                            <td>{{ item.sysOrderId }}</td>
-                            <td>{{ item.transactionId||'无' }}</td>
-                            <td>{{ item.payType==1 ? '远特账户支付' : item.payType==2 ? '微信支付' : '支付宝支付' }}</td>
-                            <td>{{ parseFloat(item.payMoney)/100 }}</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <my-page :page="ajaxData2.pageNum" :maxpage="ajaxData2.maxpage1" :callback="ajaxData2.callback"></my-page>
-            </section>
-		</div>
+		<!-- 详情 -->
+        <merchantDetails v-if="ajaxData.details||ajaxData2.details" :searchRoad="searchRoad" :_form="form" :_off="off" :_ajaxData="ajaxData" :_ajaxData2="ajaxData2"></merchantDetails>
         <!--查看商户照片-->
         <Pop v-if="off.pop" :callBack="closePop">
             <div slot="content" style="height:500px">
@@ -613,7 +234,6 @@ div.border-bottom{
             :merchantInfo="ajaxData.details"
             v-on:details="details"
             ref="ModifyInfoCase">
-
         </ModifyInfo>
   	</div>
 </template>
@@ -625,7 +245,7 @@ import pagination from "../../../componentskm/page.vue";
 import Pop from '../../../componentskm/pop';
 import ImgZoom from '../../../componentskm/ImgZoom';
 import ModifyInfo from '../../../componentskm/more/modifyMerchantInfo';
-
+import merchantDetails from "../../../componentskm/merchantDetails";
 export default{
 	name:'merchantSearch',
 	data() {
@@ -705,9 +325,10 @@ export default{
     },
 	components:{
         'my-page':pagination,
+        "merchantDetails":merchantDetails,
         Pop,
         ImgZoom,
-        ModifyInfo
+        ModifyInfo,
 	},
 	created(){
 		var vm=this;
@@ -725,6 +346,7 @@ export default{
 			}
 		},300);
         vm.init();
+       
     },
 	methods:{
         init:function(){
@@ -819,11 +441,7 @@ export default{
 		        vm.off.isLoad=false;
 	      	});
         },
-		toMap(){
-			var w=document.documentElement.clientWidth,url='',vm=this;
-			w<640 ? url='http://map.baidu.com/mobile/?latlng='+vm.ajaxData2.details.latitude+','+vm.ajaxData2.details.longitude+'' : url='http://map.baidu.com/?latlng='+vm.ajaxData2.details.latitude+','+vm.ajaxData2.details.longitude+'';
-			window.open(url);
-		},
+
 		getTotal(){//获取顶部统计数据
 			var vm=this;
             reqCommonMethod({},function(){vm.off.isLoad=false;},"km-ecs/w/merchant/statistics")
@@ -831,19 +449,7 @@ export default{
                 vm.totalInfo=data.data;
             }).catch(error=>errorDeal(error)); 	
 		},
-		shiftPaySource(paySource){//支付订单来源切换
-			if(paySource.target){
-				let options=paySource.target.children;
-				for(let i = 0;i<options.length;i++){
-					if(options[i].selected){
-						this.form.paySource=options[i].value;
-					}
-				}
-			}else{
-				this.form.paySource=paySource;
-			}
-			this.getList();
-		},
+
         details(context,type,i){//商户上用户列表查看用户，用户上查看商户
             let vm=this;
             if(i!=='x'){
@@ -894,7 +500,6 @@ export default{
 			type==1 ? (json={dealerId:vm.form.context},url='km-ecs/w/audit/getUsersDetail') : (json={phone:vm.form.context,pageNum:page||1,pageSize:10,type:vm.form.paySource},url='km-ecs/w/user/paymengList');
 			if(vm.off.isLoad)return false;
 			vm.off.isLoad=true;
-
              reqCommonMethod(json,function(){vm.off.isLoad=false;},url)
              .then((data)=>{
 	            type==1?vm.$set(vm.ajaxData,'list',data.data.list):vm.$set(vm.ajaxData2,'list',data.data.list);
@@ -924,45 +529,8 @@ export default{
             var index = str .lastIndexOf("\.");  
             return str.substring(index + 1, str.length);
         },
-        sellScopePower(){
-            let info=this.ajaxData.details.openedScopes1;
-            let str='';
-            for(let key in info){
-                if(key==1)str+=`<li class="clr"><div class="fl">远特售卡：</div>`;
-                if(key==2)str+=`<li class="clr"><div class="fl">联通售卡：</div>`;
-                if(key==3)str+=`<li class="clr"><div class="fl">移动售卡：</div>`;
-                if(key==4)str+=`<li class="clr"><div class="fl">电信售卡：</div>`;
-                info[key].forEach((value)=>{
-                    if(value.isLocal==0)str+=`<div class="fright">${value.area!='null'?value.area:''}（不限）</div></li>`;
-                    if(value.isLocal==1){
-                        // value.cusWhiteList.split(',').forEach((val)=>{
-                        //     _str+='，'+info.whiteList[val];
-                        // })
-                        str+=`<div class="fright">${value.area}（本地${value.cusWhiteDes=='null'?'':value.cusWhiteDes}）</div>`;
-                    }
-                })
-                str+='</li>';
-            }
-            layer.open({
-                content:`<ul class="f-scroll-lt lay-details">${str}</ul>`,
-                type:0,
-                title:'售卡区域详情',
-                btn:0,
-                style:'width:auto;'
-            });
-        },
-        close(v){
-            let vm=this,
-            road=vm.searchRoad;
-            vm.i--;
-            for(let i in road[vm.i]){
-                vm.$set(vm.form,vm.replacedian(i),road[vm.i][i])
-            }
 
-            if(vm.i==0){
-                vm.searchRoad=[];
-            }
-        },
+
         changeSearchType(){
             let vm=this;
 
@@ -987,19 +555,7 @@ export default{
 				total:0,//列表总条数
 			};
         },
-        lookMerchantImg(){
-            const vm=this;
 
-            let imgUrl=_CONFIG ? _CONFIG[_CONFIG.env].REGISTER_MERCHANT_IMAGE_URL : '';
-            let merchantType=vm.ajaxData.details.merchantType;
-            vm.merchantImgData=[
-                {'src':vm.ajaxData.details.frontImageUrl?imgUrl+vm.ajaxData.details.frontImageUrl:'','name':merchantType=='企业' ? '门店左照片' : '正面照片'},
-                {'src':vm.ajaxData.details.backImageUrl?imgUrl+vm.ajaxData.details.backImageUrl:'','name':merchantType=='企业' ? '门店右照片' : '反面照片'},
-                {'src':vm.ajaxData.details.handImageUrl?imgUrl+vm.ajaxData.details.handImageUrl:'','name':'手持照片'}
-            ]
-
-            vm.closePop(1);
-        }
 	}
 };
 </script>

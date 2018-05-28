@@ -694,7 +694,6 @@ export default{
             }).catch(error=>errorDeal(error)); 	
 		},
         details:function(e){//详情
-            debugger;
 			var vm=this,url,
 			orderId=e.target.name,
 			type=vm.off.type,

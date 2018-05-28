@@ -58,7 +58,7 @@
 				</li>
             </ul>
 			<ul class="g-side-ul" :class="{'hide':!isCheckk}" v-if="!off.powerKmHidden">
-				<li :class="{active:crumb[0].name=='数据统计'}" v-if="off.powerkm2||off.powerkm1">
+				<li :class="{active:crumb[0].name=='数据统计'}">
 					<b></b>
 					<router-link to="/homek/dashboard">
 						<div>
@@ -67,7 +67,7 @@
 						</div>
 					</router-link>
 				</li>
-				<li :class="{active:crumb[0].name=='订单审核'}" v-if="off.powerkm0||off.powerkm1||off.powerkm4||off.powerkm5||off.powerkm6">
+				<li v-if="off.powerKm_sh_sh||off.powerKm_kk_sh" :class="{active:crumb[0].name=='订单审核'}">
 					<b></b>
 					<router-link to="/homek/audit">
 						<div>
@@ -77,28 +77,28 @@
 						</div>
 					</router-link>
 					<ul class="g-side-subul nav1">
-						<li v-if="userInfo.isadmin.indexOf('0')>-1||userInfo.isadmin.indexOf('1')>-1">
+						<li v-if="off.powerKm_kk_sh">
 							<router-link :to="{name:'audit_card',params:{source:'realtime'}}">
 								<!-- <b></b>业务实时审核<span v-if="auditCount.opencard+auditCount.transfer+auditCount.realNameCollection+auditCount.realNameRechCard+auditCount.sdkRealTime!=0">{{auditCount.opencard+auditCount.transfer+auditCount.realNameCollection+auditCount.realNameRechCard+auditCount.sdkRealTime}}</span> -->
                                 <b></b>业务实时审核<span v-if="auditCount.opencard+auditCount.transfer+auditCount.realNameCollection+auditCount.sdkRealTime!=0">{{auditCount.opencard+auditCount.transfer+auditCount.realNameCollection+auditCount.sdkRealTime}}</span>
                             </router-link>
 						</li>
-						<li v-if="userInfo.isadmin.indexOf('0')>-1||userInfo.isadmin.indexOf('1')>-1">
+						<li v-if="off.powerKm_kk_sh">
 							<router-link :to="{name:'audit_card',params:{source:'afterwards'}}">
 								<b></b>业务事后审核<span v-if="auditCount.opencardAfterwards+auditCount.tfOpenCard!=0">{{auditCount.opencardAfterwards+auditCount.tfOpenCard}}</span>
 							</router-link>
 						</li>
-						<li v-if="userInfo.isadmin.indexOf('6')>-1||userInfo.isadmin.indexOf('5')>-1||userInfo.isadmin.indexOf('1')>-1">
+						<li v-if="off.powerKm_sh_sh">
 							<router-link :to="{name:'businessPowerAudit',params:{type:'auditing'}}">
 								<b></b>售卡范围审核<span v-if="auditCount.attribute!=0">{{auditCount.attribute}}</span>
 							</router-link>
 						</li>
-						<li v-if="userInfo.isadmin.indexOf('6')>-1||userInfo.isadmin.indexOf('5')>-1||userInfo.isadmin.indexOf('1')>-1">
+						<li v-if="off.powerKm_sh_sh">
 							<router-link :to="{name:'registMerchantAudit',params:{type:'realtime'}}">
 								<b></b>激活商户实时<span v-if="auditCount.registerMerchantRealTime!=0">{{auditCount.registerMerchantRealTime}}</span>
 							</router-link>
 						</li>
-						<li v-if="userInfo.isadmin.indexOf('6')>-1||userInfo.isadmin.indexOf('5')>-1||userInfo.isadmin.indexOf('1')>-1">
+						<li v-if="off.powerKm_sh_sh">
 							<router-link :to="{name:'registMerchantAudit',params:{type:'afterwards'}}">
 								<b></b>激活商户事后<span v-if="auditCount.registerMerchantAfter!=0">{{auditCount.registerMerchantAfter}}</span>
 							</router-link>
@@ -110,7 +110,7 @@
 						</li> -->
 					</ul>
 				</li>
-				<li :class="{active:crumb[0].name=='订单查询'}" v-if="off.powerkm1||off.powerkm2||off.powerkm3">
+				<li v-if="off.powerKm_kk_cx||off.powerKm_sh_cx" :class="{active:crumb[0].name=='订单查询'}">
 					<b></b>
 					<router-link to="/homek/orderSearch">
 						<div>
@@ -119,16 +119,16 @@
 						</div>
 					</router-link>
 					<ul class="g-side-subul nav2">
-						<li><router-link to="/homek/orderSearch/card"><b></b>业务订单</router-link></li>
-						<li><router-link to="/homek/orderSearch/recharge"><b></b>充值订单</router-link></li>
-						<li><router-link to="/homek/orderSearch/onlineHall"><b></b>网厅订单</router-link></li>
-						<li><router-link :to="{name:'businessPowerSearch',params:{type:'audited'}}"><b></b>售卡范围</router-link></li>
-						<li><router-link :to="{name:'registMerchantSearch',params:{type:'search'}}"><b></b>激活商户</router-link></li>
-						<li><router-link to="/homek/orderSearch/reserve"><b></b>预占号码</router-link></li>
+						<li v-if="off.powerKm_kk_cx"><router-link to="/homek/orderSearch/card"><b></b>业务订单</router-link></li>
+						<li v-if="off.powerKm_kk_cx"><router-link to="/homek/orderSearch/recharge"><b></b>充值订单</router-link></li>
+						<li v-if="off.powerKm_kk_cx"><router-link to="/homek/orderSearch/onlineHall"><b></b>网厅订单</router-link></li>
+						<li v-if="off.powerKm_sh_cx"><router-link :to="{name:'businessPowerSearch',params:{type:'audited'}}"><b></b>售卡范围</router-link></li>
+						<li v-if="off.powerKm_sh_cx"><router-link :to="{name:'registMerchantSearch',params:{type:'search'}}"><b></b>激活商户</router-link></li>
+						<li v-if="off.powerKm_kk_cx"><router-link to="/homek/orderSearch/reserve"><b></b>预占号码</router-link></li>
 						<!-- <li><router-link to="/home/orderSearch/busCard"><b></b>公交一卡通</router-link></li> -->
 					</ul>
 				</li>
-				<li :class="{active:crumb[0].name=='资源查询'}" v-if="off.powerkm1||off.powerkm2||off.powerkm7">
+				<li :class="{active:crumb[0].name=='资源查询'}" v-if="off.powerKm_sh_cx">
 					<b></b>
 					<router-link to="/homek/resource">
 						<div>
@@ -137,12 +137,12 @@
 						</div>
 					</router-link>
 					<ul class="g-side-subul nav3">
-						<li><router-link :to="{name:'merchant',params:{val:'null'}}"><b></b>商户查询</router-link></li>
-						<li><router-link :to="{name:'device',params:{val:'null'}}"><b></b>设备查询</router-link></li>
-						<li><router-link :to="{name:'promoter',params:{val:'null'}}"><b></b>推广方查询</router-link></li>
+						<li v-if="off.powerKm_sh_cx"><router-link :to="{name:'merchant',params:{val:'null'}}"><b></b>商户查询</router-link></li>
+						<li v-if="off.powerKm_sh_cx"><router-link :to="{name:'device',params:{val:'null'}}"><b></b>设备查询</router-link></li>
+						<li v-if="off.powerKm_sh_cx"><router-link :to="{name:'promoter',params:{val:'null'}}"><b></b>推广方查询</router-link></li>
 					</ul>
 				</li>
-				<li :class="{active:crumb[0].name=='统计报表'}" v-if="off.powerkm1||off.powerkm2">
+				<li :class="{active:crumb[0].name=='统计报表'}" v-if="off.powerKm_bb_cx">
 					<b></b>
 					<router-link to="/homek/statistics">
 						<div>
@@ -157,7 +157,7 @@
 						<li><router-link :to="{name:'softwareUseTimes',params:{type:'writeCard'}}"><b></b>写卡记录统计</router-link></li>
 					</ul>
 				</li>
-				<li :class="{active:crumb[0].name=='意见反馈'}" v-if="off.powerkm1||off.powerkm11">
+				<li :class="{active:crumb[0].name=='意见反馈'}" v-if="off.powerKm_yjfk_cx">
 					<b></b>
 					<router-link to="/homek/opinion">
 						<div>
@@ -246,7 +246,7 @@
 </template>
 <script>
 import {mapState, mapMutations, mapActions} from 'vuex';
-import {getStore} from '../config/utils';
+import {getStore,powerKm} from '../config/utils';
 import { signOut } from '../config/service';
 export default{
 	data (){
@@ -261,18 +261,6 @@ export default{
                 power0:0,
                 power5:0,
                 power6:0,
-                powerkm0:0,
-                powerkm1:0,
-                powerkm2:0,
-                powerkm3:0,
-                powerkm4:0, 
-                powerkm5:0,
-                powerkm6:0,
-                powerkm7:0,
-                powerkm11:0,
-                powerkm21:0,
-                powerkm31:0,
-                powerkm41:0,
 			},
 			userInfo:{isadmin:''},
             crumb:[{'name':''},{'name':''},{'name':''}],//面包屑
@@ -337,36 +325,16 @@ export default{
 				vm.off.userMenu=false;
 				event.stopPropagation();
             },false);
-            //远盟权限
+            
+            /* 远盟权限 */
             vm.userInfo.isadminYm&&vm.userInfo.isadminYm.indexOf('1')>-1? vm.off.power1=true : vm.off.power1=false;
 			vm.userInfo.isadminYm&&(vm.userInfo.isadminYm.indexOf('1')>-1||vm.userInfo.isadminYm.indexOf('2')>-1) ? vm.off.power2=true : vm.off.power2=false;
 			vm.userInfo.isadminYm&&(vm.userInfo.isadminYm.indexOf('1')>-1||vm.userInfo.isadminYm.indexOf('0')>-1) ? vm.off.power0=true : vm.off.power0=false;
 			vm.userInfo.isadminYm&&(vm.userInfo.isadminYm.indexOf('1')>-1||vm.userInfo.isadminYm.indexOf('5')>-1) ? vm.off.power5=true : vm.off.power5=false;
 			vm.userInfo.isadminYm&&(vm.userInfo.isadminYm.indexOf('1')>-1||vm.userInfo.isadminYm.indexOf('6')>-1) ? vm.off.power6=true : vm.off.power6=false;
-            //卡盟权限
-            var isadmin=vm.userInfo.isadmin.split(","); 
-            function IsInArray(arr,val){ 
-            　　var testStr=','+arr.join(",")+","; 
-            　　return testStr.indexOf(","+val+","); 
-            } 
-            IsInArray(isadmin,'0')>-1?vm.off.powerkm0=true : vm.off.powerkm0=false;
-            IsInArray(isadmin,'1')>-1?vm.off.powerkm1=true : vm.off.powerkm1=false;
-            IsInArray(isadmin,'2')>-1?vm.off.powerkm2=true : vm.off.powerkm2=false;
-            IsInArray(isadmin,'3')>-1?vm.off.powerkm3=true : vm.off.powerkm3=false;
-            IsInArray(isadmin,'4')>-1?vm.off.powerkm4=true : vm.off.powerkm4=false;
-            IsInArray(isadmin,'5')>-1?vm.off.powerkm5=true : vm.off.powerkm5=false;
-            IsInArray(isadmin,'6')>-1?vm.off.powerkm6=true : vm.off.powerkm6=false;
-            IsInArray(isadmin,'7')>-1?vm.off.powerkm7=true : vm.off.powerkm7=false;
-            IsInArray(isadmin,'11')>-1?vm.off.powerkm11=true : vm.off.powerkm11=false;
-            IsInArray(isadmin,'21')>-1?vm.off.powerkm21=true : vm.off.powerkm21=false;
-            IsInArray(isadmin,'31')>-1?vm.off.powerkm31=true : vm.off.powerkm31=false;
-            IsInArray(isadmin,'41')>-1?vm.off.powerkm41=true : vm.off.powerkm41=false;
-            if(IsInArray(isadmin,'0')==-1&&IsInArray(isadmin,'1')==-1&&IsInArray(isadmin,'4')==-1&&IsInArray(isadmin,'5')==-1||IsInArray(isadmin,'6')==-1){
-                vm.countTotal=0;
-            }
-            if(IsInArray(isadmin,'1')==-1&&IsInArray(isadmin,'11')==-1){
-                vm.opinionCount[0]=0;
-            }
+            
+            /* 卡盟权限 */
+            powerKm(this);
             vm.initMenu();
         },
         initMenu:function(){

@@ -152,9 +152,6 @@ export default {
           vm.timeyear.push(i + "年");
         }
       }
-    //   debugger;
-    //   var nowYear = nowTime.getFullYear();
-    //   debugger;
     },
     updateTime: function() {
       let vm = this,

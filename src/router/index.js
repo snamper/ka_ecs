@@ -6,7 +6,7 @@
 import Vue from "vue";
 import Router from "vue-router";
 import {mapState, mapMutations, mapActions} from 'vuex';
-import {getStore} from '../config/utils';
+import {getStore,getKmMenu} from '../config/utils';
 Vue.use(Router);
 const load=(isShow)=>{
   var routerLoad=document.getElementById("routerLoading");
@@ -16,6 +16,7 @@ const load=(isShow)=>{
     },200);
   }
 };
+
 const Login = resolve => {
   require.ensure(["@/views/login"], () => {
     resolve(require("@/views/login"));
@@ -306,10 +307,17 @@ const router=new Router({
         component:Dashboard
       },
       {//审核
-          path:"audit",
-          component:Audit,
-          redirect:"audit/card/realtime",
-          children:[{//开卡
+            path:"audit",
+            component:Audit,
+            redirect:function(){
+                let _switch=getKmMenu();
+                if(_switch.powerKm5a&&_switch.powerKm5b){
+                    return "audit/card/realtime"
+                }else{
+                    return "audit/businessPower/auditing"
+                }
+            }(),
+            children:[{//开卡
             path:"card/:source",
             name:"audit_card",
             component:Audit_card,
@@ -339,7 +347,15 @@ const router=new Router({
         {//订单查询
           path:"orderSearch",
           component:OrderSearch,
-          redirect:"orderSearch/card",
+        //   redirect:"orderSearch/card",
+          redirect:function(){
+            let _switch=getKmMenu();
+            if(_switch.powerKm5b){
+                return "orderSearch/card"
+            }else{
+                return "orderSearch/businessPower/audited"
+            }
+          }(),
           children:[{//开卡
             path:"card",
             name:"orderSearch_card",
@@ -433,6 +449,7 @@ const router=new Router({
 
 
 router.beforeEach((to, from, next) => {
+    
     var token = localStorage.getItem("KA_ECS_USER");
     if (!token&&to.path!=="/login"||to.path=="/"){
         next({path:"/login"});

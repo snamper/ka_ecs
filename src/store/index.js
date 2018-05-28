@@ -10,7 +10,7 @@ const state = {
 	userInfo:{},//用户信息
 	auditCount:{//审核统计数据
 		"opencard":0,//开卡实时待审核
-		"opencard_":0,//开卡试试已分配
+		"opencard_":0,//开卡实时已分配
 		"opencardAfterwards":0,//开卡事后待审核
 		"opencard_Afterwards":0,//开卡事后已分配
 		"attribute":0,//售卡权限待审核

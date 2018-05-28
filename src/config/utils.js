@@ -166,3 +166,174 @@ export const translateData=(type,v)=> {
 	}
 }
 
+export const powerKm=(v)=>{
+    let vm=v,powerKm=vm.userInfo.rightCodes;
+    powerKm=powerKm.split(',');
+    for(let i in powerKm){
+        if(powerKm[i].indexOf('1')>-1){
+            var powerKm_yjfk=powerKm[i]
+        }else if(powerKm[i].indexOf('2')>-1){
+            var powerKm_hyy=powerKm[i]
+        }else if(powerKm[i].indexOf('3')>-1){
+            var powerKm_hmzy=powerKm[i]
+        }else if(powerKm[i].indexOf('4')>-1){
+            var powerKm_hmd=powerKm[i]
+        }else if(powerKm[i].indexOf('5')>-1){
+            var powerKm_kk=powerKm[i]
+        }else if(powerKm[i].indexOf('6')>-1){
+            var powerKm_sh=powerKm[i]
+        }else if(powerKm[i].indexOf('7')>-1){
+            var powerKm_bb=powerKm[i]
+        }else if(powerKm[i].indexOf('8')>-1){
+            var powerKm_jbpz=powerKm[i]
+        }
+    }
+    for(let _i in powerKm_yjfk){//意见反馈
+        if(powerKm_yjfk[_i]=='a'){
+            vm.off.powerKm_yjfk_sh=true;
+        }if(powerKm_yjfk[_i]=='b'){
+            vm.off.powerKm_yjfk_cx=true;
+        }if(powerKm_yjfk[_i]=='c'){
+            vm.off.powerKm_yjfk_xz=true;
+        }if(powerKm_yjfk[_i]=='d'){
+            vm.off.powerKm_yjfk_xg=true;
+        }if(powerKm_yjfk[_i]=='e'){
+            vm.off.powerKm_yjfk_sc=true;
+        }
+    }
+    for(let _i in powerKm_hyy){//欢迎页
+        if(powerKm_hyy[_i]=='a'){
+            vm.off.powerKm_hyy_sh=true;
+        }if(powerKm_hyy[_i]=='b'){
+            vm.off.powerKm_hyy_cx=true;
+        }if(powerKm_hyy[_i]=='c'){
+            vm.off.powerKm_hyy_xz=true;
+        }if(powerKm_hyy[_i]=='d'){
+            vm.off.powerKm_hyy_xg=true;
+        }if(powerKm_hyy[_i]=='e'){
+            vm.off.powerKm_hyy_sc=true;
+        }
+    }
+    for(let _i in powerKm_hmzy){//号码占用
+        if(powerKm_hmzy[_i]=='a'){
+            vm.off.powerKm_hmzy_sh=true;
+        }if(powerKm_hmzy[_i]=='b'){
+            vm.off.powerKm_hmzy_cx=true;
+        }if(powerKm_hmzy[_i]=='c'){
+            vm.off.powerKm_hmzy_xz=true;
+        }if(powerKm_hmzy[_i]=='d'){
+            vm.off.powerKm_hmzy_xg=true;
+        }if(powerKm_hmzy[_i]=='e'){
+            vm.off.powerKm_hmzy_sc=true;
+        }
+    }
+    for(let _i in powerKm_hmd){//黑名单
+        if(powerKm_hmd[_i]=='a'){
+            vm.off.powerKm_hmd_sh=true;
+        }if(powerKm_hmd[_i]=='b'){
+            vm.off.powerKm_hmd_cx=true;
+        }if(powerKm_hmd[_i]=='c'){
+            vm.off.powerKm_hmd_xz=true;
+        }if(powerKm_hmd[_i]=='d'){
+            vm.off.powerKm_hmd_xg=true;
+        }if(powerKm_hmd[_i]=='e'){
+            vm.off.powerKm_hmd_sc=true;
+        }
+    }
+    for(let _i in powerKm_kk){//开卡
+        if(powerKm_kk[_i]=='a'){
+            vm.off.powerKm_kk_sh=true;
+        }if(powerKm_kk[_i]=='b'){
+            vm.off.powerKm_kk_cx=true;
+        }if(powerKm_kk[_i]=='c'){
+            vm.off.powerKm_kk_xz=true;
+        }if(powerKm_kk[_i]=='d'){
+            vm.off.powerKm_kk_xg=true;
+        }if(powerKm_kk[_i]=='e'){
+            vm.off.powerKm_kk_sc=true;
+        }
+    }
+    for(let _i in powerKm_sh){//商户
+        if(powerKm_sh[_i]=='a'){
+            vm.off.powerKm_sh_sh=true;
+        }if(powerKm_sh[_i]=='b'){
+            vm.off.powerKm_sh_cx=true;
+        }if(powerKm_sh[_i]=='c'){
+            vm.off.powerKm_sh_xz=true;
+        }if(powerKm_sh[_i]=='d'){
+            vm.off.powerKm_sh_xg=true;
+        }if(powerKm_sh[_i]=='e'){
+            vm.off.powerKm_sh_sc=true;
+        }
+    }
+    for(let _i in powerKm_bb){//报表
+        if(powerKm_bb[_i]=='a'){
+            vm.off.powerKm_bb_sh=true;
+        }if(powerKm_bb[_i]=='b'){
+            vm.off.powerKm_bb_cx=true;
+        }if(powerKm_bb[_i]=='c'){
+            vm.off.powerKm_bb_xz=true;
+        }if(powerKm_bb[_i]=='d'){
+            vm.off.powerKm_bb_xg=true;
+        }if(powerKm_bb[_i]=='e'){
+            vm.off.powerKm_bb_sc=true;
+        }
+    }
+    for(let _i in powerKm_jbpz){//基本配置
+        if(powerKm_jbpz[_i]=='a'){
+            vm.off.powerKm_jbpz_sh=true;
+        }if(powerKm_jbpz[_i]=='b'){
+            vm.off.powerKm_jbpz_cx=true;
+        }if(powerKm_jbpz[_i]=='c'){
+            vm.off.powerKm_jbpz_xz=true;
+        }if(powerKm_jbpz[_i]=='d'){
+            vm.off.powerKm_jbpz_xg=true;
+        }if(powerKm_jbpz[_i]=='e'){
+            vm.off.powerKm_jbpz_sc=true;
+        }
+    }
+}
+export const getKmMenu=()=>{
+    var powerKm1a=false,powerKm1b=false,powerKm5a=false,powerKm5b=false,powerKm6a=false,powerKm6b=false;//定义权限，根据权限进行路由重定向
+    if(typeof (getStore('KA_ECS_USER').rightCodes)!="undefined"){
+        var powerKm=getStore('KA_ECS_USER').rightCodes;
+    }else{return false}
+    powerKm=powerKm.split(',');
+    for(let i in powerKm){
+        if(powerKm[i].indexOf('1')>-1){
+            var powerKm1=powerKm[i]
+        }
+        if(powerKm[i].indexOf('5')>-1){
+            var powerKm5=powerKm[i]
+        }
+        if(powerKm[i].indexOf('6')>-1){
+            var powerKm6=powerKm[i]
+        }
+        for(let _i in powerKm1){
+            if(powerKm1[_i]=='a'){
+              powerKm1a=true//意见反馈审核
+            }
+            if(powerKm1[_i]=='b'){
+              powerKm1b=true//意见反馈查询
+            }
+        }
+        for(let _i in powerKm5){
+            if(powerKm5[_i]=='a'){
+               powerKm5a=true//开卡审核
+            }
+            if(powerKm5[_i]=='b'){
+               powerKm5b=true//开卡查询
+            }
+        }
+        for(let _i in powerKm6){
+            if(powerKm6[_i]=='a'){
+               powerKm6a=true//商户审核                  
+            }
+            if(powerKm6[_i]=='b'){
+               powerKm6b=true//商户查询                  
+            }
+        }
+    }
+    return({"powerKm1a":powerKm1a,"powerKm1b":powerKm1b,"powerKm5a":powerKm5a,"powerKm5b":powerKm5b,"powerKm6a":powerKm6a,"powerKm6b":powerKm6b})
+}
+

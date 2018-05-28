@@ -241,7 +241,6 @@ export default{
 				    vm.off.getPoints=='0';
 		        	return false;
                 }else if(vm.form.select==2&&(!context)){
-                    debugger;
 					layer.open({
 		            content:'请输入用户ID',
 		            skin: 'msg',
@@ -251,7 +250,6 @@ export default{
 				    vm.off.getPoints=='0';
 		        	return false;
 				}else if(vm.form.select==3&&(!context)){
-                    debugger;
 					layer.open({
 		            content:'请输入开卡号码',
 		            skin: 'msg',

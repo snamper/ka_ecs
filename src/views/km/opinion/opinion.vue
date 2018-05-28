@@ -173,7 +173,6 @@
       }
 //查询按钮
       ,searchList:function(index,page){
-          debugger;
         var s=this.form.select;
         var userInfo=localStorage.getItem('KA_ECS_USER');
             userInfo=JSON.parse(userInfo);

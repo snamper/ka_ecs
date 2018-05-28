@@ -152,7 +152,6 @@ export default{
             }).catch(error=>errorDeal(error));             
         },
         audit:function(result,reason,cb){//复审同意
-            debugger;
 			var vm=this;
             reqCommonMethod({"orderId":vm.auditData.orderId,"result":result,"reason":reason||''},function(){vm.off.isLoad=false;},"km-ecs/w/attribute/audit")
             .then((data)=>{

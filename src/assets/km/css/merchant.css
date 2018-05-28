@@ -1,0 +1,68 @@
+/* .g-search-form>.form-c>.row{width:auto} */
+/* .m-col-2>.col-l{display: none;} */
+/* .m-col-2>.col-r{margin-left: 0;width: 2.5rem;} */
+.total-head{position: relative;}
+.total-head>span{margin-right: 10px;}
+.total-head>span>b{font-weight: bold;}
+.total-head>.f-btn-group{position: absolute;width:4rem;left: 50%;margin-left:-2rem;top:50%;margin-top: -0.15rem;}
+.total-head>.f-btn-group>button{height:0.3rem;line-height:0.3rem;color:#717171 !important;border-radius: 5px; border-bottom-color:#ccc;-webkit-box-shadow:0 1px 1px rgba(90, 90, 90, 0.1);box-shadow:0 1px 1px rgba(90, 90, 90, 0.1);display:inline-block;padding: 0 3px;font-size:12px;cursor:pointer;background-color:#fff;border:1px solid transparent;border-color:#dadada;}
+.total-head>.f-btn-group>button:hover{color:#333333;background-color:#f1f1f1;}
+.total-head>.f-btn-group>button.active{color:#717171 !important;background-color:#F9F9F9;border-color:#c6c6c6;box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);}
+.total-head>.m-select{display: none;margin-left:0.1rem;}
+
+.merchant-total, .g-in-table, .merchant-total>tbody>tr>td{border:none !important;border-collapse:separate !important;}
+.merchant-total th:first-child{border-right:1px solid #dfe6ec;}
+.merchant-total tbody tr{border-top: none !important;}
+.merchant-total>tbody>tr>td{padding:0 !important;}
+.merchant-total{ border:1px solid #dfe6ec !important;}
+
+.o-headTotal-table tr>td, .o-headTotal-table tr>th{border-right:1px solid #dfe6ec;}
+.o-headTotal-table tr>td:first-child{background-color: #eef1f6;}
+.o-headTotal-table thead th{ height:0.3rem; background-color: #eef1f6;font-weight: normal;}
+.o-headTotal-table tbody tr>td{padding: 6px 0;}
+.g-in-table{text-align: left !important;}
+.g-in-table tr>td:nth-child(2){border-right:1px solid #dfe6ec;border-left:1px solid #dfe6ec;}
+.g-in-table td>span{display: inline-block;text-align:right;}
+.g-in-table.col-l td>span{width: 1.2rem;}
+.g-in-table.col-r td>span{width: 1.6rem;}
+.m-no-data{text-align: center;padding:0.1rem 0;}
+.o-clr-bd tr:nth-child(even){background: #fff !important;}
+@media screen and (max-width: 960px){
+.m-col-2>.col-r{width:auto;}
+.total-head>.m-select{display: inline-block;}
+.total-head>.f-btn-group{display: none;}
+.g-in-table td>span{text-align:left;margin-left: 5px;}
+.g-in-table.col-l td>span, .g-in-table.col-r td>span{width:auto;}
+}
+.g-lis-head {
+    height: 45px;
+    background-color: #fff;
+    width: 100%;
+    padding: 0.12rem 0.1rem;
+    -webkit-box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    border-radius: 4px;
+}
+.g-box {
+    /*padding-top: 0.2rem;*/
+    height:auto;
+}
+.m-total-table{
+    background: none;
+}
+span.dp{
+    display: inline-block;
+}
+div.border-bottom{
+    border-bottom:1px solid rgb(221, 220, 220);
+}
+.g-search-form>.form-c>.row{
+    width:45%;
+}
+.pdl{
+    padding-left:100px;
+}
+#merchantSearch{
+    height: 100%;
+    position: relative;
+}

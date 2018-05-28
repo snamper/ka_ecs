@@ -289,7 +289,6 @@ export default{
             }).catch(error=>errorDeal(error)); 
 		},
         dealAuditList:function(){//处理分配的订单
-        debugger;
 			const vm=this,len=vm.list.length;
             vm.auditData='';
             vm.imgData=[];
