@@ -80,7 +80,7 @@
 						<li v-if="off.powerKm_kk_sh">
 							<router-link :to="{name:'audit_card',params:{source:'realtime'}}">
 								<!-- <b></b>业务实时审核<span v-if="auditCount.opencard+auditCount.transfer+auditCount.realNameCollection+auditCount.realNameRechCard+auditCount.sdkRealTime!=0">{{auditCount.opencard+auditCount.transfer+auditCount.realNameCollection+auditCount.realNameRechCard+auditCount.sdkRealTime}}</span> -->
-                                <b></b>业务实时审核<span v-if="auditCount.opencard+auditCount.transfer+auditCount.realNameCollection+auditCount.sdkRealTime!=0">{{auditCount.opencard+auditCount.transfer+auditCount.realNameCollection+auditCount.sdkRealTime}}</span>
+                                <b></b>业务实时审核<span v-if="auditCount.opencard+auditCount.transfer+auditCount.realNameCollection+auditCount.sdkRealTime+auditCount.realNameRechCard!=0">{{auditCount.opencard+auditCount.transfer+auditCount.realNameCollection+auditCount.sdkRealTime+auditCount.realNameRechCard}}</span>
                             </router-link>
 						</li>
 						<li v-if="off.powerKm_kk_sh">

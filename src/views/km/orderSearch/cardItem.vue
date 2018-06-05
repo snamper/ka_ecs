@@ -388,7 +388,7 @@ export default{
 				}else vm.off.type==1 ? url='km-ecs/w/audit/ingList' : url='km-ecs/w/audit/edList';
 			}
 			if(vm.off.isLoad)return false;
-			vm.off.isLoad=true;
+            vm.off.isLoad=true;
             reqCommonMethod(json,function(){vm.off.isLoad=false;},url)
             .then((data)=>{
 	            vm.list=data.data.list
@@ -399,7 +399,7 @@ export default{
                 vm.off.isLoad=false;
             }).catch(error=>errorDeal(error)); 	 
 		},
-		searchClosedAndDoing:function(page){//进行中,已关闭
+        searchClosedAndDoing:function(page){//进行中,已关闭
 			var vm=this,url,json={"source":vm.form.source,"type":vm.form.orderType,"pageSize":vm.pageSize,"pageNum":page||1,"startTime":vm.form.startTime,"endTime":vm.form.endTime,"status":vm.off.type,"statusDetail":vm.form.orderStatus,"cardType":vm.form.cardType};
 			let context=vm.form['context'+vm.form.select];
 			if(vm.form.select==1&&(!context)){
@@ -446,8 +446,14 @@ export default{
 			json.context=context;
 			json.searchtype=vm.form.select;
 			if(vm.off.isLoad)return false;
-			vm.off.isLoad=true;
-             searchAuditList(json,function(){vm.off.isLoad=false;},"km-ecs/w/audit/getOrderList")
+            vm.off.isLoad=true;
+            if(json.type==6){
+                url="km-ecs/w/audit/getOrderList"
+            }else if(json.type==8){
+                url="km-ecs/w/audit/getAdditionOrderList";
+                Object.assign(json,{"periodType":vm.off.type});
+            }
+             searchAuditList(json,function(){vm.off.isLoad=false;},url)
              .then((data)=>{
                     vm.list=data.data.list;
 			    	vm.total=data.data.total;
@@ -669,17 +675,6 @@ export default{
 		},
 		agree:function(e){
 			var vm=this,url,orderId=e.target.name,number=e.target.title;
-
-			// vm.AJAX('w/audit/reAudit',{"orderId":orderId},function(data){
-			// 	layer.open({
-		    //         content:'复审成功',
-		    //         skin: 'msg',
-		    //         time: 4,
-		    //         msgSkin:'success',
-		    //     })
-			// 	vm.list[number].status=4
-			// 	vm.list[number].cardStatus=1
-            // })
             reAudit({"orderId":orderId},"km-ecs/w/audit/reAudit")
             .then((data)=>{
 	            layer.open({
@@ -743,28 +738,22 @@ export default{
 			}else{
 				if(type==1){
 					url='km-ecs/w/audit/ingInfo';
-					if(vm.form.orderType==4||vm.form.orderType==8)url='km-ecs/w/audit/getReinputInfo';
+                    if(vm.form.orderType==4||vm.form.orderType==8)url='km-ecs/w/audit/getReinputInfo';
+                    json.type='1';
 				}else if(type==2){
 					url='km-ecs/w/audit/edInfo';
-					if(vm.form.orderType==4||vm.form.orderType==8)url='km-ecs/w/audit/getReinputInfo';
+                    if(vm.form.orderType==4||vm.form.orderType==8)url='km-ecs/w/audit/getReinputInfo';
+                    json.type='2';                    
+				}else if(type==4||type==3){
+					url='km-ecs/w/audit/edInfo';
+                    if(vm.form.orderType==4||vm.form.orderType==8)url='km-ecs/w/audit/getReinputInfo';
+                    json.type='2';                    
 				}else{
-					url='km-ecs/w/audit/getOrderInfo';
+                    url='km-ecs/w/audit/getOrderInfo';
 				}
-
 			}
 			if(vm.off.isLoad)return false;
 			vm.off.isLoad=true;
-			// vm.AJAX(url,json,function(data){
-			// 	if(vm.form.source==7||vm.form.source==8){
-			// 		vm.detailsData=data.data.list[0];
-			// 	}else{
-			// 		vm.detailsData=data.data;
-			// 	}
-				
-			// 	vm.off.details=true;
-			// },function(){
-			// 	vm.off.isLoad=false;
-            // })
             reqCommonMethod(json,function(){vm.off.isLoad=false},url)
             .then((data)=>{
 				if(vm.form.source==7||vm.form.source==8){

@@ -76,7 +76,7 @@
 									<tr v-show="off.itemType!=8&&off.itemType!=9"><td>商户名称：</td>
 										<td>
 											<span>{{ auditData.companyName }}</span>
-											<span v-show="">【信用等级：{{auditData.levelName}}】</span>
+											<span>【信用等级：{{auditData.levelName}}】</span>
 										</td>
 									</tr>
 								</tbody>
@@ -91,8 +91,10 @@
 					</tr>
 				</tbody>
 				<!--实名补登-->
-				<RealTimeCollection v-if="off.itemType==1||off.itemType==2" :auditStatus="1" :auditData="auditData" :imgData="imgData"></RealTimeCollection>
-			  </table>
+				<RealTimeCollection v-if="off.itemType==1" :auditStatus="1" :auditData="auditData" :imgData="imgData"></RealTimeCollection>
+                <!-- 补换卡 -->
+                <RealNameRechCard v-if="off.itemType==2" :auditStatus="1" :auditData="auditData" :imgData="imgData"></RealNameRechCard>
+              </table>
 		  </div>
 	  </section>
 	  <div class="m-refresh" v-if="!auditData"><span class="u-icon-refresh" :class="{rotate360:off.isLoad}"></span><a @click="getAuditList">{{off.isLoad?'loading':'点击刷新'}}</a></div>
@@ -105,6 +107,7 @@ import {reqCommonMethod} from "../../../config/service.js";
 import {errorDeal,getDateTime} from "../../../config/utils.js";
 import ImgZoom from '../../../componentskm/ImgZoom';
 import RealTimeCollection from '../../../componentskm/audit/realTimeCollection';
+import RealNameRechCard from '../../../componentskm/audit/realNameRechCard';
 export default{
 	data (){
 		return {
@@ -124,7 +127,8 @@ export default{
 	},
 	components:{
 		ImgZoom,
-		RealTimeCollection
+        RealTimeCollection,
+        RealNameRechCard
 	},
 	beforeDestroy:function(){
 		window.clearInterval(this.timer)
@@ -302,13 +306,6 @@ export default{
                     this.$set(vm.imgData,4,{'src':vm.auditData.backImageUrl,'name':'过户人反面照片'})
                     this.$set(vm.imgData,5,{'src':vm.auditData.handImage,'name':'过户人手持照片'})
                     this.$set(vm.imgData,6,{'src':vm.auditData.signImage,'name':'过户人手签名照片'})
-					// vm.imgData[0]={'src':vm.auditData.frontImageOld,'name':'原机主正面照片'};
-					// vm.imgData[1]={'src':vm.auditData.backImageOld,'name':'原机主反面照片'};//
-					// vm.imgData[2]={'src':vm.auditData.handImageOld,'name':'原机主手持照片'};
-					// vm.imgData[3]={'src':vm.auditData.imageUrl,'name':'过户人正面照片'};
-					// vm.imgData[4]={'src':vm.auditData.backImageUrl,'name':'过户人反面照片'};
-					// vm.imgData[5]={'src':vm.auditData.handImage,'name':'过户人手持照片'};
-					// vm.imgData[6]={'src':vm.auditData.signImage,'name':'过户人手签名照片'};
                 }else if(vm.off.itemType==1){//实名补登
                     this.$set(vm.imgData,0,{'src':vm.auditData.oldReqParam.imageName,'name':'原正面照片'})
                     this.$set(vm.imgData,1,{'src':vm.auditData.oldReqParam.backImageName,'name':'原反面照片'})
@@ -317,14 +314,12 @@ export default{
                     this.$set(vm.imgData,4,{'src':vm.auditData.reqParam.backImageName,'name':'反面照片'})
                     this.$set(vm.imgData,5,{'src':vm.auditData.reqParam.handImageName,'name':'手持照片'})
                     this.$set(vm.imgData,6,{'src':vm.auditData.reqParam.signImageName,'name':'手签名照片'})
-					// vm.imgData[0]={'src':vm.auditData.oldReqParam.imageName,'name':'原正面照片'};
-					// vm.imgData[1]={'src':vm.auditData.oldReqParam.backImageName,'name':'原反面照片'};//
-					// vm.imgData[2]={'src':vm.auditData.oldReqParam.handImageName,'name':'原手持照片'};
-					// vm.imgData[3]={'src':vm.auditData.reqParam.imageName,'name':'正面照片'};
-					// vm.imgData[4]={'src':vm.auditData.reqParam.backImageName,'name':'反面照片'};
-					// vm.imgData[5]={'src':vm.auditData.reqParam.handImageName,'name':'手持照片'};
-					// vm.imgData[6]={'src':vm.auditData.reqParam.signImageName,'name':'手签名照片'};
-				}else{//开卡
+				}else if(vm.off.itemType==2){
+                    this.$set(vm.imgData,0,{'src':vm.auditData.reqParam.imageName,'name':'正面照片'})
+                    this.$set(vm.imgData,1,{'src':vm.auditData.reqParam.backImageName,'name':'反面照片'})
+                    this.$set(vm.imgData,2,{'src':vm.auditData.reqParam.handImageName,'name':'手持照片'})
+                    this.$set(vm.imgData,3,{'src':vm.auditData.reqParam.signImageName,'name':'手签名照片'})                                       
+                }else{//开卡
 					vm.imgData=[
 						{'src':vm.auditData.imageUrl,'name':'正面'},
 						{'src':vm.auditData.backImageUrl,'name':'反面'},

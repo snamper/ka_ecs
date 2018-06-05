@@ -16,7 +16,7 @@
   	</header>
 	<div class="g-box">
 		<table class="g-list-table">
-			<tbody v-if="list.operatorType!=5">
+			<tbody v-if="list.operatorType!=5&&list.operatorType!=9">
 				<tr>
 					<td>
 						<table class="g-inner-table">
@@ -111,7 +111,7 @@
 										<span v-else>{{ list.userAddress }}</span>
 									</td>
 								</tr>
-								<tr v-if="list.operatorType==7"r><td>原机主证件地址：</td><td>{{ list.userAddressOld }}</td></tr>
+								<tr v-if="list.operatorType==7"><td>原机主证件地址：</td><td>{{ list.userAddressOld }}</td></tr>
 								<tr><td>证件期限：</td>
 									<td>
 										<span v-if="source==7||source==8">{{ userMoreInfo.period }}</span>
@@ -163,7 +163,7 @@
 								<tr v-show="type==2"><td>审核人：</td><td>{{ list.customerName }}【审核人ID：{{ list.customerId }}】</td></tr>
 								
 								<tr v-show="type==2"><td>状态说明：</td><td>{{ list.cardStatusReason }}</td></tr>
-								<tr v-if="type==2&&list.status==2"><td>拒绝原因：</td><td><ul><li v-for="todo in filterReason(list.auditReason)"><b v-show="todo.star" class="f-c-red">*</b>{{todo.text}}</li></ul></td></tr>
+								<tr v-if="type==2&&list.status==2"><td>拒绝原因：</td><td><ul><li v-for="(todo,i) in filterReason(list.auditReason)" :key="i"><b v-show="todo.star" class="f-c-red">*</b>{{todo.text}}</li></ul></td></tr>
 								<tr v-show="type==2&&list.adutiRemarks"><td>备注：</td><td>{{ list.adutiRemarks }}</td></tr>
 							</tbody>
 						</table>
@@ -173,12 +173,14 @@
 					</td>
 				</tr>
 				<tr class="m-box-img m-meida-640down">
-					<img v-for="item in imgData" :src="item.src">
+					<img v-for="(item,i) in imgData" :src="item.src" :key="i">
 				</tr>
 			</tbody>
 			<!--实名补登-->
 			<RealTimeCollection v-if="list.operatorType==5" :auditStatus="type" :auditData="list" :imgData="imgData"></RealTimeCollection>
-  		</table>
+            <!--补换卡-->
+            <RealNameRechCard v-if="list.operatorType==9" :auditStatus="type" :auditData="list" :imgData="imgData"></RealNameRechCard>
+          </table>
   	</div>
   <um-details-view v-if="isShowDetails" :type="typeDetails" :list="detailsList" :dealerId="list.dealerId">
 
@@ -191,6 +193,7 @@ import {reqCommonMethod} from "../config/service.js";
 import {errorDeal,getDateTime} from "../config/utils.js";
 import ImgZoom from '../componentskm/ImgZoom';
 import RealTimeCollection from './audit/realTimeCollection';
+import RealNameRechCard from './audit/realNameRechCard';
 import detailsView from '../componentskm/cardOrderDetailsAlert';
 export default{
 	name:'cardOrderDetails',
@@ -212,10 +215,12 @@ export default{
 	components:{
 		'um-details-view':detailsView,
 		'ImgZoom':ImgZoom,
-		RealTimeCollection
+        RealTimeCollection,
+        RealNameRechCard
 	},
 	created:function(){
-		var vm=this;
+        var vm=this;
+        console.log(vm.list.operatorType);
 		if(vm.list.operatorType==7){//过户办理
 			vm.imgData[0]={'src':vm.list.frontImageOld,'name':'原机主正面照片'};
 			vm.imgData[1]={'src':vm.list.backImageOld,'name':'原机主反面照片'};
@@ -224,6 +229,11 @@ export default{
 			vm.imgData[4]={'src':vm.list.backImage,'name':'过户人反面照片'};
 			vm.imgData[5]={'src':vm.list.handImage,'name':'过户人手持照片'};
 			vm.imgData[6]={'src':vm.list.signImage,'name':'过户人手签名照片'};
+		}else if(vm.list.operatorType==9){//补换卡
+			vm.imgData[0]={'src':vm.list.reqParam.imageName,'name':'正面照片'};
+			vm.imgData[1]={'src':vm.list.reqParam.backImageName,'name':'反面照片'};
+			vm.imgData[2]={'src':vm.list.reqParam.handImageName,'name':'手持照片'};
+			vm.imgData[3]={'src':vm.list.reqParam.signImageName,'name':'手签名照片'};
 		}else if(vm.list.operatorType==5){//实名补登
 			vm.imgData[0]={'src':vm.list.oldReqParam.imageName,'name':'原正面照片'};
 			vm.imgData[1]={'src':vm.list.oldReqParam.backImageName,'name':'原反面照片'};//
@@ -494,9 +504,14 @@ export default{
 				vm.$parent.list[parseInt(vm.number)].cardStatus=1;
             }).catch(error=>errorDeal(error));            
 		},
-		orderLog:function(){//审核日志
-			var vm=this;
-            reqCommonMethod({"orderId":vm.list.orderId},false,"km-ecs/w/audit/log")
+        orderLog:function(){//审核日志
+            var vm=this,json;
+            if(vm.$parent.form.orderType==8){
+                json={"orderId":vm.list.sysOrderId}
+            }else{
+                json={"orderId":vm.list.orderId}
+            }
+            reqCommonMethod(json,false,"km-ecs/w/audit/log")
             .then((data)=>{
                 var str='',list= data.data;
 				for(var i in list){
