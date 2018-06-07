@@ -35,7 +35,7 @@
 										<div class="m-dropdown-select">
 							              <button class="drop-button" @click="dropSelectButton"><span class="text">{{cityData[drop.select].name}}</span><i class="caret"></i></button>
 							              <ul class="drop-menu f-scroll-lt" v-if="drop.off">
-							                <li v-for="(todo,index) in cityData"><a @click="dropSelectScope(index)">{{todo.name}}</a></li>
+							                <li v-for="(todo,index) in cityData" :key="index"><a @click="dropSelectScope(index)">{{todo.name}}</a></li>
 							              </ul>
 							            </div>
 									</td></tr>

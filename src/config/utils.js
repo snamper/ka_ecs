@@ -24,6 +24,7 @@ export const errorDeal=(res,cb)=>{
  * iframe 文件下载
  */
 export const createDownload=(url,data,cb)=>{
+    debugger;
 	var body=document.getElementsByTagName("body")[0],
 	ifr=document.getElementById("downLoadForm"),
     form = document.createElement("form"),

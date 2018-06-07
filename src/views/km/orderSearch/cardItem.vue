@@ -257,7 +257,7 @@
 require('../../../assets/km/js/base64.min.js');
 import {searchAuditList,reAudit,reqCommonMethod} from "../../../config/service.js"
 import pagination from "../../../componentskm/page.vue";
-import details from "../../../componentskm/cardOrderDetails.vue";
+import details from "../../../componentskm/cardOrderDetailsn.vue";
 import { getDateTime,translateData,secondsFormat,getUnixTime,createDownload,setStore, getStore, errorDeal } from "../../../config/utils.js";
 export default{
 	data (){
@@ -524,7 +524,7 @@ export default{
 				url='km-ecs/w/audit/downloadReinput';
                 Object.assign(json,{"periodType":vm.off.type});  
 			}
-			createDownload(url,  BASE64.encode(JSON.stringify(json)),  function(){
+			createDownload(url, BASE64.encode(JSON.stringify(json)),  function(){
 		        vm.off.isLoad=false;
 	      	});
 		},
@@ -735,22 +735,21 @@ export default{
 				json.params=[sql];
 				json.pageSize="10";
 				json.pageNum="-1";
-			}else{
-				if(type==1){
+            }else{//卡盟App
+				if(type==1){//待审核
 					url='km-ecs/w/audit/ingInfo';
                     if(vm.form.orderType==4||vm.form.orderType==8)url='km-ecs/w/audit/getReinputInfo';
-                    json.type='1';
-				}else if(type==2){
+                    vm.form.orderType==4?json.type='1':json.type='2';
+				}else if(type==2){//已审核
 					url='km-ecs/w/audit/edInfo';
                     if(vm.form.orderType==4||vm.form.orderType==8)url='km-ecs/w/audit/getReinputInfo';
-                    json.type='2';                    
-				}else if(type==4||type==3){
-					url='km-ecs/w/audit/edInfo';
-                    if(vm.form.orderType==4||vm.form.orderType==8)url='km-ecs/w/audit/getReinputInfo';
-                    json.type='2';                    
+                    vm.form.orderType==4?json.type='1':json.type='2';
 				}else{
                     url='km-ecs/w/audit/getOrderInfo';
-				}
+                    if(vm.form.orderType==4||vm.form.orderType==8)url='km-ecs/w/audit/getReinputInfo';
+                    vm.form.orderType==4?json.type='1':json.type='2';                                                           
+                }
+                
 			}
 			if(vm.off.isLoad)return false;
 			vm.off.isLoad=true;
