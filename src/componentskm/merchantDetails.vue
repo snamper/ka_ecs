@@ -356,7 +356,7 @@ export default {
             vm.closePop(1);
         },sellScopePower(){
             let vm=this.$parent;
-            let info=vm.ajaxData.details.openedScopes1;
+            let info=JSON.parse(vm.ajaxData.details.openedScopes1);
             let str='';
             for(let key in info){
                 if(key==1)str+=`<li class="clr"><div class="fl">远特售卡：</div>`;
