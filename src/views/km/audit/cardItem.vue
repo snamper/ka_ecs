@@ -138,7 +138,7 @@ export default{
 		vm.off.auditType=vm.$parent.off.auditType;
 		vm.off.itemType=vm.$route.params.type;
 		//vm.AJAX("w/audit/getRefuseReasons",{"auditType":vm.off.auditType},function(data){vm.refuseArr=data.data},function(){});
-        reqCommonMethod({"auditType":vm.off.auditType},function(){vm.off.isLoad=false;},"km-ecs/w/audit/getRefuseReasons")
+        reqCommonMethod({"auditType":vm.off.auditType},function(){},"km-ecs/w/audit/getRefuseReasons")
         .then((data)=>{
             vm.refuseArr=data.data;
         }).catch(error=>errorDeal(error));              

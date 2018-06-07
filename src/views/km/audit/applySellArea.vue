@@ -106,7 +106,7 @@ export default{
           getAuditList:function(){//获取订单
 			let vm=this,url='km-ecs/w/attribute/auditList';
 			// if(vm.off.isLoad==1){return false};
-			// vm.off.isLoad=1;
+			vm.off.isLoad=1;
             reqCommonMethod({},function(){vm.off.isLoad=false;},url)
             .then((data)=>{
                 if(data.data.length==0){
@@ -138,7 +138,7 @@ export default{
 			}
 		},agree:function(){//审核同意
 			var vm=this,url='km-ecs/w/attribute/audit';	
-            reqCommonMethod({"orderId":vm.auditData.orderId,"result":2,reason:""},function(){vm.off.isLoad=false;},url)
+            reqCommonMethod({"orderId":vm.auditData.orderId,"result":2,reason:""},false,url)
             .then((data)=>{
                 layer.open({
                     content:data.msg,
@@ -153,7 +153,7 @@ export default{
         },
         audit:function(result,reason,cb){//复审同意
 			var vm=this;
-            reqCommonMethod({"orderId":vm.auditData.orderId,"result":result,"reason":reason||''},function(){vm.off.isLoad=false;},"km-ecs/w/attribute/audit")
+            reqCommonMethod({"orderId":vm.auditData.orderId,"result":result,"reason":reason||''},false,"km-ecs/w/attribute/audit")
             .then((data)=>{
                 layer.open({
 		            content:'操作成功',
@@ -256,7 +256,7 @@ export default{
 			},1000);
 		},detailsUser:function(){//申请人详情
 			var vm=this;
-            reqCommonMethod({"userId":vm.auditData.userId},function(){vm.$parent.off.isLoad=false;},"km-ecs/w/audit/getUserInfo")
+            reqCommonMethod({"userId":vm.auditData.userId},false,"km-ecs/w/audit/getUserInfo")
             .then((data)=>{
                 vm.detailsList=data.data;
 				vm.isShowDetails=true;
@@ -265,7 +265,7 @@ export default{
 		},
 		detailsMerchant:function(){//商户详情
 			var vm=this;
-            reqCommonMethod({"dealerId":vm.auditData.dealerId},function(){vm.$parent.off.isLoad=false;},"km-ecs/w/audit/getMerchantInfo")
+            reqCommonMethod({"dealerId":vm.auditData.dealerId},false,"km-ecs/w/audit/getMerchantInfo")
             .then((data)=>{
                 vm.detailsList=data.data;
 				vm.isShowDetails=true;

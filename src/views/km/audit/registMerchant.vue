@@ -179,7 +179,7 @@ export default{
 		agree:function(){//审核同意
 			var vm=this,url='',orderId=vm.auditData.orderId;	
             //vm.AJAX("w/regist/audit",{"orderId":orderId,"result":1,"remarks":"","auditType":vm.off.auditType,"gztResult":vm.auditData.gztResult},function(data){layer.open({content:data.msg,skin:"msg",time:4,msgSkin:"success",success:function(){vm.dealAuditList()}})});
-            reqCommonMethod({"orderId":orderId,"result":1,"remarks":"","auditType":vm.off.auditType,"gztResult":vm.auditData.gztResult},function(){vm.off.isLoad=false;},"km-ecs/w/regist/audit")
+            reqCommonMethod({"orderId":orderId,"result":1,"remarks":"","auditType":vm.off.auditType,"gztResult":vm.auditData.gztResult},false,"km-ecs/w/regist/audit")
             .then((data)=>{
                layer.open({
 					content:data.msg,
@@ -228,7 +228,7 @@ export default{
 					if(remark==''&&reason=='')return false;
 					console.log(remark+'|'+reason)
 					//vm.AJAX("w/regist/audit",{"orderId":orderId,"result":2,"remarks":remark+"|"+reason,"auditType":vm.off.auditType,"gztResult":vm.auditData.gztResult},function(data){layer.open({content:data.msg,skin:"msg",time:4,msgSkin:"success",success:function(){vm.dealAuditList();layer.close(popIndex)}})});
-                    reqCommonMethod({"orderId":orderId,"result":2,"remarks":remark+'|'+reason,"auditType":vm.off.auditType,"gztResult":vm.auditData.gztResult},function(){vm.off.isLoad=false;},"km-ecs/w/regist/audit")
+                    reqCommonMethod({"orderId":orderId,"result":2,"remarks":remark+'|'+reason,"auditType":vm.off.auditType,"gztResult":vm.auditData.gztResult},false,"km-ecs/w/regist/audit")
                     .then((data)=>{
                         layer.open({
 							content:data.msg,
@@ -274,7 +274,7 @@ export default{
 		gztBtn:function(){
 			const vm=this;
 			//vm.AJAX("w/regist/gztCheck",{"orderId":vm.auditData.orderId,"auditType":vm.off.auditType},function(data){if(data==""){return false}else{vm.result=data.msg;var code=data.code;vm.off.auditIndex=0;if(code==200){layer.open({content:vm.result,skin:"msg",time:4,msgSkin:"success",})}else{layer.open({content:vm.result,skin:"msg",time:4,msgSkin:"error",})}}},function(){vm.off.isLoad=0});
-            reqCommonMethod({"orderId":vm.auditData.orderId,"auditType":vm.off.auditType},function(){vm.off.isLoad=false;},"km-ecs/w/regist/gztCheck")
+            reqCommonMethod({"orderId":vm.auditData.orderId,"auditType":vm.off.auditType},false,"km-ecs/w/regist/gztCheck")
             .then((data)=>{
                 if(data==''){
 			        return false;
