@@ -93,10 +93,9 @@
 									<tr><td>转账模式：</td><td>{{auditData.transferModel}}</td></tr>
 									<tr><td>设备编号：</td><td>{{auditData.devMac}}</td></tr>
 									<tr><td>设备MAC：</td><td>{{auditData.devMacAddress}}</td></tr>
-									<tr><td>推广渠道ID：</td><td>{{auditData.popchannel}}</td></tr>
-									<tr><td>推广渠道名称：</td><td>{{auditData.popchannelName}}</td></tr>
-									<tr><td>上级商户ID：</td><td>{{auditData.superDealerId}}</td></tr>
-									<tr><td>上级商户名称：</td><td>{{auditData.superDealerName}}</td></tr>
+									<tr><td>推广渠道：</td><td>{{auditData.popchannel}}[{{ auditData.popchannelName }}]</td></tr>
+									<tr><td>上级商户：</td><td>{{auditData.superDealerId}}[{{ auditData.superDealerName }}]</td></tr>
+									<tr><td>上级de上级商户：</td><td>{{auditData.superSuperDealerId}}[{{ auditData.superSuperDealerName }}]</td></tr>
 									<tr><td>操作人ID：</td><td>{{auditData.userId}}</td></tr>
 									<tr><td>操作人姓名：</td><td>{{auditData.userName}}</td></tr>
 

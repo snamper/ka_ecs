@@ -71,6 +71,7 @@
 									<tr><td>设备MAC：</td><td>{{list.devMacAddress}}</td></tr>
 									<tr><td>推广渠道：</td><td>{{list.popchannel}}（{{list.popchannelName}}）</td></tr>
 									<tr><td>上级商户：</td><td>{{list.superDealerId}}（{{list.superDealerName}}）</td></tr>
+									<tr><td>上级de上级商户：</td><td>{{list.superSuperDealerId}}[{{ list.superSuperDealerName }}]</td></tr>
 									<tr><td>操作人：</td><td>{{list.userId}}（{{list.userName}}）</td></tr>
 									<tr v-show="orderType==2"><td>审核人ID：</td><td>{{list.customer}}</td></tr>
 									<tr v-show="orderType==2&&list.orderStatus==2"><td>备注：</td><td v-html="filterReason()"></td></tr>
