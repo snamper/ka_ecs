@@ -353,7 +353,7 @@ export default {
                 {'src':vm._ajaxData.details.handImageUrl?imgUrl+vm._ajaxData.details.handImageUrl:'','name':'手持照片'}
             ]
 
-            vm.closePop(1);
+            vm.$parent.closePop(1);
         },sellScopePower(){
             let vm=this.$parent;
             let info=JSON.parse(vm.ajaxData.details.openedScopes1);
