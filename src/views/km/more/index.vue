@@ -6,7 +6,7 @@
 <template>
 	<section id="more">
 		<ul class="g-more-menu" v-show="!off.fn">
-			<li  class="u-black-phone" @click="showFn(1)">
+			<li v-if="off.power.powerKm_hmd_xg" class="u-black-phone" @click="showFn(1)">
 				<i class="icon"></i>
 				<span class="dp">号码黑名单</span>
 			</li>
