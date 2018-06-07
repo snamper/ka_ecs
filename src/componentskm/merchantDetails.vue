@@ -346,7 +346,7 @@ export default {
             const vm=this.$parent;
 
             let imgUrl=_CONFIG ? _CONFIG[_CONFIG.env].REGISTER_MERCHANT_IMAGE_URL : '';
-            let merchantType=vm._ajaxData.details.merchantType;
+            let merchantType=JSON.parse(vm._ajaxData.details.merchantType);
             vm.merchantImgData=[
                 {'src':vm._ajaxData.details.frontImageUrl?imgUrl+vm._ajaxData.details.frontImageUrl:'','name':merchantType=='企业' ? '门店左照片' : '正面照片'},
                 {'src':vm._ajaxData.details.backImageUrl?imgUrl+vm._ajaxData.details.backImageUrl:'','name':merchantType=='企业' ? '门店右照片' : '反面照片'},
