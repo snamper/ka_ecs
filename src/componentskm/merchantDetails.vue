@@ -157,10 +157,10 @@
                                             <td><span>自推广激励余额：</span>{{ parseFloat(_ajaxData.details.promotion)/100 }}元</td>
                                         </tr>
                                         <tr>
-                                            <td><span>其它佣金历史总金额：</span>{{ parseFloat(_ajaxData.details.extraMoney)/100 }}元</td>
+                                            <td><span>其它佣金历史总金额：</span>{{ parseFloat(_ajaxData.details.extraMoneyTotal)/100 }}元</td>
                                         </tr>
                                         <tr>
-                                            <td><span>其它佣金余额：</span>{{ parseFloat(_ajaxData.details.extraMoneyTotal)/100 }}元</td>
+                                            <td><span>其它佣金余额：</span>{{ parseFloat(_ajaxData.details.extraMoney)/100 }}元</td>
                                         </tr>
                                         <tr>
                                             <td><span>保证金：</span>{{ parseFloat(_ajaxData.details.bond)/100 }}元</td>
