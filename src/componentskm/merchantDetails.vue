@@ -95,17 +95,18 @@
                                         </tr>
                                         <tr>
                                             <td><span>激活时间：</span>{{ _ajaxData.details.registTime }}</td>
-                                            <td><span>基础总次数：</span>{{ _ajaxData.details.btFrequency }}</td>
+                                            <td><span>基础总次数：</span>{{ _ajaxData.details.btFrequency }}【成功：{{_ajaxData.details.bsFrequency}}】</td>
                                         </tr>
                                         <tr>
                                                 <td><span>签约状态：</span><b :class="{fCGreen:_ajaxData.details.isSignAgreement=='已签约',fCRed:_ajaxData.details.isSignAgreement=='未签约'}">{{ _ajaxData.details.isSignAgreement }}</b>[{{ _ajaxData.details.signTime }}]</td>
-                                                <td><span>基础成功次数：</span>{{ _ajaxData.details.bsFrequency }}</td> 
+                                                <td><span>上级商户：</span>
+                                                <a href="javascript:;" v-if="_ajaxData.details.superDealerId" @click="details(_ajaxData.details.superDealerId,1,'x')"  title="点击查看详情" class="details">{{_ajaxData.details.superDealerId}}</a>【名称：{{ _ajaxData.details.superDealerName||'--' }}】</td>
                                         </tr>
                                         <tr>
                                             <td><span>设备信息：</span>
                                                 <a :href="'#/homek/resource/device/'+_ajaxData.details.devMac" title="点击查看详情" class="details m-l">{{ _ajaxData.details.devMac }}</a></td>
-                                            <td><span>上级商户：</span>
-                                                <a href="javascript:;" v-if="_ajaxData.details.superDealerId" @click="details(_ajaxData.details.superDealerId,1,'x')"  title="点击查看详情" class="details">{{_ajaxData.details.superDealerId}}</a>【名称：{{ _ajaxData.details.superDealerName||'--' }}】</td>
+                                            <td><span>上级de上级商户：</span>
+                                                <a href="javascript:;" v-if="_ajaxData.details.superSuperDealerId" @click="details(_ajaxData.details.superSuperDealerId,1,'x')"  title="点击查看详情" class="details">{{_ajaxData.details.superSuperDealerId}}</a>【名称：{{ _ajaxData.details.superSuperDealerIdName||'--' }}】</td>
                                         </tr>
                                         <tr>
                                             <td><span>欢迎页：</span>{{ _ajaxData.details.bannerNames||'--' }}</td>
@@ -154,6 +155,12 @@
                                         </tr>
                                         <tr>
                                             <td><span>自推广激励余额：</span>{{ parseFloat(_ajaxData.details.promotion)/100 }}元</td>
+                                        </tr>
+                                        <tr>
+                                            <td><span>其它佣金历史总金额：</span>{{ parseFloat(_ajaxData.details.extraMoney)/100 }}元</td>
+                                        </tr>
+                                        <tr>
+                                            <td><span>其它佣金余额：</span>{{ parseFloat(_ajaxData.details.extraMoneyTotal)/100 }}元</td>
                                         </tr>
                                         <tr>
                                             <td><span>保证金：</span>{{ parseFloat(_ajaxData.details.bond)/100 }}元</td>
