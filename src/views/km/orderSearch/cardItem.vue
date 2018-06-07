@@ -248,7 +248,7 @@
 	</div>
 	</section>
 	<!--详情-->
-	<list-details :list="detailsData" :source="form.source" :type="off.type" v-if="off.details" :number="off.number">
+	<list-details :list="detailsData"  :source="form.source" :type="off.type" v-if="off.details" :number="off.number">
 
 	</list-details>
   </div>
@@ -257,7 +257,7 @@
 require('../../../assets/km/js/base64.min.js');
 import {searchAuditList,reAudit,reqCommonMethod} from "../../../config/service.js"
 import pagination from "../../../componentskm/page.vue";
-import details from "../../../componentskm/cardOrderDetailsn.vue";
+import details from "../../../componentskm/cardOrderDetails.vue";
 import { getDateTime,translateData,secondsFormat,getUnixTime,createDownload,setStore, getStore, errorDeal } from "../../../config/utils.js";
 export default{
 	data (){
@@ -266,7 +266,7 @@ export default{
 				type:1,//1，待审核;2，已审核;3，进行中;4，已关闭
 				isLoad:0,//加载条
 				details:0,//详情页面开关
-				number:'',//第几条详情
+                number:'',//第几条详情
 			},
 			form:{
 				source:'6',//订单来源，6、卡盟APP；7、卡盟SDK；8卡盟通服
@@ -762,6 +762,7 @@ export default{
 				}
                 vm.off.details=true;
                 vm.off.isLoad=false;
+                vm.off.examine=true;
             }).catch(error=>errorDeal(error)); 	
 		},
 		to_laydate:function(v){

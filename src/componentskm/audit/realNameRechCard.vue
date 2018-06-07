@@ -14,6 +14,12 @@
 					<tr><td>用户姓名：</td><td>{{auditData.newUserName}}</td></tr>
                     <tr><td>电话号码：</td><td>{{auditData.phoneNumber}}【{{auditData.numberLevelDesc}}-{{auditData.home||'--'}}】</td></tr>
                     <tr><td>开卡时间：</td><td>{{auditData.oldReqParam.createTime}}</td></tr>
+                    <tr v-if="examine"><td>号卡状态：</td><td>{{translateData(4,auditData.orderStatus)}}</td></tr>                    
+                    <tr v-if="examine"><td>审核状态：</td><td>
+                        <span v-if="auditData.status==1" class="f-c-green">同意</span>
+                        <span v-if="auditData.status==2" class="f-c-red">拒绝</span>
+                        <span v-if="auditData.status==3" class="f-c-grey">超时关闭</span>
+                    </td></tr>                    
                     <tr><td>开卡子系统：</td><td>{{auditData.oldSource}}</td></tr>
                     <tr><td>证件类型：</td>
                         <td>
@@ -34,7 +40,7 @@
                     </tr>
                     <tr><td>渠道ID：</td><td>{{auditData.dealerId}}</td></tr>
                     <tr><td>商户名称：</td><td>{{auditData.companyName}}【{{auditData.levelName||'--'}}】</td></tr>
-                    <tr><td>补换卡原因：</td><td>{{auditData.reason}}</td></tr>
+                    <tr><td>补换卡原因：</td><td>{{auditData.reason||auditData.req_reason}}</td></tr>
 				</tbody>
 			</table>
 		</td>
@@ -52,26 +58,29 @@
 </template>
 <script>
 import ImgZoom from '../ImgZoom';
-import {getDateTime} from '../../config/utils.js';
+import {getDateTime,translateData} from '../../config/utils.js';
 export default{
 	name:'realTimeCollection',
 	props:{
 		auditData:Object,
 		imgData:Array,
-		auditStatus:Number
+        auditStatus:Number,
 	},
 	data(){
 		return{
 			newImage:[],
-			oldImage:[]
+            oldImage:[],
+            examine:false,
 		}
 	},
 	components:{
 		ImgZoom
 	},
 	created:function(){
+        let vm=this;
 		this.oldImage=this.imgData.slice(0,3);
-		this.newImage=this.imgData.slice(3,7);
+        this.newImage=this.imgData.slice(3,7);
+        vm.examine=this.$parent.$parent.off.examine;
 	},
 	methods:{
 		getDateTime(e){
@@ -82,7 +91,9 @@ export default{
 			let longitude=parseFloat(vm.auditData.userInfo.longitude);
 			w<640 ? url='http://map.baidu.com/mobile/?latlng='+latitude+','+longitude+'' : url='http://map.baidu.com/?latlng='+latitude+','+longitude+'';
 			window.open(url);
-		},
+		},translateData(v,i){
+            return translateData(v,i);
+        }
 	}
 }
 </script>

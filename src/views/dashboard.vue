@@ -8,7 +8,7 @@
         <header>实时公告</header>
         <div class="noticediv f-scroll-lt" id="notice-box" @mouseover="noticeMouseEvent(false)" @mouseleave="noticeMouseEvent(true)" :style="{height:noticeUlHeight}">
           <ul class="m-notice-ul" id="notice-ul">
-            <li class="clr" v-for="msg in notice" :key="">
+            <li class="clr" v-for="(msg,i) in notice" :key="i">
               <div class="fl msg-type">
                 <span class="u-icon-chongzhi" v-show="msg.type==3"></span>
                 <span class="u-icon-jili" v-show="msg.type==4"></span>
