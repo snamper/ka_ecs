@@ -6,15 +6,15 @@
 <template>
 	<section id="more">
 		<ul class="g-more-menu" v-show="!off.fn">
-			<li v-if="off.power.powerKm_hmd_xg" class="u-black-phone" @click="showFn(1)">
+			<li v-if="off.powerKm_hmd_xg" class="u-black-phone" @click="showFn(1)">
 				<i class="icon"></i>
 				<span class="dp">号码黑名单</span>
 			</li>
-			<li v-if="off.power.powerKm_hyy_cx" class="u-welcome-conf" @click="showFn(2)">
+			<li v-if="off.powerKm_hyy_cx" class="u-welcome-conf" @click="showFn(2)">
 				<i class="icon"></i>
 				<span class="dp">欢迎页管理</span>
 			</li>
-			<li v-if="off.power.powerKm_hmzy_cx" class="u-number-release" @click="showFn(3)">
+			<li v-if="off.powerKm_hmzy_cx" class="u-number-release" @click="showFn(3)">
 				<i class="icon"></i>
 				<span class="dp">号码占用/解冻</span>
 			</li>
@@ -38,16 +38,19 @@ import "../../../assets/km/css/search.css";
 import PhoneBlackList from '../../../componentskm/more/phoneBlackList';
 import WelcomeConf from '../../../componentskm/more/welcomeConf';
 import NumberRelease from '../../../componentskm/more/numberRelease';
-import powerKm from "../../../config/utils.js";
+import { powerKm,getStore } from "../../../config/utils.js";
 export default{
 	name:'more',
 	data (){
 		return {
 			off:{
-				power:'',
+				// power:'',
 				fn:0
 			},
 		}
+    },
+    mounted:function(){
+  
 	},
 	components:{
 		PhoneBlackList,
@@ -56,6 +59,10 @@ export default{
 	},
 	created(){
         this.off.power=this.$parent.off;
+        let vm=this,
+            userInfo=getStore("KA_ECS_USER");
+            vm.userInfo=userInfo;
+        powerKm(vm); 
 	},
 	methods:{
 		showFn(off){

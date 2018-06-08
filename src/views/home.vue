@@ -335,6 +335,7 @@ export default{
             
             /* 卡盟权限 */
             powerKm(this);
+            console.log(vm.off);
             vm.initMenu();
         },
         initMenu:function(){

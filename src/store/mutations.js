@@ -49,7 +49,7 @@ export default {
         }
         state.auditCount = Object.assign({}, state.auditCount,res.data);
         if(powerKm5a!=true){
-            state.auditCount = Object.assign({}, state.auditCount,res.data,
+            state.auditCount = Object.assign({}, state.auditCount,
                 {"opencard":0,"opencard_":0,
                 "opencardAfterwards":0,"opencardAfterwards_":0,
                 "realNameCollection":0,"realNameCollection_":0,
@@ -59,11 +59,13 @@ export default {
                 "tfOpenCard":0,"tfOpenCard_":0,}
             );
         }if(powerKm6a!=true){
-            state.auditCount = Object.assign({}, state.auditCount,res.data,
+            state.auditCount = Object.assign({}, state.auditCount,
                 {"registerMerchantRealTime":0,"registerMerchantRealTime_":0,
                 "registerMerchantAfterWards":0,"registerMerchantAfterWards_":0,
+                "registerMerchantAfter":0,"registerMerchantAfter_":0,
                 "attribute":0});
         }
+        console.log(state.auditCount);
         let count=this.getters.getCountTotal;
 		if(count!=state.countTotal){
 			state.offCountChange=true;
