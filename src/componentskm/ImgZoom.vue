@@ -32,7 +32,6 @@ export default{
 			transformStyle:{x:0,y:0,s:1,r:0},//缩放初始坐标
 			mouse:{x:0,y:0,off:!1},//鼠标坐标
 			imgIndex:0,//图片索引
-
 		}
 	},
 	created:function(){
@@ -56,7 +55,7 @@ export default{
 			var transform='translate3d(0,0,0) scale(1) rotate('+deg+'deg)';
 			this.zoomStyle.transform=transform;
         },
-		slide:function(index){//切换
+        slide:function(index){//切换
 			var len=this.imgData.length;
 			index==2?this.imgIndex<(len-1) ? this.imgIndex+=1 : this.imgIndex=0 : this.imgIndex>0 ? this.imgIndex-=1 : this.imgIndex=len-1;
 			if(this.imgData[this.imgIndex].src){

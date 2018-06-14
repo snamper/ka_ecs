@@ -140,7 +140,7 @@
 						<li v-if="off.powerKm_sh_cx"><router-link :to="{name:'merchant',params:{val:'null'}}"><b></b>商户查询</router-link></li>
 						<li v-if="off.powerKm_sh_cx"><router-link :to="{name:'device',params:{val:'null'}}"><b></b>设备查询</router-link></li>
 						<li v-if="off.powerKm_sh_cx"><router-link :to="{name:'promoter',params:{val:'null'}}"><b></b>推广方查询</router-link></li>
-						<li v-if="off.powerKm_sh_cx"><router-link :to="{name:'exclusiveNumber',params:{val:'null'}}"><b></b>专营号查询</router-link></li>
+						<!-- <li v-if="off.powerKm_sh_cx"><router-link :to="{name:'exclusiveNumber',params:{val:'null'}}"><b></b>专营号查询</router-link></li> -->
 					</ul>
 				</li>
 				<li :class="{active:crumb[0].name=='统计报表'}" v-if="off.powerKm_bb_cx">

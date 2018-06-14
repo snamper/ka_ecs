@@ -4,6 +4,7 @@
   *@date 2017-2-11
 * *-->
 <style scoped>
+  .supIcon{display: inline-block;width: 10px;height: 10px;background: url("../assets/images/icon/zhuan.svg");background-repeat: no-repeat;background-position: center;background-size: cover;}
 </style>
 <template>
 <section class="g-list-box" id="details">
@@ -97,7 +98,7 @@
 									<td>{{ userMoreInfo.similarity }}%</td>
 								</tr>
 								<tr><td>电话号码：</td>
-									<td>{{ list.phoneNumber }}（<b v-if="list.cardType==1" class="f-c-purple">远特</b>
+									<td><span>{{ list.phoneNumber }}</span><sup v-if="list.isMonopoly==1" class="supIcon"></sup>（<b v-if="list.cardType==1" class="f-c-purple">远特</b>
 										<b v-if="list.cardType==2" class="f-c-yellow">联通</b>
 										<b class="f-c-yellow">{{ $parent.translateData(5,list.phoneLevel) }}</b>，{{list.phoneHome}}）</td>
 								</tr>

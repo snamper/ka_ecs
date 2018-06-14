@@ -213,15 +213,18 @@
 					<td v-if="off.type!=2">
 						<span v-if="off.type==1">
 							<span v-if="form.source==7||form.source==8">
+                                
 								<b v-show="todo.status==4" class="f-c-red">待分配</b>
 								<b v-show="todo.status==5" class="f-c-green">已分配</b>
 							</span>
 							<span v-else>
+                                
 								<b v-show="todo.status==1" class="f-c-red">待分配</b>
 								<b v-show="todo.status==2" class="f-c-green">已分配</b>
 							</span>
 						</span>
-						<span v-else>{{translateData(8,todo.statusDetail)}}</span>
+						<span v-if="off.showData==6">{{translateData(7,todo.statusDetail)}}</span>
+						<span v-if="off.showData==8">{{translateData(8,todo.statusDetail)}}</span>
 					</td>
 					<td v-if="off.type!=2"><a :name="todo.orderId" @click="details" href="javascript:void(0)" class="details">详情</a></td>
 
@@ -275,6 +278,7 @@ export default{
 				isLoad:0,//加载条
 				details:0,//详情页面开关
                 number:'',//第几条详情
+                showData:0,
 			},
 			form:{
 				source:'6',//订单来源，6、卡盟APP；7、卡盟SDK；8卡盟通服
@@ -466,6 +470,11 @@ export default{
             }
              searchAuditList(json,function(){vm.off.isLoad=false;},url)
              .then((data)=>{
+                    if(vm.form.orderType==6){
+                        vm.off.showData=6
+                    }else if(vm.form.orderType==8){
+                        vm.off.showData=8
+                    }
                     vm.list=data.data.list;
 			    	vm.total=data.data.total;
 			        vm.maxpage=Math.ceil(parseInt(data.data.total)/10);

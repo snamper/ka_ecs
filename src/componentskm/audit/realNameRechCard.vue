@@ -79,8 +79,7 @@ export default{
 	},
 	created:function(){
         let vm=this;
-		this.oldImage=this.imgData.slice(0,3);
-        this.newImage=this.imgData.slice(3,7);
+		this.oldImage=this.imgData.slice(0,4);
         vm.examine=this.$parent.$parent.off.examine;
 	},
 	methods:{
