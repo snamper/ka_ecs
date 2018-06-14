@@ -9,7 +9,8 @@
   	height: 100%;
   	position: relative;
   }
-  .supIcon{display: inline-block;width: 10px;height: 10px;background: url("../../../assets/images/icon/zhuan.svg");background-repeat: no-repeat;background-position: center;background-size: cover;}
+  /* .supIcon{display: inline-block;width: 10px;height: 10px;background: url("../../../assets/images/icon/zhuan.svg");background-repeat: no-repeat;background-position: center;background-size: cover;} */
+  .supIcon{color: rgb(255, 150, 30)}  
 </style>
 <template>
 	<div id="auditList">
@@ -47,7 +48,7 @@
 
 									<tr><td>电话号码：</td>
 										<td>
-                                            <span>{{ auditData.phone }}</span><sup v-if="auditData.isMonopoly==1" class="supIcon"></sup>
+                                            <span>{{ auditData.phone }}</span><span v-if="auditData.isMonopoly==1" class="supIcon">【专营号】</span><!--<sup v-if="auditData.isMonopoly==1" class="supIcon"></sup>-->
 											<span class="f-c-purple" v-if="auditData.cardType==1">远特</span>
 											<span class="f-c-yellow" v-if="auditData.cardType==2">联通</span>
 										</td>

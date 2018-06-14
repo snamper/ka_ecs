@@ -4,7 +4,8 @@
   *@date 2017-2-11
 * *-->
 <style scoped>
-  .supIcon{display: inline-block;width: 10px;height: 10px;background: url("../assets/images/icon/zhuan.svg");background-repeat: no-repeat;background-position: center;background-size: cover;}
+  /* .supIcon{display: inline-block;width: 10px;height: 10px;background: url("../assets/images/icon/zhuan.svg");background-repeat: no-repeat;background-position: center;background-size: cover;} */
+  .supIcon{color: rgb(255, 150, 30)}
 </style>
 <template>
 <section class="g-list-box" id="details">
@@ -98,9 +99,9 @@
 									<td>{{ userMoreInfo.similarity }}%</td>
 								</tr>
 								<tr><td>电话号码：</td>
-									<td><span>{{ list.phoneNumber }}</span><sup v-if="list.isMonopoly==1" class="supIcon"></sup>（<b v-if="list.cardType==1" class="f-c-purple">远特</b>
+									<td><span>{{ list.phoneNumber }}</span>（<b v-if="list.cardType==1" class="f-c-purple">远特</b>
 										<b v-if="list.cardType==2" class="f-c-yellow">联通</b>
-										<b class="f-c-yellow">{{ $parent.translateData(5,list.phoneLevel) }}</b>，{{list.phoneHome}}）</td>
+										<b class="f-c-yellow">{{ $parent.translateData(5,list.phoneLevel) }}</b>，{{list.phoneHome}}）<span v-if="auditData.isMonopoly==1" class="supIcon">【专营号】</span></td>
 								</tr>
 								<tr><td>号码规则：</td><td>{{ list.ruleCode }}</td></tr>
 								<tr><td>用户姓名：</td><td>{{ list.userName }}</td></tr>
