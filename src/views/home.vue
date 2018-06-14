@@ -140,6 +140,7 @@
 						<li v-if="off.powerKm_sh_cx"><router-link :to="{name:'merchant',params:{val:'null'}}"><b></b>商户查询</router-link></li>
 						<li v-if="off.powerKm_sh_cx"><router-link :to="{name:'device',params:{val:'null'}}"><b></b>设备查询</router-link></li>
 						<li v-if="off.powerKm_sh_cx"><router-link :to="{name:'promoter',params:{val:'null'}}"><b></b>推广方查询</router-link></li>
+						<li v-if="off.powerKm_sh_cx"><router-link :to="{name:'exclusiveNumber',params:{val:'null'}}"><b></b>专营号查询</router-link></li>
 					</ul>
 				</li>
 				<li :class="{active:crumb[0].name=='统计报表'}" v-if="off.powerKm_bb_cx">
@@ -335,7 +336,6 @@ export default{
             
             /* 卡盟权限 */
             powerKm(this);
-            console.log(vm.off);
             vm.initMenu();
         },
         initMenu:function(){
@@ -439,6 +439,8 @@ export default{
 					crumb[1]={"name":"推广方","href":""}
 				}else if(path.indexOf("device")>-1){
 					crumb[1]={"name":"设备","href":""}
+				}else if(path.indexOf("exclusiveNumber")>-1){
+					crumb[1]={"name":"专营号","href":""}
 				}
 			}else if(path.indexOf("/homek/statistics")>-1){
 				crumb[0]={"name":"统计报表"}

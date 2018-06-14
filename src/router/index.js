@@ -170,6 +170,13 @@ const Resource_device = resolve => {//设备查询
     load();
   });
 };
+const Resource_exclusiveNumber = resolve => {//设备查询
+    load(true);
+    require.ensure(["@/views/km/resource/exclusiveNumber"], () => {
+      resolve(require("@/views/km/resource/exclusiveNumber"));
+      load();
+    });
+  };
 
 /*统计报表*/
 const Statistics = resolve => {
@@ -407,6 +414,10 @@ const router=new Router({
             path:"device/:val",
             component:Resource_device,
             name:"device"
+          },{//专营号
+            path:"exclusiveNumber/:val",
+            component:Resource_exclusiveNumber,
+            name:"exclusiveNumber"
           }]
         },
         {//统计报表

@@ -65,7 +65,6 @@ export default {
                 "registerMerchantAfter":0,"registerMerchantAfter_":0,
                 "attribute":0});
         }
-        console.log(state.auditCount);
         let count=this.getters.getCountTotal;
 		if(count!=state.countTotal){
 			state.offCountChange=true;

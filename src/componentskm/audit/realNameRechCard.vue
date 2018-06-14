@@ -41,6 +41,7 @@
                     <tr><td>渠道ID：</td><td>{{auditData.dealerId}}</td></tr>
                     <tr><td>商户名称：</td><td>{{auditData.companyName}}【{{auditData.levelName||'--'}}】</td></tr>
                     <tr><td>补换卡原因：</td><td>{{auditData.reason||auditData.req_reason}}</td></tr>
+                    <tr><td>失败原因：</td><td>{{auditData.errMsg}}</td></tr>
 				</tbody>
 			</table>
 		</td>

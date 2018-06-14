@@ -288,10 +288,11 @@ export default{
 			}else if(json.pickMoneyWechat&&!json.pickMoneyWechat.match(/^\w+$/)){
 				errorDeal('微信提现账户格式错误');
 				return false;
-			}else if(json.pickMoneyAlipay&&!json.pickMoneyAlipay.match(/^\w+$/)){
-				errorDeal('支付宝提现账户格式错误');
+            }else if(json.pickMoneyAlipay&&!json.pickMoneyAlipay.match(/^[\w\s]+$/)){
+				errorDeal('支付宝账户格式错误');
 				return false;
-			}else if(json.superDealerId&&!json.superDealerId.match(/^\w+$/)){
+            }
+            else if(json.superDealerId&&!json.superDealerId.match(/^\w+$/)){
 				errorDeal('上级商户ID格式错误');
 				return false;
 			}else if(json.popDealerId&&!json.popDealerId.match(/^\w+$/)){

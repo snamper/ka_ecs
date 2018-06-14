@@ -27,10 +27,10 @@
 			<div class="row">
 				<span class="dp">操作类型：</span>
 				<div class="m-form-radio">
-					<label><span class="radio"><input value="6" type="radio" v-model="form.orderType"><span></span></span><span class="text">空卡</span></label>
+					<label><span class="radio"><input @change="inpChange(this)" value="6" type="radio" v-model="form.orderType"><span></span></span><span class="text">空卡</span></label>
 					<label v-show="form.source==6&&(off.type==2||off.type==1)"><span class="radio"><input value="7" type="radio" v-model="form.orderType"><span></span></span><span class="text">过户办理</span></label>
 					<label v-show="form.source==6&&(off.type==2||off.type==1)"><span class="radio"><input value="4" type="radio" v-model="form.orderType"><span></span></span><span class="text">实名补登</span></label>
-					<label v-show="form.source==6"><span class="radio"><input value="8" type="radio" v-model="form.orderType"><span></span></span><span class="text">补换卡</span></label>
+					<label v-show="form.source==6"><span class="radio"><input @change="inpChange(this)" value="8" type="radio" v-model="form.orderType"><span></span></span><span class="text">补换卡</span></label>
 				</div>
 			</div>
 			<div class="row">
@@ -136,7 +136,7 @@
 				<span class="m-form-radio">
 					<label><span class="radio"><input type="radio" value="6" :readonly="form.select!=6" v-model="form.select"><span></span></span><span class="text">订单状态：</span></label>
 				</span>
-				<div class="m-form-radio col-radio">
+				<div class="m-form-radio col-radio" v-if="form.orderType!=8">
 					<label><span class="radio"><input value="0" type="radio" v-model="form.orderStatus"><span></span></span><span class="text">全部</span></label>
 					<label><span class="radio"><input value="1" type="radio" v-model="form.orderStatus"><span></span></span><span class="text">已选号</span></label>
 					<label><span class="radio"><input value="2" type="radio" v-model="form.orderStatus"><span></span></span><span class="text">已选套餐</span></label>
@@ -145,6 +145,14 @@
 					<label v-show="form.source!=8"><span class="radio"><input value="6" type="radio" v-model="form.orderStatus"><span></span></span><span class="text">已开户申请</span></label>
 					<label><span class="radio"><input value="7" type="radio" v-model="form.orderStatus"><span></span></span><span class="text">已获取IMSI</span></label>
 					<label><span class="radio"><input value="8" type="radio" v-model="form.orderStatus"><span></span></span><span class="text">已开卡申请</span></label>
+				</div>
+                <div class="m-form-radio col-radio" v-if="form.orderType==8">
+					<label><span class="radio"><input value="0" type="radio" v-model="form.orderStatus"><span></span></span><span class="text">全部</span></label>
+					<label><span class="radio"><input value="1001" type="radio" v-model="form.orderStatus"><span></span></span><span class="text">已上传资料</span></label>
+					<label><span class="radio"><input value="1002" type="radio" v-model="form.orderStatus"><span></span></span><span class="text">已审核</span></label>
+					<label v-show="form.source!=8"><span class="radio"><input value="1004" type="radio" v-model="form.orderStatus"><span></span></span><span class="text">已提交受理单</span></label>
+					<label><span class="radio"><input value="1005" type="radio" v-model="form.orderStatus"><span></span></span><span class="text">已获取IMSI</span></label>
+					<label><span class="radio"><input value="1006" type="radio" v-model="form.orderStatus"><span></span></span><span class="text">已申请补换卡</span></label>
 				</div>
 			</div>
 			<button class="f-btn f-btn-line" @click="searchList()">查询</button>
@@ -213,7 +221,7 @@
 								<b v-show="todo.status==2" class="f-c-green">已分配</b>
 							</span>
 						</span>
-						<span v-else>{{translateData(7,todo.statusDetail)}}</span>
+						<span v-else>{{translateData(8,todo.statusDetail)}}</span>
 					</td>
 					<td v-if="off.type!=2"><a :name="todo.orderId" @click="details" href="javascript:void(0)" class="details">详情</a></td>
 
@@ -307,7 +315,10 @@ export default{
 			type=='auditing' ? vm.off.type=1 : type=='audited' ? vm.off.type=2 : type=='closed' ? vm.off.type=4 : vm.off.type=3;
 			vm.form.startTime=laydate.now(0,'YYYY-MM-DD 00:00:00');
 			vm.form.endTime=laydate.now(0,'YYYY-MM-DD 23:59:59');
-		},
+		},inpChange(v){
+            let vm=this;
+            vm.form.orderStatus=0
+        },
 		searchList:function(page){
             var vm=this,url,json={"source":vm.form.source,"type":vm.form.orderType,"pageSize":vm.pageSize,"pageNum":page||1,"startTime":vm.form.startTime,"endTime":vm.form.endTime,"status":vm.form.orderStatus,'auditType':vm.form.auditType,"cardType":vm.form.cardType,"periodType":vm.off.type};
 			//进行中，已关闭

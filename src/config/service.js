@@ -22,3 +22,9 @@ export const setCityAreaPoint=(data,load)=>fetch("w/cityArea/newPointList",data,
 
 /*资源查询接口*/
 export const requestGetMerchantList=(data,load)=>fetch("km-ecs/w/merchant/getMerchantList",data,"POST",load);
+/*专营号查询*/
+export const requestGetExclusiveNumer=(data,load)=>fetch("km-ecs/w/monopoly/getPhoneListCriteria",data,"POST",load);
+/*专营号详情*/
+export const requestGetExclusiveNumerDetails=(data,load)=>fetch("km-ecs/w/monopoly/getPhoneDetail",data,"POST",load);
+/*专营号列表*/
+export const requestGetExclusiveNumerList=(data,load)=>fetch("km-ecs/w/monopoly/getPhoneListByDealerId",data,"POST",load);
