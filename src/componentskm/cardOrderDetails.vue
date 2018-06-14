@@ -101,7 +101,7 @@
 								<tr><td>电话号码：</td>
 									<td><span>{{ list.phoneNumber }}</span>（<b v-if="list.cardType==1" class="f-c-purple">远特</b>
 										<b v-if="list.cardType==2" class="f-c-yellow">联通</b>
-										<b class="f-c-yellow">{{ $parent.translateData(5,list.phoneLevel) }}</b>，{{list.phoneHome}}）<span v-if="auditData.isMonopoly==1" class="supIcon">【专营号】</span></td>
+										<b class="f-c-yellow">{{ $parent.translateData(5,list.phoneLevel) }}</b>，{{list.phoneHome}}）<span v-if="list.isMonopoly==1" class="supIcon">【专营号】</span></td>
 								</tr>
 								<tr><td>号码规则：</td><td>{{ list.ruleCode }}</td></tr>
 								<tr><td>用户姓名：</td><td>{{ list.userName }}</td></tr>

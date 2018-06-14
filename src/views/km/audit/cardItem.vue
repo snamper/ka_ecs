@@ -45,7 +45,6 @@
 											<span v-show="off.auditType==1">事后审核</span>
 										</td>
 									</tr>
-
 									<tr><td>电话号码：</td>
 										<td>
                                             <span>{{ auditData.phone }}</span><span v-if="auditData.isMonopoly==1" class="supIcon">【专营号】</span><!--<sup v-if="auditData.isMonopoly==1" class="supIcon"></sup>-->
