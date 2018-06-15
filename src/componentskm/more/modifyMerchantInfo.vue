@@ -288,7 +288,7 @@ export default{
 			}else if(json.pickMoneyWechat&&!json.pickMoneyWechat.match(/^\w+$/)){
 				errorDeal('微信提现账户格式错误');
 				return false;
-            }else if(json.pickMoneyAlipay&&!json.pickMoneyAlipay.match(/^[\w\s]+$/)){
+            }else if(json.pickMoneyAlipay&&!json.pickMoneyAlipay.match(/^[^\u4e00-\u9fa5]+$/)){
 				errorDeal('支付宝账户格式错误');
 				return false;
             }

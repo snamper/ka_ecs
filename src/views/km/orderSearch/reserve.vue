@@ -88,7 +88,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr v-for="(todo,index) in list">
+				<tr v-for="(todo,index) in list" :key="index">
 					<td>{{((pageNum-1)*10+(index+1))}}</td>
 					<td>{{todo.orderId}}</td>
 					<td>{{todo.occupyPhone}}（{{ translateData(5,todo.numberLevel) }}）</td>
