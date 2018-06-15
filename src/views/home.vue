@@ -80,7 +80,7 @@
 						<li v-if="off.powerKm_kk_sh">
 							<router-link :to="{name:'audit_card',params:{source:'realtime'}}">
 								<!-- <b></b>业务实时审核<span v-if="auditCount.opencard+auditCount.transfer+auditCount.realNameCollection+auditCount.realNameRechCard+auditCount.sdkRealTime!=0">{{auditCount.opencard+auditCount.transfer+auditCount.realNameCollection+auditCount.realNameRechCard+auditCount.sdkRealTime}}</span> -->
-                                <b></b>业务实时审核<span v-if="auditCount.opencard+auditCount.transfer+auditCount.realNameCollection+auditCount.sdkRealTime+auditCount.realNameRechCard!=0">{{auditCount.opencard+auditCount.transfer+auditCount.realNameCollection+auditCount.sdkRealTime+auditCount.realNameRechCard}}</span>
+                                <b></b>业务实时审核<span v-if="auditCount.opencard+auditCount.transfer+auditCount.realNameCollection+auditCount.tfOpenCardReal+auditCount.sdkRealTime+auditCount.realNameRechCard!=0">{{auditCount.opencard+auditCount.transfer+auditCount.realNameCollection+auditCount.tfOpenCardReal+auditCount.sdkRealTime+auditCount.realNameRechCard}}</span>
                             </router-link>
 						</li>
 						<li v-if="off.powerKm_kk_sh">
@@ -383,7 +383,7 @@ export default{
 					if(path.indexOf("6")>-1){
 						crumb[2]={"name":"开卡"}
 					}else if(path.indexOf("9")>-1){
-						crumb[2]={"name":"通服开卡"}
+						crumb[2]={"name":"I卡开卡"}
 					}
 				}else if(path.indexOf("businessPower")>-1){
 					crumb[1]={"name":"售卡范围","href":""};

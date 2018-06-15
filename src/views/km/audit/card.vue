@@ -11,6 +11,10 @@
 				<div class="navInfoDiv"><p>待审核<span>{{auditCount.opencard}}</span></p><p>已分配<span>{{auditCount.opencard_}}</span></p></div>
 			</div>
 			<div class="m-menu-div">
+				<router-link :to="{name:'afterwards',params:{type:9}}" class="u-bg navBg11"><div>远特i卡订单</div><p><span>点击审核</span></p></router-link>
+				<div class="navInfoDiv"><p>待审核<span>{{auditCount.tfOpenCardReal}}</span></p><p>已分配<span>{{auditCount.tfOpenCardReal_}}</span></p></div>
+			</div>
+			<div class="m-menu-div">
 				<router-link :to="{name:'realtime',params:{type:8}}" class="u-bg navBg9"><div>卡盟SDK订单</div><p><span>点击审核</span></p></router-link>
 				<div class="navInfoDiv"><p>待审核<span>{{auditCount.sdkRealTime}}</span></p><p>已分配<span>{{auditCount.sdkRealTime_}}</span></p></div>
 			</div>
@@ -33,7 +37,7 @@
 				<div class="navInfoDiv"><p>待审核<span>{{auditCount.opencardAfterwards}}</span></p><p>已分配<span>{{auditCount.opencard_Afterwards}}</span></p></div>
 			</div>
 			<div class="m-menu-div">
-				<router-link :to="{name:'afterwards',params:{type:9}}" class="u-bg navBg11"><div>卡盟通服订单</div><p><span>点击审核</span></p></router-link>
+				<router-link :to="{name:'afterwards',params:{type:9}}" class="u-bg navBg11"><div>远特i卡订单</div><p><span>点击审核</span></p></router-link>
 				<div class="navInfoDiv"><p>待审核<span>{{auditCount.tfOpenCard}}</span></p><p>已分配<span>{{auditCount.tfOpenCard_}}</span></p></div>
 			</div>
 		</div>

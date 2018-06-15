@@ -419,9 +419,9 @@ input, button{ -webkit-appearance: none;-moz-appearance: none;-ms-appearance: no
 /*SDK开卡*/
 .navBg9>div{background-image:url(../images/sim_sdk.png);background-color:#4b3887;}
 .navBg9>p{background-color:#4b3887; color:#4b3887;}
-/*卡盟通服开卡*/
-.navBg11>div{background-image:url(../images/sim_tf.png);background-color:#4b3887;}
-.navBg11>p{background-color:#4b3887; color:#4b3887;}
+/*卡盟I卡开卡*/
+.navBg11>div{background-image:url(../images/sim_tf.png);background-color:#D81B60;}
+.navBg11>p{background-color:#D81B60; color:#D81B60;}
 /*激活商户*/
 .navBg10>div{background-image:url(../images/icon_jihuo_audit.png);background-color: #FFB300;}
 .navBg10>p{background-color:#FF8F00; color:#FF8F00;}

@@ -50,7 +50,7 @@ export default {
         state.auditCount = Object.assign({}, state.auditCount,res.data);
         if(powerKm5a!=true){
             state.auditCount = Object.assign({}, state.auditCount,
-                {"opencard":0,"opencard_":0,
+                {"opencard":0,"opencard_":0,"tfOpenCardReal":0,"tfOpenCardReal_":0,
                 "opencardAfterwards":0,"opencardAfterwards_":0,
                 "realNameCollection":0,"realNameCollection_":0,
                 "realNameRechCard":0,"realNameRechCard_":0,

@@ -18,7 +18,7 @@
 					<input type="radio" v-model="form.source" value="7"><span class="slider">卡盟SDK</span>
 				</label>
 				<label class="item" @click="topShiftClick">
-					<input type="radio" v-model="form.source" value="8"><span class="slider">卡盟通服</span>
+					<input type="radio" v-model="form.source" value="8"><span class="slider">远特i卡</span>
 				</label>
 			</div>
 		</section>
@@ -281,7 +281,7 @@ export default{
                 showData:0,
 			},
 			form:{
-				source:'6',//订单来源，6、卡盟APP；7、卡盟SDK；8卡盟通服
+				source:'6',//订单来源，6、卡盟APP；7、卡盟SDK；8远特i卡
 				orderType:6,//操作类型,4、实名补录；6、空卡；7、过户办理；8、补换卡
 				cardType:0,//运营商
 				orderStatus:0,//订单状态
@@ -619,7 +619,7 @@ export default{
 			resJson.params.push(sql);
 			return resJson;
 		},
-		getTfJson(json){//通服查询采用统一查询接口
+		getTfJson(json){//远特i卡查询采用统一查询接口
 			var vm=this,type=vm.off.type,resJson={
 					"opKey":"",
 					"params":[],
@@ -735,7 +735,7 @@ export default{
 				json.params=[sql];
 				json.pageSize="10";
 				json.pageNum="-1";
-			}else if(vm.form.source==8){//通服
+			}else if(vm.form.source==8){//远特i卡
 				url="km-ecs/w/handler/query";
 				if(type==1||type==2){
 					json.opKey="tf.orderAudit.details";
