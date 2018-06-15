@@ -319,7 +319,7 @@ input, button{ -webkit-appearance: none;-moz-appearance: none;-ms-appearance: no
 /*body滚动条*/
 /*滚动条整体部分*/
 body::-webkit-scrollbar, .f-scroll-lt::-webkit-scrollbar{
-    width:2px;
+    width:6px;
     height:2px;
 }
 /*滚动条两端的按钮*/
@@ -337,8 +337,7 @@ background-color:#fff;
 }
 /*滚动条里面可以拖动的那部分*/
 body::-webkit-scrollbar-thumb, .f-scroll-lt::-webkit-scrollbar-thumb{
-    background-color:rgba(0,0,0,0.3);
-    border-radius:5px;   
+    background-color:rgba(0,0,0,0.3);  
 }
 /*边角*/
 body::-webkit-scrollbar-corner, .f-scroll-lt::-webkit-scrollbar-corner{
