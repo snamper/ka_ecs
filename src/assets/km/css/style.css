@@ -318,33 +318,33 @@ input, button{ -webkit-appearance: none;-moz-appearance: none;-ms-appearance: no
 
 /*body滚动条*/
 /*滚动条整体部分*/
-body::-webkit-scrollbar, .f-scroll-lt::-webkit-scrollbar{
+.f-scroll-lt::-webkit-scrollbar{
     width:6px;
     height:2px;
 }
 /*滚动条两端的按钮*/
-body::-webkit-scrollbar-button, .f-scroll-lt::-webkit-scrollbar-button{
+.f-scroll-lt::-webkit-scrollbar-button{
     
     display: none !important;
 }
 /*外层轨道*/
-body::-webkit-scrollbar-track, .f-scroll-lt::-webkit-scrollbar-track{
+.f-scroll-lt::-webkit-scrollbar-track{
     background-color:rgba(0,0,0,0.3);
 }
 /*内层轨道*/
-body::-webkit-scrollbar-track-piece, .f-scroll-lt::-webkit-scrollbar-track-piece{
-background-color:#fff;
+.f-scroll-lt::-webkit-scrollbar-track-piece{
+    background-color:#fff;
 }
 /*滚动条里面可以拖动的那部分*/
-body::-webkit-scrollbar-thumb, .f-scroll-lt::-webkit-scrollbar-thumb{
+.f-scroll-lt::-webkit-scrollbar-thumb{
     background-color:rgba(0,0,0,0.3);  
 }
 /*边角*/
-body::-webkit-scrollbar-corner, .f-scroll-lt::-webkit-scrollbar-corner{
+.f-scroll-lt::-webkit-scrollbar-corner{
     
 }
 /*定义右下角拖动块的样式*/
-body::-webkit-scrollbar-resizer, .f-scroll-lt::-webkit-scrollbar-resizer{
+.f-scroll-lt::-webkit-scrollbar-resizer{
     background-color:rgba(0,0,0,0.3);
 }
 

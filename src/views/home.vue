@@ -3,7 +3,7 @@
   @import "../assets/km/css/home_ym.css";
 </style>
 <template>
-  <div class="f-scroll-lt" id="home" :class={active:off.headMenu}>
+  <div id="home" :class={active:off.headMenu}>
   	<header class="g-head">
 		<table cellspacing="0">
 			<tbody>
