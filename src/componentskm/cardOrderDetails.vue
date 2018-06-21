@@ -24,7 +24,7 @@
 						<table class="g-inner-table">
 							<tbody>
 								<tr v-if="list.operatorType!=7"><td>订单号码：</td><td>{{list.orderId}}<a href="javascript:void(0)" @click="detailsOrder" class="details m-l">查看详情</a></td></tr>
-								<tr v-if="list.payOrderId&&list.operatorType!=7"><td>支付流水号：</td><td>{{list.payOrderId}}<a href="javascript:void(0)" @click="detailsPayOrder" class="details m-l">查看详情</a></td></tr>
+								<tr v-if="list.operatorType!=7"><td>支付流水号：</td><td>{{list.payOrderId||'--'}}<a v-if="list.payOrderId" href="javascript:void(0)" @click="detailsPayOrder" class="details m-l">查看详情</a></td></tr>
 
 								<tr><td>生成时间：</td><td>{{getDateTime(list.createTime)[6]}}</td></tr>
 								<tr v-if="type==1||type==2"><td>状态修改时间：</td>
@@ -211,7 +211,8 @@ export default{
 			isShowDetails:0,
 			typeDetails:0,
 			detailsList:'',
-			userMoreInfo:''//更多用户信息
+            userMoreInfo:'',//更多用户信息
+            detailsSource:'',//要查询的详情 6、卡盟APP；7、卡盟SDK；8远特i卡
 		}
 	},
 	components:{
@@ -222,6 +223,7 @@ export default{
 	},
 	created:function(){
         var vm=this;
+        vm.detailsSource=vm.$parent.form.source;
 		if(vm.list.operatorType==7){//过户办理
 			vm.imgData[0]={'src':vm.list.frontImageOld,'name':'原机主正面照片'};
 			vm.imgData[1]={'src':vm.list.backImageOld,'name':'原机主反面照片'};
@@ -315,8 +317,13 @@ export default{
 			this.$parent.off.details=false
 		},
 		detailsTime(){//用时信息
-			var vm=this;
-            reqCommonMethod({"opKey":"order.time.details","params":['sys_order_id="'+vm.list.orderId+'"'],"pageSize":"10","pageNum":"-1"},false,"km-ecs/w/handler/query")
+            var vm=this,requestoPkey;
+            if(vm.detailsSource==8){
+                requestoPkey="tforder.time.details"
+            }else{
+                requestoPkey="order.time.details"
+            }
+            reqCommonMethod({"opKey":requestoPkey,"params":['sys_order_id="'+vm.list.orderId+'"'],"pageSize":"10","pageNum":"-1"},false,"km-ecs/w/handler/query")
             .then((data)=>{
 				var list_item= data.data.list[0],str='',str2='';
 				if(list_item){
@@ -356,59 +363,115 @@ export default{
             }).catch(error=>errorDeal(error))            
 		},
         detailsOrder:function(){//开卡订单详情
-            var vm=this;
-            reqCommonMethod({"transactionId":vm.list.orderId},false,"km-ecs/w/audit/openCardInfo")
+            var vm=this,url;
+            if(vm.detailsSource==8){
+                url="km-ecs/w/audit/tfopenCardInfo";
+            }else{
+                url="km-ecs/w/audit/openCardInfo";
+            }
+            reqCommonMethod({"transactionId":vm.list.orderId},false,url)
             .then((data)=>{
-				var list= data.data,str='',payed='';
+                var list= data.data,str='',payed='';
+                if(list.optionalPackage instanceof Array===false){
+                    list.optionalPackage=list.optionalPackage.split(',')
+                }
 				for(let i in list.optionalPackage){
-					str+='<p>'+list.optionalPackage[i].title+'</p>';
-				}
+                    if(vm.detailsSource=='8'){
+                        str+='<p>'+list.optionalPackage[i]+'</p>';
+                    }else{
+                        str+='<p>'+list.optionalPackage[i].title+'</p>';
+                    }
+                }
 				if(list.payed==1){
 					payed+='<li class="clr"><div class="fl">实付价格：</div><div class="fright">'+(parseFloat(list.actualPrice)/100).toFixed(2)+'元<b class="f-c-grey">（系统号码占用费'+(parseFloat(list.actualPrice_x)/10000).toFixed(2)+'元+商家自定占用费'+(parseFloat(list.updPrice)/100).toFixed(2)+'元+预存话费'+(parseFloat(list.actualPrice_y)/10000).toFixed(2)+'元）</b></div></li>'+
 						   '<li class="clr"><div class="fl">抵扣金额：</div><div class="fright">'+(parseFloat(list.deductionMoney)/100).toFixed(2)+'元</div></li>'+
 						   '<li class="clr"><div class="fl">开卡返佣：</div><div class="fright">'+(parseFloat(list.commission)/100).toFixed(2)+'元<b class="f-c-grey">（系统号码占用费'+(parseFloat(list.commission_x)/100).toFixed(2)+'元+商家自定占用费'+(parseFloat(list.updPrice)/100).toFixed(2)+'元+预存话费'+(parseFloat(list.commission_y)/100).toFixed(2)+'元）</b></div></li>'+
 						   '<li class="clr"><div class="fl">支付模式：</div><div class="fright">'+list.payChannel+'</div></li>';
-				}
-				layer.open({
-					content:'<ul class="f-scroll-lt lay-details">'+
-								'<li class="clr"><div class="fl">订单号：</div><div class="fright">'+list.sysOrderId+'</div></li>'+
-								'<li class="clr"><div class="fl">BOSS流水号：</div><div class="fright">'+list.transactionId+'</div></li>'+
-								'<li class="clr"><div class="fl">用户姓名：</div><div class="fright">'+list.userName+'</div></li>'+
-								'<li class="clr"><div class="fl">电话号码：</div><div class="fright">'+list.phoneNumber+'（<b class="f-c-grey">'+vm.$parent.translateData(5,list.phoneLevel)+'</b>，'+list.phoneHome+'）</div></li>'+
-								'<li class="clr"><div class="fl">ICCID：</div><div class="fright">'+list.ICCID+'</div></li>'+
-								'<li class="clr"><div class="fl">IMSI卡号：</div><div class="fright">'+list.esim+'</div></li>'+
-								'<li class="clr"><div class="fl">状态修改时间：</div><div class="fright">'+vm.getDateTime(list.timestamp)[6]+'</div></li>'+
-								'<li class="clr"><div class="fl">应付价格：</div><div class="fright">'+((parseFloat(list.price_x)/100)+(parseFloat(list.price_y)/100)+(parseFloat(list.updPrice)/100)).toFixed(2)+'元<b class="f-c-grey">（系统号码占用费'+(parseFloat(list.price_x)/100).toFixed(2)+'元+商家自定占用费'+(parseFloat(list.updPrice)/100).toFixed(2)+'元+预存话费'+(parseFloat(list.price_y)/100).toFixed(2)+'元）</b></div></li>'+payed+
-								'<li class="clr"><div class="fl">预占保证金：</div><div class="fright">'+(parseFloat(list.occupy)/100).toFixed(2)+'元</div></li>'+
-								'<li class="clr"><div class="fl">退回预占保证金：</div><div class="fright">'+(parseFloat(list.occupyReturn)/100).toFixed(2)+'元</div></li>'+
-								'<li class="clr"><div class="fl">扣除预占保证金：</div><div class="fright">'+(parseFloat(list.occupyDeduct)/100).toFixed(2)+'元</div></li>'+
-								'<li class="clr"><div class="fl">已选套餐：</div><div class="fright">'+list.package+'</div></li>'+
-								'<li class="clr"><div class="fl">已选可选包：</div><div class="fright">'+str+'</div></li></ul>',
-					type:0,
-					title:'开卡订单详情',
-					btn:0,
-					style:'width:auto;'
-				});
+                }
+                if(vm.detailsSource=='8'){
+                    layer.open({
+                        content:'<ul class="f-scroll-lt lay-details">'+
+                                    '<li class="clr"><div class="fl">订单号：</div><div class="fright">'+list.sysOrderId+'</div></li>'+
+                                    '<li class="clr"><div class="fl">BOSS流水号：</div><div class="fright">'+list.transactionId+'</div></li>'+
+                                    '<li class="clr"><div class="fl">用户姓名：</div><div class="fright">'+list.userName+'</div></li>'+
+                                    '<li class="clr"><div class="fl">电话号码：</div><div class="fright">'+list.phoneNumber+'（<b class="f-c-grey">'+vm.$parent.translateData(5,list.phoneLevel)+'</b>，'+list.phoneHome+'）</div></li>'+
+                                    '<li class="clr"><div class="fl">ICCID：</div><div class="fright">'+list.iccid+'</div></li>'+
+                                    '<li class="clr"><div class="fl">IMSI卡号：</div><div class="fright">'+list.imsi+'</div></li>'+
+                                    '<li class="clr"><div class="fl">状态修改时间：</div><div class="fright">'+vm.getDateTime(list.modifyTime)[6]+'</div></li>'+
+                                    '<li class="clr"><div class="fl">选号费：</div><div class="fright">'+(parseFloat(list.cardMoney)/100).toFixed(2)+'元</b></div></li>'+payed+
+                                    '<li class="clr"><div class="fl">折后选号费：</div><div class="fright">'+(parseFloat(list.actualCardMoney)/100).toFixed(2)+'元</div></li>'+
+                                    '<li class="clr"><div class="fl">预存话费：</div><div class="fright">'+(parseFloat(list.prestoreMoney)/100).toFixed(2)+'元</div></li>'+
+                                    '<li class="clr"><div class="fl">折后预存：</div><div class="fright">'+(parseFloat(list.actualPrestoreMoney)/100).toFixed(2)+'元</div></li>'+
+                                    '<li class="clr"><div class="fl">实际支付：</div><div class="fright">'+(parseFloat(list.actualMoney)/100).toFixed(2)+'元</div></li>'+
+                                    '<li class="clr"><div class="fl">已选套餐：</div><div class="fright">'+list.tfPackageinfo+'</div></li>'+
+                                    '<li class="clr"><div class="fl">已选可选包：</div><div class="fright">'+str+'</div></li></ul>',
+                        type:0,
+                        title:'开卡订单详情',
+                        btn:0,
+                        style:'width:auto;'
+                    });
+                }else 
+                    layer.open({
+                        content:'<ul class="f-scroll-lt lay-details">'+
+                                    '<li class="clr"><div class="fl">订单号：</div><div class="fright">'+list.sysOrderId+'</div></li>'+
+                                    '<li class="clr"><div class="fl">BOSS流水号：</div><div class="fright">'+list.transactionId+'</div></li>'+
+                                    '<li class="clr"><div class="fl">用户姓名：</div><div class="fright">'+list.userName+'</div></li>'+
+                                    '<li class="clr"><div class="fl">电话号码：</div><div class="fright">'+list.phoneNumber+'（<b class="f-c-grey">'+vm.$parent.translateData(5,list.phoneLevel)+'</b>，'+list.phoneHome+'）</div></li>'+
+                                    '<li class="clr"><div class="fl">ICCID：</div><div class="fright">'+list.ICCID+'</div></li>'+
+                                    '<li class="clr"><div class="fl">IMSI卡号：</div><div class="fright">'+list.esim+'</div></li>'+
+                                    '<li class="clr"><div class="fl">状态修改时间：</div><div class="fright">'+vm.getDateTime(list.timestamp)[6]+'</div></li>'+
+                                    '<li class="clr"><div class="fl">应付价格：</div><div class="fright">'+((parseFloat(list.price_x)/100)+(parseFloat(list.price_y)/100)+(parseFloat(list.updPrice)/100)).toFixed(2)+'元<b class="f-c-grey">（系统号码占用费'+(parseFloat(list.price_x)/100).toFixed(2)+'元+商家自定占用费'+(parseFloat(list.updPrice)/100).toFixed(2)+'元+预存话费'+(parseFloat(list.price_y)/100).toFixed(2)+'元）</b></div></li>'+payed+
+                                    '<li class="clr"><div class="fl">预占保证金：</div><div class="fright">'+(parseFloat(list.occupy)/100).toFixed(2)+'元</div></li>'+
+                                    '<li class="clr"><div class="fl">退回预占保证金：</div><div class="fright">'+(parseFloat(list.occupyReturn)/100).toFixed(2)+'元</div></li>'+
+                                    '<li class="clr"><div class="fl">扣除预占保证金：</div><div class="fright">'+(parseFloat(list.occupyDeduct)/100).toFixed(2)+'元</div></li>'+
+                                    '<li class="clr"><div class="fl">已选套餐：</div><div class="fright">'+list.package+'</div></li>'+
+                                    '<li class="clr"><div class="fl">已选可选包：</div><div class="fright">'+str+'</div></li></ul>',
+                        type:0,
+                        title:'开卡订单详情',
+                        btn:0,
+                        style:'width:auto;'
+                    });
             }).catch(error=>errorDeal(error));            
 		},
 		detailsPayOrder:function(){//支付订单详情
-			var vm=this;
-            reqCommonMethod({"payId":vm.list.payOrderId},false,"km-ecs/w/audit/payInfo")
-            .then((data)=>{
-				var list= data.data;
-				layer.open({
-					content:'<ul class="f-scroll-lt lay-details">'+
-					'<li class="clr"><div class="fl">系统流水号：</div><div class="fright">'+list.sysPayId+'</div></li>'+
-					'<li class="clr"><div class="fl">第三方流水号：</div><div class="fright">'+list.payId+'</div></li>'+
-					'<li class="clr"><div class="fl">支付渠道：</div><div class="fright">'+list.payChannel+'</div></li>'+
-					'<li class="clr"><div class="fl">支付方式：</div><div class="fright">'+list.payType+'</div></li>'+
-					'<li class="clr"><div class="fl">支付金额：</div><div class="fright">'+list.payMoney+'元</div></li></ul>',
-					type:0,
-					title:'支付订单详情',
-					btn:0,
-					style:'width:auto;'
-				});
-            }).catch(error=>errorDeal(error));
+            var vm=this;
+            if(vm.detailsSource==8){
+                reqCommonMethod({"opKey":"tf.orderApp.payInfo","params":['pay_transaction_id="'+vm.list.payOrderId+'"'],"pageSize":"10","pageNum":"-1"},false,"km-ecs/w/handler/query")
+                .then((data)=>{
+                    var list=data.data.list[0],content;
+                    content='<ul class="f-scroll-lt lay-details">'+
+                        '<li class="clr"><div class="fl">支付流水号：</div><div class="fright">'+list.pay_transaction_id    +'</div></li>'+
+                        '<li class="clr"><div class="fl">第三方流水号：</div><div class="fright">'+list.sys_order_id_pay+'</div></li>'+
+                        '<li class="clr"><div class="fl">支付账号：</div><div class="fright">'+list.pay_user_id+'</div></li>'+
+                        '<li class="clr"><div class="fl">支付方式：</div><div class="fright">'+list.payType+'</div></li>'+
+                        '<li class="clr"><div class="fl">支付金额：</div><div class="fright">'+list.actual_money+'元</div></li></ul>';
+                    layer.open({
+                        content:content,
+                        type:0,
+                        title:'支付订单详情',
+                        btn:0,
+                        style:'width:auto;'
+                    });
+                }).catch(e=>errorDeal(e))
+            }else{
+                reqCommonMethod({"payId":vm.list.payOrderId},false,"km-ecs/w/audit/payInfo")
+                .then((data)=>{
+                    var list= data.data;
+                    layer.open({
+                        content:'<ul class="f-scroll-lt lay-details">'+
+                        '<li class="clr"><div class="fl">系统流水号：</div><div class="fright">'+list.sysPayId+'</div></li>'+
+                        '<li class="clr"><div class="fl">第三方流水号：</div><div class="fright">'+list.payId+'</div></li>'+
+                        '<li class="clr"><div class="fl">支付渠道：</div><div class="fright">'+list.payChannel+'</div></li>'+
+                        '<li class="clr"><div class="fl">支付方式：</div><div class="fright">'+list.payType+'</div></li>'+
+                        '<li class="clr"><div class="fl">支付金额：</div><div class="fright">'+list.payMoney+'元</div></li></ul>',
+                        type:0,
+                        title:'支付订单详情',
+                        btn:0,
+                        style:'width:auto;'
+                    });
+                }).catch(error=>errorDeal(error));
+            }
+
 		},
 		detailsUser:function(){//操作者详情
 			var vm=this;
