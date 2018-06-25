@@ -85,7 +85,7 @@
 				</div>
 			</div>
 			<div class="row clr m-col-2">
-				<div class="dp col-l"style="width:.65rem;margin-left:0">时间区间：</div>
+				<div class="dp col-l" style="width:.65rem;margin-left:0">时间区间：</div>
 				<div class="col-r">
 					<span class="m-time-area" @click="to_laydate(1)"><input id="start" v-model="form.startTime" type="text" readonly="readonly"></span>
 					<span class="m-space">一</span>
@@ -164,7 +164,7 @@
 					<th>生成时间</th>
 					<th>状态</th>
 					<th>操作</th>
-                    <th></th>
+          <th></th>
 				</tr>
 				<tr v-if="off.type==2">
 					<th>序号</th>
@@ -318,6 +318,8 @@ export default {
       info:'',
       searchListData:"",//查询参数
       auditDetailsData:""//获取详情参数
+      ,lastSearchPage:"1"
+      ,lastSearchIndex:""
     };
   },
   components: {
@@ -352,6 +354,7 @@ export default {
       vm.off.auditdetails = 1;
     },
     searchList: function(index, page) {
+      console.log(index,page);
       var vm = this,
         url,
         json = {
@@ -366,7 +369,8 @@ export default {
           auditType: vm.form.auditType,
           gztCheck: vm.form.gztChe
         };
-
+        vm.lastSearchPage=page;
+        vm.lastSearchIndex=index;
       if (index == "order") {
         vm.off.whichbtn = "index";
         if (!vm.form.context1) {

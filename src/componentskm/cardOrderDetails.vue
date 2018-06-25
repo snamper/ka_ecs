@@ -394,7 +394,7 @@ export default{
                                     '<li class="clr"><div class="fl">订单号：</div><div class="fright">'+list.sysOrderId+'</div></li>'+
                                     '<li class="clr"><div class="fl">BOSS流水号：</div><div class="fright">'+list.transactionId+'</div></li>'+
                                     '<li class="clr"><div class="fl">用户姓名：</div><div class="fright">'+list.userName+'</div></li>'+
-                                    '<li class="clr"><div class="fl">电话号码：</div><div class="fright">'+list.phoneNumber+'（<b class="f-c-grey">'+vm.$parent.translateData(5,list.phoneLevel)+'</b>，'+list.phoneHome+'）</div></li>'+
+                                    '<li class="clr"><div class="fl">电话号码：</div><div class="fright">'+list.phoneNumber+'（<b class="f-c-grey">'+vm.$parent.translateData(5,list.bigNumberLevel)+'</b>，'+list.phoneHome+'）</div></li>'+
                                     '<li class="clr"><div class="fl">ICCID：</div><div class="fright">'+list.iccid+'</div></li>'+
                                     '<li class="clr"><div class="fl">IMSI卡号：</div><div class="fright">'+list.imsi+'</div></li>'+
                                     '<li class="clr"><div class="fl">状态修改时间：</div><div class="fright">'+vm.getDateTime(list.modifyTime)[6]+'</div></li>'+
