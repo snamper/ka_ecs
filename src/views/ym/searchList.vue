@@ -337,7 +337,7 @@ export default {
     init: function() {
       const vm=this;
       let userInfo=getStore("KA_ECS_USER");
-	  vm.userInfo=userInfo;
+	    vm.userInfo=userInfo;
       vm.userInfo.isadminYm&&(vm.userInfo.isadminYm.indexOf('1')>-1||vm.userInfo.isadminYm.indexOf('3')>-1) ? vm.off.power3=true : vm.off.power3=false;
       var type = this.$route.params.type;
       type == "auditing" ? (vm.off.type = 1) : (vm.off.type = 2);
@@ -354,11 +354,10 @@ export default {
       vm.off.auditdetails = 1;
     },
     searchList: function(index, page) {
-      console.log(index,page);
       var vm = this,
         url,
         json = {
-        //   source: vm.form.source,
+          //   source: vm.form.source,
           source:vm.form.source.join(","),
           orderType: vm.form.orderType.join(","),
           pageSize: vm.pageSize,
@@ -369,8 +368,9 @@ export default {
           auditType: vm.form.auditType,
           gztCheck: vm.form.gztChe
         };
-        vm.lastSearchPage=page;
-        vm.lastSearchIndex=index;
+      vm.pageNum=page;
+      vm.lastSearchPage=page;
+      vm.lastSearchIndex=index;
       if (index == "order") {
         vm.off.whichbtn = "index";
         if (!vm.form.context1) {

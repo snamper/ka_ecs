@@ -306,8 +306,8 @@ export default{
 		close:function(){
 			let vm=this,
 				vmPa=vm.$parent;
-                vmPa.off.details=false; 
-                vmPa.off.detailsList=false;
+        vmPa.off.details=false; 
+        vmPa.off.detailsList=false;
 		},
 		agree:function(e){
 			var vm=this,url,orderId=e.target.name;

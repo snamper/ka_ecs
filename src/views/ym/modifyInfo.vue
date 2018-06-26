@@ -61,8 +61,7 @@ export default{
             let vm=this,index,page;
             index=vm.$parent.$parent.lastSearchIndex;
             page=vm.$parent.$parent.lastSearchPage;
-            vm.$parent.$parent.searchList(index,page);
-            vm.$parent.$parent.details();
+
             if(vm.papers.userName==vm.olduserName&&
             vm.papers.userAddress==vm.olduserAddress){
                 layer.open({
@@ -79,23 +78,23 @@ export default{
             reqCommonMethod(json,false,"ym-ecs/c/audit/updateBuggingOrder")
             .then((data)=>{
                 if(data.code==200){
+                  layer.open({
+                    content:'准同意信息修改成功',
+                    skin: 'msg',
+                    time: 4,
+                    msgSkin:'success',
+                  })
+                  }else{
                     layer.open({
-			            content:'准同意信息修改成功',
-			            skin: 'msg',
-			            time: 4,
-			            msgSkin:'success',
+                      content:'准同意信息修改失败',
+                      skin: 'msg',
+                      time: 4,
+                      msgSkin:'error',
                     })
-                }else{
-                    layer.open({
-			            content:'准同意信息修改失败',
-			            skin: 'msg',
-			            time: 4,
-			            msgSkin:'error',
-			        })
-                    vm.ifFaild();
-                }
-                this.$parent.$parent.details();
-                this.$parent.$parent.searchList(1)
+                      vm.ifFaild();
+                  }
+                vm.$parent.$parent.searchList(index,page);
+                vm.$parent.$parent.details();
                 vm.close();
             }).catch(e=>{
                 layer.open({
