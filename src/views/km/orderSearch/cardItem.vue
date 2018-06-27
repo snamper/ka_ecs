@@ -99,7 +99,7 @@
 				</span>
 				<div class="input-box"><input v-model="form.context5" :readonly="form.select!=5" maxlength="12" type="tel" placeholder="请输入查询的操作者ID"></div>
 			</div>
-            <div class="row" :class="{active:form.select==5}" v-show="form.source!=7&&form.source!=8">
+            <div class="row" :class="{active:form.select==7}" v-show="form.source!=7&&form.source!=8">
 				<span class="m-form-radio">
 					<label><span class="radio"><input type="radio" value="7" v-model="form.select"><span></span></span><span class="text">用户姓名：</span></label>
 				</span>
@@ -132,6 +132,16 @@
 					<label v-if="form.orderType!=4"><span class="radio"><input value="4" type="radio" v-model="form.context6"><span></span></span><span class="text">关闭</span></label>
 				</div>
 			</div>
+      <div class="row" :class="{active:form.select==8}" v-if="off.type==2">
+				<span class="m-form-radio">
+					<label><span class="radio"><input type="radio" value="8" :readonly="form.select!=8" v-model="form.select"><span></span></span><span class="text">号卡类型：</span></label>
+				</span>
+				<div class="m-form-radio col-radio">
+					<label><span class="radio"><input value="0" type="radio" v-model="form.context8"><span></span></span><span class="text">全部</span></label>
+					<label><span class="radio"><input value="1" type="radio" v-model="form.context8"><span></span></span><span class="text">专营号</span></label>
+					<label><span class="radio"><input value="2" type="radio" v-model="form.context8"><span></span></span><span class="text">大众号</span></label>
+				</div>
+			</div>
 			<div class="row fullRow" :class="{active:form.select==6}" v-if="off.type==3||off.type==4">
 				<span class="m-form-radio">
 					<label><span class="radio"><input type="radio" value="6" :readonly="form.select!=6" v-model="form.select"><span></span></span><span class="text">订单状态：</span></label>
@@ -146,7 +156,7 @@
 					<label><span class="radio"><input value="7" type="radio" v-model="form.orderStatus"><span></span></span><span class="text">已获取IMSI</span></label>
 					<label><span class="radio"><input value="8" type="radio" v-model="form.orderStatus"><span></span></span><span class="text">已开卡申请</span></label>
 				</div>
-                <div class="m-form-radio col-radio" v-if="form.orderType==8">
+        <div class="m-form-radio col-radio" v-if="form.orderType==8">
 					<label><span class="radio"><input value="0" type="radio" v-model="form.orderStatus"><span></span></span><span class="text">全部</span></label>
 					<label><span class="radio"><input value="1001" type="radio" v-model="form.orderStatus"><span></span></span><span class="text">已上传资料</span></label>
 					<label><span class="radio"><input value="1002" type="radio" v-model="form.orderStatus"><span></span></span><span class="text">已审核</span></label>
@@ -277,8 +287,8 @@ export default{
 				type:1,//1，待审核;2，已审核;3，进行中;4，已关闭
 				isLoad:0,//加载条
 				details:0,//详情页面开关
-                number:'',//第几条详情
-                showData:0,
+        number:'',//第几条详情
+        showData:0,
 			},
 			form:{
 				source:'6',//订单来源，6、卡盟APP；7、卡盟SDK；8远特i卡
@@ -291,8 +301,9 @@ export default{
 				context3:'',//审核人ID
 				context4:'',//身份证号
 				context5:'',// 操作者ID
-                context6:0,//号卡状态
-                context7:'',//开卡者姓名
+        context6:0,//号卡状态
+        context7:'',//开卡者姓名
+        context8:0,//号卡类型
 				startTime:'',
 				endTime:'',
 				select:6//条件查询，选择的条件
@@ -320,17 +331,17 @@ export default{
 			vm.form.startTime=laydate.now(0,'YYYY-MM-DD 00:00:00');
 			vm.form.endTime=laydate.now(0,'YYYY-MM-DD 23:59:59');
 		},inpChange(v){
-            let vm=this;
-            vm.form.orderStatus=0
-        },
+      let vm=this;
+      vm.form.orderStatus=0
+    },
 		searchList:function(page){
-            var vm=this,url,json={"source":vm.form.source,"type":vm.form.orderType,"pageSize":vm.pageSize,"pageNum":page||1,"startTime":vm.form.startTime,"endTime":vm.form.endTime,"status":vm.form.orderStatus,'auditType':vm.form.auditType,"cardType":vm.form.cardType,"periodType":vm.off.type};
+      var vm=this,url,json={"source":vm.form.source,"type":vm.form.orderType,"pageSize":vm.pageSize,"pageNum":page||1,"startTime":vm.form.startTime,"endTime":vm.form.endTime,"status":vm.form.orderStatus,'auditType':vm.form.auditType,"cardType":vm.form.cardType,"periodType":vm.off.type};
 			//进行中，已关闭
 			if(json.source!=7&&json.source!=8&&(vm.off.type==3||vm.off.type==4)){
 				vm.searchClosedAndDoing(page);
 				return false;
 			}
-			let context=vm.form['context'+vm.form.select];
+      let context=vm.form['context'+vm.form.select];
 			vm.off.type==1&&vm.form.select!=6&&(json.status=0,vm.form.orderStatus=0);
 			if(vm.form.select==1&&(!context)){
 				layer.open({
@@ -350,28 +361,28 @@ export default{
 		        return false;
 			}else if(vm.form.select==2&&context.length!=11){
 				layer.open({
-		            content:'手机号码格式错误',
-		            skin: 'msg',
-		            time: 2,
-		            msgSkin:'error',
-		        });
-		        return false;
+          content:'手机号码格式错误',
+          skin: 'msg',
+          time: 2,
+          msgSkin:'error',
+        });
+        return false;
 			}else if(vm.form.select==3&&(!context)){
 				layer.open({
-		            content:'请输入审核人ID',
-		            skin: 'msg',
-		            time: 2,
-		            msgSkin:'error',
-		        });
-		        return false;
+          content:'请输入审核人ID',
+          skin: 'msg',
+          time: 2,
+          msgSkin:'error',
+        });
+        return false;
 			}else if(vm.form.select==4&&(!context)){
 				layer.open({
-		            content:'请输入身份证号',
-		            skin: 'msg',
-		            time: 2,
-		            msgSkin:'error',
-		        });
-		        return false;
+          content:'请输入身份证号',
+          skin: 'msg',
+          time: 2,
+          msgSkin:'error',
+        });
+        return false;
 			}else if(vm.form.select==5&&(!context)){
 				layer.open({
 		            content:'请输入操作者ID',
@@ -388,8 +399,12 @@ export default{
 		            msgSkin:'error',
 		        });
 		        return false;
-			}
-			json.context=context;
+      }
+      if(vm.form.select!=8){
+        json.context=context;
+      }else{
+        json.monopolyType =context;
+      }
 			json.searchtype=vm.form.select;
 			if(vm.form.source==7){
 				url="km-ecs/w/handler/query";
@@ -403,20 +418,20 @@ export default{
 				}else vm.off.type==1 ? url='km-ecs/w/audit/ingList' : url='km-ecs/w/audit/edList';
 			}
 			if(vm.off.isLoad)return false;
-            vm.off.isLoad=true;
-            reqCommonMethod(json,function(){vm.off.isLoad=false;},url)
-            .then((data)=>{
-	            vm.list=data.data.list
+      vm.off.isLoad=true;
+      reqCommonMethod(json,function(){vm.off.isLoad=false;},url)
+      .then((data)=>{
+        vm.list=data.data.list
 				vm.total=data.data.total;
 				vm.maxpage=Math.ceil(parseInt(data.data.total)/10);
 				vm.pageNum=page||1;
-                vm.callback=function(v){vm.searchList(v)};
-                vm.off.isLoad=false;
-            }).catch(error=>errorDeal(error)); 	 
+        vm.callback=function(v){vm.searchList(v)};
+        vm.off.isLoad=false;
+      }).catch(error=>errorDeal(error)); 	 
 		},
-        searchClosedAndDoing:function(page){//进行中,已关闭
+    searchClosedAndDoing:function(page){//进行中,已关闭
 			var vm=this,url,json={"source":vm.form.source,"type":vm.form.orderType,"pageSize":vm.pageSize,"pageNum":page||1,"startTime":vm.form.startTime,"endTime":vm.form.endTime,"status":vm.off.type,"statusDetail":vm.form.orderStatus,"cardType":vm.form.cardType};
-			let context=vm.form['context'+vm.form.select];
+      let context=vm.form['context'+vm.form.select];
 			if(vm.form.select==1&&(!context)){
 				layer.open({
 		            content:'请输入订单号码',
@@ -786,7 +801,6 @@ export default{
             }).catch(error=>errorDeal(error)); 	
 		},
 		to_laydate:function(v){
-
 			var vm=this;
 			laydate({
 				istime:true,

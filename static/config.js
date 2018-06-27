@@ -1,8 +1,9 @@
 window._CONFIG={
 	"env":"prod",
 	"dev":{
-		"SDK_IMAGE_URL":"https://192.168.10.98:6087/eas/",
-		"TF_IMAGE_URL":"https://192.168.10.98:6085/tas/",
+		"SDK_IMAGE_URL":"https://192.168.10.98:6051/tas/",
+		// "TF_IMAGE_URL":"https://192.168.10.98:6085/tas/",
+		"TF_IMAGE_URL":"https://192.168.10.98:6051/tas/",
 		"REGISTER_MERCHANT_IMAGE_URL":"https://192.168.10.98:6088/ums/"
 	},
 	"prod":{

@@ -180,9 +180,9 @@
 			</tbody>
 			<!--实名补登-->
 			<RealTimeCollection v-if="list.operatorType==5" :auditStatus="type" :auditData="list" :imgData="imgData"></RealTimeCollection>
-            <!--补换卡-->
-            <RealNameRechCard v-if="list.operatorType==9" :auditStatus="type" :auditData="list" :imgData="imgData"></RealNameRechCard>
-          </table>
+      <!--补换卡-->
+      <RealNameRechCard v-if="list.operatorType==9" :auditStatus="type" :auditData="list" :imgData="imgData"></RealNameRechCard>
+    </table>
   	</div>
   <um-details-view v-if="isShowDetails" :type="typeDetails" :list="detailsList" :dealerId="list.dealerId">
 
@@ -197,6 +197,7 @@ import ImgZoom from '../componentskm/ImgZoom';
 import RealTimeCollection from './audit/realTimeCollection';
 import RealNameRechCard from './audit/realNameRechCard';
 import detailsView from '../componentskm/cardOrderDetailsAlert';
+import "../../static/config.js"
 export default{
 	name:'cardOrderDetails',
 	props:{
@@ -211,19 +212,19 @@ export default{
 			isShowDetails:0,
 			typeDetails:0,
 			detailsList:'',
-            userMoreInfo:'',//更多用户信息
-            detailsSource:'',//要查询的详情 6、卡盟APP；7、卡盟SDK；8远特i卡
+      userMoreInfo:'',//更多用户信息
+      detailsSource:'',//要查询的详情 6、卡盟APP；7、卡盟SDK；8远特i卡
 		}
 	},
 	components:{
 		'um-details-view':detailsView,
 		'ImgZoom':ImgZoom,
-        RealTimeCollection,
-        RealNameRechCard
+    RealTimeCollection,
+    RealNameRechCard
 	},
 	created:function(){
-        var vm=this;
-        vm.detailsSource=vm.$parent.form.source;
+    var vm=this;
+    vm.detailsSource=vm.$parent.form.source;
 		if(vm.list.operatorType==7){//过户办理
 			vm.imgData[0]={'src':vm.list.frontImageOld,'name':'原机主正面照片'};
 			vm.imgData[1]={'src':vm.list.backImageOld,'name':'原机主反面照片'};
@@ -245,15 +246,24 @@ export default{
 			vm.imgData[4]={'src':vm.list.reqParam.backImageName,'name':'反面照片'};
 			vm.imgData[5]={'src':vm.list.reqParam.handImageName,'name':'手持照片'};
 			vm.imgData[6]={'src':vm.list.reqParam.signImageName,'name':'手签名照片'};
-		}else{
-			if(vm.source==7||vm.source==8){
-				let imgUrl=_CONFIG[_CONFIG.env].SDK_IMAGE_URL,
+		}else{//空卡
+			if(vm.source==7||vm.source==8){//7、卡盟SDK；8远特i卡
+        let imgUrl,
 				userMoreInfo=JSON.parse(decodeURIComponent(vm.list.userMoreInfo));
+        if(process.env.NODE_ENV=="development"){
+          imgUrl=_CONFIG.dev.SDK_IMAGE_URL
+        }else{
+          imgUrl=_CONFIG[_CONFIG.env].SDK_IMAGE_URL
+        }
 
 				if(vm.source==8){
 					Object.assign(userMoreInfo,JSON.parse(decodeURIComponent(vm.list.tokenInfo)));
-					imgUrl=_CONFIG[_CONFIG.env].TF_IMAGE_URL;
-				}
+          if(process.env.NODE_ENV=="development"){
+            imgUrl=_CONFIG.dev.TF_IMAGE_URL;
+          }else{
+            imgUrl=_CONFIG[_CONFIG.env].TF_IMAGE_URL;
+          }
+        }
 				if(userMoreInfo){
 					vm.userMoreInfo=userMoreInfo;
 					vm.imgData=[

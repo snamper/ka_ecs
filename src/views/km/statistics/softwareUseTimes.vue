@@ -125,13 +125,13 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr v-for="(todo,index) in list">
+				<tr v-for="(todo,index) in list" :key="index">
 					<td>{{ (pageNum-1)*pageSize+(index+1) }}</td>
 					<td>{{ todo.userId }}<br/>（{{todo.userName}}）</td>
-                    <td>
-                        <span v-show="off.type==1||off.type==2">{{ getDateTime(todo.readTime)[6] }}</span>
-                        <span v-show="off.type==3">{{ getDateTime(todo.writeTime)[6] }}</span>
-                    </td>
+            <td>
+                <span v-show="off.type==1||off.type==2">{{ getDateTime(todo.readTime)[6] }}</span>
+                <span v-show="off.type==3">{{ getDateTime(todo.writeTime)[6] }}</span>
+            </td>
 					<td>
 						<span v-show="todo.terminalType==1">IOS</span>
 						<span v-show="todo.terminalType==2">Android</span>
@@ -145,7 +145,7 @@
 							<b v-show="todo.deviceId==1">旷视</b>
 						</span>
 					</td>
-					<td>{{ todo.orderId }}</td>
+					<td>{{ todo.orderId||'--' }}</td>
 					<td>
 						<span v-show="todo.appType==1">卡盟APP</span>
 						<span v-show="todo.appType==2">Dwatch</span>
@@ -158,10 +158,10 @@
 						<span v-show="todo.operation==2">激活商户</span>
 						<span v-show="todo.operation==3">过户办理</span>
 					</td>
-					<td v-show="off.type==1||off.type==2">{{ todo.idCardNo }}</td>
-					<td>{{ todo.phoneNo }}</td>
+					<td v-show="off.type==1||off.type==2">{{ todo.idCardNo||'--' }}</td>
+					<td>{{ todo.phoneNo||'--' }}</td>
 					<td>
-						<span v-show="todo.result==0" class="f-c-red">失败</span>
+						<span v-show="todo.result==0" class="f-c-red">失败 : {{todo.errorMsg||'--'}} </span>
 						<span v-show="todo.result==1" class="f-c-green">成功</span>
 					</td>
 				</tr>
