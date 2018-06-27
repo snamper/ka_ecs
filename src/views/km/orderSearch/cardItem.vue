@@ -137,9 +137,10 @@
 					<label><span class="radio"><input type="radio" value="8" :readonly="form.select!=8" v-model="form.select"><span></span></span><span class="text">号卡类型：</span></label>
 				</span>
 				<div class="m-form-radio col-radio">
-					<label><span class="radio"><input value="0" type="radio" v-model="form.context8"><span></span></span><span class="text">全部</span></label>
-					<label><span class="radio"><input value="1" type="radio" v-model="form.context8"><span></span></span><span class="text">专营号</span></label>
-					<label><span class="radio"><input value="2" type="radio" v-model="form.context8"><span></span></span><span class="text">大众号</span></label>
+					<label><span class="radio"><input value="-1" type="radio" v-model="form.context8"><span></span></span><span class="text">全部</span></label>
+					<label><span class="radio"><input value="0" type="radio" v-model="form.context8"><span></span></span><span class="text">普通号码</span></label>
+					<label><span class="radio"><input value="1" type="radio" v-model="form.context8"><span></span></span><span class="text">大众专营号</span></label>
+					<label><span class="radio"><input value="2" type="radio" v-model="form.context8"><span></span></span><span class="text">专属专营号</span></label>
 				</div>
 			</div>
 			<div class="row fullRow" :class="{active:form.select==6}" v-if="off.type==3||off.type==4">
@@ -196,25 +197,27 @@
 			<tbody>
 				<tr v-for="(todo,index) in list" :key="index">
 					<td>{{((pageNum-1)*10+(index+1))}}</td>
-					<td>{{todo.orderId}}</td>
+					<td>{{todo.orderId||'--'}}</td>
 					<td>{{getDateTime(todo.createTime)[6]}}</td>
 					<td v-if="off.type==4">{{getDateTime(todo.modifyTime)[6]}}</td>
-					<td>{{translateData(1,todo.type)}}</td>
+					<td>
+            <span>{{translateData(1,todo.type)}}</span>
+          </td>
 					<td>
 						<span v-if="todo.auditType=='0'">实时审核</span>
 						<span v-else-if="todo.auditType==1">事后审核</span>
 						<span v-else-if="todo.auditType==2">自动审核</span>
 						<span v-else>--</span>
 					</td>
-					<td>{{todo.userName}}</td>
-					<td>{{todo.phoneNumber}}<div><span v-show="todo.phoneHome">（{{ todo.phoneHome }}）</span></div></td>
+					<td>{{todo.userName||'--'}}</td>
+					<td>{{todo.phoneNumber||'--'}}<div><span v-show="todo.phoneHome">（{{ todo.phoneHome||'--' }}）</span></div></td>
 					<!-- <td>{{translateData(5,todo.phoneLevel)}}</td> -->
-					<td>{{todo.identityCard}}</td>
-					<td v-if="off.type==1||off.type==2">{{todo.customerName}}</td>
+					<td>{{todo.identityCard||'--'}}</td>
+					<td v-if="off.type==1||off.type==2">{{todo.customerName||'--'}}</td>
 					<td v-if="form.source!=7&&form.source!=8">
-						<span v-if="todo.operator">{{todo.operator}}</span>
-						<span v-if="todo.operatorId">{{todo.operatorId}}</span>
-						<br/><b class="f-m-lighter">（{{todo.operatorName}}）</b>
+						<span v-if="todo.operator">{{todo.operator||'--'}}</span>
+						<span v-if="todo.operatorId">{{todo.operatorId||'--'}}</span>
+						<br/><b class="f-m-lighter">（{{todo.operatorName||'--'}}）</b>
 					</td>
 					<td v-if="off.type==2">
 						<span v-if="form.source!=7&&form.source!=8">{{secondsFormat(todo.auditTime)}}</span>
@@ -223,18 +226,16 @@
 					<td v-if="off.type!=2">
 						<span v-if="off.type==1">
 							<span v-if="form.source==7||form.source==8">
-                                
 								<b v-show="todo.status==4" class="f-c-red">待分配</b>
 								<b v-show="todo.status==5" class="f-c-green">已分配</b>
 							</span>
 							<span v-else>
-                                
 								<b v-show="todo.status==1" class="f-c-red">待分配</b>
 								<b v-show="todo.status==2" class="f-c-green">已分配</b>
 							</span>
 						</span>
-						<span v-if="off.showData==6">{{translateData(7,todo.statusDetail)}}</span>
-						<span v-if="off.showData==8">{{translateData(8,todo.statusDetail)}}</span>
+						<span v-if="form.orderType==6">{{translateData(7,todo.statusDetail)||'--'}}</span>
+						<span v-if="form.orderType==8">{{translateData(8,todo.statusDetail)||'--'}}</span>
 					</td>
 					<td v-if="off.type!=2"><a :name="todo.orderId" @click="details" href="javascript:void(0)" class="details">详情</a></td>
 
@@ -303,7 +304,7 @@ export default{
 				context5:'',// 操作者ID
         context6:0,//号卡状态
         context7:'',//开卡者姓名
-        context8:0,//号卡类型
+        context8:-1,//号卡类型
 				startTime:'',
 				endTime:'',
 				select:6//条件查询，选择的条件
@@ -336,7 +337,7 @@ export default{
     },
 		searchList:function(page){
       var vm=this,url,json={"source":vm.form.source,"type":vm.form.orderType,"pageSize":vm.pageSize,"pageNum":page||1,"startTime":vm.form.startTime,"endTime":vm.form.endTime,"status":vm.form.orderStatus,'auditType':vm.form.auditType,"cardType":vm.form.cardType,"periodType":vm.off.type};
-			//进行中，已关闭
+      //非卡盟SDK+远特I卡，进行中，已关闭
 			if(json.source!=7&&json.source!=8&&(vm.off.type==3||vm.off.type==4)){
 				vm.searchClosedAndDoing(page);
 				return false;
@@ -345,20 +346,20 @@ export default{
 			vm.off.type==1&&vm.form.select!=6&&(json.status=0,vm.form.orderStatus=0);
 			if(vm.form.select==1&&(!context)){
 				layer.open({
-		            content:'请输入订单号码',
-		            skin: 'msg',
-		            time: 2,
-		            msgSkin:'error',
-		        });
-		        return false;
+          content:'请输入订单号码',
+          skin: 'msg',
+          time: 2,
+          msgSkin:'error',
+        });
+        return false;
 			}else if(vm.form.select==2&&(!context)){
 				layer.open({
-		            content:'请输入手机号码',
-		            skin: 'msg',
-		            time: 2,
-		            msgSkin:'error',
-		        });
-		        return false;
+          content:'请输入手机号码',
+          skin: 'msg',
+          time: 2,
+          msgSkin:'error',
+        });
+        return false;
 			}else if(vm.form.select==2&&context.length!=11){
 				layer.open({
           content:'手机号码格式错误',
@@ -385,27 +386,27 @@ export default{
         return false;
 			}else if(vm.form.select==5&&(!context)){
 				layer.open({
-		            content:'请输入操作者ID',
-		            skin: 'msg',
-		            time: 2,
-		            msgSkin:'error',
-		        });
-		        return false;
+          content:'请输入操作者ID',
+          skin: 'msg',
+          time: 2,
+          msgSkin:'error',
+        });
+        return false;
 			}else if(vm.form.select==7&&(!context)){
 				layer.open({
-		            content:'请输入查询的用户姓名',
-		            skin: 'msg',
-		            time: 2,
-		            msgSkin:'error',
-		        });
-		        return false;
+          content:'请输入查询的用户姓名',
+          skin: 'msg',
+          time: 2,
+          msgSkin:'error',
+        });
+        return false;
       }
       json.context=context;
 			json.searchtype=vm.form.select;
-			if(vm.form.source==7){
+			if(vm.form.source==7){//SDK
 				url="km-ecs/w/handler/query";
 				json=vm.getSdkJson(json);
-			}else if(vm.form.source==8){
+			}else if(vm.form.source==8){//I卡
 				url="km-ecs/w/handler/query";
 				json=vm.getTfJson(json);
 			}else{
@@ -430,70 +431,69 @@ export default{
       let context=vm.form['context'+vm.form.select];
 			if(vm.form.select==1&&(!context)){
 				layer.open({
-		            content:'请输入订单号码',
-		            skin: 'msg',
-		            time: 2,
-		            msgSkin:'error',
-		        });
-		        return false;
+          content:'请输入订单号码',
+          skin: 'msg',
+          time: 2,
+          msgSkin:'error',
+        });
+        return false;
 			}else if(vm.form.select==2&&(!context)){
 				layer.open({
-		            content:'请输入手机号码',
-		            skin: 'msg',
-		            time: 2,
-		            msgSkin:'error',
-		        });
-		        return false;
+          content:'请输入手机号码',
+          skin: 'msg',
+          time: 2,
+          msgSkin:'error',
+        });
+        return false;
 			}else if(vm.form.select==2&&context.length!=11){
 				layer.open({
-		            content:'手机号码格式错误',
-		            skin: 'msg',
-		            time: 2,
-		            msgSkin:'error',
-		        });
-		        return false;
+          content:'手机号码格式错误',
+          skin: 'msg',
+          time: 2,
+          msgSkin:'error',
+        });
+		    return false;
 			}else if(vm.form.select==4&&(!context)){
 				layer.open({
-		            content:'请输入身份证号',
-		            skin: 'msg',
-		            time: 2,
-		            msgSkin:'error',
-		        });
-		        return false;
+          content:'请输入身份证号',
+          skin: 'msg',
+          time: 2,
+          msgSkin:'error',
+        });
+        return false;
 			}else if(vm.form.select==5&&(!context)){
 				layer.open({
-		            content:'请输入操作者ID',
-		            skin: 'msg',
-		            time: 2,
-		            msgSkin:'error',
-		        });
-		        return false;
+          content:'请输入操作者ID',
+          skin: 'msg',
+          time: 2,
+          msgSkin:'error',
+        });
+        return false;
 			}
 			json.context=context;
 			json.searchtype=vm.form.select;
 			if(vm.off.isLoad)return false;
-            vm.off.isLoad=true;
-            if(json.type==6){
-                url="km-ecs/w/audit/getOrderList"
-            }else if(json.type==8){
-                url="km-ecs/w/audit/getAdditionOrderList";
-                Object.assign(json,{"periodType":vm.off.type});
-            }
-             searchAuditList(json,function(){vm.off.isLoad=false;},url)
-             .then((data)=>{
-                    if(vm.form.orderType==6){
-                        vm.off.showData=6
-                    }else if(vm.form.orderType==8){
-                        vm.off.showData=8
-                    }
-                    vm.list=data.data.list;
-			    	vm.total=data.data.total;
-			        vm.maxpage=Math.ceil(parseInt(data.data.total)/10);
-			        vm.pageNum=page||1;
-                    vm.callback=function(v){vm.searchClosedAndDoing(v)};
-                    vm.off.isLoad=false;
-                 }
-             ).catch(error=>errorDeal(error)); 	
+      vm.off.isLoad=true;
+      if(json.type==6){
+          url="km-ecs/w/audit/getOrderList"
+      }else if(json.type==8){
+          url="km-ecs/w/audit/getAdditionOrderList";
+          Object.assign(json,{"periodType":vm.off.type});
+      }
+      searchAuditList(json,function(){vm.off.isLoad=false;},url)
+      .then((data)=>{
+        if(vm.form.orderType==6){//空卡
+            vm.off.showData=6
+          }else if(vm.form.orderType==8){//补换卡
+            vm.off.showData=8
+          }
+          vm.list=data.data.list;
+          vm.total=data.data.total;
+          vm.maxpage=Math.ceil(parseInt(data.data.total)/10);
+          vm.pageNum=page||1;
+          vm.callback=function(v){vm.searchClosedAndDoing(v)};
+          vm.off.isLoad=false;
+        }).catch(error=>errorDeal(error)); 	
 		},
 		// 导出查询结果excel
 		downLoadList:function(page){

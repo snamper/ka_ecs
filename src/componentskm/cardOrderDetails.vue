@@ -238,6 +238,7 @@ export default{
 			vm.imgData[1]={'src':vm.list.reqParam.backImageName,'name':'反面照片'};
 			vm.imgData[2]={'src':vm.list.reqParam.handImageName,'name':'手持照片'};
 			vm.imgData[3]={'src':vm.list.reqParam.signImageName,'name':'手签名照片'};
+			vm.imgData[3]={'src':vm.list.reqParam.livingIdentificationImagePath,'name':'活体识别'};
 		}else if(vm.list.operatorType==5){//实名补登
 			vm.imgData[0]={'src':vm.list.oldReqParam.imageName,'name':'原正面照片'};
 			vm.imgData[1]={'src':vm.list.oldReqParam.backImageName,'name':'原反面照片'};//
@@ -246,6 +247,7 @@ export default{
 			vm.imgData[4]={'src':vm.list.reqParam.backImageName,'name':'反面照片'};
 			vm.imgData[5]={'src':vm.list.reqParam.handImageName,'name':'手持照片'};
 			vm.imgData[6]={'src':vm.list.reqParam.signImageName,'name':'手签名照片'};
+			vm.imgData[6]={'src':vm.list.reqParam.livingIdentificationImagePath,'name':'活体识别'};
 		}else{//空卡
 			if(vm.source==7||vm.source==8){//7、卡盟SDK；8远特i卡
         let imgUrl,
@@ -452,7 +454,6 @@ export default{
                     content='<ul class="f-scroll-lt lay-details">'+
                         '<li class="clr"><div class="fl">支付流水号：</div><div class="fright">'+list.pay_transaction_id    +'</div></li>'+
                         '<li class="clr"><div class="fl">第三方流水号：</div><div class="fright">'+list.sys_order_id_pay+'</div></li>'+
-                        '<li class="clr"><div class="fl">支付账号：</div><div class="fright">'+list.pay_user_id+'</div></li>'+
                         '<li class="clr"><div class="fl">支付方式：</div><div class="fright">'+list.payType+'</div></li>'+
                         '<li class="clr"><div class="fl">支付金额：</div><div class="fright">'+list.actual_money+'元</div></li></ul>';
                     layer.open({
