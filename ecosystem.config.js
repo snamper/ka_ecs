@@ -10,9 +10,6 @@ module.exports = {
       },
       env_production : {
         NODE_ENV: 'production'
-      },
-      env_test : {
-        NODE_ENV: 'development'
       }
     },
   ],
