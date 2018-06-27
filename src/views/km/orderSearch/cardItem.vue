@@ -400,11 +400,7 @@ export default{
 		        });
 		        return false;
       }
-      if(vm.form.select!=8){
-        json.context=context;
-      }else{
-        json.monopolyType =context;
-      }
+      json.context=context;
 			json.searchtype=vm.form.select;
 			if(vm.form.source==7){
 				url="km-ecs/w/handler/query";

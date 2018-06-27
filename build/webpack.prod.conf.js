@@ -11,8 +11,8 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;//分析包
 
-// const env = require('../config/prod.env')
-const env = process.env
+const env = require('../config/prod.env')
+// const env = process.env
 
 const webpackConfig = merge(baseWebpackConfig, {
   module: {
