@@ -85,6 +85,7 @@
 					<label><span class="radio"><input type="radio" value="1" v-model="form.operation"><span></span></span><span class="text">开卡</span></label>
 					<label><span class="radio"><input type="radio" value="2" v-model="form.operation"><span></span></span><span class="text">激活商户</span></label>
 					<label><span class="radio"><input type="radio" value="3" v-model="form.operation"><span></span></span><span class="text">过户办理</span></label>
+					<label><span class="radio"><input type="radio" value="4" v-model="form.operation"><span></span></span><span class="text">实名补登</span></label>
 				</div>
 			</div>
 			<div class="row">

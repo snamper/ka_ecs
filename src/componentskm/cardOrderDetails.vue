@@ -253,15 +253,15 @@ export default{
 			if(vm.source==7||vm.source==8){//7、卡盟SDK；8远特i卡
         let imgUrl,
 				userMoreInfo=JSON.parse(decodeURIComponent(vm.list.userMoreInfo));
-        if(process.env.NODE_ENV=="development"){
+        if(process.env.NODE_ENV=="development"||process.env.NODE_ENV=="test"){
           imgUrl=_CONFIG.dev.SDK_IMAGE_URL
         }else{
           imgUrl=_CONFIG[_CONFIG.env].SDK_IMAGE_URL
         }
-
+        console.log(process.env.NODE_ENV);
 				if(vm.source==8){
 					Object.assign(userMoreInfo,JSON.parse(decodeURIComponent(vm.list.tokenInfo)));
-          if(process.env.NODE_ENV=="development"){
+          if(process.env.NODE_ENV=="development"||process.env.NODE_ENV=="test"){
             imgUrl=_CONFIG.dev.TF_IMAGE_URL;
           }else{
             imgUrl=_CONFIG[_CONFIG.env].TF_IMAGE_URL;
@@ -455,8 +455,9 @@ export default{
                     content='<ul class="f-scroll-lt lay-details">'+
                         '<li class="clr"><div class="fl">支付流水号：</div><div class="fright">'+list.pay_transaction_id    +'</div></li>'+
                         '<li class="clr"><div class="fl">第三方流水号：</div><div class="fright">'+list.sys_order_id_pay+'</div></li>'+
+                        '<li class="clr"><div class="fl">支付账号：</div><div class="fright">'+list.pay_user_id+'</div></li>'+
                         '<li class="clr"><div class="fl">支付方式：</div><div class="fright">'+list.payType+'</div></li>'+
-                        '<li class="clr"><div class="fl">支付金额：</div><div class="fright">'+list.actual_money+'元</div></li></ul>';
+                        '<li class="clr"><div class="fl">支付金额：</div><div class="fright">'+list.actual_money/100+'元</div></li></ul>';
                     layer.open({
                         content:content,
                         type:0,

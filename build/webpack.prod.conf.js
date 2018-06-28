@@ -9,10 +9,15 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;//分析包
-
-const env = require('../config/prod.env')
-// const env = process.env
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin//分析包
+var env;
+if(process.env.NODE_ENV=="production"){
+  env = require('../config/prod.env')
+}else if(process.env.NODE_ENV=="development"){
+  env = require('../config/dev.env')
+}else if(process.env.NODE_ENV=="test"){
+  env = require('../config/test.env')  
+}
 
 const webpackConfig = merge(baseWebpackConfig, {
   module: {
