@@ -36,13 +36,14 @@ export default{
 		}
 	},
 	created:function(){
-        this.initSet();
+    this.initSet();
 	},
 	watch:{
 		imgData:'initSet'
 	},
 	methods:{
 		initSet(){
+      this.imgIndex=0;
 			if(this.imgData[0].src){
 				this.zoomStyle.backgroundImage='url('+this.imgData[0].src+')';
 			}else{
@@ -59,11 +60,9 @@ export default{
       download:function(e){
         let vm=this,
         href=vm.imgData[vm.imgIndex].src;
-
         var _a = document.createElement('a');
         _a.setAttribute("href", href);
         _a.setAttribute("download", "");
-
         var evObj = document.createEvent('MouseEvents');
         evObj.initMouseEvent( 'click', true, true, window, 0, 0, 0, 0, 0, false, false, true, false, 0, null);
         _a.dispatchEvent(evObj);
@@ -110,7 +109,6 @@ export default{
 					if(e.wheelDelta&&e.wheelDelta>0||(e.detail&&e.detail<0)){
             vm.transformStyle.s.toFixed(0)==3?vm.transformStyle.s=3:vm.transformStyle.s+=0.2;
 					}else{
-            console.log(vm.transformStyle.s);
             vm.transformStyle.s.toFixed(1)==0.2?vm.transformStyle.s=0.2:vm.transformStyle.s-=0.10;
 					}
 					var transform='translate3d('+vm.transformStyle.x+'px,'+vm.transformStyle.y+'px,0) scale('+vm.transformStyle.s+') rotate('+vm.transformStyle.r+'deg)';

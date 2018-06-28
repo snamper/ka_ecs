@@ -54,7 +54,6 @@
 					<tr><td>新证件有效期：</td><td>{{auditData.reqParam.period}}</td></tr>
 				</tbody>
 			</table>
-			
 		</td>
 	</tr>
 	<tr>
@@ -75,16 +74,22 @@ export default{
 	},
 	data(){
 		return{
-			newImage:[],
-			oldImage:[]
+			newImage:[{src:'',name:''}],
+			oldImage:[{src:'',name:''}]
 		}
-	},
+  },
+  watch:{
+    imgData(){
+      this.oldImage=this.imgData.slice(0,3);
+      this.newImage=this.imgData.slice(3,8);
+    },
+  },
 	components:{
 		ImgZoom
 	},
 	created:function(){
-		this.oldImage=this.imgData.slice(0,3);
-		this.newImage=this.imgData.slice(3,8);
+    this.oldImage=this.imgData.slice(0,3);
+    this.newImage=this.imgData.slice(3,8);
 	},
 	methods:{
 		

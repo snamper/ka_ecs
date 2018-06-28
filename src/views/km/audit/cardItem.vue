@@ -147,42 +147,42 @@ export default{
 		vm.getAuditList();
 	},
 	methods:{
-      agree:function(){//审核同意
-      var vm=this,auditType=vm.off.auditType,url='';
-			var orderId=vm.auditData.orderId;
-			let json={
-				"orderId":orderId,
-				"result":1,"remark":'',
-				"reason": '',
-				"refuseReasonCode":"",
-				"auditType":auditType
-			}
-			if(vm.off.itemType==8){
-				url="km-ecs/w/sdk/auditOrder";
-			}else if(vm.off.itemType==9){
-				url="km-ecs/w/tongfu/auditOrder";
-			}else if(vm.off.itemType==1||vm.off.itemType==2){
-				url="km-ecs/w/audit/auditOfReinput";
-				json.result=2;
-				json.phone=vm.auditData.phoneNumber;
-				json.orderId=vm.auditData.sysOrderId;
-			}else{
-				url="km-ecs/w/audit/audit";
-			}
-			//vm.AJAX(url,{"orderId":orderId,"result":1,"remark":"","reason":"","refuseReasonCode":"","auditType":auditType},function(data){layer.open({content:data.msg,skin:"msg",time:4,msgSkin:"success",success:function(){vm.dealAuditList()}})});
-            reqCommonMethod(json,false,url)
-            .then((data)=>{
-                layer.open({
-					content:data.msg,
-					skin: 'msg',
-					time: 4,
-					msgSkin:'success',
-					success:function(){
-						vm.dealAuditList();
-					}
-				})
-            }).catch(error=>errorDeal(error)); 
-		},
+    agree:function(){//审核同意
+    var vm=this,auditType=vm.off.auditType,url='';
+    var orderId=vm.auditData.orderId;
+    let json={
+      "orderId":orderId,
+      "result":1,"remark":'',
+      "reason": '',
+      "refuseReasonCode":"",
+      "auditType":auditType
+    }
+    if(vm.off.itemType==8){
+      url="km-ecs/w/sdk/auditOrder";
+    }else if(vm.off.itemType==9){
+      url="km-ecs/w/tongfu/auditOrder";
+    }else if(vm.off.itemType==1||vm.off.itemType==2){
+      url="km-ecs/w/audit/auditOfReinput";
+      json.result=2;
+      json.phone=vm.auditData.phoneNumber;
+      json.orderId=vm.auditData.sysOrderId;
+    }else{
+      url="km-ecs/w/audit/audit";
+    }
+    //vm.AJAX(url,{"orderId":orderId,"result":1,"remark":"","reason":"","refuseReasonCode":"","auditType":auditType},function(data){layer.open({content:data.msg,skin:"msg",time:4,msgSkin:"success",success:function(){vm.dealAuditList()}})});
+    reqCommonMethod(json,false,url)
+    .then((data)=>{
+        layer.open({
+        content:data.msg,
+        skin: 'msg',
+        time: 4,
+        msgSkin:'success',
+        success:function(){
+          vm.dealAuditList();
+        }
+      })
+    }).catch(error=>errorDeal(error)); 
+  },
 		refuse:function(obj){//审核拒绝
 			var str='',vm=this,orderId=vm.auditData.orderId,popIndex,ww=window.innerWidth,wwSet,auditType=vm.off.auditType;
 			for(let i=0;i<vm.refuseArr.list.length;i++){
@@ -322,15 +322,21 @@ export default{
           this.$set(vm.imgData,2,{'src':vm.auditData.reqParam.handImageName,'name':'手持照片'})
           this.$set(vm.imgData,3,{'src':vm.auditData.reqParam.signImageName,'name':'手签名照片'})                                       
         }else{//开卡
-          vm.imgData=[
-            {'src':vm.auditData.imageUrl,'name':'正面'},
-            {'src':vm.auditData.backImageUrl,'name':'反面'},
-            {'src':vm.auditData.handImageUrl,'name':'手持'},
-            {'src':vm.auditData.livingImgUrl,'name':'活体识别'},
-            {'src':vm.auditData.signImageUrl,'name':'手签名'},
-          ];
+          // vm.imgData=[
+          //   {'src':vm.auditData.imageUrl,'name':'正面'},
+          //   {'src':vm.auditData.backImageUrl,'name':'反面'},
+          //   {'src':vm.auditData.handImageUrl,'name':'手持'},
+          //   {'src':vm.auditData.livingImgUrl,'name':'活体识别'},
+          //   {'src':vm.auditData.signImageUrl,'name':'手签名'},
+          // ];
+          this.$set(vm.imgData,0,{'src':vm.auditData.imageUrl,'name':'正面'})
+          this.$set(vm.imgData,1,{'src':vm.auditData.backImageUrl,'name':'反面'})
+          this.$set(vm.imgData,2,{'src':vm.auditData.handImageUrl,'name':'手持'})
+          this.$set(vm.imgData,3,{'src':vm.auditData.livingImgUrl,'name':'活体识别'})
+          this.$set(vm.imgData,4,{'src':vm.auditData.signImageUrl,'name':'手签名'})
           if(vm.off.itemType==6){
-            vm.imgData.push({'src':vm.auditData.headImageName,'name':'身份证照片'});
+            // vm.imgData.push({'src':vm.auditData.headImageName,'name':'身份证照片'});
+            this.$set(vm.imgData,5,{'src':vm.auditData.headImageName,'name':'身份证照片'})
           }
         }
         vm.off.auditIndex++;
