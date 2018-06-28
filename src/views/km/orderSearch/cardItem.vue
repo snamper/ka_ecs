@@ -157,6 +157,7 @@
 					<label><span class="radio"><input value="7" type="radio" v-model="form.orderStatus"><span></span></span><span class="text">已获取IMSI</span></label>
 					<label><span class="radio"><input value="8" type="radio" v-model="form.orderStatus"><span></span></span><span class="text">已开卡申请</span></label>
 				</div>
+
         <div class="m-form-radio col-radio" v-if="form.orderType==8">
 					<label><span class="radio"><input value="0" type="radio" v-model="form.orderStatus"><span></span></span><span class="text">全部</span></label>
 					<label><span class="radio"><input value="1001" type="radio" v-model="form.orderStatus"><span></span></span><span class="text">已上传资料</span></label>

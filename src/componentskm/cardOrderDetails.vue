@@ -233,12 +233,13 @@ export default{
 			vm.imgData[4]={'src':vm.list.backImage,'name':'过户人反面照片'};
 			vm.imgData[5]={'src':vm.list.handImage,'name':'过户人手持照片'};
 			vm.imgData[6]={'src':vm.list.signImage,'name':'过户人手签名照片'};
+			vm.imgData[7]={'src':vm.list.livingImg,'name':'活体识别'};      
 		}else if(vm.list.operatorType==9){//补换卡
 			vm.imgData[0]={'src':vm.list.reqParam.imageName,'name':'正面照片'};
 			vm.imgData[1]={'src':vm.list.reqParam.backImageName,'name':'反面照片'};
 			vm.imgData[2]={'src':vm.list.reqParam.handImageName,'name':'手持照片'};
 			vm.imgData[3]={'src':vm.list.reqParam.signImageName,'name':'手签名照片'};
-			vm.imgData[3]={'src':vm.list.reqParam.livingIdentificationImagePath,'name':'活体识别'};
+			// vm.imgData[3]={'src':vm.list.reqParam.livingIdentificationImagePath,'name':'活体识别'};
 		}else if(vm.list.operatorType==5){//实名补登
 			vm.imgData[0]={'src':vm.list.oldReqParam.imageName,'name':'原正面照片'};
 			vm.imgData[1]={'src':vm.list.oldReqParam.backImageName,'name':'原反面照片'};//
@@ -247,7 +248,7 @@ export default{
 			vm.imgData[4]={'src':vm.list.reqParam.backImageName,'name':'反面照片'};
 			vm.imgData[5]={'src':vm.list.reqParam.handImageName,'name':'手持照片'};
 			vm.imgData[6]={'src':vm.list.reqParam.signImageName,'name':'手签名照片'};
-			vm.imgData[6]={'src':vm.list.reqParam.livingIdentificationImagePath,'name':'活体识别'};
+			vm.imgData[7]={'src':vm.list.reqParam.livingIdentificationImagePath,'name':'活体识别'};
 		}else{//空卡
 			if(vm.source==7||vm.source==8){//7、卡盟SDK；8远特i卡
         let imgUrl,
