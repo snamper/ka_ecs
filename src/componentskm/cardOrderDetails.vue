@@ -258,7 +258,6 @@ export default{
         }else{
           imgUrl=_CONFIG[_CONFIG.env].SDK_IMAGE_URL
         }
-        console.log(process.env.NODE_ENV);
 				if(vm.source==8){
 					Object.assign(userMoreInfo,JSON.parse(decodeURIComponent(vm.list.tokenInfo)));
           if(process.env.NODE_ENV=="development"||process.env.NODE_ENV=="test"){
@@ -290,7 +289,8 @@ export default{
 					{'src':vm.list.imageUrl,'name':'正面'},
 					{'src':vm.list.backImageUrl,'name':'反面'},
 					{'src':vm.list.livingImg,'name':'活体识别'},
-					{'src':vm.list.signImageUrl,'name':'手签名'}
+					{'src':vm.list.signImageUrl,'name':'手签名'},
+					{'src':vm.list.headImageName,'name':'身份证照片'}
 				];
 			}
 			

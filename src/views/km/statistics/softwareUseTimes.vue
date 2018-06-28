@@ -140,11 +140,10 @@
 					</td>
 					<td>
 						<span v-show="off.type==1||off.type==3">
-							<b v-show="todo.deviceId==1">森锐</b>
-							<b v-show="todo.deviceId==2">握奇</b>
+              {{translateData(9,todo.deviceId)}}
 						</span>
 						<span v-show="off.type==2">
-							<b v-show="todo.deviceId==1">旷视</b>
+							<label v-show="todo.deviceId==1">旷视</label>
 						</span>
 					</td>
 					<td>{{ todo.orderId||'--' }}</td>
@@ -156,10 +155,7 @@
 						<span v-show="todo.appType==5">卡盟通服</span>
 					</td>
 					<td>
-						<span v-if="todo.operation==1">开卡</span>
-						<span v-else-if="todo.operation==2">激活商户</span>
-						<span v-else-if="todo.operation==3">过户办理</span>
-						<span v-else="todo.operation==3">--</span>
+						<span>{{translateData(3,todo.operation)}}</span>
 					</td>
 					<td v-show="off.type==1||off.type==2">{{ todo.idCardNo||'--' }}</td>
 					<td>{{ todo.phoneNo||'--' }}</td>
@@ -190,7 +186,7 @@
 import {reqCommonMethod} from "../../../config/service.js";
 import pagination from "../../../componentskm/page.vue";
 import { getDateTime,getUnixTime } from "../../../config/utils.js";
-import {setStore, getStore, createDownload} from '../../../config/utils';
+import {setStore, getStore, createDownload,translateData} from '../../../config/utils';
 export default{
 	data (){
 		return {
@@ -343,7 +339,10 @@ export default{
 				this.off.type=3;                
       }
 		    this.list='';
-		}
+    },
+    translateData(t,v){
+      return translateData(t,v);
+    },
 	}
 }
 </script>

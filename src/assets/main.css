@@ -10,6 +10,9 @@
   border-bottom: 7px solid transparent;
 }
 /* 边距 */
-.f-padding-left1{padding-left: .2rem;}
+.f-padding-left2{padding-left: .2rem;}
+.f-margin-top1{margin-top: .1rem;}
 .f-bgc-white{background: #fff;}
 .f-border-radius4{border-radius: 4px;}
+/* 查询模块 */
+.m-search-padding{padding: .2rem .1rem}

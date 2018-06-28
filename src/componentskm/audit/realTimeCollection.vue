@@ -85,7 +85,6 @@ export default{
 	created:function(){
 		this.oldImage=this.imgData.slice(0,3);
 		this.newImage=this.imgData.slice(3,8);
-    console.log(this.oldImage,this.newImage);
 	},
 	methods:{
 		

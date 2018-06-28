@@ -15,7 +15,6 @@ exports.assetsPath = function (_path) {
   var assetsSubDirectory="";
   if(process.env.NODE_ENV === 'production'||process.env.NODE_ENV === 'test'){
     assetsSubDirectory=config.build.assetsSubDirectory
-    console.log(assetsSubDirectory+'---assetsSubDirectory---')
   }else{
     assetsSubDirectory=config.dev.assetsSubDirectory
   }
