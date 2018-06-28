@@ -315,7 +315,7 @@ export default{
           this.$set(vm.imgData,4,{'src':vm.auditData.reqParam.backImageName,'name':'反面照片'})
           this.$set(vm.imgData,5,{'src':vm.auditData.reqParam.handImageName,'name':'手持照片'})
           this.$set(vm.imgData,6,{'src':vm.auditData.reqParam.signImageName,'name':'手签名照片'})
-          this.$set(vm.imgData,7,{'src':vm.auditData.reqParam.livingImgUrl,'name':'活体识别照片'})
+          this.$set(vm.imgData,7,{'src':vm.auditData.reqParam.livingIdentificationImagePath,'name':'活体识别照片'})
         }else if(vm.off.itemType==2){//补换卡
           this.$set(vm.imgData,0,{'src':vm.auditData.reqParam.imageName,'name':'正面照片'})
           this.$set(vm.imgData,1,{'src':vm.auditData.reqParam.backImageName,'name':'反面照片'})
