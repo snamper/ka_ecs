@@ -87,6 +87,7 @@
 					<label v-if="off.type!=3"><span class="radio"><input type="radio" value="2" v-model="form.operation"><span></span></span><span class="text">激活商户</span></label>
 					<label v-if="off.type!=3"><span class="radio"><input type="radio" value="3" v-model="form.operation"><span></span></span><span class="text">过户办理</span></label>
 					<label v-if="off.type!=3"><span class="radio"><input type="radio" value="4" v-model="form.operation"><span></span></span><span class="text">实名补登</span></label>
+					<label v-if="off.type!=3"><span class="radio"><input type="radio" value="5" v-model="form.operation"><span></span></span><span class="text">换补卡</span></label>
 				</div>
 			</div>
 			<div class="row">
