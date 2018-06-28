@@ -94,9 +94,9 @@
 				</tbody>
 				<!--实名补登-->
 				<RealTimeCollection v-if="off.itemType==1" :auditStatus="1" :auditData="auditData" :imgData="imgData"></RealTimeCollection>
-                <!-- 补换卡 -->
-                <RealNameRechCard v-if="off.itemType==2" :auditStatus="1" :auditData="auditData" :imgData="imgData"></RealNameRechCard>
-              </table>
+        <!-- 补换卡 -->
+        <RealNameRechCard v-if="off.itemType==2" :auditStatus="1" :auditData="auditData" :imgData="imgData"></RealNameRechCard>
+      </table>
 		  </div>
 	  </section>
 	  <div class="m-refresh" v-if="!auditData"><span class="u-icon-refresh" :class="{rotate360:off.isLoad}"></span><a @click="getAuditList">{{off.isLoad?'loading':'点击刷新'}}</a></div>
@@ -129,8 +129,8 @@ export default{
 	},
 	components:{
 		ImgZoom,
-        RealTimeCollection,
-        RealNameRechCard
+    RealTimeCollection,
+    RealNameRechCard
 	},
 	beforeDestroy:function(){
 		window.clearInterval(this.timer)
@@ -147,8 +147,8 @@ export default{
 		vm.getAuditList();
 	},
 	methods:{
-        agree:function(){//审核同意
-            var vm=this,auditType=vm.off.auditType,url='';
+      agree:function(){//审核同意
+      var vm=this,auditType=vm.off.auditType,url='';
 			var orderId=vm.auditData.orderId;
 			let json={
 				"orderId":orderId,
@@ -220,7 +220,6 @@ export default{
 					refuseReasonCode=refuseReasonCode.substring(0,refuseReasonCode.length-1)
 					reason=document.getElementById('reason').value;
 					if(remark==''&&reason=='')return false;
-
 					let json={
 						"orderId":orderId,
 						"result":2,
@@ -242,19 +241,19 @@ export default{
 					}else{
 						url="km-ecs/w/audit/audit";
 					}
-                    reqCommonMethod(json,false,url)
+          reqCommonMethod(json,false,url)
 					.then((data)=>{
-                        layer.open({
-							content:data.msg,
-							skin: 'msg',
-							time: 4,
-							msgSkin:'success',
-							success:function(){
-								vm.dealAuditList();
-								layer.close(popIndex);
-							}
+          layer.open({
+            content:data.msg,
+            skin: 'msg',
+            time: 4,
+            msgSkin:'success',
+            success:function(){
+              vm.dealAuditList();
+              layer.close(popIndex);
+            }
 						})
-                    }).catch(error=>errorDeal(error)); 
+          }).catch(error=>errorDeal(error)); 
 				}
 			})
 		},
@@ -263,7 +262,6 @@ export default{
 			var url='';
 			if(vm.off.isLoad==1){return false};
 			vm.off.isLoad=1;
-
 			if(vm.off.itemType==8){
 				url="km-ecs/w/sdk/distributeOrder";
 			}else if(vm.off.itemType==9){
@@ -274,79 +272,84 @@ export default{
 				url="km-ecs/w/audit/toaudit";
 			}
 			//vm.AJAX(url,{"type":vm.off.itemType,"auditType":auditType},function(data){if(data.data.list.length==0){layer.open({content:"当前没有分配的订单",skin:"msg",time:4,msgSkin:"error",});return false}vm.list=data.data.list;vm.off.auditIndex=0;vm.dealAuditList();window.clearInterval(vm.timer);vm.timeDown(parseInt(vm.list[0].expireTime))},function(){vm.off.isLoad=0});
-            reqCommonMethod({"type":vm.off.itemType,"auditType":auditType},function(){vm.off.isLoad=false;},url)
-            .then((data)=>{
-                if(data.data.list.length==0){
-					layer.open({
-			            content:'当前没有分配的订单',
-			            skin: 'msg',
-			            time: 4,
-			            msgSkin:'error',
-			        })
-                vm.off.isLoad=false;  
-                return false;                                  
+        reqCommonMethod({"type":vm.off.itemType,"auditType":auditType},function(){vm.off.isLoad=false;},url)
+        .then((data)=>{
+        if(data.data.list.length==0){
+          layer.open({
+            content:'当前没有分配的订单',
+            skin: 'msg',
+            time: 4,
+            msgSkin:'error',
+          })
+          vm.off.isLoad=false;  
+          return false;                                  
 				}
 				vm.list=data.data.list;
 				vm.off.auditIndex=0;
 				vm.dealAuditList();
 				window.clearInterval(vm.timer)
-                vm.timeDown(parseInt(vm.list[0].expireTime));
-                vm.off.isLoad=false;                  
-            }).catch(error=>errorDeal(error)); 
+        vm.timeDown(parseInt(vm.list[0].expireTime));
+        vm.off.isLoad=false;                  
+      }).catch(error=>errorDeal(error)); 
 		},
-        dealAuditList:function(){//处理分配的订单
-			const vm=this,len=vm.list.length;
-            vm.auditData='';
-            vm.imgData=[];
-			if(len&&(vm.off.auditIndex+1)<=len){
-				vm.auditData=vm.list[vm.off.auditIndex];
-                if(vm.off.itemType==7){//过户办理
-                    this.$set(vm.imgData,0,{'src':vm.auditData.frontImageOld,'name':'原机主正面照片'})
-                    this.$set(vm.imgData,1,{'src':vm.auditData.backImageOld,'name':'原机主反面照片'})
-                    this.$set(vm.imgData,2,{'src':vm.auditData.handImageOld,'name':'原机主手持照片'})
-                    this.$set(vm.imgData,3,{'src':vm.auditData.imageUrl,'name':'过户人正面照片'})
-                    this.$set(vm.imgData,4,{'src':vm.auditData.backImageUrl,'name':'过户人反面照片'})
-                    this.$set(vm.imgData,5,{'src':vm.auditData.handImage,'name':'过户人手持照片'})
-                    this.$set(vm.imgData,6,{'src':vm.auditData.signImage,'name':'过户人手签名照片'})
-                }else if(vm.off.itemType==1){//实名补登
-                    this.$set(vm.imgData,0,{'src':vm.auditData.oldReqParam.imageName,'name':'原正面照片'})
-                    this.$set(vm.imgData,1,{'src':vm.auditData.oldReqParam.backImageName,'name':'原反面照片'})
-                    this.$set(vm.imgData,2,{'src':vm.auditData.oldReqParam.handImageName,'name':'原手持照片'})
-                    this.$set(vm.imgData,3,{'src':vm.auditData.reqParam.imageName,'name':'正面照片'})
-                    this.$set(vm.imgData,4,{'src':vm.auditData.reqParam.backImageName,'name':'反面照片'})
-                    this.$set(vm.imgData,5,{'src':vm.auditData.reqParam.handImageName,'name':'手持照片'})
-                    this.$set(vm.imgData,6,{'src':vm.auditData.reqParam.signImageName,'name':'手签名照片'})
-				}else if(vm.off.itemType==2){
-                    this.$set(vm.imgData,0,{'src':vm.auditData.reqParam.imageName,'name':'正面照片'})
-                    this.$set(vm.imgData,1,{'src':vm.auditData.reqParam.backImageName,'name':'反面照片'})
-                    this.$set(vm.imgData,2,{'src':vm.auditData.reqParam.handImageName,'name':'手持照片'})
-                    this.$set(vm.imgData,3,{'src':vm.auditData.reqParam.signImageName,'name':'手签名照片'})                                       
-                }else{//开卡
-					vm.imgData=[
-						{'src':vm.auditData.imageUrl,'name':'正面'},
-						{'src':vm.auditData.backImageUrl,'name':'反面'},
-						{'src':vm.auditData.handImageUrl,'name':'手持'},
-						{'src':vm.auditData.livingImgUrl,'name':'活体识别'},
-						{'src':vm.auditData.signImageUrl,'name':'手签名'}
-					];
-				}
-				vm.off.auditIndex++;
-			}
-		},
-		timeDown:function(time){//倒计时
-			var vm=this,timeFormat=function(t){
-	    		var t_s=t%60,t_m=Math.floor(t/60);
-	    		t_s<=9&&(t_s='0'+t_s);
-	    		t_m<=9&&(t_m='0'+t_m);
-	    		return t_m+':'+t_s;
-	    	};vm.timer=setInterval(function(){
-				time--;
-	    		time==0?(vm.off.time='00:00',clearInterval(vm.timer),vm.auditData=''):vm.off.time=timeFormat(time);
-			},1000);
-		},
-		getDateTime(v){
-			return getDateTime(v);
-		}
+    dealAuditList:function(){//处理分配的订单
+      const vm=this,len=vm.list.length;
+      vm.auditData='';
+      vm.imgData=[];
+      if(len&&(vm.off.auditIndex+1)<=len){
+        vm.auditData=vm.list[vm.off.auditIndex];
+        if(vm.off.itemType==7){//过户办理
+          this.$set(vm.imgData,0,{'src':vm.auditData.frontImageOld,'name':'原机主正面照片'})
+          this.$set(vm.imgData,1,{'src':vm.auditData.backImageOld,'name':'原机主反面照片'})
+          this.$set(vm.imgData,2,{'src':vm.auditData.handImageOld,'name':'原机主手持照片'})
+          this.$set(vm.imgData,3,{'src':vm.auditData.imageUrl,'name':'过户人正面照片'})
+          this.$set(vm.imgData,4,{'src':vm.auditData.backImageUrl,'name':'过户人反面照片'})
+          this.$set(vm.imgData,5,{'src':vm.auditData.handImage,'name':'过户人手持照片'})
+          this.$set(vm.imgData,6,{'src':vm.auditData.signImage,'name':'过户人手签名照片'})
+        }else if(vm.off.itemType==1){//实名补登
+          this.$set(vm.imgData,0,{'src':vm.auditData.oldReqParam.imageName,'name':'原正面照片'})
+          this.$set(vm.imgData,1,{'src':vm.auditData.oldReqParam.backImageName,'name':'原反面照片'})
+          this.$set(vm.imgData,2,{'src':vm.auditData.oldReqParam.handImageName,'name':'原手持照片'})
+          this.$set(vm.imgData,3,{'src':vm.auditData.reqParam.imageName,'name':'正面照片'})
+          this.$set(vm.imgData,4,{'src':vm.auditData.reqParam.backImageName,'name':'反面照片'})
+          this.$set(vm.imgData,5,{'src':vm.auditData.reqParam.handImageName,'name':'手持照片'})
+          this.$set(vm.imgData,6,{'src':vm.auditData.reqParam.signImageName,'name':'手签名照片'})
+        }else if(vm.off.itemType==2){//补换卡
+          this.$set(vm.imgData,0,{'src':vm.auditData.reqParam.imageName,'name':'正面照片'})
+          this.$set(vm.imgData,1,{'src':vm.auditData.reqParam.backImageName,'name':'反面照片'})
+          this.$set(vm.imgData,2,{'src':vm.auditData.reqParam.handImageName,'name':'手持照片'})
+          this.$set(vm.imgData,3,{'src':vm.auditData.reqParam.signImageName,'name':'手签名照片'})                                       
+        }else{//开卡
+          vm.imgData=[
+            {'src':vm.auditData.imageUrl,'name':'正面'},
+            {'src':vm.auditData.backImageUrl,'name':'反面'},
+            {'src':vm.auditData.handImageUrl,'name':'手持'},
+            {'src':vm.auditData.livingImgUrl,'name':'活体识别'},
+            {'src':vm.auditData.signImageUrl,'name':'手签名'},
+          ];
+          console.log(vm.off.itemType);
+          if(vm.off.itemType==6){
+            vm.imgData.push({'src':vm.auditData.handImageUrl,'name':'身份证照片'});
+          }
+        }
+        vm.off.auditIndex++;
+      }
+    },
+    timeDown:function(time){//倒计时
+      var vm=this,timeFormat=function(t){
+        var t_s=t%60,t_m=Math.floor(t/60);
+        t_s<=9&&(t_s='0'+t_s);
+        t_m<=9&&(t_m='0'+t_m);
+        return t_m+':'+t_s;
+      };
+      vm.timer=setInterval(function(){
+        time--;
+        time==0?(vm.off.time='00:00',clearInterval(vm.timer),vm.auditData=''):vm.off.time=timeFormat(time);
+      },1000);
+    },
+    getDateTime(v){
+      return getDateTime(v);
+    }
 	}
 }
 </script>
