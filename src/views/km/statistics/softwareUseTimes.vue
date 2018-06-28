@@ -71,6 +71,7 @@
 					<label><span class="radio"><input type="radio" value="0" v-model="form.deviceId"><span></span></span><span class="text">全部</span></label>
 					<label><span class="radio"><input type="radio" value="1" v-model="form.deviceId"><span></span></span><span class="text">森锐</span></label>
 					<label><span class="radio"><input type="radio" value="2" v-model="form.deviceId"><span></span></span><span class="text">握奇</span></label>
+					<label v-if="off.type!=3"><span class="radio"><input type="radio" value="3" v-model="form.deviceId"><span></span></span><span class="text">卡尔</span></label>
 				</div>
 				<div class="m-form-radio" v-show="off.type==2">
 					<label><span class="radio"><input type="radio" value="0" v-model="form.deviceId"><span></span></span><span class="text">全部</span></label>
@@ -83,9 +84,9 @@
 				<div class="m-form-radio">
 					<label><span class="radio"><input type="radio" value="0" v-model="form.operation"><span></span></span><span class="text">全部</span></label>
 					<label><span class="radio"><input type="radio" value="1" v-model="form.operation"><span></span></span><span class="text">开卡</span></label>
-					<label><span class="radio"><input type="radio" value="2" v-model="form.operation"><span></span></span><span class="text">激活商户</span></label>
-					<label><span class="radio"><input type="radio" value="3" v-model="form.operation"><span></span></span><span class="text">过户办理</span></label>
-					<label><span class="radio"><input type="radio" value="4" v-model="form.operation"><span></span></span><span class="text">实名补登</span></label>
+					<label v-if="off.type!=3"><span class="radio"><input type="radio" value="2" v-model="form.operation"><span></span></span><span class="text">激活商户</span></label>
+					<label v-if="off.type!=3"><span class="radio"><input type="radio" value="3" v-model="form.operation"><span></span></span><span class="text">过户办理</span></label>
+					<label v-if="off.type!=3"><span class="radio"><input type="radio" value="4" v-model="form.operation"><span></span></span><span class="text">实名补登</span></label>
 				</div>
 			</div>
 			<div class="row">
@@ -155,9 +156,10 @@
 						<span v-show="todo.appType==5">卡盟通服</span>
 					</td>
 					<td>
-						<span v-show="todo.operation==1">开卡</span>
-						<span v-show="todo.operation==2">激活商户</span>
-						<span v-show="todo.operation==3">过户办理</span>
+						<span v-if="todo.operation==1">开卡</span>
+						<span v-else-if="todo.operation==2">激活商户</span>
+						<span v-else-if="todo.operation==3">过户办理</span>
+						<span v-else="todo.operation==3">--</span>
 					</td>
 					<td v-show="off.type==1||off.type==2">{{ todo.idCardNo||'--' }}</td>
 					<td>{{ todo.phoneNo||'--' }}</td>
@@ -261,24 +263,15 @@ export default{
 
 			if(vm.off.isLoad)return false;
 			vm.off.isLoad=true;
-			// vm.AJAX(url,json,function(data){
-			// 	vm.list=data.data.list;
-			// 	vm.total=data.data.total;
-			// 	vm.maxpage=Math.ceil(parseInt(data.data.total)/10);
-			// 	vm.pageNum=page||1;
-			// 	vm.callback=function(v){vm.searchList(index,v)};
-			// },function(){
-			// 	vm.off.isLoad=false;
-            // });
-            reqCommonMethod(json,function(){vm.off.isLoad=false;},url)
-            .then((data)=>{
-                vm.list=data.data.list;
+      reqCommonMethod(json,function(){vm.off.isLoad=false;},url)
+      .then((data)=>{
+        vm.list=data.data.list;
 				vm.total=data.data.total;
 				vm.maxpage=Math.ceil(parseInt(data.data.total)/10);
 				vm.pageNum=page||1;
-                vm.callback=function(v){vm.searchList(index,v)};
-                vm.off.isLoad=false;
-            }).catch(error=>errorDeal(error)); 	            
+          vm.callback=function(v){vm.searchList(index,v)};
+          vm.off.isLoad=false;
+        }).catch(error=>errorDeal(error)); 	            
 		},
 		downLoadList:function(){//导出EXCEL
 			var vm=this,url,userInfo=getStore("KA_ECS_USER");
@@ -313,19 +306,18 @@ export default{
 					"appType":vm.form.appType,
 				};
 			if(vm.off.type==1){
-                url="km-ecs/w/statistics/identifierListdown";
-                 json.idCardNo=vm.form.idCardNo;
+        url="km-ecs/w/statistics/identifierListdown";
+        json.idCardNo=vm.form.idCardNo;
 			}else if(vm.off.type==2){
-                url="km-ecs/w/statistics/identifierLivedown";
-                 json.idCardNo=vm.form.idCardNo;
+        url="km-ecs/w/statistics/identifierLivedown";
+        json.idCardNo=vm.form.idCardNo;
 			}else if(vm.off.type==3){
 				url="km-ecs/w/statistics/writecarddown";
-            }
+      }
 			vm.off.load=true;
 			createDownload(url,BASE64.encode(JSON.stringify(json)),function(){
 				vm.off.load=false;
 			});
-            
 		},
 		to_laydate:function(v){
 			var vm=this;
@@ -343,14 +335,14 @@ export default{
 		},
 		changeRouter(){
 			let type=this.$route.params.type
-			if(type=="idCard"){
+			if(type=="idCard"){//身份证识别
 				this.off.type=1;
-			}else if(type=="faceConfirm"){
+			}else if(type=="faceConfirm"){//活体识别
 				this.off.type=2;
-			}else if(type=="writeCard"){
+			}else if(type=="writeCard"){//写卡记录
 				this.off.type=3;                
-            }
-		     this.list='';
+      }
+		    this.list='';
 		}
 	}
 }

@@ -9,7 +9,7 @@
     "start": "npm run dev",
     "lint": "eslint --ext .js,.vue src",
     "build": "node build/build.js",
-    "buildTest":"node build/buildTest.js"
+    "buildTest": "node build/buildTest.js"
   },
   "dependencies": {
     "axios": "^0.17.1",
@@ -19,6 +19,7 @@
     "echarts-gl": "^1.0.0-beta.5",
     "exif-js": "^2.3.0",
     "intercept-fetch": "^1.4.3",
+    "iview": "^2.14.3",
     "mapbox-gl": "^0.42.2",
     "maptalks": "^0.34.0",
     "vue": "^2.5.2",

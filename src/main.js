@@ -10,7 +10,7 @@ import router from './router';
 import App from './App';
 
 Vue.config.debug = true;
-
+require("./assets/main.css");
 require("./assets/km/css/style.css");
 require('./assets/km/js/layer/layer.js');
 require("./assets/km/js/layer/need/layer.css");
@@ -19,9 +19,11 @@ require("./assets/km/js/laydate/skins/default/laydate.css");
 require("./assets/km/js/ajax.js");
 require("./assets/km/js/base64.min.js");
 require("./config/service.js");
-require("./assets/ym/js/trim.js")
+require("./assets/ym/js/trim.js");
+import iView from 'iview';
+import 'iview/dist/styles/iview.css';
 
-
+Vue.use(iView);
 
 new Vue({
   el: '#app',

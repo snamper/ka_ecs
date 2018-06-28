@@ -1,0 +1,15 @@
+/* 订单查询蓝色三角 */
+.u-arrow{
+  /* background-color: #20a0ff; */
+  display: inline-block;
+  position: absolute;
+  left: 0;
+  top: 2px;
+  border-left: 10px solid #20a0ff;
+  border-top: 7px solid transparent;
+  border-bottom: 7px solid transparent;
+}
+/* 边距 */
+.f-padding-left1{padding-left: .2rem;}
+.f-bgc-white{background: #fff;}
+.f-border-radius4{border-radius: 4px;}

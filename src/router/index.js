@@ -140,6 +140,20 @@ const OrderSearch_reserve = resolve => {//预占号码
     resolve(require("@/views/km/orderSearch/reserve"));
     load();
   });
+}
+;const OrderSearch_makeCard = resolve => {//制卡订单
+  load(true);
+  require.ensure(["@/views/km/orderSearch/makeCard"], () => {
+    resolve(require("@/views/km/orderSearch/makeCard"));
+    load();
+  });
+}
+;const OrderSearch_cardWanderAbout = resolve => {//号码流转
+  load(true);
+  require.ensure(["@/views/km/orderSearch/cardWanderAbout"], () => {
+    resolve(require("@/views/km/orderSearch/cardWanderAbout"));
+    load();
+  });
 };
 /*资源查询*/
 const Resource = resolve => {
@@ -396,7 +410,17 @@ const router=new Router({
             path:"reserve",
             name:'reserveSearch',
             component:OrderSearch_reserve,
+          },{//号码流转
+            path:"cardWanderAbout",
+            name:'cardWanderAboutSearch',
+            component:OrderSearch_cardWanderAbout,
+          },{//制卡
+            path:"makeCard",
+            name:'makeCardSearch',
+            component:OrderSearch_makeCard,
           }]
+
+          
         },
 		    {//资源查询
           path:"resource",

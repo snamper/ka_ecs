@@ -125,6 +125,8 @@
 						<li v-if="off.powerKm_sh_cx"><router-link :to="{name:'businessPowerSearch',params:{type:'audited'}}"><b></b>售卡范围</router-link></li>
 						<li v-if="off.powerKm_sh_cx"><router-link :to="{name:'registMerchantSearch',params:{type:'search'}}"><b></b>激活商户</router-link></li>
 						<li v-if="off.powerKm_kk_cx"><router-link to="/homek/orderSearch/reserve"><b></b>预占号码</router-link></li>
+						<!-- <li v-if="true"><router-link to="/homek/orderSearch/makeCard"><b></b>制卡订单</router-link></li> -->
+						<!-- <li v-if="true"><router-link to="/homek/orderSearch/cardWanderAbout"><b></b>流转订单</router-link></li> -->
 						<!-- <li><router-link to="/home/orderSearch/busCard"><b></b>公交一卡通</router-link></li> -->
 					</ul>
 				</li>
@@ -428,6 +430,10 @@ export default{
 					crumb[1]={"name":"充值订单","href":""}
 				}else if(path.indexOf("reserve")>-1){
 					crumb[1]={"name":"预占号码","href":""}
+				}else if(path.indexOf("makeCard")>-1){
+					crumb[1]={"name":"制卡订单","href":""}
+				}else if(path.indexOf("cardWanderAbout")>-1){
+					crumb[1]={"name":"流转订单","href":""}
 				}
 			}else if(path.indexOf("/homek/resource")>-1){
 				crumb[0]={"name":"资源查询"}

@@ -17,6 +17,8 @@ module.exports = {
   ],
   // add your custom rules here
   'rules': {
+    // iview代码报错
+    "vue/no-parsing-error": [2, { "x-invalid-end-tag": false }],
     // allow paren-less arrow functions
     'arrow-parens': 0,
     // allow async-await
