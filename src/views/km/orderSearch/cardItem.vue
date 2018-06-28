@@ -767,35 +767,34 @@ export default{
 				json.params=[sql];
 				json.pageSize="10";
 				json.pageNum="-1";
-            }else{//卡盟App
+        }else{//卡盟App
 				if(type==1){//待审核
-					url='km-ecs/w/audit/ingInfo';
-                    if(vm.form.orderType==4||vm.form.orderType==8)url='km-ecs/w/audit/getReinputInfo';
-                    vm.form.orderType==4?json.type='1':json.type='2';
+          url='km-ecs/w/audit/ingInfo';
+          if(vm.form.orderType==4||vm.form.orderType==8)url='km-ecs/w/audit/getReinputInfo';
+          vm.form.orderType==4?json.type='1':json.type='2';
 				}else if(type==2){//已审核
 					url='km-ecs/w/audit/edInfo';
-                    if(vm.form.orderType==4||vm.form.orderType==8)url='km-ecs/w/audit/getReinputInfo';
-                    vm.form.orderType==4?json.type='1':json.type='2';
+          if(vm.form.orderType==4||vm.form.orderType==8)url='km-ecs/w/audit/getReinputInfo';
+          vm.form.orderType==4?json.type='1':json.type='2';
 				}else{
-                    url='km-ecs/w/audit/getOrderInfo';
-                    if(vm.form.orderType==4||vm.form.orderType==8)url='km-ecs/w/audit/getReinputInfo';
-                    vm.form.orderType==4?json.type='1':json.type='2';                                                           
-                }
-                
+          url='km-ecs/w/audit/getOrderInfo';
+          if(vm.form.orderType==4||vm.form.orderType==8)url='km-ecs/w/audit/getReinputInfo';
+          vm.form.orderType==4?json.type='1':json.type='2';                                                           
+        }
 			}
 			if(vm.off.isLoad)return false;
 			vm.off.isLoad=true;
-            reqCommonMethod(json,function(){vm.off.isLoad=false},url)
-            .then((data)=>{
+      reqCommonMethod(json,function(){vm.off.isLoad=false},url)
+      .then((data)=>{
 				if(vm.form.source==7||vm.form.source==8){
 					vm.detailsData=data.data.list[0];
 				}else{
 					vm.detailsData=data.data;
 				}
-                vm.off.details=true;
-                vm.off.isLoad=false;
-                vm.off.examine=true;
-            }).catch(error=>errorDeal(error)); 	
+          vm.off.details=true;
+          vm.off.isLoad=false;
+          vm.off.examine=true;
+        }).catch(error=>errorDeal(error)); 	
 		},
 		to_laydate:function(v){
 			var vm=this;

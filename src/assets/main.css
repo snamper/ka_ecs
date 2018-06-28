@@ -9,13 +9,18 @@
   border-top: 7px solid transparent;
   border-bottom: 7px solid transparent;
 }
-/* 边距 */
+/* 功能模块。常用样式 */
 .f-padding-left2{padding-left: .2rem;}
 .f-margin-top1{margin-top: .1rem;}
 .f-bgc-white{background: #fff;}
 .f-border-radius4{border-radius: 4px;}
+.f-dis-flex{display: flex;}
+.f-dis-block{display: block;}
+.f-dis-none{display: none;}
+.f-dis-inline-block{display: inline-block;}
 /* 查询模块 */
 .m-search-padding{padding: .2rem .1rem}
 
 /* 图标 */
 
+/*  */

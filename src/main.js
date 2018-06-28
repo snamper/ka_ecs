@@ -10,7 +10,6 @@ import router from './router';
 import App from './App';
 
 Vue.config.debug = true;
-require("./assets/main.css");
 require("./assets/km/css/style.css");
 require('./assets/km/js/layer/layer.js');
 require("./assets/km/js/layer/need/layer.css");
@@ -22,7 +21,7 @@ require("./config/service.js");
 require("./assets/ym/js/trim.js");
 import iView from 'iview';
 import 'iview/dist/styles/iview.css';
-
+require("./assets/main.css");
 Vue.use(iView);
 
 new Vue({
