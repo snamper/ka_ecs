@@ -306,6 +306,7 @@ export default{
           this.$set(vm.imgData,4,{'src':vm.auditData.backImageUrl,'name':'过户人反面照片'})
           this.$set(vm.imgData,5,{'src':vm.auditData.handImage,'name':'过户人手持照片'})
           this.$set(vm.imgData,6,{'src':vm.auditData.signImage,'name':'过户人手签名照片'})
+          this.$set(vm.imgData,7,{'src':vm.auditData.livingImgUrl,'name':'活体识别照片'})
         }else if(vm.off.itemType==1){//实名补登
           this.$set(vm.imgData,0,{'src':vm.auditData.oldReqParam.imageName,'name':'原正面照片'})
           this.$set(vm.imgData,1,{'src':vm.auditData.oldReqParam.backImageName,'name':'原反面照片'})
@@ -314,6 +315,7 @@ export default{
           this.$set(vm.imgData,4,{'src':vm.auditData.reqParam.backImageName,'name':'反面照片'})
           this.$set(vm.imgData,5,{'src':vm.auditData.reqParam.handImageName,'name':'手持照片'})
           this.$set(vm.imgData,6,{'src':vm.auditData.reqParam.signImageName,'name':'手签名照片'})
+          this.$set(vm.imgData,7,{'src':vm.auditData.reqParam.livingImgUrl,'name':'活体识别照片'})
         }else if(vm.off.itemType==2){//补换卡
           this.$set(vm.imgData,0,{'src':vm.auditData.reqParam.imageName,'name':'正面照片'})
           this.$set(vm.imgData,1,{'src':vm.auditData.reqParam.backImageName,'name':'反面照片'})
@@ -327,7 +329,6 @@ export default{
             {'src':vm.auditData.livingImgUrl,'name':'活体识别'},
             {'src':vm.auditData.signImageUrl,'name':'手签名'},
           ];
-          console.log(vm.off.itemType);
           if(vm.off.itemType==6){
             vm.imgData.push({'src':vm.auditData.headImageName,'name':'身份证照片'});
           }

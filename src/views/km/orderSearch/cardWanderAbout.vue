@@ -18,19 +18,18 @@
     <Row>
       <Col span="24" class="f-padding-left2 f-margin-top1"><b class="u-arrow"></b>条件查询</Col>      
       <Col span="24" class="f-dis-flex f-bgc-white f-border-radius4 m-search-padding f-margin-top1">
-        <Col :xs="20" :sm="18" :md="12" :lg="12">
-          <span class="f-dis-inline-block">时间区间 </span>
-          <div class="f-inline-block">
-            <span class="m-time-area">
-              <input @click="to_laydate(1)" v-model="form.startTime" type="text" readonly="readonly"><input @click="to_laydate(2)" v-model="form.endTime" type="text" readonly="readonly">
-            </span>
-          </div>
-        </Col>
+        <span class="f-dis-inline-block">时间区间 </span>
+        <div class="f-inline-block">
+          <span class="m-time-area">
+            <input @click="to_laydate(this,1)" v-model="form.startTime" type="text" readonly="readonly"><input @click="to_laydate(this,2)" v-model="form.endTime" type="text" readonly="readonly">
+          </span>
+        </div>
       </Col>
     </Row>
   </div>
 </template>
 <script>
+  import { to_laydate } from "../../../config/utils.js";
   export default {
     data () {
       return {
@@ -41,18 +40,15 @@
         }
       }
     },
+    created:function(){
+      let vm=this;
+      vm.form.startTime=laydate.now(0,'YYYY-MM-DD 00:00:00');
+			vm.form.endTime=laydate.now(0,'YYYY-MM-DD 23:59:59');
+    },
     methods: {
-      to_laydate:function(v){
-        var vm=this;
-        laydate({
-          istime:true,
-          format: 'YYYY-MM-DD hh:mm:ss',
-          isclear: false,
-          choose: function(dates){ //选择好日期的回调
-            v==1 ? vm.form.startTime=dates : vm.form.endTime=dates;
-          }
-        });
-      },
+      to_laydate(i,v){
+        return to_laydate(i,v)
+      }
     }
   }
 </script>

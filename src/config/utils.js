@@ -172,6 +172,21 @@ export const translateData=(type,v)=> {
       break;
 	}
 }
+/**
+ * 
+ * 
+ */
+export const to_laydate=(t,v)=>{
+  var vm=t;
+  laydate({
+    istime:true,
+    format: 'YYYY-MM-DD hh:mm:ss',
+    isclear: false,
+    choose: function(dates){ //选择好日期的回调
+      v==1 ? vm.form.startTime=dates : vm.form.endTime=dates;
+    }
+  });
+}
 
 export const powerKm=(v)=>{
     let vm=v,powerKm=vm.userInfo.rightCodes;
