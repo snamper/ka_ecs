@@ -329,7 +329,7 @@ export default{
           ];
           console.log(vm.off.itemType);
           if(vm.off.itemType==6){
-            vm.imgData.push({'src':vm.auditData.handImageUrl,'name':'身份证照片'});
+            vm.imgData.push({'src':vm.auditData.headImageName,'name':'身份证照片'});
           }
         }
         vm.off.auditIndex++;

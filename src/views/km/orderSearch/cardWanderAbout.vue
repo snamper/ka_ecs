@@ -31,30 +31,30 @@
   </div>
 </template>
 <script>
-    export default {
-        data () {
-            return {
-              orderId:'',
-              form:{
-                startTime:"",
-                endTime:"",
-              }
-            }
-        },
-        methods: {
-          to_laydate:function(v){
-            var vm=this;
-            laydate({
-              istime:true,
-              format: 'YYYY-MM-DD hh:mm:ss',
-              isclear: false,
-              choose: function(dates){ //选择好日期的回调
-                v==1 ? vm.form.startTime=dates : vm.form.endTime=dates;
-              }
-            });
-          },
+  export default {
+    data () {
+      return {
+        orderId:'',
+        form:{
+          startTime:"",
+          endTime:"",
         }
+      }
+    },
+    methods: {
+      to_laydate:function(v){
+        var vm=this;
+        laydate({
+          istime:true,
+          format: 'YYYY-MM-DD hh:mm:ss',
+          isclear: false,
+          choose: function(dates){ //选择好日期的回调
+            v==1 ? vm.form.startTime=dates : vm.form.endTime=dates;
+          }
+        });
+      },
     }
+  }
 </script>
 
 
