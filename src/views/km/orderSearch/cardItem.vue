@@ -125,22 +125,22 @@
 					<label><span class="radio"><input type="radio" value="6" :readonly="form.select!=6" v-model="form.select"><span></span></span><span class="text">号卡状态：</span></label>
 				</span>
 				<div class="m-form-radio col-radio">
-					<label><span class="radio"><input value="0" type="radio" v-model="form.context6"><span></span></span><span class="text">全部</span></label>
-					<label><span class="radio"><input value="1" type="radio" v-model="form.context6"><span></span></span><span class="text">成功</span></label>
-					<label><span class="radio"><input value="2" type="radio" v-model="form.context6"><span></span></span><span class="text">失败</span></label>
-					<label><span class="radio"><input value="3" type="radio" v-model="form.context6"><span></span></span><span class="text">处理中</span></label>
-					<label v-if="form.orderType!=4"><span class="radio"><input value="4" type="radio" v-model="form.context6"><span></span></span><span class="text">关闭</span></label>
+					<label><span @click="checked6" class="radio"><input value="0" type="radio" v-model="form.context6"><span></span></span><span class="text">全部</span></label>
+					<label><span @click="checked6" class="radio"><input value="1" type="radio" v-model="form.context6"><span></span></span><span class="text">成功</span></label>
+					<label><span @click="checked6" class="radio"><input value="2" type="radio" v-model="form.context6"><span></span></span><span class="text">失败</span></label>
+					<label><span @click="checked6" class="radio"><input value="3" type="radio" v-model="form.context6"><span></span></span><span class="text">处理中</span></label>
+					<label @click="checked6" v-if="form.orderType!=4"><span class="radio"><input value="4" type="radio" v-model="form.context6"><span></span></span><span class="text">关闭</span></label>
 				</div>
 			</div>
-      <div class="row" :class="{active:form.select==8}" v-if="off.type==2">
+      <div class="row" :class="{active:form.select==8}"  v-if="off.type==2">
 				<span class="m-form-radio">
 					<label><span class="radio"><input type="radio" value="8" :readonly="form.select!=8" v-model="form.select"><span></span></span><span class="text">号卡类型：</span></label>
 				</span>
 				<div class="m-form-radio col-radio">
-					<label><span class="radio"><input value="-1" type="radio" v-model="form.context8"><span></span></span><span class="text">全部</span></label>
-					<label><span class="radio"><input value="0" type="radio" v-model="form.context8"><span></span></span><span class="text">普通号码</span></label>
-					<label><span class="radio"><input value="1" type="radio" v-model="form.context8"><span></span></span><span class="text">大众专营号</span></label>
-					<label><span class="radio"><input value="2" type="radio" v-model="form.context8"><span></span></span><span class="text">专属专营号</span></label>
+					<label><span @click="checked8" class="radio"><input value="-1" type="radio" v-model="form.context8"><span></span></span><span class="text">全部</span></label>
+					<label><span @click="checked8" class="radio"><input value="0" type="radio" v-model="form.context8"><span></span></span><span class="text">普通号码</span></label>
+					<label><span @click="checked8" class="radio"><input value="1" type="radio" v-model="form.context8"><span></span></span><span class="text">大众专营号</span></label>
+					<label><span @click="checked8" class="radio"><input value="2" type="radio" v-model="form.context8"><span></span></span><span class="text">专属专营号</span></label>
 				</div>
 			</div>
 			<div class="row fullRow" :class="{active:form.select==6}" v-if="off.type==3||off.type==4">
@@ -323,6 +323,22 @@ export default{
 		'my-page':pagination,
 		'list-details':details
 	},
+  computed: {
+    context8(){
+      return this.form.context8;
+    },
+    context6(){
+      return this.form.context6;
+    }
+  },
+  watch: {
+    context8(){
+      this.form.select=8
+    },
+    context6(){
+      this.form.select=6
+    }
+  },
 	created:function(){
 		this.init()
 	},
@@ -824,6 +840,12 @@ export default{
 				select:6
 			});
 		},
+    checked6(){
+      this.form.select=6
+    },
+    checked8(){
+      this.form.select=8
+    },
 		getUnixTime(v){
 			return getUnixTime(v);
 		},
