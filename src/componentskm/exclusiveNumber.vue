@@ -68,7 +68,6 @@ export default{
         },
         getNumberDetails(v){
             let vm=this,data={id:v};
-            console.log(v);
             requestGetExclusiveNumerDetails(data)
             .then((data)=>{
                 vm.off.numberDetailsAlert=true                                

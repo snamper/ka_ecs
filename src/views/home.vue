@@ -280,7 +280,6 @@ export default{
     },
 	mounted:function(){
         this.init();
-        //this.initMenu();
 	},
 	computed:{
 		...mapState([

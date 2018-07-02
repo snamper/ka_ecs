@@ -14,8 +14,7 @@
           <!--订单号码查询-->
           <section class="form-c">
             <div class="row clr m-col-2">
-              <span class="dp col-l">订单号码：</span>
-              <div class="col-r m-input-button"><input v-model="form.context1" maxlength="32" type="tel" placeholder="请输入查询的订单号码"><button @click="searchList('order')">查询</button></div>
+              <span class="dp col-l">订单号码：</span><div class="col-r m-input-button"><input v-model="form.context1" maxlength="32" type="tel" placeholder="请输入查询的订单号码"><button @click="searchList('order')">查询</button></div>
             </div>
           </section>
           <div class="m-tag"><b></b>条件查询</div>

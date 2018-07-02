@@ -28,3 +28,15 @@ export const requestGetExclusiveNumer=(data,load)=>fetch("km-ecs/w/monopoly/getP
 export const requestGetExclusiveNumerDetails=(data,load)=>fetch("km-ecs/w/monopoly/getPhoneDetail",data,"POST",load);
 /*专营号列表*/
 export const requestGetExclusiveNumerList=(data,load)=>fetch("km-ecs/w/monopoly/getPhoneListByDealerId",data,"POST",load);
+/**专营号流转查询*/
+export const requestGetExclusiveNumerFlowList=(data,load)=>fetch("km-ecs/w/monopoly/getTransferNums",data,"POST",load);
+/**专营号流转详情查询 */
+export const requestGetExclusiveNumerFlowDetails1=(data,load)=>fetch("km-ecs/w/monopoly/getWhiteList",data,"POST",load);
+export const requestGetExclusiveNumerFlowDetails2=(data,load)=>fetch("km-ecs/w/monopoly/getEmptyList",data,"POST",load);
+
+/**制成卡 */
+export const requestGetMakeWhiteList=(data,load)=>fetch("km-ecs/w/monopoly/getMakeWhileList",data,"POST",load);
+export const requestGetMakeWhiteDetails=(data,load)=>fetch("km-ecs/w/monopoly/getMakeWhiteDesc",data,"POST",load);
+/**制白卡 */
+export const requestGetMakeChengList=(data,load)=>fetch("km-ecs/w/monopoly/getMakeReadyList",data,"POST",load);
+export const requestGetMakeChengDetails=(data,load)=>fetch("km-ecs/w/monopoly/getMakeReadyDesc",data,"POST",load);

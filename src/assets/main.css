@@ -10,6 +10,7 @@
   border-bottom: 7px solid transparent;
 }
 /* 功能模块。常用样式 */
+.f-border{border: 1px solid #e3e4e6}
 .f-padding-left2{padding-left: .2rem;}
 .f-margin-top1{margin-top: .1rem;}
 .f-bgc-white{background: #fff;}
@@ -18,8 +19,13 @@
 .f-dis-block{display: block;}
 .f-dis-none{display: none;}
 .f-dis-inline-block{display: inline-block;}
+.f-width100{width: 100%}
+.f-width80{width: 80%}
+.f-width60{width: 60%}
+.f-t-a-c{text-align: center}
 /* 查询模块 */
 .m-search-padding{padding: .2rem .1rem}
+.m-padding10{padding:5px 10px}
 
 /* 图标 */
 
