@@ -4,11 +4,15 @@
     p.whiteDetailsTitle, p.emptyDetailsTitle{padding: 10px;}
     p.whiteDetailsTitle>span, p.emptyDetailsTitle>span{display: inline-block;width: 10px;height: 10px;background: url('../assets/images/dian.png') no-repeat center;background-size: contain}
     .table-numberDetails{border:none}
-    table.orderInfo tr td:nth-child(odd), table.chengCardInfo tr td:nth-child(odd){width:200px;text-align: right}
-    table.whiteCard tr td:nth-child(odd){width:200px;text-align: right}
+    table.orderInfo tr td:nth-child(odd), table.chengCardInfo tr td:nth-child(odd){width:200px;text-align: right;color: #a5a5a5;}
+    table.orderInfo tr td:nth-child(even), table.chengCardInfo tr td:nth-child(even){text-align: left;}
+    table.whiteCard tr td:nth-child(odd){width:200px;text-align: right;color: #a5a5a5}
+    table.whiteCard tr td:nth-child(even){text-align: left;}
+    .m-total-table{background-color:transparent }
+    .g-list-table, .g-inner-table, .g-box{height: auto}
 </style>
 <template>
-    <section>
+    <section class="g-list-box" id="details">
         <div>
             <!--商户ID详情-->
             <div  class="m-total-table g-list-box" >
@@ -21,102 +25,111 @@
                     <p class="whiteDetailsTitle"><span></span> 订单信息 </p>
                     <table class="merchant-total g-list-table table-numberDetails">
                         <table class="g-in-table col-l orderInfo">
+                            <!-- 成卡 -->
                             <tbody v-if="cardType==1">
                                 <tr>
                                     <td>订单号码：</td>
-                                    <td>{{detailsWhite.sysOrderId||'--'}}</td>
+                                    <td>{{detailsEmpty.sys_order_id||'--'}}</td>
                                     <td>操 作 人：</td> 
-                                    <td></td>
+                                    <td>{{detailsEmpty.username||'--'}}({{detailsEmpty.user_id||'--'}})<a @click="getDetails(1,detailsEmpty.user_id)">查看详情</a></td>
                                 </tr>
                                 <tr>
                                     <td>创建时间：</td>
-                                    <td>{{getDateTime(detailsWhite.createTime)[6]}}</td>
+                                    <td>{{getDateTime(detailsEmpty.create_time)[6]}}</td>
                                     <td>操作人IP：</td>
-                                    <td></td>
+                                    <td>{{detailsEmpty.user_token_info.host||'--'}}</td>
                                 </tr>
                                 <tr>
                                     <td>状态修改时间：</td>
-                                    <td></td>
+                                    <td>{{getDateTime(detailsEmpty.modify_time)[6]}} <a @click="getDetails(2)">查看详情</a></td>
                                     <td>开卡人位置信息：</td>
-                                    <td></td>
+                                    <td>N{{detailsEmpty.user_token_info.latitude||'--'}},E{{detailsEmpty.user_token_info.longitude||'--'}}<a @click="getDetails(3,detailsEmpty.user_token_info)">查看地图</a></td>
                                 </tr>
                                 <tr>
                                     <td>当前状态：</td>
-                                    <td></td>
+                                    <td>
+                                        {{translateData(11,detailsEmpty.latest_phase)}}
+                                    </td>
                                     <td>商户名称：</td>
-                                    <td></td>
+                                    <td>{{detailsEmpty.company_name||'--'}}</td>
                                 </tr>
                                 <tr>
                                     <td>制卡结果：</td>
-                                    <td></td>
+                                    <td>{{translateData(13,detailsEmpty.order_status)}}</td>
                                     <td>渠道ID：</td>
-                                    <td></td>
+                                    <td>{{detailsEmpty.dealer_id||'--'}} <a @click="getDetails(4,detailsEmpty.dealer_id)">查看详情</a></td>
                                 </tr>
                                 <tr>
                                     <td>识别仪名称：</td>
-                                    <td></td>                                    
+                                    <td>{{detailsEmpty.device_id||'--'}}</td>                                    
                                     <td>终端类型：</td>
-                                    <td></td>
+                                    <td>
+                                        <span v-if="detailsEmpty.terminal_type==1">IOS</span>
+                                        <span v-if="detailsEmpty.terminal_type==2">Android</span>
+                                        <span v-if="detailsEmpty.terminal_type==0">未知设备</span>,版本号：{{detailsEmpty.user_token_info.appVersion}}
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>识别模式：</td>
-                                    <td></td>
+                                    <td>--</td>
                                     <td>MAC地址：</td>
-                                    <td></td>
+                                    <td>{{detailsEmpty.mac||'--'}}</td>
                                 </tr>
                             </tbody>
+                            <!-- 白卡 -->
                             <tbody v-if="cardType==2">
                                 <tr>
                                     <td>订单号码：</td>
-                                    <td>{{detailsEmpty.orderId||'--'}}</td>
+                                    <td>{{detailsWhite.sys_order_id||'--'}}</td>
                                     <td>操 作 人：</td> 
-                                    <td>{{detailsEmpty.operatorName||'--'}}({{detailsEmpty.operatorId||'--'}})</td>
+                                    <td>{{detailsWhite.create_user_name||'--'}}({{detailsWhite.create_user_id||'--'}})</td>
                                 </tr>
                                 <tr>
                                     <td>创建时间：</td>
-                                    <td>{{getDateTime(detailsEmpty.createTime)[6]}}</td>
+                                    <td>{{getDateTime(detailsWhite.create_time)[6]}}</td>
                                     <td>操作人IP：</td>
-                                    <td></td>
+                                    <td>{{detailsWhite.user_token_info.host||'--'}}</td>
                                 </tr>
                                 <tr>
                                     <td>状态修改时间：</td>
-                                    <td></td>
+                                    <td>{{getDateTime(detailsWhite.create_time)[6]}}</td>
                                     <td>开卡人位置信息：</td>
-                                    <td></td>
+                                    <td>N{{detailsWhite.user_token_info.latitude||'--'}},E{{detailsWhite.user_token_info.longitude||'--'}}<a @click="getDetails(3,detailsWhite.user_token_info)">查看地图</a></td>
                                 </tr>
                                 <tr>
                                     <td>当前状态：</td>
-                                    <td>{{detailsEmpty.status||'--'}}
-                                        <span v-if="detailsEmpty.status==0">全部</span>
-                                        <span v-if="detailsEmpty.status==1">进行中</span>
-                                        <span v-if="detailsEmpty.status==2">成功</span>
-                                        <span v-if="detailsEmpty.status==3">失败</span>
-                                        <span v-if="detailsEmpty.status==4">已激活</span>
-                                    </td>
+                                    <td>{{translateData(11,detailsWhite.latest_phase)}}</td>
                                     <td>商户名称：</td>
-                                    <td>{{detailsEmpty.companyName||'--'}}({{detailsEmpty.dealerId||'--'}})</td>
+                                    <td>{{detailsWhite.create_company_name||'--'}}</td>
                                 </tr>
                                 <tr>
                                     <td>制卡结果：</td>
-                                    <td></td>
+                                    <td>{{translateData(13,detailsWhite.status)}}</td>
                                     <td>渠道ID：</td>
-                                    <td></td>
+                                    <td>{{detailsWhite.create_dealer_id||'--'}}</td>
                                 </tr>
                                 <tr>
                                     <td>识别仪名称：</td>
-                                    <td></td>                                    
+                                    <td>{{detailsWhite.device_id}}</td>                                    
                                     <td>终端类型：</td>
-                                    <td></td>
+                                    <td>
+                                        <span v-if="detailsWhite.terminal_type==1">IOS</span>
+                                        <span v-if="detailsWhite.terminal_type==2">Android</span>
+                                        <span v-if="detailsWhite.terminal_type==0">未知设备</span>
+                                        ,版本号：
+                                        {{detailsWhite.user_token_info.appVersion}}
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>识别模式：</td>
                                     <td></td>
                                     <td>MAC地址：</td>
-                                    <td></td>
+                                    <td>{{detailsWhite.mac||'--'}}</td>
                                 </tr>
                             </tbody>
                         </table>
                     </table>
+                    <!-- 成卡 -->
                     <div v-if="cardType==1">
                         <p class="emptyDetailsTitle"><span></span> 成卡信息 </p>
                         <table class="merchant-total g-list-table table-numberDetails">
@@ -124,49 +137,55 @@
                                 <tbody>
                                     <tr>
                                         <td>制卡号码：</td> 
-                                        <td>{{detailsWhite.phoneNumber||'--'}}</td>
-                                        <td>预存：</td>   
-                                        <td></td>
+                                        <td>{{detailsEmpty.phone_number||'--'}}</td>
+                                        <td>原预存：</td>   
+                                        <td>{{translateData('money',detailsEmpty.old_prestore_money)||'--'}}元</td>
                                     </tr>
                                     <tr>
                                         <td>码号类型：</td>  
                                         <td>
-                                            <span v-if="detailsWhite.monopolyType==0">普号</span>
-                                            <span v-if="detailsWhite.monopolyType==1">大众专营号</span>
-                                            <span v-if="detailsWhite.monopolyType==2">专属专营号</span>
-                                            <span v-else>--</span>
+                                            {{translateData(10,detailsEmpty.monopoly_type)}}
                                         </td>
-                                        <td>选号费：</td> 
-                                        <td></td>
+                                        <td>新预存：</td>   
+                                        <td>{{translateData('money',detailsEmpty.prestore_money)||'--'}}元</td>
+                                        
                                     </tr>
                                     <tr>
                                         <td>码号规则：</td> 
-                                        <td></td>
-                                        <td>支付订单：</td> 
-                                        <td></td>
+                                        <td>{{detailsEmpty.number_level||'--'}}</td>
+                                        <td>选号费：</td> 
+                                        <td>{{translateData('money',detailsEmpty.card_money)||'--'}}元</td>
+                                        
                                     </tr>
                                     <tr>
                                         <td>ICCID：</td>   
-                                        <td></td>
-                                        <td>支付金额：</td>   
-                                        <td></td>
+                                        <td>{{detailsEmpty.iccid||'--'}}</td>
+                                        <td>支付订单：</td> 
+                                        <td>{{detailsEmpty.sys_order_id_pay||'--'}}</td>
                                     </tr>
                                     <tr>
                                         <td>IMSI：</td>   
-                                        <td></td>
-                                        <td>支付方式：</td>   
-                                        <td></td>
+                                        <td>{{detailsEmpty.imsi||'--'}}</td>
+                                        <td>支付金额：</td>   
+                                        <td>{{translateData('money',detailsEmpty.total_money)||'--'}}元</td>
                                     </tr>
                                      <tr>
-                                        <td>产品名称：</td>   
-                                        <td></td>
+                                        <td>原产品名称：</td>   
+                                        <td>{{detailsEmpty.pkg_info||'--'}} <span class="f-c-grey">({{detailsEmpty.old_optional_pkg||'--'}})</span> </td>
+                                        <td>支付方式：</td>   
+                                        <td>{{translateData(12,detailsEmpty.pay_type)}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>新产品名称：</td>
+                                        <td>{{detailsEmpty.pkg_info||'--'}} <span class="f-c-grey">({{detailsEmpty.optional_package||'--'}})</span> </td>
                                         <td>制卡返佣：</td>   
-                                        <td></td>
+                                        <td>{{translateData('money',detailsEmpty.sel_income+detailsEmpty.pre_income)}}元({{`预存返佣${translateData('money',detailsEmpty.sel_income)}元+选号费返佣${translateData('money',detailsEmpty.pre_income)}元`}})</td>
                                     </tr>
                                 </tbody>
                             </table>
                         </table>
                     </div>
+                    <!-- 白卡 -->
                     <div v-if="cardType==2">
                         <p class="emptyDetailsTitle"><span></span> 白卡信息 </p>
                         <table class="merchant-total g-list-table table-numberDetails">
@@ -174,42 +193,31 @@
                                 <tbody>
                                     <tr>
                                         <td>所属号段：</td>
-                                        <td>{{detailsEmpty.phoneSegment||'--'}}</td>                                   
+                                        <td>{{detailsWhite.phone_title||'--'}}***</td>                                   
                                     </tr>
                                     <tr>
                                         <td>码号类型：</td>
-                                        <td>{{detailsEmpty.phoneType}}
-                                            <span v-if="detailsEmpty.phoneType==-1">全部</span>
-                                            <span v-if="detailsEmpty.phoneType==0">普号</span>
-                                            <span v-if="detailsEmpty.phoneType==1">大众专营号</span>
-                                            <span v-if="detailsEmpty.phoneType==2">专属专营号</span>
-                                        </td>
+                                        <td>{{translateData(10,detailsWhite.monopoly_type)}}</td>
                                     </tr>
                                     <tr>
                                         <td>ICCID：</td>
-                                        <td>{{detailsEmpty.iccid||'--'}}</td>
+                                        <td>{{detailsWhite.iccid||'--'}}</td>
                                     </tr>
                                     <tr>
                                         <td>IMSI：</td>
-                                        <td>{{detailsEmpty.imsi||'--'}}</td>
+                                        <td>{{detailsWhite.imsi||'--'}}</td>
                                     </tr>
                                     <tr>
                                         <td>支付订单：</td>
-                                        <td></td>
+                                        <td>{{detailsWhite.sys_order_id_pay||'--'}}</td>
                                     </tr>
                                     <tr>
                                         <td>保证金：</td>
-                                        <td></td>
+                                        <td>{{translateData('money',detailsWhite.pay_money)}}元</td>
                                     </tr>
                                     <tr>
                                         <td>支付方式：</td>
-                                        <td>
-                                            {{detailsEmpty.payType||'--'}}
-                                            <span v-if="detailsEmpty.payType==0">全部</span>
-                                            <span v-if="detailsEmpty.payType==1">资金池</span>
-                                            <span v-if="detailsEmpty.payType==2">微信</span>
-                                            <span v-if="detailsEmpty.payType==3">支付宝</span>
-                                        </td>
+                                        <td>{{translateData(12,detailsWhite.pay_type)}}</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -218,12 +226,14 @@
                 </div>
             </div>
         </div>
+        <detailsView v-if="isShowDetails" :type="typeDetails" :list="detailsList" :dealerId="searchDealerId"></detailsView>
     </section>
 </template>
 <script>
 import "../assets/km/css/cardOrderDetails.css";
-import {getDateTime, errorDeal} from "../../src/config/utils.js"
-import {requestGetExclusiveNumerList} from "../config/service.js";
+import {getDateTime, errorDeal,translateData} from "../../src/config/utils.js"
+import {requestGetExclusiveNumerList,reqCommonMethod} from "../config/service.js";
+import detailsView from '../componentskm/cardOrderDetailsAlert';
 export default{
     name:"merchantDetails",
     props:{
@@ -233,11 +243,17 @@ export default{
     },
     data (){
         return {
-            
+            isShowDetails:0,
+			typeDetails:0,
+            detailsList:'',
+            searchDealerId:''
         }
     },
     components:{
-        
+        detailsView
+    },
+    created:function(){
+
     },
     methods:{
        close(){
@@ -252,8 +268,41 @@ export default{
                vm.getEmptyList(vm.searchEmptyReauestData)
            }
        },
+       getDetails(v,i){
+           let vm=this;
+           if(v==1){
+               vm.searchDealerId=i;
+                reqCommonMethod({"userId":i},false,"km-ecs/w/audit/getUserInfo")
+                .then((data)=>{
+                    vm.detailsList=data.data;
+                    vm.isShowDetails=true;
+                    vm.typeDetails=1;
+                }).catch(error=>errorDeal(error));
+           }else if(v==2){
+
+           }else if(v==3){
+                var w=document.documentElement.clientWidth,url='';
+                let latitude=parseFloat(i.latitude);
+                let longitude=parseFloat(i.longitude);
+                console.log(latitude,longitude)
+                w<640 ? url='http://map.baidu.com/mobile/?latlng='+latitude+','+longitude+'' : url='http://map.baidu.com/?latlng='+latitude+','+longitude+'';
+                window.open(url);
+           }else if(v==4){
+                vm.searchDealerId=i;
+                reqCommonMethod({"dealerId":i},false,"km-ecs/w/audit/getMerchantInfo")
+                .then((data)=>{
+                    vm.detailsList=data.data;
+                    vm.isShowDetails=true;
+                    vm.typeDetails=2;
+                }).catch(error=>errorDeal(error));   
+           }else{
+               return false;
+           }
+       },
        getDateTime(v){
            return getDateTime(v)
+       },translateData(v,i){
+           return translateData(v,i)
        }
     }
 }

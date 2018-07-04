@@ -28,6 +28,7 @@ input, button{ -webkit-appearance: none;-moz-appearance: none;-ms-appearance: no
 .f-c-yellow, .fCYellow{color:#ffc333;}
 .f-c-grey, .fCGrey{color:#A5A5A5 !important;}
 .f-c-purple{color:#4b3887;}
+.f-s-12{font-size: 12px;}
 .fCBlack{color: #000;}
 .f-inline-block{display: inline-block;vertical-align: middle;}
 .f-mgt-10{margin-top: 0.1rem;}

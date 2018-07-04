@@ -35,7 +35,7 @@ export const requestGetExclusiveNumerFlowDetails1=(data,load)=>fetch("km-ecs/w/m
 export const requestGetExclusiveNumerFlowDetails2=(data,load)=>fetch("km-ecs/w/monopoly/getEmptyList",data,"POST",load);
 
 /**制成卡 */
-export const requestGetMakeWhiteList=(data,load)=>fetch("km-ecs/w/monopoly/getMakeWhileList",data,"POST",load);
+export const requestGetMakeWhiteList=(data,load)=>fetch("km-ecs/w/monopoly/getMakeWhiteList",data,"POST",load);
 export const requestGetMakeWhiteDetails=(data,load)=>fetch("km-ecs/w/monopoly/getMakeWhiteDesc",data,"POST",load);
 /**制白卡 */
 export const requestGetMakeChengList=(data,load)=>fetch("km-ecs/w/monopoly/getMakeReadyList",data,"POST",load);

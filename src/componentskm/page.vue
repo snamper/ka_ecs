@@ -27,11 +27,10 @@ export default{
 		maxpage:Number,
 		page:Number,
 		callback:Function
-	},
+    },
 	computed:{
 		pages(){
 			var arr={isHome:!1,isSpace:!1,left:[],right:[]},maxpage=this.maxpage,page=this.page;
-
 			if(maxpage<=8){
 		        for(var i=1;i<=maxpage;i++){
 		        	arr.left.push(i)		            
@@ -51,7 +50,6 @@ export default{
 		                arr.isSpace=true;
 		                arr.right=[maxpage-1,maxpage];
 		            }
-		            
 		        }else if(page==1){
 		        	arr.isHome=true;
 	                for(var i=1;i<=5;i++){

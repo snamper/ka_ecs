@@ -4,7 +4,8 @@
     p.whiteDetailsTitle, p.emptyDetailsTitle{padding: 10px;}
     p.whiteDetailsTitle>span, p.emptyDetailsTitle>span{display: inline-block;width: 10px;height: 10px;background: url('../assets/images/dian.png') no-repeat center;background-size: contain}
     .table-numberDetails{border:none}
-    p.detailsEleA{margin-bottom: 10px;}
+    p.detailsEleP{margin-bottom: 10px;}
+    a.detailsEleA{text-decoration: underline}
 </style>
 <template>
     <section>
@@ -17,31 +18,27 @@
                     </div>
                 </header>
                 <div class="g-box">
-                    <p class="detailsEleA"><a>1568476****</a></p>
-                    <p class="numberInfo"> <label>归属地：{{'--'}}</label><label>预存：{{'--'}}</label><label>产品名称：{{'--'}}</label></p>
+                    <p class="detailsEleP"><a class="f-t-d-u">{{translateData('formatPhone',orderDetails.phoneTitle)}}***</a></p>
+                    <p class="numberInfo"> <label>归属地：{{orderDetails.cityName||'--'}}</label><label>预存：{{orderDetails.faceVal||'--'}}</label><label>产品名称：{{orderDetails.title||'--'}}</label></p>
                     <p class="whiteDetailsTitle"><span></span> 白卡 </p>
                     <table class="merchant-total g-list-table table-numberDetails">
                         <table class="g-in-table col-l">
                             <tbody>
                                 <tr v-for="(v,i) in listWhite" :key="i">
                                     <td v-for="(num,ind) in v" :key="ind">
-                                        <p>ICCID:{{num.iccid}}</p>
-                                        <p>IMSI:{{num.imsi}}</p>
+                                        <p>ICCID: <a class="f-t-d-u">{{num.iccid||'--'}}</a></p>
+                                        <p class="f-c-grey f-s-12">IMSI:{{num.imsi}}</p>
                                     </td>   
                                     <td v-if="kongA" v-for="(v,i) in kongA"></td>
                                 </tr>
                                 <tr>
-                                    <td v-if="kongA.length" colspan="7">
-                                        <p>
-                                            <a @click="searchMore(1)">展开查看更多</a>
-                                        </p>
+                                    <td v-if="!kongA.length" colspan="7">
+                                        <p><a @click="searchMore(1)">展开查看更多</a></p>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td v-if="!listWhite.length" colspan="7">
-                                        <p>
-                                           <h3>暂无数据</h3>
-                                        </p>
+                                        <p><h3>暂无数据</h3></p>
                                     </td>
                                 </tr>
                             </tbody>
@@ -60,17 +57,13 @@
                                     </tr>  
                                 </tr>
                                 <tr>
-                                    <td v-if="kongAE.length" colspan="7" >
-                                        <p>
-                                            <a @click="searchMore(2)">展开查看更多</a>
-                                        </p>
+                                    <td v-if="!kongAE.length" colspan="7" >
+                                        <p><a @click="searchMore(2)">展开查看更多</a></p>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td v-if="!listEmpty.length" colspan="7">
-                                        <p>
-                                            <h3>暂无数据</h3>
-                                        </p>
+                                        <p><h3>暂无数据</h3></p>
                                     </td>
                                 </tr>
                             </tbody>
@@ -83,7 +76,7 @@
 </template>
 <script>
 import "../assets/km/css/cardOrderDetails.css";
-import {getDateTime, errorDeal} from "../../src/config/utils.js"
+import {getDateTime, errorDeal,translateData} from "../../src/config/utils.js"
 import {requestGetExclusiveNumerList} from "../config/service.js";
 export default{
     name:"numberFlowDetails",
@@ -91,12 +84,16 @@ export default{
         listEmpty:Array,
         listWhite:Array,
         kongA:Array,
-        kongAE:Array
+        kongAE:Array,
+        orderDetails:Object
     },
     data (){
         return {
             
         }
+    },
+    created:function(){
+    
     },
     components:{
         
@@ -115,6 +112,8 @@ export default{
             }else if(v===2){
                 vm.getEmptyList(vm.searchEmptyReauestData)
             }
+        },translateData(v,i){
+            return translateData(v,i)
         }
     }
 }

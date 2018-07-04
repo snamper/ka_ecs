@@ -13,7 +13,7 @@
                     <div class="box">
                         <label class="item" @click="topShiftClick">
                             <input type="radio" v-model="form.source" value="6">
-                            <span class="slider">卡盟APP</span>
+                            <span class="slider">卡盟小站</span>
                         </label>
                         <label class="item" @click="topShiftClick">
                             <input type="radio" v-model="form.source" value="7">
@@ -53,6 +53,18 @@
                                     <span></span>
                                 </span>
                                 <span class="text">补换卡</span>
+                            </label>
+                            <label v-show="form.source==6">
+                                <span class="radio"><input @change="inpChange(this)" value="9" type="radio" v-model="form.orderType">
+                                    <span></span>
+                                </span>
+                                <span class="text">开空卡</span>
+                            </label>
+                            <label v-show="form.source==6">
+                                <span class="radio"><input @change="inpChange(this)" value="10" type="radio" v-model="form.orderType">
+                                    <span></span>
+                                </span>
+                                <span class="text">开白卡</span>
                             </label>
                         </div>
                     </div>
@@ -129,6 +141,29 @@
                                     <span></span>
                                 </span>
                                 <span class="text">自动审核</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="row" v-if="form.source==6">
+                        <span class="dp">操作类型：</span>
+                        <div class="m-form-radio">
+                            <label>
+                                <span class="radio"><input type="radio" value="1" v-model="form.operatorType">
+                                    <span></span>
+                                </span>
+                                <span class="text">卡盟</span>
+                            </label>
+                            <label>
+                                <span class="radio"><input type="radio" value="2" v-model="form.operatorType">
+                                    <span></span>
+                                </span>
+                                <span class="text">远微商城</span>
+                            </label>
+                            <label>
+                                <span class="radio"><input type="radio" value="3" v-model="form.operatorType">
+                                    <span></span>
+                                </span>
+                                <span class="text">信时空公众号</span>
                             </label>
                         </div>
                     </div>
@@ -592,6 +627,7 @@ export default {
         orderType: 6, //操作类型,4、实名补录；6、空卡；7、过户办理；8、补换卡
         cardType: 0, //运营商
         orderStatus: 0, //订单状态
+        operatorType:1,//操作类型
         auditType: 9, //审核方式
         context1: "", //订单号码
         context2: "", //手机号码

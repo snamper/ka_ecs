@@ -8,11 +8,10 @@
 .m-form-radio>label{
     margin-right: 0;
 }
-.detailsEleA{
-    text-decoration: underline
-}
+a.detailsEleA{text-decoration: underline;}
+div.input-box{width: 70%;}
+span.m-form-radio{width: 75px;}
 </style>
-
 <template>
     <section class="g-search-menu">
         <div  id="search" :class="{active:off.details}">
@@ -21,7 +20,7 @@
             <section v-if="!off.flowDetails">
                 <div class="g-search-form">
                     <div class="m-tag">
-                        <b></b>精确查询</div>
+                    <b></b>订单查询</div>
                     <!--订单号码查询-->
                     <section class="form-c">
                         <div class="row clr m-col-2">
@@ -31,23 +30,14 @@
                         </div>
                     </section>
                     <div class="m-tag">
-                        <b></b>条件查询</div>
-                    <section class="form-c">
+                    <b></b>条件查询</div>
+                    <section class="form-c o-no-bgc">
                         <div class="row clr m-col-2">
-                            <div class="dp col-l">时间区间：</div>
-                            <div class="col-r">
+                            <span class="m-form-radio">时间区间：</span>
+                            <div class="input-box">
                                 <span class="m-time-area"><input @click="to_laydate(1)" v-model="form.startTime" type="text" readonly="readonly"><input @click="to_laydate(2)" v-model="form.endTime" type="text" readonly="readonly"></span>
                             </div>
                         </div>
-                        <div class="row  m-col-2">
-                            <span class="dp col-l">商 户 I D ：</span>
-                            <div class="col-r">
-                                <div class="input-box"><input v-model="dealerId" maxlength="16" type="tel" placeholder="请输入查询的商户ID"></div>
-                            </div>
-                        </div>
-                    </section>
-                    <section class="form-c o-no-bgc">
-                        <!--卡号-->
                         <div class="row" :class="{active:form.select==1}">
                             <span class="m-form-radio">
                                 <label>
@@ -58,6 +48,10 @@
                                 </label>
                             </span>
                             <div class="input-box"><input v-model="cardNumber" :readonly="form.select!=1" maxlength="25" type="tel" placeholder="请输入查询的卡号"></div>
+                        </div>
+                        <div class="row  m-col-2">
+                            <span class="m-form-radio">商 户 I D ：</span>                            
+                            <div class="input-box"><input v-model="dealerId" maxlength="16" type="tel" placeholder="请输入查询的商户ID"></div>
                         </div>
                         <div class="row" :class="{active:form.select==2}">
                             <span class="m-form-radio">
@@ -86,7 +80,7 @@
                     <div class="total-head">
                         统计结果
                         <b>{{total}}</b>
-                        <button class="btn_export_excel" v-if="searchFlowList.length!=0" :disabled="searchFlowList.length==0" @click="exportList">导出excel</button>
+                        <button class="btn_export_excel" v-if="false" :disabled="searchFlowList.length==0" @click="exportList">导出excel</button>
                     </div>
                     <table>
                         <thead>
@@ -109,12 +103,12 @@
                                 <td>{{getDateTime(todo.createTime)[6]}}</td>
                                 <td>{{todo.oldDealerId||'--'}}<br>{{todo.oldCompanyName||'--'}}</td>
                                 <td>{{todo.newDealerId||'--'}}<br>{{todo.newCompanyName||'--'}}</td>
-                                <td><a @click="numberFlowDetails(todo)" class="detailsEleA">{{todo.phoneTitle||'--'}}</a></td>
+                                <td><a @click="numberFlowDetails(todo)" class="detailsEleA">{{translateData('formatPhone',todo.phoneTitle)}}***</a></td>
                                 <td>{{todo.useDeviceId||'--'}}</td>
                                 <td>
-                                    <span v-if="todo.status==2">成功</span>
+                                    <span class="f-c-green" v-if="todo.status==2">成功</span>
                                     <span class="f-c-red" v-if="todo.status==3">失败</span>
-                                    <span class="f-c-green" v-if="todo.status==1">进行中</span>
+                                    <span class="f-c-blue" v-if="todo.status==1">进行中</span>
                                 </td>
                             </tr>
                         </tbody>
@@ -131,7 +125,7 @@
 import { requestGetExclusiveNumerFlowList,requestGetExclusiveNumerFlowDetails1,requestGetExclusiveNumerFlowDetails2 } from "../../../config/service.js";
 import pagination from "../../../componentskm/page.vue";
 import numberFlowDetails from "../../../componentskm/numberFlowDetails";
-import { createDownload, errorDeal,getDateTime } from "../../../config/utils";
+import { createDownload, errorDeal,getDateTime ,translateData} from "../../../config/utils";
 export default {
   data() {
     return {
@@ -164,8 +158,8 @@ export default {
         pageSize: 10, //显示条数
         maxpage: 1, //最大页数
         callback: Function ,//page组件点击回调
-        kongArr:[],
-        kongArr2:[],
+        kongArr:[1],
+        kongArr2:[1],
         orderDetails:{},
     };
   },
@@ -214,7 +208,7 @@ export default {
             .then((data)=>{
                 vm.total=data.data.total
                 vm.searchFlowList=data.data.datas;
-                vm.maxpage=vm.total/vm.pageSize;
+                vm.maxpage=Math.ceil(parseInt(vm.total)/vm.pageSize);
                 vm.pageNow=i||1;
                 vm.callback=(i)=>{vm.searchList(v,i)};
             }).catch((e=>errorDeal(e)))
@@ -224,7 +218,7 @@ export default {
             .then((data)=>{
                 vm.total=data.data.total
                 vm.searchFlowList=data.data.datas;
-                vm.maxpage=vm.total/vm.pageSize;
+                vm.maxpage=Math.ceil(parseInt(vm.total)/vm.pageSize);
                 vm.pageNow=i||1;
                 vm.callback=(i)=>{vm.searchList(v,i)};
             }).catch((e=>errorDeal(e)))
@@ -233,11 +227,11 @@ export default {
     numberFlowDetails(v){//专营号号段的详情
         let vm=this;vm.searchWhiteRequsetData={
             "pageSize": "10",
-            "orderId": v.orderId
+            "orderId": v.sysOrderId
         };
         vm.searchEmptyReauestData={
             "pageSize": "10",
-            "orderId": v.orderId
+            "orderId": v.sysOrderId
         }
         vm.orderDetails=v;
         vm.off.flowDetails=true;
@@ -260,7 +254,7 @@ export default {
         requestGetExclusiveNumerFlowDetails1(v)
         .then((data)=>{
             let num=data.data.datas;
-            vm.detailsDataWhite=[];
+            // vm.detailsDataWhite=[];
             for(let i =0 ,len=num.length;i<len;i+=7){
                 vm.detailsDataWhite.push(num.slice(i,i+7))
                 
@@ -279,7 +273,7 @@ export default {
         requestGetExclusiveNumerFlowDetails2(v)
         .then((data)=>{
             let num=data.data.datas; 
-            vm.detailsDataEmpty=[];
+            // vm.detailsDataEmpty=[];
             for(let i =0 ,len=num.length;i<len;i+=7){
                 vm.detailsDataEmpty.push(num.slice(i,i+7))
             }   
@@ -319,6 +313,8 @@ export default {
     },
     getDateTime(v){
         return getDateTime(v)
+    },translateData(v,i){
+        return translateData(v,i)
     }
   }
 };
