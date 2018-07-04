@@ -1,6 +1,6 @@
 <style scoped>
     .numberInfo{width:98%;background-color:#fff;padding:12px 8px;border-radius:6px}
-    .numberInfo>label{margin-right: 30px;}
+    .numberInfo>b{padding-right: 20px;}
     p.whiteDetailsTitle, p.emptyDetailsTitle{padding: 10px;}
     p.whiteDetailsTitle>span, p.emptyDetailsTitle>span{display: inline-block;width: 10px;height: 10px;background: url('../assets/images/dian.png') no-repeat center;background-size: contain}
     .table-numberDetails{border:none}
@@ -19,8 +19,12 @@
                 </header>
                 <div class="g-box">
                     <p class="detailsEleP"><a class="f-t-d-u">{{translateData('formatPhone',orderDetails.phoneTitle)}}***</a></p>
-                    <p class="numberInfo"> <label>归属地：{{orderDetails.cityName||'--'}}</label><label>预存：{{orderDetails.faceVal||'--'}}</label><label>产品名称：{{orderDetails.title||'--'}}</label></p>
-                    <p class="whiteDetailsTitle"><span></span> 白卡 </p>
+                    <p class="numberInfo">
+                        <b><label class="f-c-grey">归属地 ：</label>{{orderDetails.cityName||'--'}}</b>
+                        <b><label class="f-c-grey">预存 ：</label>{{translateData('money',orderDetails.preStore)}}元</b>
+                        <b><label class="f-c-grey">产品名称 ：</label>{{orderDetails.pkgName||'--'}}<span class="f-c-grey">( {{orderDetails.optPkgInfo}} )</span></b>
+                    </p>
+                    <p class="whiteDetailsTitle"><span></span> 白卡 ( {{cardTotalWhite}} 张)</p>
                     <table class="merchant-total g-list-table table-numberDetails">
                         <table class="g-in-table col-l">
                             <tbody>
@@ -44,7 +48,7 @@
                             </tbody>
                         </table>
                     </table>
-                    <p class="emptyDetailsTitle"><span></span> 码号 </p>
+                    <p class="emptyDetailsTitle"><span></span> 码号 （ {{cardTotalEmpty}} 个）</p>
                     <table class="merchant-total g-list-table table-numberDetails">
                         <table class="g-in-table col-l">
                             <tbody>
@@ -85,7 +89,9 @@ export default{
         listWhite:Array,
         kongA:Array,
         kongAE:Array,
-        orderDetails:Object
+        orderDetails:Object,
+        cardTotalWhite:Number,
+        cardTotalEmpty:Number
     },
     data (){
         return {
@@ -93,7 +99,7 @@ export default{
         }
     },
     created:function(){
-    
+        
     },
     components:{
         
@@ -104,6 +110,8 @@ export default{
             vm.off.flowDetails=false;
             vm.whitePageNum=0;
             vm.emptyPageNum=0;
+            vm.detailsDataWhite=[];//白卡详情数据
+            vm.detailsDataEmpty=[]; //空卡详情数据
         },
         searchMore(v){
             let vm=this.$parent;

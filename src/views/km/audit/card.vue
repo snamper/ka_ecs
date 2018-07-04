@@ -7,7 +7,7 @@
 	<section class="g-audit-menu">
 		<div v-if="off.source==4&&off.auditType==0" class="g-audit-menu-c">
 			<div class="m-menu-div">
-				<router-link :to="{name:'realtime',params:{type:6}}" class="u-bg navBg1"><div>卡盟APP订单</div><p><span>点击审核</span></p></router-link>
+				<router-link :to="{name:'realtime',params:{type:6}}" class="u-bg navBg1"><div>业务订单</div><p><span>点击审核</span></p></router-link>
 				<div class="navInfoDiv"><p>待审核<span>{{auditCount.opencard}}</span></p><p>已分配<span>{{auditCount.opencard_}}</span></p></div>
 			</div>
 			<!-- <div class="m-menu-div">
@@ -69,7 +69,7 @@ export default{
 		])
 	},
 	methods:{
-		setType:function(){
+		setType(){
 			const route=this.$route;
 			if(route.params.source=="realtime"){
 				this.off.auditType=0;
@@ -78,7 +78,6 @@ export default{
 				this.off.auditType=1;
 				this.off.source=4
 			}
-
 			if(route.path.indexOf('realtime/')>-1||route.path.indexOf('afterwards/')>-1){
 				this.off.source=0
 			}

@@ -47,7 +47,7 @@ span.m-form-radio{width: 75px;}
                                     <span class="text">号码：</span>
                                 </label>
                             </span>
-                            <div class="input-box"><input v-model="cardNumber" :readonly="form.select!=1" maxlength="25" type="tel" placeholder="请输入查询的卡号"></div>
+                            <div class="input-box"><input v-model="cardNumber" :readonly="form.select!=1" maxlength="8" type="tel" placeholder="请输入查询的8位号码"></div>
                         </div>
                         <div class="row  m-col-2">
                             <span class="m-form-radio">商 户 I D ：</span>                            
@@ -107,7 +107,9 @@ span.m-form-radio{width: 75px;}
                                 <td>{{todo.useDeviceId||'--'}}</td>
                                 <td>
                                     <span class="f-c-green" v-if="todo.status==2">成功</span>
-                                    <span class="f-c-red" v-if="todo.status==3">失败</span>
+                                    <span class="f-c-red" v-if="todo.status==3">
+                                        {{todo.errorMsg}}
+                                    </span>
                                     <span class="f-c-blue" v-if="todo.status==1">进行中</span>
                                 </td>
                             </tr>
@@ -116,7 +118,7 @@ span.m-form-radio{width: 75px;}
                     <my-page :page="pageNow" :maxpage="maxpage" :callback="callback"></my-page>
                 </div>
             </section>
-            <numberFlowDetails v-if="off.flowDetails" :kongA="kongArr" :kongAE="kongArr2" :listEmpty="detailsDataEmpty" :listWhite="detailsDataWhite" :orderDetails="orderDetails"></numberFlowDetails>
+            <numberFlowDetails v-if="off.flowDetails" :cardTotalWhite="whiteCardTotal" :cardTotalEmpty="emptyCardTotal" :kongA="kongArr" :kongAE="kongArr2" :listEmpty="detailsDataEmpty" :listWhite="detailsDataWhite" :orderDetails="orderDetails"></numberFlowDetails>
         </div>
         <!--详情页面-->
     </section>
@@ -161,6 +163,8 @@ export default {
         kongArr:[1],
         kongArr2:[1],
         orderDetails:{},
+        whiteCardTotal:0,
+        emptyCardTotal:0,
     };
   },
   components: {
@@ -198,7 +202,7 @@ export default {
             "status": vm.flowResult.join(","),//0全部 1进行中2成功3失败
             "searchType": vm.form.select||0,//搜索分类0:无，1:8位号码段，2设备号
         };
-        if(vm.deviceId==1){
+        if(vm.deviceId==""){
             json.context=vm.cardNumber
         }else{
             json.context=vm.deviceId
@@ -254,10 +258,10 @@ export default {
         requestGetExclusiveNumerFlowDetails1(v)
         .then((data)=>{
             let num=data.data.datas;
+            vm.whiteCardTotal=data.data.total;
             // vm.detailsDataWhite=[];
             for(let i =0 ,len=num.length;i<len;i+=7){
-                vm.detailsDataWhite.push(num.slice(i,i+7))
-                
+                vm.detailsDataWhite.push(num.slice(i,i+7)) 
             }
             let len=num.length;
             let kongTbW=7-len%7;
@@ -273,6 +277,7 @@ export default {
         requestGetExclusiveNumerFlowDetails2(v)
         .then((data)=>{
             let num=data.data.datas; 
+            vm.emptyCardTotal=data.data.total;
             // vm.detailsDataEmpty=[];
             for(let i =0 ,len=num.length;i<len;i+=7){
                 vm.detailsDataEmpty.push(num.slice(i,i+7))

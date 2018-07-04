@@ -3,6 +3,9 @@
   *@author: thinkmix
   *@date 2017-11-6
 * *-->
+<style scoped>
+
+</style>
 <template>
     <div id="search" :class="{active:off.details}">
         <header class="m-scroll-bar animated infinite" :class="{active:off.isLoad}"></header>
@@ -145,7 +148,7 @@
                         </div>
                     </div>
                     <div class="row" v-if="form.source==6">
-                        <span class="dp">操作类型：</span>
+                        <!-- <span class="dp">开卡方式：</span>
                         <div class="m-form-radio">
                             <label>
                                 <span class="radio"><input type="radio" value="1" v-model="form.operatorType">
@@ -165,6 +168,13 @@
                                 </span>
                                 <span class="text">信时空公众号</span>
                             </label>
+                        </div> -->
+                        <span class="dp">开卡方式：</span>
+                        <div class="m-form-checkbox">
+                            <label><span class="checkbox"><input type="checkbox" value="true" v-model="checkAllopencardType" checked="checked" @change="BtnCheckAllopencardType"><span></span></span><span class="text">全部</span></label>
+                            <label><span class="checkbox"><input type="checkbox" value="1" v-model="form.opencardType" checked="checked"><span></span></span><span class="text">卡盟</span></label>
+                            <label><span class="checkbox"><input type="checkbox" value="2" v-model="form.opencardType" checked="checked"><span></span></span><span class="text">远微商城</span></label>
+                            <label><span class="checkbox"><input type="checkbox" value="3" v-model="form.opencardType" checked="checked"><span></span></span><span class="text">信时空公众号</span></label>
                         </div>
                     </div>
                     <div class="row">
@@ -254,19 +264,19 @@
                         </span>
                         <div class="m-form-radio col-radio" v-show="form.source!=7">
                             <label>
-                                <span class="radio"><input type="radio" checked="checked" value="0" v-model="form.orderStatus">
+                                <span @click="checked6" class="radio"><input type="radio" checked="checked" value="0" v-model="form.orderStatus">
                                     <span></span>
                                 </span>
                                 <span class="text">全部</span>
                             </label>
                             <label>
-                                <span class="radio"><input type="radio" value="1" v-model="form.orderStatus">
+                                <span @click="checked6" class="radio"><input type="radio" value="1" v-model="form.orderStatus">
                                     <span></span>
                                 </span>
                                 <span class="text">待分配</span>
                             </label>
                             <label>
-                                <span class="radio"><input type="radio" value="2" v-model="form.orderStatus">
+                                <span @click="checked6" class="radio"><input type="radio" value="2" v-model="form.orderStatus">
                                     <span></span>
                                 </span>
                                 <span class="text">已分配</span>
@@ -628,6 +638,7 @@ export default {
         cardType: 0, //运营商
         orderStatus: 0, //订单状态
         operatorType:1,//操作类型
+        opencardType:[1,2,3],//开卡方式
         auditType: 9, //审核方式
         context1: "", //订单号码
         context2: "", //手机号码
@@ -641,6 +652,7 @@ export default {
         endTime: "",
         select: 6 //条件查询，选择的条件
       },
+      checkAllopencardType:true,
       list: "", //查询数据
       detailsData: "", //详情数据
       total: 0, //总查询条数
@@ -648,6 +660,7 @@ export default {
       pageSize: 10, //显示条数
       maxpage: 1, //最大页数
       callback: Function //page组件点击回调
+      
     };
   },
   components: {
@@ -661,6 +674,7 @@ export default {
     context6() {
       return this.form.context6;
     }
+    
   },
   watch: {
     context8() {
@@ -668,6 +682,16 @@ export default {
     },
     context6() {
       this.form.select = 6;
+    },
+    'form.orderStatus'(){
+        this.form.select = 6;
+    },
+    'form.opencardType'(){
+        if(this.form.opencardType.length==3){
+            this.checkAllopencardType=true;
+        }else{
+            this.checkAllopencardType=false;
+        }
     }
   },
   created: function() {
@@ -677,7 +701,7 @@ export default {
     init: function() {
       var vm = this,
         type = this.$route.params.type;
-      type == "auditing"
+        type == "auditing"
         ? (vm.off.type = 1)
         : type == "audited"
           ? (vm.off.type = 2)
@@ -702,21 +726,16 @@ export default {
           status: vm.form.orderStatus,
           auditType: vm.form.auditType,
           cardType: vm.form.cardType,
-          periodType: vm.off.type
+          periodType: vm.off.type,
+        //   opencardType:vm.form.opencardType.join(',')
         };
       //非卡盟SDK+远特I卡，进行中，已关闭
-      if (
-        json.source != 7 &&
-        json.source != 8 &&
-        (vm.off.type == 3 || vm.off.type == 4)
-      ) {
+      if (json.source != 7 &&json.source != 8 &&(vm.off.type == 3 || vm.off.type == 4)) {
         vm.searchClosedAndDoing(page);
         return false;
       }
       let context = vm.form["context" + vm.form.select];
-      vm.off.type == 1 &&
-        vm.form.select != 6 &&
-        ((json.status = 0), (vm.form.orderStatus = 0));
+      vm.off.type == 1 &&vm.form.select != 6 &&((json.status = 0), (vm.form.orderStatus = 0));
       if (vm.form.select == 1 && !context) {
         layer.open({
           content: "请输入订单号码",
@@ -1306,6 +1325,13 @@ export default {
     },
     secondsFormat(v) {
       return secondsFormat(v);
+    },
+    BtnCheckAllopencardType(){
+        if(this.checkAllopencardType==true){
+            this.form.opencardType=[1,2,3]
+        }else{
+            this.form.opencardType=[]
+        }
     }
   }
 };

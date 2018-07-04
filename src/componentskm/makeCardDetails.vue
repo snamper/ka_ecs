@@ -41,9 +41,9 @@
                                 </tr>
                                 <tr>
                                     <td>状态修改时间：</td>
-                                    <td>{{getDateTime(detailsEmpty.modify_time)[6]}} <a @click="getDetails(2)">查看详情</a></td>
+                                    <td>{{getDateTime(detailsEmpty.modify_time)[6]}} <a @click="getDetails(2,detailsEmpty.sys_order_id)">查看详情</a></td>
                                     <td>开卡人位置信息：</td>
-                                    <td>N{{detailsEmpty.user_token_info.latitude||'--'}},E{{detailsEmpty.user_token_info.longitude||'--'}}<a @click="getDetails(3,detailsEmpty.user_token_info)">查看地图</a>{{detailsEmpty.street}}</td>
+                                    <td>N{{detailsEmpty.user_token_info.latitude||'--'}},E{{detailsEmpty.user_token_info.longitude||'--'}}<a class="f-t-d-u" @click="getDetails(3,detailsEmpty.user_token_info)">查看地图</a>{{detailsEmpty.street}}</td>
                                 </tr>
                                 <tr>
                                     <td>当前状态：</td>
@@ -268,9 +268,9 @@ export default{
                vm.getEmptyList(vm.searchEmptyReauestData)
            }
        },
-       getDetails(v,i){
-           let vm=this;
-           if(v==1){
+        getDetails(v,i){
+            let vm=this;
+            if(v==1){
                vm.searchDealerId=i;
                 reqCommonMethod({"userId":i},false,"km-ecs/w/audit/getUserInfo")
                 .then((data)=>{
@@ -278,8 +278,46 @@ export default{
                     vm.isShowDetails=true;
                     vm.typeDetails=1;
                 }).catch(error=>errorDeal(error));
-           }else if(v==2){
-
+            }else if(v==2){
+            let vm=this;
+            reqCommonMethod({"opKey":"makecard.order.time","params":['sys_order_id="'+i+'"'],"pageSize":"10","pageNum":"-1"},false,"km-ecs/w/handler/query")
+            .then((data)=>{
+				var list_item= data.data.list[0],str='',str2='';
+				if(list_item){
+					if(list_item.card_type==1){
+						str+=`<li class="clr"><div class="fl">实时审核时间：</div><div class="fright">${vm.getDateTime(list_item.time_real_audited)[6]}</div></li>`;
+						str2+=`<li class="clr"><div class="fl">开卡保存订单时间：</div><div class="fright">${vm.getDateTime(list_item.time_save_order)[6]}</div></li>`;
+					}else if(list_item.card_type==2){
+						str+=`<li class="clr"><div class="fl">开户成功时间：</div><div class="fright">${vm.getDateTime(list_item.time_serverice_open)[6]}</div></li>`;
+					}
+					layer.open({
+						content:`<ul class="f-scroll-lt lay-details">
+						<li class="clr"><div class="fl">生成时间：</div><div class="fright">${vm.getDateTime(list_item.time_create_order)[6]}</div></li>
+						<li class="clr"><div class="fl">保存套餐时间：</div><div class="fright">${vm.getDateTime(list_item.time_set_business)[6]}</div></li>
+						<li class="clr"><div class="fl">保存身份信息时间：</div><div class="fright">${vm.getDateTime(list_item.time_set_user_info)[6]}</div></li>
+						<li class="clr"><div class="fl">支付时间：</div><div class="fright">${vm.getDateTime(list_item.time_payed)[6]}</div></li>
+						<li class="clr"><div class="fl">自动审核时间：</div><div class="fright">${vm.getDateTime(list_item.time_auto_audited)[6]}</div></li>${str}
+						<li class="clr"><div class="fl">受理单提交时间：</div><div class="fright">${vm.getDateTime(list_item.time_accepted)[6]}</div></li>
+						<li class="clr"><div class="fl">请求IMSI时间：</div><div class="fright">${vm.getDateTime(list_item.time_imsi_request)[6]}</div></li>
+						<li class="clr"><div class="fl">拿到IMSI时间：</div><div class="fright">${vm.getDateTime(list_item.time_imsi_got)[6]}</div></li>
+						<li class="clr"><div class="fl">提交写卡结果时间：</div><div class="fright">${vm.getDateTime(list_item.time_write_card)[6]}</div></li>${str2}
+						<li class="clr"><div class="fl">提交到BOSS时间：</div><div class="fright">${vm.getDateTime(list_item.time_submit_order)[6]}</div></li>
+						<li class="clr"><div class="fl">开卡异步结果时间：</div><div class="fright">${vm.getDateTime(list_item.time_order_result)[6]}</div></li>
+						<li class="clr"><div class="fl">事后审核时间：</div><div class="fright">${vm.getDateTime(list_item.time_after_audit)[6]}</div></li></ul>`,
+						type:0,
+						title:'开卡时间详情',
+						btn:0,
+						style:'width:auto;'
+					});
+				}else{
+					layer.open({
+			            content:'暂无该订单时间详情',
+			            skin: 'msg',
+			            time: 2,
+			            msgSkin:'error',
+			        })
+				}
+            }).catch(error=>errorDeal(error))
            }else if(v==3){
                 var w=document.documentElement.clientWidth,url='';
                 let latitude=parseFloat(i.latitude);

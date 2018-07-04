@@ -411,7 +411,7 @@ const router=new Router({
         name:'reserveSearch',
         component:OrderSearch_reserve,
       },{//号码流转
-        path:"cardWanderAbout",
+        path:"flowCard",
         name:'cardWanderAboutSearch',
         component:OrderSearch_cardWanderAbout,
       },{//制卡
