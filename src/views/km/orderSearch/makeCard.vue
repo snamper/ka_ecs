@@ -92,6 +92,7 @@
                                     <label><span class="checkbox"><input type="checkbox" value="2" v-model="payType" checked="checked"><span></span></span><span class="text">微信</span></label>
                                     <label><span class="checkbox"><input type="checkbox" value="3" v-model="payType" checked="checked"><span></span></span><span class="text">支付宝</span></label>
                                     <label><span class="checkbox"><input type="checkbox" value="1" v-model="payType" checked="checked"><span></span></span><span class="text">账户</span></label>
+                                    <label><span class="checkbox"><input type="checkbox" value="0" v-model="payType" checked="checked"><span></span></span><span class="text">未支付</span></label>
                                 </div>
                             </div>
                             <div class="row clr m-col-2">
@@ -140,9 +141,7 @@
                                     <td>{{todo.dealer_id||'--'}}<br>{{todo.company_name||'--'}}</td>
                                     <td>{{todo.actual_money/100}}</td>
                                     <td>
-                                        <span v-if="todo.pay_type==1">远特</span>
-                                        <span v-if="todo.pay_type==2">微信</span>
-                                        <span v-if="todo.pay_type==3">支付宝</span>
+                                        {{translateData(12,todo.pay_type)}}
                                     </td>
                                     <td>
                                         <span class="f-c-blue" v-if="todo.order_status==1">进行中</span>
@@ -239,7 +238,7 @@ export default {
       checkAllMakeCardRes:true,
       makeCardRes:[1,2,3,4],
       checkAllPayType:true,
-      payType:[1,2,3],
+      payType:[0,1,2,3],
       phoneNumber:"",
       orderId:"",
       dealerId:"",
@@ -269,14 +268,14 @@ export default {
         }
     },
     makeCardRes(){
-        if(this.makeCardRes.length==3){
+        if(this.makeCardRes.length==4){
             this.checkAllMakeCardRes=true;
         }else{
             this.checkAllMakeCardRes=false;
         }
     },
     payType(){
-        if(this.payType.length==3){
+        if(this.payType.length==4){
             this.checkAllPayType=true;
         }else{
             this.checkAllPayType=false;
@@ -361,13 +360,13 @@ export default {
         }
     },BtnCheckAllMakeCardRes(){
         if(this.checkAllMakeCardRes==true){
-            this.makeCardRes=[1,2,3]
+            this.makeCardRes=[1,2,3,4]
         }else if(this.checkAllMakeCardRes==false){
             this.makeCardRes=[]
         }
     },BtnCheckAllPayType(){
         if(this.checkAllPayType==true){
-            this.payType=[1,2,3]
+            this.payType=[0,1,2,3]
         }else if(this.checkAllPayType==false){
             this.payType=[]
         }

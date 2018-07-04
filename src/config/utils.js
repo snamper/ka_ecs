@@ -171,19 +171,23 @@ export const translateData=(type,v)=> {
             return v==1 ? '森瑞' : v==2 ? '握奇' : v==3 ? '卡尔' : '--';
         break;
         case 10://开卡码号类型 
-            return v==-1 ? '全部' : v==0 ? '普号' : v==1 ? '大众专营号' : v==2 ? '专属专营号':'--';
+            return v==-1 ? '全部' : v==0 ? '大众号' : v==1 ? '大众专营号' : v==2 ? '专属专营号':'--';
         break;
         case 11://开卡当前状态
             return v==1001 ? '生成订单' : v==1002 ? '支付' : v==1003 ? '获取imsi' : v==1004 ? '写卡成功':'--';
         break;
         case 12://开卡制卡付款方式
-            return v==1 ? '远特账户' : v==2 ? '微信' : v==3 ? '支付宝' : '--';
+            return v==1 ? '远特账户' : v==2 ? '微信' : v==3 ? '支付宝' : v==0 ? '未支付' : '--';
         break;
         case 13://开卡制卡结果
             return v==1 ? '进行中' : v==2 ? '制卡成功' : v==3 ? '制卡失败' : v==4 ? '订单关闭':v==5 ? '已激活':'--';
         break;
         case 'money'://金额转换
-            return (v/100).toFixed(2)
+            if(!isNaN(v)){
+                return (v/100).toFixed(2)
+            }else{
+                return 0.00
+            }
         case 'formatPhone'://格式化手机号
             v=v+"";
             return `${v.slice(0,3)} ${v.slice(3,7)} ${v.slice(7,8)}`

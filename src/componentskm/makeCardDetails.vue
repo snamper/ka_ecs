@@ -43,7 +43,7 @@
                                     <td>状态修改时间：</td>
                                     <td>{{getDateTime(detailsEmpty.modify_time)[6]}} <a @click="getDetails(2)">查看详情</a></td>
                                     <td>开卡人位置信息：</td>
-                                    <td>N{{detailsEmpty.user_token_info.latitude||'--'}},E{{detailsEmpty.user_token_info.longitude||'--'}}<a @click="getDetails(3,detailsEmpty.user_token_info)">查看地图</a></td>
+                                    <td>N{{detailsEmpty.user_token_info.latitude||'--'}},E{{detailsEmpty.user_token_info.longitude||'--'}}<a @click="getDetails(3,detailsEmpty.user_token_info)">查看地图</a>{{detailsEmpty.street}}</td>
                                 </tr>
                                 <tr>
                                     <td>当前状态：</td>
@@ -94,7 +94,7 @@
                                     <td>状态修改时间：</td>
                                     <td>{{getDateTime(detailsWhite.create_time)[6]}}</td>
                                     <td>开卡人位置信息：</td>
-                                    <td>N{{detailsWhite.user_token_info.latitude||'--'}},E{{detailsWhite.user_token_info.longitude||'--'}}<a @click="getDetails(3,detailsWhite.user_token_info)">查看地图</a></td>
+                                    <td>N{{detailsWhite.user_token_info.latitude||'--'}},E{{detailsWhite.user_token_info.longitude||'--'}}<a @click="getDetails(3,detailsWhite.user_token_info)">查看地图</a>{{detailsWhite.street}}</td>
                                 </tr>
                                 <tr>
                                     <td>当前状态：</td>
@@ -137,9 +137,9 @@
                                 <tbody>
                                     <tr>
                                         <td>制卡号码：</td> 
-                                        <td>{{detailsEmpty.phone_number||'--'}}</td>
+                                        <td>{{detailsEmpty.phone_number||'--'}}（{{translateData(5,detailsEmpty.big_number_level)}} , {{detailsEmpty.home}}）</td>
                                         <td>原预存：</td>   
-                                        <td>{{translateData('money',detailsEmpty.old_prestore_money)||'--'}}元</td>
+                                        <td>{{translateData('money',detailsEmpty.old_prestore_money)}}元</td>
                                     </tr>
                                     <tr>
                                         <td>码号类型：</td>  
