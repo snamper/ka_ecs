@@ -120,10 +120,10 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td>识别模式：</td>
-                                <td></td>
                                 <td>MAC地址：</td>
                                 <td>{{detailsWhite.mac||'--'}}</td>
+                                <td></td>
+                                <td></td>
                             </tr>
                         </tbody>
                     </table>
@@ -192,7 +192,7 @@
                             <tbody>
                                 <tr>
                                     <td>所属号段：</td>
-                                    <td>{{detailsWhite.phone_title||'--'}}***</td>                                   
+                                    <td>{{detailsWhite.phone_title||'--'}}****</td>                                   
                                 </tr>
                                 <tr>
                                     <td>码号类型：</td>

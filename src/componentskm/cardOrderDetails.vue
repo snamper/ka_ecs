@@ -167,6 +167,54 @@
 								<tr v-show="type==2"><td>状态说明：</td><td>{{ list.cardStatusReason }}</td></tr>
 								<tr v-if="type==2&&list.status==2"><td>拒绝原因：</td><td><ul><li v-for="(todo,i) in filterReason(list.auditReason)" :key="i"><b v-show="todo.star" class="f-c-red">*</b>{{todo.text}}</li></ul></td></tr>
 								<tr v-show="type==2&&list.adutiRemarks"><td>备注：</td><td>{{ list.adutiRemarks }}</td></tr>
+                                <tr>
+                                    <td>号卡分类：</td>
+                                    <td>{{translateData(10,list.monopolyType)}}</td>
+                                </tr>
+                                <tr>
+                                    <td>号卡类型：</td>
+                                    <td>{{translateData(14,list.bizType)}}</td>
+                                </tr>
+                                <tr>
+                                    <td>开卡方式：</td>
+                                    <td>{{translateData(15,list.appType)}}</td>
+                                </tr>
+                                <tr v-if="list.monopolyType==1||list.monopolyType==2">
+                                    <td>初始可选包：</td>
+                                    <td>{{list.primalyOptPkg||'--'}}</td>
+                                </tr>
+                                <tr v-if="list.monopolyType==1||list.monopolyType==2">
+                                    <td>初始套餐：</td>
+                                    <td>{{list.primalyPkg||'--'}}</td>
+                                </tr>
+                                <tr v-if="list.monopolyType==1||list.monopolyType==2">
+                                    <td>初始预存：</td>
+                                    <td>{{list.primalyPrestore||'--'}}</td>
+                                </tr>
+                                <tr v-if="list.monopolyType==1||list.monopolyType==2">
+                                    <td>制卡可选包：</td>
+                                    <td>{{list.makeOptPkg||'--'}}</td>
+                                </tr>
+                                <tr v-if="list.monopolyType==1||list.monopolyType==2">
+                                    <td>制卡套餐：</td>
+                                    <td>{{list.makePkg||'--'}}</td>
+                                </tr>
+                                <tr v-if="list.monopolyType==1||list.monopolyType==2">
+                                    <td>制卡预存：</td>
+                                    <td>{{list.makePrestore||'--'}}</td>
+                                </tr>
+                                <tr v-if="list.monopolyType==1||list.monopolyType==2">
+                                    <td>开卡可选包：</td>
+                                    <td>{{list.openOptPkg||'--'}}</td>
+                                </tr>
+                                <tr v-if="list.monopolyType==1||list.monopolyType==2">
+                                    <td>开卡套餐：</td>
+                                    <td>{{list.openPkg||'--'}}</td>
+                                </tr>
+                                <tr v-if="list.monopolyType==1||list.monopolyType==2">
+                                    <td>开卡预存：</td>
+                                    <td>{{list.openPrestore||'--'}}</td>
+                                </tr>
 							</tbody>
 						</table>
 					</td>
@@ -192,7 +240,7 @@
 <script>
 import "../assets/km/css/cardOrderDetails.css";
 import {reqCommonMethod} from "../config/service.js";
-import {errorDeal,getDateTime} from "../config/utils.js";
+import {errorDeal,getDateTime,translateData} from "../config/utils.js";
 import ImgZoom from '../componentskm/ImgZoom';
 import RealTimeCollection from './audit/realTimeCollection';
 import RealNameRechCard from './audit/realNameRechCard';
@@ -635,7 +683,10 @@ export default{
 		},
 		getDateTime(v){
 			return getDateTime(v);
-		},
+        },
+        translateData(v,i){
+            return translateData(v,i)
+        }
 	}
 }
 </script>

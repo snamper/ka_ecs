@@ -813,13 +813,7 @@ export default {
       }
       if (vm.off.isLoad) return false;
       vm.off.isLoad = true;
-      reqCommonMethod(
-        json,
-        function() {
-          vm.off.isLoad = false;
-        },
-        url
-      )
+      reqCommonMethod( json, function() { vm.off.isLoad = false; }, url )
         .then(data => {
           vm.list = data.data.list;
           vm.total = data.data.total;
@@ -899,13 +893,7 @@ export default {
         url = "km-ecs/w/audit/getAdditionOrderList";
         Object.assign(json, { periodType: vm.off.type });
       }
-      searchAuditList(
-        json,
-        function() {
-          vm.off.isLoad = false;
-        },
-        url
-      )
+      searchAuditList( json, function() { vm.off.isLoad = false; }, url )
         .then(data => {
           if (vm.form.orderType == 6) {
             //空卡
@@ -1260,13 +1248,7 @@ export default {
       }
       if (vm.off.isLoad) return false;
       vm.off.isLoad = true;
-      reqCommonMethod(
-        json,
-        function() {
-          vm.off.isLoad = false;
-        },
-        url
-      )
+      reqCommonMethod(json,function() {vm.off.isLoad = false;},url )
         .then(data => {
           if (vm.form.source == 7 || vm.form.source == 8) {
             vm.detailsData = data.data.list[0];

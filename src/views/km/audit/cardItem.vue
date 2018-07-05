@@ -144,20 +144,52 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td>原套餐：</td>
-                                            <td></td>
+                                            <td>号卡分类：</td>
+                                            <td>{{translateData(10,auditData.monopolyType)}}</td>
                                         </tr>
                                         <tr>
-                                            <td>新套餐：</td>
-                                            <td></td>
+                                            <td>号卡类型：</td>
+                                            <td>{{translateData(14,auditData.bizType)}}</td>
                                         </tr>
                                         <tr>
-                                            <td>原预存：</td>
-                                            <td></td>
+                                            <td>开卡方式：</td>
+                                            <td>{{translateData(15,auditData.appType)}}</td>
                                         </tr>
-                                        <tr>
-                                            <td>新预存：</td>
-                                            <td></td>
+                                        <tr v-if="auditData.monopolyType==1||auditData.monopolyType==2">
+                                            <td>初始可选包：</td>
+                                            <td>{{auditData.primalyOptPkg||'--'}}</td>
+                                        </tr>
+                                        <tr v-if="auditData.monopolyType==1||auditData.monopolyType==2">
+                                            <td>初始套餐：</td>
+                                            <td>{{auditData.primalyPkg||'--'}}</td>
+                                        </tr>
+                                        <tr v-if="auditData.monopolyType==1||auditData.monopolyType==2">
+                                            <td>初始预存：</td>
+                                            <td>{{auditData.primalyPrestore||'--'}}</td>
+                                        </tr>
+                                        <tr v-if="auditData.monopolyType==1||auditData.monopolyType==2">
+                                            <td>制卡可选包：</td>
+                                            <td>{{auditData.makeOptPkg||'--'}}</td>
+                                        </tr>
+                                        <tr v-if="auditData.monopolyType==1||auditData.monopolyType==2">
+                                            <td>制卡套餐：</td>
+                                            <td>{{auditData.makePkg||'--'}}</td>
+                                        </tr>
+                                        <tr v-if="auditData.monopolyType==1||auditData.monopolyType==2">
+                                            <td>制卡预存：</td>
+                                            <td>{{auditData.makePrestore||'--'}}</td>
+                                        </tr>
+                                        <tr v-if="auditData.monopolyType==1||auditData.monopolyType==2">
+                                            <td>开卡可选包：</td>
+                                            <td>{{auditData.openOptPkg||'--'}}</td>
+                                        </tr>
+                                        <tr v-if="auditData.monopolyType==1||auditData.monopolyType==2">
+                                            <td>开卡套餐：</td>
+                                            <td>{{auditData.openPkg||'--'}}</td>
+                                        </tr>
+                                        <tr v-if="auditData.monopolyType==1||auditData.monopolyType==2">
+                                            <td>开卡预存：</td>
+                                            <td>{{auditData.openPrestore||'--'}}</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -187,7 +219,7 @@
 import "../../../assets/km/css/cardOrderDetails.css";
 import "../../../assets/km/css/audit.css";
 import { reqCommonMethod } from "../../../config/service.js";
-import { errorDeal, getDateTime } from "../../../config/utils.js";
+import { errorDeal, getDateTime,translateData } from "../../../config/utils.js";
 import ImgZoom from "../../../componentskm/ImgZoom";
 import RealTimeCollection from "../../../componentskm/audit/realTimeCollection";
 import RealNameRechCard from "../../../componentskm/audit/realNameRechCard";
@@ -384,13 +416,7 @@ export default {
       } else {
         url = "km-ecs/w/audit/toaudit";
       }
-      reqCommonMethod(
-        { type: vm.off.itemType, auditType: auditType },
-        function() {
-          vm.off.isLoad = false;
-        },
-        url
-      )
+      reqCommonMethod({ type: vm.off.itemType, auditType: auditType },function() {vm.off.isLoad = false;},url)
         .then(data => {
           if (data.data.list.length == 0) {
             layer.open({
@@ -566,6 +592,8 @@ export default {
     },
     getDateTime(v) {
       return getDateTime(v);
+    },translateData(v,i){
+        return translateData(v,i)
     }
   }
 };
