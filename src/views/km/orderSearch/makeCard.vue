@@ -175,13 +175,14 @@
                                     <td><a @click="searchMakeCardDetails(todo)">{{todo.orderId||'--'}}</a></td>
                                     <td>{{getDateTime(todo.creatTime)[6]}}</td>
                                     <td>
+                                        <span v-if="todo.phoneType==0">{{todo.phoneSegment||'--'}}****</span>
                                         <span v-if="todo.phoneType==1">{{todo.phoneSegment||'--'}}****</span>
                                         <span v-if="todo.phoneType==2">{{todo.phoneSegment||'--'}}***</span>
                                     </td>
                                     <td>{{translateData(10,todo.phoneType)}}</td>
                                     <td>{{todo.iccid||'--'}}</td>
                                     <td>{{todo.imsi||'--'}}</td>
-                                     <td>{{todo.operatorId||'--'}}<br>({{todo.operatorName||'--'}})</td>
+                                    <td>{{todo.operatorId||'--'}}<br>({{todo.operatorName||'--'}})</td>
                                     <td>{{todo.dealerId||'--'}}<br>{{todo.companyName||'--'}}</td>
                                     <td>{{translateData('money',todo.payMoney)}}</td>
                                     <td>{{translateData(12,todo.payType)}}</td>

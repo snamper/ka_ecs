@@ -727,7 +727,7 @@ export default {
           auditType: vm.form.auditType,
           cardType: vm.form.cardType,
           periodType: vm.off.type,
-        //   opencardType:vm.form.opencardType.join(',')
+          opencardType:vm.form.opencardType.join(',')
         };
       //非卡盟SDK+远特I卡，进行中，已关闭
       if (json.source != 7 &&json.source != 8 &&(vm.off.type == 3 || vm.off.type == 4)) {
