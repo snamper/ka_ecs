@@ -192,7 +192,8 @@
                             <tbody>
                                 <tr>
                                     <td>所属号段：</td>
-                                    <td>{{detailsWhite.phone_title||'--'}}****</td>                                   
+                                    <td v-if="detailsWhite.monopoly_type==1">{{detailsWhite.phone_title||'--'}}****</td>                                   
+                                    <td v-if="detailsWhite.monopoly_type==2">{{detailsWhite.phone_title||'--'}}***</td>                                   
                                 </tr>
                                 <tr>
                                     <td>码号类型：</td>
