@@ -85,7 +85,7 @@
       },
       clearFileInput() {
         let uploadForm=document.querySelector('.upload-form');
-        for(let i=0,len=uploadForm,length;i<len;i++){
+        for(let i=0,len=uploadForm.length;i<len;i++){
           uploadForm[i].reset()
         }
       },

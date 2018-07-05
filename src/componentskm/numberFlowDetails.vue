@@ -22,7 +22,7 @@
                     <p class="numberInfo">
                         <b><label class="f-c-grey">归属地 ：</label>{{orderDetails.cityName||'--'}}</b>
                         <b><label class="f-c-grey">预存 ：</label>{{translateData('money',orderDetails.preStore)}}元</b>
-                        <b><label class="f-c-grey">产品名称 ：</label>{{orderDetails.pkgName||'--'}}<span class="f-c-grey">( {{orderDetails.optPkgInfo}} )</span></b>
+                        <b><label class="f-c-grey">产品名称 ：</label>{{orderDetails.pkgName||'--'}}<span class="f-c-grey"> ( 资费：{{orderDetails.feeVoice}}，可选包：{{orderDetails.optPkgInfo}} ) </span></b>
                     </p>
                     <p class="whiteDetailsTitle"><span></span> 白卡 ( {{cardTotalWhite}} 张)</p>
                     <table class="merchant-total g-list-table table-numberDetails">

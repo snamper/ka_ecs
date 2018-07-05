@@ -10,6 +10,7 @@
 </style>
 
 <template>
+<section class="g-search-menu">
     <div id="search" :class="{active:off.cardDetails}">
         <header class="m-scroll-bar animated infinite" :class="{active:off.isLoad}"></header>
         <!--查询-->
@@ -173,7 +174,7 @@
                                     <td>{{((pageNow-1)*10+(index+1))}}</td>
                                     <td><a @click="searchMakeCardDetails(todo)">{{todo.orderId||'--'}}</a></td>
                                     <td>{{getDateTime(todo.creatTime)[6]}}</td>
-                                    <td>{{todo.phoneSegment||'--'}}***</td>
+                                    <td>{{todo.phoneSegment||'--'}}****</td>
                                     <td>{{translateData(10,todo.phoneType)}}</td>
                                     <td>{{todo.iccid||'--'}}</td>
                                     <td>{{todo.imsi||'--'}}</td>
@@ -198,6 +199,7 @@
         <!--详情-->
         <makeCardDetails v-if="off.cardDetails" :cardType="form.source" :detailsWhite="whiteCardDet" :detailsEmpty="emptyCardDet"></makeCardDetails>
     </div>
+</section>
 </template>
 <script>
 require("../../../assets/km/js/base64.min.js");
@@ -301,6 +303,15 @@ export default {
             "phoneType": vm.cardType.join(","),// 0普号1大众专营号2专属专营号
             "status": vm.makeCardRes.join(","),// 1进行中2成功3失败
             "payType": vm.payType.join(",")// 1资金池2微信3支付宝
+        }
+        if(v==1&&vm.orderId==""){
+            layer.open({
+                content:"请输入查询的单号",
+                skin:"msg",
+                time: 2,
+                msgSkin: "error"
+            });
+            return false;
         }
         if(v==2){
             json.orderId="";

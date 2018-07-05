@@ -43,7 +43,7 @@ span.m-form-radio{width: 75px;}
                                     <span class="text">号码：</span>
                                 </label>
                             </span>
-                            <div class="input-box"><input v-model="cardNumber" :readonly="form.select!=1" maxlength="8" type="tel" placeholder="请输入查询的8位号码"></div>
+                            <div class="input-box"><input v-model="cardNumber" :readonly="form.select!=1" maxlength="11" type="tel" placeholder="请输入查询的8位号码"></div>
                         </div>
                         <div class="row  m-col-2">
                             <span class="m-form-radio">商 户 I D ：</span>                            
@@ -198,10 +198,19 @@ export default {
             "status": vm.flowResult.join(","),//0全部 1进行中2成功3失败
             "searchType": vm.form.select||0,//搜索分类0:无，1:8位号码段，2设备号
         };
+        if(v==1&&vm.orderId==""){
+            layer.open({
+                content:"请输入查询的单号",
+                skin:"msg",
+                time: 2,
+                msgSkin: "error"
+            });
+            return false;
+        }
         if(v==2){
             json.orderId=""
         }
-        if(vm.deviceId==""){
+        if(vm.form.select==1){
             json.context=vm.cardNumber
         }else{
             json.context=vm.deviceId

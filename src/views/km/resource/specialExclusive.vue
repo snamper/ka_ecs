@@ -75,7 +75,8 @@ p.detailsEleP{margin-bottom: 10px;}
 </template>
 <script>
 import "../../../assets/km/css/search.css";
-import { translateData,getDateTime } from '../../../config/utils.js';
+import { translateData,getDateTime, errorDeal } from '../../../config/utils.js';
+import { requestGetSpecialExclusiveNumber } from "../../../config/service.js";
 export default { 
     data() {
         return{
@@ -88,6 +89,7 @@ export default {
             },
             search:{
                 list:"",
+                listTotal:"",
             },
             dealerId:"",
             pageNow:1,
@@ -97,7 +99,24 @@ export default {
     },
     methods:{
         searchList(){
-
+            let vm=this;
+            if(vm.dealerId==""){
+                layer.open({
+                    content:"请输入查询的商户ID",
+                    skin: "msg",
+                    time: 2,
+                    msgSkin: "error"
+                });
+                return false;
+            }
+            requestGetSpecialExclusiveNumber({dealerId:vm.dealerId},()=>{vm.off.isLoad=false})
+            .then((data)=>{
+                vm.search.list=data.data.datas;
+                vm.search.listTotal=data.data.total;
+                vm.maxpage=Math.ceil(parseInt(vm.search.listTotal)/vm.pagesize);
+                vm.pageNow=i||1;
+                vm.callback=(i)=>{vm.searchList(v,i)};
+            }).catch(e=>errorDeal(e))
         },
         isChe(){
             this.form.select = "";

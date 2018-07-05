@@ -40,3 +40,12 @@ export const requestGetMakeWhiteDetails=(data,load)=>fetch("km-ecs/w/monopoly/ge
 /**制白卡 */
 export const requestGetMakeChengList=(data,load)=>fetch("km-ecs/w/monopoly/getMakeReadyList",data,"POST",load);
 export const requestGetMakeChengDetails=(data,load)=>fetch("km-ecs/w/monopoly/getMakeReadyDesc",data,"POST",load);
+
+/*专营号查询*/
+export const requestGetExclusiveNumber=(data,load)=>fetch("km-ecs/w/monopoly/getMakeReadyDesc",data,"POST",load);
+export const requestGetExclusiveWhite=(data,load)=>fetch("km-ecs/w/monopoly/getMakeReadyDesc",data,"POST",load);
+export const requestGetExclusiveCheng=(data,load)=>fetch("km-ecs/w/monopoly/getMakeReadyDesc",data,"POST",load);
+export const requestGetExclusiveActive=(data,load)=>fetch("km-ecs/w/monopoly/getMakeReadyDesc",data,"POST",load);
+export const requestGetExclusiveNotActive=(data,load)=>fetch("km-ecs/w/monopoly/getMakeReadyDesc",data,"POST",load);
+/*商户专营号查询*/
+export const requestGetSpecialExclusiveNumber=(data,load)=>fetch("km-ecs/w/monopoly/getMakeReadyDesc",data,"POST",load);
