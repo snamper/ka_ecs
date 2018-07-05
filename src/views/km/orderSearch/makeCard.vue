@@ -61,13 +61,18 @@
                             <div v-if="form.source==1" class="row clr m-col-2">
                                 <span class="dp col-l">号码查询：</span>
                                 <div class="col-r">
-                                    <div class="input-box"><input v-model="phoneNumber" maxlength="11" type="tel" placeholder="请输入查询的号码"></div>
+                                    <div class="input-box">
+                                        <input v-model="phoneNumber" maxlength="11" type="tel" placeholder="请输入查询的号码">
+                                    </div>
                                 </div>
                             </div>
                             <div v-if="form.source==2" class="row clr m-col-2">
                                 <span class="dp col-l">号段查询：</span>
                                 <div class="col-r">
-                                    <div class="input-box"><input v-model="phoneNumber" maxlength="8" type="tel" placeholder="请输入查询的号段"></div>
+                                    <div class="input-box">
+                                        <input v-if="off.special" v-model="phoneNumber" maxlength="7" type="tel" placeholder="请输入查询的号段">
+                                        <input v-if="off.ordinary" v-model="phoneNumber" maxlength="8" type="tel" placeholder="请输入查询的号段">
+                                    </div>
                                 </div>
                             </div>
                             <div class="row pdl">
@@ -228,7 +233,9 @@ export default {
         isLoad: 0, //加载条
         cardDetails: false, //详情页面开关
         number: "", //第几条详情
-        showData: 0
+        showData: 0,
+        ordinary:true,
+        special:false,
       },
       form: {
         source: "1", //1 成卡,2 白卡
@@ -238,11 +245,11 @@ export default {
       },
       searchMakeCardList:false,
       checkAllcardType:true,
-      cardType:[0,1,2],
       checkAllMakeCardRes:true,
+      cardType:[0,1,2],
       makeCardRes:[1,2,3,4],
-      checkAllPayType:true,
       payType:[0,1,2,3],
+      checkAllPayType:true,
       phoneNumber:"",
       orderId:"",
       dealerId:"",
@@ -263,12 +270,21 @@ export default {
     makeCardDetails
   },
   watch:{
-
     cardType(){
         if(this.cardType.length==3){
             this.checkAllcardType=true;
         }else{
             this.checkAllcardType=false;
+        }
+        console.log(this.cardType)
+        if(this.cardType.indexOf("1")>-1||this.cardType.indexOf("0")>-1){
+            console.log(111)
+            this.off.special=false
+            this.off.ordinary=true
+        }else if(this.cardType.indexOf("2")>-1&&this.cardType.length==1){
+            console.log(222)
+            this.off.ordinary=false
+            this.off.special=true
         }
     },
     makeCardRes(){
@@ -403,11 +419,16 @@ export default {
         });
     },
     topShiftClick() {
+        console.log(6666)
       var vm = this;
       vm.searchMakeCardList = false;
-      vm.form = Object.assign(vm.form, {
-
-      });
+      vm.phoneNumber="",
+      vm.dealerId="",
+      vm.operatorId="",
+      vm.cardType=[0,1,2],
+      vm.makeCardRes=[1,2,3,4],
+      vm.payType=[0,1,2,3],
+      vm.form = Object.assign(vm.form, { });
     },
     getDateTime(v) {
       return getDateTime(v);

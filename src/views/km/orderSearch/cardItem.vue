@@ -173,8 +173,8 @@
                         <div class="m-form-checkbox">
                             <label><span class="checkbox"><input type="checkbox" value="true" v-model="checkAllopencardType" checked="checked" @change="BtnCheckAllopencardType"><span></span></span><span class="text">全部</span></label>
                             <label><span class="checkbox"><input type="checkbox" value="1" v-model="form.opencardType" checked="checked"><span></span></span><span class="text">卡盟</span></label>
-                            <label><span class="checkbox"><input type="checkbox" value="2" v-model="form.opencardType" checked="checked"><span></span></span><span class="text">远微商城</span></label>
-                            <label><span class="checkbox"><input type="checkbox" value="3" v-model="form.opencardType" checked="checked"><span></span></span><span class="text">信时空公众号</span></label>
+                            <label><span class="checkbox"><input type="checkbox" value="6" v-model="form.opencardType" checked="checked"><span></span></span><span class="text">远微商城</span></label>
+                            <label><span class="checkbox"><input type="checkbox" value="7" v-model="form.opencardType" checked="checked"><span></span></span><span class="text">信时空公众号</span></label>
                         </div>
                     </div>
                     <div class="row">
@@ -638,7 +638,7 @@ export default {
         cardType: 0, //运营商
         orderStatus: 0, //订单状态
         operatorType:1,//操作类型
-        opencardType:[1,2,3],//开卡方式
+        opencardType:[1,6,7],//开卡方式
         auditType: 9, //审核方式
         context1: "", //订单号码
         context2: "", //手机号码
@@ -699,15 +699,11 @@ export default {
   },
   methods: {
     init: function() {
-      var vm = this,
+        var vm = this,
         type = this.$route.params.type;
-        type == "auditing"
-        ? (vm.off.type = 1)
-        : type == "audited"
-          ? (vm.off.type = 2)
-          : type == "closed" ? (vm.off.type = 4) : (vm.off.type = 3);
-      vm.form.startTime = laydate.now(0, "YYYY-MM-DD 00:00:00");
-      vm.form.endTime = laydate.now(0, "YYYY-MM-DD 23:59:59");
+        type == "auditing" ? (vm.off.type = 1) : type == "audited" ? (vm.off.type = 2) : type == "closed" ? (vm.off.type = 4) : (vm.off.type = 3);
+        vm.form.startTime = laydate.now(0, "YYYY-MM-DD 00:00:00");
+        vm.form.endTime = laydate.now(0, "YYYY-MM-DD 23:59:59");
     },
     inpChange(v) {
       let vm = this;
@@ -1310,7 +1306,7 @@ export default {
     },
     BtnCheckAllopencardType(){
         if(this.checkAllopencardType==true){
-            this.form.opencardType=[1,2,3]
+            this.form.opencardType=[1,6,7]
         }else{
             this.form.opencardType=[]
         }
