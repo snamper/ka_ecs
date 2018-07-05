@@ -1,5 +1,4 @@
 <style scoped>
-@import "../../assets/ym/css/search.css";
 [v-cloak]{
     display: none;
 }
@@ -81,6 +80,7 @@ import {reqCommonMethod} from "../../config/service.js";
 import pagination from "../ym/page.vue";
 import details from "../ym/searchListDetails.vue";
 import layerForm from "../ym/layerForm.vue";
+import "../../assets/ym/css/search.css";
 import axios from "axios";
 export default {
     name:"Excel",

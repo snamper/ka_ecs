@@ -1,5 +1,5 @@
 <style scoped>
-@import "../../assets/ym/css/search.css";
+
 .g-search-menu #search #auditList .m-refresh {
   position: absolute;
   margin: auto;
@@ -267,6 +267,7 @@
   </div>
 </template>
 <script>
+import "../../assets/ym/css/search.css";
 import pagination from "../../componentskm/page.vue";
 import details from "../ym/searchListDetails.vue";
 import auditdetails from "../ym/auditList.vue";

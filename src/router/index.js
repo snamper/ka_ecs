@@ -178,11 +178,11 @@ const Resource_promoter = resolve => {//推广方查询
   });
 };
 const Resource_device = resolve => {//设备查询
-  load(true);
-  require.ensure(["@/views/km/resource/device"], () => {
-    resolve(require("@/views/km/resource/device"));
-    load();
-  });
+    load(true);
+    require.ensure(["@/views/km/resource/device"], () => {
+        resolve(require("@/views/km/resource/device"));
+        load();
+    });
 };
 const Resource_exclusiveNumber = resolve => {//设备查询
     load(true);
@@ -190,7 +190,29 @@ const Resource_exclusiveNumber = resolve => {//设备查询
       resolve(require("@/views/km/resource/exclusiveNumber"));
       load();
     });
-  };
+};
+
+const Resource_ordinaryExclusive = resolve => {//大众专营号
+    load(true);
+    require.ensure(["@/views/km/resource/ordinaryExclusive"], () => {
+      resolve(require("@/views/km/resource/ordinaryExclusive"));
+      load();
+    });
+};
+const Resource_exclusive = resolve => {//专营号
+    load(true);
+    require.ensure(["@/views/km/resource/exclusive"], () => {
+      resolve(require("@/views/km/resource/exclusive"));
+      load();
+    });
+};
+const Resource_specialExclusive = resolve => {//专属专营号
+    load(true);
+    require.ensure(["@/views/km/resource/specialExclusive"], () => {
+      resolve(require("@/views/km/resource/specialExclusive"));
+      load();
+    });
+};
 
 /*统计报表*/
 const Statistics = resolve => {
@@ -318,7 +340,6 @@ const router=new Router({
             path:'illegalSearch',
             component:resolve => require(['@/views/ym/illegalSearch'],resolve),
           }]
-
     }
     ,{
       path:"/homek",
@@ -440,6 +461,18 @@ const router=new Router({
         path:"exclusiveNumber/:val",
         component:Resource_exclusiveNumber,
         name:"exclusiveNumber"
+      },{//大众专营号
+        path:"ordinaryExclusive/:val",
+        component:Resource_ordinaryExclusive,
+        name:"ordinaryExclusive"
+      },{//专营号
+        path:"exclusive/:val",
+        component:Resource_exclusive,
+        name:"exclusive"
+      },{//专属专营号
+        path:"specialExclusive/:val",
+        component:Resource_specialExclusive,
+        name:"specialExclusive"
       }]
     },
     {//统计报表

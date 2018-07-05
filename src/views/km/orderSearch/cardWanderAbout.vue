@@ -2,12 +2,8 @@
   *@info 号码流转查询模块
 **-->
 <style scoped>
-.form-c.o-no-bgc>.row .text{
-    width: auto
-}
-.m-form-radio>label{
-    margin-right: 0;
-}
+.form-c.o-no-bgc>.row .text{width: auto}
+.m-form-radio>label{margin-right: 0;}
 a.detailsEleA{text-decoration: underline;}
 div.input-box{width: 70%;}
 span.m-form-radio{width: 75px;}
@@ -62,7 +58,7 @@ span.m-form-radio{width: 75px;}
                                     <span class="text">设备号：</span>
                                 </label>
                             </span>
-                            <div class="input-box"><input v-model="deviceId" :readonly="form.select!=2" maxlength="11" type="tel" placeholder="请输入查询的设备号码"></div>
+                            <div class="input-box"><input v-model="deviceId" :readonly="form.select!=2" maxlength="14" type="tel" placeholder="请输入查询的设备号码"></div>
                         </div>
                         <div class="row pdl">
                             <span class="dp">流转结果：</span>
@@ -202,6 +198,9 @@ export default {
             "status": vm.flowResult.join(","),//0全部 1进行中2成功3失败
             "searchType": vm.form.select||0,//搜索分类0:无，1:8位号码段，2设备号
         };
+        if(v==2){
+            json.orderId=""
+        }
         if(vm.deviceId==""){
             json.context=vm.cardNumber
         }else{

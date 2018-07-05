@@ -1,5 +1,5 @@
 <style scoped>
-  @import "../../assets/ym/css/search.css";
+  
 </style>
 <template>
   <div id="search" :class="{active:off.details}">
@@ -65,6 +65,7 @@
   </div>
 </template>
 <script>
+import "../../assets/ym/css/search.css";
 import pagination from "../../componentskm/page.vue";
 import details from "../ym/searchListDetails.vue";
 import layerForm from '../ym/layerForm.vue'

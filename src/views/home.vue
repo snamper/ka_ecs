@@ -142,6 +142,9 @@
 						<li v-if="off.powerKm_sh_cx"><router-link :to="{name:'merchant',params:{val:'null'}}"><b></b>商户查询</router-link></li>
 						<li v-if="off.powerKm_sh_cx"><router-link :to="{name:'device',params:{val:'null'}}"><b></b>设备查询</router-link></li>
 						<li v-if="off.powerKm_sh_cx"><router-link :to="{name:'promoter',params:{val:'null'}}"><b></b>推广方查询</router-link></li>
+						<li v-if="true"><router-link :to="{name:'ordinaryExclusive',params:{val:'null'}}"><b></b>大众专营号查询</router-link></li>
+						<li v-if="true"><router-link :to="{name:'exclusive',params:{val:'null'}}"><b></b>专营号查询</router-link></li>
+						<li v-if="true"><router-link :to="{name:'specialExclusive',params:{val:'null'}}"><b></b>商户专营号查询</router-link></li>
 						<!-- <li v-if="off.powerKm_sh_cx"><router-link :to="{name:'exclusiveNumber',params:{val:'null'}}"><b></b>专营号查询</router-link></li> -->
 					</ul>
 				</li>
@@ -315,7 +318,7 @@ export default{
             window.onresize=()=>vm.debounce(300,vm.windowChange());
 			vm.timer.count=setInterval(()=>vm.getAuditStatisticsInfo(),5000);
             vm.timer.OpcountT=setInterval(()=>vm.getOpinionCountInfo(),60000);
-			// vm.timer.countYm=setInterval(()=>vm.getAuditStatisticsInfoYm(),5000);            
+			vm.timer.countYm=setInterval(()=>vm.getAuditStatisticsInfoYm(),5000);            
 			vm.SET_ONLINE_TIME();
 			let userInfo=getStore("KA_ECS_USER");
 			vm.userInfo=userInfo;
@@ -444,9 +447,16 @@ export default{
 					crumb[1]={"name":"推广方","href":""}
 				}else if(path.indexOf("device")>-1){
 					crumb[1]={"name":"设备","href":""}
-				}else if(path.indexOf("exclusiveNumber")>-1){
+				}else if(path.indexOf("ordinaryExclusive")>-1){
+					crumb[1]={"name":"大众专营号","href":""}
+				}else if(path.indexOf("exclusive")>-1){
 					crumb[1]={"name":"专营号","href":""}
-				}
+				}else if(path.indexOf("specialExclusive")>-1){
+					crumb[1]={"name":"商户专营号","href":""}
+                }
+               /* else if(path.indexOf("exclusiveNumber")>-1){
+					crumb[1]={"name":"专营号","href":""}
+				} */
 			}else if(path.indexOf("/homek/statistics")>-1){
 				crumb[0]={"name":"统计报表"}
 				if(path.indexOf("cardOrder")>-1){

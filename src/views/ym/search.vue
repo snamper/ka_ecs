@@ -1,5 +1,5 @@
 <style scoped>
-  @import "../../assets/ym/css/search.css";
+  
 </style>
 <template>
 	<section class="g-search-menu">
@@ -21,6 +21,7 @@
 	</section>
 </template>
 <script>
+import "../../assets/ym/css/search.css";
 export default{
 	name:'search',
 	data (){

@@ -61,6 +61,10 @@ border-left:10px solid #20a0ff;border-top: 7px solid transparent;border-bottom: 
 .g-search-form>.form-c>.row>.dp{color: #666;}
 .g-search-form>.form-c>.f-btn{display: block;width:30%;margin:0.15rem auto;padding: 0.12rem 0}
 
+.g-search-form>.form-c>.row3{width: 32%;display: inline-block;}
+.g-search-form>.form-c>.row3>.dp{color: #666;}
+
+
 .m-col-2{margin:0.1rem 0;}
 .m-col-2>.col-l{float: left;min-width:0.65rem;line-height: 0.35rem;text-align: right;}
 .m-col-2>.col-r{margin-left:0.7rem;display: block;margin-right: 0.1rem;}
@@ -87,10 +91,21 @@ border-left:10px solid #20a0ff;border-top: 7px solid transparent;border-bottom: 
 .form-c.o-no-bgc>.row .text{display: inline-block;color: #999;width: 0.7rem;}
 .form-c.o-no-bgc>.row>.col-radio .text{width: auto;text-align: left;}
 
+.form-c.o-no-bgc>.row3>.input-box{display: inline-block;width: 70%;}
+.form-c.o-no-bgc>.row3>.input-box>input{font-family:fantasy;letter-spacing: 1px;border-color:#eee; }
+.form-c.o-no-bgc>.row3.active input{border-color:#20a0ff;}
+.form-c.o-no-bgc>.row3.active .text{color:#1f2d3d !important;}
+.form-c.o-no-bgc>.row3 .text{display: inline-block;color: #999;width: 0.7rem;}
+.form-c.o-no-bgc>.row3>.col-radio .text{width: auto;text-align: left;}
+
 .o-detail-form{}
 .o-detail-form>.row{margin:0.1rem 0;}
 .o-detail-form>.row>.col-l{width: 0.7rem;text-align: right;}
 .o-detail-form>.row>.col-r{margin-left: 0.7rem;}
+
+.o-detail-form>.row3{margin:0.1rem 0;}
+.o-detail-form>.row3>.col-l{width: 0.7rem;text-align: right;}
+.o-detail-form>.row3>.col-r{margin-left: 0.7rem;}
 
 /*顶部滑块*/
 .m-top-shift{
@@ -254,6 +269,13 @@ display:inline-block;position: absolute;right: 5px;top:50%;width:0.18rem;height:
  /* .m-form-radio>label, .m-form-checkbox>label{margin:3px 0;}*/
   .m-form-radio.col-r{top: 5px;}
 }
+
+@media screen and (max-width: 960px){
+    .m-col-2>.col-r{margin-right: 0;}
+    .g-search-form>.form-c>.row3{display: block;width: 100%;}
+   /* .m-form-radio>label, .m-form-checkbox>label{margin:3px 0;}*/
+    .m-form-radio.col-r{top: 5px;}
+  }
 
 /*导出excel的按钮*/
 .btn_export_excel{

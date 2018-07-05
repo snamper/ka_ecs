@@ -1,5 +1,5 @@
 <style scoped>
-  @import "../../assets/ym/css/search.css";
+  
 </style>
 <template>
 <div id="search">
@@ -46,6 +46,7 @@
 <script>
 import {reqCommonMethod} from "../../config/service.js";
 import {errorDeal} from "../../config/utils";
+import "../../assets/ym/css/search.css";
 export default{
 	name:'illegalSearch',
 	data (){

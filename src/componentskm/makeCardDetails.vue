@@ -70,10 +70,10 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>识别模式：</td>
-                                    <td>--</td>
                                     <td>MAC地址：</td>
                                     <td>{{detailsEmpty.mac||'--'}}</td>
+                                    <td></td>
+                                    <td></td>
                                 </tr>
                             </tbody>
                             <!-- 白卡 -->
@@ -137,7 +137,7 @@
                                 <tbody>
                                     <tr>
                                         <td>制卡号码：</td> 
-                                        <td>{{detailsEmpty.phone_number||'--'}}（{{translateData(5,detailsEmpty.big_number_level)}} , {{detailsEmpty.home}}）</td>
+                                        <td>{{detailsEmpty.phone_number||'--'}}（<span class="f-c-yellow">{{translateData(5,detailsEmpty.big_number_level)}}</span> , {{detailsEmpty.home}}）</td>
                                         <td>原预存：</td>   
                                         <td>{{translateData('money',detailsEmpty.old_prestore_money)}}元</td>
                                     </tr>
@@ -167,7 +167,7 @@
                                         <td>IMSI：</td>   
                                         <td>{{detailsEmpty.imsi||'--'}}</td>
                                         <td>支付金额：</td>   
-                                        <td>{{translateData('money',detailsEmpty.total_money)||'--'}}元</td>
+                                        <td>{{translateData('money',detailsEmpty.total_money-detailsEmpty.deduction_money)||'--'}}元({{`应付${translateData('money',detailsEmpty.total_money)}元-抵扣${translateData('money',detailsEmpty.deduction_money)}元`}})</td>
                                     </tr>
                                      <tr>
                                         <td>原产品名称：</td>   
@@ -177,7 +177,7 @@
                                     </tr>
                                     <tr>
                                         <td>新产品名称：</td>
-                                        <td>{{detailsEmpty.pkg_info||'--'}} <span class="f-c-grey">({{detailsEmpty.optional_package||'--'}})</span> </td>
+                                        <td>{{detailsEmpty.pkg_info||'--'}} <span class="f-c-grey">(资费：{{translateData('money',detailsEmpty.fee_voice)}}元，可选包：{{detailsEmpty.optional_package||'--'}})</span> </td>
                                         <td>制卡返佣：</td>   
                                         <td>{{translateData('money',detailsEmpty.sel_income+detailsEmpty.pre_income)}}元({{`预存返佣${translateData('money',detailsEmpty.sel_income)}元+选号费返佣${translateData('money',detailsEmpty.pre_income)}元`}})</td>
                                     </tr>

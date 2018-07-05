@@ -133,9 +133,7 @@
                                     <td>{{getDateTime(todo.create_time)[6]}}</td>
                                     <td>{{todo.phone_number||'--'}}</td>
                                     <td>
-                                        <span v-if="todo.monopoly_type==0">普号</span>
-                                        <span v-if="todo.monopoly_type==1">大众专营号</span>
-                                        <span v-if="todo.monopoly_type==2">专属专营号</span>
+                                        {{translateData(10,todo.monopoly_type)}}
                                     </td>
                                     <td>{{todo.user_id||'--'}}<br>({{todo.username||'--'}})</td>
                                     <td>{{todo.dealer_id||'--'}}<br>{{todo.company_name||'--'}}</td>
@@ -304,13 +302,17 @@ export default {
             "status": vm.makeCardRes.join(","),// 1进行中2成功3失败
             "payType": vm.payType.join(",")// 1资金池2微信3支付宝
         }
+        if(v==2){
+            json.orderId="";
+        }
         if(vm.form.source==2){//成卡
             requestGetMakeWhiteList(json,()=>{vm.off.isLoad=false})
             .then((data)=>{
                 vm.total=data.data.total;
                 vm.searchMakeCardList=data.data.list;
                 vm.maxpage=Math.ceil(parseInt(vm.total)/vm.pageSize);
-                vm.callback=(v,i)=>{vm.searchList(v,i)};
+                vm.pageNow=i||1;
+                vm.callback=(i)=>{vm.searchList(v,i)};
             })
         }else{
             requestGetMakeChengList(json,()=>{vm.off.isLoad=false})
@@ -318,7 +320,8 @@ export default {
                 vm.total=data.data.total;
                 vm.searchMakeCardList=data.data.datas;
                 vm.maxpage=Math.ceil(parseInt(vm.total)/vm.pageSize);
-                vm.callback=(v,i)=>{vm.searchList(v,i)};
+                vm.pageNow=i||1;
+                vm.callback=(i)=>{vm.searchList(v,i)};
             })
         }   
     },
