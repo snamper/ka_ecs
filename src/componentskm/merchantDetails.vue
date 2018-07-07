@@ -442,6 +442,7 @@ export default{
         },
         detailsOwnNumber(v){
             let vm=this;
+            vm.numbersArray=[]
             requestGetExclusiveNumerList({dealerId:v},function(){vm.off.isLoad=false;})
             .then((data)=>{
                 vm.exclusiveNumberLength=data.data.length;

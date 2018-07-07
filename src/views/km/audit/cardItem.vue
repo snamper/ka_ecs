@@ -165,7 +165,7 @@
                                         </tr>
                                         <tr v-if="auditData.monopolyType==1||auditData.monopolyType==2">
                                             <td>初始预存：</td>
-                                            <td>{{auditData.prodRecords.primalyPrestore||'--'}}</td>
+                                            <td>{{translateData('money',auditData.prodRecords.primalyPrestore)}}</td>
                                         </tr>
                                         <tr v-if="auditData.monopolyType==1||auditData.monopolyType==2">
                                             <td>制卡可选包：</td>

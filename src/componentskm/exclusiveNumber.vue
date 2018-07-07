@@ -26,7 +26,7 @@
                             <tbody>
                                 <tr v-for="(v,i) of numbersList" :key="i">
                                     <td class="styleTd" v-for="(value,index) of v" :key="index">
-                                        <p class="line" @click="getNumberDetails(value.id)">{{value.number}}</p>
+                                        <p class="line" @click="getNumberDetails(value.number)">{{value.number}}</p>
                                         <p><span>{{value.city}}</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="f-c-orange">{{value.prestoreMoney/100}}元卡</span></p>
                                     </td>
                                 </tr>
@@ -67,7 +67,7 @@ export default{
             vm.$parent.off.detailsExclusiveNumber=false;
         },
         getNumberDetails(v){
-            let vm=this,data={id:v};
+            let vm=this,data={number:v};
             requestGetExclusiveNumerDetails(data)
             .then((data)=>{
                 vm.off.numberDetailsAlert=true                                
