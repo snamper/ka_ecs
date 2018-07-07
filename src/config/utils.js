@@ -192,7 +192,7 @@ export const translateData=(type,v)=> {
             if(!isNaN(v)){
                 return (v/100).toFixed(2)
             }else{
-                return '0.00'
+                return '--'
             }
         case 'formatPhone'://格式化手机号
             v=v+"";

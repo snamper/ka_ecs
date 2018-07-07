@@ -157,39 +157,39 @@
                                         </tr>
                                         <tr v-if="auditData.monopolyType==1||auditData.monopolyType==2">
                                             <td>初始可选包：</td>
-                                            <td>{{auditData.primalyOptPkg||'--'}}</td>
+                                            <td>{{auditData.prodRecords.primalyOptPkg||'--'}}</td>
                                         </tr>
                                         <tr v-if="auditData.monopolyType==1||auditData.monopolyType==2">
                                             <td>初始套餐：</td>
-                                            <td>{{auditData.primalyPkg||'--'}}</td>
+                                            <td>{{auditData.prodRecords.primalyPkg||'--'}}</td>
                                         </tr>
                                         <tr v-if="auditData.monopolyType==1||auditData.monopolyType==2">
                                             <td>初始预存：</td>
-                                            <td>{{auditData.primalyPrestore||'--'}}</td>
+                                            <td>{{auditData.prodRecords.primalyPrestore||'--'}}</td>
                                         </tr>
                                         <tr v-if="auditData.monopolyType==1||auditData.monopolyType==2">
                                             <td>制卡可选包：</td>
-                                            <td>{{auditData.makeOptPkg||'--'}}</td>
+                                            <td>{{auditData.prodRecords.makeOptPkg||'--'}}</td>
                                         </tr>
                                         <tr v-if="auditData.monopolyType==1||auditData.monopolyType==2">
                                             <td>制卡套餐：</td>
-                                            <td>{{auditData.makePkg||'--'}}</td>
+                                            <td>{{auditData.prodRecords.makePkg||'--'}}</td>
                                         </tr>
                                         <tr v-if="auditData.monopolyType==1||auditData.monopolyType==2">
                                             <td>制卡预存：</td>
-                                            <td>{{auditData.makePrestore||'--'}}</td>
+                                            <td>{{auditData.prodRecords.makePrestore||'--'}}</td>
                                         </tr>
                                         <tr v-if="auditData.monopolyType==1||auditData.monopolyType==2">
                                             <td>开卡可选包：</td>
-                                            <td>{{auditData.openOptPkg||'--'}}</td>
+                                            <td>{{auditData.prodRecords.openOptPkg||'--'}}</td>
                                         </tr>
                                         <tr v-if="auditData.monopolyType==1||auditData.monopolyType==2">
                                             <td>开卡套餐：</td>
-                                            <td>{{auditData.openPkg||'--'}}</td>
+                                            <td>{{auditData.prodRecords.openPkg||'--'}}</td>
                                         </tr>
                                         <tr v-if="auditData.monopolyType==1||auditData.monopolyType==2">
                                             <td>开卡预存：</td>
-                                            <td>{{auditData.openPrestore||'--'}}</td>
+                                            <td>{{translateData('money',auditData.prodRecords.openPrestore)}}</td>
                                         </tr>
                                         <tr v-if="auditData.monopolyType==1||auditData.monopolyType==2">
                                             <td>首充金额：</td>

@@ -103,7 +103,6 @@
 										<b v-if="list.cardType==2" class="f-c-yellow">联通</b>
 										<b class="f-c-yellow">{{ $parent.translateData(5,list.phoneLevel) }}</b>，{{list.phoneHome}}）<span v-if="list.isMonopoly==1" class="supIcon">【专营号】</span></td>
 								</tr>
-								<tr><td>号码规则：</td><td>{{ list.ruleCode }}</td></tr>
 								<tr><td>用户姓名：</td><td>{{ list.userName }}</td></tr>
 								<tr><td>身份证号码：</td><td>{{ list.identityCard }}</td></tr>
 								<tr v-if="list.operatorType==7"><td>原机主证件号码：</td><td>{{ list.identityCardOld }}</td></tr>
@@ -212,7 +211,7 @@
                                     <td>{{list.prodRecords.openPkg||'--'}}</td>
                                 </tr>
                                 <tr v-if="list.monopolyType==1||list.monopolyType==2">
-                                    <td>开卡预存</td>
+                                    <td>开卡预存：</td>
                                     <td>{{translateData('money',list.prodRecords.openPrestore)}}</td>
                                 </tr>
                                 <tr v-if="list.monopolyType==1||list.monopolyType==2">
