@@ -42,7 +42,7 @@
 			</tbody>
 		</table>
   	</header>
-  	<aside class="g-side">
+  	<aside class="g-side f-scroll-lt">
 		<nav class="g-side-nav">
 			<header class="g-side-head"><img src="../assets/km/images/logo_page.png" alt="titleLogo"></header>
             <ul class="m-mainCatalog">

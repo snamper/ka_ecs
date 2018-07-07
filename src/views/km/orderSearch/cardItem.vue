@@ -37,7 +37,19 @@
                                 <span class="radio"><input @change="inpChange(this)" value="6" type="radio" v-model="form.orderType">
                                     <span></span>
                                 </span>
-                                <span class="text">空卡</span>
+                                <span class="text">开空卡</span>
+                            </label>
+                            <label v-show="form.source==6">
+                                <span class="radio"><input @change="inpChange(this)" value="9" type="radio" v-model="form.orderType">
+                                    <span></span>
+                                </span>
+                                <span class="text">开白卡</span>
+                            </label>
+                            <label v-show="form.source==6">
+                                <span class="radio"><input @change="inpChange(this)" value="10" type="radio" v-model="form.orderType">
+                                    <span></span>
+                                </span>
+                                <span class="text">开成卡</span>
                             </label>
                             <label v-show="form.source==6&&(off.type==2||off.type==1)">
                                 <span class="radio"><input value="7" type="radio" v-model="form.orderType">
@@ -56,18 +68,6 @@
                                     <span></span>
                                 </span>
                                 <span class="text">补换卡</span>
-                            </label>
-                            <label v-show="form.source==6">
-                                <span class="radio"><input @change="inpChange(this)" value="9" type="radio" v-model="form.orderType">
-                                    <span></span>
-                                </span>
-                                <span class="text">开空卡</span>
-                            </label>
-                            <label v-show="form.source==6">
-                                <span class="radio"><input @change="inpChange(this)" value="10" type="radio" v-model="form.orderType">
-                                    <span></span>
-                                </span>
-                                <span class="text">开白卡</span>
                             </label>
                         </div>
                     </div>
@@ -172,9 +172,9 @@
                         <span class="dp">开卡方式：</span>
                         <div class="m-form-checkbox">
                             <label><span class="checkbox"><input type="checkbox" value="true" v-model="checkAllopencardType" checked="checked" @change="BtnCheckAllopencardType"><span></span></span><span class="text">全部</span></label>
-                            <label><span class="checkbox"><input type="checkbox" value="1" v-model="form.opencardType" checked="checked"><span></span></span><span class="text">卡盟</span></label>
-                            <label><span class="checkbox"><input type="checkbox" value="6" v-model="form.opencardType" checked="checked"><span></span></span><span class="text">远微商城</span></label>
-                            <label><span class="checkbox"><input type="checkbox" value="7" v-model="form.opencardType" checked="checked"><span></span></span><span class="text">信时空公众号</span></label>
+                            <label><span class="checkbox"><input type="checkbox" value="1" v-model="form.sourceFrom" checked="checked"><span></span></span><span class="text">卡盟</span></label>
+                            <label><span class="checkbox"><input type="checkbox" value="6" v-model="form.sourceFrom" checked="checked"><span></span></span><span class="text">远微商城</span></label>
+                            <label><span class="checkbox"><input type="checkbox" value="7" v-model="form.sourceFrom" checked="checked"><span></span></span><span class="text">信时空公众号</span></label>
                         </div>
                     </div>
                     <div class="row">
@@ -345,7 +345,7 @@
                             </label>
                         </div>
                     </div>
-                    <div class="row" :class="{active:form.select==8}" v-if="off.type==2">
+                    <div class="row" :class="{active:form.select==8}" v-if="form.source==6">
                         <span class="m-form-radio">
                             <label>
                                 <span class="radio"><input type="radio" value="8" :readonly="form.select!=8" v-model="form.select">
@@ -605,23 +605,10 @@
 </template>
 <script>
 require("../../../assets/km/js/base64.min.js");
-import {
-  searchAuditList,
-  reAudit,
-  reqCommonMethod
-} from "../../../config/service.js";
+import { searchAuditList, reAudit, reqCommonMethod } from "../../../config/service.js";
 import pagination from "../../../componentskm/page.vue";
 import details from "../../../componentskm/cardOrderDetails.vue";
-import {
-  getDateTime,
-  translateData,
-  secondsFormat,
-  getUnixTime,
-  createDownload,
-  setStore,
-  getStore,
-  errorDeal
-} from "../../../config/utils.js";
+import { getDateTime, translateData, secondsFormat, getUnixTime, createDownload, setStore, getStore, errorDeal } from "../../../config/utils.js";
 export default {
   data() {
     return {
@@ -638,7 +625,7 @@ export default {
         cardType: 0, //运营商
         orderStatus: 0, //订单状态
         operatorType:1,//操作类型
-        opencardType:[1,6,7],//开卡方式
+        sourceFrom :[1,6,7],//开卡方式
         auditType: 9, //审核方式
         context1: "", //订单号码
         context2: "", //手机号码
@@ -686,8 +673,8 @@ export default {
     'form.orderStatus'(){
         this.form.select = 6;
     },
-    'form.opencardType'(){
-        if(this.form.opencardType.length==3){
+    'form.sourceFrom'(){
+        if(this.form.sourceFrom.length==3){
             this.checkAllopencardType=true;
         }else{
             this.checkAllopencardType=false;
@@ -723,7 +710,7 @@ export default {
           auditType: vm.form.auditType,
           cardType: vm.form.cardType,
           periodType: vm.off.type,
-          opencardType:vm.form.opencardType.join(',')
+          sourceFrom :vm.form.sourceFrom .join(',')
         };
       //非卡盟SDK+远特I卡，进行中，已关闭
       if (json.source != 7 &&json.source != 8 &&(vm.off.type == 3 || vm.off.type == 4)) {
@@ -803,9 +790,7 @@ export default {
         if (json.type == 4 || json.type == 8) {
           url = "km-ecs/w/audit/ingList4Reinput";
         } else
-          vm.off.type == 1
-            ? (url = "km-ecs/w/audit/ingList")
-            : (url = "km-ecs/w/audit/edList");
+          vm.off.type == 1 ? (url = "km-ecs/w/audit/ingList") : (url = "km-ecs/w/audit/edList");
       }
       if (vm.off.isLoad) return false;
       vm.off.isLoad = true;
@@ -824,8 +809,7 @@ export default {
     },
     searchClosedAndDoing: function(page) {
       //进行中,已关闭
-      var vm = this,
-        url,
+      var vm = this, url,
         json = {
           source: vm.form.source,
           type: vm.form.orderType,
@@ -835,7 +819,8 @@ export default {
           endTime: vm.form.endTime,
           status: vm.off.type,
           statusDetail: vm.form.orderStatus,
-          cardType: vm.form.cardType
+          cardType: vm.form.cardType,
+          sourceFrom:vm.form.sourceFrom.join(",")
         };
       let context = vm.form["context" + vm.form.select];
       if (vm.form.select == 1 && !context) {
@@ -883,7 +868,7 @@ export default {
       json.searchtype = vm.form.select;
       if (vm.off.isLoad) return false;
       vm.off.isLoad = true;
-      if (json.type == 6) {
+      if (json.type == 6||json.type == 9||json.type == 10||json.type == 11) {//4、实名补录；6、空卡；7、过户办理；8、补换卡
         url = "km-ecs/w/audit/getOrderList";
       } else if (json.type == 8) {
         url = "km-ecs/w/audit/getAdditionOrderList";
@@ -891,28 +876,27 @@ export default {
       }
       searchAuditList( json, function() { vm.off.isLoad = false; }, url )
         .then(data => {
-          if (vm.form.orderType == 6) {
+            if (vm.form.orderType == 6) {
             //空卡
             vm.off.showData = 6;
-          } else if (vm.form.orderType == 8) {
+            } else if (vm.form.orderType == 8) {
             //补换卡
             vm.off.showData = 8;
-          }
-          vm.list = data.data.list;
-          vm.total = data.data.total;
-          vm.maxpage = Math.ceil(parseInt(data.data.total) / 10);
-          vm.pageNum = page || 1;
-          vm.callback = function(v) {
+            }
+            vm.list = data.data.list;
+            vm.total = data.data.total;
+            vm.maxpage = Math.ceil(parseInt(data.data.total) / 10);
+            vm.pageNum = page || 1;
+            vm.callback = function(v) {
             vm.searchClosedAndDoing(v);
-          };
-          vm.off.isLoad = false;
+            };
+            vm.off.isLoad = false;
         })
         .catch(error => errorDeal(error));
     },
     // 导出查询结果excel
     downLoadList: function(page) {
-      var vm = this,
-        url,
+      var vm = this, url,
         json = {
           source: vm.form.source,
           type: vm.form.orderType,
@@ -974,7 +958,6 @@ export default {
       json.codeId = codeId;
       json.context = context;
       json.searchtype = vm.form.select;
-
       if (vm.form.orderType == 7 || vm.form.orderType == 6) {
         url = "km-ecs/w/audit/downloadEdList";
       } else if (vm.form.orderType == 4 || vm.form.orderType == 8) {
@@ -1306,9 +1289,9 @@ export default {
     },
     BtnCheckAllopencardType(){
         if(this.checkAllopencardType==true){
-            this.form.opencardType=[1,6,7]
+            this.form.sourceFrom=[1,6,7]
         }else{
-            this.form.opencardType=[]
+            this.form.sourceFrom=[]
         }
     }
   }

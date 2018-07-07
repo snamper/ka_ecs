@@ -191,6 +191,18 @@
                                             <td>开卡预存：</td>
                                             <td>{{auditData.openPrestore||'--'}}</td>
                                         </tr>
+                                        <tr v-if="auditData.monopolyType==1||auditData.monopolyType==2">
+                                            <td>首充金额：</td>
+                                            <td>{{translateData('money',auditData.prodRecords.firstCharge)}}</td>
+                                        </tr>
+                                        <tr v-if="auditData.monopolyType==1||auditData.monopolyType==2">
+                                            <td>首充金额折扣：</td>
+                                            <td>{{auditData.prodRecords.firstChargeDiscount/1000}}折</td>
+                                        </tr>
+                                        <tr v-if="auditData.monopolyType==1||auditData.monopolyType==2">
+                                            <td>首充实际支付：</td>
+                                            <td>{{translateData('money',auditData.prodRecords.firstChargeActual/100)}}</td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </td>

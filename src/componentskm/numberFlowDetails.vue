@@ -5,7 +5,7 @@
     p.whiteDetailsTitle>span, p.emptyDetailsTitle>span{display: inline-block;width: 10px;height: 10px;background: url('../assets/images/dian.png') no-repeat center;background-size: contain}
     .table-numberDetails{border:none}
     p.detailsEleP{margin-bottom: 10px;}
-    a.detailsEleA{text-decoration: underline}
+    a.detailsEleA{text-decoration: underline;color: #20A0FF;}
 </style>
 <template>
     <section>
@@ -18,7 +18,7 @@
                     </div>
                 </header>
                 <div class="g-box">
-                    <p class="detailsEleP"><a class="f-t-d-u">{{translateData('formatPhone',orderDetails.phoneTitle)}}***</a></p>
+                    <p class="detailsEleP"><a class="detailsEleA">{{translateData('formatPhone',orderDetails.phoneTitle)}}***</a></p>
                     <p class="numberInfo">
                         <b><label class="f-c-grey">归属地 ：</label>{{orderDetails.cityName||'--'}}</b>
                         <b><label class="f-c-grey">预存 ：</label>{{translateData('money',orderDetails.preStore)}}元</b>

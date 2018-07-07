@@ -41,7 +41,7 @@
                             <tr>
                                 <td>状态修改时间：</td>
                                 <td>{{getDateTime(detailsEmpty.modify_time)[6]}} <a @click="getDetails(2,detailsEmpty.sys_order_id)">查看详情</a></td>
-                                <td>开卡人位置信息：</td>
+                                <td>操作人位置信息：</td>
                                 <td>N{{detailsEmpty.user_token_info.latitude||'--'}},E{{detailsEmpty.user_token_info.longitude||'--'}}<a class="f-t-d-u" @click="getDetails(3,detailsEmpty.user_token_info)">查看地图</a>{{detailsEmpty.street}}</td>
                             </tr>
                             <tr>
@@ -92,7 +92,7 @@
                             <tr>
                                 <td>状态修改时间：</td>
                                 <td>{{getDateTime(detailsWhite.create_time)[6]}}</td>
-                                <td>开卡人位置信息：</td>
+                                <td>操作人位置信息：</td>
                                 <td>N{{detailsWhite.user_token_info.latitude||'--'}},E{{detailsWhite.user_token_info.longitude||'--'}}<a @click="getDetails(3,detailsWhite.user_token_info)">查看地图</a>{{detailsWhite.street}}</td>
                             </tr>
                             <tr>

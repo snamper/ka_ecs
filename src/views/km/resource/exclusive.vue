@@ -185,7 +185,7 @@ export default {
                 isLoad:false,
             },
             form:{
-                select:"",
+                select:1,
                 context1:"",//号码/号段
                 context2:"",//设备号
                 context3:"",//iccid
@@ -231,7 +231,8 @@ export default {
     methods:{
         searchList(v){
             let vm=this,json={};
-                vm.form={whiteList:"",
+                vm.search={
+                whiteList:"",
                 whiteListTotal:0,
                 chengkaList:"",
                 chengkaListTotal:0,
@@ -249,6 +250,7 @@ export default {
                     });
                     return false;
                 }
+                console.log(vm.form.select)
                 if(vm.form.select==1){
                     json.phoneNum=vm.form.context1;
                 }else if(vm.form.select==2){

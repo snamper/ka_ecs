@@ -181,39 +181,51 @@
                                 </tr>
                                 <tr v-if="list.monopolyType==1||list.monopolyType==2">
                                     <td>初始可选包：</td>
-                                    <td>{{list.primalyOptPkg||'--'}}</td>
+                                    <td>{{list.prodRecords.primalyOptPkg||'--'}}</td>
                                 </tr>
                                 <tr v-if="list.monopolyType==1||list.monopolyType==2">
                                     <td>初始套餐：</td>
-                                    <td>{{list.primalyPkg||'--'}}</td>
+                                    <td>{{list.prodRecords.primalyPkg||'--'}}</td>
                                 </tr>
                                 <tr v-if="list.monopolyType==1||list.monopolyType==2">
                                     <td>初始预存：</td>
-                                    <td>{{list.primalyPrestore||'--'}}</td>
+                                    <td>{{translateData('money',list.prodRecords.primalyPrestore)}}</td>
                                 </tr>
                                 <tr v-if="list.monopolyType==1||list.monopolyType==2">
                                     <td>制卡可选包：</td>
-                                    <td>{{list.makeOptPkg||'--'}}</td>
+                                    <td>{{list.prodRecords.makeOptPkg||'--'}}</td>
                                 </tr>
                                 <tr v-if="list.monopolyType==1||list.monopolyType==2">
                                     <td>制卡套餐：</td>
-                                    <td>{{list.makePkg||'--'}}</td>
+                                    <td>{{list.prodRecords.makePkg||'--'}}</td>
                                 </tr>
                                 <tr v-if="list.monopolyType==1||list.monopolyType==2">
                                     <td>制卡预存：</td>
-                                    <td>{{list.makePrestore||'--'}}</td>
+                                    <td>{{translateData('money',list.prodRecords.makePrestore)}}</td>
                                 </tr>
                                 <tr v-if="list.monopolyType==1||list.monopolyType==2">
                                     <td>开卡可选包：</td>
-                                    <td>{{list.openOptPkg||'--'}}</td>
+                                    <td>{{list.prodRecords.openOptPkg||'--'}}</td>
                                 </tr>
                                 <tr v-if="list.monopolyType==1||list.monopolyType==2">
                                     <td>开卡套餐：</td>
-                                    <td>{{list.openPkg||'--'}}</td>
+                                    <td>{{list.prodRecords.openPkg||'--'}}</td>
                                 </tr>
                                 <tr v-if="list.monopolyType==1||list.monopolyType==2">
-                                    <td>开卡预存：</td>
-                                    <td>{{list.openPrestore||'--'}}</td>
+                                    <td>开卡预存</td>
+                                    <td>{{translateData('money',list.prodRecords.openPrestore)}}</td>
+                                </tr>
+                                <tr v-if="list.monopolyType==1||list.monopolyType==2">
+                                    <td>首充金额：</td>
+                                    <td>{{translateData('money',list.prodRecords.firstCharge)}}</td>
+                                </tr>
+                                <tr v-if="list.monopolyType==1||list.monopolyType==2">
+                                    <td>首充金额折扣：</td>
+                                    <td>{{list.prodRecords.firstChargeDiscount/1000}}折</td>
+                                </tr>
+                                <tr v-if="list.monopolyType==1||list.monopolyType==2">
+                                    <td>首充实际支付：</td>
+                                    <td>{{translateData('money',list.prodRecords.firstChargeActual/100)}}</td>
                                 </tr>
 							</tbody>
 						</table>

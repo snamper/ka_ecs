@@ -71,14 +71,15 @@
                     <tr v-for="(v,i) in dataList" :key="i">
                         <td>{{ ((pageNum-1)*10+(i+1)) }}</td>
                         <td><a @click="getNumberDetails(v.id)" class="underLine" href="javascript:void(0)">{{v.number}}</a></td>
-                        <td>{{v.prestoreMoney}}</td>
-                        <td>{{v.city}}</td>
+                        <td>{{translateData('money',v.prestoreMoney)}}</td>
+                        <td>{{v.city||'--'}}</td>
 
                         <td class="dealerInfo">
                             <table>
                                 <tr v-if="v.dealers.length!=0" v-for="(value,index) in v.dealers" :key="index">
                                     <td >
-                                        <a class="underLine" href="javascript:void(0)" @click="detailsDealer(value.dealerId)">{{value.companyName}}</a>
+                                        <a v-if="value.companyName" class="underLine" href="javascript:void(0)" @click="detailsDealer(value.dealerId)">{{value.companyName}}</a>
+                                        <a v-else>--</a>
                                     </td>
                                 </tr>
                                 <tr v-if="v.dealers.length==0">
@@ -93,7 +94,8 @@
                                 <tr v-if="v.dealers.length!=0" v-for="(value,index) in v.dealers" :key="index">
                                     <td >
                                         <span v-if="value.merchantType==1">企业</span>
-                                        <span v-if="value.merchantType==2">个人</span>
+                                        <span v-else-if="value.merchantType==2">个人</span>
+                                        <span v-else>--</span>
                                     </td>
                                 </tr>
                                 <tr v-if="v.dealers.length==0">
@@ -107,7 +109,7 @@
                             <table>
                                 <tr v-if="v.dealers.length!=0" v-for="(value,index) in v.dealers" :key="index">
                                     <td >
-                                        {{value.nickname}}
+                                        {{value.nickname||'--'}}
                                     </td>
                                 </tr>
                                 <tr v-if="v.dealers.length==0">
@@ -151,7 +153,7 @@ export default{
             i:'',            
             list:'',//查询数据
             off:{
-                isLoad:!1,//ajax加载控制
+                isLoad:false,//ajax加载控制
                 detailskind:'',
                 pop:0,//弹出组件开关
                 modifyInfo:0//显示修改商户资料开关
@@ -196,23 +198,7 @@ export default{
 				callback:Function,//分页响应函数
 				total:0,//列表总条数
 			},
-			dataList:
-                {
-                    "city": "北京",
-                    "number": "17190069919",
-                    "prestoreMoney": "3500",
-                    "dealers": [{
-                        "dealerId": "test",
-                        "companyName": "家乐福",
-                        "merchantType": "1", //商户属性  1 企业 2 个人
-                        "nickname": "test" //商户类别
-                },{
-                        "dealerId": "test",
-                        "companyName": "家乐福22",
-                        "merchantType": "2", //商户属性  1 企业 2 个人
-                        "nickname": "测试" //商户类别
-                }]
-            }
+			dataList:{}
         ,//详情数据
 			total:0,//总查询条数
 			pageNum:1,//当前页数
@@ -234,20 +220,22 @@ export default{
 		this.init()
 	},
 	methods:{
-		init:function(){
+		init(){
 		
 		},
-		searchList:function(page){
-			let vm=this,data,url;
+		searchList(page){
+            let vm=this,data,url;
             data={phone:vm.form.context1,cityCode:vm.selectedNode,prestoreMoney:vm.form.context5,currentPage:page||1,pageSize:20} 
             vm.list=true;
             vm.pageNum=page||1;
             vm.searchRoad.push({'vm.form.type':vm.ajaxData.details});
             vm.i=vm.searchRoad.length; 
-            requestGetExclusiveNumer(data,function(){vm.off.isLoad=false;})
+			vm.off.isLoad=true;
+            requestGetExclusiveNumer(data,()=>{vm.off.isLoad=false;})
             .then((data)=>{
                 vm.dataList=data.data
                 vm.maxpage=Math.ceil(parseInt(data.total)/20);
+                vm.total=data.total;
                 vm.callback=function(v){vm.searchList(v)};                
             }).catch(e=>errorDeal(e))     
         },detailsDealer(v){
@@ -271,7 +259,7 @@ export default{
             }).catch(e=>errorDeal(e))
         },
 		// 导出查询结果excel
-		downLoadList:function(){
+		downLoadList(){
 			const vm=this;
 			let json=vm.getForm();
 			if(!json)return false;
@@ -287,7 +275,7 @@ export default{
 		        vm.off.isLoad=false;
 	      	});
 		},
-		details:function(e){//详情
+		details(e){//详情
 			var vm=this,
 			orderId=e.target.name,
 			json={"pageSize":"10","pageNum":"-1","params":['occupy_order_id="'+orderId+'"'],"opKey":"order.reserve.details"};
@@ -315,7 +303,7 @@ export default{
 				}
 			},300)
 		},
-		to_laydate:function(v){
+		to_laydate(v){
 			var vm=this;
 			laydate({
 				istime:true,

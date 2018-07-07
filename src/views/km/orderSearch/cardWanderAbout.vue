@@ -4,7 +4,7 @@
 <style scoped>
 .form-c.o-no-bgc>.row .text{width: auto}
 .m-form-radio>label{margin-right: 0;}
-a.detailsEleA{text-decoration: underline;}
+a.detailsEleA{text-decoration: underline;color: #20A0FF;cursor: pointer;}
 div.input-box{width: 70%;}
 span.m-form-radio{width: 75px;}
 </style>

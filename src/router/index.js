@@ -184,7 +184,7 @@ const Resource_device = resolve => {//设备查询
         load();
     });
 };
-const Resource_exclusiveNumber = resolve => {//设备查询
+const Resource_ordinaryExclusive = resolve => {//设备查询
     load(true);
     require.ensure(["@/views/km/resource/exclusiveNumber"], () => {
       resolve(require("@/views/km/resource/exclusiveNumber"));
@@ -192,7 +192,7 @@ const Resource_exclusiveNumber = resolve => {//设备查询
     });
 };
 
-const Resource_ordinaryExclusive = resolve => {//大众专营号
+const Resource_exclusiveNumber = resolve => {//大众专营号
     load(true);
     require.ensure(["@/views/km/resource/ordinaryExclusive"], () => {
       resolve(require("@/views/km/resource/ordinaryExclusive"));

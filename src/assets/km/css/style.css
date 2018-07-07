@@ -275,9 +275,9 @@ input, button{ -webkit-appearance: none;-moz-appearance: none;-ms-appearance: no
 .layer-refuse-pop>textarea{
     border-radius: 7px;
     width: 100%;
-  border: 1px solid #bfcbd9;color: #1f2d3d;
-  padding: 0.1rem 0;
-  height: 0.6rem;
+    border: 1px solid #bfcbd9;color: #1f2d3d;
+    padding: 0.1rem 0;
+    height: 0.6rem;
     transition: border-color .2s cubic-bezier(.645, .045, .355, 1);
   -webkit-transition: border-color .2s cubic-bezier(.645, .045, .355, 1);
   -moz-transition: border-color .2s cubic-bezier(.645, .045, .355, 1);
@@ -320,7 +320,7 @@ input, button{ -webkit-appearance: none;-moz-appearance: none;-ms-appearance: no
 /*body滚动条*/
 /*滚动条整体部分*/
 .f-scroll-lt::-webkit-scrollbar{
-    width:6px;
+    width:2px;
     height:2px;
 }
 /*滚动条两端的按钮*/
@@ -334,7 +334,7 @@ input, button{ -webkit-appearance: none;-moz-appearance: none;-ms-appearance: no
 }
 /*内层轨道*/
 .f-scroll-lt::-webkit-scrollbar-track-piece{
-    background-color:#fff;
+    background-color:#405364;
 }
 /*滚动条里面可以拖动的那部分*/
 .f-scroll-lt::-webkit-scrollbar-thumb{

@@ -19,10 +19,7 @@ require("./assets/km/js/ajax.js");
 require("./assets/km/js/base64.min.js");
 require("./config/service.js");
 require("./assets/ym/js/trim.js");
-import iView from 'iview';
-import 'iview/dist/styles/iview.css';
 require("./assets/main.css");
-Vue.use(iView);
 
 new Vue({
   el: '#app',

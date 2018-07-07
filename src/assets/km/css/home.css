@@ -62,7 +62,8 @@
   background-color: #405364;
   height: 100%;
   left: -1.8rem;
-  z-index: 901
+  z-index: 901;
+  overflow: scroll;
 }
 
 .g-side-nav {}
