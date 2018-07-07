@@ -183,7 +183,7 @@ export const translateData=(type,v)=> {
             return v==1 ? '进行中' : v==2 ? '制卡成功' : v==3 ? '制卡失败' : v==4 ? '订单关闭':v==5 ? '已激活':'--';
         break;
         case 14://卡类型
-            return v==1 ? '空卡' : v==2 ? '白卡' : v==3 ? '成卡' : '--';
+            return v==4 ? '成卡' : v==5 ? '白卡' : v==6 ? '空卡' : '--';
         break;
         case 15://开卡方式
             return v==1 ? '卡盟APP' : v==2 ? 'SDK' : v==3 ? 'DWatch' : v==4? 'AndroidWear' : v==5 ? 'i卡' : v==6 ? '远微商城' : v==7 ? '信时空公众号' : '--' ;
