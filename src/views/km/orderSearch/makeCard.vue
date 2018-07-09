@@ -4,12 +4,10 @@
   *@date 2017-11-6
 * *-->
 <style scoped>
-    .m-top-shift>.box{margin-bottom: none;}
-    div.input-box{width: 60%;}
     .m-top-shift>.box{margin-bottom: 0}
-    a.linka{color: #20A0FF}
+    div.input-box{width: 60%;}
+    a.linka{color: #20A0FF;cursor: pointer;}
 </style>
-
 <template>
 <section class="g-search-menu">
     <div id="search" :class="{active:off.cardDetails}">
@@ -31,8 +29,7 @@
                 </section>
                 <section>
                     <div class="g-search-form">
-                        <div class="m-tag">
-                            <b></b>精确查询</div>
+                        <div class="m-tag"><b></b>精确查询</div>
                         <!--订单号码查询-->
                         <section class="form-c">
                             <div class="row clr m-col-2">
@@ -41,8 +38,7 @@
                                 </div>
                             </div>
                         </section>
-                        <div class="m-tag">
-                            <b></b>条件查询</div>
+                        <div class="m-tag"><b></b>条件查询</div>
                         <section class="form-c">
                             <div class="row clr m-col-2">
                                 <div class="dp col-l">时间区间：</div>
@@ -50,7 +46,7 @@
                                     <span class="m-time-area"><input @click="to_laydate(1)" v-model="form.startTime" type="text" readonly="readonly"><input @click="to_laydate(2)" v-model="form.endTime" type="text" readonly="readonly"></span>
                                 </div>
                             </div>
-                             <div class="row pdl">
+                            <div class="row pdl">
                                 <span class="dp">码号类型：</span>
                                 <div class="m-form-checkbox">
                                     <label><span class="checkbox"><input type="checkbox" value="true" v-model="checkAllcardType" checked="checked" @change="BtnCheckAllCardType"><span></span></span><span class="text">全部</span></label>
@@ -112,11 +108,7 @@
                         </section>
                     </div>
                     <div class="m-total-table" v-if="searchMakeCardList">
-                        <div class="total-head">
-                            统计结果
-                            <b>{{total}}</b>
-                            <button class="btn_export_excel" v-if="false" :disabled="searchMakeCardList.length==0" @click="exportList">导出excel</button>
-                        </div>
+                        <div class="total-head"> 统计结果 <b>{{total}}</b> <button class="btn_export_excel" v-if="false" :disabled="searchMakeCardList.length==0" @click="exportList">导出excel</button> </div>
                         <table v-if="form.source==1">
                             <thead>
                                 <tr>
@@ -178,7 +170,7 @@
                                 <!--查询结果表格-->
                                 <tr v-for="(todo,index) in searchMakeCardList">
                                     <td>{{((pageNow-1)*10+(index+1))}}</td>
-                                    <td><a @click="searchMakeCardDetails(todo)">{{todo.orderId||'--'}}</a></td>
+                                    <td><a class="linka" @click="searchMakeCardDetails(todo)">{{todo.orderId||'--'}}</a></td>
                                     <td>{{getDateTime(todo.creatTime)[6]}}</td>
                                     <td>
                                         <span v-if="todo.phoneType==0">{{todo.phoneSegment||'--'}}****</span>
