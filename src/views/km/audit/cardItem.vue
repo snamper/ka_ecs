@@ -178,7 +178,7 @@
                                         </tr>
                                         <tr v-if="auditData.monopolyType==1||auditData.monopolyType==2">
                                             <td>首充金额：</td>
-                                            <td>{{auditData.prodRecords.firstCharge}}元</td>
+                                            <td>{{translateData('money',auditData.prodRecords.firstCharge)}}元</td>
                                         </tr>
                                         <tr v-if="auditData.monopolyType==1||auditData.monopolyType==2">
                                             <td>首充金额折扣：</td>
@@ -186,7 +186,7 @@
                                         </tr>
                                         <tr v-if="auditData.monopolyType==1||auditData.monopolyType==2">
                                             <td>首充实际支付：</td>
-                                            <td>{{translateData('money',auditData.prodRecords.firstChargeActual)}}元</td>
+                                            <td>{{translateData('money',auditData.prodRecords.firstChargeActual/100)}}元</td>
                                         </tr>
                                     </tbody>
                                 </table>
