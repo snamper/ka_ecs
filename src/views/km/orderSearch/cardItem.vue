@@ -598,9 +598,7 @@
             </div>
         </section>
         <!--详情-->
-        <list-details :list="detailsData" :source="form.source" :type="off.type" v-if="off.details" :number="off.number">
-
-        </list-details>
+        <list-details :list="detailsData" :source="form.source" :type="off.type" v-if="off.details" :number="off.number"> </list-details>
     </div>
 </template>
 <script>
@@ -621,7 +619,7 @@ export default {
       },
       form: {
         source: "6", //订单来源，6、卡盟APP；7、卡盟SDK；8远特i卡
-        orderType: 6, //操作类型,4、实名补录；6、空卡；7、过户办理；8、补换卡
+        orderType: 6, //4：开成卡 5：开白卡 6：开空卡 7：过户 8：实名补登  9：补换卡
         cardType: 0, //运营商
         orderStatus: 0, //订单状态
         operatorType:1,//操作类型

@@ -152,7 +152,6 @@ export const translateData=(type,v)=> {
 			break;
 		case 3://卡盟统计报表查询操作类型
       return v==1 ? '开卡' : v==2 ? '激活商户' : v==3 ? '过户' : v==4 ? '实名补登' : v==5 ? '补换卡' : '--';
-
 			break;
 		case 4://号卡状态
 			return v==1 ? '初始状态' : v==2 ? '成功' : v==3 ? '失败' : v==4 ? '订单关闭' : '--';

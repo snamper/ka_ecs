@@ -11,7 +11,7 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
         '/km_center_ecs/':{
-            // target:'http://192.168.10.66:8091',
+            // target:'http://192.168.10.98:8081',
             target:'http://192.168.10.117:8081',
             changeOrigin:true,
             pathRewrite:{
@@ -19,7 +19,7 @@ module.exports = {
             }
         },
         '/km-ecs/':{
-            // target:'http://192.168.10.66:6086',
+            // target:'https://192.168.10.98:6086',
             target:'http://192.168.10.117:6086',
             changeOrigin:true,
             pathRewrite:{
