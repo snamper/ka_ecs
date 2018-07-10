@@ -10,6 +10,7 @@
     table.whiteCard tr td:nth-child(even){text-align: left;}
     .m-total-table{background-color:transparent }
     .g-list-table, .g-inner-table, .g-box{height: auto;width:99%}
+    a.linka{color: #20A0FF;cursor: pointer;}
 </style>
 <template>
     <section class="g-list-box" id="details">
@@ -42,7 +43,7 @@
                                 <td>状态修改时间：</td>
                                 <td>{{getDateTime(detailsEmpty.modify_time)[6]}} <a @click="getDetails(2,detailsEmpty.sys_order_id)">查看详情</a></td>
                                 <td>操作人位置信息：</td>
-                                <td>N{{detailsEmpty.user_token_info.latitude||'--'}},E{{detailsEmpty.user_token_info.longitude||'--'}}<a class="f-t-d-u" @click="getDetails(3,detailsEmpty.user_token_info)">查看地图</a>{{detailsEmpty.street}}</td>
+                                <td>N{{detailsEmpty.user_token_info.latitude||'--'}},E{{detailsEmpty.user_token_info.longitude||'--'}}<a class="f-t-d-u linka" @click="getDetails(3,detailsEmpty.user_token_info)">查看地图</a>{{detailsEmpty.street}}</td>
                             </tr>
                             <tr>
                                 <td>当前状态：</td>
@@ -93,7 +94,7 @@
                                 <td>状态修改时间：</td>
                                 <td>{{getDateTime(detailsWhite.create_time)[6]}}</td>
                                 <td>操作人位置信息：</td>
-                                <td>N{{detailsWhite.user_token_info.latitude||'--'}},E{{detailsWhite.user_token_info.longitude||'--'}}<a @click="getDetails(3,detailsWhite.user_token_info)">查看地图</a>{{detailsWhite.street}}</td>
+                                <td>N{{detailsWhite.user_token_info.latitude||'--'}},E{{detailsWhite.user_token_info.longitude||'--'}}<a class="f-t-d-u linka" @click="getDetails(3,detailsWhite.user_token_info)">查看地图</a>{{detailsWhite.street}}</td>
                             </tr>
                             <tr>
                                 <td>当前状态：</td>
@@ -157,7 +158,10 @@
                                     <td>ICCID：</td>   
                                     <td>{{detailsEmpty.iccid||'--'}}</td>
                                     <td>折后选号费：</td>
-                                    <td>{{translateData('money',detailsEmpty.actual_card_money)}}（{{detailsEmpty.card_money_rebate/1000}}折）</td>
+                                    <td>{{translateData('money',detailsEmpty.actual_card_money)}}
+                                        <span v-if="detailsEmpty.card_money_rebate/1000!=10">（{{detailsEmpty.card_money_rebate/1000}}折）</span>
+                                        <span v-else></span>
+                                    </td>
                                     
                                 </tr>
                                 <tr>
