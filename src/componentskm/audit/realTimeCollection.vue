@@ -81,15 +81,15 @@ export default{
   watch:{
     imgData(){
       this.oldImage=this.imgData.slice(0,3);
-      this.newImage=this.imgData.slice(3,8);
+      this.newImage=this.imgData.slice(3,7);
     },
   },
 	components:{
 		ImgZoom
 	},
 	created:function(){
-    this.oldImage=this.imgData.slice(0,3);
-    this.newImage=this.imgData.slice(3,8);
+        this.oldImage=this.imgData.slice(0,3);
+        this.newImage=this.imgData.slice(3,7);
 	},
 	methods:{
 		

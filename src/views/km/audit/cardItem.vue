@@ -149,7 +149,7 @@
                                         </tr>
                                         <tr>
                                             <td>号卡类型：</td>
-                                            <td>{{translateData(14,auditData.bizType)}}</td>
+                                            <td>{{translateData(14,auditData.operatorType)}}</td>
                                         </tr>
                                         <tr>
                                             <td>开卡方式：</td>

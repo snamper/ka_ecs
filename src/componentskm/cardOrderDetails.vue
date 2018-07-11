@@ -16,7 +16,7 @@
         </header>
         <div class="g-box">
             <table class="g-list-table">
-                <tbody v-if="list.operatorType!=8&&list.operatorType!=9">
+                <tbody v-if="list.operatorType!=4&&list.operatorType!=8">
                     <tr>
                         <td>
                             <table class="g-inner-table">
@@ -114,8 +114,8 @@
                                     </tr>
                                     <tr v-show="source!=7">
                                         <td>操作人IP：</td>
-                                        <td v-if="source==8">{{ userMoreInfo.host }}</td>
-                                        <td v-else>{{ list.host }}</td>
+                                        <td v-if="source==8">{{ userMoreInfo.host||'--' }}</td>
+                                        <td v-else>{{ list.host || '--'}}</td>
                                     </tr>
                                     <tr v-show="source!=7">
                                         <td>开卡位置信息：</td>
@@ -147,7 +147,8 @@
                                     </tr>
                                     <tr v-show="list.similarity!='0'&&source!=7&&source!=8">
                                         <td>活体识别相似度：</td>
-                                        <td>{{ list.similarity }}%</td>
+                                        <td v-if="list.similarity">{{ list.similarity }}%</td>
+                                        <td v-else>--</td>
                                     </tr>
                                     <tr v-show="userMoreInfo.similarity&&(source==7||source==8)">
                                         <td>活体识别相似度：</td>
@@ -196,13 +197,13 @@
                                     <tr>
                                         <td>IMEI：</td>
                                         <td>
-                                            <span v-if="source!=8">{{ list.IMEI }}</span>
-                                            <span v-else>{{ userMoreInfo.IMEI }}</span>
+                                            <span v-if="source!=8">{{ list.IMEI||'--' }}</span>
+                                            <span v-else>{{ userMoreInfo.IMEI||'--' }}</span>
                                         </td>
                                     </tr>
                                     <tr v-if="source!=7">
                                         <td>ICCID：</td>
-                                        <td>{{ list.ICCID }}</td>
+                                        <td>{{ list.ICCID||'--' }}</td>
                                     </tr>
 
                                     <tr v-show="source!=8">
@@ -213,7 +214,6 @@
                                                 <b v-show="list.terminalType==2">Android</b>
                                             </span>
                                             <span v-else>{{ list.terminalType }}</span>
-
                                         </td>
                                     </tr>
                                     <tr v-show="source==8">
@@ -275,8 +275,8 @@
                                         <td>{{translateData(10,list.monopolyType)}}</td>
                                     </tr>
                                     <tr>
-                                        <td>号卡类型：</td>
-                                        <td>{{translateData(14,list.bizType)}}</td>
+                                        <td>操作类型：</td>
+                                        <td>{{translateData(1,list.operatorType)}}</td>
                                     </tr>
                                     <tr>
                                         <td>开卡方式：</td>
@@ -317,9 +317,9 @@
                     </tr>
                 </tbody>
                 <!--实名补登-->
-                <RealTimeCollection v-if="list.operatorType==8" :auditStatus="type" :auditData="list" :imgData="imgData"></RealTimeCollection>
+                <RealTimeCollection v-if="list.operatorType==4" :auditStatus="type" :auditData="list" :imgData="imgData"></RealTimeCollection>
                 <!--补换卡-->
-                <RealNameRechCard v-if="list.operatorType==9" :auditStatus="type" :auditData="list" :imgData="imgData"></RealNameRechCard>
+                <RealNameRechCard v-if="list.operatorType==8" :auditStatus="type" :auditData="list" :imgData="imgData"></RealNameRechCard>
             </table>
         </div>
         <um-details-view v-if="isShowDetails" :type="typeDetails" :list="detailsList" :dealerId="list.dealerId">
@@ -372,13 +372,13 @@ export default {
       vm.imgData[5] = { src: vm.list.handImage, name: "过户人手持照片" };
       vm.imgData[6] = { src: vm.list.signImage, name: "过户人手签名照片" };
       vm.imgData[7] = { src: vm.list.livingImg, name: "活体识别" };
-    } else if (vm.list.operatorType == 9) {//补换卡
+    } else if (vm.list.operatorType == 8) {//补换卡
       vm.imgData[0] = { src: vm.list.reqParam.imageName, name: "正面照片" };
       vm.imgData[1] = { src: vm.list.reqParam.backImageName, name: "反面照片" };
       vm.imgData[2] = { src: vm.list.reqParam.handImageName, name: "手持照片" };
       vm.imgData[3] = { src: vm.list.reqParam.signImageName, name: "手签名照片" };
       // vm.imgData[3]={'src':vm.list.reqParam.livingIdentificationImagePath,'name':'活体识别'};
-    } else if (vm.list.operatorType == 8) {//实名补登
+    } else if (vm.list.operatorType == 4) {//实名补登
       vm.imgData[0] = { src: vm.list.oldReqParam.imageName, name: "原正面照片" };
       vm.imgData[1] = { src: vm.list.oldReqParam.backImageName, name: "原反面照片" }; //
       vm.imgData[2] = { src: vm.list.oldReqParam.handImageName, name: "原手持照片" };
