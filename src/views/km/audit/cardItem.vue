@@ -470,7 +470,7 @@ export default {
           this.$set(vm.imgData, 2, { src: vm.auditData.handImageUrl, name: "手持" });
           this.$set(vm.imgData, 3, { src: vm.auditData.livingImgUrl, name: "活体识别" });
           this.$set(vm.imgData, 4, { src: vm.auditData.signImageUrl, name: "手签名" });
-          if (vm.off.itemType == 6) {
+          if (vm.off.itemType == '4,5,6') {
             this.$set(vm.imgData, 5, { src: vm.auditData.headImageName, name: "身份证照片" });
           }
         }
