@@ -235,10 +235,17 @@
 .u-icon-buhuanka{
     background-image: url(../assets/km/images/icon_buhuanka2.png)
 }
+.u-icon-chengka{
+    background-image: url(../assets/km/images/icon_chengka.png);
+}
+.u-icon-baika{
+    background-image: url(../assets/km/images/icon_baika.png);
+}
 .u-icon-shiftEchart{
   background-image: url(../assets/km/images/echarts-shift.png);
   background-size: 0.25rem;
 }
+
 .statistics{
   position: absolute;
   right: 0.1rem;

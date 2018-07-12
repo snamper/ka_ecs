@@ -22,6 +22,7 @@
                 <span class="u-icon-bulu" v-show="msg.type==10"></span> 
                 <span class="u-icon-guohu" v-show="msg.type==12"></span> 
                 <span class="u-icon-buhuanka" v-show="msg.type==11"></span> 
+                <span class="u-icon-chengka" v-show="msg.type==13"></span> 
               </div>
               <div class="msg-content">
                 <time>{{ getDateTime(msg.createTime)[5] }}</time>
