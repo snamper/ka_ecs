@@ -65,38 +65,38 @@ export default{
 	props:{
 		auditData:Object,
 		imgData:Array,
-    auditStatus:Number,
+        auditStatus:Number,
 	},
 	data(){
 		return{
 			newImage:[],
-      oldImage:[],
-      examine:false,
+            oldImage:[],
+            examine:false,
 		}
 	},
 	components:{
 		ImgZoom
 	},
 	created:function(){
-    let vm=this;
-    this.oldImage=[];
+        let vm=this;
+        this.oldImage=[];
 		this.oldImage=this.imgData.slice(0,4);
-    vm.examine=this.$parent.$parent.off.examine;
+        vm.examine=this.$parent.$parent.off.examine;
 	},
 	methods:{
 		getDateTime(e){
-      return getDateTime(e);
-    },
-    toMap(){
-			var w=document.documentElement.clientWidth,url='',vm=this;
-			let latitude=parseFloat(vm.auditData.userInfo.latitude);
-			let longitude=parseFloat(vm.auditData.userInfo.longitude);
-			w<640 ? url='http://map.baidu.com/mobile/?latlng='+latitude+','+longitude+'' : url='http://map.baidu.com/?latlng='+latitude+','+longitude+'';
-			window.open(url);
-    },
-    translateData(v,i){
-      return translateData(v,i);
-    }
+            return getDateTime(e);
+        },
+        toMap(){
+            var w=document.documentElement.clientWidth,url='',vm=this;
+            let latitude=parseFloat(vm.auditData.userInfo.latitude);
+            let longitude=parseFloat(vm.auditData.userInfo.longitude);
+            w<640 ? url='http://map.baidu.com/mobile/?latlng='+latitude+','+longitude+'' : url='http://map.baidu.com/?latlng='+latitude+','+longitude+'';
+            window.open(url);
+        },
+        translateData(v,i){
+            return translateData(v,i);
+        }
 	}
 }
 </script>

@@ -43,7 +43,7 @@ export default{
 	},
 	methods:{
 		initSet(){
-      this.imgIndex=0;
+        this.imgIndex=0;
 			if(this.imgData[0].src){
 				this.zoomStyle.backgroundImage='url('+this.imgData[0].src+')';
 			}else{

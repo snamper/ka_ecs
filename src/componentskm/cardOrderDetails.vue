@@ -294,26 +294,26 @@
                                         <td>实付金额：</td>
                                         <td>{{translateData('money',list.prodRecords.actualMoney/100)}}元</td>
                                     </tr>
-                                    <tr v-if="list.monopolyType==1||list.monopolyType==2">
+                                    <tr>
                                         <td>初始信息：</td>
                                         <td>可选包：{{list.prodRecords.primalyOptPkg||'--'}}； 套餐：{{list.prodRecords.primalyPkg||'--'}}； 预存：{{translateData('money',list.prodRecords.primalyPrestore)}}元
                                         </td>
                                     </tr>
-                                    <tr v-if="list.monopolyType==1||list.monopolyType==2">
+                                    <tr>
                                         <td>制卡信息：</td>
                                         <td>可选包：{{list.prodRecords.makeOptPkg||'--'}}； 套餐：{{list.prodRecords.makePkg||'--'}}； 预存：{{translateData('money',list.prodRecords.makePrestore)}}元
                                         </td>
                                     </tr>
-                                    <tr v-if="list.monopolyType==1||list.monopolyType==2">
+                                    <tr>
                                         <td>开卡信息：</td>
                                         <td>可选包：{{list.prodRecords.openOptPkg||'--'}}； 套餐：{{list.prodRecords.openPkg||'--'}}； 预存：{{translateData('money',list.prodRecords.openPrestore)}}元
                                         </td>
                                     </tr>
-                                    <tr v-if="list.monopolyType==1||list.monopolyType==2">
+                                    <tr>
                                         <td>首充金额：</td>
                                         <td>{{translateData('money',list.prodRecords.firstCharge)}}元</td>
                                     </tr>
-                                    <tr v-if="list.monopolyType==1||list.monopolyType==2">
+                                    <tr>
                                         <td>首充实际支付：</td>
                                         <td>{{translateData('money',list.prodRecords.firstChargeActual/100)}}元（ {{list.prodRecords.firstChargeDiscount/1000}}折 ）</td>
                                     </tr>
