@@ -155,6 +155,18 @@
                                             <td>开卡方式：</td>
                                             <td>{{translateData(15,auditData.appType)}}</td>
                                         </tr>
+                                        <tr>
+                                            <td>预存补差价：</td>
+                                            <td>{{translateData('money',auditData.diffPrestore)}}元</td>
+                                        </tr>
+                                        <tr>
+                                            <td>账户抵扣：</td>
+                                            <td>{{translateData('money',auditData.deductionMoney)}}元</td>
+                                        </tr>
+                                        <tr>
+                                            <td>实付金额：</td>
+                                            <td>{{translateData('money',auditData.actualMoney/100)}}元</td>
+                                        </tr>
                                         <tr v-if="auditData.monopolyType==1||auditData.monopolyType==2">
                                             <td>初始信息：</td>
                                             <td>可选包：{{auditData.prodRecords.primalyOptPkg||'--'}}；
