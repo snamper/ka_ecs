@@ -556,7 +556,7 @@
                                         <b v-show="todo.status==2" class="f-c-green">已分配</b>
                                     </span>
                                 </span>
-                                <span v-if="form.orderType==6">{{translateData(7,todo.statusDetail)}}</span>
+                                <span v-if="form.orderType!=8">{{translateData(7,todo.statusDetail)}}</span>
                                 <span v-if="form.orderType==8">{{translateData(8,todo.statusDetail)}}</span>
                             </td>
                             <td v-if="off.type!=2">
