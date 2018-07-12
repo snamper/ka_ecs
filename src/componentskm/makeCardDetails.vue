@@ -31,7 +31,7 @@
                                 <td>订单号码：</td>
                                 <td>{{detailsEmpty.sys_order_id||'--'}}</td>
                                 <td>操 作 人：</td> 
-                                <td>{{detailsEmpty.username||'--'}}({{detailsEmpty.user_id||'--'}})<a @click="getDetails(1,detailsEmpty.user_id)">查看详情</a></td>
+                                <td>{{detailsEmpty.username||'--'}}({{detailsEmpty.user_id||'--'}})<a href="javascript:;" class="f-c-blue" @click="getDetails(1,detailsEmpty.user_id)">查看详情</a></td>
                             </tr>
                             <tr>
                                 <td>创建时间：</td>
@@ -41,7 +41,7 @@
                             </tr>
                             <tr>
                                 <td>状态修改时间：</td>
-                                <td>{{getDateTime(detailsEmpty.modify_time)[6]}} <a @click="getDetails(2,detailsEmpty.sys_order_id)">查看详情</a></td>
+                                <td>{{getDateTime(detailsEmpty.modify_time)[6]}} <a href="javascript:;" class="f-c-blue" @click="getDetails(2,detailsEmpty.sys_order_id)">查看详情</a></td>
                                 <td>操作人位置信息：</td>
                                 <td>N{{detailsEmpty.user_token_info.latitude||'--'}},E{{detailsEmpty.user_token_info.longitude||'--'}}<a class="f-t-d-u linka" @click="getDetails(3,detailsEmpty.user_token_info)">查看地图</a>{{detailsEmpty.street}}</td>
                             </tr>
@@ -92,7 +92,7 @@
                             </tr>
                             <tr>
                                 <td>状态修改时间：</td>
-                                <td>{{getDateTime(detailsWhite.create_time)[6]}}</td>
+                                <td>{{getDateTime(detailsWhite.create_time)[6]}} <a href="javascript:;" class="f-c-blue" @click="getDetails(2,detailsWhite.sys_order_id)">查看详情</a></td>
                                 <td>操作人位置信息：</td>
                                 <td>N{{detailsWhite.user_token_info.latitude||'--'}},E{{detailsWhite.user_token_info.longitude||'--'}}<a class="f-t-d-u linka" @click="getDetails(3,detailsWhite.user_token_info)">查看地图</a>{{detailsWhite.street}}</td>
                             </tr>

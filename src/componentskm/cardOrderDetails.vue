@@ -270,20 +270,20 @@
                                         <td>备注：</td>
                                         <td>{{ list.adutiRemarks }}</td>
                                     </tr>
-                                    <tr>
+                                    <tr v-if="source == 6">
                                         <td>号卡分类：</td>
                                         <td>{{translateData(10,list.monopolyType)}}</td>
                                     </tr>
-                                    <tr>
+                                    <tr v-if="source == 6">
                                         <td>操作类型：</td>
                                         <td>{{translateData(1,list.operatorType)}}</td>
                                     </tr>
-                                    <tr>
+                                    <tr v-if="source == 6">
                                         <td>开卡方式：</td>
                                         <td>{{translateData(15,list.appType)}}</td>
                                     </tr>
-                                    <tr>
-                                    <td v-if="source == 6">预存补差价：</td>
+                                    <tr v-if="source == 6">
+                                        <td>预存补差价：</td>
                                         <td>{{translateData('money',list.prodRecords.diffPrestore)}}元</td>
                                     </tr>
                                     <tr v-if="source == 6">
