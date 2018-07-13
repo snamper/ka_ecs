@@ -27,11 +27,11 @@
 			<div class="row">
 				<span class="dp">系统名称：</span>
 				<div class="m-form-radio">
-					<label><span class="radio"><input type="checkbox" value="0" v-model="form.source"><span></span></span><span class="text">远盟</span></label>
-					<label><span class="radio"><input type="checkbox" value="1" v-model="form.source"><span></span></span><span class="text">远易站</span></label>
-					<label><span class="radio"><input type="checkbox" value="3" v-model="form.source"><span></span></span><span class="text">远微商城</span></label>
-					<label><span class="radio"><input type="checkbox" value="2" v-model="form.source"><span></span></span><span class="text">信时空</span></label>
-					<label><span class="radio"><input type="checkbox" value="4" v-model="form.source"><span></span></span><span class="text">网厅</span></label>
+					<label><span class="checkbox"><input type="checkbox" value="0" v-model="form.source"><span></span></span><span class="text">远盟</span></label>
+					<label><span class="checkbox"><input type="checkbox" value="1" v-model="form.source"><span></span></span><span class="text">远易站</span></label>
+					<label><span class="checkbox"><input type="checkbox" value="3" v-model="form.source"><span></span></span><span class="text">远微商城</span></label>
+					<label><span class="checkbox"><input type="checkbox" value="2" v-model="form.source"><span></span></span><span class="text">信时空</span></label>
+					<label><span class="checkbox"><input type="checkbox" value="4" v-model="form.source"><span></span></span><span class="text">网厅</span></label>
 				</div>
 			</div>
 
@@ -391,7 +391,23 @@ export default {
         vm.off.type == 1 &&
           vm.form.select == 5 &&
           (context = vm.form.orderStatus);
-        if (vm.form.select == 2 && !context) {
+        if(vm.form.source==""){
+            layer.open({
+                content: "请选择要查询的系统类型",
+                skin: "msg",
+                time: 2,
+                msgSkin: "error"
+            });
+            return false;
+        }else if(vm.form.orderType==""){
+            layer.open({
+                content: "请选择要查询的操作类型",
+                skin: "msg",
+                time: 2,
+                msgSkin: "error"
+            });
+            return false;
+        }else if (vm.form.select == 2 && !context) {
           layer.open({
             content: "请输入手机号码",
             skin: "msg",
