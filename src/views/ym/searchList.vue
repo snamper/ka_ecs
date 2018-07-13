@@ -368,7 +368,6 @@ export default {
           auditType: vm.form.auditType,
           gztCheck: vm.form.gztChe
         };
-    //   vm.pageNum=page;
       vm.lastSearchPage=page;
       vm.lastSearchIndex=index;
       if (index == "order") {
