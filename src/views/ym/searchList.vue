@@ -26,7 +26,7 @@
 		<section class="form-c">
 			<div class="row">
 				<span class="dp">系统名称：</span>
-				<div class="m-form-radio">
+				<div class="m-form-checkbox">
 					<label><span class="checkbox"><input type="checkbox" value="0" v-model="form.source"><span></span></span><span class="text">远盟</span></label>
 					<label><span class="checkbox"><input type="checkbox" value="1" v-model="form.source"><span></span></span><span class="text">远易站</span></label>
 					<label><span class="checkbox"><input type="checkbox" value="3" v-model="form.source"><span></span></span><span class="text">远微商城</span></label>
