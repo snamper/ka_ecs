@@ -260,7 +260,6 @@ export default {
             }else{
                 this.checkAllcardType=false;
             }
-            console.log(this.cardType)
             if(this.cardType.indexOf("1")>-1||this.cardType.indexOf("0")>-1){
                 this.off.special=false
                 this.off.ordinary=true

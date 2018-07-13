@@ -6,6 +6,7 @@
     .table-numberDetails{border:none}
     p.detailsEleP{margin-bottom: 10px;}
     a.detailsEleA{text-decoration: underline;color: #20A0FF;}
+    a.linka{cursor: pointer;}
 </style>
 <template>
     <section>
@@ -30,18 +31,17 @@
                             <tbody>
                                 <tr v-for="(v,i) in listWhite" :key="i">
                                     <td v-for="(num,ind) in v" :key="ind">
-                                        <p>ICCID: <a class="f-t-d-u">{{num.iccid||'--'}}</a></p>
+                                        <p>ICCID: <a class="detailsEleA">{{num.iccid||'--'}}</a></p>
                                         <p class="f-c-grey f-s-12">IMSI:{{num.imsi}}</p>
                                     </td>   
-                                    <td v-if="kongA" v-for="(v,i) in kongA"></td>
                                 </tr>
                                 <tr>
-                                    <td v-if="!kongA.length" colspan="7">
-                                        <p><a @click="searchMore(1)">展开查看更多</a></p>
+                                    <td v-if="cardTotalWhite>listWhite.length" colspan="5">
+                                        <p><a class="detailsEleA linka" @click="searchMore(1)">展开查看更多</a></p>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td v-if="!listWhite.length" colspan="7">
+                                    <td v-if="!listWhite.length" colspan="5">
                                         <p><h3>暂无数据</h3></p>
                                     </td>
                                 </tr>
@@ -53,20 +53,19 @@
                         <table class="g-in-table col-l">
                             <tbody>
                                 <tr>
-                                    <tr v-for="(v,i) in listEmpty" :key="i">
+                                    <tr class="numList" v-for="(v,i) in listEmpty" :key="i">
                                         <td v-for="(num,ind) in v" :key="ind">
                                             <p>{{num}}</p>
                                         </td> 
-                                        <td v-if="kongAE" v-for="(v,i) in kongAE"></td>  
                                     </tr>  
                                 </tr>
                                 <tr>
-                                    <td v-if="!kongAE.length" colspan="7" >
-                                        <p><a @click="searchMore(2)">展开查看更多</a></p>
+                                    <td v-if="cardTotalEmpty>listWhite.length" colspan="5" >
+                                        <p><a class="detailsEleA linka" @click="searchMore(2)">展开查看更多</a></p>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td v-if="!listEmpty.length" colspan="7">
+                                    <td v-if="!listEmpty.length" colspan="5">
                                         <p><h3>暂无数据</h3></p>
                                     </td>
                                 </tr>
@@ -87,8 +86,6 @@ export default{
     props:{
         listEmpty:Array,
         listWhite:Array,
-        kongA:Array,
-        kongAE:Array,
         orderDetails:Object,
         cardTotalWhite:Number,
         cardTotalEmpty:Number

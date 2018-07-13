@@ -114,7 +114,7 @@ span.m-form-radio{width: 75px;}
                     <my-page :page="pageNow" :maxpage="maxpage" :callback="callback"></my-page>
                 </div>
             </section>
-            <numberFlowDetails v-if="off.flowDetails" :cardTotalWhite="whiteCardTotal" :cardTotalEmpty="emptyCardTotal" :kongA="kongArr" :kongAE="kongArr2" :listEmpty="detailsDataEmpty" :listWhite="detailsDataWhite" :orderDetails="orderDetails"></numberFlowDetails>
+            <numberFlowDetails v-if="off.flowDetails" :cardTotalWhite="whiteCardTotal" :cardTotalEmpty="emptyCardTotal" :listEmpty="detailsDataEmpty" :listWhite="detailsDataWhite" :orderDetails="orderDetails"></numberFlowDetails>
         </div>
         <!--详情页面-->
     </section>
@@ -156,8 +156,6 @@ export default {
         pageSize: 10, //显示条数
         maxpage: 1, //最大页数
         callback: Function ,//page组件点击回调
-        kongArr:[1],
-        kongArr2:[1],
         orderDetails:{},
         whiteCardTotal:0,
         emptyCardTotal:0,
@@ -237,7 +235,8 @@ export default {
         }
     },
     numberFlowDetails(v){//专营号号段的详情
-        let vm=this;vm.searchWhiteRequsetData={
+        let vm=this;
+        vm.searchWhiteRequsetData={
             "pageSize": "10",
             "orderId": v.sysOrderId
         };
@@ -263,18 +262,12 @@ export default {
     getWhiteList(v,fun){
         let vm=this;
         v.pageNow=++vm.whitePageNum
-        requestGetExclusiveNumerFlowDetails1(v)
+        requestGetExclusiveNumerFlowDetails1(v,()=>{vm.off.isLoad=false;})
         .then((data)=>{
             let num=data.data.datas;
             vm.whiteCardTotal=data.data.total;
-            // vm.detailsDataWhite=[];
             for(let i =0 ,len=num.length;i<len;i+=7){
                 vm.detailsDataWhite.push(num.slice(i,i+7)) 
-            }
-            let len=num.length;
-            let kongTbW=7-len%7;
-            if(kongTbW!=7){
-                vm.kongArr.length=kongTbW
             }
             return "success";                  
         })
@@ -282,19 +275,14 @@ export default {
     getEmptyList(v,fun){
         let vm=this;
         v.pageNow=++vm.emptyPageNum
-        requestGetExclusiveNumerFlowDetails2(v)
+        requestGetExclusiveNumerFlowDetails2(v,()=>{vm.off.isLoad=false;})
         .then((data)=>{
             let num=data.data.datas; 
             vm.emptyCardTotal=data.data.total;
-            // vm.detailsDataEmpty=[];
-            for(let i =0 ,len=num.length;i<len;i+=7){
-                vm.detailsDataEmpty.push(num.slice(i,i+7))
+            for(let i =0 ,len=num.length;i<len;i+=5){
+                vm.detailsDataEmpty.push(num.slice(i,i+5))
             }   
-            let len=num.length;
-            let kongTbE=7-len%7;
-            if(kongTbE!=7){
-                vm.kongArr2.length=kongTbE
-            }
+            console.log(vm.emptyCardTotal)
             return "success";     
         })
     },
