@@ -237,11 +237,11 @@ export default {
     numberFlowDetails(v){//专营号号段的详情
         let vm=this;
         vm.searchWhiteRequsetData={
-            "pageSize": "10",
+            "pageSize": "200",
             "orderId": v.sysOrderId
         };
         vm.searchEmptyReauestData={
-            "pageSize": "10",
+            "pageSize": "200",
             "orderId": v.sysOrderId
         }
         vm.orderDetails=v;
@@ -265,6 +265,15 @@ export default {
         requestGetExclusiveNumerFlowDetails1(v,()=>{vm.off.isLoad=false;})
         .then((data)=>{
             let num=data.data.datas;
+            if(num.length==0){
+                layer.open({
+                    content:"没有更多数据了",
+                    skin:"msg",
+                    time: 2,
+                    msgSkin: "error"
+                });
+                return false;
+            }
             vm.whiteCardTotal=data.data.total;
             for(let i =0 ,len=num.length;i<len;i+=7){
                 vm.detailsDataWhite.push(num.slice(i,i+7)) 
@@ -278,11 +287,19 @@ export default {
         requestGetExclusiveNumerFlowDetails2(v,()=>{vm.off.isLoad=false;})
         .then((data)=>{
             let num=data.data.datas; 
+            if(num.length==0){
+                layer.open({
+                    content:"没有更多数据了",
+                    skin:"msg",
+                    time: 2,
+                    msgSkin: "error"
+                });
+                return false;
+            }
             vm.emptyCardTotal=data.data.total;
             for(let i =0 ,len=num.length;i<len;i+=5){
                 vm.detailsDataEmpty.push(num.slice(i,i+5))
             }   
-            console.log(vm.emptyCardTotal)
             return "success";     
         })
     },
