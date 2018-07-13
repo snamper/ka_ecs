@@ -358,7 +358,6 @@ export default {
       var vm = this,
         url,
         json = {
-          //   source: vm.form.source,
           source:vm.form.source.join(","),
           orderType: vm.form.orderType.join(","),
           pageSize: vm.pageSize,
