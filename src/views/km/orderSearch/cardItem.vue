@@ -421,11 +421,11 @@
                                 </span>
                                 <span class="text">已支付</span>
                             </label>
-                            <label v-show="form.source!=8">
+                            <label>
                                 <span class="radio"><input value="6" type="radio" v-model="form.orderStatus">
                                     <span></span>
                                 </span>
-                                <span class="text">已开户申请</span>
+                                <span class="text">已审核，待支付</span>
                             </label>
                             <label>
                                 <span class="radio"><input value="7" type="radio" v-model="form.orderStatus">
@@ -619,7 +619,7 @@ export default {
       },
       form: {
         source: "6", //订单来源，6、卡盟APP；7、卡盟SDK；8远特i卡
-        orderType: 6, //4：开成卡 5：开白卡 6：开空卡 7：过户 8：实名补登  9：补换卡
+        orderType: 6, //
         cardType: 0, //运营商
         orderStatus: 0, //订单状态
         operatorType:1,//操作类型
@@ -1111,6 +1111,8 @@ export default {
             code = 1003; //已上传资料
           } else if (json.status == 4) {
             code = 1004; //已支付
+          } else if (json.status == 6) {
+            code = 1006; //已审核，待支付
           } else if (json.status == 7) {
             code = 1007; //已获取IMSI
           } else if (json.status == 8) {

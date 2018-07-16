@@ -19,9 +19,6 @@
 .m-refresh>a{color:#20a0ff;font-weight: bold;font-size: 0.15rem;z-index: 2; cursor: pointer;line-height: 1rem;text-align: center;}
 
 /*响应式*/
-@media screen and (min-width: 960px){
-  .m-menu-div{margin-top:-0.2rem;}
-}
 @media screen and (min-width: 341px) and (max-width: 450px){
   .m-menu-div, .m-menu-div>a>div, .m-menu-div>a>p{width:1.2rem; height:1.2rem; font-size: 0.13rem;}
   .m-menu-div>a>p{line-height:1.2rem;}
