@@ -143,27 +143,27 @@
                                                 <span>【信用等级：{{auditData.levelName}}】</span>
                                             </td>
                                         </tr>
-                                        <tr>
+                                        <tr v-if="off.itemType == 6">
                                             <td>号卡分类：</td>
                                             <td>{{translateData(10,auditData.monopolyType)}}</td>
                                         </tr>
-                                        <tr>
+                                        <tr v-if="off.itemType == 6">
                                             <td>号卡类型：</td>
                                             <td>{{translateData(14,auditData.operatorType)}}</td>
                                         </tr>
-                                        <tr>
+                                        <tr v-if="off.itemType == 6">
                                             <td>开卡方式：</td>
                                             <td>{{translateData(15,auditData.appType)}}</td>
                                         </tr>
-                                        <tr>
+                                        <tr v-if="off.itemType == 6">
                                             <td>预存补差价：</td>
                                             <td>{{translateData('money',auditData.prodRecords.diffPrestore)}}元</td>
                                         </tr>
-                                        <tr>
+                                        <tr v-if="off.itemType == 6">
                                             <td>账户抵扣：</td>
                                             <td>{{translateData('money',auditData.prodRecords.deductionMoney)}}元</td>
                                         </tr>
-                                        <tr>
+                                        <tr v-if="off.itemType == 6">
                                             <td>实付金额：</td>
                                             <td>{{translateData('money',auditData.prodRecords.actualMoney/100)}}元</td>
                                         </tr>

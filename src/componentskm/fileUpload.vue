@@ -84,7 +84,8 @@
         return dq.querySelector(str);
       },
       clearFileInput() {
-        let uploadForm=document.querySelector('.upload-form');
+        let uploadForm=document.querySelectorAll('.upload-form');
+
         for(let i=0,len=uploadForm.length;i<len;i++){
           uploadForm[i].reset()
         }
