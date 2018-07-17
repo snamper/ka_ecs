@@ -941,14 +941,20 @@ export default {
       //SDK查询采用统一查询接口
       var vm = this,
         type = vm.off.type,
+        str,
         resJson = {
           opKey: "",
           params: [],
           pageSize: "10",
           pageNum: json.pageNum
-        },
-        sql =
-          "A.create_time BETWEEN " +
+        };
+        if (type == 3 || type == 4) {
+            str = "A.device_type=3 AND "
+        }else if(type == 2 || type == 1){
+            str = "B.device_type=3 AND "
+        }
+        var sql =
+          str+" A.create_time BETWEEN " +
           getUnixTime(json.startTime) +
           " AND " +
           getUnixTime(json.endTime) +
@@ -958,7 +964,7 @@ export default {
       }
       if (type == 2 || type == 1) {
         //待审核-已审核
-        resJson.opKey = "sdk.orderAudit.list";
+        resJson.opKey = "tf.orderAudit.list";
         if (json.status != 0) {
           sql += " AND A.result=" + json.status;
         } else if (json.status == 0) {
@@ -977,7 +983,7 @@ export default {
           }
         }
       } else if (type == 3 || type == 4) {
-        resJson.opKey = "sdk.orderApp.list";
+        resJson.opKey = "tf.orderApp.list";
         if (type == 3) {
           sql += " AND A.order_status=1";
         } else if (type == 4) {
@@ -1021,14 +1027,20 @@ export default {
       //远特i卡查询采用统一查询接口
       var vm = this,
         type = vm.off.type,
+        str,
         resJson = {
           opKey: "",
           params: [],
           pageSize: "10",
           pageNum: json.pageNum
-        },
-        sql =
-          "A.create_time BETWEEN " +
+        };
+        if (type == 3 || type == 4) {
+            str = "A.device_type=3 AND "
+        }else if(type == 2 || type == 1){
+            str = "B.device_type=3 AND "
+        }
+        var sql =
+          str+"A.create_time BETWEEN " +
           getUnixTime(json.startTime) +
           " AND " +
           getUnixTime(json.endTime) +
@@ -1130,23 +1142,24 @@ export default {
         url,
         orderId = e.target.name,
         type = vm.off.type,
+        str,
         json = { orderId: orderId, status: type },
-        sql = 'A.sys_order_id="' + orderId + '"';
+        sql ='A.sys_order_id="' + orderId + '"';
       vm.off.number = e.target.title;
       if (vm.form.source == 7) {
         //SDK
         url = "km-ecs/w/handler/query";
         if (type == 1 || type == 2) {
-          json.opKey = "sdk.orderAudit.details";
+          json.opKey = "tf.orderAudit.details";
           if (type == 2) {
             sql += " AND (A.result=1 OR A.result=2)";
           } else if (type == 1) {
             sql += " AND (A.result=4 OR A.result=5)";
           }
         } else if (type == 3 || type == 4) {
-          json.opKey = "sdk.orderApp.details";
+          json.opKey = "tf.orderApp.details";
           if (type == 3) {
-            sql += " AND A.order_status=6";
+           
           } else if (type == 4) {
             sql += " AND A.order_status=4";
           }
