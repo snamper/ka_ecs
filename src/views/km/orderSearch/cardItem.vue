@@ -148,27 +148,6 @@
                         </div>
                     </div>
                     <div class="row" v-if="form.source==6">
-                        <!-- <span class="dp">开卡方式：</span>
-                        <div class="m-form-radio">
-                            <label>
-                                <span class="radio"><input type="radio" value="1" v-model="form.operatorType">
-                                    <span></span>
-                                </span>
-                                <span class="text">卡盟</span>
-                            </label>
-                            <label>
-                                <span class="radio"><input type="radio" value="2" v-model="form.operatorType">
-                                    <span></span>
-                                </span>
-                                <span class="text">远微商城</span>
-                            </label>
-                            <label>
-                                <span class="radio"><input type="radio" value="3" v-model="form.operatorType">
-                                    <span></span>
-                                </span>
-                                <span class="text">信时空公众号</span>
-                            </label>
-                        </div> -->
                         <span class="dp">开卡方式：</span>
                         <div class="m-form-checkbox">
                             <label><span class="checkbox"><input type="checkbox" value="true" v-model="checkAllopencardType" checked="checked" @change="BtnCheckAllopencardType"><span></span></span><span class="text">全部</span></label>
@@ -659,7 +638,6 @@ export default {
     context6() {
       return this.form.context6;
     }
-    
   },
   watch: {
     context8() {
@@ -667,9 +645,6 @@ export default {
     },
     context6() {
       this.form.select = 6;
-    },
-    'form.orderStatus'(){
-        this.form.select = 6;
     },
     'form.sourceFrom'(){
         if(this.form.sourceFrom.length==3){
@@ -689,10 +664,6 @@ export default {
         type == "auditing" ? (vm.off.type = 1) : type == "audited" ? (vm.off.type = 2) : type == "closed" ? (vm.off.type = 4) : (vm.off.type = 3);
         vm.form.startTime = laydate.now(0, "YYYY-MM-DD 00:00:00");
         vm.form.endTime = laydate.now(0, "YYYY-MM-DD 23:59:59");
-    },
-    inpChange(v) {
-      let vm = this;
-      vm.form.orderStatus = 0;
     },
     searchList: function(page) {
       var vm = this,
