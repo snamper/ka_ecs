@@ -1035,9 +1035,9 @@ export default {
           pageNum: json.pageNum
         };
         if (type == 3 || type == 4) {
-            str = "A.device_type=3 AND "
+            str = "A.device_type in (1,2) AND "
         }else if(type == 2 || type == 1){
-            str = "B.device_type=3 AND "
+            str = "B.device_type in (1,2) AND "
         }
         var sql =
           str+"A.create_time BETWEEN " +
