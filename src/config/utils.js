@@ -151,11 +151,11 @@ export const translateData=(type,v)=> {
 				return v==1 ? '身份证' : v==2 ? '军官证' : v==3 ? '护照' :void 0;
 			break;
 		case 3://卡盟统计报表查询操作类型
-      return v==1 ? '开卡' : v==2 ? '激活商户' : v==3 ? '过户' : v==4 ? '实名补登' : v==5 ? '补换卡' : '--';
+        return v==1 ? '开卡' : v==2 ? '激活商户' : v==3 ? '过户' : v==4 ? '实名补登' : v==5 ? '补换卡' : '--';
 			break;
 		case 4://号卡状态
 			return v==1 ? '初始状态' : v==2 ? '成功' : v==3 ? '失败' : v==4 ? '订单关闭' : '--';
-			break;
+		break;
 		case 5://靓号等级
 			var level=["普号","特级","一级","二级","三级","四级","五级","六级","七级","八级","九级","十级","十一级"];
     		return v||v==0 ? level[parseInt(v)] : '未知';
@@ -186,6 +186,9 @@ export const translateData=(type,v)=> {
         break;
         case 15://开卡方式
             return v==1 ? '卡盟APP' : v==2 ? 'SDK' : v==3 ? 'DWatch' : v==4? 'AndroidWear' : v==5 ? 'i卡' : v==6 ? '远微商城' : v==7 ? '信时空公众号' : '--' ;
+        break;
+        case 16://短信验证
+            return v==1?'是':v==0?'否':'--';
         break;
         case 'money'://金额转换
             if(!isNaN(v)){

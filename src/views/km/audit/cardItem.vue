@@ -204,6 +204,10 @@
                                             <td>首充实际支付：</td>
                                             <td>{{translateData('money',auditData.prodRecords.firstChargeActual/100)}}元</td>
                                         </tr>
+                                        <tr v-if="off.itemType == '4,5,6'">
+                                            <td>短信校验：</td>
+                                            <td>{{translateData(15,auditData.safeType)}}</td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </td>

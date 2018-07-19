@@ -282,6 +282,7 @@
                             </label>
                         </div>
                     </div>
+                    
                     <div class="row" :class="{active:form.select==6}" v-if="off.type==2">
                         <span class="m-form-radio">
                             <label>
@@ -486,6 +487,7 @@
                             <th v-show="off.type!=2">订单状态</th>
                             <th v-show="off.type==2">审核用时</th>
                             <th v-show="off.type==2">号卡状态</th>
+                            <th>短信验证</th>
                             <th v-show="off.type==2">审核状态</th>
                             <th></th>
                         </tr>
@@ -539,12 +541,16 @@
                                 <span v-if="form.orderType==8">{{translateData(8,todo.statusDetail)}}</span>
                             </td>
                             <td v-if="off.type!=2">
+                                {{translateData(16,todo.safeType)}}
+                            </td>
+                            <td v-if="off.type!=2">
                                 <a :name="todo.orderId" @click="details" href="javascript:void(0)" class="details">详情</a>
                             </td>
-
                             <!--已审核-->
                             <td v-if="off.type==2" :class="{fCYellow:todo.cardStatus==1,fCGreen:todo.cardStatus==2,fCRed:todo.cardStatus==3,fCRed:todo.cardStatus==4,fCGrey:todo.cardStatus==9}">{{translateData(4,todo.cardStatus)}}</td>
-
+                            <td v-if="off.type==2">
+                                {{translateData(16,todo.safeType)}}
+                            </td>
                             <td colspan="2" v-if="off.type==2&&todo.status==1" class="td-col-2">
                                 <div class="f-c-green">同意</div>
                                 <div>
@@ -560,12 +566,14 @@
                                     <span v-if="todo.allowRecheck==2" class="time_out f-c-red">超过复审时间</span>
                                 </div>
                             </td>
+                            
                             <td colspan="2" v-if="off.type==2&&todo.status==3" class="td-col-2">
                                 <div class="f-c-red">超时关闭</div>
                                 <div>
                                     <a :name="todo.orderId" :title="index" @click="details" class="details" href="javascript:void(0)">详情</a>
                                 </div>
                             </td>
+                            
                             <!-- <td colspan="2" v-if="off.type==2&&todo.status==4" class="td-col-2">
 						<div class="f-c-blue">复审同意</div>
 						<div><a :name="todo.orderId" :title="index" @click="details" class="details" href="javascript:void(0)">详情</a></div>
@@ -598,7 +606,7 @@ export default {
       },
       form: {
         source: "6", //订单来源，6、卡盟APP；7、卡盟SDK；8远特i卡
-        orderType: 6, //
+        orderType: 6, //6 开空卡 9 开白卡 10 开成卡 7 过户 4 实名补录 8 补换卡
         cardType: 0, //运营商
         orderStatus: 0, //订单状态
         operatorType:1,//操作类型
@@ -613,8 +621,8 @@ export default {
         context7: "", //开卡者姓名
         context8: -1, //号卡类型
         startTime: "",
+        select: 6 ,//条件查询 1 订单号码2 手机号码 3 审核人ID 4 身份证号 5 操作者ID 6 订单状态7 用户姓名 8 号卡类型
         endTime: "",
-        select: 6 //条件查询，选择的条件
       },
       checkAllopencardType:true,
       list: "", //查询数据
@@ -977,14 +985,24 @@ export default {
 
         if (json.context != 0 && json.searchtype != 1) {
           if (json.searchtype == 6) {
-            sql += " AND A.order_status=" + json.context;
+            // sql += " AND B.order_status=" + json.context;
+
+            if (json.context == 1) {
+              sql += " AND B.order_status=2";
+            } else if (json.context == 2) {
+              sql += " AND B.order_status=3";
+            } else if (json.context == 3) {
+              sql += " AND B.order_status=1";
+            } else if (json.context == 4) {
+              sql += " AND B.order_status=4";
+            }
           } else if (vm.form.context6 != 0) {
-            sql += " AND A.order_status=" + vm.form.context6;
+            sql += " AND B.order_status=" + vm.form.context6;
           }
         }
       } else if (type == 3 || type == 4) {
         resJson.opKey = "tf.orderApp.list";
-        if (type == 3) {
+        if (type == 3) {//1，待审核;2，已审核;3，进行中;4，已关闭
           sql += " AND A.order_status=1";
         } else if (type == 4) {
           sql += " AND A.order_status=4";
