@@ -142,9 +142,9 @@
 						<li v-if="off.powerKm_sh_cx"><router-link :to="{name:'merchant',params:{val:'null'}}"><b></b>商户查询</router-link></li>
 						<li v-if="off.powerKm_sh_cx"><router-link :to="{name:'device',params:{val:'null'}}"><b></b>设备查询</router-link></li>
 						<li v-if="off.powerKm_sh_cx"><router-link :to="{name:'promoter',params:{val:'null'}}"><b></b>推广方查询</router-link></li>
-						<li v-if="true"><router-link :to="{name:'ordinaryExclusive',params:{val:'null'}}"><b></b>大众号查询</router-link></li>
-						<li v-if="true"><router-link :to="{name:'exclusive',params:{val:'null'}}"><b></b>专营号查询</router-link></li>
-						<li v-if="true"><router-link :to="{name:'specialExclusive',params:{val:'null'}}"><b></b>商户专营号查询</router-link></li>
+						<!-- <li v-if="true"><router-link :to="{name:'ordinaryExclusive',params:{val:'null'}}"><b></b>大众号查询</router-link></li> -->
+						<!-- <li v-if="true"><router-link :to="{name:'exclusive',params:{val:'null'}}"><b></b>专营号查询</router-link></li> -->
+						<!-- <li v-if="true"><router-link :to="{name:'specialExclusive',params:{val:'null'}}"><b></b>商户专营号查询</router-link></li> -->
 						<!-- <li v-if="off.powerKm_sh_cx"><router-link :to="{name:'exclusiveNumber',params:{val:'null'}}"><b></b>专营号查询</router-link></li> -->
 					</ul>
 				</li>

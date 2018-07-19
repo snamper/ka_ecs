@@ -1011,7 +1011,7 @@ export default {
         if (json.status != 0 && json.searchtype != 1) {
           let code = 0;
           if (json.status == 1) {
-            code = 1001; //已选号
+            code = 1000; //已选号
           } else if (json.status == 2) {
             code = 1001; //已选套餐
           } else if (json.status == 3) {
