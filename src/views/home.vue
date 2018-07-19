@@ -126,7 +126,7 @@
 						<li v-if="off.powerKm_sh_cx"><router-link :to="{name:'registMerchantSearch',params:{type:'search'}}"><b></b>激活商户</router-link></li>
 						<li v-if="off.powerKm_kk_cx"><router-link to="/homek/orderSearch/reserve"><b></b>预占号码</router-link></li>
 						<li v-if="true"><router-link to="/homek/orderSearch/makeCard"><b></b>制卡订单</router-link></li>
-						<li v-if="true"><router-link to="/homek/orderSearch/flowCard"><b></b>流转订单</router-link></li>
+						<li v-if="true"><router-link :to="{name:'flowCard',params:{val:'null'}}"><b></b>流转订单</router-link></li>
 						<!-- <li><router-link to="/home/orderSearch/busCard"><b></b>公交一卡通</router-link></li> -->
 					</ul>
 				</li>
@@ -142,9 +142,9 @@
 						<li v-if="off.powerKm_sh_cx"><router-link :to="{name:'merchant',params:{val:'null'}}"><b></b>商户查询</router-link></li>
 						<li v-if="off.powerKm_sh_cx"><router-link :to="{name:'device',params:{val:'null'}}"><b></b>设备查询</router-link></li>
 						<li v-if="off.powerKm_sh_cx"><router-link :to="{name:'promoter',params:{val:'null'}}"><b></b>推广方查询</router-link></li>
-						<!-- <li v-if="true"><router-link :to="{name:'ordinaryExclusive',params:{val:'null'}}"><b></b>大众号查询</router-link></li> -->
-						<!-- <li v-if="true"><router-link :to="{name:'exclusive',params:{val:'null'}}"><b></b>专营号查询</router-link></li> -->
-						<!-- <li v-if="true"><router-link :to="{name:'specialExclusive',params:{val:'null'}}"><b></b>商户专营号查询</router-link></li> -->
+						<li v-if="true"><router-link :to="{name:'ordinaryExclusive',params:{val:'null'}}"><b></b>大众号查询</router-link></li>
+						<li v-if="true"><router-link :to="{name:'exclusive',params:{val:'null'}}"><b></b>专营号查询</router-link></li>
+						<li v-if="true"><router-link :to="{name:'specialExclusive',params:{val:'null'}}"><b></b>商户专营号查询</router-link></li>
 						<!-- <li v-if="off.powerKm_sh_cx"><router-link :to="{name:'exclusiveNumber',params:{val:'null'}}"><b></b>专营号查询</router-link></li> -->
 					</ul>
 				</li>

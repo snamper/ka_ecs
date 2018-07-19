@@ -166,7 +166,18 @@ export default {
     numberFlowDetails
   },
   created: function() {
-    this.init();
+    var vm=this;
+    setTimeout(function(){
+        if(val!='null'){
+        let val=vm.$route.params.val;
+        vm.orderId=val;
+        vm.searchList(1,'',val);
+            let v={};
+            v.sysOrderId=val;
+            vm.numberFlowDetails(v);
+        }
+    },300);
+    vm.init();
   },
   watch:{
       flowResult(){
@@ -184,7 +195,7 @@ export default {
         vm.form.startTime = laydate.now(0, "YYYY-MM-DD 00:00:00");
         vm.form.endTime = laydate.now(0, "YYYY-MM-DD 23:59:59");
     },
-    searchList(v,i){
+    searchList(v,i,x){
         let vm=this,
         json={
             "pageSize": "10",
@@ -214,6 +225,7 @@ export default {
             json.context=vm.deviceId
         }
         if(v==1){//订单查询
+        debugger;
             requestGetExclusiveNumerFlowList(json,()=>{vm.off.isLoad=false;})
             .then((data)=>{
                 vm.total=data.data.total

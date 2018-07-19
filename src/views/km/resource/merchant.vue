@@ -346,7 +346,6 @@ export default{
 			}
 		},300);
         vm.init();
-       
     },
 	methods:{
         init:function(){

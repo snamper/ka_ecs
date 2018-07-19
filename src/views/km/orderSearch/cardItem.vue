@@ -34,19 +34,19 @@
                         <span class="dp">操作类型：</span>
                         <div class="m-form-radio">
                             <label>
-                                <span class="radio"><input @change="inpChange(this)" value="6" type="radio" v-model="form.orderType">
+                                <span class="radio"><input value="6" type="radio" v-model="form.orderType">
                                     <span></span>
                                 </span>
                                 <span class="text">开空卡</span>
                             </label>
                             <label v-show="form.source==6">
-                                <span class="radio"><input @change="inpChange(this)" value="9" type="radio" v-model="form.orderType">
+                                <span class="radio"><input value="9" type="radio" v-model="form.orderType">
                                     <span></span>
                                 </span>
                                 <span class="text">开白卡</span>
                             </label>
                             <label v-show="form.source==6">
-                                <span class="radio"><input @change="inpChange(this)" value="10" type="radio" v-model="form.orderType">
+                                <span class="radio"><input value="10" type="radio" v-model="form.orderType">
                                     <span></span>
                                 </span>
                                 <span class="text">开成卡</span>
@@ -487,7 +487,7 @@
                             <th v-show="off.type!=2">订单状态</th>
                             <th v-show="off.type==2">审核用时</th>
                             <th v-show="off.type==2">号卡状态</th>
-                            <th>短信验证</th>
+                            <th v-if="isShowDXYZ==true">短信验证</th>
                             <th v-show="off.type==2">审核状态</th>
                             <th></th>
                         </tr>
@@ -540,7 +540,7 @@
                                 <span v-if="form.orderType!=8">{{translateData(7,todo.statusDetail)}}</span>
                                 <span v-if="form.orderType==8">{{translateData(8,todo.statusDetail)}}</span>
                             </td>
-                            <td v-if="off.type!=2">
+                            <td v-if="off.type!=2&&isShowDXYZ==true">
                                 {{translateData(16,todo.safeType)}}
                             </td>
                             <td v-if="off.type!=2">
@@ -548,7 +548,7 @@
                             </td>
                             <!--已审核-->
                             <td v-if="off.type==2" :class="{fCYellow:todo.cardStatus==1,fCGreen:todo.cardStatus==2,fCRed:todo.cardStatus==3,fCRed:todo.cardStatus==4,fCGrey:todo.cardStatus==9}">{{translateData(4,todo.cardStatus)}}</td>
-                            <td v-if="off.type==2">
+                            <td v-if="off.type==2&&isShowDXYZ==true">
                                 {{translateData(16,todo.safeType)}}
                             </td>
                             <td colspan="2" v-if="off.type==2&&todo.status==1" class="td-col-2">
@@ -631,8 +631,8 @@ export default {
       pageNum: 1, //当前页数
       pageSize: 10, //显示条数
       maxpage: 1, //最大页数
-      callback: Function //page组件点击回调
-      
+      callback: Function, //page组件点击回调
+      isShowDXYZ:false,
     };
   },
   components: {
@@ -675,6 +675,7 @@ export default {
     },
     searchList: function(page) {
       var vm = this,
+
         url,
         json = {
           source: vm.form.source,
@@ -689,10 +690,14 @@ export default {
           periodType: vm.off.type,
           sourceFrom :vm.form.sourceFrom .join(',')
         };
+        vm.isShowDXYZ=false;
       //非卡盟SDK+远特I卡，进行中，已关闭
       if (json.source != 7 &&json.source != 8 &&(vm.off.type == 3 || vm.off.type == 4)) {
         vm.searchClosedAndDoing(page);
         return false;
+      }
+      if(vm.form.orderType=='10'){
+          vm.isShowDXYZ=true;
       }
       let context = vm.form["context" + vm.form.select];
       vm.off.type == 1 &&vm.form.select != 6 &&((json.status = 0), (vm.form.orderStatus = 0));

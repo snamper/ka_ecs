@@ -36,7 +36,7 @@
                                     </td>   
                                 </tr>
                                 <tr>
-                                    <td v-if="cardTotalWhite>listWhite.length" colspan="5">
+                                    <td v-if="cardTotalWhite>listWhitelength" colspan="5">
                                         <p><a class="detailsEleA linka" @click="searchMore(1)">展开查看更多</a></p>
                                     </td>
                                 </tr>
@@ -60,7 +60,7 @@
                                     </tr>  
                                 </tr>
                                 <tr>
-                                    <td v-if="cardTotalEmpty>listWhite.length" colspan="5" >
+                                    <td v-if="cardTotalEmpty>listEmptylength" colspan="5" >
                                         <p><a class="detailsEleA linka" @click="searchMore(2)">展开查看更多</a></p>
                                     </td>
                                 </tr>
@@ -92,11 +92,18 @@ export default{
     },
     data (){
         return {
-            
+            listEmptylength:0,
+            listWhitelength:0
         }
     },
     created:function(){
-        
+        for(let i in this.listEmpty){
+            this.listEmptylength+=this.listEmpty[i].length
+        }
+        for(let i in this.listWhite){
+            this.listWhitelength+=this.listWhite[i].length
+        }
+        console.log(this.listEmptylength,this.listWhitelength)
     },
     components:{
         

@@ -432,8 +432,8 @@ const router=new Router({
         name:'reserveSearch',
         component:OrderSearch_reserve,
       },{//号码流转
-        path:"flowCard",
-        name:'cardWanderAboutSearch',
+        path:"flowCard/:val",
+        name:'flowCard',
         component:OrderSearch_cardWanderAbout,
       },{//制卡
         path:"makeCard",
