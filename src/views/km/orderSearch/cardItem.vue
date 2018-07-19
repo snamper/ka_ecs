@@ -675,7 +675,6 @@ export default {
     },
     searchList: function(page) {
       var vm = this,
-
         url,
         json = {
           source: vm.form.source,
@@ -804,6 +803,7 @@ export default {
           cardType: vm.form.cardType,
           sourceFrom:vm.form.sourceFrom.join(",")
         };
+        vm.isShowDXYZ=false;
       let context = vm.form["context" + vm.form.select];
       if (vm.form.select == 1 && !context) {
         layer.open({
@@ -845,6 +845,9 @@ export default {
           msgSkin: "error"
         });
         return false;
+      }
+      if(vm.form.orderType=='10'){
+          vm.isShowDXYZ=true;
       }
       json.context = context;
       json.searchtype = vm.form.select;
