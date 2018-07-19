@@ -206,7 +206,7 @@
                                         </tr>
                                         <tr v-if="off.itemType == '4,5,6'">
                                             <td>短信校验：</td>
-                                            <td>{{translateData(15,auditData.safeType)}}</td>
+                                            <td>{{translateData(16,auditData.safeType)}}</td>
                                         </tr>
                                     </tbody>
                                 </table>
