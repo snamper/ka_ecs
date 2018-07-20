@@ -114,7 +114,7 @@ span.m-form-radio{width: 75px;}
                     <my-page :page="pageNow" :maxpage="maxpage" :callback="callback"></my-page>
                 </div>
             </section>
-            <numberFlowDetails v-if="off.flowDetails" :cardTotalWhite="whiteCardTotal" :cardTotalEmpty="emptyCardTotal" :listEmpty="detailsDataEmpty" :listWhite="detailsDataWhite" :orderDetails="orderDetails"></numberFlowDetails>
+            <numberFlowDetails v-if="off.flowDetails" :cardTotalWhite="whiteCardTotal" :cardTotalEmpty="emptyCardTotal" :listEmpty="detailsDataEmpty" :listWhite="detailsDataWhite" :orderDetails="orderDetails" :numberInfo="searchFlowList"></numberFlowDetails>
         </div>
         <!--详情页面-->
     </section>
@@ -133,11 +133,11 @@ export default {
         flowDetails: false, //详情页面开关
         number: "" //第几条详情
       },
-      form: {
-        startTime: "",
-        endTime: "",
-        select: "" //条件查询，默认选择的条件
-      },
+        form: {
+            startTime: "",
+            endTime: "",
+            select: "" //条件查询，默认选择的条件
+        },
         orderId: "", //订单号码
         dealerId:"",//商户ID
         cardNumber:"", //卡号
@@ -165,37 +165,62 @@ export default {
     "my-page": pagination,
     numberFlowDetails
   },
-  created: function() {
-    var vm=this;
-    setTimeout(function(){
-        if(val!='null'){
-        let val=vm.$route.params.val;
-        vm.orderId=val;
-        vm.searchList(1,'',val);
-            let v={};
-            v.sysOrderId=val;
-            vm.numberFlowDetails(v);
+    created: function() {
+        var vm=this;
+        vm.init();
+        setTimeout(function(){
+            let val=vm.$route.params.val,v={};
+            if(val!='null'){
+                vm.orderId=val;
+                var p1 = new Promise((resolve,reject)=>{
+                    let json={
+                        "pageSize": "10",
+                        "pageNow": 1,
+                        "startTime": new Date(vm.form.startTime).getTime(),
+                        "endTime": new Date(vm.form.endTime).getTime(),
+                        "orderId": vm.orderId,
+                        "dealerId": vm.dealerId,
+                        "status": vm.flowResult.join(","),//0全部 1进行中2成功3失败
+                        "searchType": vm.form.select||0,//搜索分类0:无，1:8位号码段，2设备号
+                    };
+                    if(vm.form.select==1){
+                        json.context=vm.cardNumber
+                    }else{
+                        json.context=vm.deviceId
+                    }
+                    requestGetExclusiveNumerFlowList(json,()=>{vm.off.isLoad=false;})
+                    .then((data)=>{
+                        vm.total=data.data.total
+                        vm.searchFlowList=data.data.datas;
+                    }).catch((e=>errorDeal(e)))
+                    resolve("success22");
+                });
+                p1.then(()=>{
+                    v.sysOrderId=val;
+                    vm.numberFlowDetails(v);
+                })
+            }
+        },300);
+    },
+    watch:{
+        flowResult(){
+            if(this.flowResult.length==3){
+                this.checkAll=true;
+            }else{
+                this.checkAll=false;
+            }
+        },
+        searchFlowList(){
+            console.log(this.searchFlowList);
         }
-    },300);
-    vm.init();
-  },
-  watch:{
-      flowResult(){
-          if(this.flowResult.length==3){
-              this.checkAll=true;
-          }else{
-              this.checkAll=false;
-          }
-      }
-  },
+    },
   methods: {
     init: function() {
-        var vm = this,
-        type = this.$route.params.type;
+        var vm = this;
         vm.form.startTime = laydate.now(0, "YYYY-MM-DD 00:00:00");
         vm.form.endTime = laydate.now(0, "YYYY-MM-DD 23:59:59");
     },
-    searchList(v,i,x){
+    searchList(v,i,resolve){
         let vm=this,
         json={
             "pageSize": "10",
@@ -225,7 +250,6 @@ export default {
             json.context=vm.deviceId
         }
         if(v==1){//订单查询
-        debugger;
             requestGetExclusiveNumerFlowList(json,()=>{vm.off.isLoad=false;})
             .then((data)=>{
                 vm.total=data.data.total
@@ -245,6 +269,7 @@ export default {
                 vm.callback=(i)=>{vm.searchList(v,i)};
             }).catch((e=>errorDeal(e)))
         }
+        resolve("success22");
     },
     numberFlowDetails(v){//专营号号段的详情
         let vm=this;
@@ -267,9 +292,8 @@ export default {
             resolve("success!!!!");
         }) 
         Promise.all([d1,d2])
-        .then(()=>{
-
-        }).catch(e=>errorDeal(e))        
+        .then(()=>{})
+        .catch(e=>errorDeal(e))     
     },
     getWhiteList(v,fun){
         let vm=this;

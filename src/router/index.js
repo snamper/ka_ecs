@@ -436,8 +436,8 @@ const router=new Router({
         name:'flowCard',
         component:OrderSearch_cardWanderAbout,
       },{//制卡
-        path:"makeCard",
-        name:'makeCardSearch',
+        path:"makeCard/:val",
+        name:'makeCard',
         component:OrderSearch_makeCard,
       }]
     },

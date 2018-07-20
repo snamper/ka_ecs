@@ -125,7 +125,7 @@
 						<li v-if="off.powerKm_sh_cx"><router-link :to="{name:'businessPowerSearch',params:{type:'audited'}}"><b></b>售卡范围</router-link></li>
 						<li v-if="off.powerKm_sh_cx"><router-link :to="{name:'registMerchantSearch',params:{type:'search'}}"><b></b>激活商户</router-link></li>
 						<li v-if="off.powerKm_kk_cx"><router-link to="/homek/orderSearch/reserve"><b></b>预占号码</router-link></li>
-						<li v-if="true"><router-link to="/homek/orderSearch/makeCard"><b></b>制卡订单</router-link></li>
+						<li v-if="true"><router-link :to="{name:'makeCard',params:{val:'null'}}"><b></b>制卡订单</router-link></li>
 						<li v-if="true"><router-link :to="{name:'flowCard',params:{val:'null'}}"><b></b>流转订单</router-link></li>
 						<!-- <li><router-link to="/home/orderSearch/busCard"><b></b>公交一卡通</router-link></li> -->
 					</ul>
@@ -318,7 +318,7 @@ export default{
             window.onresize=()=>vm.debounce(300,vm.windowChange());
 			vm.timer.count=setInterval(()=>vm.getAuditStatisticsInfo(),5000);
             vm.timer.OpcountT=setInterval(()=>vm.getOpinionCountInfo(),60000);
-			vm.timer.countYm=setInterval(()=>vm.getAuditStatisticsInfoYm(),5000);            
+			// vm.timer.countYm=setInterval(()=>vm.getAuditStatisticsInfoYm(),5000);            
 			vm.SET_ONLINE_TIME();
 			let userInfo=getStore("KA_ECS_USER");
 			vm.userInfo=userInfo;

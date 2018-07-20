@@ -379,12 +379,10 @@ export default{
                 pageSize:10,
                 pageNum:page||1
             }    
-
             let searchDatajq={
                 typeKey:vm.form.searchType,
                 typeValue:vm.form.searchContext,                
             }
-
             let searchDatazh={
                 timeStar:new Date(vm.form.startTime.replace(/-/g,'/')).getTime(),
                 timeEnd:new Date(vm.form.endTime.replace(/-/g,'/')).getTime(),

@@ -19,11 +19,11 @@
                     </div>
                 </header>
                 <div class="g-box">
-                    <p class="detailsEleP"><a class="detailsEleA">{{translateData('formatPhone',orderDetails.phoneTitle)}}***</a></p>
+                    <p class="detailsEleP"><a class="detailsEleA">{{translateData('formatPhone',numberInfo[0].phoneTitle)}}***</a></p>
                     <p class="numberInfo">
-                        <b><label class="f-c-grey">归属地 ：</label>{{orderDetails.cityName||'--'}}</b>
-                        <b><label class="f-c-grey">预存 ：</label>{{translateData('money',orderDetails.preStore)}}元</b>
-                        <b><label class="f-c-grey">产品名称 ：</label>{{orderDetails.pkgName||'--'}}<span class="f-c-grey"> ( 资费：{{orderDetails.feeVoice}}，可选包：{{orderDetails.optPkgInfo}} ) </span></b>
+                        <b><label class="f-c-grey">归属地 ：</label>{{numberInfo[0].cityName||'--'}}</b>
+                        <b><label class="f-c-grey">预存 ：</label>{{translateData('money',numberInfo[0].preStore)}}元</b>
+                        <b><label class="f-c-grey">产品名称 ：</label>{{numberInfo[0].pkgName||'--'}}<span class="f-c-grey"> ( 资费：{{numberInfo[0].feeVoice}}，可选包：{{numberInfo[0].optPkgInfo}} ) </span></b>
                     </p>
                     <p class="whiteDetailsTitle"><span></span> 白卡 ( {{cardTotalWhite}} 张)</p>
                     <table class="merchant-total g-list-table table-numberDetails">
@@ -88,22 +88,26 @@ export default{
         listWhite:Array,
         orderDetails:Object,
         cardTotalWhite:Number,
-        cardTotalEmpty:Number
+        cardTotalEmpty:Number,
+        numberInfo:Object
     },
     data (){
         return {
             listEmptylength:0,
-            listWhitelength:0
+            listWhitelength:0,
         }
     },
+    watch:{
+        
+    },
     created:function(){
-        for(let i in this.listEmpty){
-            this.listEmptylength+=this.listEmpty[i].length
+        let vm=this;
+        for(let i in vm.listEmpty){
+            vm.listEmptylength+=vm.listEmpty[i].length
         }
-        for(let i in this.listWhite){
-            this.listWhitelength+=this.listWhite[i].length
+        for(let i in vm.listWhite){
+            vm.listWhitelength+=vm.listWhite[i].length
         }
-        console.log(this.listEmptylength,this.listWhitelength)
     },
     components:{
         

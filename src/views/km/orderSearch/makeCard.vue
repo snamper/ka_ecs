@@ -284,7 +284,15 @@ export default {
         }
     },
     created: function() {
-        this.init();
+        let vm=this;
+        vm.init();
+        setTimeout(function(){
+            let val=vm.$route.params.val,v={};
+            v.sys_order_id=val;
+            if(val!='null'){
+                vm.searchMakeCardDetails(v)
+            }
+        },300);
     },
     methods: {
         searchList(v,i){
