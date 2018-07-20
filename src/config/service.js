@@ -41,7 +41,7 @@ export const requestGetMakeWhiteDetails=(data,load)=>fetch("km-ecs/w/monopoly/ge
 export const requestGetMakeChengList=(data,load)=>fetch("km-ecs/w/monopoly/getMakeReadyList",data,"POST",load);
 export const requestGetMakeChengDetails=(data,load)=>fetch("km-ecs/w/monopoly/getMakeReadyDesc",data,"POST",load);
 
-/*专营号查询*/
+/*专营号制卡相关*/
 export const requestGetExclusiveNumber=(data,load)=>fetch("km-ecs/w/monopoly/getMakeReadyDesc",data,"POST",load);
 export const requestGetExclusiveWhite=(data,load)=>fetch("km-ecs/w/monopoly/getMakeReadyDesc",data,"POST",load);
 export const requestGetExclusiveCheng=(data,load)=>fetch("km-ecs/w/monopoly/getMakeReadyDesc",data,"POST",load);
@@ -49,3 +49,11 @@ export const requestGetExclusiveActive=(data,load)=>fetch("km-ecs/w/monopoly/get
 export const requestGetExclusiveNotActive=(data,load)=>fetch("km-ecs/w/monopoly/getMakeReadyDesc",data,"POST",load);
 /*商户专营号查询*/
 export const requestGetSpecialExclusiveNumber=(data,load)=>fetch("km-ecs/w/monopoly/getMakeReadyDesc",data,"POST",load);
+
+/*专营号查询相关*/
+export const requestGetExclusiveNumberList=(data,load)=>fetch("km-ecs/w/monopoly/getPrivateList",data,"POST",load);
+export const requestGetExclusiveNumberDesc=(data,load)=>fetch("km-ecs/w/monopoly/getNumsDesList",data,"POST",load);
+export const requestGetGeneralNumberList1=(data,load)=>fetch("km-ecs/w/monopoly/getGeneralByPhone",data,"POST",load);
+export const requestGetGeneralNumberList2=(data,load)=>fetch("km-ecs/w/monopoly/getGeneralList",data,"POST",load);
+export const requestGetGeneralNumberDesc=(data,load)=>fetch("km-ecs/w/monopoly/getGNumsDesList",data,"POST",load);
+
