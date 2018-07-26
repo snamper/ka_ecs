@@ -87,7 +87,7 @@
                                 </span>
                                 <span class="text">远特</span>
                             </label>
-                            <label v-show="form.source!=8&&form.orderType!=4">
+                            <label v-show="form.source!=8&&form.orderType!=4&&form.source!=7">
                                 <span class="radio"><input type="radio" value="2" v-model="form.cardType">
                                     <span></span>
                                 </span>
@@ -985,9 +985,9 @@ export default {
           " AND " +
           getUnixTime(json.endTime) +
           "";
-      if (json.cardType != 0) {
-        sql += " AND A.card_type=" + json.cardType;
-      }
+    //   if (json.cardType != 0) {
+    //     sql += " AND A.card_type=" + json.cardType;
+    //   }
       if (type == 2 || type == 1) {
         //待审核-已审核
         resJson.opKey = "tf.orderAudit.list";
