@@ -1176,15 +1176,15 @@ export default {
         var vm = this,
         url,orderId,
         type = vm.off.type,
-        str,json={},
-        sql ='A.sys_order_id="' + orderId + '"';
-        if(e.hasOwnProperty('target')){
-            orderId = e.target.name
-            vm.off.number = e.target.title;
-        }else{
+        str,json={};
+        if(e.hasOwnProperty('name')){
             orderId = e.name
-            vm.off.number = e.title;            
+            vm.off.number = e.title; 
+        }else{
+            orderId = e.target.name
+            vm.off.number = e.target.title;           
         };
+        let sql ='A.sys_order_id="' + orderId + '"';
         json = { orderId: orderId, status: type };
         if (vm.form.source == 7) {
         //SDK
@@ -1250,6 +1250,7 @@ export default {
         }
         }
         // if (vm.off.isLoad) return false;
+        debugger;
         vm.off.isLoad = true;
         reqCommonMethod(json,function() {vm.off.isLoad = false;},url )
         .then(data => {

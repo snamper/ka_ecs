@@ -191,7 +191,18 @@ export default {
     },
     components:{
 		'my-page':pagination
-	},
+    },
+    created:function(){
+        let vm=this;
+        setTimeout(function(){
+            let val=vm.$route.params.val,v={};
+            v.sys_order_id=val;
+            if(val!='null'){
+                vm.form.context1=val;
+                vm.searchList()
+            }
+        },300);
+    },
     methods:{
         searchList(p){
             let vm=this,
