@@ -52,7 +52,7 @@
                         <b><label v-if="search.number1.cityName" class="f-c-grey"></label><a style="color:#20a0ff">{{translateData('formatPhone',search.number1.phoneTitle)}}***</a></b>
                         <b><label v-if="search.number1.cityName" class="f-c-grey">归属地 ：</label>{{search.number1.cityName||'--'}}</b>
                         <b><label v-if="search.number1.preStore" class="f-c-grey">预存 ：</label>{{translateData('money',search.number1.preStore)}}元</b>
-                        <b><label v-if="search.number1.pkgName" class="f-c-grey">产品名称 ：</label>{{search.number1.pkgName||'--'}}<span class="f-c-grey">( 资费:{{search.number1.feeVoice||'--'}} ,可选包:{{search.numberList[0].optPkgInfo||'--'}})</span></b>
+                        <b><label v-if="search.number1.pkgName" class="f-c-grey">产品名称 ：</label>{{search.number1.pkgName||'--'}}<span class="f-c-grey">( 资费:{{search.number1.faceVoice||'--'}} ,可选包:{{search.number1.optPkgInfo||'--'}})</span></b>
                     </p>
                 </div>
                 <div class="m-total-table">
@@ -236,19 +236,11 @@ export default {
                     msgSkin: "error"
                 });
                 return false;
-            }else{
-                layer.open({
-                    content:"选择的查询条件不正确",
-                    skin: "msg",
-                    time: 2,
-                    msgSkin: "error"
-                });
-                return false;
             }
             vm.search.numberInfo="";
             requestGetExclusiveNumberList(json,()=>{vm.off.isLoad=false})
             .then((data)=>{
-                vm.search.number1=data.data.datas[0];
+                vm.search.number1=data.privInfo;
                 vm.search.numberList=data.data.datas;
                 vm.maxpage=Math.ceil(parseInt(data.data.total)/10);
                 vm.total=data.data.total;
@@ -263,7 +255,7 @@ export default {
                 "pageNow": p||1,
                 "searchType": v.s,//1白卡2成卡3已激活4未激活
                 "phoneSg":vm.search.number1.phoneTitle,//8位码号段
-                "dealerId":vm.search.number1.newDealerId//商户id
+                "dealerId":v.dealerId//商户id
             };
             requestGetExclusiveNumberDesc(json,()=>{vm.off.isLoad=false})
             .then((data)=>{
