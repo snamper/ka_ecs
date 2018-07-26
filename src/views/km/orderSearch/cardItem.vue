@@ -1250,7 +1250,6 @@ export default {
         }
         }
         // if (vm.off.isLoad) return false;
-        debugger;
         vm.off.isLoad = true;
         reqCommonMethod(json,function() {vm.off.isLoad = false;},url )
         .then(data => {

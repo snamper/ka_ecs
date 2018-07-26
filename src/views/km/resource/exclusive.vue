@@ -212,6 +212,39 @@ export default {
                 "searchType": vm.form.select,//1:码号段前8位，2：设备号,3:iccid
                 "context": vm.form['context'+vm.form.select],//搜索文本
             };
+            if(vm.form.select==1&&!vm.form.context1){
+                layer.open({
+                    content:"请输入查询的号码或号段",
+                    skin: "msg",
+                    time: 2,
+                    msgSkin: "error"
+                });
+                return false;
+            }else if(vm.form.select==2&&!vm.form.context2){
+                layer.open({
+                    content:"请输入查询的设备号",
+                    skin: "msg",
+                    time: 2,
+                    msgSkin: "error"
+                });
+                return false;
+            }else if(vm.form.select==3&&!vm.form.context3){
+                layer.open({
+                    content:"请输入查询的ICCID",
+                    skin: "msg",
+                    time: 2,
+                    msgSkin: "error"
+                });
+                return false;
+            }else{
+                layer.open({
+                    content:"选择的查询条件不正确",
+                    skin: "msg",
+                    time: 2,
+                    msgSkin: "error"
+                });
+                return false;
+            }
             vm.search.numberInfo="";
             requestGetExclusiveNumberList(json,()=>{vm.off.isLoad=false})
             .then((data)=>{
