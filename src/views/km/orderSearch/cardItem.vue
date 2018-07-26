@@ -672,22 +672,32 @@ export default {
         type == "auditing" ? (vm.off.type = 1) : type == "audited" ? (vm.off.type = 2) : type == "closed" ? (vm.off.type = 4) : (vm.off.type = 3);
         vm.form.startTime = laydate.now(0, "YYYY-MM-DD 00:00:00");
         vm.form.endTime = laydate.now(0, "YYYY-MM-DD 23:59:59");
+        let id = this.$route.params.id;
+        if(id!="null"){
+            vm.form.source='6';
+            vm.form.select='1';
+            vm.form.context1=id;
+            vm.searchList();
+            let e = {};
+            e.name=id;
+            vm.details(e);
+        }
     },
     searchList: function(page) {
       var vm = this,
         url,
         json = {
-          source: vm.form.source,
-          type: vm.form.orderType,
+          source: vm.form.source, //订单来源，6、卡盟APP；7、卡盟SDK；8远特i卡
+          type: vm.form.orderType,//6 开空卡 9 开白卡 10 开成卡 7 过户 4 实名补录 8 补换卡
           pageSize: vm.pageSize,
           pageNum: page || 1,
           startTime: vm.form.startTime,
           endTime: vm.form.endTime,
-          status: vm.form.orderStatus,
-          auditType: vm.form.auditType,
-          cardType: vm.form.cardType,
-          periodType: vm.off.type,
-          sourceFrom :vm.form.sourceFrom .join(',')
+          status: vm.form.orderStatus,//订单状态
+          auditType: vm.form.auditType,//审核方式
+          cardType: vm.form.cardType,//运营商
+          periodType: vm.off.type,//1，待审核;2，已审核;3，进行中;4，已关闭
+          sourceFrom :vm.form.sourceFrom .join(',')//开卡方式
         };
         vm.isShowDXYZ=false;
       //非卡盟SDK+远特I卡，进行中，已关闭
@@ -994,7 +1004,6 @@ export default {
         if (json.context != 0 && json.searchtype != 1) {
           if (json.searchtype == 6) {
             // sql += " AND B.order_status=" + json.context;
-
             if (json.context == 1) {
               sql += " AND B.order_status=2";
             } else if (json.context == 2) {
@@ -1164,89 +1173,94 @@ export default {
     },
     details: function(e) {
       //详情
-      var vm = this,
-        url,
-        orderId = e.target.name,
+        var vm = this,
+        url,orderId,
         type = vm.off.type,
-        str,
-        json = { orderId: orderId, status: type },
+        str,json={},
         sql ='A.sys_order_id="' + orderId + '"';
-      vm.off.number = e.target.title;
-      if (vm.form.source == 7) {
+        if(e.hasOwnProperty('target')){
+            orderId = e.target.name
+            vm.off.number = e.target.title;
+        }else{
+            orderId = e.name
+            vm.off.number = e.title;            
+        };
+        json = { orderId: orderId, status: type };
+        if (vm.form.source == 7) {
         //SDK
         url = "km-ecs/w/handler/query";
         if (type == 1 || type == 2) {
-          json.opKey = "tf.orderAudit.details";
-          if (type == 2) {
+            json.opKey = "tf.orderAudit.details";
+            if (type == 2) {
             sql += " AND (A.result=1 OR A.result=2)";
-          } else if (type == 1) {
+            } else if (type == 1) {
             sql += " AND (A.result=4 OR A.result=5)";
-          }
+            }
         } else if (type == 3 || type == 4) {
-          json.opKey = "tf.orderApp.details";
-          if (type == 3) {
-           
-          } else if (type == 4) {
+            json.opKey = "tf.orderApp.details";
+            if (type == 3) {
+            
+            } else if (type == 4) {
             sql += " AND A.order_status=4";
-          }
+            }
         }
         json.params = [sql];
         json.pageSize = "10";
         json.pageNum = "-1";
-      } else if (vm.form.source == 8) {
+        } else if (vm.form.source == 8) {
         //远特i卡
         url = "km-ecs/w/handler/query";
         if (type == 1 || type == 2) {
-          json.opKey = "tf.orderAudit.details";
-          if (type == 2) {
+            json.opKey = "tf.orderAudit.details";
+            if (type == 2) {
             sql += " AND (A.result=1 OR A.result=2)";
-          } else if (type == 1) {
+            } else if (type == 1) {
             sql += " AND (A.result=4 OR A.result=5)";
-          }
+            }
         } else if (type == 3 || type == 4) {
-          json.opKey = "tf.orderApp.details";
-          if (type == 3) {
+            json.opKey = "tf.orderApp.details";
+            if (type == 3) {
             sql += " AND A.order_status=1";
-          } else if (type == 4) {
+            } else if (type == 4) {
             sql += " AND A.order_status=4";
-          }
+            }
         }
         json.params = [sql];
         json.pageSize = "10";
         json.pageNum = "-1";
-      } else {
+        } else {
         //卡盟App
         if (type == 1) {
-          //待审核
-          url = "km-ecs/w/audit/ingInfo";
-          if (vm.form.orderType == 4 || vm.form.orderType == 8)
+            //待审核
+            url = "km-ecs/w/audit/ingInfo";
+            if (vm.form.orderType == 4 || vm.form.orderType == 8)
             url = "km-ecs/w/audit/getReinputInfo";
-          vm.form.orderType == 4 ? (json.type = "1") : (json.type = "2");
+            vm.form.orderType == 4 ? (json.type = "1") : (json.type = "2");
         } else if (type == 2) {
-          //已审核
-          url = "km-ecs/w/audit/edInfo";
-          if (vm.form.orderType == 4 || vm.form.orderType == 8)
+            //已审核
+            url = "km-ecs/w/audit/edInfo";
+            if (vm.form.orderType == 4 || vm.form.orderType == 8)
             url = "km-ecs/w/audit/getReinputInfo";
-          vm.form.orderType == 4 ? (json.type = "1") : (json.type = "2");
+            vm.form.orderType == 4 ? (json.type = "1") : (json.type = "2");
         } else {
-          url = "km-ecs/w/audit/getOrderInfo";
-          if (vm.form.orderType == 4 || vm.form.orderType == 8)
+            url = "km-ecs/w/audit/getOrderInfo";
+            if (vm.form.orderType == 4 || vm.form.orderType == 8)
             url = "km-ecs/w/audit/getReinputInfo";
-          vm.form.orderType == 4 ? (json.type = "1") : (json.type = "2");
+            vm.form.orderType == 4 ? (json.type = "1") : (json.type = "2");
         }
-      }
-      if (vm.off.isLoad) return false;
-      vm.off.isLoad = true;
-      reqCommonMethod(json,function() {vm.off.isLoad = false;},url )
+        }
+        // if (vm.off.isLoad) return false;
+        vm.off.isLoad = true;
+        reqCommonMethod(json,function() {vm.off.isLoad = false;},url )
         .then(data => {
-          if (vm.form.source == 7 || vm.form.source == 8) {
+            if (vm.form.source == 7 || vm.form.source == 8) {
             vm.detailsData = data.data.list[0];
-          } else {
+            } else {
             vm.detailsData = data.data;
-          }
-          vm.off.details = true;
-          vm.off.isLoad = false;
-          vm.off.examine = true;
+            }
+            vm.off.details = true;
+            vm.off.isLoad = false;
+            vm.off.examine = true;
         })
         .catch(error => errorDeal(error));
     },

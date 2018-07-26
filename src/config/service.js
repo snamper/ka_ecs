@@ -42,18 +42,19 @@ export const requestGetMakeChengList=(data,load)=>fetch("km-ecs/w/monopoly/getMa
 export const requestGetMakeChengDetails=(data,load)=>fetch("km-ecs/w/monopoly/getMakeReadyDesc",data,"POST",load);
 
 /*专营号制卡相关*/
-export const requestGetExclusiveNumber=(data,load)=>fetch("km-ecs/w/monopoly/getMakeReadyDesc",data,"POST",load);
-export const requestGetExclusiveWhite=(data,load)=>fetch("km-ecs/w/monopoly/getMakeReadyDesc",data,"POST",load);
-export const requestGetExclusiveCheng=(data,load)=>fetch("km-ecs/w/monopoly/getMakeReadyDesc",data,"POST",load);
-export const requestGetExclusiveActive=(data,load)=>fetch("km-ecs/w/monopoly/getMakeReadyDesc",data,"POST",load);
-export const requestGetExclusiveNotActive=(data,load)=>fetch("km-ecs/w/monopoly/getMakeReadyDesc",data,"POST",load);
+// export const requestGetExclusiveWhite=(data,load)=>fetch("km-ecs/w/monopoly/getMakeReadyDesc",data,"POST",load);
+// export const requestGetExclusiveCheng=(data,load)=>fetch("km-ecs/w/monopoly/getMakeReadyDesc",data,"POST",load);
+// export const requestGetExclusiveActive=(data,load)=>fetch("km-ecs/w/monopoly/getMakeReadyDesc",data,"POST",load);
+// export const requestGetExclusiveNotActive=(data,load)=>fetch("km-ecs/w/monopoly/getMakeReadyDesc",data,"POST",load);
 /*商户专营号查询*/
-export const requestGetSpecialExclusiveNumber=(data,load)=>fetch("km-ecs/w/monopoly/getMakeReadyDesc",data,"POST",load);
+export const requestGetMerchantExclusiveNumber=(data,load)=>fetch("km-ecs/w/monopoly/getPrivateListByDealerId",data,"POST",load);
 
 /*专营号查询相关*/
 export const requestGetExclusiveNumberList=(data,load)=>fetch("km-ecs/w/monopoly/getPrivateList",data,"POST",load);
 export const requestGetExclusiveNumberDesc=(data,load)=>fetch("km-ecs/w/monopoly/getNumsDesList",data,"POST",load);
 export const requestGetGeneralNumberList1=(data,load)=>fetch("km-ecs/w/monopoly/getGeneralByPhone",data,"POST",load);
+/*大众号查询列表*/
 export const requestGetGeneralNumberList2=(data,load)=>fetch("km-ecs/w/monopoly/getGeneralList",data,"POST",load);
+/*大众号查询详情*/
 export const requestGetGeneralNumberDesc=(data,load)=>fetch("km-ecs/w/monopoly/getGNumsDesList",data,"POST",load);
 

@@ -28,7 +28,7 @@ input:focus {outline: none;border-color: #20a0ff}
 .m-input-button>input:focus + button{border-color:#20a0ff;color:#20a0ff;}
 
 #search, #merchantSearch{padding: 0.15rem;position: relative;}
-#search.active{width:100%;height:100%;position:absolute;padding: 0;}
+#search.active{width:100%;height:100%;padding: 0;}
 
 .g-search-menu, .m-search-menu *{width: 100%;height: 100%;}
 .g-search-menu{display: table;position: relative;}

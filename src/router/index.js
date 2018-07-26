@@ -403,9 +403,9 @@ const router=new Router({
         name:"orderSearch_card",
         component:OrderSearch_card,
         children:[{
-          path:":type",
-          component:OrderSearch_cardItem,
-          name:"orderSearch_cardItem"
+            path:":type/:id",
+            component:OrderSearch_cardItem,
+            name:"orderSearch_cardItem"
         }]
       },{//售卡权限
         path:"businessPower/:type",

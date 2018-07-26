@@ -3,7 +3,7 @@
   @import "../assets/km/css/home_ym.css";
 </style>
 <template>
-  <div id="home" :class={active:off.headMenu}>
+  <div id="home" :class={active:off.headMenu}  ref="psec">
   	<header class="g-head">
 		<table cellspacing="0">
 			<tbody>
@@ -316,7 +316,7 @@ export default{
             let kmOpinionInfo=vm.getOpinionCountInfo();//km意见反馈数统计
             let ymAuditInfo=vm.getAuditStatisticsInfoYm();//ym订单审核数统计
             window.onresize=()=>vm.debounce(300,vm.windowChange());
-			vm.timer.count=setInterval(()=>vm.getAuditStatisticsInfo(),5000);
+			// vm.timer.count=setInterval(()=>vm.getAuditStatisticsInfo(),5000);
             vm.timer.OpcountT=setInterval(()=>vm.getOpinionCountInfo(),60000);
 			// vm.timer.countYm=setInterval(()=>vm.getAuditStatisticsInfoYm(),5000);            
 			vm.SET_ONLINE_TIME();

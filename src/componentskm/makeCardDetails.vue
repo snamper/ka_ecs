@@ -347,7 +347,6 @@ export default{
                 var w=document.documentElement.clientWidth,url='';
                 let latitude=parseFloat(i.latitude);
                 let longitude=parseFloat(i.longitude);
-                console.log(latitude,longitude)
                 w<640 ? url='http://map.baidu.com/mobile/?latlng='+latitude+','+longitude+'' : url='http://map.baidu.com/?latlng='+latitude+','+longitude+'';
                 window.open(url);
            }else if(v==4){

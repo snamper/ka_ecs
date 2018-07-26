@@ -32,7 +32,6 @@ input, button{ -webkit-appearance: none;-moz-appearance: none;-ms-appearance: no
 .fCBlack{color: #000;}
 .f-inline-block{display: inline-block;vertical-align: middle;}
 .f-mgt-10{margin-top: 0.1rem;}
-
 .f-bdr50{border-radius: 50%;}
 .f-btn{ display: inline-block;color: #fff; outline: none;border:none; text-align: center;line-height: 1;font-size: 0.14rem;border-radius: 3px;cursor: pointer;} 
 .f-btn-success{background-color: #13ce66;}
@@ -43,6 +42,7 @@ input, button{ -webkit-appearance: none;-moz-appearance: none;-ms-appearance: no
 .f-btn-line:hover{border-color: #20a0ff;color: #20a0ff;}
 .f-btn-warning{background-color: #f7ba2a;color: #fff;}
 .f-btn-warning:active, .f-btn-warning:hover { background-color: #f9c855;}
+.f-a-td{text-decoration: underline;color:#20a0ff;cursor: pointer}
 .f-no-data{
     padding:0.2rem;
     text-align: center;

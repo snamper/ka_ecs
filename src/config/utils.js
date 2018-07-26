@@ -190,6 +190,9 @@ export const translateData=(type,v)=> {
         case 16://短信验证
             return v==1?'是':v==0?'否':'--';
         break;
+        case 17://号卡状态
+            return v==0?'未激活':v==1?'预占':v==2?'成卡':v==3?'已激活':'--';
+        break;
         case 'money'://金额转换
             if(!isNaN(v)){
                 return (v/100).toFixed(2)
