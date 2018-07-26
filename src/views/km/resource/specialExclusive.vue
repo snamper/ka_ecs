@@ -38,9 +38,9 @@
                 </section>
             </div>
             <!-- 查询结果 -->
-            <div v-if="search.list" class="m-total-table">
+            <div v-if="list" class="m-total-table">
                 <div class="total-head">查询结果
-                    【<a class="f-a-td">{{dealerId}} ({{search.list[0].companyName}})</a>】<b>{{search.listTotal}}</b>
+                    <label v-if="list.length>0">【<a class="f-a-td">{{dealerId}} ({{list[0].companyName}})</a>】<b>{{listTotal}}</b></label>
                     <!-- <button class="btn_export_excel" v-if="maxpage" @click="downLoadList">导出excel</button> -->
                 </div>
                 <table>
@@ -59,9 +59,9 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="(todo,index) in search.list" :key="index">
+                        <tr v-for="(todo,index) in list" :key="index">
                             <td>{{((pageNow-1)*10+(index+1))}}</td>
-                            <td>{{translateData('formatPhone',todo.phoneTitle)}}***</td>
+                            <td><a class="f-a-td" :href="'#/homek/resource/exclusive/'+todo.phoneTitle" >{{translateData('formatPhone',todo.phoneTitle)}}***</a></td>
                             <td>{{todo.home||'--'}}</td>
                             <td>{{translateData('money',todo.preStore)}}</td>
                             <td>{{todo.pkgName||'--'}}</td>
@@ -94,10 +94,8 @@ export default {
                 select:"",
                 cardType:-1,
             },
-            search:{
-                list:"",
-                listTotal:"",
-            },
+            list:"",
+            listTotal:"",
             dealerId:"",
             pageNow:1,
             pageSize:10,
@@ -129,9 +127,10 @@ export default {
             }
             requestGetMerchantExclusiveNumber(json,()=>{vm.off.isLoad=false})
             .then((data)=>{
-                vm.search.list=data.data.datas;
-                vm.search.listTotal=data.data.total;
-                vm.maxpage=Math.ceil(parseInt(vm.search.listTotal)/vm.pageSize);
+                vm.list=data.data.datas;
+                debugger;
+                vm.listTotal=data.data.total;
+                vm.maxpage=Math.ceil(parseInt(vm.listTotal)/vm.pageSize);
                 vm.pageNow=p||1;
                 vm.callback=(p)=>{vm.searchList(p)};
             }).catch(e=>errorDeal(e))

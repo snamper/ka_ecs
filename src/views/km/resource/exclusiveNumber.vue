@@ -229,9 +229,9 @@ export default{
                 data={phone:vm.form.context1};
                 reqAction=requestGetGeneralNumberList1;
             }else{
-                data={phone:vm.form.context1,cityCode:vm.selectedNode,prestoreMoney:vm.context5,pageNow:page||1,pageSize:20} 
+                data={phone:vm.form.context1,cityCode:vm.selectedNode,prestoreMoney:vm.context5.join(','),pageNow:page||1,pageSize:20} 
                 if(vm.context5All==true){
-                    data.prestoreMoney=""
+                    data.prestoreMoney="-1"
                 }
                 reqAction=requestGetGeneralNumberList2;
             }
