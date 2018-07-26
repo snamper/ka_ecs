@@ -40,7 +40,7 @@
             <!-- 查询结果 -->
             <div v-if="list" class="m-total-table">
                 <div class="total-head">查询结果
-                    <label v-if="list.length>0">【<a class="f-a-td">{{totaldealerId}} ({{list[0].companyName}})</a>】<b>{{listTotal}}</b></label>
+                    <label v-if="list.length>0">【<a class="f-a-td">{{dealerInfo.dealerId}} ({{dealerInfo.companyName}})</a>】<b>{{listTotal}}</b></label>
                     <!-- <button class="btn_export_excel" v-if="maxpage" @click="downLoadList">导出excel</button> -->
                 </div>
                 <table>
@@ -102,7 +102,7 @@ export default {
             maxpage:1,
             callback:Function,
             total:"",
-            totaldealerId:"",
+            dealerInfo:"",
         }
     },
     components:{
@@ -126,13 +126,14 @@ export default {
                 });
                 return false;
             }
+            vm.off.isLoad=true;
             requestGetMerchantExclusiveNumber(json,()=>{vm.off.isLoad=false})
             .then((data)=>{
                 vm.list=data.data.datas;
                 vm.listTotal=data.data.total;
                 vm.maxpage=Math.ceil(parseInt(vm.listTotal)/vm.pageSize);
                 vm.pageNow=p||1;
-                vm.totaldealerId=vm.dealerId.slice(0);
+                vm.dealerInfo=data.merchInfo;
                 vm.callback=(p)=>{vm.searchList(p)};
             }).catch(e=>errorDeal(e))
         },
