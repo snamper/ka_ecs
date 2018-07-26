@@ -7,8 +7,9 @@ export default {
 		let isadmin=state.userInfo.isadmin;
 		if(isadmin){
             var count=0;
-				count = auditCount.opencard+auditCount.opencardAfterwards+auditCount.attribute+auditCount.realNameCollection+auditCount.transfer+auditCount.sdkRealTime+auditCount.tfOpenCard+auditCount.realNameRechCard+auditCount.registerMerchantRealTime+auditCount.registerMerchantAfter;
-			return count;
+				count = auditCount.opencard+auditCount.opencardAfterwards+auditCount.attribute+auditCount.realNameCollection+auditCount.transfer+auditCount.sdkRealTime+auditCount.tfOpenCard+auditCount.realNameRechCard+auditCount.registerMerchantRealTime+auditCount.registerMerchantAfter+auditCount.tfOpenCardReal;
+                console.log(count);
+                return count;
 		}else{
 			return 0;
 		}
