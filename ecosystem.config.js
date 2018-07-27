@@ -41,7 +41,24 @@ module.exports = {
       path : '/usr/local/nginx/html/ka_ecs',
       'post-deploy' : 'cnpm install && npm run build && pm2 reload ecosystem.config.js --env production'
     },
-  
+    yfdTest : {
+        user : 'root',
+        host : '192.168.10.103',
+        ref  : 'origin/master',
+        // repo : 'git@github.com:thinkmix/ka_ecs.git',
+        repo : 'https://github.com/thinkmix/ka_ecs.git',
+        path : '/home/nginx/html/ka_ecs',
+        'post-deploy' : 'cnpm install && npm run build && pm2 reload ecosystem.config.js --env production'
+    },
+    yfdProduction : {
+        user : 'root',
+        host : '39.104.179.79',
+        ref  : 'origin/master',
+        // repo : 'git@github.com:thinkmix/ka_ecs.git',
+        repo : 'https://github.com/thinkmix/ka_ecs.git',
+        path : '/home/nginx/html/ka_ecs',
+        'post-deploy' : 'cnpm install && npm run build && pm2 reload ecosystem.config.js --env production'
+      },
   }
 };
 
