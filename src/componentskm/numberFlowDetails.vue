@@ -1,13 +1,3 @@
-<style scoped>
-    .numberInfo{width:98%;background-color:#fff;padding:12px 8px;border-radius:6px}
-    .numberInfo>b{padding-right: 20px;}
-    p.whiteDetailsTitle, p.emptyDetailsTitle{padding: 10px;}
-    p.whiteDetailsTitle>span, p.emptyDetailsTitle>span{display: inline-block;width: 10px;height: 10px;background: url('../assets/images/dian.png') no-repeat center;background-size: contain}
-    .table-numberDetails{border:none}
-    p.detailsEleP{margin-bottom: 10px;}
-    a.detailsEleA{text-decoration: underline;color: #20A0FF;}
-    a.linka{cursor: pointer;}
-</style>
 <template>
     <section>
         <div>
@@ -33,7 +23,8 @@
                                     <td v-for="(num,ind) in v" :key="ind">
                                         <p>ICCID: <a class="detailsEleA">{{num.iccid||'--'}}</a></p>
                                         <p class="f-c-grey f-s-12">IMSI:{{num.imsi}}</p>
-                                    </td>   
+                                    </td>
+                                    <td v-if="i==listWhite.length-1" v-for="(value,index) in tdWhite"></td>
                                 </tr>
                                 <tr>
                                     <td v-if="cardTotalWhite>listWhitelength" colspan="5">
@@ -57,6 +48,7 @@
                                         <td v-for="(num,ind) in v" :key="ind">
                                             <p>{{num}}</p>
                                         </td> 
+                                        <td v-if="i==listEmpty.length-1" v-for="(value,index) in tdEmpty"></td>
                                     </tr>  
                                 </tr>
                                 <tr>
@@ -83,14 +75,7 @@ import {getDateTime, errorDeal,translateData} from "../../src/config/utils.js"
 import {requestGetExclusiveNumerList} from "../config/service.js";
 export default{
     name:"numberFlowDetails",
-    props:{
-        listEmpty:Array,
-        listWhite:Array,
-        orderDetails:Object,
-        cardTotalWhite:Number,
-        cardTotalEmpty:Number,
-        numberInfo:Object
-    },
+    props:[ 'listEmpty', 'listWhite', 'orderDetails', 'cardTotalWhite', 'cardTotalEmpty', 'numberInfo', 'tdEmpty', 'tdWhite'],
     data (){
         return {
             listEmptylength:0,
@@ -98,7 +83,16 @@ export default{
         }
     },
     watch:{
-        
+        listEmpty(){
+            for(let i in this.listEmpty){
+                this.listEmptylength=this.listEmpty[i].length*i+this.listEmpty[i].length
+            }
+        },
+        listWhite(){
+            for(let i in this.listWhite){
+                this.listWhitelength=this.listWhite[i].length*i+this.listWhite[i].length
+            }
+        }
     },
     created:function(){
         let vm=this;
@@ -109,18 +103,7 @@ export default{
             vm.listWhitelength+=vm.listWhite[i].length
         }
     },
-    components:{
-        
-    },
     methods:{
-        close(){
-            let vm=this.$parent;
-            vm.off.flowDetails=false;
-            vm.whitePageNum=0;
-            vm.emptyPageNum=0;
-            vm.detailsDataWhite=[];//白卡详情数据
-            vm.detailsDataEmpty=[]; //空卡详情数据
-        },
         searchMore(v){
             let vm=this.$parent;
             if(v===1){
@@ -128,10 +111,27 @@ export default{
             }else if(v===2){
                 vm.getEmptyList(vm.searchEmptyReauestData)
             }
+        },close(){
+            let vm=this.$parent;
+            vm.off.flowDetails=false;
+            vm.whitePageNum=0;
+            vm.emptyPageNum=0;
+            vm.detailsDataWhite=[];//白卡详情数据
+            vm.detailsDataEmpty=[]; //空卡详情数据
         },translateData(v,i){
             return translateData(v,i)
         }
     }
 }
 </script>
+<style scoped>
+    .numberInfo{width:98%;background-color:#fff;padding:12px 8px;border-radius:6px}
+    .numberInfo>b{padding-right: 20px;}
+    p.whiteDetailsTitle, p.emptyDetailsTitle{padding: 10px;}
+    p.whiteDetailsTitle>span, p.emptyDetailsTitle>span{display: inline-block;width: 10px;height: 10px;background: url('../assets/images/dian.png') no-repeat center;background-size: contain}
+    .table-numberDetails{border:none}
+    p.detailsEleP{margin-bottom: 10px;}
+    a.detailsEleA{text-decoration: underline;color: #20A0FF;}
+    a.linka{cursor: pointer;}
+</style>
 

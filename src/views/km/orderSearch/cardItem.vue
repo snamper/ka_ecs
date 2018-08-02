@@ -595,73 +595,73 @@ import pagination from "../../../componentskm/page.vue";
 import details from "../../../componentskm/cardOrderDetails.vue";
 import { getDateTime, translateData, secondsFormat, getUnixTime, createDownload, setStore, getStore, errorDeal } from "../../../config/utils.js";
 export default {
-  data() {
-    return {
-      off: {
-        type: 1, //1，待审核;2，已审核;3，进行中;4，已关闭
-        isLoad: 0, //加载条
-        details: 0, //详情页面开关
-        number: "", //第几条详情
-        showData: 0
-      },
-      form: {
-        source: "6", //订单来源，6、卡盟APP；7、卡盟SDK；8远特i卡
-        orderType: 6, //6 开空卡 9 开白卡 10 开成卡 7 过户 4 实名补录 8 补换卡
-        cardType: 0, //运营商
-        orderStatus: 0, //订单状态
-        operatorType:1,//操作类型
-        sourceFrom :[1,6,7],//开卡方式
-        auditType: 9, //审核方式
-        context1: "", //订单号码
-        context2: "", //手机号码
-        context3: "", //审核人ID
-        context4: "", //身份证号
-        context5: "", // 操作者ID
-        context6: 0, //号卡状态
-        context7: "", //开卡者姓名
-        context8: -1, //号卡类型
-        startTime: "",
-        select: 6 ,//条件查询 1 订单号码2 手机号码 3 审核人ID 4 身份证号 5 操作者ID 6 订单状态7 用户姓名 8 号卡类型
-        endTime: "",
-      },
-      checkAllopencardType:true,
-      list: "", //查询数据
-      detailsData: "", //详情数据
-      total: 0, //总查询条数
-      pageNum: 1, //当前页数
-      pageSize: 10, //显示条数
-      maxpage: 1, //最大页数
-      callback: Function, //page组件点击回调
-      isShowDXYZ:false,
-    };
-  },
-  components: {
-    "my-page": pagination,
-    "list-details": details
-  },
-  computed: {
-    context8() {
-      return this.form.context8;
+    data() {
+        return {
+        off: {
+            type: 1, //1，待审核;2，已审核;3，进行中;4，已关闭
+            isLoad: 0, //加载条
+            details: 0, //详情页面开关
+            number: "", //第几条详情
+            showData: 0
+        },
+        form: {
+            source: "6", //订单来源，6、卡盟APP；7、卡盟SDK；8远特i卡
+            orderType: 6, //6 开空卡 9 开白卡 10 开成卡 7 过户 4 实名补录 8 补换卡
+            cardType: 0, //运营商
+            orderStatus: 0, //订单状态
+            operatorType:1,//操作类型
+            sourceFrom :[1,6,7],//开卡方式
+            auditType: 9, //审核方式
+            context1: "", //订单号码
+            context2: "", //手机号码
+            context3: "", //审核人ID
+            context4: "", //身份证号
+            context5: "", // 操作者ID
+            context6: 0, //号卡状态
+            context7: "", //开卡者姓名
+            context8: -1, //号卡类型
+            startTime: "",
+            select: 6 ,//条件查询 1 订单号码2 手机号码 3 审核人ID 4 身份证号 5 操作者ID 6 订单状态7 用户姓名 8 号卡类型
+            endTime: "",
+        },
+        checkAllopencardType:true,
+        list: "", //查询数据
+        detailsData: "", //详情数据
+        total: 0, //总查询条数
+        pageNum: 1, //当前页数
+        pageSize: 10, //显示条数
+        maxpage: 1, //最大页数
+        callback: Function, //page组件点击回调
+        isShowDXYZ:false,
+        };
     },
-    context6() {
-      return this.form.context6;
-    }
-  },
-  watch: {
-    context8() {
-      this.form.select = 8;
+    components: {
+        "my-page": pagination,
+        "list-details": details
     },
-    context6() {
-      this.form.select = 6;
-    },
-    'form.sourceFrom'(){
-        if(this.form.sourceFrom.length==3){
-            this.checkAllopencardType=true;
-        }else{
-            this.checkAllopencardType=false;
+    computed: {
+        context8() {
+            return this.form.context8;
+        },
+        context6() {
+            return this.form.context6;
         }
-    }
-  },
+    },
+    watch: {
+        context8() {
+            this.form.select = 8;
+        },
+        context6() {
+            this.form.select = 6;
+        },
+        'form.sourceFrom'(){
+            if(this.form.sourceFrom.length==3){
+                this.checkAllopencardType=true;
+            }else{
+                this.checkAllopencardType=false;
+            }
+        }
+    },
   created: function() {
     this.init();
   },
@@ -697,7 +697,7 @@ export default {
           auditType: vm.form.auditType,//审核方式
           cardType: vm.form.cardType,//运营商
           periodType: vm.off.type,//1，待审核;2，已审核;3，进行中;4，已关闭
-          sourceFrom :vm.form.sourceFrom .join(',')//开卡方式
+          sourceFrom :vm.form.sourceFrom.join(',')//开卡方式
         };
         vm.isShowDXYZ=false;
       //非卡盟SDK+远特I卡，进行中，已关闭

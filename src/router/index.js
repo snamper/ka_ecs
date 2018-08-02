@@ -259,6 +259,14 @@ const More = resolve =>{
     load();
   });
 };
+/*实名资源库*/
+const realNameResource = resolve =>{
+    load(true);
+    require.ensure(["@/views/km/realNameSource/index"], () => {
+      resolve(require("@/views/km/realNameSource/index"));
+      load();
+    });
+  };
 /*区域管理*/
 // const Fence = resolve =>{
 //   load(true);
@@ -502,6 +510,11 @@ const router=new Router({
       path:"more",
       component:More,
       name:"more"
+    },
+    {//实名资源
+        path:"realNameResource",
+        component:realNameResource,
+        name:"realNameResource"
     }
         // {//区域管理
         //   path:"fence",

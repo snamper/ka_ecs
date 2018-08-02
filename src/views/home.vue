@@ -142,9 +142,9 @@
 						<li v-if="off.powerKm_sh_cx"><router-link :to="{name:'merchant',params:{val:'null'}}"><b></b>商户查询</router-link></li>
 						<li v-if="off.powerKm_sh_cx"><router-link :to="{name:'device',params:{val:'null'}}"><b></b>设备查询</router-link></li>
 						<li v-if="off.powerKm_sh_cx"><router-link :to="{name:'promoter',params:{val:'null'}}"><b></b>推广方查询</router-link></li>
-						<li v-if="true"><router-link :to="{name:'ordinaryExclusive',params:{val:'null'}}"><b></b>大众号查询</router-link></li>
-						<li v-if="true"><router-link :to="{name:'exclusive',params:{val:'null'}}"><b></b>专营号查询</router-link></li>
-						<li v-if="true"><router-link :to="{name:'specialExclusive',params:{val:'null'}}"><b></b>商户专营号查询</router-link></li>
+						<li v-if="false"><router-link :to="{name:'ordinaryExclusive',params:{val:'null'}}"><b></b>大众号查询</router-link></li>
+						<li v-if="false"><router-link :to="{name:'exclusive',params:{val:'null'}}"><b></b>专营号查询</router-link></li>
+						<li v-if="false"><router-link :to="{name:'specialExclusive',params:{val:'null'}}"><b></b>商户专营号查询</router-link></li>
 						<!-- <li v-if="off.powerKm_sh_cx"><router-link :to="{name:'exclusiveNumber',params:{val:'null'}}"><b></b>专营号查询</router-link></li> -->
 					</ul>
 				</li>
@@ -182,6 +182,16 @@
 						</div>
 					</router-link>
 				</li>
+                <li v-if="false" :class="{active:crumb[0].name=='实名资源库'}">
+					<b></b>
+					<router-link to="/homek/realNameResource">
+						<div>
+							<i class="u-icon-morefn"></i>
+							<span>实名资源库</span>
+						</div>
+					</router-link>
+				</li>
+
 				<!-- <li :class="{active:$route.path.indexOf('/home/fence')>-1}">
 					<b></b>
 					<router-link to="/home/fence">
@@ -479,7 +489,9 @@ export default{
 				}
 			}else if(path.indexOf("/homek/more")>-1){
 				crumb[0]={"name":"更多功能"};
-			}
+			}else if(path.indexOf("/homek/realNameResource")>-1){
+				crumb[0]={"name":"实名资源库"};
+            }
 			this.crumb=crumb;
 			mainDom.style.overflowY='hidden';
 			var timer=setTimeout(()=>mainDom.style.overflowY='',500);

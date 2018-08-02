@@ -80,6 +80,8 @@
                                     <label><span class="checkbox"><input type="checkbox" value="3" v-model="makeCardRes" checked="checked"><span></span></span><span class="text">失败</span></label>
                                     <label><span class="checkbox"><input type="checkbox" value="1" v-model="makeCardRes" checked="checked"><span></span></span><span class="text">进行中</span></label>
                                     <label><span class="checkbox"><input type="checkbox" value="4" v-model="makeCardRes" checked="checked"><span></span></span><span class="text">订单关闭</span></label>
+                                    <label><span class="checkbox"><input type="checkbox" value="5" v-model="makeCardRes" checked="checked"><span></span></span><span class="text">已激活</span></label>
+                                    <label><span class="checkbox"><input type="checkbox" value="6" v-model="makeCardRes" checked="checked"><span></span></span><span class="text">废卡</span></label>
                                 </div>
                             </div>
                             <div class="row clr m-col-2">
@@ -108,7 +110,7 @@
                         </section>
                     </div>
                     <div class="m-total-table" v-if="searchMakeCardList">
-                        <div class="total-head"> 统计结果 <b>{{total}}</b> <button class="btn_export_excel" v-if="false" :disabled="searchMakeCardList.length==0" @click="exportList">导出excel</button> </div>
+                        <div class="total-head"> 统计结果 <b>{{total}}</b> <button class="btn_export_excel" v-if="searchMakeCardList" :disabled="searchMakeCardList.length==0" @click="exportList">导出excel</button> </div>
                         <table v-if="form.source==1">
                             <thead>
                                 <tr>
@@ -145,6 +147,8 @@
                                         <span class="f-c-green" v-if="todo.order_status==2">成功</span>
                                         <span class="f-c-red" v-if="todo.order_status==3">失败</span>
                                         <span class="f-c-red" v-if="todo.order_status==4">订单已关闭</span>
+                                        <span class="f-c-green" v-if="todo.order_status==5">已激活</span>
+                                        <span class="f-c-red" v-if="todo.order_status==6">废卡</span>
                                     </td>
                                 </tr>
                             </tbody>
@@ -205,48 +209,49 @@
 </template>
 <script>
 require("../../../assets/km/js/base64.min.js");
+import { getDateTime, translateData, errorDeal ,createDownload} from "../../../config/utils.js";
 import { requestGetMakeWhiteList, requestGetMakeChengList, requestGetMakeWhiteDetails, requestGetMakeChengDetails } from "../../../config/service.js";
 import pagination from "../../../componentskm/page.vue";
 import makeCardDetails from "../../../componentskm/makeCardDetails";
-import { getDateTime, translateData, errorDeal } from "../../../config/utils.js";
 export default {
     data() {
         return {
-        off: {
-            type: 1, //1，待审核;2，已审核;3，进行中;4，已关闭
-            isLoad: 0, //加载条
-            cardDetails: false, //详情页面开关
-            number: "", //第几条详情
-            showData: 0,
-            ordinary:true,
-            special:false,
-        },
-        form: {
-            source: "1", //1 成卡,2 白卡
-            startTime: "",
-            endTime: "",
-            select: 6 //条件查询，选择的条件
-        },
-        searchMakeCardList:false,
-        checkAllcardType:true,
-        checkAllMakeCardRes:true,
-        cardType:[0,1,2],
-        makeCardRes:[1,2,3,4],
-        payType:[0,1,2,3],
-        checkAllPayType:true,
-        phoneNumber:"",
-        orderId:"",
-        dealerId:"",
-        operatorId:"",
-        list: "", //查询数据
-        detailsData: "", //详情数据
-        total: 0, //总查询条数
-        pageNow: 1, //当前页数
-        pageSize: 10, //显示条数
-        maxpage: 1, //最大页数
-        callback: Function ,//page组件点击回调
-        whiteCardDet:{},
-        emptyCardDet:{},
+            off: {
+                type: 1, //1，待审核;2，已审核;3，进行中;4，已关闭
+                isLoad: 0, //加载条
+                cardDetails: false, //详情页面开关
+                number: "", //第几条详情
+                showData: 0,
+                ordinary:true,
+                special:false,
+            },
+            form: {
+                source: "1", //1 成卡,2 白卡
+                startTime: "",
+                endTime: "",
+                select: 6 //条件查询，选择的条件
+            },
+            searchMakeCardList:false,
+            checkAllcardType:true,
+            checkAllMakeCardRes:true,
+            cardType:[0,1,2],
+            makeCardRes:[1,2,3,4,5,6],
+            payType:[0,1,2,3],
+            checkAllPayType:true,
+            phoneNumber:"",
+            orderId:"",
+            dealerId:"",
+            operatorId:"",
+            list: "", //查询数据
+            detailsData: "", //详情数据
+            total: 0, //总查询条数
+            pageNow: 1, //当前页数
+            pageSize: 10, //显示条数
+            maxpage: 1, //最大页数
+            callback: Function ,//page组件点击回调
+            whiteCardDet:{},
+            emptyCardDet:{},
+            downloadJson:"",
         };
     },
     components: {
@@ -269,7 +274,7 @@ export default {
             }
         },
         makeCardRes(){
-            if(this.makeCardRes.length==4){
+            if(this.makeCardRes.length==6){
                 this.checkAllMakeCardRes=true;
             }else{
                 this.checkAllMakeCardRes=false;
@@ -321,6 +326,7 @@ export default {
             if(v==2){
                 json.orderId="";
             }
+            vm.downloadJson=json;
             if(vm.form.source==2){//成卡
                 requestGetMakeWhiteList(json,()=>{vm.off.isLoad=false})
                 .then((data)=>{
@@ -340,8 +346,10 @@ export default {
                     vm.callback=(i)=>{vm.searchList(v,i)};
                 })
             }   
-        },
-        searchMakeCardDetails(v){
+        },exportList(){
+            let vm=this;
+            createDownload("km-ecs/w/monopoly/downloadMakeReadyList",BASE64.encode(JSON.stringify(vm.downloadJson)),function(){})
+        },searchMakeCardDetails(v){
             let vm=this;
             if(vm.form.source==1){
                 requestGetMakeChengDetails({orderId:v.sys_order_id},()=>{vm.off.isLoad=false})
@@ -372,7 +380,7 @@ export default {
             }
         },BtnCheckAllMakeCardRes(){
             if(this.checkAllMakeCardRes==true){
-                this.makeCardRes=[1,2,3,4]
+                this.makeCardRes=[1,2,3,4,5,6]
             }else if(this.checkAllMakeCardRes==false){
                 this.makeCardRes=[]
             }
@@ -401,7 +409,7 @@ export default {
             vm.dealerId="",
             vm.operatorId="",
             vm.cardType=[0,1,2],
-            vm.makeCardRes=[1,2,3,4],
+            vm.makeCardRes=[1,2,3,4,5,6],
             vm.payType=[0,1,2,3];
         //   vm.form = Object.assign(vm.form, {});
         },

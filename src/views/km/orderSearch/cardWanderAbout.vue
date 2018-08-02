@@ -99,7 +99,7 @@ span.m-form-radio{width: 75px;}
                                 <td>{{getDateTime(todo.createTime)[6]}}</td>
                                 <td>{{todo.oldDealerId||'--'}}<br>{{todo.oldCompanyName||'--'}}</td>
                                 <td>{{todo.newDealerId||'--'}}<br>{{todo.newCompanyName||'--'}}</td>
-                                <td><a @click="numberFlowDetails(todo)" class="detailsEleA">{{translateData('formatPhone',todo.phoneTitle)}}***</a></td>
+                                <td><a  @click="numberFlowDetails(todo)" :class="todo.status==2?'detailsEleA':'--'">{{translateData('formatPhone',todo.phoneTitle)}}***</a></td>
                                 <td>{{todo.useDeviceId||'--'}}</td>
                                 <td>
                                     <span class="f-c-green" v-if="todo.status==2">成功</span>
@@ -114,7 +114,7 @@ span.m-form-radio{width: 75px;}
                     <my-page :page="pageNow" :maxpage="maxpage" :callback="callback"></my-page>
                 </div>
             </section>
-            <numberFlowDetails v-if="off.flowDetails" :cardTotalWhite="whiteCardTotal" :cardTotalEmpty="emptyCardTotal" :listEmpty="detailsDataEmpty" :listWhite="detailsDataWhite" :orderDetails="orderDetails" :numberInfo="searchFlowList"></numberFlowDetails>
+            <numberFlowDetails v-if="off.flowDetails" :cardTotalWhite="whiteCardTotal" :cardTotalEmpty="emptyCardTotal" :listEmpty="detailsDataEmpty" :listWhite="detailsDataWhite" :orderDetails="orderDetails" :numberInfo="searchFlowList" :tdEmpty="tdEmpty" :tdWhite="tdWhite"></numberFlowDetails>
         </div>
         <!--详情页面-->
     </section>
@@ -144,7 +144,7 @@ export default {
         deviceId: "", //设备号
         flowResult:[1,2,3],//流转结果
         checkAll:true,
-        searchFlowList: "", //查询数据
+        searchFlowList:"", //查询数据
         detailsDataWhite: [], //白卡详情数据
         detailsDataEmpty: [], //空卡详情数据
         searchWhiteRequsetData:{},
@@ -159,6 +159,8 @@ export default {
         orderDetails:{},
         whiteCardTotal:0,
         emptyCardTotal:0,
+        tdWhite:[],
+        tdEmpty:[]
     };
   },
   components: {
@@ -193,7 +195,6 @@ export default {
                         vm.total=data.data.total
                         vm.searchFlowList=data.data.datas;
                     }).catch((e=>errorDeal(e)))
-                    resolve("success22");
                 });
                 p1.then(()=>{
                     v.sysOrderId=val;
@@ -209,9 +210,6 @@ export default {
             }else{
                 this.checkAll=false;
             }
-        },
-        searchFlowList(){
-            console.log(this.searchFlowList);
         }
     },
   methods: {
@@ -269,9 +267,11 @@ export default {
                 vm.callback=(i)=>{vm.searchList(v,i)};
             }).catch((e=>errorDeal(e)))
         }
-        resolve("success22");
     },
     numberFlowDetails(v){//专营号号段的详情
+        if(v.status!=2){
+            return false
+        }
         let vm=this;
         vm.searchWhiteRequsetData={
             "pageSize": "200",
@@ -285,14 +285,12 @@ export default {
         vm.off.flowDetails=true;
         let d1 = new Promise((resolve,reject)=>{
             vm.getWhiteList(vm.searchWhiteRequsetData);
-            resolve("success!!!!");
         }) 
         let d2 = new Promise((resolve,reject)=>{
             vm.getEmptyList(vm.searchEmptyReauestData);
-            resolve("success!!!!");
         }) 
         Promise.all([d1,d2])
-        .then(()=>{})
+        .then((result)=>{})
         .catch(e=>errorDeal(e))     
     },
     getWhiteList(v,fun){
@@ -301,18 +299,28 @@ export default {
         requestGetExclusiveNumerFlowDetails1(v,()=>{vm.off.isLoad=false;})
         .then((data)=>{
             let num=data.data.datas;
-            if(num.length==0){
-                layer.open({
-                    content:"没有更多数据了",
-                    skin:"msg",
-                    time: 2,
-                    msgSkin: "error"
-                });
-                return false;
+            if(vm.whitePageNum>1){
+                if(num.length==0){
+                    layer.open({
+                        content:"没有更多数据了",
+                        skin:"msg",
+                        time: 2,
+                        msgSkin: "error"
+                    });
+                    return false;
+                }
             }
             vm.whiteCardTotal=data.data.total;
-            for(let i =0 ,len=num.length;i<len;i+=7){
-                vm.detailsDataWhite.push(num.slice(i,i+7)) 
+            for(let i =0 ,len=num.length;i<len;i+=5){
+                vm.detailsDataWhite.push(num.slice(i,i+5)) 
+            }
+            if(vm.detailsDataWhite instanceof Array&&vm.detailsDataWhite.length>0){
+                let lastArr=vm.detailsDataWhite[vm.detailsDataWhite.length-1].length;
+                if(lastArr<5){
+                    vm.tdWhite=new Array(5-lastArr);
+                }else{
+                    vm.tdWhite=new Array(0);
+                }
             }
             return "success";                  
         })
@@ -323,19 +331,29 @@ export default {
         requestGetExclusiveNumerFlowDetails2(v,()=>{vm.off.isLoad=false;})
         .then((data)=>{
             let num=data.data.datas; 
-            if(num.length==0){
-                layer.open({
-                    content:"没有更多数据了",
-                    skin:"msg",
-                    time: 2,
-                    msgSkin: "error"
-                });
-                return false;
+            if(vm.emptyPageNum>1){
+                if(num.length==0){
+                    layer.open({
+                        content:"没有更多数据了",
+                        skin:"msg",
+                        time: 2,
+                        msgSkin: "error"
+                    });
+                    return false;
+                }
             }
             vm.emptyCardTotal=data.data.total;
-            for(let i =0 ,len=num.length;i<len;i+=5){
+            for(let i = 0 ,len=num.length;i<len;i+=5){
                 vm.detailsDataEmpty.push(num.slice(i,i+5))
-            }   
+            }  
+            if(vm.detailsDataEmpty instanceof Array&&vm.detailsDataEmpty.length>0){
+                let lastArr=vm.detailsDataEmpty[vm.detailsDataEmpty.length-1].length;
+                if(lastArr<5){
+                    vm.tdEmpty=new Array(5-lastArr);
+                }else{
+                    vm.tdEmpty=new Array(0);
+                } 
+            }
             return "success";     
         })
     },
