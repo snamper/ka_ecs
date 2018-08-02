@@ -3,7 +3,7 @@
 **-->
 <template>
     <section class="g-search-menu">
-        <div v-if="!off.details" :class="{active:off.details}">
+        <div v-if="!off.details" id="search" :class="{active:off.details}">
             <header class="m-scroll-bar animated infinite" :class="{active:off.isLoad}"></header>
             <section>
                 <div class="g-search-form">
@@ -157,7 +157,7 @@
                 </div>
             </section>
         </div>
-        <details v-if="off.details"></details>
+        <detail v-if="off.details"></detail>
     </section>
 </template>
 <script>
@@ -165,7 +165,7 @@ import "../../../assets/km/css/search.css";
 import { getRealNameSource,getRealNameSourceDetail } from "../../../config/service.js";
 import { errorDeal,getDateTime ,translateData} from "../../../config/utils";
 import pagination from "../../../componentskm/page.vue";
-import details from './sourceDetail';
+import sourceDetail from './sourceDetail';
 export default {
     data() {
         return {
@@ -183,7 +183,7 @@ export default {
     },
     components: {
         "my-page": pagination,
-        details
+        "detail":sourceDetail
     },
     created: function() {
         this.init();

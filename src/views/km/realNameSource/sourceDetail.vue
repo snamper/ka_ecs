@@ -1,48 +1,60 @@
-
 <template>
-    <section class="g-list-box">
-        <!--采集详情-->
-        <div  class="m-total-table g-list-box" >
+    <section class="g-list-box" id="details">
+        <div  class="m-total-table" >
             <header class="g-lis-head">
                 <a  class="m-details-back u-icon-back" style="width:20px;height:20px;" @click="close"></a>
-                <div class="m-footD-btn">
-                </div>
             </header>
             <div class="g-box">
-                <p class="whiteDetailsTitle"><span></span> 订单信息 </p>
-                <table class="merchant-total g-list-table table-numberDetails">
-                    <table class="g-in-table col-l orderInfo">
-                        <tbody>
-                           
-                        </tbody>
-                    </table>
+                <p class="m-detail-title">证件号码</p>
+                <table>
+                    <tr>
+                        <td>采集时间</td>
+                        <td>姓名</td>
+                        <td>采集方式</td>
+                        <td>可信度</td>
+                        <td>校验方式</td>
+                        <td>采集结果</td>
+                        <td>采集源</td>
+                        <td>业务类型</td>
+                        <td>订单号码</td>
+                    </tr>
+                    <tr >
+
+                    </tr>
                 </table>
             </div>
         </div>
     </section>
 </template>
 <script>
+import "../../../assets/km/css/cardOrderDetails.css";
 export default{
     props:[],
     data (){
         return {
-            
+   
         }
     },
-    components:{
-       
-    },methods:{
-        getDateTime(v){
-            return getDateTime(v)
-        },translateData(v,i){
-            return translateData(v,i)
-        },close(){
-            let vm=this.$parent;
-                vm.off.details=false;
-        }
+
+    created:function(){
+
+    },
+    methods:{
+       close(){
+           let vm=this.$parent;
+           vm.off.details=false;
+       },getDateTime(v){
+           return getDateTime(v)
+       },translateData(v,i){
+           return translateData(v,i)
+       }
     }
 }
 </script>
 <style scoped>
-    
+    .m-total-table{background: transparent}
+    .g-box tr td{padding: 10px 0px} 
+    .g-box tr:nth-child(1){background: #EEF1F8}
+    .m-detail-title{height: 40px;line-height: 20px;background: #fff;padding: 10px}
 </style>
+
