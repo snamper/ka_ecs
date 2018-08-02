@@ -59,4 +59,5 @@ export const requestGetGeneralNumberList2=(data,load)=>fetch("km-ecs/w/monopoly/
 export const requestGetGeneralNumberDesc=(data,load)=>fetch("km-ecs/w/monopoly/getGNumsDesList",data,"POST",load);
 /*实名资源库*/
 export const getRealNameSource=(data,load)=>fetch("km-ecs/w/realNameAuth/query",data,"POST",load);
+export const getRealNameSourceDetail=(data,load)=>fetch("km-ecs/w/realNameAuth/queryDetail",data,"POST",load);
 

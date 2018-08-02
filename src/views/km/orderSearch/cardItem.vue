@@ -466,7 +466,7 @@
             <div class="m-total-table" v-if="list">
                 <div class="total-head">统计结果
                     <b>{{total}}</b>
-                    <button class="btn_export_excel" v-if="maxpage" @click="downLoadList">导出excel</button>
+                    <button class="btn_export_excel" v-if="false" @click="downLoadList">导出excel</button>
                 </div>
                 <table>
                     <thead>
