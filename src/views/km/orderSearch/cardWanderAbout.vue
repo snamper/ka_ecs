@@ -114,7 +114,7 @@ span.m-form-radio{width: 75px;}
                     <my-page :page="pageNow" :maxpage="maxpage" :callback="callback"></my-page>
                 </div>
             </section>
-            <numberFlowDetails v-if="off.flowDetails" :cardTotalWhite="whiteCardTotal" :cardTotalEmpty="emptyCardTotal" :listEmpty="detailsDataEmpty" :listWhite="detailsDataWhite" :orderDetails="orderDetails" :numberInfo="searchFlowList" :tdEmpty="tdEmpty" :tdWhite="tdWhite"></numberFlowDetails>
+            <numberFlowDetails v-if="off.flowDetails" :cardTotalWhite="whiteCardTotal" :cardTotalEmpty="emptyCardTotal" :listEmpty="detailsDataEmpty" :listWhite="detailsDataWhite" :orderDetails="orderDetails" :numberInfo="numberInfo" :tdEmpty="tdEmpty" :tdWhite="tdWhite"></numberFlowDetails>
         </div>
         <!--详情页面-->
     </section>
@@ -145,6 +145,7 @@ export default {
         flowResult:[1,2,3],//流转结果
         checkAll:true,
         searchFlowList:"", //查询数据
+        numberInfo:"",//号码详情
         detailsDataWhite: [], //白卡详情数据
         detailsDataEmpty: [], //空卡详情数据
         searchWhiteRequsetData:{},
@@ -193,7 +194,7 @@ export default {
                     requestGetExclusiveNumerFlowList(json,()=>{vm.off.isLoad=false;})
                     .then((data)=>{
                         vm.total=data.data.total
-                        vm.searchFlowList=data.data.datas;
+                        vm.numberInfo=data.data.datas[0];
                     }).catch((e=>errorDeal(e)))
                 });
                 p1.then(()=>{
@@ -267,8 +268,7 @@ export default {
                 vm.callback=(i)=>{vm.searchList(v,i)};
             }).catch((e=>errorDeal(e)))
         }
-    },
-    numberFlowDetails(v){//专营号号段的详情
+    },numberFlowDetails(v){//专营号号段的详情
         if(v.status!=2){
             return false
         }
@@ -281,7 +281,7 @@ export default {
             "pageSize": "200",
             "orderId": v.sysOrderId
         }
-        vm.orderDetails=v;
+        vm.numberInfo=v;
         vm.off.flowDetails=true;
         let d1 = new Promise((resolve,reject)=>{
             vm.getWhiteList(vm.searchWhiteRequsetData);
