@@ -157,7 +157,7 @@
                 </div>
             </section>
         </div>
-        <detail v-if="off.details"></detail>
+        <detail v-if="off.details" :details="searchDetails"></detail>
     </section>
 </template>
 <script>
@@ -171,12 +171,13 @@ export default {
         return {
             idCard:"",
             searchList:"true",
+            searchDetails:"",
             form:{
                 startTime:"",
                 endTime:""
             },
             off:{
-                details:true,
+                details:false,
                 isLoad:false
             }   
         };
@@ -203,9 +204,11 @@ export default {
                     " markType": "",
                     " pageNum": "1",
                     " pageSize": "20"}
+                vm.off.details=true;
             getRealNameSourceDetail(json,()=>{vm.off.isLoad=false})
             .then((data)=>{
-
+                vm.off.details=true;
+                vm.searchDetails=data.data.list;
             }).catch(e=>errorDeal(e))
         },init: function() {
             var vm = this;

@@ -466,7 +466,7 @@
             <div class="m-total-table" v-if="list">
                 <div class="total-head">统计结果
                     <b>{{total}}</b>
-                    <button class="btn_export_excel" v-if="false" @click="downLoadList">导出excel</button>
+                    <button class="btn_export_excel" v-if="maxpage&&form.source==6&&off.type==2" @click="downLoadList">导出excel</button>
                 </div>
                 <table>
                     <thead>
@@ -803,7 +803,7 @@ export default {
       var vm = this, url,
         json = {
           source: vm.form.source,
-          type: vm.form.orderType,
+          type: vm.form.orderType,//6 开空卡 9 开白卡 10 开成卡 7 过户 4 实名补录 8 补换卡
           pageSize: vm.pageSize,
           pageNum: page || 1,
           startTime: vm.form.startTime,
@@ -899,7 +899,9 @@ export default {
           endTime: vm.form.endTime,
           status: vm.form.orderStatus,
           auditType: vm.form.auditType,
-          cardType: vm.form.cardType
+          cardType: vm.form.cardType,
+          sourceFrom :vm.form.sourceFrom.join(','),
+          periodType: vm.off.type 
         };
       let context = vm.form["context" + vm.form.select];
       vm.off.type == 1 &&
@@ -953,11 +955,10 @@ export default {
       json.codeId = codeId;
       json.context = context;
       json.searchtype = vm.form.select;
-      if (vm.form.orderType == 7 || vm.form.orderType == 6) {
+      if (vm.form.orderType == 7 || vm.form.orderType == 6||vm.form.orderType==9||vm.form.orderType==10) {//过户，开空卡,成卡，白卡
         url = "km-ecs/w/audit/downloadEdList";
-      } else if (vm.form.orderType == 4 || vm.form.orderType == 8) {
+      } else if (vm.form.orderType == 4 || vm.form.orderType == 8) {//实名补录，补换卡
         url = "km-ecs/w/audit/downloadReinput";
-        Object.assign(json, { periodType: vm.off.type });
       }
       createDownload(url, BASE64.encode(JSON.stringify(json)), function() {
         vm.off.isLoad = false;

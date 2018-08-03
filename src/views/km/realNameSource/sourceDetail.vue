@@ -18,8 +18,16 @@
                         <td>业务类型</td>
                         <td>订单号码</td>
                     </tr>
-                    <tr >
-
+                    <tr v-for="(v,i) in details">
+                        <td>{{getDateTime(v.collectTime)[6]}}</td>
+                        <td>{{v.itemValue||'--'}}</td>
+                        <td>{{v.collectMode}}</td>
+                        <td>{{v.reliability}}</td>
+                        <td>{{v.checkMode}}</td>
+                        <td>{{v}}</td>
+                        <td>{{v.collectSource}}</td>
+                        <td>{{v.businessType}}</td>
+                        <td>{{v}}</td>
                     </tr>
                 </table>
             </div>
@@ -29,7 +37,7 @@
 <script>
 import "../../../assets/km/css/cardOrderDetails.css";
 export default{
-    props:[],
+    props:[details],
     data (){
         return {
    
