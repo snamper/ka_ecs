@@ -61,3 +61,6 @@ export const requestGetGeneralNumberDesc=(data,load)=>fetch("km-ecs/w/monopoly/g
 export const getRealNameSource=(data,load)=>fetch("km-ecs/w/realNameAuth/query",data,"POST",load);
 export const getRealNameSourceDetail=(data,load)=>fetch("km-ecs/w/realNameAuth/queryDetail",data,"POST",load);
 
+/*远盟订单查询总条数*/
+export const getOrderTotal=(data,load)=>fetch("ym-ecs/c/audit/orderSearchTotal",data,"POST",load);
+

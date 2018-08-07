@@ -19,7 +19,7 @@
                 <div class="m-total-table" v-if="searchList">
                     <p class="m-tab-head">证件号码 : </p>
                     <table>
-                        <tbody>
+                        <tbody >
                             <tr>
                                 <td></td>
                                 <td></td>
@@ -34,17 +34,17 @@
                             </tr>
                             <tr>
                                 <td>姓名</td>
-                                <td>{{searchList.itemName}}</td>
-                                <td>{{searchList.collectTime}}</td>
-                                <td>{{searchList.collectMode}}</td>
-                                <td>{{searchList.reliability}}</td>
-                                <td>{{searchList.checkMode}}</td>
-                                <td>{{searchList.collectSource}}</td>
-                                <td>{{searchList.businessType}}</td>
-                                <td>{{searchList.orderId}}</td>
+                                <td>{{searchList[0].itemValue}}</td>
+                                <td>{{searchList[0].collectTime}}</td>
+                                <td>{{searchList[0].collectMode}}</td>
+                                <td>{{searchList[0].reliability}}</td>
+                                <td>{{searchList[0].checkMode}}</td>
+                                <td>{{searchList[0].collectSource}}</td>
+                                <td>{{searchList[0].businessType}}</td>
+                                <td>{{searchList[0].orderId}}</td>
                                 <td><a class="detailsA" @click="details">查看详情</a></td>
                             </tr>
-                            <tr>
+                            <!-- <tr>
                                 <td>地址</td>
                                 <td>{{searchList}}</td>
                                 <td>{{searchList}}</td>
@@ -151,7 +151,7 @@
                                 <td>{{searchList}}</td>
                                 <td>{{searchList}}</td>
                                 <td><a class="detailsA" @click="details">查看详情</a></td>
-                            </tr>
+                            </tr> -->
                         </tbody>
                     </table>
                 </div>
@@ -192,18 +192,20 @@ export default {
     methods: {
         search(){
             let vm=this,
-                json={idCardNo:vm.idCard};
+                // json={idCardNo:vm.idCard};
+                json={"idCardNo":"51132519900515112X"};
             getRealNameSource(json,()=>{vm.off.isLoad=false})
             .then((data)=>{
                 vm.searchList=data.data.list;
             });
         },details(){
             let vm=this,
-                json={
-                    "idCardNo": vm.idCard,
-                    " markType": "",
-                    " pageNum": "1",
-                    " pageSize": "20"}
+                // json={
+                //     "idCardNo": vm.idCard,
+                //     " markType": "",
+                //     " pageNum": "1",
+                //     " pageSize": "20"}
+                json={"idCardNo":"51132519900515112X","markType":"1","pageNum":"1","pageSize":"10"}
                 vm.off.details=true;
             getRealNameSourceDetail(json,()=>{vm.off.isLoad=false})
             .then((data)=>{

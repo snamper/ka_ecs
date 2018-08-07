@@ -37,7 +37,7 @@
 <script>
 import "../../../assets/km/css/cardOrderDetails.css";
 export default{
-    props:[details],
+    props:['details'],
     data (){
         return {
    
