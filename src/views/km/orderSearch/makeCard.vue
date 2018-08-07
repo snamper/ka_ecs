@@ -294,6 +294,12 @@ export default {
         setTimeout(function(){
             let val=vm.$route.params.val,v={};
             v.sys_order_id=val;
+            if(val.indexOf('BK')>-1){
+                vm.form.source=2
+            }
+            else if(val.indexOf('CK')>-1){
+                vm.form.source=1
+            }
             if(val!='null'){
                 vm.searchMakeCardDetails(v)
             }
@@ -358,7 +364,7 @@ export default {
                     vm.emptyCardDet=data.data;
                 })
             }else{
-                requestGetMakeWhiteDetails({orderId:v.orderId},()=>{vm.off.isLoad=false})
+                requestGetMakeWhiteDetails({orderId:v.sys_order_id},()=>{vm.off.isLoad=false})
                 .then((data)=>{
                     vm.off.cardDetails=true;
                     vm.whiteCardDet=data.data;

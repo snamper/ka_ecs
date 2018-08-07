@@ -35,19 +35,19 @@
             </div>
             <div class="m-total-table" v-if="dataList">
                 <div class="total-head">查询结果<b>{{total}}</b> <!--<button class="btn_export_excel" v-if="maxpage"  @click="downLoadList">导出excel</button>--></div>
-                <table class="exclusiveNumberTab" v-if="form.context1.length!=11">
+                <table class="exclusiveNumberTab" v-if="listShow==2">
                     <thead>
                         <tr>
                             <th>序号</th>
                             <th>号码</th>
                             <th>归属地</th>
-                            <th>预存(元)</th>
+                            <th>面额(元)</th>
                             <th>产品名称</th>
                             <th>已激活(个)</th>
                             <th>成卡(个)</th>
                             <th>未激活(个)</th>
                             <th>白卡(个)</th>
-                            <th>预占(个)</th>
+                            <th v-if="false">预占(个)</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -61,17 +61,17 @@
                             <td><a :class="{'f-a-td':v.adulted!=0}" @click="getNumberInfo({s:'2',phone:v.phoneSg,size:v.adulted},p)">{{v.adulted}}</a></td>
                             <td><a :class="{'f-a-td':v.unactived!=0}" @click="getNumberInfo({s:'4',phone:v.phoneSg,size:v.unactived},p)">{{v.unactived}}</a></td>
                             <td><a :class="{'f-a-td':v.whiteed!=0}" @click="getNumberInfo({s:'1',phone:v.phoneSg,size:v.whiteed},p)">{{v.whiteed}}</a></td>
-                            <td><a :class="{'f-a-td':v.occupy!=0}" @click="getNumberInfo({s:'5',phone:v.phoneSg,size:v.occupy},p)">{{v.occupy}}</a></td>
+                            <td v-if="false"><a :class="{'f-a-td':v.occupy!=0}" @click="getNumberInfo({s:'5',phone:v.phoneSg,size:v.occupy},p)">{{v.occupy}}</a></td>
                         </tr>
                     </tbody>
                 </table>
-                <table class="exclusiveNumberTab" v-if="form.context1.length==11">
+                <table class="exclusiveNumberTab" v-if="listShow==1">
                     <thead>
                         <tr>
                             <th>序号</th>
                             <th>号码</th>
                             <th>归属地</th>
-                            <th>预存(元)</th>
+                            <th>面额(元)</th>
                             <th>产品名称</th>
                             <th>当前状态</th>
                             <th>短信校验</th>
@@ -79,7 +79,6 @@
                             <th>制卡商户</th>
                             <th>开卡订单号码</th>
                             <th>开卡商户</th>
-                            <th>所属渠道</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -92,24 +91,20 @@
                             <td>{{translateData(17,dataList.status)}}</td>
                             <td>{{translateData(16,dataList.safeType)}}</td>
                             <td>
-                                <a v-if="dataList.makeCardId!=0&&dataList.makeCardId!='--'" :href="'#/homek/orderSearch/makeCard/'+dataList.makeCardId" class="details">{{dataList.makeCardId||'--'}}</a>
-                                <a v-if="dataList.makeCardId==0&&dataList.makeCardId=='--'">{{dataList.makeCardId||'--'}}</a>
+                                <a :href="'#/homek/orderSearch/makeCard/'+dataList.makeCardId" class="details">{{dataList.makeCardId||'--'}}</a>
+                                <!-- <a v-if="dataList.makeCardId==0&&dataList.makeCardId=='--'">{{dataList.makeCardId||'--'}}</a> -->
                             </td>
                             <td>
-                                <a v-if="dataList.makeDealer!='--'" :href="'#/homek/resource/merchant/'+dataList.makeDealer" class="details">{{dataList.makeDealerName||'--'}}({{dataList.makeDealer||'--'}})</a>
-                                <a v-if="dataList.makeDealer=='--'">{{dataList.makeDealerName||'--'}}({{dataList.makeDealer||'--'}})</a>
+                                <a :href="'#/homek/resource/merchant/'+dataList.makeDealer" class="details">{{dataList.makeDealerName||'--'}}({{dataList.makeDealer||'--'}})</a>
+                                <!-- <a v-if="dataList.makeDealer=='--'">{{dataList.makeDealerName||'--'}}({{dataList.makeDealer||'--'}})</a> -->
                             </td>
                             <td>
-                                <a v-if="dataList.makeDealer!='--'" :href="'#/homek/orderSearch/makeCard/'+dataList.openCardId" class="details">{{dataList.openCardId||'--'}}</a>
-                                <a v-if="dataList.makeDealer=='--'">{{dataList.openCardId||'--'}}</a>
+                                <a :href="'#/homek/orderSearch/card/audited/'+dataList.openCardId" class="details">{{dataList.openCardId||'--'}}</a>
+                                <!-- <a v-if="dataList.makeDealer=='--'">{{dataList.openCardId||'--'}}</a> -->
                             </td>
                             <td>
-                                <a v-if="dataList.openDealer!='--'" :href="'#/homek/resource/merchant/'+dataList.openDealer" class="details">{{dataList.openDealerName||'--'}}({{dataList.openDealer||'--'}})</a>
-                                <a v-if="dataList.openDealer=='--'">{{dataList.openDealerName||'--'}}({{dataList.openDealer||'--'}})</a>
-                            </td>
-                            <td>
-                                <a v-if="dataList.channelId!='--'" :href="'#/homek/resource/merchant/'+dataList.channelId" class="details">{{dataList.channelName||'--'}}({{dataList.channelId||'--'}})</a>
-                                <a v-if="dataList.channelId=='--'">{{dataList.channelName||'--'}}({{dataList.channelId||'--'}})</a>
+                                <a :href="'#/homek/resource/merchant/'+dataList.openDealer" class="details">{{dataList.openDealerName||'--'}}({{dataList.openDealer||'--'}})</a>
+                                <!-- <a v-if="dataList.openDealer=='--'">{{dataList.openDealerName||'--'}}({{dataList.openDealer||'--'}})</a> -->
                             </td>
                         </tr>
                     </tbody>
@@ -121,7 +116,7 @@
                         <tr>
                             <th>序号</th>
                             <th>号码</th>
-                            <th>预存(元)</th>
+                            <th>面额(元)</th>
                             <th>产品名称</th>
                             <th>制卡订单号码</th>
                             <th>制卡商户</th>
@@ -198,11 +193,12 @@ export default{
             total1:0,//总查询条数
 			maxpage1:1,//最大页数
 			callback1:Function//page组件点击回调
-            ,citys:[{"cityName":"全国","cityCode":" "},{"cityName":"北京","cityCode":"110"},{"cityName":"长春","cityCode":"901"},{"cityName":"长沙","cityCode":"741"},{"cityName":"沧州","cityCode":"180"},{"cityName":"常州","cityCode":"440"},{"cityName":"成都","cityCode":"810"},{"cityName":"重庆","cityCode":"831"},{"cityName":"大连","cityCode":"940"},{"cityName":"大庆","cityCode":"981"},{"cityName":"东莞","cityCode":"580"},{"cityName":"佛山","cityCode":"530"},{"cityName":"福州","cityCode":"380"},{"cityName":"广州","cityCode":"510"},{"cityName":"贵阳","cityCode":"850"},{"cityName":"哈尔滨","cityCode":"971"},{"cityName":"海口","cityCode":"501"},{"cityName":"杭州","cityCode":"360"},{"cityName":"合肥","cityCode":"305"},{"cityName":"呼和浩特","cityCode":"101"},{"cityName":"湖州","cityCode":"362"},{"cityName":"惠州","cityCode":"570"},{"cityName":"济南","cityCode":"170"},{"cityName":"嘉兴","cityCode":"363"},{"cityName":"江门","cityCode":"550"},{"cityName":"金华","cityCode":"367"},{"cityName":"开封","cityCode":"762"},{"cityName":"昆明","cityCode":"860"},{"cityName":"丽水","cityCode":"469"},{"cityName":"南昌","cityCode":"750"},{"cityName":"南京","cityCode":"340"},{"cityName":"南宁","cityCode":"591"},{"cityName":"南通","cityCode":"358"},{"cityName":"宁波","cityCode":"370"},{"cityName":"平顶山","cityCode":"769"},{"cityName":"青岛","cityCode":"166"},{"cityName":"衢州","cityCode":"468"},{"cityName":"泉州","cityCode":"480"},{"cityName":"汕头","cityCode":"560"},{"cityName":"上海","cityCode":"310"},{"cityName":"绍兴","cityCode":"365"},{"cityName":"深圳","cityCode":"540"},{"cityName":"沈阳","cityCode":"910"},{"cityName":"石家庄","cityCode":"188"},{"cityName":"苏州","cityCode":"450"},{"cityName":"台州","cityCode":"476"},{"cityName":"泰州","cityCode":"445"},{"cityName":"天津","cityCode":"130"},{"cityName":"潍坊","cityCode":"155"},{"cityName":"温州","cityCode":"470"},{"cityName":"乌鲁木齐","cityCode":"890"},{"cityName":"无锡","cityCode":"330"},{"cityName":"芜湖","cityCode":"303"},{"cityName":"武汉","cityCode":"710"},{"cityName":"西安","cityCode":"841"},{"cityName":"厦门","cityCode":"390"},{"cityName":"徐州","cityCode":"350"},{"cityName":"烟台","cityCode":"161"},{"cityName":"盐城","cityCode":"348"},{"cityName":"银川","cityCode":"880"},{"cityName":"珠海","cityCode":"620"},{"cityName":"镇江","cityCode":"343"},{"cityName":"中山","cityCode":"556"},{"cityName":"舟山","cityCode":"364"},{"cityName":"郑州","cityCode":"760"},{"cityName":"安顺","cityCode":"789"},{"cityName":"白银","cityCode":"879"},{"cityName":"北海","cityCode":"599"},
+            ,citys:[{"cityName":"全国","cityCode":"100"},{"cityName":"北京","cityCode":"110"},{"cityName":"长春","cityCode":"901"},{"cityName":"长沙","cityCode":"741"},{"cityName":"沧州","cityCode":"180"},{"cityName":"常州","cityCode":"440"},{"cityName":"成都","cityCode":"810"},{"cityName":"重庆","cityCode":"831"},{"cityName":"大连","cityCode":"940"},{"cityName":"大庆","cityCode":"981"},{"cityName":"东莞","cityCode":"580"},{"cityName":"佛山","cityCode":"530"},{"cityName":"福州","cityCode":"380"},{"cityName":"广州","cityCode":"510"},{"cityName":"贵阳","cityCode":"850"},{"cityName":"哈尔滨","cityCode":"971"},{"cityName":"海口","cityCode":"501"},{"cityName":"杭州","cityCode":"360"},{"cityName":"合肥","cityCode":"305"},{"cityName":"呼和浩特","cityCode":"101"},{"cityName":"湖州","cityCode":"362"},{"cityName":"惠州","cityCode":"570"},{"cityName":"济南","cityCode":"170"},{"cityName":"嘉兴","cityCode":"363"},{"cityName":"江门","cityCode":"550"},{"cityName":"金华","cityCode":"367"},{"cityName":"开封","cityCode":"762"},{"cityName":"昆明","cityCode":"860"},{"cityName":"丽水","cityCode":"469"},{"cityName":"南昌","cityCode":"750"},{"cityName":"南京","cityCode":"340"},{"cityName":"南宁","cityCode":"591"},{"cityName":"南通","cityCode":"358"},{"cityName":"宁波","cityCode":"370"},{"cityName":"平顶山","cityCode":"769"},{"cityName":"青岛","cityCode":"166"},{"cityName":"衢州","cityCode":"468"},{"cityName":"泉州","cityCode":"480"},{"cityName":"汕头","cityCode":"560"},{"cityName":"上海","cityCode":"310"},{"cityName":"绍兴","cityCode":"365"},{"cityName":"深圳","cityCode":"540"},{"cityName":"沈阳","cityCode":"910"},{"cityName":"石家庄","cityCode":"188"},{"cityName":"苏州","cityCode":"450"},{"cityName":"台州","cityCode":"476"},{"cityName":"泰州","cityCode":"445"},{"cityName":"天津","cityCode":"130"},{"cityName":"潍坊","cityCode":"155"},{"cityName":"温州","cityCode":"470"},{"cityName":"乌鲁木齐","cityCode":"890"},{"cityName":"无锡","cityCode":"330"},{"cityName":"芜湖","cityCode":"303"},{"cityName":"武汉","cityCode":"710"},{"cityName":"西安","cityCode":"841"},{"cityName":"厦门","cityCode":"390"},{"cityName":"徐州","cityCode":"350"},{"cityName":"烟台","cityCode":"161"},{"cityName":"盐城","cityCode":"348"},{"cityName":"银川","cityCode":"880"},{"cityName":"珠海","cityCode":"620"},{"cityName":"镇江","cityCode":"343"},{"cityName":"中山","cityCode":"556"},{"cityName":"舟山","cityCode":"364"},{"cityName":"郑州","cityCode":"760"},{"cityName":"安顺","cityCode":"789"},{"cityName":"白银","cityCode":"879"},{"cityName":"北海","cityCode":"599"},
             {"cityName": "潮州", cityCode: "531"},{"cityName": "德阳", cityCode: "825"},{"cityName": "大理", cityCode: "862"},{"cityName": "桂林", cityCode: "592"},{"cityName": "赣州", cityCode: "752"},{"cityName": "固原", cityCode: "885"},{"cityName": "淮安", cityCode: "354"},{"cityName": "黄石", cityCode: "715"},{"cityName": "酒泉", cityCode: "931"},{"cityName": "荆州", cityCode: "712"},{"cityName": "荆门", cityCode: "724"},{"cityName": "泸州", cityCode: "815"},{"cityName": "兰州", cityCode: "870"},{"cityName": "柳州", cityCode: "593"},{"cityName": "乐山", cityCode: "814"},{"cityName": "南充", cityCode: "822"},{"cityName": "梅州", cityCode: "528"},{"cityName": "绵阳", cityCode: "824"},{"cityName": "清远", cityCode: "535"},{"cityName": "韶关", cityCode: "558"},{"cityName": "石嘴山", cityCode: "884"},{"cityName": "吴忠", cityCode: "883"},{"cityName": "孝感", cityCode: "717"},{"cityName": "咸宁", cityCode: "719"},{"cityName": "宜昌", cityCode: "711"},{"cityName": "宜宾", cityCode: "817"},{"cityName": "扬州", cityCode: "430"},{"cityName": "湛江", cityCode: "520"},{"cityName": "肇庆", cityCode: "536"},{"cityName": "中卫", cityCode: "886"},{"cityName": "资阳", cityCode: "830"},{"cityName": "天水", cityCode: "877"}]
-            ,selectedNode:" "
+            ,selectedNode:"100"
             ,phoneNum:""
             ,phoneStatus:""
+            ,listShow:""
 		}
 	},
 	components:{
@@ -225,24 +221,58 @@ export default{
 		searchList(page){
             let vm=this,data,url,reqAction;
             vm.numberInfo="";
+            if(vm.context5.length==0){
+                layer.open({
+                    content:"请选择面额",
+                    skin:"msg",
+                    time: 2,
+                    msgSkin: "error"
+                });
+                return false;
+            }
+            if(vm.form.context1!=""&&vm.form.context1.length<7){
+                layer.open({
+                    content:"请输入正确的号码/段",
+                    skin:"msg",
+                    time: 2,
+                    msgSkin: "error"
+                });
+                return false;
+            }else{
+                if(isNaN(vm.form.context1)){
+                    layer.open({
+                        content:"请输入正确的号码/段",
+                        skin:"msg",
+                        time: 2,
+                        msgSkin: "error"
+                    });
+                    return false;
+                }
+            }
             if(vm.form.context1.length==11){
                 data={phone:vm.form.context1};
-                reqAction=requestGetGeneralNumberList1;
+                requestGetGeneralNumberList1(data,()=>{vm.off.isLoad=false;})
+                .then((data)=>{
+                    vm.dataList=data.data
+                    vm.maxpage=Math.ceil(parseInt(data.data.length)/20);
+                    vm.pageNum=page||1;
+                    vm.total=1;
+                    vm.listShow="1";
+                    vm.callback=function(v){vm.searchList(v)};                
+                }).catch(e=>errorDeal(e)) 
             }else{
-                data={phone:vm.form.context1,cityCode:vm.selectedNode,prestoreMoney:vm.context5.join(','),pageNow:page||1,pageSize:20} 
-                if(vm.context5All==true){
-                    data.prestoreMoney="-1"
-                }
-                reqAction=requestGetGeneralNumberList2;
+                data={phone:vm.form.context1,cityCode:vm.selectedNode,prestoreMoney:vm.context5,pageNow:page||1,pageSize:10} 
+                requestGetGeneralNumberList2(data,()=>{vm.off.isLoad=false;})
+                .then((data)=>{
+                    vm.dataList=data.data
+                    vm.maxpage=Math.ceil(parseInt(data.total)/10);
+                    vm.pageNum=page||1;
+                    vm.total=data.total;
+                    vm.listShow="2";
+                    vm.callback=function(v){vm.searchList(v)};                
+                }).catch(e=>errorDeal(e)) ;
             }
-            reqAction(data,()=>{vm.off.isLoad=false;})
-            .then((data)=>{
-                vm.dataList=data.data
-                vm.maxpage=Math.ceil(parseInt(data.data.length)/20);
-                vm.pageNum=page||1;
-                vm.total=data.data.length;
-                vm.callback=function(v){vm.searchList(v)};                
-            }).catch(e=>errorDeal(e))     
+                
         },
         getNumberInfo(v,p){
             if(v.size==0){

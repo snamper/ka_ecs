@@ -57,7 +57,7 @@
                                 <td>制卡结果：</td>
                                 <td>{{translateData(13,detailsEmpty.order_status)}}</td>
                                 <td>渠道ID：</td>
-                                <td>{{detailsEmpty.dealer_id||'--'}} <a @click="getDetails(4,detailsEmpty.dealer_id)">查看详情</a></td>
+                                <td>{{detailsEmpty.dealer_id||'--'}} <a class="f-c-blue" @click="getDetails(4,detailsEmpty.dealer_id)">查看详情</a></td>
                             </tr>
                             <tr>
                                 <td>识别仪名称：</td>
