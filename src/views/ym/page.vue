@@ -18,11 +18,12 @@
 <script>
 export default{
 	name:'pagination',
-	props:{
-		maxpage:Number,
-		page:Number,
-		callback:Function
-	},
+	// props:{
+	// 	maxpage:Number,
+	// 	page:Number,
+	// 	callback:Function
+    // },
+    props:["maxpage", "page", "callback"],
 	computed:{
 		pages(){
 			var arr={isHome:!1,isSpace:!1,left:[],right:[]},maxpage=this.maxpage,page=this.page;
