@@ -110,7 +110,7 @@
                         </section>
                     </div>
                     <div class="m-total-table" v-if="searchMakeCardList">
-                        <div class="total-head"> 统计结果 <b>{{total}}</b> <button class="btn_export_excel" v-if="searchMakeCardList" :disabled="searchMakeCardList.length==0" @click="exportList">导出excel</button> </div>
+                        <div class="total-head"> 统计结果 <b>{{total}}</b> <button class="btn_export_excel" v-if="searchMakeCardList&&off.export==true" :disabled="searchMakeCardList.length==0" @click="exportList">导出excel</button> </div>
                         <table v-if="form.source==1">
                             <thead>
                                 <tr>
@@ -224,6 +224,7 @@ export default {
                 showData: 0,
                 ordinary:true,
                 special:false,
+                export:false,
             },
             form: {
                 source: "1", //1 成卡,2 白卡
@@ -303,10 +304,12 @@ export default {
             if(val!='null'){
                 vm.searchMakeCardDetails(v)
             }
-        },300);
+            resolve('true');
+        },300)
     },
     methods: {
         searchList(v,i){
+
             let vm=this,json={
                 "pageSize": "10",
                 "pageNow": i||1,
@@ -319,7 +322,8 @@ export default {
                 "phoneType": vm.cardType.join(","),// 0普号1大众专营号2专属专营号
                 "status": vm.makeCardRes.join(","),// 1进行中2成功3失败
                 "payType": vm.payType.join(",")// 1资金池2微信3支付宝
-            }
+            };
+            vm.off.export=false;
             if(v==1&&vm.orderId==""){
                 layer.open({
                     content:"请输入查询的单号",
@@ -333,7 +337,7 @@ export default {
                 json.orderId="";
             }
             vm.downloadJson=json;
-            if(vm.form.source==2){//成卡
+            if(vm.form.source==2){//白卡
                 requestGetMakeWhiteList(json,()=>{vm.off.isLoad=false})
                 .then((data)=>{
                     vm.total=data.data.total;
@@ -342,7 +346,7 @@ export default {
                     vm.pageNow=i||1;
                     vm.callback=(i)=>{vm.searchList(v,i)};
                 })
-            }else{
+            }else{//成卡
                 requestGetMakeChengList(json,()=>{vm.off.isLoad=false})
                 .then((data)=>{
                     vm.total=data.data.total;
@@ -350,6 +354,7 @@ export default {
                     vm.maxpage=Math.ceil(parseInt(vm.total)/vm.pageSize);
                     vm.pageNow=i||1;
                     vm.callback=(i)=>{vm.searchList(v,i)};
+                    vm.off.export=true;
                 })
             }   
         },exportList(){

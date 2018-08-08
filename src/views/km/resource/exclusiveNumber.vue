@@ -11,23 +11,24 @@
                 <div class="m-tag"><b></b>条件查询</div>
                 <section class="form-c o-no-bgc">
                     <div class="row">
-                        <span class="text">号码/段：</span>
+                        <span class="text m-title">号码/段：</span>
                         <div class="input-box"><input v-model="form.context1"  maxlength="11" type="tel" placeholder="请输入查询的专营号码/段"></div>
                     </div>
                     <div class="row" >
-                        <span class="text">归属地：</span>
+                        <span class="text m-title">归属地：</span>
                         <select name="citysSelect" id="city" class="selectStyle" v-model="selectedNode">
                             <option v-for="(v,i) in citys" :key="i" :value="v.cityCode">{{v.cityName}}</option>
                         </select>
                     </div>
                     <div class="row fullRow" >
-                        <span class="text">面额：</span>
+                        <span class="text m-title">面额：</span>
                         <div class="m-form-checkbox">
                             <label><span class="checkbox"><input type="checkbox" value="true" v-model="context5All" checked="checked" @change="BtnCheckAll"><span></span></span><span class="text">全部</span></label>
                             <label><span class="checkbox"><input type="checkbox" value="100" v-model="context5" checked="checked"><span></span></span><span class="text">100卡</span></label>
                             <label><span class="checkbox"><input type="checkbox" value="50" v-model="context5" checked="checked"><span></span></span><span class="text">50卡</span></label>
                             <label><span class="checkbox"><input type="checkbox" value="20" v-model="context5" checked="checked"><span></span></span><span class="text">20卡</span></label>
                             <label><span class="checkbox"><input type="checkbox" value="10" v-model="context5" checked="checked"><span></span></span><span class="text">10卡</span></label>
+                            <label><span class="checkbox"><input type="checkbox" value="-1" v-model="context5" checked="checked"><span></span></span><span class="text">无预存</span></label>
                         </div>
                     </div>
                     <button class="f-btn f-btn-line" @click="searchList()">查询</button>
@@ -57,11 +58,11 @@
                             <td>{{v.city||'--'}}</td>
                             <td>{{translateData('money',v.preStore)}}</td>
                             <td>{{v.pkgName||'--'}}</td>
-                            <td><a :class="{'f-a-td':v.actived!=0}" @click="getNumberInfo({s:'3',phone:v.phoneSg,size:v.actived},p)">{{v.actived}}</a></td>
-                            <td><a :class="{'f-a-td':v.adulted!=0}" @click="getNumberInfo({s:'2',phone:v.phoneSg,size:v.adulted},p)">{{v.adulted}}</a></td>
-                            <td><a :class="{'f-a-td':v.unactived!=0}" @click="getNumberInfo({s:'4',phone:v.phoneSg,size:v.unactived},p)">{{v.unactived}}</a></td>
-                            <td><a :class="{'f-a-td':v.whiteed!=0}" @click="getNumberInfo({s:'1',phone:v.phoneSg,size:v.whiteed},p)">{{v.whiteed}}</a></td>
-                            <td v-if="false"><a :class="{'f-a-td':v.occupy!=0}" @click="getNumberInfo({s:'5',phone:v.phoneSg,size:v.occupy},p)">{{v.occupy}}</a></td>
+                            <td><a :class="{'f-a-td':v.actived!=0}" @click="getNumberInfo({s:'3',phone:v.phoneSg,size:v.actived,monopolyType:v.monopolyType})">{{v.actived}}</a></td>
+                            <td><a :class="{'f-a-td':v.adulted!=0}" @click="getNumberInfo({s:'2',phone:v.phoneSg,size:v.adulted,monopolyType:v.monopolyType})">{{v.adulted}}</a></td>
+                            <td><a :class="{'f-a-td':v.unactived!=0}" @click="getNumberInfo({s:'4',phone:v.phoneSg,size:v.unactived,monopolyType:v.monopolyType})">{{v.unactived}}</a></td>
+                            <td><a :class="{'f-a-td':v.whiteed!=0}" @click="getNumberInfo({s:'1',phone:v.phoneSg,size:v.whiteed,monopolyType:v.monopolyType})">{{v.whiteed}}</a></td>
+                            <td v-if="false"><a :class="{'f-a-td':v.occupy!=0}" @click="getNumberInfo({s:'5',phone:v.phoneSg,size:v.occupy,monopolyType:v.monopolyType})">{{v.occupy}}</a></td>
                         </tr>
                     </tbody>
                 </table>
@@ -181,7 +182,7 @@ export default{
             i:'',            
             list:'',//查询数据
             context5All:true,//面额全选
-            context5:[100,50,20,10],//面额
+            context5:[100,50,20,10,-1],//面额
 			dataList:"",//号码/段查询列表
 			numberInfo:"",//号码/段查询列表
 			pageNum:1,//当前页数
@@ -210,7 +211,7 @@ export default{
     },
     watch:{
         context5(){
-            if(this.context5.length==4){
+            if(this.context5.length==5){
                 this.context5All=true;
             }else{
                 this.context5All=false;
@@ -284,6 +285,7 @@ export default{
                 "pageNow": p||1,
                 "searchType": v.s,//1白卡2成卡3已激活4未激活
                 "phoneSg":v.phone,//8位码号段
+                "monopolyType":v.monopolyType
             };
             requestGetGeneralNumberDesc(json,()=>{vm.off.isLoad=false})
             .then((data)=>{
@@ -293,7 +295,7 @@ export default{
                 vm.pageNum1=p||1;
                 vm.phoneNum=v.phone;
                 vm.phoneStatus=v.s;
-                vm.callback1=function(i){vm.getNumberInfo(v,i)};    
+                vm.callback1=function(p){vm.getNumberInfo(v,p)};    
                 setTimeout(()=>{
                     this.funScrollTop()
                 },50) 
@@ -345,7 +347,7 @@ export default{
         },
         BtnCheckAll(){
             if(this.context5All==true){
-                this.context5=[100,50,20,10]
+                this.context5=[100,50,20,10,-1]
             }else if(this.context5All==false){
                 this.context5=[]
             }
@@ -370,5 +372,6 @@ export default{
     .g-search-menu{position: static}
     /* .g-list-box, #details, .g-list-table, .g-inner-table, .g-box{width: auto;height: auto} */
     div.m-total-table{background: transparent}
+    .m-title{text-align: justify;text-align-last: justify}
 </style>
 
