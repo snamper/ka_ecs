@@ -59,6 +59,15 @@ module.exports = {
         path : '/home/nginx/html/ka_ecs',
         'post-deploy' : 'cnpm install && npm run build && pm2 reload ecosystem.config.js --env production'
       },
+      KmTest:{
+        user : 'root',
+        host : '172.17.183.223',
+        ref  : 'origin/master',
+        // repo : 'git@github.com:thinkmix/ka_ecs.git',
+        repo : 'https://github.com/thinkmix/ka_ecs.git',
+        path : '/home/nginx/html/ka_ecs',
+        'post-deploy' : 'cnpm install && npm run build && pm2 reload ecosystem.config.js --env production'
+      }
   }
 };
 
