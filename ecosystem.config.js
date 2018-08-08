@@ -61,7 +61,7 @@ module.exports = {
       },
       KmTest:{
         user : 'root',
-        host : '172.17.183.223',
+        host : '39.106.162.188',
         ref  : 'origin/master',
         // repo : 'git@github.com:thinkmix/ka_ecs.git',
         repo : 'https://github.com/thinkmix/ka_ecs.git',
