@@ -65,7 +65,7 @@ module.exports = {
         ref  : 'origin/master',
         // repo : 'git@github.com:thinkmix/ka_ecs.git',
         repo : 'https://github.com/thinkmix/ka_ecs.git',
-        path : '/home/nginx/html/ka_ecs',
+        path : '/usr/local/nginx/html/ka_ecs',
         'post-deploy' : 'cnpm install && npm run build && pm2 reload ecosystem.config.js --env production'
       }
   }
