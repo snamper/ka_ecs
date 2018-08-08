@@ -48,7 +48,7 @@
                             <th>成卡(个)</th>
                             <th>未激活(个)</th>
                             <th>白卡(个)</th>
-                            <th v-if="false">预占(个)</th>
+                            <th>预占(个)</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -62,7 +62,7 @@
                             <td><a :class="{'f-a-td':v.adulted!=0}" @click="getNumberInfo({s:'2',phone:v.phoneSg,size:v.adulted,monopolyType:v.monopolyType})">{{v.adulted}}</a></td>
                             <td><a :class="{'f-a-td':v.unactived!=0}" @click="getNumberInfo({s:'4',phone:v.phoneSg,size:v.unactived,monopolyType:v.monopolyType})">{{v.unactived}}</a></td>
                             <td><a :class="{'f-a-td':v.whiteed!=0}" @click="getNumberInfo({s:'1',phone:v.phoneSg,size:v.whiteed,monopolyType:v.monopolyType})">{{v.whiteed}}</a></td>
-                            <td v-if="false"><a :class="{'f-a-td':v.occupy!=0}" @click="getNumberInfo({s:'5',phone:v.phoneSg,size:v.occupy,monopolyType:v.monopolyType})">{{v.occupy}}</a></td>
+                            <td><a :class="{'f-a-td':v.occupy!=0}" @click="getNumberInfo({s:'5',phone:v.phoneSg,size:v.occupy,monopolyType:v.monopolyType})">{{v.occupy}}</a></td>
                         </tr>
                     </tbody>
                 </table>
@@ -83,7 +83,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
+                        <tr v-if="JSON.stringify(dataList)!='{}'">
                             <td>{{((pageNum-1)*10+(i+1))}}</td>
                             <td>{{dataList.phone}}</td>
                             <td>{{dataList.home||'--'}}</td>
@@ -110,7 +110,7 @@
                         </tr>
                     </tbody>
                 </table>
-                <my-page v-if="form.context1.length!=11" :page="pageNum" :maxpage="maxpage" :callback="callback"></my-page>
+                <my-page v-if="listShow==2" :page="pageNum" :maxpage="maxpage" :callback="callback"></my-page>
                 <div v-if="numberInfo" class="total-head">号码信息【{{translateData('formatPhone',phoneNum)}}****】{{translateCardType(phoneStatus)}}<b>{{total1}}</b> <!--<button class="btn_export_excel" v-if="maxpage"  @click="downLoadList">导出excel</button>--></div>
                 <table class="exclusiveNumberTab" v-if="numberInfo">
                     <thead>
@@ -169,7 +169,9 @@ export default{
 			off:{
                 details:0,//详情页面开关
                 numberDetails:'',
-                numberDetailsAlert:false
+                numberDetailsAlert:false,
+                isLoad:false,
+                show:""
             },
 			form:{
                 context1:'',//号码/段
@@ -250,15 +252,19 @@ export default{
                     return false;
                 }
             }
+            vm.off.isLoad=true;
+            vm.pageNum=page||1;
             if(vm.form.context1.length==11){
                 data={phone:vm.form.context1};
                 requestGetGeneralNumberList1(data,()=>{vm.off.isLoad=false;})
                 .then((data)=>{
                     vm.dataList=data.data
                     vm.maxpage=Math.ceil(parseInt(data.data.length)/20);
-                    vm.pageNum=page||1;
                     vm.total=1;
                     vm.listShow="1";
+                    if(JSON.stringify(vm.dataList)=="{}"){
+                        vm.total=0;
+                    }
                     vm.callback=function(v){vm.searchList(v)};                
                 }).catch(e=>errorDeal(e)) 
             }else{
@@ -267,7 +273,6 @@ export default{
                 .then((data)=>{
                     vm.dataList=data.data
                     vm.maxpage=Math.ceil(parseInt(data.total)/10);
-                    vm.pageNum=page||1;
                     vm.total=data.total;
                     vm.listShow="2";
                     vm.callback=function(v){vm.searchList(v)};                

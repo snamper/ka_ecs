@@ -110,7 +110,7 @@
                         </section>
                     </div>
                     <div class="m-total-table" v-if="searchMakeCardList">
-                        <div class="total-head"> 统计结果 <b>{{total}}</b> <button class="btn_export_excel" v-if="searchMakeCardList&&off.export==true" :disabled="searchMakeCardList.length==0" @click="exportList">导出excel</button> </div>
+                        <div class="total-head"> 统计结果 <b>{{total}}</b> <button class="btn_export_excel" v-if="searchMakeCardList" :disabled="searchMakeCardList.length==0" @click="exportList">导出excel</button> </div>
                         <table v-if="form.source==1">
                             <thead>
                                 <tr>
@@ -224,7 +224,6 @@ export default {
                 showData: 0,
                 ordinary:true,
                 special:false,
-                export:false,
             },
             form: {
                 source: "1", //1 成卡,2 白卡
@@ -253,6 +252,7 @@ export default {
             whiteCardDet:{},
             emptyCardDet:{},
             downloadJson:"",
+            exportType:""
         };
     },
     components: {
@@ -309,7 +309,6 @@ export default {
     },
     methods: {
         searchList(v,i){
-
             let vm=this,json={
                 "pageSize": "10",
                 "pageNow": i||1,
@@ -323,7 +322,6 @@ export default {
                 "status": vm.makeCardRes.join(","),// 1进行中2成功3失败
                 "payType": vm.payType.join(",")// 1资金池2微信3支付宝
             };
-            vm.off.export=false;
             if(v==1&&vm.orderId==""){
                 layer.open({
                     content:"请输入查询的单号",
@@ -345,6 +343,7 @@ export default {
                     vm.maxpage=Math.ceil(parseInt(vm.total)/vm.pageSize);
                     vm.pageNow=i||1;
                     vm.callback=(i)=>{vm.searchList(v,i)};
+                    vm.exportType='b';
                 })
             }else{//成卡
                 requestGetMakeChengList(json,()=>{vm.off.isLoad=false})
@@ -354,12 +353,20 @@ export default {
                     vm.maxpage=Math.ceil(parseInt(vm.total)/vm.pageSize);
                     vm.pageNow=i||1;
                     vm.callback=(i)=>{vm.searchList(v,i)};
-                    vm.off.export=true;
+                    vm.exportType='c';
                 })
             }   
         },exportList(){
-            let vm=this;
-            createDownload("km-ecs/w/monopoly/downloadMakeReadyList",BASE64.encode(JSON.stringify(vm.downloadJson)),function(){})
+            let vm=this,
+                url="";
+                if(vm.exportType=='c'){
+                    url="km-ecs/w/monopoly/downloadMakeReadyList"
+                }else if(vm.exportType=='b'){
+                    url="km-ecs/w/monopoly/downloadMakeWhiteList"
+                }else{
+                    return false;
+                }
+            createDownload(url,BASE64.encode(JSON.stringify(vm.downloadJson)),function(){})
         },searchMakeCardDetails(v){
             let vm=this;
             if(vm.form.source==1){
