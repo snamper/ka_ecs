@@ -293,6 +293,7 @@ export default{
                 "phoneSg":v.phone,//8位码号段
                 "monopolyType":v.monopolyType
             };
+            vm.off.isLoad=true;
             requestGetGeneralNumberDesc(json,()=>{vm.off.isLoad=false})
             .then((data)=>{
                 vm.numberInfo=data.data;

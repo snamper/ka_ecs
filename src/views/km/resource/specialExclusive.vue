@@ -135,7 +135,7 @@ export default {
                 vm.pageNow=p||1;
                 vm.dealerInfo=data.merchInfo;
                 vm.callback=(p)=>{vm.searchList(p)};
-            }).catch(e=>errorDeal(e))
+            }).catch(e=>errorDeal(e,()=>{vm.list=""}))
         },
         isChe(){
             this.form.select = "";

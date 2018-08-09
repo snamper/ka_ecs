@@ -17,7 +17,7 @@
                                 <span class="text">号段：</span>
                             </label>
                         </span>
-                        <div class="input-box"><input v-model="form.context1" :readonly="form.select!=1" maxlength="8" type="tel" placeholder="请输入查询的号码或号段"></div>
+                        <div class="input-box"><input v-model="form.context1" :readonly="form.select!=1" maxlength="8" type="tel" placeholder="请输入查询的号段"></div>
                     </div>
                     <div class="row3" :class="{active:form.select==2}">
                         <span class="m-form-radio">
@@ -39,7 +39,7 @@
                                 <span class="text">ICCID：</span>
                             </label>
                         </span>
-                        <div class="input-box"><input v-model="form.context3" :readonly="form.select!=3" maxlength="19" type="tel" placeholder="请输入查询的ICCID"></div>
+                        <div class="input-box"><input v-model="form.context3" :readonly="form.select!=3" maxlength="20" type="tel" placeholder="请输入查询的ICCID"></div>
                     </div>
                     <button class="f-btn f-btn-line" @click="searchList(1)">查询</button>
                 </section>
@@ -239,8 +239,7 @@ export default {
                 });
                 return false;
             }else if(vm.form.select==3){
-                debugger;
-                if(vm.form.context3.length!=19){
+                if(vm.form.context3.length<19){
                     layer.open({
                         content:"请输入正确的ICCID",
                         skin: "msg",
@@ -260,6 +259,7 @@ export default {
                 
             }
             vm.search.numberInfo="";
+            vm.off.isLoad=true;
             requestGetExclusiveNumberList(json,()=>{vm.off.isLoad=false})
             .then((data)=>{
                 if(JSON.stringify(data.privInfo)=='{}'){
@@ -285,6 +285,7 @@ export default {
                 "outTime":v.info.outTime,
                 "phoneSg":vm.search.number1.phoneTitle,//8位码号段
             };
+            vm.off.isLoad=true;            
             requestGetExclusiveNumberDesc(json,()=>{vm.off.isLoad=false})
             .then((data)=>{
                 vm.search.numberInfo=data.data;
