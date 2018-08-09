@@ -175,7 +175,7 @@ export default {
             let val=vm.$route.params.val,v={};
             if(val!='null'){
                 vm.orderId=val;
-                var p1 = new Promise((resolve,reject)=>{
+                new Promise((resolve,reject)=>{
                     let json={
                         "pageSize": "10",
                         "pageNow": 1,
@@ -194,13 +194,15 @@ export default {
                     requestGetExclusiveNumerFlowList(json,()=>{vm.off.isLoad=false;})
                     .then((data)=>{
                         vm.total=data.data.total
+                        vm.searchFlowList=data.data.datas;
                         vm.numberInfo=data.data.datas[0];
                     }).catch((e=>errorDeal(e)))
-                });
-                p1.then(()=>{
+                    resolve('success!')
+                }).then(()=>{
                     v.sysOrderId=val;
+                    v.status=2;
                     vm.numberFlowDetails(v);
-                })
+                }).catch((e=>errorDeal(e)))
             }
         },300);
     },

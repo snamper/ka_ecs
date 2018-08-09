@@ -304,7 +304,6 @@ export default {
             if(val!='null'){
                 vm.searchMakeCardDetails(v)
             }
-            resolve('true');
         },300)
     },
     methods: {

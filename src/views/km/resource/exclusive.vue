@@ -14,7 +14,7 @@
                                 <span class="radio"><input type="radio" value="1" @click="isChe" v-model="form.select">
                                     <span></span>
                                 </span>
-                                <span class="text">号码/号段：</span>
+                                <span class="text">号段：</span>
                             </label>
                         </span>
                         <div class="input-box"><input v-model="form.context1" :readonly="form.select!=1" maxlength="8" type="tel" placeholder="请输入查询的号码或号段"></div>
@@ -77,7 +77,7 @@
                             <tr v-for="(todo,index) in search.numberList" :key="index">
                                 <td>{{ ((pageNum-1)*10+(index+1)) }}</td>
                                 <td>{{getDateTime(todo.createTime)[6]}}</td>
-                                <td>{{todo.sysOrderId||'--'}}</td>
+                                <td><a class="f-a-td" :href="'#/homek/orderSearch/flowCard/'+todo.sysOrderId">{{todo.sysOrderId||'--'}}</a></td>
                                 <td>
                                     <a class="f-a-td" v-if="!isNaN(todo.actived)&&todo.actived!=0" @click="getNumberInfo({s:3,newCompanyName:todo.newCompanyName,dealerId:todo.newDealerId,size:todo.actived})">{{todo.actived}}</a>
                                     <a v-else-if="todo.actived==0">{{todo.actived}}</a>
@@ -129,7 +129,7 @@
                                 <td>{{todo.phone||'--'}}</td>
                                 <td>{{todo.iccid||'--'}}</td>
                                 <td>{{todo.imsi||'--'}}</td>
-                                <td>{{todo.preStore||'--'}}</td>
+                                <td>{{todo.preStore/100||'--'}}</td>
                                 <td>{{todo.pkgName||'--'}}</td>
                                 <td>
                                     <a v-if="todo.makeCardId!='--'" :href="'#/homek/orderSearch/makeCard/'+todo.makeCardId" class="f-a-td">{{todo.makeCardId}}</a>
@@ -137,7 +137,7 @@
                                 </td>
                                 <td>
                                     <a v-if="todo.openCardId!='--'" :href="'#/homek/orderSearch/card/audited/'+todo.openCardId" class="f-a-td">{{todo.openCardId||'--'}}</a>
-                                    <a>{{todo.openCardId||'--'}}</a>
+                                    <a v-if="todo.openCardId=='--'">{{todo.openCardId||'--'}}</a>
                                 </td>
                                 <td>{{translateData(16,todo.safeType)}}</td>
                             </tr>
@@ -212,14 +212,24 @@ export default {
                 "searchType": vm.form.select,//1:码号段前8位，2：设备号,3:iccid
                 "context": vm.form['context'+vm.form.select],//搜索文本
             };
-            if(vm.form.select==1&&!vm.form.context1){
-                layer.open({
-                    content:"请输入查询的号码或号段",
-                    skin: "msg",
-                    time: 2,
-                    msgSkin: "error"
-                });
-                return false;
+            if(vm.form.select==1){
+                if(vm.form.context1.length!=8){
+                    layer.open({
+                        content:"请输入正确的8位号段",
+                        skin: "msg",
+                        time: 2,
+                        msgSkin: "error"
+                    });
+                    return false;
+                }else if(isNaN(vm.form.context1)){
+                    layer.open({
+                        content:"请输入正确的8位号段",
+                        skin: "msg",
+                        time: 2,
+                        msgSkin: "error"
+                    });
+                    return false;
+                }
             }else if(vm.form.select==2&&!vm.form.context2){
                 layer.open({
                     content:"请输入查询的设备号",
@@ -301,6 +311,7 @@ export default {
     .form-c.o-no-bgc{padding: .15rem .3rem;}
     .numberInfo{background-color:#fff;padding:12px 8px;border-radius:6px}
     .numberInfo>b{padding-right: 20px;}
+    span.text{text-align: justify;text-align-last: justify}
 </style>
 
 
