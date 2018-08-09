@@ -312,8 +312,8 @@ export default {
             let vm=this,json={
                 "pageSize": "10",
                 "pageNow": i||1,
-                "startTime": new Date(vm.form.startTime).getTime(),
-                "endTime": new Date(vm.form.endTime).getTime(),
+                "startTime": new Date(vm.form.startTime.replace(/-/g,'/')).getTime(),
+                "endTime": new Date(vm.form.endTime.replace(/-/g,'/')).getTime(),
                 "orderId": vm.orderId,
                 "operatorId": vm.operatorId,//操作人
                 "dealerId": vm.dealerId,

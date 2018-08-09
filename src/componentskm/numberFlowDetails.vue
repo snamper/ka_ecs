@@ -102,7 +102,6 @@ export default{
         for(let i in vm.listWhite){
             vm.listWhitelength+=vm.listWhite[i].length
         }
-        console.log(vm.numberInfo);
     },
     methods:{
         searchMore(v){

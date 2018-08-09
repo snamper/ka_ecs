@@ -75,7 +75,7 @@ export default async(url = '', data = {}, type = 'GET', load, method = 'fetch') 
           })
     } else {//XHR对象
 		return new Promise((resolve, reject) => {
-			let requestObj;
+            let requestObj;
 			if (window.XMLHttpRequest) {
                 requestObj = new XMLHttpRequest();
 			} else {

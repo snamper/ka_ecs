@@ -179,8 +179,8 @@ export default {
                     let json={
                         "pageSize": "10",
                         "pageNow": 1,
-                        "startTime": new Date(vm.form.startTime).getTime(),
-                        "endTime": new Date(vm.form.endTime).getTime(),
+                        "startTime": new Date(vm.form.startTime.replace(/-/g,'/')).getTime(),
+                        "endTime": new Date(vm.form.endTime.replace(/-/g,'/')).getTime(),
                         "orderId": vm.orderId,
                         "dealerId": vm.dealerId,
                         "status": vm.flowResult.join(","),//0全部 1进行中2成功3失败
@@ -226,8 +226,8 @@ export default {
         json={
             "pageSize": "10",
             "pageNow": i||1,
-            "startTime": new Date(vm.form.startTime).getTime(),
-            "endTime": new Date(vm.form.endTime).getTime(),
+            "startTime": new Date(vm.form.startTime.replace(/-/g,'/')).getTime(),
+            "endTime": new Date(vm.form.endTime.replace(/-/g,'/')).getTime(),
             "orderId": vm.orderId,
             "dealerId": vm.dealerId,
             "status": vm.flowResult.join(","),//0全部 1进行中2成功3失败
