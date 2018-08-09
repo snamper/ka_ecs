@@ -375,7 +375,7 @@ export default {
                     vm.emptyCardDet=data.data;
                 })
             }else{
-                requestGetMakeWhiteDetails({orderId:v.sys_order_id},()=>{vm.off.isLoad=false})
+                requestGetMakeWhiteDetails({orderId:v.orderId},()=>{vm.off.isLoad=false})
                 .then((data)=>{
                     vm.off.cardDetails=true;
                     vm.whiteCardDet=data.data;

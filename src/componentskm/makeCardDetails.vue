@@ -82,7 +82,7 @@
                                 <td>订单号码：</td>
                                 <td>{{detailsWhite.sys_order_id||'--'}}</td>
                                 <td>操 作 人：</td> 
-                                <td>{{detailsWhite.create_user_name||'--'}}({{detailsWhite.create_user_id||'--'}})</td>
+                                <td>{{detailsWhite.create_user_name||'--'}}({{detailsWhite.create_user_id||'--'}})<a href="javascript:;" class="f-c-blue" @click="getDetails(1,detailsWhite.create_user_id)">查看详情</a></td>
                             </tr>
                             <tr>
                                 <td>创建时间：</td>
@@ -106,7 +106,7 @@
                                 <td>制卡结果：</td>
                                 <td>{{translateData(13,detailsWhite.status)}}</td>
                                 <td>渠道ID：</td>
-                                <td>{{detailsWhite.create_dealer_id||'--'}}</td>
+                                <td>{{detailsWhite.create_dealer_id||'--'}}<a class="f-c-blue" @click="getDetails(4,detailsWhite.create_dealer_id)">查看详情</a></td>
                             </tr>
                             <tr>
                                 <td>识别仪名称：</td>
