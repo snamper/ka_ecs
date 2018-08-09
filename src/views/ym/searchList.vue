@@ -272,7 +272,7 @@ import pagination from "../../componentskm/page.vue";
 import details from "../ym/searchListDetails.vue";
 import auditdetails from "../ym/auditList.vue";
 import { setStore, getStore, createDownload,errorDeal } from "../../config/utils";
-import {reqCommonMethod,getOrderTotal} from "../../config/service.js";
+import {reqCommonMethod} from "../../config/service.js";
 export default {
   name: "search",
   data() {
@@ -336,150 +336,158 @@ export default {
   },
   methods: {
     init: function() {
-        const vm=this;
-        let userInfo=getStore("KA_ECS_USER");
-        vm.userInfo=userInfo;
-        vm.userInfo.isadminYm&&(vm.userInfo.isadminYm.indexOf('1')>-1||vm.userInfo.isadminYm.indexOf('3')>-1) ? vm.off.power3=true : vm.off.power3=false;
-        var type = this.$route.params.type;
-        type == "auditing" ? (vm.off.type = 1) : (vm.off.type = 2);
-        vm.form.startTime = laydate.now(0, "YYYY-MM-DD 00:00:00");
-        vm.form.endTime = laydate.now(0, "YYYY-MM-DD 23:59:59");
-        vm.off.type == 1 ? (vm.form.select = 5) : (vm.form.select = 7);
+      const vm=this;
+      let userInfo=getStore("KA_ECS_USER");
+	    vm.userInfo=userInfo;
+      vm.userInfo.isadminYm&&(vm.userInfo.isadminYm.indexOf('1')>-1||vm.userInfo.isadminYm.indexOf('3')>-1) ? vm.off.power3=true : vm.off.power3=false;
+      var type = this.$route.params.type;
+      type == "auditing" ? (vm.off.type = 1) : (vm.off.type = 2);
+      vm.form.startTime = laydate.now(0, "YYYY-MM-DD 00:00:00");
+      vm.form.endTime = laydate.now(0, "YYYY-MM-DD 23:59:59");
+      vm.off.type == 1 ? (vm.form.select = 5) : (vm.form.select = 7);
     },
     auditBtn: function(type, orderId) {
-        var vm = this;
-        vm.cardT = type;
-        vm.orderId = orderId;
-        vm.off.detailsList = 1;
-        vm.off.auditdetails = 1;
+      var vm = this;
+      vm.cardT = type;
+      vm.orderId = orderId;
+      // vm.detailsData=data.data.list;
+      vm.off.detailsList = 1;
+      vm.off.auditdetails = 1;
     },
     searchList: function(index, page) {
-        var vm = this,
+      var vm = this,
         url,
         json = {
-            source:vm.form.source.join(","),
-            orderType: vm.form.orderType.join(","),
-            pageSize: vm.pageSize,
-            pageNum: page || 1,
-            startTime: vm.form.startTime,
-            endTime: vm.form.endTime,
-            orderStatus: vm.form.orderStatus,
-            auditType: vm.form.auditType,
-            gztCheck: vm.form.gztChe
+          source:vm.form.source.join(","),
+          orderType: vm.form.orderType.join(","),
+          pageSize: vm.pageSize,
+          pageNum: page || 1,
+          startTime: vm.form.startTime,
+          endTime: vm.form.endTime,
+          orderStatus: vm.form.orderStatus,
+          auditType: vm.form.auditType,
+          gztCheck: vm.form.gztChe
         };
-        vm.list="";
-        vm.pageNum=page;
-        vm.lastSearchPage=page;
-        vm.lastSearchIndex=index;
-        if (index == "order") {
-            vm.off.whichbtn = "index";
-            if (!vm.form.context1) {
-                layer.open({
-                content: "请输入订单号码",
-                skin: "msg",
-                time: 2,
-                msgSkin: "error"
-                });
-                return false;
-            }
-            json.context = vm.form.context1;
-            json.type = 1;
-        } else if (index == 1) {
-            vm.off.whichbtn = 1;
-            let context = vm.form["context" + vm.form.select];
-            vm.off.type == 1 &&
-                vm.form.select == 5 &&
-                (context = vm.form.orderStatus);
-            if(vm.form.source==""){
-                layer.open({
-                    content: "请选择要查询的系统类型",
-                    skin: "msg",
-                    time: 2,
-                    msgSkin: "error"
-                });
-                return false;
-            }else if(vm.form.orderType==""){
-                layer.open({
-                    content: "请选择要查询的操作类型",
-                    skin: "msg",
-                    time: 2,
-                    msgSkin: "error"
-                });
-                return false;
-            }else if (vm.form.select == 2 && !context) {
-                layer.open({
-                content: "请输入手机号码",
-                skin: "msg",
-                time: 2,
-                msgSkin: "error"
-                });
-                return false;
-            } else if (vm.form.select == 2 && context.length != 11) {
-                layer.open({
-                content: "手机号码格式错误",
-                skin: "msg",
-                time: 2,
-                msgSkin: "error"
-                });
-                return false;
-            } else if (vm.form.select == 3 && !context) {
-                layer.open({
-                content: "请输入审核人工号",
-                skin: "msg",
-                time: 2,
-                msgSkin: "error"
-                });
-                return false;
-            } else if (vm.form.select == 4 && !context) {
-                layer.open({
-                content: "请输入身份证号",
-                skin: "msg",
-                time: 2,
-                msgSkin: "error"
-                });
-                return false;
-            } else if (vm.form.select == 6 && !context) {
-                layer.open({
-                content: "请输入操作者工号",
-                skin: "msg",
-                time: 2,
-                msgSkin: "error"
-                });
-                return false;
-            }else if (vm.form.select == 8 && !context) {
-                layer.open({
-                content: "请输入查询的用户姓名",
-                skin: "msg",
-                time: 2,
-                msgSkin: "error"
-                });
-                return false;
-            }
-            json.context = context;
-            json.type = vm.form.select;
+      vm.list="";
+      vm.pageNum=page;
+      vm.lastSearchPage=page;
+      vm.lastSearchIndex=index;
+      if (index == "order") {
+        vm.off.whichbtn = "index";
+        if (!vm.form.context1) {
+          layer.open({
+            content: "请输入订单号码",
+            skin: "msg",
+            time: 2,
+            msgSkin: "error"
+          });
+          return false;
         }
-        vm.off.type == 1 ? (url = "ym-ecs/c/audit/auditOrderSearch") : (url = "ym-ecs/c/audit/orderSearch");
-        vm.off.isLoad=true;
-        vm.searchListData=json;
-        if(typeof(page) == "undefined"){
-            vm.maxpage=1;
-            vm.total=" 加载中... ";
-            getOrderTotal(vm.searchListData,function(){vm.off.isLoad=false})
-            .then((data)=>{
-                vm.maxpage = Math.ceil(parseInt(data.data) / 10);
-                vm.total = data.data;
-            })
+        json.context = vm.form.context1;
+        json.type = 1;
+      } else if (index == 1) {
+        vm.off.whichbtn = 1;
+        let context = vm.form["context" + vm.form.select];
+        vm.off.type == 1 &&
+          vm.form.select == 5 &&
+          (context = vm.form.orderStatus);
+        if(vm.form.source==""){
+            layer.open({
+                content: "请选择要查询的系统类型",
+                skin: "msg",
+                time: 2,
+                msgSkin: "error"
+            });
+            return false;
+        }else if(vm.form.orderType==""){
+            layer.open({
+                content: "请选择要查询的操作类型",
+                skin: "msg",
+                time: 2,
+                msgSkin: "error"
+            });
+            return false;
+        }else if (vm.form.select == 2 && !context) {
+          layer.open({
+            content: "请输入手机号码",
+            skin: "msg",
+            time: 2,
+            msgSkin: "error"
+          });
+          return false;
+        } else if (vm.form.select == 2 && context.length != 11) {
+          layer.open({
+            content: "手机号码格式错误",
+            skin: "msg",
+            time: 2,
+            msgSkin: "error"
+          });
+          return false;
+        } else if (vm.form.select == 3 && !context) {
+          layer.open({
+            content: "请输入审核人工号",
+            skin: "msg",
+            time: 2,
+            msgSkin: "error"
+          });
+          return false;
+        } else if (vm.form.select == 4 && !context) {
+          layer.open({
+            content: "请输入身份证号",
+            skin: "msg",
+            time: 2,
+            msgSkin: "error"
+          });
+          return false;
+        } else if (vm.form.select == 6 && !context) {
+          layer.open({
+            content: "请输入操作者工号",
+            skin: "msg",
+            time: 2,
+            msgSkin: "error"
+          });
+          return false;
+        }else if (vm.form.select == 8 && !context) {
+          layer.open({
+            content: "请输入查询的用户姓名",
+            skin: "msg",
+            time: 2,
+            msgSkin: "error"
+          });
+          return false;
         }
-        reqCommonMethod(vm.searchListData,function(){vm.off.isLoad=false},url)
-        .then((data)=>{
-            vm.list = data.data.list;
-            vm.pageNum = page || 1;
-            vm.callback = function(v) {
-                vm.searchList(index, v);
-            };
-            vm.off.isLoad=false;
-        }).catch(error=>errorDeal(error)); 
-            
+        json.context = context;
+        json.type = vm.form.select;
+      }
+      vm.off.type == 1
+        ? (url = "ym-ecs/c/audit/auditOrderSearch")
+        : (url = "ym-ecs/c/audit/orderSearch");
+    //   vm.AJAX(url,json,function(data) {
+    //       vm.list = data.data.list;
+    //       vm.total = data.data.total;
+    //       vm.maxpage = Math.ceil(parseInt(data.data.total) / 10);
+    //       vm.pageNum = page || 1;
+    //       vm.callback = function(v) {
+    //         vm.searchList(index, v);
+    //       };
+    //     },
+    //     function() {
+    //       vm.off.isLoad = false;
+    //     }
+    //   );
+      vm.off.isLoad=true;
+      vm.searchListData=json;
+      reqCommonMethod(vm.searchListData,function(){vm.off.isLoad=false},url)
+      .then((data)=>{
+          vm.list = data.data.list;
+          vm.total = data.data.total;
+          vm.maxpage = Math.ceil(parseInt(data.data.total) / 10);
+          vm.pageNum = page || 1;
+          vm.callback = function(v) {
+            vm.searchList(index, v);
+          };
+          vm.off.isLoad=false;
+      }).catch(error=>errorDeal(error));    
     },
     downLoadList: function(index, page) {
       //导出EXCEL
@@ -558,6 +566,20 @@ export default {
         json.context = context;
         json.type = vm.form.select;
       }
+      //      if(!userInfo){
+      //        layer.open({
+      //          content:'登录已过期，请重新登录',
+      //          style:'width:auto;',
+      //          btn:['确定'],
+      //          shadeClose:false,
+      //          yes:function(){
+      //            setStore("KA_ECS_USER","");
+      //            window.location.href="#/login";
+      //            layer.closeAll();
+      //          }
+      //        });
+      //        return false;
+      //      }
       if (vm.off.type == 1) {
         url = "ym-ecs/c/audit/downloadOrderSearch";
       } else if (vm.off.type == 2) {
@@ -572,28 +594,38 @@ export default {
       });
     },
     downloadBugOrder() {
-        //下载准同意excel
-        var vm = this;
-        vm.off.load = true;
-        let userInfo=getStore("KA_ECS_USER"),json={
-        startTime: vm.form.startTime,
-        endTime: vm.form.endTime,
-        cardStatus: vm.form.context7,
-        customerId:userInfo.customerId,
-        codeId:userInfo.codeId
-        };
-        createDownload("ym-ecs/c/audit/exportBuggingOrder", JSON.stringify(json), function() {
-            vm.off.load = false;
-        });
+      //下载准同意excel
+      var vm = this;
+      vm.off.load = true;
+      let userInfo=getStore("KA_ECS_USER"),json={
+      	startTime: vm.form.startTime,
+      	endTime: vm.form.endTime,
+      	cardStatus: vm.form.context7,
+      	customerId:userInfo.customerId,
+	  	codeId:userInfo.codeId
+      };
+      createDownload("ym-ecs/c/audit/exportBuggingOrder", JSON.stringify(json), function() {
+        vm.off.load = false;
+      });
     },
     agree: function(e) {
-        var vm = this,
+      var vm = this,
         url,
         orderId = e.target.name,
         number = e.target.title;
-        reqCommonMethod({ orderId: orderId },function(){vm.off.isLoad=false;},"ym-ecs/c/audit/orderRecheck")
-        .then((response)=>{
-            layer.open({
+    //   vm.AJAX("c/audit/orderRecheck", { orderId: orderId }, function(data) {
+    //     layer.open({
+    //       content: "复审成功",
+    //       skin: "msg",
+    //       time: 4,
+    //       msgSkin: "success"
+    //     });
+    //     vm.list[number].result = 3;
+    //     vm.list[number].cardStatus = 1;
+    //   });
+      reqCommonMethod({ orderId: orderId },function(){vm.off.isLoad=false;},"ym-ecs/c/audit/orderRecheck")
+      .then((response)=>{
+          layer.open({
             content: "复审成功",
             skin: "msg",
             time: 4,
@@ -602,7 +634,7 @@ export default {
             vm.list[number].result = 3;
             vm.list[number].cardStatus = 1;
             vm.off.isLoad=false;
-        }).catch(error=>errorDeal(error));         
+      }).catch(error=>errorDeal(error));         
     },
     details: function(e) {
     var vm = this,
@@ -615,78 +647,117 @@ export default {
         vm.off.type == 1
         ? (url = "ym-ecs/c/audit/auditOrderDetails")
         : (url = "ym-ecs/c/audit/orderDetails");
-        if (vm.off.isLoad) return false;
-        vm.off.isLoad = true;
-
-        if(typeof(orderId)!="undefined"){
-            vm.auditDetailsData={orderId:orderId}
-        }
-        reqCommonMethod(vm.auditDetailsData,function(){vm.off.isLoad=false;},url)
-        .then((data)=>{
-            vm.detailsData = data.data;
-            vm.off.details = true;
-            vm.off.detailsList = true;
-            vm.off.isLoad=false;
-        }).catch(error=>errorDeal(error));          
+      if (vm.off.isLoad) return false;
+      vm.off.isLoad = true;
+    //   vm.AJAX(
+    //     url,
+    //     { orderId: orderId },
+    //     function(data) {
+    //       vm.detailsData = data.data;
+    //       vm.off.details = true;
+    //       vm.off.detailsList = true;
+    //     },
+    //     function() {
+    //       vm.off.isLoad = false;
+    //     }
+    //   );
+    if(typeof(orderId)!="undefined"){
+        vm.auditDetailsData={orderId:orderId}
+    }
+      reqCommonMethod(vm.auditDetailsData,function(){vm.off.isLoad=false;},url)
+      .then((data)=>{
+          vm.detailsData = data.data;
+          vm.off.details = true;
+          vm.off.detailsList = true;
+          vm.off.isLoad=false;
+      }).catch(error=>errorDeal(error));          
     },
     to_laydate: function(v) {
-        var vm = this,
+      var vm = this,
         el = "";
-        v == 1 ? (el = "#start") : (el = "#end");
-        laydate({
+      v == 1 ? (el = "#start") : (el = "#end");
+      laydate({
         elem: el,
         istime: true,
         format: "YYYY-MM-DD hh:mm:ss",
         isclear: false,
         choose: function(dates) {
-            //选择好日期的回调
-            v == 1 ? (vm.form.startTime = dates) : (vm.form.endTime = dates);
+          //选择好日期的回调
+          v == 1 ? (vm.form.startTime = dates) : (vm.form.endTime = dates);
         }
-        });
+      });
     },
     toSearch: function(e) {
-        e.keyCode == 13 && this.searchList(2);
+      e.keyCode == 13 && this.searchList(2);
     },
     translateData: function(type, v) {
-        v = parseInt(v);
-        switch (type) {
+      v = parseInt(v);
+      switch (type) {
         case 1: //操作类型
-            return v == 1 ? "开成卡": v == 2 ? "开白卡" : v == 4 ? "实名补录" : v == 3 ? "过户办理" : v == 5 ? "实名登记" : void 0;
-            break;
+          return v == 1
+            ? "开成卡"
+            : v == 2
+              ? "开白卡"
+              : v == 4
+                ? "实名补录"
+                : v == 3 ? "过户办理" : v == 5 ? "实名登记" : void 0;
+          break;
         case 2: //证件类型
-            return v == 1 ? "身份证" : v == 2 ? "军官证" : v == 3 ? "护照" : void 0;
-            break;
+          return v == 1
+            ? "身份证"
+            : v == 2 ? "军官证" : v == 3 ? "护照" : void 0;
+          break;
         case 3: //已审核，订单状态
-            break;
+          break;
         case 4: //开卡状态
-            return v == 1 ? "处理中" : v == 2 ? "成功" : v == 3 ? "失败" : v == 9 ? "--" : void 0;
-            break;
+          return v == 1
+            ? "处理中"
+            : v == 2 ? "成功" : v == 3 ? "失败" : v == 9 ? "--" : void 0;
+          break;
         case 5: //靓号等级
-            var level = [ "普号", "特级", "一级", "二级", "三级", "四级", "五级", "六级", "七级", "八级", "九级", "十级", "十一级" ];
-            return level[parseInt(v)];
-            break;
+          var level = [
+            "普号",
+            "特级",
+            "一级",
+            "二级",
+            "三级",
+            "四级",
+            "五级",
+            "六级",
+            "七级",
+            "八级",
+            "九级",
+            "十级",
+            "十一级"
+          ];
+          return level[parseInt(v)];
+          break;
         case 6: //天数，时分秒
-            v = parseInt(v);
-            var day, minute, second, hour;
-            day = Math.floor(v / (60 * 60 * 24));
-            hour = Math.floor((v % (60 * 60 * 24)) / (60 * 60));
-            minute = Math.floor((v % (60 * 60)) / 60);
-            second = Math.floor(v % 60);
-            return day > 0 ? day + "天" + hour + "时" + minute + "分" + second + "秒" : hour > 0 ? hour + "时" + minute + "分" + second + "秒" : minute > 0 ? minute + "分" + second + "秒" : second + "秒";
-            break;
-        }
+          v = parseInt(v);
+          var day, minute, second, hour;
+          day = Math.floor(v / (60 * 60 * 24));
+          hour = Math.floor((v % (60 * 60 * 24)) / (60 * 60));
+          minute = Math.floor((v % (60 * 60)) / 60);
+          second = Math.floor(v % 60);
+          return day > 0
+            ? day + "天" + hour + "时" + minute + "分" + second + "秒"
+            : hour > 0
+              ? hour + "时" + minute + "分" + second + "秒"
+              : minute > 0 ? minute + "分" + second + "秒" : second + "秒";
+          break;
+      }
     },
     getDateTime: function(e) {
-        var t;
-        t = e ? new Date(parseInt(e)) : new Date();
-        var n = t.getFullYear(),
+      var t;
+      t = e ? new Date(parseInt(e)) : new Date();
+      var n = t.getFullYear(),
         a = t.getMonth() + 1,
         r = t.getDate(),
         o = t.getHours(),
         i = t.getMinutes(),
         c = t.getSeconds(),
         k = [];
-        a >= 10 ? a : (a = "0" + a),
+      a >= 10 ? a : (a = "0" + a),
         r >= 10 ? r : (r = "0" + r),
         o >= 10 ? o : (o = "0" + o),
         i >= 10 ? i : (i = "0" + i),
@@ -698,7 +769,7 @@ export default {
         (k[4] = a + "-" + r),
         (k[5] = o + ":" + i + ":" + c),
         (k[6] = n + "-" + a + "-" + r + " " + o + ":" + i + ":" + c);
-        return k;
+      return k;
     }
     // dropSelectButton:function(e){
     // 	var vm=this;
