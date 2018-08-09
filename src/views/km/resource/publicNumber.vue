@@ -28,6 +28,7 @@
                             <label><span class="checkbox"><input type="checkbox" value="50" v-model="context5" checked="checked"><span></span></span><span class="text">50卡</span></label>
                             <label><span class="checkbox"><input type="checkbox" value="20" v-model="context5" checked="checked"><span></span></span><span class="text">20卡</span></label>
                             <label><span class="checkbox"><input type="checkbox" value="10" v-model="context5" checked="checked"><span></span></span><span class="text">10卡</span></label>
+                            <label><span class="checkbox"><input type="checkbox" value="0" v-model="context5" checked="checked"><span></span></span><span class="text">0卡</span></label>
                             <label><span class="checkbox"><input type="checkbox" value="-1" v-model="context5" checked="checked"><span></span></span><span class="text">无预存</span></label>
                         </div>
                     </div>
@@ -184,7 +185,7 @@ export default{
             i:'',            
             list:'',//查询数据
             context5All:true,//面额全选
-            context5:[100,50,20,10,-1],//面额
+            context5:[100,50,20,10,0,-1],//面额
 			dataList:"",//号码/段查询列表
 			numberInfo:"",//号码/段查询列表
 			pageNum:1,//当前页数
@@ -213,7 +214,7 @@ export default{
     },
     watch:{
         context5(){
-            if(this.context5.length==5){
+            if(this.context5.length==6){
                 this.context5All=true;
             }else{
                 this.context5All=false;
@@ -352,7 +353,7 @@ export default{
         },
         BtnCheckAll(){
             if(this.context5All==true){
-                this.context5=[100,50,20,10,-1]
+                this.context5=[100,50,20,10,0,-1]
             }else if(this.context5All==false){
                 this.context5=[]
             }

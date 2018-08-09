@@ -184,18 +184,10 @@ const Resource_device = resolve => {//设备查询
         load();
     });
 };
-const Resource_ordinaryExclusive = resolve => {//设备查询
+const Resource_ordinaryExclusive = resolve => {//大众专营号
     load(true);
-    require.ensure(["@/views/km/resource/exclusiveNumber"], () => {
-      resolve(require("@/views/km/resource/exclusiveNumber"));
-      load();
-    });
-};
-
-const Resource_exclusiveNumber = resolve => {//大众专营号
-    load(true);
-    require.ensure(["@/views/km/resource/ordinaryExclusive"], () => {
-      resolve(require("@/views/km/resource/ordinaryExclusive"));
+    require.ensure(["@/views/km/resource/publicNumber"], () => {
+      resolve(require("@/views/km/resource/publicNumber"));
       load();
     });
 };
@@ -465,10 +457,6 @@ const router=new Router({
         path:"device/:val",
         component:Resource_device,
         name:"device"
-      },{//专营号
-        path:"exclusiveNumber/:val",
-        component:Resource_exclusiveNumber,
-        name:"exclusiveNumber"
       },{//大众专营号
         path:"ordinaryExclusive/:val",
         component:Resource_ordinaryExclusive,

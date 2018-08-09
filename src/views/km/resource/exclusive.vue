@@ -39,7 +39,7 @@
                                 <span class="text">ICCID：</span>
                             </label>
                         </span>
-                        <div class="input-box"><input v-model="form.context3" :readonly="form.select!=3" maxlength="25" type="tel" placeholder="请输入查询的ICCID"></div>
+                        <div class="input-box"><input v-model="form.context3" :readonly="form.select!=3" maxlength="19" type="tel" placeholder="请输入查询的ICCID"></div>
                     </div>
                     <button class="f-btn f-btn-line" @click="searchList(1)">查询</button>
                 </section>
@@ -79,22 +79,22 @@
                                 <td>{{getDateTime(todo.createTime)[6]}}</td>
                                 <td><a class="f-a-td" :href="'#/homek/orderSearch/flowCard/'+todo.sysOrderId">{{todo.sysOrderId||'--'}}</a></td>
                                 <td>
-                                    <a class="f-a-td" v-if="!isNaN(todo.actived)&&todo.actived!=0" @click="getNumberInfo({s:3,newCompanyName:todo.newCompanyName,dealerId:todo.newDealerId,size:todo.actived})">{{todo.actived}}</a>
+                                    <a class="f-a-td" v-if="!isNaN(todo.actived)&&todo.actived!=0" @click="getNumberInfo({s:3,info:todo})">{{todo.actived}}</a>
                                     <a v-else-if="todo.actived==0">{{todo.actived}}</a>
                                     <a v-else>--</a>
                                 </td>
                                 <td>
-                                    <a class="f-a-td" v-if="!isNaN(todo.adulted)&&todo.adulted!=0" @click="getNumberInfo({s:2,newCompanyName:todo.newCompanyName,dealerId:todo.newDealerId,size:todo.adulted})">{{todo.adulted}}</a>
+                                    <a class="f-a-td" v-if="!isNaN(todo.adulted)&&todo.adulted!=0" @click="getNumberInfo({s:2,info:todo})">{{todo.adulted}}</a>
                                     <a v-else-if="todo.adulted==0">{{todo.adulted}}</a>
                                     <a v-else>{{todo.adulted}}</a>
                                 </td>
                                 <td>
-                                    <a class="f-a-td" v-if="!isNaN(todo.unactived)&&todo.unactived!=0" @click="getNumberInfo({s:4,newCompanyName:todo.newCompanyName,dealerId:todo.newDealerId,size:todo.unactived})">{{todo.unactived}}</a>
+                                    <a class="f-a-td" v-if="!isNaN(todo.unactived)&&todo.unactived!=0" @click="getNumberInfo({s:4,info:todo})">{{todo.unactived}}</a>
                                     <a v-else-if="todo.unactived==0">{{todo.unactived}}</a>
                                     <a v-else>{{todo.unactived}}</a>
                                 </td>
                                 <td>
-                                    <a class="f-a-td" v-if="!isNaN(todo.whited)&&todo.whited!=0" @click="getNumberInfo({s:1,newCompanyName:todo.newCompanyName,dealerId:todo.newDealerId,size:todo.whited})">{{todo.whited}}</a>
+                                    <a class="f-a-td" v-if="!isNaN(todo.whited)&&todo.whited!=0" @click="getNumberInfo({s:1,info:todo})">{{todo.whited}}</a>
                                     <a v-else-if="todo.whited==0">{{todo.whited}}</a>
                                     <a v-else>{{todo.whited}}</a>
                                 </td>
@@ -238,19 +238,35 @@ export default {
                     msgSkin: "error"
                 });
                 return false;
-            }else if(vm.form.select==3&&!vm.form.context3){
-                layer.open({
-                    content:"请输入查询的ICCID",
-                    skin: "msg",
-                    time: 2,
-                    msgSkin: "error"
-                });
-                return false;
+            }else if(vm.form.select==3){
+                debugger;
+                if(vm.form.context3.length!=19){
+                    layer.open({
+                        content:"请输入正确的ICCID",
+                        skin: "msg",
+                        time: 2,
+                        msgSkin: "error"
+                    });
+                    return false;
+                }else if(isNaN(vm.form.context3)){
+                    layer.open({
+                        content:"请输入正确的ICCID",
+                        skin: "msg",
+                        time: 2,
+                        msgSkin: "error"
+                    });
+                    return false;
+                }
+                
             }
             vm.search.numberInfo="";
             requestGetExclusiveNumberList(json,()=>{vm.off.isLoad=false})
             .then((data)=>{
-                vm.search.number1=data.privInfo;
+                if(JSON.stringify(data.privInfo)=='{}'){
+                    vm.search.number1="";
+                }else{
+                    vm.search.number1=data.privInfo;
+                }
                 vm.search.numberList=data.data.datas;
                 vm.maxpage=Math.ceil(parseInt(data.data.total)/10);
                 vm.total=data.data.total;
@@ -264,8 +280,10 @@ export default {
                 "pageSize": "10",
                 "pageNow": p||1,
                 "searchType": v.s,//1白卡2成卡3已激活4未激活
+                "dealerId":v.info.newDealerId,//商户id
+                "createTime":v.info.createTime,
+                "outTime":v.info.outTime,
                 "phoneSg":vm.search.number1.phoneTitle,//8位码号段
-                "dealerId":v.dealerId//商户id
             };
             requestGetExclusiveNumberDesc(json,()=>{vm.off.isLoad=false})
             .then((data)=>{
@@ -274,10 +292,20 @@ export default {
                 vm.total1=data.data.length;
                 vm.pageNum1=p||1;
                 vm.phoneNum=vm.search.number1.phoneTitle;
-                vm.phoneDealerId=v.dealerId;
-                vm.phoneDealerName=v.newCompanyName;
+                vm.phoneDealerId=v.info.newDealerId;
+                vm.phoneDealerName=v.info.newCompanyName;
                 vm.phoneStatus=v.s;
-                vm.phoneTotal=v.size;
+                if(v.s==1){
+                    vm.phoneTotal=v.info.whited;
+                }else if(v.s==2){
+                    vm.phoneTotal=v.info.adulted;
+                }else if(v.s==3){
+                    vm.phoneTotal=v.info.actived
+                }else if(v.s==4){
+                    vm.phoneTotal=v.info.unactived
+                }else{
+                    return false
+                }
                 vm.callback1=function(v){vm.searchList(v)};
                 setTimeout(()=>{
                     this.funScrollTop()

@@ -182,7 +182,7 @@
 						</div>
 					</router-link>
 				</li>
-                <li v-if="true" :class="{active:crumb[0].name=='实名资源库'}">
+                <li v-if="false" :class="{active:crumb[0].name=='实名资源库'}">
 					<b></b>
 					<router-link to="/homek/realNameResource">
 						<div>
@@ -458,7 +458,7 @@ export default{
 				}else if(path.indexOf("device")>-1){
 					crumb[1]={"name":"设备","href":""}
 				}else if(path.indexOf("ordinaryExclusive")>-1){
-					crumb[1]={"name":"大众专营号","href":""}
+					crumb[1]={"name":"大众号","href":""}
 				}else if(path.indexOf("exclusive")>-1){
 					crumb[1]={"name":"专营号","href":""}
 				}else if(path.indexOf("specialExclusive")>-1){

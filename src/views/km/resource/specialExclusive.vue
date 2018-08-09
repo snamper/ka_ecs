@@ -40,7 +40,7 @@
             <!-- 查询结果 -->
             <div v-if="list" class="m-total-table">
                 <div class="total-head">查询结果
-                    <label v-if="list.length>0">【<a class="f-a-td">{{dealerInfo.dealerId}} ({{dealerInfo.companyName}})</a>】<b>{{listTotal}}</b></label>
+                    <label v-if="list.length>0">【<a :href="'#/homek/resource/merchant/'+dealerInfo.dealerId" class="f-a-td">{{dealerInfo.dealerId}} ({{dealerInfo.companyName}})</a>】<b>{{listTotal}}</b></label>
                     <!-- <button class="btn_export_excel" v-if="maxpage" @click="downLoadList">导出excel</button> -->
                 </div>
                 <table>
