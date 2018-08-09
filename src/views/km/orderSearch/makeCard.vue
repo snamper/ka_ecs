@@ -294,12 +294,13 @@ export default {
         vm.init();
         setTimeout(function(){
             let val=vm.$route.params.val,v={};
-            v.sys_order_id=val;
             if(val.indexOf('BK')>-1){
                 vm.form.source=2
+                v.orderId=val;
             }
             else if(val.indexOf('CK')>-1){
                 vm.form.source=1
+                v.sys_order_id=val;
             }
             if(val!='null'){
                 vm.searchMakeCardDetails(v)
