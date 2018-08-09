@@ -336,150 +336,158 @@ export default {
   },
   methods: {
     init: function() {
-        const vm=this;
-        let userInfo=getStore("KA_ECS_USER");
-        vm.userInfo=userInfo;
-        vm.userInfo.isadminYm&&(vm.userInfo.isadminYm.indexOf('1')>-1||vm.userInfo.isadminYm.indexOf('3')>-1) ? vm.off.power3=true : vm.off.power3=false;
-        var type = this.$route.params.type;
-        type == "auditing" ? (vm.off.type = 1) : (vm.off.type = 2);
-        vm.form.startTime = laydate.now(0, "YYYY-MM-DD 00:00:00");
-        vm.form.endTime = laydate.now(0, "YYYY-MM-DD 23:59:59");
-        vm.off.type == 1 ? (vm.form.select = 5) : (vm.form.select = 7);
+      const vm=this;
+      let userInfo=getStore("KA_ECS_USER");
+	    vm.userInfo=userInfo;
+      vm.userInfo.isadminYm&&(vm.userInfo.isadminYm.indexOf('1')>-1||vm.userInfo.isadminYm.indexOf('3')>-1) ? vm.off.power3=true : vm.off.power3=false;
+      var type = this.$route.params.type;
+      type == "auditing" ? (vm.off.type = 1) : (vm.off.type = 2);
+      vm.form.startTime = laydate.now(0, "YYYY-MM-DD 00:00:00");
+      vm.form.endTime = laydate.now(0, "YYYY-MM-DD 23:59:59");
+      vm.off.type == 1 ? (vm.form.select = 5) : (vm.form.select = 7);
     },
     auditBtn: function(type, orderId) {
-        var vm = this;
-        vm.cardT = type;
-        vm.orderId = orderId;
-        vm.off.detailsList = 1;
-        vm.off.auditdetails = 1;
+      var vm = this;
+      vm.cardT = type;
+      vm.orderId = orderId;
+      // vm.detailsData=data.data.list;
+      vm.off.detailsList = 1;
+      vm.off.auditdetails = 1;
     },
     searchList: function(index, page) {
-        var vm = this,
+      var vm = this,
         url,
         json = {
-            source:vm.form.source.join(","),
-            orderType: vm.form.orderType.join(","),
-            pageSize: vm.pageSize,
-            pageNum: page || 1,
-            startTime: vm.form.startTime,
-            endTime: vm.form.endTime,
-            orderStatus: vm.form.orderStatus,
-            auditType: vm.form.auditType,
-            gztCheck: vm.form.gztChe
+          source:vm.form.source.join(","),
+          orderType: vm.form.orderType.join(","),
+          pageSize: vm.pageSize,
+          pageNum: page || 1,
+          startTime: vm.form.startTime,
+          endTime: vm.form.endTime,
+          orderStatus: vm.form.orderStatus,
+          auditType: vm.form.auditType,
+          gztCheck: vm.form.gztChe
         };
-        vm.list="";
-        vm.pageNum=page;
-        vm.lastSearchPage=page;
-        vm.lastSearchIndex=index;
-        if (index == "order") {
-            vm.off.whichbtn = "index";
-            if (!vm.form.context1) {
-                layer.open({
-                content: "请输入订单号码",
-                skin: "msg",
-                time: 2,
-                msgSkin: "error"
-                });
-                return false;
-            }
-            json.context = vm.form.context1;
-            json.type = 1;
-        } else if (index == 1) {
-            vm.off.whichbtn = 1;
-            let context = vm.form["context" + vm.form.select];
-            vm.off.type == 1 &&
-                vm.form.select == 5 &&
-                (context = vm.form.orderStatus);
-            if(vm.form.source==""){
-                layer.open({
-                    content: "请选择要查询的系统类型",
-                    skin: "msg",
-                    time: 2,
-                    msgSkin: "error"
-                });
-                return false;
-            }else if(vm.form.orderType==""){
-                layer.open({
-                    content: "请选择要查询的操作类型",
-                    skin: "msg",
-                    time: 2,
-                    msgSkin: "error"
-                });
-                return false;
-            }else if (vm.form.select == 2 && !context) {
-                layer.open({
-                content: "请输入手机号码",
-                skin: "msg",
-                time: 2,
-                msgSkin: "error"
-                });
-                return false;
-            } else if (vm.form.select == 2 && context.length != 11) {
-                layer.open({
-                content: "手机号码格式错误",
-                skin: "msg",
-                time: 2,
-                msgSkin: "error"
-                });
-                return false;
-            } else if (vm.form.select == 3 && !context) {
-                layer.open({
-                content: "请输入审核人工号",
-                skin: "msg",
-                time: 2,
-                msgSkin: "error"
-                });
-                return false;
-            } else if (vm.form.select == 4 && !context) {
-                layer.open({
-                content: "请输入身份证号",
-                skin: "msg",
-                time: 2,
-                msgSkin: "error"
-                });
-                return false;
-            } else if (vm.form.select == 6 && !context) {
-                layer.open({
-                content: "请输入操作者工号",
-                skin: "msg",
-                time: 2,
-                msgSkin: "error"
-                });
-                return false;
-            }else if (vm.form.select == 8 && !context) {
-                layer.open({
-                content: "请输入查询的用户姓名",
-                skin: "msg",
-                time: 2,
-                msgSkin: "error"
-                });
-                return false;
-            }
-            json.context = context;
-            json.type = vm.form.select;
+      vm.list="";
+      vm.pageNum=page;
+      vm.lastSearchPage=page;
+      vm.lastSearchIndex=index;
+      if (index == "order") {
+        vm.off.whichbtn = "index";
+        if (!vm.form.context1) {
+          layer.open({
+            content: "请输入订单号码",
+            skin: "msg",
+            time: 2,
+            msgSkin: "error"
+          });
+          return false;
         }
-        vm.off.type == 1 ? (url = "ym-ecs/c/audit/auditOrderSearch") : (url = "ym-ecs/c/audit/orderSearch");
-        vm.off.isLoad=true;
-        vm.searchListData=json;
-        if(typeof(page) == "undefined"){
-            vm.maxpage=1;
-            vm.total=" 加载中... ";
-            getOrderTotal(vm.searchListData,function(){vm.off.isLoad=false})
-            .then((data)=>{
-                vm.maxpage = Math.ceil(parseInt(data.data) / 10);
-                vm.total = data.data;
-            })
+        json.context = vm.form.context1;
+        json.type = 1;
+      } else if (index == 1) {
+        vm.off.whichbtn = 1;
+        let context = vm.form["context" + vm.form.select];
+        vm.off.type == 1 &&
+          vm.form.select == 5 &&
+          (context = vm.form.orderStatus);
+        if(vm.form.source==""){
+            layer.open({
+                content: "请选择要查询的系统类型",
+                skin: "msg",
+                time: 2,
+                msgSkin: "error"
+            });
+            return false;
+        }else if(vm.form.orderType==""){
+            layer.open({
+                content: "请选择要查询的操作类型",
+                skin: "msg",
+                time: 2,
+                msgSkin: "error"
+            });
+            return false;
+        }else if (vm.form.select == 2 && !context) {
+          layer.open({
+            content: "请输入手机号码",
+            skin: "msg",
+            time: 2,
+            msgSkin: "error"
+          });
+          return false;
+        } else if (vm.form.select == 2 && context.length != 11) {
+          layer.open({
+            content: "手机号码格式错误",
+            skin: "msg",
+            time: 2,
+            msgSkin: "error"
+          });
+          return false;
+        } else if (vm.form.select == 3 && !context) {
+          layer.open({
+            content: "请输入审核人工号",
+            skin: "msg",
+            time: 2,
+            msgSkin: "error"
+          });
+          return false;
+        } else if (vm.form.select == 4 && !context) {
+          layer.open({
+            content: "请输入身份证号",
+            skin: "msg",
+            time: 2,
+            msgSkin: "error"
+          });
+          return false;
+        } else if (vm.form.select == 6 && !context) {
+          layer.open({
+            content: "请输入操作者工号",
+            skin: "msg",
+            time: 2,
+            msgSkin: "error"
+          });
+          return false;
+        }else if (vm.form.select == 8 && !context) {
+          layer.open({
+            content: "请输入查询的用户姓名",
+            skin: "msg",
+            time: 2,
+            msgSkin: "error"
+          });
+          return false;
         }
-        reqCommonMethod(vm.searchListData,function(){vm.off.isLoad=false},url)
-        .then((data)=>{
-            vm.list = data.data.list;
-            vm.pageNum = page || 1;
-            vm.callback = function(v) {
-                vm.searchList(index, v);
-            };
-            vm.off.isLoad=false;
-        }).catch(error=>errorDeal(error)); 
-            
+        json.context = context;
+        json.type = vm.form.select;
+      }
+      vm.off.type == 1
+        ? (url = "ym-ecs/c/audit/auditOrderSearch")
+        : (url = "ym-ecs/c/audit/orderSearch");
+    //   vm.AJAX(url,json,function(data) {
+    //       vm.list = data.data.list;
+    //       vm.total = data.data.total;
+    //       vm.maxpage = Math.ceil(parseInt(data.data.total) / 10);
+    //       vm.pageNum = page || 1;
+    //       vm.callback = function(v) {
+    //         vm.searchList(index, v);
+    //       };
+    //     },
+    //     function() {
+    //       vm.off.isLoad = false;
+    //     }
+    //   );
+      vm.off.isLoad=true;
+      vm.searchListData=json;
+      reqCommonMethod(vm.searchListData,function(){vm.off.isLoad=false},url)
+      .then((data)=>{
+          vm.list = data.data.list;
+          vm.total = data.data.total;
+          vm.maxpage = Math.ceil(parseInt(data.data.total) / 10);
+          vm.pageNum = page || 1;
+          vm.callback = function(v) {
+            vm.searchList(index, v);
+          };
+          vm.off.isLoad=false;
+      }).catch(error=>errorDeal(error));    
     },
     downLoadList: function(index, page) {
       //导出EXCEL
