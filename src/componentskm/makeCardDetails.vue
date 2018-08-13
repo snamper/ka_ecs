@@ -72,8 +72,8 @@
                             <tr>
                                 <td>MAC地址：</td>
                                 <td>{{detailsEmpty.mac||'--'}}</td>
-                                <td></td>
-                                <td></td>
+                                <td>短信校验号码：</td>
+                                <td>{{detailsEmpty.safe_phone}}</td>
                             </tr>
                         </tbody>
                         <!-- 白卡 -->
@@ -162,21 +162,18 @@
                                         <span v-if="detailsEmpty.card_money_rebate/1000!=10">（{{detailsEmpty.card_money_rebate/1000}}折）</span>
                                         <span v-else></span>
                                     </td>
-                                    
                                 </tr>
                                 <tr>
                                     <td>IMSI：</td>   
                                     <td>{{detailsEmpty.imsi||'--'}}</td>
                                     <td>支付订单：</td> 
                                     <td>{{detailsEmpty.sys_order_id_pay||'--'}}</td>
-                                    
                                 </tr>
                                     <tr>
                                     <td>原产品名称：</td>   
                                     <td>{{detailsEmpty.old_pkg_info||'--'}} <span class="f-c-grey">(资费：{{detailsEmpty.old_fee_voice}}，可选包：{{detailsEmpty.old_optional_pkg||'--'}})</span> </td>
                                     <td>支付方式：</td>   
                                     <td>{{translateData(12,detailsEmpty.pay_type)}}</td>
-                                    
                                 </tr>
                                 <tr>
                                     <td>新产品名称：</td>
@@ -184,7 +181,6 @@
                                     <td>实付金额：</td>   
                                     <td v-if="detailsEmpty.monopoly_type==0">{{translateData('money',detailsEmpty.actual_money)||'--'}}元({{`差价${translateData('money',(detailsEmpty.prestore_money-detailsEmpty.old_prestore_money))}元-抵扣${translateData('money',detailsEmpty.deduction_money)}元+选号费${translateData('money',detailsEmpty.card_money)}元`}})</td>
                                     <td v-else>{{translateData('money',detailsEmpty.actual_money)||'--'}}元({{`差价${translateData('money',(detailsEmpty.prestore_money-detailsEmpty.old_prestore_money))}元-抵扣${translateData('money',detailsEmpty.deduction_money)}元`}})</td>
-                                    
                                 </tr>
                                 <tr>
                                     <td>原预存：</td>   
