@@ -40,10 +40,10 @@ span.m-form-radio{width: 75px;}
                                     <span class="radio"><input type="radio" value="1" @click="isChe" v-model="form.select">
                                         <span></span>
                                     </span>
-                                    <span class="text">号码：</span>
+                                    <span class="text">号段：</span>
                                 </label>
                             </span>
-                            <div class="input-box"><input v-model="cardNumber" :readonly="form.select!=1" maxlength="11" type="tel" placeholder="请输入查询的8位号码"></div>
+                            <div class="input-box"><input v-model="cardNumber" :readonly="form.select!=1" maxlength="8" type="tel" placeholder="请输入查询的号段"></div>
                         </div>
                         <div class="row  m-col-2">
                             <span class="m-form-radio">商 户 I D ：</span>                            

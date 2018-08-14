@@ -461,25 +461,46 @@ export default {
         vm.off.type == 1 ? (url = "ym-ecs/c/audit/auditOrderSearch") : (url = "ym-ecs/c/audit/orderSearch");
         vm.off.isLoad=true;
         vm.searchListData=json;
-        if(typeof(page) == "undefined"){
-            vm.maxpage=1;
-            vm.total=" 加载中... ";
-            getOrderTotal(vm.searchListData,function(){vm.off.isLoad=false})
+        if(vm.off.type==1){
+            reqCommonMethod(vm.searchListData,function(){vm.off.isLoad=false},url)
             .then((data)=>{
-                vm.maxpage = Math.ceil(parseInt(data.data) / 10);
-                vm.total = data.data;
-            })
+                vm.list = data.data.list;
+                vm.total = data.data.total;
+                vm.maxpage = Math.ceil(parseInt(data.data.total) / 10);
+                vm.pageNum = page || 1;
+                vm.callback = function(v) {
+                    vm.searchList(index, v);
+                };
+                vm.off.isLoad=false;
+            }).catch(error=>errorDeal(error));    
+        }else if(vm.off.type==2){
+            if(typeof(page) == "undefined"){
+                vm.maxpage=1;
+                vm.total=" 加载中... ";
+                getOrderTotal(vm.searchListData,function(){vm.off.isLoad=false})
+                .then((data)=>{
+                    vm.maxpage = Math.ceil(parseInt(data.data) / 10);
+                    vm.total = data.data;
+                })
+            }
+            reqCommonMethod(vm.searchListData,function(){vm.off.isLoad=false},url)
+            .then((data)=>{
+                vm.list = data.data.list;
+                vm.pageNum = page || 1;
+                vm.callback = function(v) {
+                    vm.searchList(index, v);
+                };
+                vm.off.isLoad=false;
+            }).catch(error=>errorDeal(error));
+        }else{
+            layer.open({
+            content: "未知错误",
+            skin: "msg",
+            time: 2,
+            msgSkin: "error"
+          });
+          return false;
         }
-        reqCommonMethod(vm.searchListData,function(){vm.off.isLoad=false},url)
-        .then((data)=>{
-            vm.list = data.data.list;
-            vm.pageNum = page || 1;
-            vm.callback = function(v) {
-                vm.searchList(index, v);
-            };
-            vm.off.isLoad=false;
-        }).catch(error=>errorDeal(error)); 
-            
     },
     downLoadList: function(index, page) {
       //导出EXCEL
