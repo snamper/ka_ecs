@@ -5,7 +5,7 @@ em, i{font-style:normal; }
 ul, ol{list-style: none;}
 html{font-size: 625%;}
 html,body{width: 100%;height: 100%;}
-body{background-color:#F1F2F3;margin: auto;color: #48576a;font-family: "Microsoft YaHei","Arial","微软雅黑";-webkit-overflow-scrolling: touch;-webkit-font-smoothing: antialiased;-moz-osx-font-smoothing: grayscale;font-size:0.13rem;}
+body{background-color:#F1F2F3;margin: auto;color: rgba(0,0,0,0.65);font-family: "Microsoft YaHei","Arial","微软雅黑";-webkit-overflow-scrolling: touch;-webkit-font-smoothing: antialiased;-moz-osx-font-smoothing: grayscale;font-size:0.13rem;}
 #app{position: absolute;top:0; width: 100%;height: 100%;min-width: 300px;}
 input::-webkit-outer-spin-button, input::-webkit-inner-spin-button{-webkit-appearance: none !important; margin: 0;}
 input[type="number"]{-moz-appearance:textfield;}
@@ -330,15 +330,15 @@ input, button{ -webkit-appearance: none;-moz-appearance: none;-ms-appearance: no
 }
 /*外层轨道*/
 .f-scroll-lt::-webkit-scrollbar-track{
-    background-color:rgba(0,0,0,0.3);
+    background-color:rgba(0,0,0,0.2);
 }
 /*内层轨道*/
 .f-scroll-lt::-webkit-scrollbar-track-piece{
-    background-color:#405364;
+    background-color:#bbb;
 }
 /*滚动条里面可以拖动的那部分*/
 .f-scroll-lt::-webkit-scrollbar-thumb{
-    background-color:rgba(0,0,0,0.3);  
+    background-color:rgba(0,0,0,0.2);  
 }
 /*边角*/
 .f-scroll-lt::-webkit-scrollbar-corner{
@@ -346,7 +346,7 @@ input, button{ -webkit-appearance: none;-moz-appearance: none;-ms-appearance: no
 }
 /*定义右下角拖动块的样式*/
 .f-scroll-lt::-webkit-scrollbar-resizer{
-    background-color:rgba(0,0,0,0.3);
+    background-color:rgba(0,0,0,0.2);
 }
 
 /*菜单按钮*/

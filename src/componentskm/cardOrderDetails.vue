@@ -847,6 +847,41 @@ export default {
       if (vm.list.sysOrderId) {
         orderId = vm.list.sysOrderId;
       }
+
+      const transfer = (val)=>{
+        return val == 0 ? '未执行' : val == -1 ? '不适用' : val + '%';
+      }
+
+      const transfer_result = (val)=>{
+        let name = '', style = 'fCGrey';
+
+        switch(parseInt(val)){
+            case 0:
+                name = '未执行';
+                style = 'fCRed';
+                break;
+            case -1:
+                name = '不适用';
+                break;
+            case 1:
+                name = '成功';
+                style = 'fCGreen';
+                break;
+            case 2:
+                name = '失败';
+                style = 'fCRed';
+                break;
+            case 3:
+                name = '未定';
+                style = 'fCYellow';
+                break;
+            default:
+                name = '--';
+                break;
+        }
+        return {name:name,style:style};
+      }
+
       reqCommonMethod(
         {
           opKey: "order.autoAudit.details",
@@ -863,74 +898,44 @@ export default {
             ? layer.open({
                 content: `<ul class="f-scroll-lt lay-details o-fl-w">
 					<li class="clr"><div class="fl">正面与手持对比相似度：</div><div class="fright">${
-            list_item1.frontHandImageSimilarity
-          }%</div></li>
+            transfer(list_item1.frontHandImageSimilarity)
+          }</div></li>
 					<li class="clr"><div class="fl">正面与第三方对比相似度：</div><div class="fright">${
-            list_item1.frontImageSimilarity
-          }%</div></li>
+            transfer(list_item1.frontImageSimilarity)
+          }</div></li>
 					<li class="clr"><div class="fl">手持与第三方相似度：</div><div class="fright">${
-            list_item1.handImageSimilarity
-          }%</div></li>
+            transfer(list_item1.handImageSimilarity)
+          }</div></li>
 					<li class="clr"><div class="fl">活体识别照相似度：</div><div class="fright">${
-            list_item1.livingImageSimilarity
-          }%</div></li>
-					<li class="clr"><div class="fl">年龄校验结果：</div><div class="fright">${
-            list_item1.ageCheck == 1
-              ? '<span class="fCGreen">成功</span>'
-              : list_item1.ageCheck == 2
-                ? '<span class="fCRed">失败</span>'
-                : list_item1.ageCheck == 3
-                  ? '<span class="fCYellow">未定</span>'
-                  : "--"
+            transfer(list_item1.livingImageSimilarity)
           }</div></li>
-					<li class="clr"><div class="fl">地址校验结果：</div><div class="fright">${
-            list_item1.addressCheck == 1
-              ? '<span class="fCGreen">成功</span>'
-              : list_item1.addressCheck == 2
-                ? '<span class="fCRed">失败</span>'
-                : list_item1.addressCheck == 3
-                  ? '<span class="fCYellow">未定</span>'
-                  : "--"
+					<li class="clr"><div class="fl">年龄校验结果：</div><div class="fright ${transfer_result(list_item1.ageCheck).style}">${
+                    transfer_result(list_item1.ageCheck).name
+            }</div></li>
+					<li class="clr"><div class="fl">地址校验结果：</div><div class="fright ${transfer_result(list_item1.addressCheck).style}">${
+                    transfer_result(list_item1.addressCheck).name
           }</div></li>
-					<li class="clr"><div class="fl">身份证有效期校验结果：</div><div class="fright">${
-            list_item1.periodCheck == 1
-              ? '<span class="fCGreen">成功</span>'
-              : list_item1.periodCheck == 2
-                ? '<span class="fCRed">失败</span>'
-                : list_item1.periodCheck == 3
-                  ? '<span class="fCYellow">未定</span>'
-                  : "--"
+					<li class="clr"><div class="fl">身份证有效期校验结果：</div><div class="fright ${transfer_result(list_item1.periodCheck).style}">${
+                    transfer_result(list_item1.periodCheck).name
           }</div></li>
-					<li class="clr"><div class="fl">身份证号与正面OCR匹配结果：</div><div class="fright">${
-            list_item1.ocrIdCardNoCheck == 1
-              ? '<span class="fCGreen">成功</span>'
-              : list_item1.ocrIdCardNoCheck == 2
-                ? '<span class="fCRed">失败</span>'
-                : list_item1.ocrIdCardNoCheck == 3
-                  ? '<span class="fCYellow">未定</span>'
-                  : "--"
+					<li class="clr"><div class="fl">身份证号与正面OCR匹配结果：</div><div class="fright ${transfer_result(list_item1.ocrIdCardNoCheck).style}">${
+                    transfer_result(list_item1.ocrIdCardNoCheck).name
           }</div></li>
-					<li class="clr"><div class="fl">有效期与背面OCR匹配结果：</div><div class="fright">${
-            list_item1.ocrIdCardPeriodCheck == 1
-              ? '<span class="fCGreen">成功</span>'
-              : list_item1.ocrIdCardPeriodCheck == 2
-                ? '<span class="fCRed">失败</span>'
-                : list_item1.ocrIdCardPeriodCheck == 3
-                  ? '<span class="fCYellow">未定</span>'
-                  : "--"
+					<li class="clr"><div class="fl">有效期与背面OCR匹配结果：</div><div class="fright ${transfer_result(list_item1.ocrIdCardPeriodCheck).style}">${
+                    transfer_result(list_item1.ocrIdCardPeriodCheck).name
           }</div></li>
 					<li class="clr"><div class="fl">上传身份证号与OCR对比相似度：</div><div class="fright">${
-            list_item1.idCardNoSimilarity
-          }%</div></li>
+            transfer(list_item1.idCardNoSimilarity)
+          }</div></li>
 					<li class="clr"><div class="fl">上传姓名与OCR对比相似度：</div><div class="fright">${
-            list_item1.idCardNameSimilarity
-          }%</div></li>
+            transfer(list_item1.idCardNameSimilarity)
+          }</div></li>
 					<li class="clr"><div class="fl">上传地址与OCR对比相似度：</div><div class="fright">${
-            list_item1.idCardAddressSimilarity
-          }%</div></li>
+            transfer(list_item1.idCardAddressSimilarity)
+          }</div></li>
 					<li class="clr"><div class="fl">上传有效期与OCR对比相似度：</div><div class="fright">${
-            list_item1.idCardPeriodSimilarity
-          }%</div></li>
+            transfer(list_item1.idCardPeriodSimilarity)
+          }</div></li>
 					<li class="clr"><div class="fl">审核结果：</div><div class="fright">${
             list_item1.result == 1
               ? '<span class="fCGreen">成功</span>'
