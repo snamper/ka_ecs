@@ -312,106 +312,71 @@ export default{
 		},
 		autoAuditInfo(){//自动审核详情
 			var vm=this;
-			// vm.AJAX("c/audit/automaticDetails",{"orderId":vm.auditData.orderId},function(data){
-			// 	var list_item1= data.data;
-			// 	layer.open({
-			// 		content:`<ul class="f-scroll-lt lay-details o-fl-w">
-			// 		<li class="clr"><div class="fl">正面与手持对比相似度：</div><div class="fright">${list_item1.front_hand_image_similarity}%</div></li>
-			// 		<li class="clr"><div class="fl">正面与第三方对比相似度：</div><div class="fright">${list_item1.front_image_similarity}%</div></li>
-			// 		<li class="clr"><div class="fl">手持与第三方相似度：</div><div class="fright">${list_item1.hand_image_similarity}%</div></li>
-			// 		<li class="clr"><div class="fl">活体识别照相似度：</div><div class="fright">${list_item1.living_image_similarity}%</div></li>
-			// 		<li class="clr"><div class="fl">年龄校验结果：</div><div class="fright">${
-			// 			list_item1.age_check==1?'<span class="fCGreen">成功</span>':
-			// 			list_item1.age_check==2?'<span class="fCRed">失败</span>':
-			// 			list_item1.age_check==3?'<span class="fCYellow">未定</span>':	'--'
-			// 		}</div></li>
-			// 		<li class="clr"><div class="fl">地址校验结果：</div><div class="fright">${
-			// 			list_item1.address_check==1?'<span class="fCGreen">成功</span>':
-			// 			list_item1.address_check==2?'<span class="fCRed">失败</span>':
-			// 			list_item1.address_check==3?'<span class="fCYellow">未定</span>':	'--'
-			// 		}</div></li>
-			// 		<li class="clr"><div class="fl">身份证有效期校验结果：</div><div class="fright">${
-			// 			list_item1.period_check==1?'<span class="fCGreen">成功</span>':
-			// 			list_item1.period_check==2?'<span class="fCRed">失败</span>':
-			// 			list_item1.period_check==3?'<span class="fCYellow">未定</span>':	'--'
-			// 		}</div></li>
-			// 		<li class="clr"><div class="fl">身份证号与正面OCR匹配结果：</div><div class="fright">${
-			// 			list_item1.ocr_id_card_no_check==1?'<span class="fCGreen">成功</span>':
-			// 			list_item1.ocr_id_card_no_check==2?'<span class="fCRed">失败</span>':
-			// 			list_item1.ocr_id_card_no_check==3?'<span class="fCYellow">未定</span>':	'--'
-			// 		}</div></li>
-			// 		<li class="clr"><div class="fl">有效期与背面OCR匹配结果：</div><div class="fright">${
-			// 			list_item1.ocr_id_card_period_check==1?'<span class="fCGreen">成功</span>':
-			// 			list_item1.ocr_id_card_period_check==2?'<span class="fCRed">失败</span>':
-			// 			list_item1.ocr_id_card_period_check==3?'<span class="fCYellow">未定</span>':	'--'
-			// 		}</div></li>
-			// 		<li class="clr"><div class="fl">上传身份证号与OCR对比相似度：</div><div class="fright">${list_item1.id_card_no_similarity}%</div></li>
-			// 		<li class="clr"><div class="fl">上传姓名与OCR对比相似度：</div><div class="fright">${list_item1.id_card_name_similarity}%</div></li>
-			// 		<li class="clr"><div class="fl">上传地址与OCR对比相似度：</div><div class="fright">${list_item1.id_card_address_similarity}%</div></li>
-			// 		<li class="clr"><div class="fl">上传有效期与OCR对比相似度：</div><div class="fright">${list_item1.id_card_period_similarity}%</div></li>
-			// 		<li class="clr"><div class="fl">国政通校验结果：</div><div class="fright">${
-  			// 			list_item1.gzt_check==1?'<span class="fCGreen">成功</span>':
-			// 			list_item1.gzt_check==2?'<span class="fCRed">失败</span>':
- 			// 			list_item1.gzt_check==3?'<span class="fCYellow">未定</span>':'--'
-  			// 		}</div></li>			
-  			// 		<li class="clr"><div class="fl">审核结果：</div><div class="fright">${
-  			// 			list_item1.result==1?'<span class="fCGreen">成功</span>':
-  			// 			list_item1.result==2?'<span class="fCRed">拒绝</span>':
-  			// 			list_item1.result==3?'<span class="fCYellow">转人工审核</span>':	'--'
-  			// 		}</div></li>
-			// 		<li class="clr"><div class="fl">审核结果描述：</div><div class="fright">${list_item1.desc}</div></li>
-			// 		<li class="clr"><div class="fl">拒绝理由：</div><div class="fright">${
-			// 			list_item1.code==1018?'<span class="fCGreen">远特开卡超过上限</span>':
-			// 			list_item1.code==1019?'<span class="fCRed">联通开卡超过上限</span>':'--'
-			// 		}</div></li></ul>`,
-			// 		type:0,
-			// 		title:'自动审核详情',
-			// 		btn:0,
-			// 		style:'width:auto;'
-			// 	});
-            // });
+			
+			const transfer = (val)=>{
+                return val == 0 ? '未执行' : val == -1 ? '不适用' : val + '%';
+            }
+
+            const transfer_result = (val)=>{
+                let name = '', style = 'fCGrey';
+
+                switch(parseInt(val)){
+                    case 0:
+                        name = '未执行';
+                        style = 'fCRed';
+                        break;
+                    case -1:
+                        name = '不适用';
+                        break;
+                    case 1:
+                        name = '成功';
+                        style = 'fCGreen';
+                        break;
+                    case 2:
+                        name = '失败';
+                        style = 'fCRed';
+                        break;
+                    case 3:
+                        name = '未定';
+                        style = 'fCYellow';
+                        break;
+                    default:
+                        name = '--';
+                        break;
+                }
+                return {name:name,style:style};
+            }
+
             reqCommonMethod({"orderId":vm.auditData.orderId},function(){vm.off.isLoad=false;},"ym-ecs/c/audit/automaticDetails")            
             .then((data)=>{
                 var list_item1= data.data;
 				layer.open({
 					content:`<ul class="f-scroll-lt lay-details o-fl-w">
-					<li class="clr"><div class="fl">正面与手持对比相似度：</div><div class="fright">${list_item1.front_hand_image_similarity}%</div></li>
-					<li class="clr"><div class="fl">正面与第三方对比相似度：</div><div class="fright">${list_item1.front_image_similarity}%</div></li>
-					<li class="clr"><div class="fl">手持与第三方相似度：</div><div class="fright">${list_item1.hand_image_similarity}%</div></li>
-					<li class="clr"><div class="fl">活体识别照相似度：</div><div class="fright">${list_item1.living_image_similarity}%</div></li>
-					<li class="clr"><div class="fl">年龄校验结果：</div><div class="fright">${
-						list_item1.age_check==1?'<span class="fCGreen">成功</span>':
-						list_item1.age_check==2?'<span class="fCRed">失败</span>':
-						list_item1.age_check==3?'<span class="fCYellow">未定</span>':	'--'
+					<li class="clr"><div class="fl">正面与手持对比相似度：</div><div class="fright">${transfer(list_item1.front_hand_image_similarity)}</div></li>
+					<li class="clr"><div class="fl">正面与第三方对比相似度：</div><div class="fright">${transfer(list_item1.front_image_similarity)}</div></li>
+					<li class="clr"><div class="fl">手持与第三方相似度：</div><div class="fright">${transfer(list_item1.hand_image_similarity)}</div></li>
+					<li class="clr"><div class="fl">活体识别照相似度：</div><div class="fright">${transfer(list_item1.living_image_similarity)}</div></li>
+					<li class="clr"><div class="fl">年龄校验结果：</div><div class="fright ${transfer_result(list_item1.age_check).style}">${
+                        transfer_result(list_item1.age_check).name
 					}</div></li>
-					<li class="clr"><div class="fl">地址校验结果：</div><div class="fright">${
-						list_item1.address_check==1?'<span class="fCGreen">成功</span>':
-						list_item1.address_check==2?'<span class="fCRed">失败</span>':
-						list_item1.address_check==3?'<span class="fCYellow">未定</span>':	'--'
+					<li class="clr"><div class="fl">地址校验结果：</div><div class="fright ${transfer_result(list_item1.address_check).style}">${
+                        transfer_result(list_item1.address_check).name
 					}</div></li>
-					<li class="clr"><div class="fl">身份证有效期校验结果：</div><div class="fright">${
-						list_item1.period_check==1?'<span class="fCGreen">成功</span>':
-						list_item1.period_check==2?'<span class="fCRed">失败</span>':
-						list_item1.period_check==3?'<span class="fCYellow">未定</span>':	'--'
+					<li class="clr"><div class="fl">身份证有效期校验结果：</div><div class="fright ${transfer_result(list_item1.period_check).style}">${
+                        transfer_result(list_item1.period_check).name
 					}</div></li>
-					<li class="clr"><div class="fl">身份证号与正面OCR匹配结果：</div><div class="fright">${
-						list_item1.ocr_id_card_no_check==1?'<span class="fCGreen">成功</span>':
-						list_item1.ocr_id_card_no_check==2?'<span class="fCRed">失败</span>':
-						list_item1.ocr_id_card_no_check==3?'<span class="fCYellow">未定</span>':	'--'
+					<li class="clr"><div class="fl">身份证号与正面OCR匹配结果：</div><div class="fright ${transfer_result(list_item1.ocr_id_card_no_check).style}">${
+                        transfer_result(list_item1.ocr_id_card_no_check).name
 					}</div></li>
-					<li class="clr"><div class="fl">有效期与背面OCR匹配结果：</div><div class="fright">${
-						list_item1.ocr_id_card_period_check==1?'<span class="fCGreen">成功</span>':
-						list_item1.ocr_id_card_period_check==2?'<span class="fCRed">失败</span>':
-						list_item1.ocr_id_card_period_check==3?'<span class="fCYellow">未定</span>':	'--'
+					<li class="clr"><div class="fl">有效期与背面OCR匹配结果：</div><div class="fright ${transfer_result(list_item1.ocr_id_card_period_check).style}">${
+                        transfer_result(list_item1.ocr_id_card_period_check).name
 					}</div></li>
-					<li class="clr"><div class="fl">上传身份证号与OCR对比相似度：</div><div class="fright">${list_item1.id_card_no_similarity}%</div></li>
-					<li class="clr"><div class="fl">上传姓名与OCR对比相似度：</div><div class="fright">${list_item1.id_card_name_similarity}%</div></li>
-					<li class="clr"><div class="fl">上传地址与OCR对比相似度：</div><div class="fright">${list_item1.id_card_address_similarity}%</div></li>
-					<li class="clr"><div class="fl">上传有效期与OCR对比相似度：</div><div class="fright">${list_item1.id_card_period_similarity}%</div></li>
-					<li class="clr"><div class="fl">国政通校验结果：</div><div class="fright">${
-  						list_item1.gzt_check==1?'<span class="fCGreen">成功</span>':
-						list_item1.gzt_check==2?'<span class="fCRed">失败</span>':
- 						list_item1.gzt_check==3?'<span class="fCYellow">未定</span>':'--'
+					<li class="clr"><div class="fl">上传身份证号与OCR对比相似度：</div><div class="fright">${transfer(list_item1.id_card_no_similarity)}</div></li>
+					<li class="clr"><div class="fl">上传姓名与OCR对比相似度：</div><div class="fright">${transfer(list_item1.id_card_name_similarity)}</div></li>
+					<li class="clr"><div class="fl">上传地址与OCR对比相似度：</div><div class="fright">${transfer(list_item1.id_card_address_similarity)}</div></li>
+					<li class="clr"><div class="fl">上传有效期与OCR对比相似度：</div><div class="fright">${transfer(list_item1.id_card_period_similarity)}</div></li>
+					<li class="clr"><div class="fl">国政通校验结果：</div><div class="fright ${transfer_result(list_item1.gzt_check).style}">${
+                        transfer_result(list_item1.gzt_check).name
   					}</div></li>			
   					<li class="clr"><div class="fl">审核结果：</div><div class="fright">${
   						list_item1.result==1?'<span class="fCGreen">成功</span>':
@@ -427,7 +392,7 @@ export default{
 					title:'自动审核详情',
 					btn:0,
 					style:'width:auto;'
-                });
+				});
                 vm.off.isLoad=false;
             }).catch(error=>errorDeal(error)); 
 		},
