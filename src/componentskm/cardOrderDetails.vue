@@ -238,12 +238,6 @@
                                             <span v-show="source==7">{{ userMoreInfo.devInfo }}</span>
                                         </td>
                                     </tr>
-                                    <!-- <tr><td>活体识别名称：</td>
-									<td>
-										<span v-show="source!=7">{{ list.livingImgSoftWareName }}</span>
-										<span v-show="source==7">{{ userMoreInfo.livingImgSoftWareName }}</span>
-									</td>
-								</tr> -->
                                     <tr v-show="source!=7&&source!=8">
                                         <td>识别模式：</td>
                                         <td>{{ list.openMode }}</td>

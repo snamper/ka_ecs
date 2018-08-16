@@ -3,262 +3,260 @@
   @import "../assets/km/css/home_ym.css";
 </style>
 <template>
-  <div id="home" :class={active:off.headMenu}  ref="psec">
-  	<header class="g-head">
-		<table cellspacing="0">
-			<tbody>
-				<tr>
-					<td>
-						<a class="m-navside-show" @click="headMenu"><i class="u-icon-menu"></i></a>
-						<span v-if="crumb[1].name" class="f-inline-block m-crumb">
-							<a>{{crumb[0].name}}</a>
-							<a class="u-icon-right mid"></a>
-							<a v-show="!crumb[1].href">{{crumb[1].name}}</a>
-							<router-link v-show="crumb[1].href" :to="crumb[1].href">{{crumb[1].name}}</router-link>
-							<span v-show="crumb[2].name">
-								<a class="u-icon-right mid"></a>
-								<a>{{crumb[2].name}}</a>
-							</span>
-						</span>
-					</td>
-					<td class="f-tar">
-						<div class="m-user-online">Online <b>{{onlineTime}}</b></div>
-						<div class="m-info-user"><i></i><span>{{userInfo.customerName}}</span></div>
-						<div class="m-menu-user">
-							<a @click="userMenu"><i class="u-icon-menu2"></i></a>
-							<ul class="m-user-dropdown f-tas" :class="{active:off.userMenu}">
-								<li>
-									<a class="user clr">
-										<div class="logo fl"></div>
-										<div class="info f-tal"><div class="author">{{userInfo.customerName}}</div><time class="online">online：<b>{{onlineTime}}</b></time></div>
-									</a>
-								</li>
-								<li><a @click="clickSignOut">退出</a></li>
-							</ul>
-						</div>
+    <div id="home" :class={active:off.headMenu}  ref="psec">
+        <header class="g-head">
+            <table cellspacing="0">
+                <tbody>
+                    <tr>
+                        <td>
+                            <a class="m-navside-show" @click="headMenu"><i class="u-icon-menu"></i></a>
+                            <span v-if="crumb[1].name" class="f-inline-block m-crumb">
+                                <a>{{crumb[0].name}}</a>
+                                <a class="u-icon-right mid"></a>
+                                <a v-show="!crumb[1].href">{{crumb[1].name}}</a>
+                                <router-link v-show="crumb[1].href" :to="crumb[1].href">{{crumb[1].name}}</router-link>
+                                <span v-show="crumb[2].name">
+                                    <a class="u-icon-right mid"></a>
+                                    <a>{{crumb[2].name}}</a>
+                                </span>
+                            </span>
+                        </td>
+                        <td class="f-tar">
+                            <div class="m-user-online">Online <b>{{onlineTime}}</b></div>
+                            <div class="m-info-user"><i></i><span>{{userInfo.customerName}}</span></div>
+                            <div class="m-menu-user">
+                                <a @click="userMenu"><i class="u-icon-menu2"></i></a>
+                                <ul class="m-user-dropdown f-tas" :class="{active:off.userMenu}">
+                                    <li>
+                                        <a class="user clr">
+                                            <div class="logo fl"></div>
+                                            <div class="info f-tal"><div class="author">{{userInfo.customerName}}</div><time class="online">online：<b>{{onlineTime}}</b></time></div>
+                                        </a>
+                                    </li>
+                                    <li><a @click="clickSignOut">退出</a></li>
+                                </ul>
+                            </div>
 
-					</td>
-				</tr>
-			</tbody>
-		</table>
-  	</header>
-  	<aside class="g-side f-scroll-lt">
-		<nav class="g-side-nav">
-			<header class="g-side-head"><img src="../assets/km/images/logo_page.png" alt="titleLogo"></header>
-            <ul class="m-mainCatalog">
-                <li :class="{'active':isCheckk}" @click="isCheck('k')" v-if="!off.powerKmHidden">
-                    <span>卡盟</span>
-					<b class="animated m-lighter" :class="{bounce:offCountChange}" v-if="countTotal||opinionCount[0]">{{countTotal+opinionCount[0]}}</b> 
-					<!-- <b class="animated m-lighter" :class="{bounce:offCountChange}" v-if="off.powerkm0||off.powerkm4||off.powerkm5||off.powerkm6">{{countTotal}}</b>  -->
-					<!-- <b class="animated m-lighter" :class="{bounce:offCountChange}" v-if="off.powerkm11">{{opinionCount[0]}}</b>  -->
-				</li>
-				<li :class="{'active':isChecky}" @click="isCheck('y')" v-if="!off.powerYmHidden">
-                    <span>远盟</span>
-					<b class="animated m-lighter" :class="{bounce:offCountChange}" v-if="off.power0||off.power1" v-show="auditCountYm.readyCard+auditCountYm.whiteCard+auditCountYm.newChangeCard+auditCountYm.realNameCollection+auditCountYm.fill">{{auditCountYm.readyCard+auditCountYm.whiteCard+auditCountYm.newChangeCard+auditCountYm.realNameCollection+auditCountYm.fill}}</b>
-				</li>
-            </ul>
-			<ul class="g-side-ul" :class="{'hide':!isCheckk}" v-if="!off.powerKmHidden">
-				<li :class="{active:crumb[0].name=='数据统计'}">
-					<b></b>
-					<router-link to="/homek/dashboard">
-						<div>
-							<i class="u-icon-home"></i>
-							<span>数据面板</span>
-						</div>
-					</router-link>
-				</li>
-				<li v-if="off.powerKm_sh_sh||off.powerKm_kk_sh" :class="{active:crumb[0].name=='订单审核'}">
-					<b></b>
-					<router-link to="/homek/audit">
-						<div>
-							<i class="u-icon-audit"></i>
-							<span>订单审核</span>
-							<b class="animated m-lighter" :class="{bounce:offCountChange}" v-show="countTotal">{{countTotal}}</b>
-						</div>
-					</router-link>
-					<ul class="g-side-subul nav1">
-						<li v-if="off.powerKm_kk_sh">
-							<router-link :to="{name:'audit_card',params:{source:'realtime'}}">
-								<!-- <b></b>业务实时审核<span v-if="auditCount.opencard+auditCount.transfer+auditCount.realNameCollection+auditCount.realNameRechCard+auditCount.sdkRealTime!=0">{{auditCount.opencard+auditCount.transfer+auditCount.realNameCollection+auditCount.realNameRechCard+auditCount.sdkRealTime}}</span> -->
-                                <b></b>业务实时审核<span v-if="auditCount.opencard+auditCount.transfer+auditCount.realNameCollection+auditCount.tfOpenCardReal+auditCount.sdkRealTime+auditCount.realNameRechCard!=0">{{auditCount.opencard+auditCount.transfer+auditCount.realNameCollection+auditCount.tfOpenCardReal+auditCount.sdkRealTime+auditCount.realNameRechCard}}</span>
-                            </router-link>
-						</li>
-						<li v-if="off.powerKm_kk_sh">
-							<router-link :to="{name:'audit_card',params:{source:'afterwards'}}">
-								<b></b>业务事后审核<span v-if="auditCount.opencardAfterwards+auditCount.tfOpenCard!=0">{{auditCount.opencardAfterwards+auditCount.tfOpenCard}}</span>
-							</router-link>
-						</li>
-						<li v-if="off.powerKm_sh_sh">
-							<router-link :to="{name:'businessPowerAudit',params:{type:'auditing'}}">
-								<b></b>售卡范围审核<span v-if="auditCount.attribute!=0">{{auditCount.attribute}}</span>
-							</router-link>
-						</li>
-						<li v-if="off.powerKm_sh_sh">
-							<router-link :to="{name:'registMerchantAudit',params:{type:'realtime'}}">
-								<b></b>激活商户实时<span v-if="auditCount.registerMerchantRealTime!=0">{{auditCount.registerMerchantRealTime}}</span>
-							</router-link>
-						</li>
-						<li v-if="off.powerKm_sh_sh">
-							<router-link :to="{name:'registMerchantAudit',params:{type:'afterwards'}}">
-								<b></b>激活商户事后<span v-if="auditCount.registerMerchantAfter!=0">{{auditCount.registerMerchantAfter}}</span>
-							</router-link>
-						</li>
-                        <!-- <li v-if="userInfo.isadmin.indexOf('6')>-1||userInfo.isadmin.indexOf('5')>-1||userInfo.isadmin.indexOf('1')>-1">
-							<router-link :to="{name:'applySellArea'}">
-								<b></b>申请区域审核<span v-if="auditCount.attribute!=0">{{auditCount.attribute}}</span>
-							</router-link>
-						</li> -->
-					</ul>
-				</li>
-				<li v-if="off.powerKm_kk_cx||off.powerKm_sh_cx" :class="{active:crumb[0].name=='订单查询'}">
-					<b></b>
-					<router-link to="/homek/orderSearch">
-						<div>
-							<i class="u-icon-search"></i>
-							<span>订单查询</span>
-						</div>
-					</router-link>
-					<ul class="g-side-subul nav2">
-						<li v-if="off.powerKm_kk_cx"><router-link to="/homek/orderSearch/card"><b></b>业务订单</router-link></li>
-						<li v-if="off.powerKm_kk_cx"><router-link to="/homek/orderSearch/recharge"><b></b>充值订单</router-link></li>
-						<li v-if="off.powerKm_kk_cx"><router-link to="/homek/orderSearch/onlineHall"><b></b>网厅订单</router-link></li>
-						<li v-if="off.powerKm_sh_cx"><router-link :to="{name:'businessPowerSearch',params:{type:'audited'}}"><b></b>售卡范围</router-link></li>
-						<li v-if="off.powerKm_sh_cx"><router-link :to="{name:'registMerchantSearch',params:{type:'search'}}"><b></b>激活商户</router-link></li>
-						<li v-if="off.powerKm_kk_cx"><router-link to="/homek/orderSearch/reserve"><b></b>预占号码</router-link></li>
-						<li v-if="true"><router-link :to="{name:'makeCard',params:{val:'null'}}"><b></b>制卡订单</router-link></li>
-						<li v-if="true"><router-link :to="{name:'flowCard',params:{val:'null'}}"><b></b>流转订单</router-link></li>
-						<!-- <li><router-link to="/home/orderSearch/busCard"><b></b>公交一卡通</router-link></li> -->
-					</ul>
-				</li>
-				<li :class="{active:crumb[0].name=='资源查询'}" v-if="off.powerKm_sh_cx">
-					<b></b>
-					<router-link to="/homek/resource">
-						<div>
-							<i class="u-icon-searchResource"></i>
-							<span>资源查询</span>
-						</div>
-					</router-link>
-					<ul class="g-side-subul nav3">
-						<li v-if="off.powerKm_sh_cx"><router-link :to="{name:'merchant',params:{val:'null'}}"><b></b>商户查询</router-link></li>
-						<li v-if="off.powerKm_sh_cx"><router-link :to="{name:'device',params:{val:'null'}}"><b></b>设备查询</router-link></li>
-						<li v-if="off.powerKm_sh_cx"><router-link :to="{name:'promoter',params:{val:'null'}}"><b></b>推广方查询</router-link></li>
-						<li v-if="true"><router-link :to="{name:'ordinaryExclusive',params:{val:'null'}}"><b></b>大众号查询</router-link></li>
-						<li v-if="true"><router-link :to="{name:'exclusive',params:{val:'null'}}"><b></b>专营号查询</router-link></li>
-						<li v-if="true"><router-link :to="{name:'specialExclusive',params:{val:'null'}}"><b></b>商户专营号查询</router-link></li>
-						<!-- <li v-if="off.powerKm_sh_cx"><router-link :to="{name:'exclusiveNumber',params:{val:'null'}}"><b></b>专营号查询</router-link></li> -->
-					</ul>
-				</li>
-				<li :class="{active:crumb[0].name=='统计报表'}" v-if="off.powerKm_bb_cx">
-					<b></b>
-					<router-link to="/homek/statistics">
-						<div>
-							<i class="u-icon-statistics"></i>
-							<span>统计报表</span>
-						</div>
-					</router-link>
-					<ul class="g-side-subul nav4">
-						<li><router-link to="/homek/statistics/cardOrder"><b></b>开卡统计下载</router-link></li>
-						<li><router-link :to="{name:'softwareUseTimes',params:{type:'idCard'}}"><b></b>身份证识别统计</router-link></li>
-						<li><router-link :to="{name:'softwareUseTimes',params:{type:'faceConfirm'}}"><b></b>活体识别统计</router-link></li>
-						<li><router-link :to="{name:'softwareUseTimes',params:{type:'writeCard'}}"><b></b>写卡记录统计</router-link></li>
-					</ul>
-				</li>
-				<li :class="{active:crumb[0].name=='意见反馈'}" v-if="off.powerKm_yjfk_cx">
-					<b></b>
-					<router-link to="/homek/opinion">
-						<div>
-							<i class="u-icon-opinion"></i>
-							<span>意见反馈</span>
-							<b class="animated m-lighter" :class="{bounce:offCountChange}" v-show="opinionCount[0]">{{opinionCount[0]}}</b>
-						</div>
-					</router-link>
-				</li>
-				<li :class="{active:crumb[0].name=='更多功能'}">
-					<b></b>
-					<router-link to="/homek/more">
-						<div>
-							<i class="u-icon-morefn"></i>
-							<span>更多功能</span>
-						</div>
-					</router-link>
-				</li>
-                <li v-if="false" :class="{active:crumb[0].name=='实名资源库'}">
-					<b></b>
-					<router-link to="/homek/realNameResource">
-						<div>
-							<i class="u-icon-morefn"></i>
-							<span>实名资源库</span>
-						</div>
-					</router-link>
-				</li>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </header>
+        <aside class="g-side f-scroll-lt">
+            <nav class="g-side-nav">
+                <header class="g-side-head"><img src="../assets/km/images/logo_page.png" alt="titleLogo"></header>
+                <ul class="m-mainCatalog">
+                    <li :class="{'active':isCheckk}" @click="isCheck('k')" v-if="!off.powerKmHidden">
+                        <span>卡盟</span>
+                        <b class="animated m-lighter" :class="{bounce:offCountChange}" v-if="countTotal||opinionCount[0]">{{countTotal+opinionCount[0]}}</b> 
+                        <!-- <b class="animated m-lighter" :class="{bounce:offCountChange}" v-if="off.powerkm0||off.powerkm4||off.powerkm5||off.powerkm6">{{countTotal}}</b>  -->
+                        <!-- <b class="animated m-lighter" :class="{bounce:offCountChange}" v-if="off.powerkm11">{{opinionCount[0]}}</b>  -->
+                    </li>
+                    <li :class="{'active':isChecky}" @click="isCheck('y')" v-if="!off.powerYmHidden">
+                        <span>远盟</span>
+                        <b class="animated m-lighter" :class="{bounce:offCountChange}" v-if="off.power0||off.power1" v-show="auditCountYm.readyCard+auditCountYm.whiteCard+auditCountYm.newChangeCard+auditCountYm.realNameCollection+auditCountYm.fill">{{auditCountYm.readyCard+auditCountYm.whiteCard+auditCountYm.newChangeCard+auditCountYm.realNameCollection+auditCountYm.fill}}</b>
+                    </li>
+                </ul>
+                <ul class="g-side-ul" :class="{'hide':!isCheckk}" v-if="!off.powerKmHidden">
+                    <li :class="{active:crumb[0].name=='数据统计'}">
+                        <b></b>
+                        <router-link to="/homek/dashboard">
+                            <div>
+                                <i class="u-icon-home"></i>
+                                <span>数据面板</span>
+                            </div>
+                        </router-link>
+                    </li>
+                    <li v-if="off.powerKm_sh_sh||off.powerKm_kk_sh" :class="{active:crumb[0].name=='订单审核'}">
+                        <b></b>
+                        <router-link to="/homek/audit">
+                            <div>
+                                <i class="u-icon-audit"></i>
+                                <span>订单审核</span>
+                                <b class="animated m-lighter" :class="{bounce:offCountChange}" v-show="countTotal">{{countTotal}}</b>
+                            </div>
+                        </router-link>
+                        <ul class="g-side-subul nav1">
+                            <li v-if="off.powerKm_kk_sh">
+                                <router-link :to="{name:'audit_card',params:{source:'realtime'}}">
+                                    <!-- <b></b>业务实时审核<span v-if="auditCount.opencard+auditCount.transfer+auditCount.realNameCollection+auditCount.realNameRechCard+auditCount.sdkRealTime!=0">{{auditCount.opencard+auditCount.transfer+auditCount.realNameCollection+auditCount.realNameRechCard+auditCount.sdkRealTime}}</span> -->
+                                    <b></b>业务实时审核<span v-if="auditCount.opencard+auditCount.transfer+auditCount.realNameCollection+auditCount.tfOpenCardReal+auditCount.sdkRealTime+auditCount.realNameRechCard!=0">{{auditCount.opencard+auditCount.transfer+auditCount.realNameCollection+auditCount.tfOpenCardReal+auditCount.sdkRealTime+auditCount.realNameRechCard}}</span>
+                                </router-link>
+                            </li>
+                            <li v-if="off.powerKm_kk_sh">
+                                <router-link :to="{name:'audit_card',params:{source:'afterwards'}}">
+                                    <b></b>业务事后审核<span v-if="auditCount.opencardAfterwards+auditCount.tfOpenCard!=0">{{auditCount.opencardAfterwards+auditCount.tfOpenCard}}</span>
+                                </router-link>
+                            </li>
+                            <li v-if="off.powerKm_sh_sh">
+                                <router-link :to="{name:'businessPowerAudit',params:{type:'auditing'}}">
+                                    <b></b>售卡范围审核<span v-if="auditCount.attribute!=0">{{auditCount.attribute}}</span>
+                                </router-link>
+                            </li>
+                            <li v-if="off.powerKm_sh_sh">
+                                <router-link :to="{name:'registMerchantAudit',params:{type:'realtime'}}">
+                                    <b></b>激活商户实时<span v-if="auditCount.registerMerchantRealTime!=0">{{auditCount.registerMerchantRealTime}}</span>
+                                </router-link>
+                            </li>
+                            <li v-if="off.powerKm_sh_sh">
+                                <router-link :to="{name:'registMerchantAudit',params:{type:'afterwards'}}">
+                                    <b></b>激活商户事后<span v-if="auditCount.registerMerchantAfter!=0">{{auditCount.registerMerchantAfter}}</span>
+                                </router-link>
+                            </li>
+                            <!-- <li v-if="userInfo.isadmin.indexOf('6')>-1||userInfo.isadmin.indexOf('5')>-1||userInfo.isadmin.indexOf('1')>-1">
+                                <router-link :to="{name:'applySellArea'}">
+                                    <b></b>申请区域审核<span v-if="auditCount.attribute!=0">{{auditCount.attribute}}</span>
+                                </router-link>
+                            </li> -->
+                        </ul>
+                    </li>
+                    <li v-if="off.powerKm_kk_cx||off.powerKm_sh_cx" :class="{active:crumb[0].name=='订单查询'}">
+                        <b></b>
+                        <router-link to="/homek/orderSearch">
+                            <div>
+                                <i class="u-icon-search"></i>
+                                <span>订单查询</span>
+                            </div>
+                        </router-link>
+                        <ul class="g-side-subul nav2">
+                            <li v-if="off.powerKm_kk_cx"><router-link to="/homek/orderSearch/card"><b></b>业务订单</router-link></li>
+                            <li v-if="off.powerKm_kk_cx"><router-link to="/homek/orderSearch/recharge"><b></b>充值订单</router-link></li>
+                            <li v-if="off.powerKm_kk_cx"><router-link to="/homek/orderSearch/onlineHall"><b></b>网厅订单</router-link></li>
+                            <li v-if="off.powerKm_sh_cx"><router-link :to="{name:'businessPowerSearch',params:{type:'audited'}}"><b></b>售卡范围</router-link></li>
+                            <li v-if="off.powerKm_sh_cx"><router-link :to="{name:'registMerchantSearch',params:{type:'search'}}"><b></b>激活商户</router-link></li>
+                            <li v-if="off.powerKm_kk_cx"><router-link to="/homek/orderSearch/reserve"><b></b>预占号码</router-link></li>
+                            <li v-if="true"><router-link :to="{name:'makeCard',params:{val:'null'}}"><b></b>制卡订单</router-link></li>
+                            <li v-if="true"><router-link :to="{name:'flowCard',params:{val:'null'}}"><b></b>流转订单</router-link></li>
+                            <!-- <li><router-link to="/home/orderSearch/busCard"><b></b>公交一卡通</router-link></li> -->
+                        </ul>
+                    </li>
+                    <li :class="{active:crumb[0].name=='资源查询'}" v-if="off.powerKm_sh_cx">
+                        <b></b>
+                        <router-link to="/homek/resource">
+                            <div>
+                                <i class="u-icon-searchResource"></i>
+                                <span>资源查询</span>
+                            </div>
+                        </router-link>
+                        <ul class="g-side-subul nav3">
+                            <li v-if="off.powerKm_sh_cx"><router-link :to="{name:'merchant',params:{val:'null'}}"><b></b>商户查询</router-link></li>
+                            <li v-if="off.powerKm_sh_cx"><router-link :to="{name:'device',params:{val:'null'}}"><b></b>设备查询</router-link></li>
+                            <li v-if="off.powerKm_sh_cx"><router-link :to="{name:'promoter',params:{val:'null'}}"><b></b>推广方查询</router-link></li>
+                            <li v-if="true"><router-link :to="{name:'ordinaryExclusive',params:{val:'null'}}"><b></b>大众号查询</router-link></li>
+                            <li v-if="true"><router-link :to="{name:'exclusive',params:{val:'null'}}"><b></b>专营号查询</router-link></li>
+                            <li v-if="true"><router-link :to="{name:'specialExclusive',params:{val:'null'}}"><b></b>商户专营号查询</router-link></li>
+                            <!-- <li v-if="off.powerKm_sh_cx"><router-link :to="{name:'exclusiveNumber',params:{val:'null'}}"><b></b>专营号查询</router-link></li> -->
+                        </ul>
+                    </li>
+                    <li :class="{active:crumb[0].name=='统计报表'}" v-if="off.powerKm_bb_cx">
+                        <b></b>
+                        <router-link to="/homek/statistics">
+                            <div>
+                                <i class="u-icon-statistics"></i>
+                                <span>统计报表</span>
+                            </div>
+                        </router-link>
+                        <ul class="g-side-subul nav4">
+                            <li><router-link to="/homek/statistics/cardOrder"><b></b>开卡统计下载</router-link></li>
+                            <li><router-link :to="{name:'softwareUseTimes',params:{type:'idCard'}}"><b></b>身份证识别统计</router-link></li>
+                            <li><router-link :to="{name:'softwareUseTimes',params:{type:'faceConfirm'}}"><b></b>活体识别统计</router-link></li>
+                            <li><router-link :to="{name:'softwareUseTimes',params:{type:'writeCard'}}"><b></b>写卡记录统计</router-link></li>
+                        </ul>
+                    </li>
+                    <li :class="{active:crumb[0].name=='意见反馈'}" v-if="off.powerKm_yjfk_cx">
+                        <b></b>
+                        <router-link to="/homek/opinion">
+                            <div>
+                                <i class="u-icon-opinion"></i>
+                                <span>意见反馈</span>
+                                <b class="animated m-lighter" :class="{bounce:offCountChange}" v-show="opinionCount[0]">{{opinionCount[0]}}</b>
+                            </div>
+                        </router-link>
+                    </li>
+                    <li :class="{active:crumb[0].name=='更多功能'}">
+                        <b></b>
+                        <router-link to="/homek/more">
+                            <div>
+                                <i class="u-icon-morefn"></i>
+                                <span>更多功能</span>
+                            </div>
+                        </router-link>
+                    </li>
+                    <li v-if="false" :class="{active:crumb[0].name=='实名资源库'}">
+                        <b></b>
+                        <router-link to="/homek/realNameResource">
+                            <div>
+                                <i class="u-icon-morefn"></i>
+                                <span>实名资源库</span>
+                            </div>
+                        </router-link>
+                    </li>
 
-				<!-- <li :class="{active:$route.path.indexOf('/home/fence')>-1}">
-					<b></b>
-					<router-link to="/home/fence">
-						<div>
-							<i class="u-icon-fence"></i>
-							<span>区域管理</span>
-						</div>
-					</router-link>
-				</li> -->
-			</ul>
+                    <!-- <li :class="{active:$route.path.indexOf('/home/fence')>-1}">
+                        <b></b>
+                        <router-link to="/home/fence">
+                            <div>
+                                <i class="u-icon-fence"></i>
+                                <span>区域管理</span>
+                            </div>
+                        </router-link>
+                    </li> -->
+                </ul>
 
-            <!-- 远盟目录 -->
-            <ul class="g-side-ul-ym" :class="{'hide':!isChecky}" v-if="!off.powerYmHidden">
-				<li :class="{active:$route.path.indexOf('/homey/audit')>-1||$route.path=='/homey/wsim'}" v-if="off.power0||off.power1">
-					<b></b>
-					<router-link to="/homey/audit/yuanmeng"><div><i class="u-icon-audit"></i><span>订单审核</span><b class="animated infinite bounce m-lighter" v-show="auditCountYm.readyCard+auditCountYm.whiteCard+auditCountYm.newChangeCard+auditCountYm.realNameCollection+auditCountYm.fill">{{auditCountYm.readyCard+auditCountYm.whiteCard+auditCountYm.newChangeCard+auditCountYm.realNameCollection+auditCountYm.fill}}</b></div></router-link>                                                
-                </li>
-				<li :class="{active:$route.path.indexOf('/homey/search')>-1}" v-if="off.power2||off.power1">
-					<b></b>
-					<router-link to="/homey/search"><div><i class="u-icon-search"></i><span>订单查询</span></div></router-link>
-				</li>
-				<li v-if="off.power1||off.power5" :class="{active:$route.path=='/homey/pointsSearch'||$route.path=='/homey/pointsEx'||$route.path=='/homey/pointsGain'||$route.path=='/homey/pointsManage'}">
-					<b></b>
-					<router-link to="/homey/pointsSearch"><div><i class="u-icon-points"></i><span>积分管理</span></div></router-link>
-					<ul class="g-side-subul" :class="off.power5||off.power1?'Tall':'Talls'">
-						<li><router-link to="/homey/pointsSearch"><b></b>用户积分查询</router-link></li>
-						<li><router-link to="/homey/pointsGain"><b></b>积分获取详情</router-link></li>
-						<li><router-link to="/homey/pointsEx"><b></b>积分兑换详情</router-link></li>
-						<li v-if="off.power5"><router-link to="/homey/pointsManage"><b></b>积分管理</router-link></li>
-					</ul>
-				</li>
-                <li v-if="off.power6||off.power1" :class="{active:$route.path.indexOf('/homey/excelDownload')>-1}">
-					<b></b>
-					<router-link to="/homey/excelDownload"><div><i class="u-icon-downLoad"></i><span>日报excel</span></div></router-link>
-				</li>
-				<li :class="{active:$route.path.indexOf('/homey/illegalSearch')>-1}" v-if="off.power1||off.power2">
-					<b></b>
-					<router-link to="/homey/illegalSearch"><div><i class="u-icon-illegalSearch"></i><span>违规查询</span></div></router-link>
-				</li>
-			</ul>
-		</nav>
-	</aside>
-  	<section class="g-main" id="main">
-  		<transition appear name="fadeInUp">
-			<router-view></router-view>
-		</transition>
-	</section>
-	<footer class="g-foot">
-
-	</footer>
-	<div id="routerLoading">
-      <div class="circle-loader">
-          <div class="circle-line">
-              <div class="circle circle-blue"></div>
-          </div>
-          <div class="circle-line">
-              <div class="circle circle-yellow"></div>
-          </div>
-          <div class="circle-line">
-              <div class="circle circle-red"></div>
-          </div>
-          <div class="circle-line">
-              <div class="circle circle-green"></div>
-          </div>
-      </div>
+                <!-- 远盟目录 -->
+                <ul class="g-side-ul-ym" :class="{'hide':!isChecky}" v-if="!off.powerYmHidden">
+                    <li :class="{active:$route.path.indexOf('/homey/audit')>-1||$route.path=='/homey/wsim'}" v-if="off.power0||off.power1">
+                        <b></b>
+                        <router-link to="/homey/audit/yuanmeng"><div><i class="u-icon-audit"></i><span>订单审核</span><b class="animated infinite bounce m-lighter" v-show="auditCountYm.readyCard+auditCountYm.whiteCard+auditCountYm.newChangeCard+auditCountYm.realNameCollection+auditCountYm.fill">{{auditCountYm.readyCard+auditCountYm.whiteCard+auditCountYm.newChangeCard+auditCountYm.realNameCollection+auditCountYm.fill}}</b></div></router-link>                                                
+                    </li>
+                    <li :class="{active:$route.path.indexOf('/homey/search')>-1}" v-if="off.power2||off.power1">
+                        <b></b>
+                        <router-link to="/homey/search"><div><i class="u-icon-search"></i><span>订单查询</span></div></router-link>
+                    </li>
+                    <li v-if="off.power1||off.power5" :class="{active:$route.path=='/homey/pointsSearch'||$route.path=='/homey/pointsEx'||$route.path=='/homey/pointsGain'||$route.path=='/homey/pointsManage'}">
+                        <b></b>
+                        <router-link to="/homey/pointsSearch"><div><i class="u-icon-points"></i><span>积分管理</span></div></router-link>
+                        <ul class="g-side-subul" :class="off.power5||off.power1?'Tall':'Talls'">
+                            <li><router-link to="/homey/pointsSearch"><b></b>用户积分查询</router-link></li>
+                            <li><router-link to="/homey/pointsGain"><b></b>积分获取详情</router-link></li>
+                            <li><router-link to="/homey/pointsEx"><b></b>积分兑换详情</router-link></li>
+                            <li v-if="off.power5"><router-link to="/homey/pointsManage"><b></b>积分管理</router-link></li>
+                        </ul>
+                    </li>
+                    <li v-if="off.power6||off.power1" :class="{active:$route.path.indexOf('/homey/excelDownload')>-1}">
+                        <b></b>
+                        <router-link to="/homey/excelDownload"><div><i class="u-icon-downLoad"></i><span>日报excel</span></div></router-link>
+                    </li>
+                    <li :class="{active:$route.path.indexOf('/homey/illegalSearch')>-1}" v-if="off.power1||off.power2">
+                        <b></b>
+                        <router-link to="/homey/illegalSearch"><div><i class="u-icon-illegalSearch"></i><span>违规查询</span></div></router-link>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+        <section class="g-main" id="main">
+            <transition appear name="fadeInUp">
+                <router-view></router-view>
+            </transition>
+        </section>
+        <footer class="g-foot"></footer>
+        <div id="routerLoading">
+            <div class="circle-loader">
+                <div class="circle-line">
+                    <div class="circle circle-blue"></div>
+                </div>
+                <div class="circle-line">
+                    <div class="circle circle-yellow"></div>
+                </div>
+                <div class="circle-line">
+                    <div class="circle circle-red"></div>
+                </div>
+                <div class="circle-line">
+                    <div class="circle circle-green"></div>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
 </template>
 <script>
 import {mapState, mapMutations, mapActions} from 'vuex';
@@ -506,8 +504,6 @@ export default{
                 vm.isCheckk=false;
             }
         },
-      
-       
 		userMenu:function(e){//用户菜单show or hide
 			this.off.userMenu?this.off.userMenu=false:this.off.userMenu=true;
 			e.stopPropagation();

@@ -3,9 +3,7 @@
   *@author: thinkmix
   *@date 2017-11-6
 * *-->
-<style scoped>
 
-</style>
 <template>
     <div id="search" :class="{active:off.details}">
         <header class="m-scroll-bar animated infinite" :class="{active:off.isLoad}"></header>
@@ -20,7 +18,7 @@
                         </label>
                         <label class="item" @click="topShiftClick">
                             <input type="radio" v-model="form.source" value="7">
-                            <span class="slider">卡盟SDK</span>
+                            <span class="slider">SDK</span>
                         </label>
                         <label class="item" @click="topShiftClick">
                             <input type="radio" v-model="form.source" value="8">
@@ -590,10 +588,12 @@
 </template>
 <script>
 require("../../../assets/km/js/base64.min.js");
+// require("../../../assets/km/css/search.css");
 import { searchAuditList, reAudit, reqCommonMethod } from "../../../config/service.js";
 import pagination from "../../../componentskm/page.vue";
 import details from "../../../componentskm/cardOrderDetails.vue";
 import { getDateTime, translateData, secondsFormat, getUnixTime, createDownload, setStore, getStore, errorDeal } from "../../../config/utils.js";
+
 export default {
     data() {
         return {

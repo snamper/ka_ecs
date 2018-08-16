@@ -1,5 +1,5 @@
 #details{display: table-cell;padding: 0.15rem;}
-.g-list-box, #details, .g-list-table, .g-inner-table, .g-box{width: 100%; height: 100%;}
+.g-list-box, #details, .g-list-table, .g-inner-table, .g-box{width: 100%; height: auto;}
 .g-list-box, .g-lis-head{position: absolute;}
 .g-box{padding-top: 0.6rem;}
 .g-lis-head{background-color: #fff;width: 100%;padding:0.12rem 0.1rem;box-shadow: 0 0 10px rgba(0,0,0,0.1);border-radius: 4px;}

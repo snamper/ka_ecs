@@ -84,14 +84,14 @@
 					<label><span class="radio"><input type="radio" value="2" v-model="form.auditType"><span></span></span><span class="text">自动审核</span></label>
 				</div>
 			</div>
-			<div class="row clr m-col-2">
-				<div class="dp col-l" style="width:.65rem;margin-left:0">时间区间：</div>
-				<div class="col-r">
-					<span class="m-time-area" @click="to_laydate(1)"><input id="start" v-model="form.startTime" type="text" readonly="readonly"></span>
-					<span class="m-space">一</span>
-					<span class="m-time-area" @click="to_laydate(2)"><input id="end" v-model="form.endTime" type="text" readonly="readonly"></span>
-				</div>
-			</div>
+            <div class="row">
+                <span class="dp">时间区间：</span>
+                <div class="f-inline-block">
+                    <span class="m-time-area">
+                        <input @click="to_laydate(1)" v-model="form.startTime" type="text" readonly="readonly"><input @click="to_laydate(2)" v-model="form.endTime" type="text" readonly="readonly">
+                    </span>
+                </div>
+            </div>
 		</section>
 		<section class="form-c o-no-bgc">
 			<div class="row" :class="{active:form.select==2}">
