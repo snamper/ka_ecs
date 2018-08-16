@@ -72,7 +72,8 @@
                             <tr>
                                 <td>MAC地址：</td>
                                 <td>{{detailsEmpty.mac||'--'}}</td>
-                                
+                                <td></td>
+                                <td></td>
                             </tr>
                         </tbody>
                         <!-- 白卡 -->
