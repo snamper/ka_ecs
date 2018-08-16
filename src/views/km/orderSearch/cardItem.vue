@@ -538,7 +538,7 @@
                                 <span v-if="form.orderType==8">{{translateData(8,todo.statusDetail)}}</span>
                             </td>
                             <td v-if="off.type!=2&&isShowDXYZ==true">
-                                {{translateData(16,todo.safeType)}}
+                                {{translateData(16,todo.safeType)}} <span v-if="todo.safeType">（{{todo.safePhone||'--'}}）</span>
                             </td>
                             <td v-if="off.type!=2">
                                 <a :name="todo.orderId" @click="details" href="javascript:void(0)" class="details">详情</a>
