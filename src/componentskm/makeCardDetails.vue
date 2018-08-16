@@ -193,7 +193,7 @@
                                     <td>{{translateData('money',detailsEmpty.prestore_money)||'--'}}元</td>
                                     <td>短信验证：</td>
                                     <td>
-                                        <span v-if="detailsEmpty.safe_type==1">是（{{detailsEmpty.safe_phone}}）</span>
+                                        <span v-if="detailsEmpty.safe_type==1">是（{{detailsEmpty.safe_phone||'--'}}）</span>
                                         <span v-else-if="detailsEmpty.safe_type==0">否</span>
                                         <span v-else>--</span>
                                     </td>
