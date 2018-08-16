@@ -19,10 +19,10 @@ module.exports = {
         },
         '/km-ecs/':{
             // target:'http://192.168.10.66:6086',
-            target:'http://192.168.10.117:6086',
+            target:'http://192.168.10.26:6086',
             changeOrigin:true,
             pathRewrite:{
-                '^/km-ecs/':'/ecs/'
+                '/km-ecs/':'/ecs/'
             }
         },
         '/km_ums/':{
@@ -34,11 +34,10 @@ module.exports = {
         },
         '/ym-ecs/':{
             // target:'http://192.168.10.66:8087',
-            target:'http://192.168.10.117:8080',
+            target:'http://192.168.10.110:8080',
             changeOrigin:true,
             pathRewrite:{
-                // '^/ym-ecs/':'/ecs/'
-                '^/ym-ecs/':'/yuangmeng_ecs/'
+                '/ym-ecs/':'/ecs/'
             }
         },
     },

@@ -1,19 +1,18 @@
 <style scoped>
-
-.g-search-menu #search #auditList .m-refresh {
-  position: absolute;
-  margin: auto;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-}
-.g-search-menu #search #auditList {
-  display: block;
-}
-.m-sub-page>.fl{
-	padding: 20px;
-}
+    .g-search-menu #search #auditList .m-refresh {
+    position: absolute;
+    margin: auto;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    }
+    .g-search-menu #search #auditList {
+    display: block;
+    }
+    .m-sub-page>.fl{
+        padding: 20px;
+    }
 </style>
 <template>
   <div id="search" :class="{active:off.details}">
@@ -651,19 +650,16 @@ export default {
         }).catch(error=>errorDeal(error));          
     },
     to_laydate: function(v) {
-        var vm = this,
-        el = "";
-        v == 1 ? (el = "#start") : (el = "#end");
-        laydate({
-        elem: el,
+      var vm = this;
+      laydate({
         istime: true,
         format: "YYYY-MM-DD hh:mm:ss",
         isclear: false,
         choose: function(dates) {
-            //选择好日期的回调
-            v == 1 ? (vm.form.startTime = dates) : (vm.form.endTime = dates);
+          //选择好日期的回调
+          v == 1 ? (vm.form.startTime = dates) : (vm.form.endTime = dates);
         }
-        });
+      });
     },
     toSearch: function(e) {
         e.keyCode == 13 && this.searchList(2);

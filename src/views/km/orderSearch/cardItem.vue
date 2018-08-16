@@ -3,7 +3,6 @@
   *@author: thinkmix
   *@date 2017-11-6
 * *-->
-
 <template>
     <div id="search" :class="{active:off.details}">
         <header class="m-scroll-bar animated infinite" :class="{active:off.isLoad}"></header>

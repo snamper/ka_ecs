@@ -133,5 +133,7 @@ export default{
     p.detailsEleP{margin-bottom: 10px;}
     a.detailsEleA{text-decoration: underline;color: #20A0FF;}
     a.linka{cursor: pointer;}
+    .g-list-box, #details, .g-list-table, .g-inner-table, .g-box{width: 100%; height: auto;}
+    .m-total-table{background: transparent}
 </style>
 

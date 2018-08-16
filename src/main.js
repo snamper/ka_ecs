@@ -14,6 +14,7 @@ require("./assets/km/css/style.css");
 require("./assets/km/js/layer/need/layer.css");
 require("./assets/km/js/laydate/skins/default/laydate.css");
 require("./assets/main.css");
+require("./assets/km/css/search.css");
 require('./assets/km/js/layer/layer.js');
 require("./assets/km/js/laydate/laydate.js");
 require("./assets/km/js/ajax.js");
