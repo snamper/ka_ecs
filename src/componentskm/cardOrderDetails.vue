@@ -557,7 +557,7 @@ export default {
       //开卡订单详情
       var vm = this,
         url;
-      if (vm.detailsSource == 8) {
+      if (vm.detailsSource == 8||vm.detailsSource==7) {
         url = "km-ecs/w/audit/tfopenCardInfo";
       } else {
         url = "km-ecs/w/audit/openCardInfo";
@@ -571,7 +571,7 @@ export default {
             list.optionalPackage = list.optionalPackage.split(",");
           }
           for (let i in list.optionalPackage) {
-            if (vm.detailsSource == "8") {
+            if (vm.detailsSource == "8"||vm.detailsSource == "7") {
               str += "<p>" + list.optionalPackage[i] + "</p>";
             } else {
               str += "<p>" + list.optionalPackage[i].title + "</p>";
@@ -606,7 +606,7 @@ export default {
               list.payChannel +
               "</div></li>";
           }
-          if (vm.detailsSource == "8") {
+          if (vm.detailsSource == "8"||vm.detailsSource == "7") {
             layer.open({
               content:
                 '<ul class="f-scroll-lt lay-details">' +

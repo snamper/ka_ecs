@@ -538,7 +538,7 @@
                                 <span v-if="form.orderType==8">{{translateData(8,todo.statusDetail)}}</span>
                             </td>
                             <td v-if="off.type!=2&&isShowDXYZ==true">
-                                {{translateData(16,todo.safeType)}} <span v-if="todo.safeType">（{{todo.safePhone||'--'}}）</span>
+                                {{translateData(16,todo.safeType)}}
                             </td>
                             <td v-if="off.type!=2">
                                 <a :name="todo.orderId" @click="details" href="javascript:void(0)" class="details">详情</a>
@@ -546,7 +546,7 @@
                             <!--已审核-->
                             <td v-if="off.type==2" :class="{fCYellow:todo.cardStatus==1,fCGreen:todo.cardStatus==2,fCRed:todo.cardStatus==3,fCRed:todo.cardStatus==4,fCGrey:todo.cardStatus==9}">{{translateData(4,todo.cardStatus)}}</td>
                             <td v-if="off.type==2&&isShowDXYZ==true">
-                                {{translateData(16,todo.safeType)}}
+                                {{translateData(16,todo.safeType)}} <span v-if="todo.safeType">（{{todo.safePhone||'--'}}）</span>
                             </td>
                             <td colspan="2" v-if="off.type==2&&todo.status==1" class="td-col-2">
                                 <div class="f-c-green">同意</div>
