@@ -15,7 +15,7 @@
 				<div class="navInfoDiv"><p>待审核<span>{{auditCount.tfOpenCardReal}}</span></p><p>已分配<span>{{auditCount.tfOpenCardReal_}}</span></p></div>
 			</div>
 			<div class="m-menu-div">
-				<router-link :to="{name:'realtime',params:{type:8}}" class="u-bg navBg9"><div>卡盟SDK订单</div><p><span>点击审核</span></p></router-link>
+				<router-link :to="{name:'realtime',params:{type:8}}" class="u-bg navBg9"><div>SDK订单</div><p><span>点击审核</span></p></router-link>
 				<div class="navInfoDiv"><p>待审核<span>{{auditCount.sdkRealTime}}</span></p><p>已分配<span>{{auditCount.sdkRealTime_}}</span></p></div>
 			</div>
 			<div class="m-menu-div">

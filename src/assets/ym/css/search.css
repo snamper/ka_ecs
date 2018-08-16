@@ -59,7 +59,7 @@ border-left:10px solid #20a0ff;border-top: 7px solid transparent;border-bottom: 
 .g-search-form>.form-c>.f-btn{display: block;width:30%;margin:0.2rem auto;padding: 0.12rem 0}
 
 .m-col-2{}
-.m-col-2>.col-l{float: left;width:1rem;line-height: 0.35rem;text-align: right;}
+.m-col-2>.col-l{float: left;width:0.65rem;line-height: 0.35rem;text-align: right;}
 .m-col-2>.col-r{margin-left:1rem;display: block;}
 .m-col-2>.col-r>.m-time-area{}
 .m-col-2>.col-r>.m-space{padding:0 3px;}

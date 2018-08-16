@@ -2,11 +2,11 @@
   *@info 号码流转查询模块
 **-->
 <style scoped>
-.form-c.o-no-bgc>.row .text{width: auto}
-.m-form-radio>label{margin-right: 0;}
-a.detailsEleA{text-decoration: underline;color: #20A0FF;cursor: pointer;}
-div.input-box{width: 70%;}
-span.m-form-radio{width: 75px;}
+    .form-c.o-no-bgc>.row .text{width: auto}
+    .m-form-radio>label{margin-right: 0;}
+    a.detailsEleA{text-decoration: underline;color: #20A0FF;cursor: pointer;}
+    div.input-box{width: 70%;}
+    span.m-form-radio{width: 75px;}
 </style>
 <template>
     <section class="g-search-menu">
@@ -358,9 +358,6 @@ export default {
             }
             return "success";     
         })
-    },
-    exportList(){
-
     },
     //按钮
     isChe: function() {

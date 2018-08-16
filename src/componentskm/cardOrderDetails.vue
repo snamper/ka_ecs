@@ -238,12 +238,6 @@
                                             <span v-show="source==7">{{ userMoreInfo.devInfo }}</span>
                                         </td>
                                     </tr>
-                                    <!-- <tr><td>活体识别名称：</td>
-									<td>
-										<span v-show="source!=7">{{ list.livingImgSoftWareName }}</span>
-										<span v-show="source==7">{{ userMoreInfo.livingImgSoftWareName }}</span>
-									</td>
-								</tr> -->
                                     <tr v-show="source!=7&&source!=8">
                                         <td>识别模式：</td>
                                         <td>{{ list.openMode }}</td>
@@ -593,6 +587,8 @@ export default {
               (parseFloat(list.updPrice) / 100).toFixed(2) +
               "元+预存话费" +
               (parseFloat(list.actualPrice_y) / 10000).toFixed(2) +
+              "元+实付首充预存" +
+              (parseFloat(list.actualFirstCharge) / 10000).toFixed(2) +
               "元）</b></div></li>" +
               '<li class="clr"><div class="fl">抵扣金额：</div><div class="fright">' +
               (parseFloat(list.deductionMoney) / 100).toFixed(2) +
@@ -699,7 +695,8 @@ export default {
                 (
                   parseFloat(list.price_x) / 100 +
                   parseFloat(list.price_y) / 100 +
-                  parseFloat(list.updPrice) / 100
+                  parseFloat(list.updPrice) / 100+
+                  parseFloat(list.firstCharge)/100
                 ).toFixed(2) +
                 '元<b class="f-c-grey">（系统号码占用费' +
                 (parseFloat(list.price_x) / 100).toFixed(2) +
@@ -707,6 +704,8 @@ export default {
                 (parseFloat(list.updPrice) / 100).toFixed(2) +
                 "元+预存话费" +
                 (parseFloat(list.price_y) / 100).toFixed(2) +
+                "元+首冲预存" +
+                (parseFloat(list.firstCharge) / 100).toFixed(2) +
                 "元）</b></div></li>" +
                 payed +
                 '<li class="clr"><div class="fl">预占保证金：</div><div class="fright">' +

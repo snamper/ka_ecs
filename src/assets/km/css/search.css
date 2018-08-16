@@ -75,12 +75,12 @@ border-left:10px solid #20a0ff;border-top: 7px solid transparent;border-bottom: 
   margin-right:7px;
 }
 .m-time-area{ display: inline-block;}
-.m-time-area>input{text-align: center;font-size: 14px;width: auto;cursor: pointer;}
+.m-time-area>input{text-align: center;font-size: 14px;width: auto !important;cursor: pointer;}
 .m-time-area>input:first-child{
-  border-radius:7px 0 0 7px;
+  border-radius:7px 0 0 7px !important;
 }
 .m-time-area>input:last-child{
-  border-radius:0 7px 7px 0;
+  border-radius:0 7px 7px 0 !important;
 }
 .m-form-radio.col-r{top: -2px;}
 .form-c.o-no-bgc{padding: 0 0.1rem;padding-bottom: 1px;}

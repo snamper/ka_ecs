@@ -1,85 +1,85 @@
-// <style scoped>
-//   @import "../../assets/km/css/home.css";
-// </style>
-// <template>
-//   <div class="f-scroll-lt" id="home" :class={active:off.headMenu}>
-//   	<header class="g-head">
-// 		<table cellspacing="0">
-// 			<tbody>
-// 				<tr>
-// 					<td>
-// 						<a class="m-navside-show" @click="headMenu"><i class="u-icon-menu"></i></a>
-// 						<span v-if="crumb[1].name" class="f-inline-block m-crumb"><a :href="crumb[0].href">{{crumb[0].name}}</a><a class="u-icon-right mid"></a><a>{{crumb[1].name}}</a></span>
-// 					</td>
-// 					<td class="f-tar">
-// 						<div class="m-user-online">Online <b>{{off.time}}</b></div>
-// 						<div class="m-info-user"><i></i><span>{{userInfo.name}}</span></div>
-// 						<div class="m-menu-user">
-// 							<a @click="userMenu"><i class="u-icon-menu2"></i></a>
-// 							<ul class="m-user-dropdown f-tas" :class="{active:off.userMenu}">
-// 								<li>
-// 									<a class="user clr">
-// 										<div class="logo fl"></div>
-// 										<div class="info f-tal"><div class="author">{{userInfo.name}}</div><time class="online">online：<b>{{off.time}}</b></time></div>
-// 									</a>
-// 								</li>
-// 								<li><a @click="signOut">退出</a></li>
-// 							</ul>
-// 						</div>
+<!--<style scoped>
+  @import "../../assets/km/css/home.css";
+</style>
+<template>
+  <div class="f-scroll-lt" id="home" :class={active:off.headMenu}>
+  	<header class="g-head">
+		<table cellspacing="0">
+			<tbody>
+				<tr>
+					<td>
+						<a class="m-navside-show" @click="headMenu"><i class="u-icon-menu"></i></a>
+						<span v-if="crumb[1].name" class="f-inline-block m-crumb"><a :href="crumb[0].href">{{crumb[0].name}}</a><a class="u-icon-right mid"></a><a>{{crumb[1].name}}</a></span>
+					</td>
+					<td class="f-tar">
+						<div class="m-user-online">Online <b>{{off.time}}</b></div>
+						<div class="m-info-user"><i></i><span>{{userInfo.name}}</span></div>
+						<div class="m-menu-user">
+							<a @click="userMenu"><i class="u-icon-menu2"></i></a>
+							<ul class="m-user-dropdown f-tas" :class="{active:off.userMenu}">
+								<li>
+									<a class="user clr">
+										<div class="logo fl"></div>
+										<div class="info f-tal"><div class="author">{{userInfo.name}}</div><time class="online">online：<b>{{off.time}}</b></time></div>
+									</a>
+								</li>
+								<li><a @click="signOut">退出</a></li>
+							</ul>
+						</div>
 
-// 					</td>
-// 				</tr>
-// 			</tbody>
-// 		</table>
-//   	</header>
-//   	<aside class="g-side">
-// 		<nav class="g-side-nav">
-// 			<header class="g-side-head">远盟</header>
-// 			<ul class="g-side-ul" >
-// 				<li :class="{active:$route.path.indexOf('/home/audit')>-1||$route.path=='/home/wsim'}" v-if="off.power0">
-// 					<b></b>
-// 					<router-link to="/home/audit/yuanmeng"><div><i class="u-icon-audit"></i><span>订单审核</span><b class="animated infinite bounce m-lighter" v-if="count.total">{{count.total}}</b></div></router-link>
-// 					<ul class="g-side-subul">
-// 						<li><router-link :to="{name:'audit',params:{source:'yuanmeng'}}"><b></b>远盟</router-link></li>
-// 						<li><router-link to="/home/wsim"><b></b>WSIM卡</router-link></li>
-// 					</ul>
-// 				</li>
-// 				<li :class="{active:$route.path.indexOf('/home/search')>-1}" v-if="off.power">
-// 					<b></b>
-// 					<router-link to="/home/search"><div><i class="u-icon-search"></i><span>订单查询</span></div></router-link>
-// 				</li>
-// 				<li :class="{active:$route.path=='/home/pointsSearch'||$route.path=='/home/pointsEx'||$route.path=='/home/pointsGain'||$route.path=='/home/pointsManage'}">
-// 					<b></b>
-// 					<router-link to="/home/pointsSearch"><div><i class="u-icon-points"></i><span>积分管理</span></div></router-link>
-// 					<ul class="g-side-subul" :class="off.power5?'Tall':'Talls'">
-// 						<li><router-link to="/home/pointsSearch"><b></b>用户积分查询</router-link></li>
-// 						<li><router-link to="/home/pointsGain"><b></b>积分获取详情</router-link></li>
-// 						<li><router-link to="/home/pointsEx"><b></b>积分兑换详情</router-link></li>
-// 						<li v-if="off.power5"><router-link to="/home/pointsManage"><b></b>积分管理</router-link></li>
-// 					</ul>
-// 				</li>
-//                 <li :class="{active:$route.path.indexOf('/home/excelDownload')>-1}">
-// 					<b></b>
-// 					<router-link to="/home/excelDownload"><div><i class="u-icon-downLoad"></i><span>日报excel</span></div></router-link>
-// 				</li>
-// 				<li :class="{active:$route.path.indexOf('/home/illegalSearch')>-1}" v-if="off.power1">
-// 					<b></b>
-// 					<router-link to="/home/illegalSearch"><div><i class="u-icon-illegalSearch"></i><span>违规查询</span></div></router-link>
-// 				</li>
-// 			</ul>
-// 		</nav>
-// 	</aside>
-//   	<section class="g-main" id="main">
-// 		<transition appear name="fadeInUp">
-// 			<router-view></router-view>
-// 		</transition>
-// 	</section>
-// 	<footer class="g-foot">
+					</td>
+				</tr>
+			</tbody>
+		</table>
+  	</header>
+  	<aside class="g-side">
+		<nav class="g-side-nav">
+			<header class="g-side-head">远盟</header>
+			<ul class="g-side-ul" >
+				<li :class="{active:$route.path.indexOf('/home/audit')>-1||$route.path=='/home/wsim'}" v-if="off.power0">
+					<b></b>
+					<router-link to="/home/audit/yuanmeng"><div><i class="u-icon-audit"></i><span>订单审核</span><b class="animated infinite bounce m-lighter" v-if="count.total">{{count.total}}</b></div></router-link>
+					<ul class="g-side-subul">
+						<li><router-link :to="{name:'audit',params:{source:'yuanmeng'}}"><b></b>远盟</router-link></li>
+						<li><router-link to="/home/wsim"><b></b>WSIM卡</router-link></li>
+					</ul>
+				</li>
+				<li :class="{active:$route.path.indexOf('/home/search')>-1}" v-if="off.power">
+					<b></b>
+					<router-link to="/home/search"><div><i class="u-icon-search"></i><span>订单查询</span></div></router-link>
+				</li>
+				<li :class="{active:$route.path=='/home/pointsSearch'||$route.path=='/home/pointsEx'||$route.path=='/home/pointsGain'||$route.path=='/home/pointsManage'}">
+					<b></b>
+					<router-link to="/home/pointsSearch"><div><i class="u-icon-points"></i><span>积分管理</span></div></router-link>
+					<ul class="g-side-subul" :class="off.power5?'Tall':'Talls'">
+						<li><router-link to="/home/pointsSearch"><b></b>用户积分查询</router-link></li>
+						<li><router-link to="/home/pointsGain"><b></b>积分获取详情</router-link></li>
+						<li><router-link to="/home/pointsEx"><b></b>积分兑换详情</router-link></li>
+						<li v-if="off.power5"><router-link to="/home/pointsManage"><b></b>积分管理</router-link></li>
+					</ul>
+				</li>
+                <li :class="{active:$route.path.indexOf('/home/excelDownload')>-1}">
+					<b></b>
+					<router-link to="/home/excelDownload"><div><i class="u-icon-downLoad"></i><span>日报excel</span></div></router-link>
+				</li>
+				<li :class="{active:$route.path.indexOf('/home/illegalSearch')>-1}" v-if="off.power1">
+					<b></b>
+					<router-link to="/home/illegalSearch"><div><i class="u-icon-illegalSearch"></i><span>违规查询</span></div></router-link>
+				</li>
+			</ul>
+		</nav>
+	</aside>
+  	<section class="g-main" id="main">
+		<transition appear name="fadeInUp">
+			<router-view></router-view>
+		</transition>
+	</section>
+	<footer class="g-foot">
 
-// 	</footer>
-//   </div>
-// </template>
-// <script>
+	</footer>
+  </div>
+</template>
+<script>-->
 // export default{
 // 	name:'home',
 // 	data (){

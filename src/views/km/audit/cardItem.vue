@@ -31,12 +31,6 @@
                                             <td>订单号码：</td>
                                             <td>{{auditData.orderId}}</td>
                                         </tr>
-                                        <!-- <tr><td>订单状态：</td>
-                                            <td class="f-c-purple" v-if="auditData.orderStatus==0">待审核</td>
-                                            <td class="f-c-yellow" v-if="auditData.orderStatus==1">进行中</td>
-                                            <td class="f-c-green" v-if="auditData.orderStatus==2">成功</td>
-                                            <td class="f-c-red" v-if="auditData.orderStatus==3">失败</td>
-                                        </tr> -->
                                         <tr>
                                             <td>生成时间：</td>
                                             <td>{{getDateTime(auditData.createTime)[6]}}</td>
@@ -126,7 +120,6 @@
                                             <td>识别仪名称：</td>
                                             <td>{{ auditData.devSN }}</td>
                                         </tr>
-                                        <!-- <tr><td>活体识别APK：</td><td>{{ auditData.livingImgSoftWareName }}</td></tr> -->
                                         <tr v-show="off.itemType!=8&&off.itemType!=9">
                                             <td>操作人：</td>
                                             <td>{{ auditData.operatorName }}【ID：{{ auditData.operator }}】</td>
@@ -171,40 +164,40 @@
                                             <td>实付金额：</td>
                                             <td>{{translateData('money',auditData.prodRecords.actualMoney/100)}}元</td>
                                         </tr>
-                                        <tr v-if="auditData.monopolyType==1||auditData.monopolyType==2">
+                                        <tr v-if="(off.itemType==6&&auditData.monopolyType==1)||(off.itemType==6&&auditData.monopolyType==2)">
                                             <td>初始信息：</td>
                                             <td>可选包：{{auditData.prodRecords.primalyOptPkg||'--'}}；
                                                 套餐：{{auditData.prodRecords.primalyPkg||'--'}}；
                                                 预存：{{translateData('money',auditData.prodRecords.primalyPrestore)}}元
                                             </td>
                                         </tr>
-                                        <tr v-if="auditData.monopolyType==1||auditData.monopolyType==2">
+                                        <tr v-if="(off.itemType==6&&auditData.monopolyType==1)||(off.itemType==6&&auditData.monopolyType==2)">
                                             <td>制卡信息：</td>
                                             <td>可选包：{{auditData.prodRecords.makeOptPkg||'--'}}；
                                                 套餐：{{auditData.prodRecords.makePkg||'--'}}；
                                                 预存：{{translateData('money',auditData.prodRecords.makePrestore)}}元
                                             </td>
                                         </tr>
-                                        <tr v-if="auditData.monopolyType==1||auditData.monopolyType==2">
+                                        <tr v-if="(off.itemType==6&&auditData.monopolyType==1)||(off.itemType==6&&auditData.monopolyType==2)">
                                             <td>开卡信息：</td>
                                             <td>可选包：{{auditData.prodRecords.openOptPkg||'--'}}；
                                                 套餐：{{auditData.prodRecords.openPkg||'--'}}；
                                                 预存：{{translateData('money',auditData.prodRecords.openPrestore)}}元
                                             </td>
                                         </tr>
-                                        <tr v-if="auditData.monopolyType==1||auditData.monopolyType==2">
+                                        <tr v-if="(off.itemType==6&&auditData.monopolyType==1)||(off.itemType==6&&auditData.monopolyType==2)">
                                             <td>首充金额：</td>
                                             <td>{{translateData('money',auditData.prodRecords.firstCharge)}}元</td>
                                         </tr>
-                                        <tr v-if="auditData.monopolyType==1||auditData.monopolyType==2">
+                                        <tr v-if="(off.itemType==6&&auditData.monopolyType==1)||(off.itemType==6&&auditData.monopolyType==2)">
                                             <td>首充金额折扣：</td>
                                             <td>{{auditData.prodRecords.firstChargeDiscount/1000}}折</td>
                                         </tr>
-                                        <tr v-if="auditData.monopolyType==1||auditData.monopolyType==2">
+                                        <tr v-if="(off.itemType==6&&auditData.monopolyType==1)||(off.itemType==6&&auditData.monopolyType==2)">
                                             <td>首充实际支付：</td>
                                             <td>{{translateData('money',auditData.prodRecords.firstChargeActual/100)}}元</td>
                                         </tr>
-                                        <tr v-if="off.itemType == '4,5,6'">
+                                        <tr v-if="off.itemType == 6">
                                             <td>短信校验：</td>
                                             <td>{{translateData(16,auditData.safeType)}}</td>
                                         </tr>
@@ -248,7 +241,7 @@ export default {
             time: "00:00", //审核计时
             isLoad: 0, //是否ajax请求
             auditType: 1, //0,实时;1,事后;
-            itemType: 6 //6 业务订单；7 过户；8 SDK开卡；9 通服开卡；1 实名补录；2 补换卡；
+            itemType: 6 //6 业务订单；7 过户；8 SDK开卡；9 i卡；1 实名补录；2 补换卡；
         },
         timer: Number, //审核倒计时
         list: [], //分配的订单
