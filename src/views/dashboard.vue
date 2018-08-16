@@ -36,101 +36,134 @@
       <div class="map-box-out make_transist" v-bind:class="{'showscale' : isA, 'hidescale': !isA}">
         <div class="map-box">
           <!--总开卡成功数-->
-          <div class="map-box-inner" id="amount"></div>
-          <div class="inner-total total-3">（<span>总数：</span><b class="fsfantasy"><CountUp :start="0"
-                        :end="parseInt(amountCard[0])"
-                        :decimals="0"
-                        :duration="3"
-                        :options="countOptions"
-                        :callback="callback"></CountUp></b>）
-                      </div>
+          <div class="map-box-inner">
+            <div id="amount" class="render"></div>
+            <div class="inner-total">
+              <span>总数：</span>
+              <CountUp class="f-fst-gotham"
+                :start="0"
+                :end="amountCard[0]"
+                :decimals="0"
+                :duration="3"
+                :options="countOptions"
+                :callback="callback" />
+            </div>
+          </div>
+
           <div class="statistics">
             <div class="col">
-              <div>远特普号<span class="media-540">（可售）</span></div><b class="fsfantasy">
-                <CountUp :start="0"
-                        :end="parseInt(phoneTotal[0])"
-                        :decimals="0"
-                        :duration="3"
-                        :options="countOptions"
-                        :callback="callback"></CountUp></b>
-              <div>远特靓号<span class="media-540">（可售）</span></div><b class="fsfantasy"><CountUp :start="0"
-                        :end="parseInt(phoneTotal[1])"
-                        :decimals="0"
-                        :duration="3"
-                        :options="countOptions"
-                        :callback="callback"></CountUp></b></b>
+              <div>远特普号<span class="media-540">（可售）</span></div>
+              <CountUp class="f-fst-gotham"
+                :start="0"
+                :end="phoneTotal[0]"
+                :decimals="0"
+                :duration="3"
+                :options="countOptions"
+                :callback="callback"/>
+              <div>远特靓号<span class="media-540">（可售）</span></div>
+              <CountUp class="f-fst-gotham"
+                :start="0"
+                :end="phoneTotal[1]"
+                :decimals="0"
+                :duration="3"
+                :options="countOptions"
+                :callback="callback"/>
             </div>
             <div class="col">
-              <div>联通普号<span class="media-540">（可售）</span></div><b class="fsfantasy"><CountUp :start="0"
-                        :end="parseInt(phoneTotal[2])"
-                        :decimals="0"
-                        :duration="3"
-                        :options="countOptions"
-                        :callback="callback"></CountUp></b></b>
-              <div>联通靓号<span class="media-540">（可售）</span></div><b class="fsfantasy"><CountUp :start="0"
-                        :end="parseInt(phoneTotal[3])"
-                        :decimals="0"
-                        :duration="3"
-                        :options="countOptions"
-                        :callback="callback"></CountUp></b></b>
+              <div>联通普号<span class="media-540">（可售）</span></div>
+              <CountUp class="f-fst-gotham"
+                :start="0"
+                :end="phoneTotal[2]"
+                :decimals="0"
+                :duration="3"
+                :options="countOptions"
+                :callback="callback"/>
+              <div>联通靓号<span class="media-540">（可售）</span></div>
+              <CountUp class="f-fst-gotham"
+                :start="0"
+                :end="phoneTotal[3]"
+                :decimals="0"
+                :duration="3"
+                :options="countOptions"
+                :callback="callback"/>
             </div>
           </div>
         </div>
         <!--签约/激活商户-->
         <div class="map-box">
-          <div class="map-box-inner" id="merchant"></div>
-          <div class="inner-total total-3">（<span>签约总数：</span><b class="fsfantasy"><CountUp :start="0"
-                        :end="parseInt(merchantTotal[0])"
-                        :decimals="0"
-                        :duration="3"
-                        :options="countOptions"
-                        :callback="callback"></CountUp></b>
-                        <span>激活总数：</span><b class="fsfantasy"><CountUp :start="0"
-                        :end="parseInt(merchantTotal[1])"
-                        :decimals="0"
-                        :duration="3"
-                        :options="countOptions"
-                        :callback="callback"></CountUp></b>）</div>
+          <div class="map-box-inner">
+            <div id="merchant" class="render"></div>
+            <div class="inner-total">
+              <span>签约总数：</span>
+              <CountUp class="f-fst-gotham"
+                :start="0"
+                :end="merchantTotal[0]"
+                :decimals="0"
+                :duration="3"
+                :options="countOptions"
+                :callback="callback" />
+              <span>激活总数：</span>
+              <CountUp class="f-fst-gotham"
+                :start="0"
+                :end="merchantTotal[1]"
+                :decimals="0"
+                :duration="3"
+                :options="countOptions"
+                :callback="callback" />
+            </div>
+          </div>
           <div class="statistics">
             <div class="col">
-              <div>游客</div><b class="fsfantasy"><CountUp :start="0"
-                        :end="parseInt(userTotal[0])"
-                        :decimals="0"
-                        :duration="3"
-                        :options="countOptions"
-                        :callback="callback"></CountUp></b>
-              <div>远特商户/工号数</div><b class="fsfantasy"><CountUp :start="0"
-                        :end="parseInt(userTotal[1])"
-                        :decimals="0"
-                        :duration="3"
-                        :options="countOptions"
-                        :callback="callback"></CountUp>/
-                      <CountUp :start="0"
-                        :end="parseInt(userTotal[4])"
-                        :decimals="0"
-                        :duration="3"
-                        :options="countOptions"
-                        :callback="callback"></CountUp></b>
+              <div>游客</div>
+              <CountUp class="f-fst-gotham"
+                :start="0"
+                :end="userTotal[0]"
+                :decimals="0"
+                :duration="3"
+                :options="countOptions"
+                :callback="callback"/>
+              <div>远特商户/工号数</div>
+              <CountUp class="f-fst-gotham"
+                :start="0"
+                :end="userTotal[1]"
+                :decimals="0"
+                :duration="3"
+                :options="countOptions"
+                :callback="callback"/>
+              <em>/</em>
+              <CountUp class="f-fst-gotham"
+                :start="0"
+                :end="userTotal[4]"
+                :decimals="0"
+                :duration="3"
+                :options="countOptions"
+                :callback="callback"/>
             </div>
             <div class="col">
-              <div>联通商户/工号数</div><b class="fsfantasy"><CountUp :start="0"
-                        :end="parseInt(userTotal[2])"
-                        :decimals="0"
-                        :duration="3"
-                        :options="countOptions"
-                        :callback="callback"></CountUp>/
-                      <CountUp :start="0"
-                        :end="parseInt(userTotal[5])"
-                        :decimals="0"
-                        :duration="3"
-                        :options="countOptions"
-                        :callback="callback"></CountUp></b>
-              <div>设备数</div><b class="fsfantasy"><CountUp :start="0"
-                        :end="parseInt(userTotal[3])"
-                        :decimals="0"
-                        :duration="3"
-                        :options="countOptions"
-                        :callback="callback"></CountUp></b>
+              <div>联通商户/工号数</div>
+              <CountUp class="f-fst-gotham"
+                :start="0"
+                :end="userTotal[2]"
+                :decimals="0"
+                :duration="3"
+                :options="countOptions"
+                :callback="callback"/>
+              <em>/</em>
+              <CountUp class="f-fst-gotham"
+                :start="0"
+                :end="userTotal[5]"
+                :decimals="0"
+                :duration="3"
+                :options="countOptions"
+                :callback="callback"/>
+              <div>设备数</div>
+              <CountUp class="f-fst-gotham"
+                :start="0"
+                :end="userTotal[3]"
+                :decimals="0"
+                :duration="3"
+                :options="countOptions"
+                :callback="callback"/>
             </div>
           </div>
         </div>
@@ -138,40 +171,96 @@
       <!--第二屏-->
       <div class="map-box-out make_transist" v-bind:class="{'showscale' : !isA, 'hidescale': isA}">
         <div class="map-box">
-          <!--开卡尝试-->
-          <div class="map-box-inner" id="cardCreate"></div>
-          <div class="inner-total total-1">（<span>历史总数：</span><b class="fsfantasy"><CountUp :start="0"
-                        :end="parseInt(secondViewTotal[0])"
-                        :decimals="0"
-                        :duration="3"
-                        :options="countOptions"
-                        :callback="callback"></CountUp></b>）</div>
-          <!--开卡成功数-->
-          <div class="map-box-inner" style="flex:1.2" id="openCardSuccess"></div>
-          <div class="inner-total total-2">（<span>历史总数：</span><b class="fsfantasy"><CountUp :start="0"
-                        :end="parseInt(secondViewTotal[1])"
-                        :decimals="0"
-                        :duration="3"
-                        :options="countOptions"
-                        :callback="callback"></CountUp></b>）</div>
+          <!--开卡统计-->
+          <div class="map-box-inner">
+            <div id="cardCreate" class="render"></div>
+            <div class="inner-total">
+              <span>历史总数：</span>
+              <CountUp class="f-fst-gotham"
+                :start="0"
+                :end="secondViewTotal[0]"
+                :decimals="0"
+                :duration="3"
+                :options="countOptions"
+                :callback="callback" />
+              <span>成功：</span>
+              <CountUp class="f-fst-gotham"
+                :start="0"
+                :end="secondViewTotal[1]"
+                :decimals="0"
+                :duration="3"
+                :options="countOptions"
+                :callback="callback" />
+            </div>
+            <div class="m-create-legend">
+              <div class="item" :class="{active:off.cardCreate_index == 0}" @click="cardCreateTimeShift(0)">
+                <span class="sty">
+                  <span class="circle"></span>
+                  <span class="line"></span>
+                </span>
+                <span class="text">时</span>
+              </div>
+              <div class="item" :class="{active:off.cardCreate_index == 1}" @click="cardCreateTimeShift(1)">
+                <span class="sty">
+                  <span class="circle"></span>
+                  <span class="line"></span>
+                </span>
+                <span class="text">天</span>
+              </div>
+              <div class="item" :class="{active:off.cardCreate_index == 2}" @click="cardCreateTimeShift(2)">
+                <span class="sty">
+                  <span class="circle"></span>
+                  <span class="line"></span>
+                </span>
+                <span class="text">月</span>
+              </div>
+            </div>
+          </div>
+          
+          <!--制卡成功数-->
+          <div class="map-box-inner">
+            <div id="makeCardSuccess" class="render"></div>
+            <div class="inner-total">
+              <span>历史总数：</span>
+              <CountUp class="f-fst-gotham"
+                :start="0"
+                :end="secondViewTotal[4]"
+                :decimals="0"
+                :duration="3"
+                :options="countOptions"
+                :callback="callback" />
+            </div>
+          </div>
         </div>
         <div class="map-box">
           <!--在线用户-->
-          <div class="map-box-inner" id="onlineUser"></div>
-          <div class="inner-total total-1">（<span>历史总数：</span><b class="fsfantasy"><CountUp :start="0"
-                        :end="parseInt(secondViewTotal[2])"
-                        :decimals="0"
-                        :duration="3"
-                        :options="countOptions"
-                        :callback="callback"></CountUp></b>）</div>
+          <div class="map-box-inner">
+            <div id="onlineUser" class="render"></div>
+            <div class="inner-total">
+              <span>历史总数：</span>
+              <CountUp class="f-fst-gotham"
+                :start="0"
+                :end="secondViewTotal[2]"
+                :decimals="0"
+                :duration="3"
+                :options="countOptions"
+                :callback="callback" />
+            </div>
+          </div>
           <!--充值金额-->
-          <div class="map-box-inner" style="flex:1.2" id="rechargeMoney"></div>
-          <div class="inner-total total-2">（<span>历史总数：</span><b class="fsfantasy"><CountUp :start="0"
-                        :end="parseInt(secondViewTotal[3])"
-                        :decimals="0"
-                        :duration="3"
-                        :options="countOptions"
-                        :callback="callback"></CountUp></b>）</div>
+          <div class="map-box-inner">
+            <div id="rechargeMoney" class="render"></div>
+            <div class="inner-total">
+              <span>历史总数：</span>
+              <CountUp class="f-fst-gotham"
+                :start="0"
+                :end="secondViewTotal[3]"
+                :decimals="0"
+                :duration="3"
+                :options="countOptions"
+                :callback="callback" />
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -204,13 +293,17 @@ import CountUp from 'vue-countup-v2';
           cardTry_index:0,//开卡尝试legend selected index
           onlineUser_index:0,//在线用户legend selected index
           recharge_index:0,//充值legend selected index
-          cardSuccess_index:0,//开卡成功legend selected index
+          cardCreate_index:0,//开卡统计：时、天、月切换index
         },
         phoneTotal:[0,0,0,0],//0,远特普号;1,远特靓号;2,联通普号;3,联通靓号;
         userTotal:[0,0,0,0,0,0],//0,游客;1,远特商户数;2,联通商户数;3,设备数;4,远特工号数;5,联通工号数;
-        secondViewTotal:[0,0,0,0],//0,开卡尝试;1,在线商户;2,在线用户;3,充值金额;
+        secondViewTotal:[0,0,0,0,0],//0,开卡尝试;1,在线商户;2,在线用户;3,充值金额;4,制卡成功数
         merchantTotal:[0,0],//0,签约商户总数;1,激活商户总数;
         amountCard:[0],//总开卡成功数
+        cardCreateData:{//开卡统计数据
+          success:{},
+          created:{},
+        }
       };
     },
     components: {
@@ -252,12 +345,12 @@ import CountUp from 'vue-countup-v2';
         vm.getcardCreate();
         vm.getonlineUser();
         vm.getrechargeMoney();
-        vm.getOpenCardSuccess();
+        vm.getmakeCardSuccess();
       },2500);
       
 
-      vm.noticeMouseEvent(true);
-      vm.intervalGetLine(true);
+      //vm.noticeMouseEvent(true);
+      //vm.intervalGetLine(true);
     },
     methods: {
       callback: function(ins) {
@@ -274,7 +367,7 @@ import CountUp from 'vue-countup-v2';
               vm.getcardCreate();
               vm.getonlineUser();
               vm.getrechargeMoney();
-              vm.getOpenCardSuccess();
+              vm.getmakeCardSuccess();
           },1000*60*5);
           vm.TimerLine.push(timer)
         }else{
@@ -412,23 +505,26 @@ import CountUp from 'vue-countup-v2';
       getcardCreate(){//开卡尝试数
         var vm=this;
          reqCommonMethod({"type":5},function(){vm.off.isLoad=false;},"km-ecs/w/statistics/homepagedrawline")
-          .then((data)=>{
-            vm.secondViewTotal[0] = data.data.total;
-            vm.initMap({
-                id: "cardCreate",
-                name: "开卡尝试",
-                legend: ["时", "天", "月"],
-                category: [vm.getLatelyTime(data.data.lasttime[0],'hour',12),vm.getLatelyTime(data.data.lasttime[1],'day',7),vm.getLatelyTime(data.data.lasttime[2],'month',6)],
-                lineData: [data.data.hour,data.data.day,data.data.month],
-                index:vm.off.cardTry_index
-            });
-          }).catch(error=>errorDeal(error));     
+          .then((createData)=>{
+            vm.secondViewTotal[0] = parseInt(createData.data.total);
+            vm.cardCreateData.created = createData.data;
+
+
+            reqCommonMethod({"type":4},function(){vm.off.isLoad=false;},"km-ecs/w/statistics/homepagedrawline")
+            .then((successData)=>{
+              vm.secondViewTotal[1] = parseInt(successData.data.total);
+              vm.cardCreateData.success = successData.data;
+
+              vm.cardCreateTimeShift(0);
+          }).catch(error=>errorDeal(error));
+
+        }).catch(error=>errorDeal(error));    
       },
       getonlineUser(){//用户在线数
         var vm=this;
          reqCommonMethod({"type":6},function(){vm.off.isLoad=false;},"km-ecs/w/statistics/homepagedrawline")
           .then((data)=>{
-              vm.secondViewTotal[2] = data.data.total;
+              vm.secondViewTotal[2] = parseInt(data.data.total);
               vm.initMap({
                 id: "onlineUser",
                 name: "在线用户",
@@ -443,7 +539,7 @@ import CountUp from 'vue-countup-v2';
         var vm=this;
          reqCommonMethod({"type":7},function(){vm.off.isLoad=false;},"km-ecs/w/statistics/homepagedrawline")
           .then((data)=>{
-              vm.secondViewTotal[3] = data.data.total;
+              vm.secondViewTotal[3] = parseInt(data.data.total);
               vm.initMap({
                 id: "rechargeMoney",
                 name: "充值金额",
@@ -454,37 +550,20 @@ import CountUp from 'vue-countup-v2';
               });
           }).catch(error=>errorDeal(error));
       },
-      getOpenCardSuccess(){//开卡成功数
+      getmakeCardSuccess(){//获取制卡统计
         var vm=this;
-         reqCommonMethod({"type":4},function(){vm.off.isLoad=false;},"km-ecs/w/statistics/homepagedrawline")
+         reqCommonMethod({"type":8},function(){vm.off.isLoad=false;},"km-ecs/w/statistics/homepagedrawline")
           .then((data)=>{
-            vm.secondViewTotal[1] = data.data.total;
-            vm.initMap({
-                id: "openCardSuccess",
-                name: "开卡成功数",
+              vm.secondViewTotal[4] = parseInt(data.data.total);
+              vm.initMap({
+                id: "makeCardSuccess",
+                name: "制卡成功数",
+                index:vm.off.recharge_index,
                 legend: ["时", "天", "月"],
-                index:vm.off.cardSuccess_index,
                 category: [vm.getLatelyTime(data.data.lasttime[0],'hour',12),vm.getLatelyTime(data.data.lasttime[1],'day',7),vm.getLatelyTime(data.data.lasttime[2],'month',6)],
-                lineData: [data.data.hour,data.data.day,data.data.month],
-            });
-          }).catch(error=>errorDeal(error));    
-      },
-      filterNumber(num){//数字格式化
-        // num=num.toString();
-        // const filter=s=>{
-        //   let result = [ ], counter = 0;
-        //   s=(s || 0).toString().split('');
-        //   for(let i = s.length - 1; i >= 0; i--) {
-        //       counter++;
-        //       result.unshift(s[i]);
-        //       if (!(counter % 3) && i != 0) { result.unshift(','); }
-        //   }
-        //   return result.join('');
-        // }
-        // if(num.indexOf(".")>-1){
-        //   let arr=num.split(".");
-        //   return filter(arr[0])+'.'+arr[1];
-        // }else return filter(num)
+                lineData: [data.data.hour,data.data.day,data.data.month]
+              });
+          }).catch(error=>errorDeal(error));
       },
       initMap(params) {
         var vm = this,series = [],min=[],myChart = '';
@@ -513,7 +592,7 @@ import CountUp from 'vue-countup-v2';
             },
             // areaStyle: {normal: {}},
           }
-          if(params.id=="merchant"){
+          if(params.id=="merchant" || params.id=="cardCreate"){
             if(i==1)option.itemStyle.normal.color="#3DD79B";
             option.yAxisIndex=i;
           }
@@ -556,11 +635,11 @@ import CountUp from 'vue-countup-v2';
                 backgroundColor: "#333"
               }
             },
-            formatter:params.id=="merchant" ? '{a0}: {c0}<br />{a1}: {c1}' : '{c}'
+            formatter:params.id=="merchant" || params.id=="cardCreate" ? '{a0}: {c0}<br />{a1}: {c1}' : '{c}'
           },
           legend: {
             data: params.legend,
-            selectedMode: params.id=="merchant" ? "multiple" : "single",
+            selectedMode: params.id=="merchant" || params.id=="cardCreate" ? "multiple" : "single",
             textStyle: {
               color: "#555"
             },
@@ -590,23 +669,30 @@ import CountUp from 'vue-countup-v2';
           }],
           series: series
         };
-        option.yAxis[0].min=min[0];
-        if(params.id=="merchant"){
+        option.yAxis[0].min=min[params.index];
+
+        if(params.id == "cardCreate"){
+          option.legend.show = false;
+        }
+
+        if(params.id=="merchant" || params.id=="cardCreate"){
           option.yAxis[0].name=params.legend[0];
           option.yAxis.push({
             name:params.legend[1],
             splitLine: { show: false },
             axisLine: {
               lineStyle: {
-                color: "#555"
+                color: "#3DD79B"
               }
             },
             min:min[1]
           });
         }
+
         myChart.on("legendselectchanged", function(legend) {//legend click
           let index = 0,
-          len = Object.keys(legend.selected).length;
+              len = Object.keys(legend.selected).length;
+
           if (legend.name == "时") {
             index = 0;
           } else if (legend.name == "天") {
@@ -616,24 +702,49 @@ import CountUp from 'vue-countup-v2';
           } else if (legend.name == "月") {
             index = len - 1;
           }
-          if(params.id=="cardCreate"){
-            vm.off.cardTry_index=index
-          }else if(params.id=="onlineUser"){
+
+          if(params.id=="onlineUser"){
             vm.off.onlineUser_index=index
           }else if(params.id=="rechargeMoney"){
             vm.off.recharge_index=index
-          }else if(params.id=="openCardSuccess"){
-            vm.off.cardSuccess_index=index
           }
           option.xAxis.data = params.category[index];
-          if(params.id!="merchant"){
+
+          if(params.id!="merchant" && params.id!="cardCreate"){
             option.yAxis[0].min=min[index];
           }
+
           myChart.setOption(option);
         });
+
         myChart.setOption(option);
         myChart.hideLoading();
-        } 
+
+        }
+      },
+      cardCreateTimeShift(index){//开卡统计，时、天、月切换。（PS：因未能实现legend切换双折线的方法，故采用手动渲染）
+        const vm = this;
+
+        let cardCreateData = vm.cardCreateData,
+            lineData = [];
+
+        if(index == 0){
+          lineData = [cardCreateData.created.hour,cardCreateData.success.hour];
+        }else if(index == 1){
+          lineData = [cardCreateData.created.day,cardCreateData.success.day];
+        }else if(index == 2){
+          lineData = [cardCreateData.created.month,cardCreateData.success.month];
+        }
+
+        vm.off.cardCreate_index = index;
+        vm.initMap({
+            id: "cardCreate",
+            name: "",
+            legend: ["开卡尝试", "开卡成功"],
+            index:index,
+            category: [vm.getLatelyTime(cardCreateData.created.lasttime[0],'hour',12),vm.getLatelyTime(cardCreateData.created.lasttime[1],'day',7),vm.getLatelyTime(cardCreateData.created.lasttime[2],'month',6)],
+            lineData: lineData,
+        });
       },
       getDateTime(v){
         return getDateTime(v);
