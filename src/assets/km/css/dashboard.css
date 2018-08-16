@@ -1,16 +1,24 @@
-/*@font-face{
-  font-family:'fantasy_d';
-  src:url('../assets/fonts/fantasy/fantasy.otf');
-  src:url('../assets/fonts/fantasy/fantasy.eot?#iefix') format('embedded-opentype'),
-    url('../assets/fonts/fantasy/fantasy.woff2') format('woff2'),
-    url('../assets/fonts/fantasy/fantasy.woff') format('woff'),
-    url('../assets/fonts/fantasy/fantasy.ttf') format('truetype'),
-    url('../assets/fonts/fantasy/fantasy.svg#webfont') format('svg');  
+@font-face{
+  font-family:'gotham';
+  src:url('../assets/fonts/gotham/Gotham-Medium.otf');
+  src:url('../assets/fonts/gotham/Gotham-Medium.eot?#iefix') format('embedded-opentype'),
+    url('../assets/fonts/gotham/Gotham-Medium.woff2') format('woff2'),
+    url('../assets/fonts/gotham/Gotham-Medium.woff') format('woff'),
+    url('../assets/fonts/gotham/Gotham-Medium.ttf') format('truetype'),
+    url('../assets/fonts/gotham/Gotham-Medium.svg#webfont') format('svg');  
 
   font-weight:normal;
   font-style:normal;
   font-display: swap;
-}*/
+}
+.f-fst-gotham{
+  font-family:'gotham';
+  color: #4b3887;
+  font-size: 0.28rem;
+  letter-spacing: 1px;
+}
+
+
 .dashboard-box {
   position: relative;
   width: 100%;
@@ -18,11 +26,9 @@
   overflow: hidden;
   background-color:#F1F2F3;
 }
-.dashboard-box-inner{
+.dashboard-box-inner, .map-box-inner>.render{
   position:relative;
   height:100%;
-  /*min-width:1200px;
-  min-height:700px;*/
 }
 .map-box-out {
   height: 100%;
@@ -34,36 +40,19 @@
   height: 50%;
   position: relative;
 }
-.map-box>.inner-total{
-  position: absolute;
-  top:-0.12rem;
-  margin-right:-0.4rem;
-}
-.map-box>.inner-total>b, .statistics>.col>b{
-  /*font-family:'Farrington7B';*/
-  color: #4b3887;
-  font-size: 0.3rem;
-  letter-spacing: 1px;
-}
-.fsfantasy{
-  /*font-family: 'fantasy_d';*/
-  font-weight: bold;
-}
-.map-box>.inner-total.total-1{
-  right: 60%;
-
-}
-.map-box>.inner-total.total-2{
-  right: 10%;
-}
-.map-box>.inner-total.total-3{
-  left:0;
-  width: 100%;
-  text-align: center;
-}
 .map-box-inner {
   flex: 0.85;
+  position:relative;
 }
+.map-box-inner>.render{
+
+}
+.map-box-inner>.inner-total{
+  position: absolute;
+  top:-7px;
+  right: 10%;
+}
+
 @media screen and (min-width: 1600px){
   .map-box-inner {
     flex: 0.92;
@@ -88,6 +77,60 @@
 .switch:active {
     transform: scale(.8);
 }
+
+.m-create-legend{
+  position: absolute;
+  top: 5px;
+  left: 1.2rem;
+}
+.m-create-legend>.item{
+  display: inline-block;
+  margin-right: 0.1rem;
+  cursor: pointer;
+}
+.m-create-legend>.item>.sty{
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  width: 0.25rem;
+  height: 0.15rem;
+}
+.m-create-legend>.item>.sty>.circle{
+  position: absolute;
+  left: 7px;
+  top: 0;
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 100%;
+  background-color: #fff;
+  border:1px solid transparent;
+  border-color:#ddd;
+  z-index: 88;
+}
+.m-create-legend>.item>.sty>.line{
+  content: '';
+  position: absolute;
+  z-index: 87;
+  left: 0;
+  top: 5px;
+  display: inline-block;
+  width: 0.25rem;
+  border-top: 1px solid transparent;
+  border-color:#ddd;
+}
+.m-create-legend>.item>.text{
+  color:#999;
+}
+.m-create-legend>.active .line, .m-create-legend>.active .circle{
+  border-color:#4b3887 !important;
+}
+.m-create-legend>.active>.text{
+  color:#212121;
+}
+
+
+
 /*公告区域*/
 .notice{
   background-color: #fff;
