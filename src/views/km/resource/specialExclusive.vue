@@ -10,11 +10,11 @@
                 <section class="form-c">
                     <div class="row clr m-col-2">
                         <span class="dp col-l">商户ID：</span>
-                        <div class="col-r m-input-button"><input v-model="dealerId" maxlength="32" type="tel" placeholder="请输入查询的商户ID"><button @click="searchList()">查询</button>
-                        </div>
+                        <div class="col-r"><input style="width:80%" v-model="dealerId" maxlength="32" type="tel" placeholder="请输入查询的商户ID"></div>
                     </div>
                     <div class="row">
                         <div class="m-form-radio">
+                            <span>设备：</span>
                             <label>
                                 <span class="radio"><input type="radio" value="-1" v-model="form.cardType">
                                     <span></span>
@@ -25,16 +25,17 @@
                                 <span class="radio"><input type="radio" value="1" v-model="form.cardType">
                                     <span></span>
                                 </span>
-                                <span class="text">有设备</span>
+                                <span class="text">当前拥有设备</span>
                             </label>
                             <label>
                                 <span class="radio"><input type="radio" value="0" v-model="form.cardType">
                                     <span></span>
                                 </span>
-                                <span class="text">无设备</span>
+                                <span class="text">历史拥有设备</span>
                             </label>
                         </div>
                     </div>
+                    <button class="f-btn f-btn-line" @click="searchList()">查询</button>
                 </section>
             </div>
             <!-- 查询结果 -->
