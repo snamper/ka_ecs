@@ -41,14 +41,14 @@ export default{
 		                arr.isHome=true;
 		                for(var i=maxpage-7;i<=maxpage;i++){
 		                    arr.left.push(i)
-		                }
+                        }
 		            }else{
 		                arr.isHome=true;
 		                for(var i=page;i<=page+4;i++){
 		                    arr.left.push(i)
 		                }
 		                arr.isSpace=true;
-		                arr.right=[maxpage-1,maxpage];
+                        arr.right=[maxpage-1,maxpage];
 		            }
 		        }else if(page==1){
 		        	arr.isHome=true;
@@ -83,7 +83,6 @@ export default{
 	                	arr.right=[maxpage-1,maxpage];
 		            }
 		        }
-		        
 		    }
 		    return arr;
 		}

@@ -66,7 +66,7 @@ border-left:10px solid #20a0ff;border-top: 7px solid transparent;border-bottom: 
 
 
 .m-col-2{margin:0.1rem 0;}
-.m-col-2>.col-l{float: left;min-width:0.65rem;line-height: 0.35rem;text-align: right;}
+.m-col-2>.col-l{float: left;min-width:0.7rem;line-height: 0.35rem;text-align: right;}
 .m-col-2>.col-r{margin-left:0.7rem;display: block;margin-right: 0.1rem;}
 .m-col-2>.col-r>.m-space{padding:0 3px;}
 .m-one-font{

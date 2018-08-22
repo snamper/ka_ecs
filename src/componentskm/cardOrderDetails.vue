@@ -396,35 +396,35 @@ export default {
       vm.imgData[6] = { src: vm.list.reqParam.signImageName, name: "手签名照片" };
       vm.imgData[7] = { src: vm.list.reqParam.livingIdentificationImagePath, name: "活体识别" };
     } else {//空卡,成卡,白卡
-      if (vm.source == 7 || vm.source == 8) {//7、卡盟SDK；8远特i卡
-        let imgUrl,userMoreInfo = JSON.parse(decodeURIComponent(vm.list.userMoreInfo));
-        if ( process.env.NODE_ENV == "development" ||process.env.NODE_ENV == "test" ) {
-          imgUrl = _CONFIG.dev.SDK_IMAGE_URL;
-        } else {
-          imgUrl = _CONFIG[_CONFIG.env].SDK_IMAGE_URL;
-        }
+        if (vm.source == 7 || vm.source == 8) {//7、卡盟SDK；8远特i卡
+            let imgUrl,userMoreInfo = JSON.parse(decodeURIComponent(vm.list.userMoreInfo));
+            if ( process.env.NODE_ENV == "development" ||process.env.NODE_ENV == "test" ) {
+                 _CONFIG.dev.SDK_IMAGE_URL;
+            } else {
+                imgUrl = _CONFIG[_CONFIG.env].SDK_IMAGE_URL;
+            }
         if (vm.source == 8) {
-          Object.assign( userMoreInfo, JSON.parse(decodeURIComponent(vm.list.tokenInfo)) );
-          if ( process.env.NODE_ENV == "development" || process.env.NODE_ENV == "test" ) {
-            imgUrl = _CONFIG.dev.TF_IMAGE_URL;
-          } else {
-            imgUrl = _CONFIG[_CONFIG.env].TF_IMAGE_URL;
-          }
+            Object.assign( userMoreInfo, JSON.parse(decodeURIComponent(vm.list.tokenInfo)) );
+            if ( process.env.NODE_ENV == "development" || process.env.NODE_ENV == "test" ) {
+                imgUrl = _CONFIG.dev.TF_IMAGE_URL;
+            } else {
+                imgUrl = _CONFIG[_CONFIG.env].TF_IMAGE_URL;
+            }
         }
         if (userMoreInfo) {
-          vm.userMoreInfo = userMoreInfo;
-          vm.imgData = [ { src: imgUrl + userMoreInfo.imageNameSrc, name: "正面" }, { src: imgUrl + userMoreInfo.backImageNameSrc, name: "反面" }, { src: imgUrl + userMoreInfo.livingIdentificationImagePath, name: "活体识别" }, { src: imgUrl + userMoreInfo.signImageName, name: "手签名" } ];
+            vm.userMoreInfo = userMoreInfo;
+            vm.imgData = [ { src: imgUrl + userMoreInfo.imageName, name: "正面" }, { src: imgUrl + userMoreInfo.backImageName, name: "反面" }, { src: imgUrl + userMoreInfo.livingIdentificationImagePath, name: "活体识别" }, { src: imgUrl + userMoreInfo.signImageName, name: "手签名" } ];
         } else {
-          vm.imgData = [ { src: "", name: "正面" }, { src: "", name: "反面" }, { src: "", name: "活体识别" }, { src: "", name: "手签名" } ];
+            vm.imgData = [ { src: "", name: "正面" }, { src: "", name: "反面" }, { src: "", name: "活体识别" }, { src: "", name: "手签名" } ];
         }
       } else {
         vm.imgData = [
-          { src: vm.list.handImageUrl, name: "手持" },
-          { src: vm.list.imageUrl, name: "正面" },
-          { src: vm.list.backImageUrl, name: "反面" },
-          { src: vm.list.livingImg, name: "活体识别" },
-          { src: vm.list.signImageUrl, name: "手签名" },
-          { src: vm.list.headImageName, name: "身份证照片" }
+            { src: vm.list.handImageUrl, name: "手持" },
+            { src: vm.list.imageUrl, name: "正面" },
+            { src: vm.list.backImageUrl, name: "反面" },
+            { src: vm.list.livingImg, name: "活体识别" },
+            { src: vm.list.signImageUrl, name: "手签名" },
+            { src: vm.list.headImageName, name: "身份证照片" }
         ];
       }
 

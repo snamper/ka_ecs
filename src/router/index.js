@@ -205,6 +205,13 @@ const Resource_specialExclusive = resolve => {//专属专营号
       load();
     });
 };
+const Resource_simCard = resolve => {//专属专营号
+    load(true);
+    require.ensure(["@/views/km/resource/simCard"], () => {
+      resolve(require("@/views/km/resource/simCard"));
+      load();
+    });
+};
 
 /*统计报表*/
 const Statistics = resolve => {
@@ -469,6 +476,10 @@ const router=new Router({
         path:"specialExclusive/:val",
         component:Resource_specialExclusive,
         name:"specialExclusive"
+      },{//sim卡查询
+        path:"simCard/:val",
+        component:Resource_simCard,
+        name:"simCard"
       }]
     },
     {//统计报表

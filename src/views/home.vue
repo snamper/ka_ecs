@@ -145,6 +145,7 @@
                             <li v-if="true"><router-link :to="{name:'ordinaryExclusive',params:{val:'null'}}"><b></b>大众号查询</router-link></li>
                             <li v-if="true"><router-link :to="{name:'exclusive',params:{val:'null'}}"><b></b>专营号查询</router-link></li>
                             <li v-if="true"><router-link :to="{name:'specialExclusive',params:{val:'null'}}"><b></b>商户专营号查询</router-link></li>
+                            <li v-if="true"><router-link :to="{name:'simCard',params:{val:'null'}}"><b></b>SIM卡查询</router-link></li>
                             <!-- <li v-if="off.powerKm_sh_cx"><router-link :to="{name:'exclusiveNumber',params:{val:'null'}}"><b></b>专营号查询</router-link></li> -->
                         </ul>
                     </li>
@@ -461,6 +462,8 @@ export default{
 					crumb[1]={"name":"专营号","href":""}
 				}else if(path.indexOf("specialExclusive")>-1){
 					crumb[1]={"name":"商户专营号","href":""}
+                }else if(path.indexOf("simCard")>-1){
+					crumb[1]={"name":"SIM卡查询","href":""}
                 }
                /* else if(path.indexOf("exclusiveNumber")>-1){
 					crumb[1]={"name":"专营号","href":""}

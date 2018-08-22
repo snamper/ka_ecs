@@ -23,13 +23,13 @@
                     <div class="row fullRow" >
                         <span class="text m-title">面额：</span>
                         <div class="m-form-checkbox">
-                            <label><span class="checkbox"><input type="checkbox" value="true" v-model="context5All" checked="checked" @change="BtnCheckAll"><span></span></span><span class="text">全部</span></label>
-                            <label><span class="checkbox"><input type="checkbox" value="100" v-model="context5" checked="checked"><span></span></span><span class="text">100卡</span></label>
-                            <label><span class="checkbox"><input type="checkbox" value="50" v-model="context5" checked="checked"><span></span></span><span class="text">50卡</span></label>
-                            <label><span class="checkbox"><input type="checkbox" value="20" v-model="context5" checked="checked"><span></span></span><span class="text">20卡</span></label>
-                            <label><span class="checkbox"><input type="checkbox" value="10" v-model="context5" checked="checked"><span></span></span><span class="text">10卡</span></label>
-                            <label><span class="checkbox"><input type="checkbox" value="0" v-model="context5" checked="checked"><span></span></span><span class="text">0卡</span></label>
-                            <label><span class="checkbox"><input type="checkbox" value="-1" v-model="context5" checked="checked"><span></span></span><span class="text">无预存</span></label>
+                            <label><span class="checkbox"><input type="checkbox" value="true" v-model="context5All" checked="checked" @change="BtnCheckAll"><span></span></span><span class="f-checkText">全部</span></label>
+                            <label><span class="checkbox"><input type="checkbox" value="100" v-model="context5" checked="checked"><span></span></span><span class="f-checkText">100卡</span></label>
+                            <label><span class="checkbox"><input type="checkbox" value="50" v-model="context5" checked="checked"><span></span></span><span class="f-checkText">50卡</span></label>
+                            <label><span class="checkbox"><input type="checkbox" value="20" v-model="context5" checked="checked"><span></span></span><span class="f-checkText">20卡</span></label>
+                            <label><span class="checkbox"><input type="checkbox" value="10" v-model="context5" checked="checked"><span></span></span><span class="f-checkText">10卡</span></label>
+                            <label><span class="checkbox"><input type="checkbox" value="0" v-model="context5" checked="checked"><span></span></span><span class="f-checkText">0卡</span></label>
+                            <label><span class="checkbox"><input type="checkbox" value="-1" v-model="context5" checked="checked"><span></span></span><span class="f-checkText">无预存</span></label>
                         </div>
                     </div>
                     <button class="f-btn f-btn-line" @click="searchList()">查询</button>
@@ -279,7 +279,6 @@ export default{
                     vm.callback=function(v){vm.searchList(v)};                
                 }).catch(e=>errorDeal(e)) ;
             }
-                
         },
         getNumberInfo(v,p){
             if(v.size==0){
@@ -380,5 +379,6 @@ export default{
     /* .g-list-box, #details, .g-list-table, .g-inner-table, .g-box{width: auto;height: auto} */
     div.m-total-table{background: transparent}
     .m-title{text-align: justify;text-align-last: justify}
+    span.f-checkText{display: inline-block;margin-left: 5px;margin-right: 5px;}
 </style>
 
