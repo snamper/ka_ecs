@@ -672,8 +672,17 @@ export default {
         vm.form.startTime = laydate.now(0, "YYYY-MM-DD 00:00:00");
         vm.form.endTime = laydate.now(0, "YYYY-MM-DD 23:59:59");
         let id = this.$route.params.id;
+        let deviceType=this.$route.params.deviceType;
+        if(deviceType==1){
+            vm.form.source=6
+        }else if(deviceType==2){
+            vm.form.source=7
+        }else if(deviceType==3){
+            vm.form.source=8
+        }else{
+            return false
+        }
         if(id!="null"){
-            vm.form.source='6';
             vm.form.select='1';
             vm.form.context1=id;
             vm.searchList();
