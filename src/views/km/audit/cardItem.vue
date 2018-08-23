@@ -329,7 +329,7 @@ export default {
       }
       ww <= 640 ? (wwSet = "width:98%") : (wwSet = "max-width:645px");
       popIndex = layer.open({
-        content: `<div class="f-scroll-lt lay-div-refuse f-tal" id="refuseList">${str}<div class="checkbox-list"><input maxlength="30" type="text" id="reason" placeholder="请输入补充内容"></div></div>`,
+        content: `<div class="f-scroll-lt lay-div-refuse f-tal" id="refuseList">${str}<div class="checkbox-list"><input maxlength="30" type="text" id="remarkInput" placeholder="请输入补充内容"></div></div>`,
         btn: ["确定", "取消"],
         type: 1,
         style: wwSet,
@@ -343,21 +343,21 @@ export default {
             stopCard = "0",
             refuseReasonCode = "",
             url = "",
-            reason;
+            reason = "";
           for (let i = 0; i < p.length; i++) {
             if (p[i].nodeType == 1 && p[i].checked) {
-              remark += vm.refuseArr.list[p[i].name].info + "|"; //拒绝原因
+              reason += vm.refuseArr.list[p[i].name].info + "|"; //拒绝原因
               refuseReasonCode += vm.refuseArr.list[p[i].name].code + ","; //拒绝原因code
               if (vm.refuseArr.list[p[i].name].stopCard == 1 && auditType == 1)
                 stopCard = "1";
             }
           }
-          remark = remark.substring(0, remark.length - 1);
+          reason = reason.substring(0, reason.length - 1);
           refuseReasonCode = refuseReasonCode.substring(
             0,
             refuseReasonCode.length - 1
           );
-          reason = document.getElementById("reason").value;
+          remark = document.getElementById("remarkInput").value;
           if (remark == "" && reason == "") return false;
           let json = {
             orderId: orderId,
