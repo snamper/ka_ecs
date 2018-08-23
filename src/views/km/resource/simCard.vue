@@ -16,7 +16,7 @@
                 </section>
             </div>
             <!-- 查询结果 -->
-            <div v-if="list" class="m-total-table">
+            <div v-if="listSwitch" class="m-total-table">
                 <div class="total-head">查询结果</div>
                 <table>
                     <thead>
@@ -34,7 +34,7 @@
                             <th>开卡商户名称</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody  v-if="list">
                         <tr>
                             <td>1</td>
                             <td>{{list.iccid}}</td>
@@ -71,6 +71,7 @@ export default {
                 select:"",
                 cardType:-1,
             },
+            listSwitch:"",
             list:"",
             iccid:"",
             pageNow:1,
@@ -104,6 +105,12 @@ export default {
             requestGetSimCardList(json,()=>{vm.off.isLoad=false})
             .then((data)=>{
                 vm.list=data.data;
+                vm.listSwitch=true;
+                vm.maxpage=1;
+                vm.pageNow=1;
+                if(JSON.stringify(data.data)=="null"){
+                    vm.maxpage=0
+                }
                 vm.callback=(p)=>{vm.searchList(p)};
             }).catch(e=>errorDeal(e,()=>{vm.list=""}))
         },
