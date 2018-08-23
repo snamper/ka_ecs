@@ -349,8 +349,8 @@ import CountUp from 'vue-countup-v2';
       },2500);
       
 
-      //vm.noticeMouseEvent(true);
-      //vm.intervalGetLine(true);
+      vm.noticeMouseEvent(true);
+      vm.intervalGetLine(true);
     },
     methods: {
       callback: function(ins) {
