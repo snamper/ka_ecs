@@ -216,7 +216,6 @@ export default {
                 json.phone="";
             }
             vm.off.isLoad=true;
-            vm.pageNum=page||1;
             requestGetExclusiveNumberList(json,()=>{vm.off.isLoad=false})
             .then((data)=>{
                 vm.dataList=data.data.datas;
