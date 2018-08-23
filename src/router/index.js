@@ -410,7 +410,7 @@ const router=new Router({
         name:"orderSearch_card",
         component:OrderSearch_card,
         children:[{
-            path:":type/:id",
+            path:":type/:id/:deviceType",
             component:OrderSearch_cardItem,
             name:"orderSearch_cardItem"
         }]
