@@ -599,17 +599,10 @@ import CountUp from 'vue-countup-v2';
           min[i]=Math.min.apply(null,params.lineData[i]);
           series.push(option);
         }
+
+
         for(let j=0;j<min.length;j++){//最小值取整
-          if(min[j]>10){
-            let num=min[j].toString(),len=num.length,power;
-            if(len>=4){
-              power=Math.pow(10,(len-2));
-            }else{
-              power=Math.pow(10,(len-1));
-            }
-            num=parseInt(num/power)*power;
-            min[j]=num;
-          };
+          min[j] = vm.mathNearInteger(min[j]);
         }
         // option
         var option = {
@@ -671,11 +664,9 @@ import CountUp from 'vue-countup-v2';
         };
         option.yAxis[0].min=min[params.index];
 
-        if(params.id == "cardCreate"){
-          option.legend.show = false;
-        }
+        
 
-        if(params.id=="merchant" || params.id=="cardCreate"){
+        if(params.id=="merchant"){
           option.yAxis[0].name=params.legend[0];
           option.yAxis.push({
             name:params.legend[1],
@@ -687,7 +678,30 @@ import CountUp from 'vue-countup-v2';
             },
             min:min[1]
           });
+        }else if(params.id == "cardCreate"){
+          option.legend.show = false;
+          let _min = Math.min.apply(null,params.lineData[1]),
+              _max = Math.max.apply(null,params.lineData[0]);
+
+          _min = vm.mathNearInteger(_min);
+
+          option.yAxis[0].min=_min;
+          option.yAxis[0].max=_max;
+          option.yAxis[0].name=params.legend[0];
+          option.yAxis.push({
+            show:false,
+            name:params.legend[1],
+            splitLine: { show: false },
+            axisLine: {
+              lineStyle: {
+                color: "#3DD79B"
+              }
+            },
+            min:_min,
+            max:_max
+          });
         }
+        
 
         myChart.on("legendselectchanged", function(legend) {//legend click
           let index = 0,
@@ -745,6 +759,23 @@ import CountUp from 'vue-countup-v2';
             category: [vm.getLatelyTime(cardCreateData.created.lasttime[0],'hour',12),vm.getLatelyTime(cardCreateData.created.lasttime[1],'day',7),vm.getLatelyTime(cardCreateData.created.lasttime[2],'month',6)],
             lineData: lineData,
         });
+      },
+      mathNearInteger(num){//计算临近最小整数
+        let near;
+
+        if(num > 9){
+          let len = num.toString().length,power;
+
+          if(len >= 4){
+            power=Math.pow(10,(len-2));
+          }else{
+            power=Math.pow(10,(len-1));
+          }
+
+          near=parseInt(num/power)*power;
+        }else near = 0;
+
+        return near;
       },
       getDateTime(v){
         return getDateTime(v);

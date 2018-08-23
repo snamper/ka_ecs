@@ -185,7 +185,7 @@ export const translateData=(type,v)=> {
             return v==4 ? '成卡' : v==5 ? '白卡' : v==6 ? '空卡' : '--';
         break;
         case 15://开卡方式
-            return v==1 ? '卡盟APP' : v==2 ? 'SDK' : v==3 ? 'DWatch' : v==4? 'AndroidWear' : v==5 ? 'i卡' : v==6 ? '远微商城' : v==7 ? '信时空公众号' : '--' ;
+            return v==1 ? '卡盟APP' : v==2 ? 'i卡手机版' : v==3 ? 'i卡手表版' : v==4 ? 'i卡SDK' : v==5 ? '--' : v==6 ? '远微商城' : v==7 ? '信时空公众号' : '--' ;
         break;
         case 16://短信验证
             return v==1?'是':v==0?'否':'--';

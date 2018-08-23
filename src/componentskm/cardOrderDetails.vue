@@ -43,22 +43,7 @@
                                             <a href="javascript:void(0)" @click="detailsTime" class="details m-l">查看详情</a>
                                         </td>
                                     </tr>
-                                    <tr v-show="type==2">
-                                        <td>审核用时：</td>
-                                        <td>
-                                            <span v-if="source==7||source==8">{{ $parent.secondsFormat(parseInt(list.modifyTime)/1000-parseInt(list.createTime)/1000) }}</span>
-                                            <span v-else>{{ $parent.secondsFormat(list.auditTime) }}</span>
-                                        </td>
-                                    </tr>
-                                    <tr v-if="type==1||type==2">
-                                        <td>审核方式：</td>
-                                        <td>
-                                            <span v-if="list.auditType=='0'">实时审核</span>
-                                            <span v-else-if="list.auditType==1">事后审核</span>
-                                            <span v-else-if="list.auditType==2">自动审核</span>
-                                            <a href="javascript:void(0)" @click="autoAuditInfo" class="details m-l">查看详情</a>
-                                        </td>
-                                    </tr>
+                                   
                                     <tr v-if="type==1">
                                         <td>当前状态：</td>
                                         <td>
@@ -89,6 +74,26 @@
                                         <td>号卡状态：</td>
                                         <td>{{ $parent.translateData(4,list.cardStatus) }}</td>
                                     </tr>
+                                    <tr v-show="type==2">
+                                        <td>状态说明：</td>
+                                        <td class="fCRed">{{ list.cardStatusReason }}</td>
+                                    </tr>
+                                     <tr v-show="type==2">
+                                        <td>审核用时：</td>
+                                        <td>
+                                            <span v-if="source==7||source==8">{{ $parent.secondsFormat(parseInt(list.modifyTime)/1000-parseInt(list.createTime)/1000) }}</span>
+                                            <span v-else>{{ $parent.secondsFormat(list.auditTime) }}</span>
+                                        </td>
+                                    </tr>
+                                    <tr v-if="type==1||type==2">
+                                        <td>审核方式：</td>
+                                        <td>
+                                            <span v-if="list.auditType=='0'">实时审核</span>
+                                            <span v-else-if="list.auditType==1">事后审核</span>
+                                            <span v-else-if="list.auditType==2">自动审核</span>
+                                            <a href="javascript:void(0)" @click="autoAuditInfo" class="details m-l">查看详情</a>
+                                        </td>
+                                    </tr>
                                     <tr v-if="type==2">
                                         <td>审核状态：</td>
                                         <td v-if="list.status==1">
@@ -105,6 +110,23 @@
                                             <!-- <a v-if="list.allowRecheck==1" class="agree" href="javascript:void(0)" @click="agree">同意</a> -->
                                             <span v-if="list.allowRecheck==2" class="red">超过复审时间</span>
                                         </td>
+                                    </tr>
+                                    <tr v-show="type==2">
+                                        <td>审核人：</td>
+                                        <td>{{ list.customerName }}【审核人ID：{{ list.customerId }}】</td>
+                                    </tr>
+                                    <tr v-if="type==2&&list.status==2">
+                                        <td>拒绝原因：</td>
+                                        <td>
+                                            <ul>
+                                                <li v-for="(todo,i) in filterReason(list.auditReason)" :key="i">
+                                                    <b v-show="todo.star" class="f-c-red">*</b>{{todo.text}}</li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr v-show="type==2">
+                                        <td>审核备注：</td>
+                                        <td>{{ list.adutiRemarks || '--' }}</td>
                                     </tr>
                                     <tr v-show="source!=7&&source!=8">
                                         <td>操作人：</td>
@@ -132,14 +154,15 @@
                                         <td>原机主姓名：</td>
                                         <td>{{ list.userNameOld }}</td>
                                     </tr>
-                                    <tr v-show="source!=8">
+                                    <tr>
                                         <td>商户名称：</td>
                                         <td>
-                                            <span>{{ list.merchantShopName }}</span>
-                                            <span v-show="source!=7">【信用等级：{{list.dealerLevel}}】</span>
+                                            <span v-show="source == 6">{{ list.merchantShopName }}</span>
+                                            <span v-show="source != 6">{{ list.companyName }}</span>
+                                            <span v-show="source == 6">【信用等级：{{list.dealerLevel}}】</span>
                                         </td>
                                     </tr>
-                                    <tr v-show="source!=8">
+                                    <tr>
                                         <td>渠道ID：</td>
                                         <td>{{ list.dealerId }}
                                             <a v-show="list.dealerId" href="javascript:void(0)" @click="detailsMerchant" class="details m-l">查看详情</a>
@@ -155,14 +178,26 @@
                                         <td>{{ userMoreInfo.similarity }}%</td>
                                     </tr>
                                     <tr>
-                                        <td>电话号码：</td>
+                                        <td>开卡号码：</td>
                                         <td>
                                             <span>{{ list.phoneNumber }}</span>（
                                             <b v-if="list.cardType==1" class="f-c-purple">远特</b>
                                             <b v-if="list.cardType==2" class="f-c-yellow">联通</b>
                                             <b class="f-c-yellow">{{ $parent.translateData(5,list.phoneLevel) }}</b>，{{list.phoneHome}}）
-                                            <span v-if="list.isMonopoly==1" class="supIcon">【专营号】</span>
+                                            <span v-if="list.monopolyType==1" class="supIcon">【专营号】</span>
                                         </td>
+                                    </tr>
+                                    <tr>
+                                        <td>号卡分类：</td>
+                                        <td>{{translateData(10,list.monopolyType)}}</td>
+                                    </tr>
+                                    <tr v-if="source == 6">
+                                        <td>操作类型：</td>
+                                        <td>{{translateData(1,list.operatorType)}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>开卡方式：</td>
+                                        <td>{{translateData(15,list.appType || (parseInt(list.deviceType) + 1))}}</td>
                                     </tr>
                                     <tr>
                                         <td>用户姓名：</td>
@@ -242,40 +277,6 @@
                                         <td>识别模式：</td>
                                         <td>{{ list.openMode }}</td>
                                     </tr>
-                                    <tr v-show="type==2">
-                                        <td>审核人：</td>
-                                        <td>{{ list.customerName }}【审核人ID：{{ list.customerId }}】</td>
-                                    </tr>
-
-                                    <tr v-show="type==2">
-                                        <td>状态说明：</td>
-                                        <td>{{ list.cardStatusReason }}</td>
-                                    </tr>
-                                    <tr v-if="type==2&&list.status==2">
-                                        <td>拒绝原因：</td>
-                                        <td>
-                                            <ul>
-                                                <li v-for="(todo,i) in filterReason(list.auditReason)" :key="i">
-                                                    <b v-show="todo.star" class="f-c-red">*</b>{{todo.text}}</li>
-                                            </ul>
-                                        </td>
-                                    </tr>
-                                    <tr v-show="type==2&&list.adutiRemarks">
-                                        <td>备注：</td>
-                                        <td>{{ list.adutiRemarks }}</td>
-                                    </tr>
-                                    <tr v-if="source == 6">
-                                        <td>号卡分类：</td>
-                                        <td>{{translateData(10,list.monopolyType)}}</td>
-                                    </tr>
-                                    <tr v-if="source == 6">
-                                        <td>操作类型：</td>
-                                        <td>{{translateData(1,list.operatorType)}}</td>
-                                    </tr>
-                                    <tr v-if="source == 6">
-                                        <td>开卡方式：</td>
-                                        <td>{{translateData(15,list.appType)}}</td>
-                                    </tr>
                                     <tr v-if="source == 6">
                                         <td>预存补差价：</td>
                                         <td>{{translateData('money',list.prodRecords.diffPrestore)}}元</td>
@@ -298,11 +299,11 @@
                                         <td>可选包：{{list.prodRecords.makeOptPkg||'--'}}； 套餐：{{list.prodRecords.makePkg||'--'}}； 预存：{{translateData('money',list.prodRecords.makePrestore)}}元
                                         </td>
                                     </tr>
-                                    <tr v-if="source == 6">
+                                    <!-- <tr v-if="source == 6">
                                         <td>开卡信息：</td>
                                         <td>可选包：{{list.prodRecords.openOptPkg||'--'}}； 套餐：{{list.prodRecords.openPkg||'--'}}； 预存：{{translateData('money',list.prodRecords.openPrestore)}}元
                                         </td>
-                                    </tr>
+                                    </tr> -->
                                     <tr v-if="source == 6">
                                         <td>首充金额：</td>
                                         <td>{{translateData('money',list.prodRecords.firstCharge)}}元</td>
