@@ -200,7 +200,7 @@ export default {
             }
             if(vm.form.select==1){
                 if(vm.numberSection!=""){
-                    if(isNaN(vm.numberSection)||vm.numberSection.length<7){
+                    if(isNaN(vm.numberSection)||vm.numberSection.length<8){
                         layer.open({
                             content:"请输入正确的号码或号段",
                             skin:"msg",

@@ -676,9 +676,9 @@ export default {
         if(deviceType==1){
             vm.form.source=6
         }else if(deviceType==2){
-            vm.form.source=7
-        }else if(deviceType==3){
             vm.form.source=8
+        }else if(deviceType==3){
+            vm.form.source=7
         }else{
             return false
         }
