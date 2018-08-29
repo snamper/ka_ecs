@@ -310,14 +310,14 @@ export default{
 					vm.imgData=[
 						{'src':vm.auditData.doorPictureLeft,'name':'门店照片-左'},
 						{'src':vm.auditData.doorPictureRight,'name':'门店照片-右'},
-						{'src':vm.auditData.handPicture,'name':'手持证件照'},
+						{'src':vm.auditData.handPicture,'name':'手持/免冠证件照'},
 						{'src':vm.auditData.signPicture,'name':'手签名'},
 					];
 				}else if(vm.auditData.merchantType==2){//个人
 					vm.imgData=[
 						{'src':vm.auditData.doorPictureLeft,'name':'身份证正面'},
 						{'src':vm.auditData.doorPictureRight,'name':'身份证反面'},
-						{'src':vm.auditData.handPicture,'name':'手持证件照'},
+						{'src':vm.auditData.handPicture,'name':'手持/免冠证件照'},
 						{'src':vm.auditData.signPicture,'name':'手签名'},
 					];
 				}

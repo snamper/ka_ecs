@@ -116,7 +116,7 @@ export default{
 		vm.imgData=[
 			{'src':vm.list.doorPictureLeft?imgUrl+vm.list.doorPictureLeft:'','name':'门店照片-左'},
 			{'src':vm.list.doorPictureRight?imgUrl+vm.list.doorPictureRight:'','name':'门店照片-右'},
-			{'src':vm.list.handPicture?imgUrl+vm.list.handPicture:'','name':'手持证件照'},
+			{'src':vm.list.handPicture?imgUrl+vm.list.handPicture:'','name':'手持/免冠证件照'},
 			{'src':vm.list.signPicture?imgUrl+vm.list.signPicture:'','name':'手签名'},
 		];
 		

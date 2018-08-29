@@ -396,7 +396,6 @@ const router=new Router({
     {//订单查询
       path:"orderSearch",
       component:OrderSearch,
-    //redirect:"orderSearch/card",
       redirect:function(){
         let _switch=getKmMenu();
         if(_switch.powerKm5b){

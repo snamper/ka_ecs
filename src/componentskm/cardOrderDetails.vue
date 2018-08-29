@@ -376,25 +376,25 @@ export default {
     if (vm.list.operatorType == 7) {//过户办理
       vm.imgData[0] = { src: vm.list.frontImageOld, name: "原机主正面照片" };
       vm.imgData[1] = { src: vm.list.backImageOld, name: "原机主反面照片" };
-      vm.imgData[2] = { src: vm.list.handImageOld, name: "原机主手持照片" };
-      vm.imgData[3] = { src: vm.list.papersImage, name: "过户人正面照片" };
-      vm.imgData[4] = { src: vm.list.backImage, name: "过户人反面照片" };
-      vm.imgData[5] = { src: vm.list.handImage, name: "过户人手持照片" };
-      vm.imgData[6] = { src: vm.list.signImage, name: "过户人手签名照片" };
+      vm.imgData[2] = { src: vm.list.handImageOld, name: "原机主手持/免冠照片" };
+      vm.imgData[3] = { src: vm.list.papersImage, name: "新机主正面照片" };
+      vm.imgData[4] = { src: vm.list.backImage, name: "新机主反面照片" };
+      vm.imgData[5] = { src: vm.list.handImage, name: "新机主手持/免冠照片" };
+      vm.imgData[6] = { src: vm.list.signImage, name: "新机主手签名照片" };
       vm.imgData[7] = { src: vm.list.livingImg, name: "活体识别" };
     } else if (vm.list.operatorType == 8) {//补换卡
       vm.imgData[0] = { src: vm.list.reqParam.imageName, name: "正面照片" };
       vm.imgData[1] = { src: vm.list.reqParam.backImageName, name: "反面照片" };
-      vm.imgData[2] = { src: vm.list.reqParam.handImageName, name: "手持照片" };
+      vm.imgData[2] = { src: vm.list.reqParam.handImageName, name: "手持/免冠照片" };
       vm.imgData[3] = { src: vm.list.reqParam.signImageName, name: "手签名照片" };
       // vm.imgData[3]={'src':vm.list.reqParam.livingIdentificationImagePath,'name':'活体识别'};
     } else if (vm.list.operatorType == 4) {//实名补登
       vm.imgData[0] = { src: vm.list.oldReqParam.imageName, name: "原正面照片" };
       vm.imgData[1] = { src: vm.list.oldReqParam.backImageName, name: "原反面照片" }; //
-      vm.imgData[2] = { src: vm.list.oldReqParam.handImageName, name: "原手持照片" };
+      vm.imgData[2] = { src: vm.list.oldReqParam.handImageName, name: "原手持/免冠照片" };
       vm.imgData[3] = { src: vm.list.reqParam.imageName, name: "正面照片" };
       vm.imgData[4] = { src: vm.list.reqParam.backImageName, name: "反面照片" };
-      vm.imgData[5] = { src: vm.list.reqParam.handImageName, name: "手持照片" };
+      vm.imgData[5] = { src: vm.list.reqParam.handImageName, name: "手持/免冠照片" };
       vm.imgData[6] = { src: vm.list.reqParam.signImageName, name: "手签名照片" };
       vm.imgData[7] = { src: vm.list.reqParam.livingIdentificationImagePath, name: "活体识别" };
     } else {//空卡,成卡,白卡
@@ -418,9 +418,9 @@ export default {
             vm.imgData = [ { src: imgUrl + userMoreInfo.imageName, name: "正面" }, { src: imgUrl + userMoreInfo.backImageName, name: "反面" }, { src: imgUrl + userMoreInfo.livingIdentificationImagePath, name: "活体识别" }, { src: imgUrl + userMoreInfo.signImageName, name: "手签名" } ];
             if(vm.source==8){
                 if(vm.list.reqParam.hasOwnProperty('reqParam')){
-                    vm.imgData.push({ src: imgUrl + vm.list.reqParam.handImageName, name: "手持照" });                
+                    vm.imgData.push({ src: imgUrl + vm.list.reqParam.handImageName, name: "手持/免冠照" });                
                 }else{
-                    vm.imgData.push({ src: '', name: "手持照" });                
+                    vm.imgData.push({ src: '', name: "手持/免冠照" });                
                 }
             }
         } else {
@@ -428,7 +428,7 @@ export default {
         }
       } else {
         vm.imgData = [
-            { src: vm.list.handImageUrl, name: "手持" },
+            { src: vm.list.handImageUrl, name: "手持/免冠" },
             { src: vm.list.imageUrl, name: "正面" },
             { src: vm.list.backImageUrl, name: "反面" },
             { src: vm.list.livingImg, name: "活体识别" },

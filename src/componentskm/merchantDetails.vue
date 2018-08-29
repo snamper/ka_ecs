@@ -365,7 +365,7 @@ export default{
             vm.$parent.merchantImgData=[
                 {'src':vm._ajaxData.details.frontImageUrl?imgUrl+vm._ajaxData.details.frontImageUrl:'','name':merchantType=='企业' ? '门店左照片' : '正面照片'},
                 {'src':vm._ajaxData.details.backImageUrl?imgUrl+vm._ajaxData.details.backImageUrl:'','name':merchantType=='企业' ? '门店右照片' : '反面照片'},
-                {'src':vm._ajaxData.details.handImageUrl?imgUrl+vm._ajaxData.details.handImageUrl:'','name':'手持照片'}
+                {'src':vm._ajaxData.details.handImageUrl?imgUrl+vm._ajaxData.details.handImageUrl:'','name':'手持/免冠照片'}
             ]
             vm.$parent.closePop(1);
         },sellScopePower(){

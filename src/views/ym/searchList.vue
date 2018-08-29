@@ -228,9 +228,11 @@
 					<td>{{translateData(6,todo.takeTime)}}</td>
 					<td :class="{fCYellow:todo.cardStatus==1,fCGreen:todo.cardStatus==2,fCRed:todo.cardStatus==3,fCGrey:todo.cardStatus==9}">{{translateData(4,todo.cardStatus)}}</td>
 					<td>
+					    <span v-if="todo.gztCheckResult==-1">不适用</span>
+					    <span v-if="todo.gztCheckResult==0">未执行</span>
 					    <span v-if="todo.gztCheckResult==1">成功</span>
-					    <span v-if="todo.gztCheckResult==2">失败</span>
-					    <span v-if="todo.gztCheckResult==3">未定</span>
+					    <span v-if="todo.gztCheckResult==2">拒绝</span>
+					    <span v-if="todo.gztCheckResult==3">无法校验</span>
 					    <span v-if="!todo.hasOwnProperty('gztCheckResult')">未校验</span>
 				    </td>
 					<td colspan="2" v-if="todo.result==1" class="td-col-2">

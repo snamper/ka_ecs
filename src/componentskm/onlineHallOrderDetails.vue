@@ -68,7 +68,7 @@
     created:function(){
       var vm=this;
       vm.imgData=[
-        {'src':vm.list.fourthImage,'name':'手持'},
+        {'src':vm.list.fourthImage,'name':'手持/免冠'},
         {'src':vm.list.papersImage,'name':'正面'},
         {'src':vm.list.backImage,'name':'反面'}
       ];

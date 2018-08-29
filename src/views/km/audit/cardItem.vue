@@ -446,30 +446,30 @@ export default {
             if (vm.off.itemType == 7) {//过户办理
             this.$set(vm.imgData, 0, { src: vm.auditData.frontImageOld, name: "原机主正面照片" });
             this.$set(vm.imgData, 1, { src: vm.auditData.backImageOld, name: "原机主反面照片" });
-            this.$set(vm.imgData, 2, { src: vm.auditData.handImageOld, name: "原机主手持照片" });
-            this.$set(vm.imgData, 3, { src: vm.auditData.imageUrl, name: "过户人正面照片" });
-            this.$set(vm.imgData, 4, { src: vm.auditData.backImageUrl, name: "过户人反面照片" });
-            this.$set(vm.imgData, 5, { src: vm.auditData.handImage, name: "过户人手持照片" });
-            this.$set(vm.imgData, 6, { src: vm.auditData.signImage, name: "过户人手签名照片" });
+            this.$set(vm.imgData, 2, { src: vm.auditData.handImageOld, name: "原机主手持/免冠照片" });
+            this.$set(vm.imgData, 3, { src: vm.auditData.imageUrl, name: "新机主正面照片" });
+            this.$set(vm.imgData, 4, { src: vm.auditData.backImageUrl, name: "新机主反面照片" });
+            this.$set(vm.imgData, 5, { src: vm.auditData.handImage, name: "新机主手持/免冠照片" });
+            this.$set(vm.imgData, 6, { src: vm.auditData.signImage, name: "新机主手签名照片" });
             this.$set(vm.imgData, 7, { src: vm.auditData.livingImgUrl, name: "活体识别照片" });
             } else if (vm.off.itemType == 1) {//实名补登
             this.$set(vm.imgData, 0, { src: vm.auditData.oldReqParam.imageName, name: "原正面照片" });
             this.$set(vm.imgData, 1, { src: vm.auditData.oldReqParam.backImageName, name: "原反面照片" });
-            this.$set(vm.imgData, 2, { src: vm.auditData.oldReqParam.handImageName, name: "原手持照片" });
+            this.$set(vm.imgData, 2, { src: vm.auditData.oldReqParam.handImageName, name: "原手持/免冠照片" });
             this.$set(vm.imgData, 3, { src: vm.auditData.reqParam.imageName, name: "正面照片" });
             this.$set(vm.imgData, 4, { src: vm.auditData.reqParam.backImageName, name: "反面照片" });
-            this.$set(vm.imgData, 5, { src: vm.auditData.reqParam.handImageName, name: "手持照片" });
+            this.$set(vm.imgData, 5, { src: vm.auditData.reqParam.handImageName, name: "手持/免冠照片" });
             this.$set(vm.imgData, 6, { src: vm.auditData.reqParam.signImageName, name: "手签名照片" });
             this.$set(vm.imgData, 7, { src: vm.auditData.reqParam.livingIdentificationImagePath, name: "活体识别照片" });
             } else if (vm.off.itemType == 2) {//补换卡
             this.$set(vm.imgData, 0, { src: vm.auditData.reqParam.imageName, name: "正面照片" });
             this.$set(vm.imgData, 1, { src: vm.auditData.reqParam.backImageName, name: "反面照片" });
-            this.$set(vm.imgData, 2, { src: vm.auditData.reqParam.handImageName, name: "手持照片" });
+            this.$set(vm.imgData, 2, { src: vm.auditData.reqParam.handImageName, name: "手持/免冠照片" });
             this.$set(vm.imgData, 3, { src: vm.auditData.reqParam.signImageName, name: "手签名照片" });
             } else {
             this.$set(vm.imgData, 0, { src: vm.auditData.imageUrl, name: "正面照" });
             this.$set(vm.imgData, 1, { src: vm.auditData.backImageUrl, name: "反面照" });
-            this.$set(vm.imgData, 2, { src: vm.auditData.handImageUrl, name: "手持照" });
+            this.$set(vm.imgData, 2, { src: vm.auditData.handImageUrl, name: "手持/免冠照" });
             this.$set(vm.imgData, 3, { src: vm.auditData.livingImgUrl, name: "活体识别" });
             this.$set(vm.imgData, 4, { src: vm.auditData.signImageUrl || vm.auditData.signImgUrl, name: "手签名" });
             if (vm.off.itemType == '4,5,6') {//业务订单

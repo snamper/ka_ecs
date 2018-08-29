@@ -287,18 +287,18 @@ export default{
 			vm.imgData[1]={'src':vm.list.transferFrontImageOld||'../../assets/ym/img/no-img.png','name':'原机主过户正面照片'};
 			vm.imgData[2]={'src':vm.list.backImageOld||'../../assets/ym/img/no-img.png','name':'原机主反面照片'};//
 			vm.imgData[3]={'src':vm.list.transferBackImageOld||'../../assets/ym/img/no-img.png','name':'原机主过户反面照片'};
-			vm.imgData[4]={'src':vm.list.handImageOld||'../../assets/ym/img/no-img.png','name':'原机主手持照片'};
-			vm.imgData[5]={'src':vm.list.transferHandImageOld||'../../assets/ym/img/no-img.png','name':'原机主过户手持照片'};
+			vm.imgData[4]={'src':vm.list.handImageOld||'../../assets/ym/img/no-img.png','name':'原机主手持/免冠照片'};
+			vm.imgData[5]={'src':vm.list.transferHandImageOld||'../../assets/ym/img/no-img.png','name':'原机主过户手持/免冠照片'};
 
-			vm.imgData[6]={'src':vm.list.papersImage||'../../assets/ym/img/no-img.png','name':'过户人正面照片'};
-			vm.imgData[7]={'src':vm.list.backImage||'../../assets/ym/img/no-img.png','name':'过户人反面照片'};
-			vm.imgData[8]={'src':vm.list.handImage||'../../assets/ym/img/no-img.png','name':'过户人手持照片'};
-			vm.imgData[9]={'src':vm.list.signImage||'../../assets/ym/img/no-img.png','name':'过户人手签名照片'};
+			vm.imgData[6]={'src':vm.list.papersImage||'../../assets/ym/img/no-img.png','name':'新机主正面照片'};
+			vm.imgData[7]={'src':vm.list.backImage||'../../assets/ym/img/no-img.png','name':'新机主反面照片'};
+			vm.imgData[8]={'src':vm.list.handImage||'../../assets/ym/img/no-img.png','name':'新机主手持/免冠照片'};
+			vm.imgData[9]={'src':vm.list.signImage||'../../assets/ym/img/no-img.png','name':'新机主手签名照片'};
 
 			vm.zoomStyle_1.backgroundImage='url('+vm.imgData[0].src+')';
 			vm.zoomStyle_2.backgroundImage='url('+vm.imgData[1].src+')';
 		}else{
-			vm.imgData=[{'src':vm.list.handImage||'../../assets/ym/img/no-img.png','name':'手持'},{'src':vm.list.papersImage||'../../assets/ym/img/no-img.png','name':'正面'},{'src':vm.list.backImage||'../../assets/ym/img/no-img.png','name':'反面'},{'src':vm.list.avatarImage||'../../assets/ym/img/no-img.png','name':'头像'},{'src':vm.list.signImage||'../../assets/ym/img/no-img.png','name':'手签名'}];
+			vm.imgData=[{'src':vm.list.handImage||'../../assets/ym/img/no-img.png','name':'手持/免冠'},{'src':vm.list.papersImage||'../../assets/ym/img/no-img.png','name':'正面'},{'src':vm.list.backImage||'../../assets/ym/img/no-img.png','name':'反面'},{'src':vm.list.avatarImage||'../../assets/ym/img/no-img.png','name':'头像'},{'src':vm.list.signImage||'../../assets/ym/img/no-img.png','name':'手签名'}];
 				vm.zoomStyle.backgroundImage='url('+vm.imgData[0].src+')';
 		}
 	},
@@ -384,6 +384,10 @@ export default{
                 return val == 0 ? '未执行' : val == -1 ? '不适用' : val + '%';
             }
 
+            const transferGztCheck = (val)=>{
+                return val == -1 ? '不适用' : val == 0 ? '未执行' : val==1 ? '成功' : val==2 ? '拒绝' : val==3 ? '无法校验' : '--';
+            }
+
             const transfer_result = (val)=>{
                 let name = '', style = 'fCGrey';
 
@@ -432,7 +436,7 @@ export default{
 					<li class="clr"><div class="fl">上传姓名与OCR对比相似度：</div><div class="fright">${transfer(list_item1.id_card_name_similarity)}</div></li>
 					<li class="clr"><div class="fl">上传地址与OCR对比相似度：</div><div class="fright">${transfer(list_item1.id_card_address_similarity)}</div></li>
 					<li class="clr"><div class="fl">上传有效期与OCR对比相似度：</div><div class="fright">${transfer(list_item1.id_card_period_similarity)}</div></li>
-					<li class="clr"><div class="fl">国政通校验结果：</div><div class="fright ${transfer_result(list_item1.gzt_check).style}">${ transfer_result(list_item1.gzt_check).name }</div></li>			
+					<li class="clr"><div class="fl">国政通校验结果：</div><div class="fright ${transfer_result(list_item1.gzt_check).style}">${ transferGztCheck(list_item1.gzt_check) }</div></li>			
                     <li class="clr">
                       <div class="fl">审核结果：</div>
                       <div class="fright">${

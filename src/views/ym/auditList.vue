@@ -451,18 +451,18 @@ export default{
 					vm.imgData[1]={'src':vm.auditData.transferFrontImageOld||'../../assets/ym/img/no-img.png','name':'原机主过户正面照片'};
 					vm.imgData[2]={'src':vm.auditData.backImageOld||'../../assets/ym/img/no-img.png','name':'原机主反面照片'};//
 					vm.imgData[3]={'src':vm.auditData.transferBackImageOld||'../../assets/ym/img/no-img.png','name':'原机主过户反面照片'};
-					vm.imgData[4]={'src':vm.auditData.handImageOld||'../../assets/ym/img/no-img.png','name':'原机主手持照片'};
-					vm.imgData[5]={'src':vm.auditData.transferHandImageOld||'../../assets/ym/img/no-img.png','name':'原机主过户手持照片'};
+					vm.imgData[4]={'src':vm.auditData.handImageOld||'../../assets/ym/img/no-img.png','name':'原机主手持/免冠照片'};
+					vm.imgData[5]={'src':vm.auditData.transferHandImageOld||'../../assets/ym/img/no-img.png','name':'原机主过户手持/免冠照片'};
 
-					vm.imgData[6]={'src':vm.auditData.papersImage||'../../assets/ym/img/no-img.png','name':'过户人正面照片'};
-					vm.imgData[7]={'src':vm.auditData.backImage||'../../assets/ym/img/no-img.png','name':'过户人反面照片'};
-					vm.imgData[8]={'src':vm.auditData.avatarImage||'../../assets/ym/img/no-img.png','name':'过户人手持照片'};
-					vm.imgData[9]={'src':vm.auditData.signImage||'../../assets/ym/img/no-img.png','name':'过户人手签名照片'};
+					vm.imgData[6]={'src':vm.auditData.papersImage||'../../assets/ym/img/no-img.png','name':'正面照片'};
+					vm.imgData[7]={'src':vm.auditData.backImage||'../../assets/ym/img/no-img.png','name':'新机主反面照片'};
+					vm.imgData[8]={'src':vm.auditData.avatarImage||'../../assets/ym/img/no-img.png','name':'新机主手持/免冠照片'};
+					vm.imgData[9]={'src':vm.auditData.signImage||'../../assets/ym/img/no-img.png','name':'新机主手签名照片'};
 
 					vm.zoomStyle_1.backgroundImage='url('+vm.imgData[0].src+')';
 					vm.zoomStyle_2.backgroundImage='url('+vm.imgData[1].src+')';
 				}else{
-					vm.imgData=[{'src':vm.auditData.avatarImage||'../../assets/ym/img/no-img.png','name':'手持'},{'src':vm.auditData.papersImage||'../../assets/ym/img/no-img.png','name':'正面'},{'src':vm.auditData.backImage||'../../assets/ym/img/no-img.png','name':'反面'},{'src':vm.auditData.headImage||'../../assets/ym/img/no-img.png','name':'头像'},{'src':vm.auditData.signImage||'../../assets/ym/img/no-img.png','name':'手签名'}];
+					vm.imgData=[{'src':vm.auditData.avatarImage||'../../assets/ym/img/no-img.png','name':'手持/免冠'},{'src':vm.auditData.papersImage||'../../assets/ym/img/no-img.png','name':'正面'},{'src':vm.auditData.backImage||'../../assets/ym/img/no-img.png','name':'反面'},{'src':vm.auditData.headImage||'../../assets/ym/img/no-img.png','name':'头像'},{'src':vm.auditData.signImage||'../../assets/ym/img/no-img.png','name':'手签名'}];
 					vm.zoomStyle.backgroundImage='url('+vm.imgData[0].src+')';
 				}
 				vm.off.auditIndex++;
