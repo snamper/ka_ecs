@@ -139,14 +139,14 @@
                                         <td v-if="source==8">{{ userMoreInfo.host||'--' }}</td>
                                         <td v-else>{{ list.host || '--'}}</td>
                                     </tr>
-                                    <tr v-show="source!=7">
+                                    <tr>
                                         <td>开卡位置信息：</td>
                                         <td>
                                             <span v-show="list.longitude||userMoreInfo.longitude">
                                                 <i v-if="source==8">{{ userMoreInfo.latitude }}，{{ userMoreInfo.longitude }}</i>
                                                 <i v-else>{{ list.latitude }}，{{ list.longitude }}</i>
                                                 <a href="javascript:void(0)" @click="toMap" class="details m-l">查看地图</a>
-                                                <em v-if="source!=8">{{ list.street }}</em>
+                                                <em>{{ list.street }}</em>
                                             </span>
                                         </td>
                                     </tr>
