@@ -27,7 +27,8 @@
                 </section>
                 <!-- <div class="m-tag"><b></b>条件查询</div> -->
                 <section class="form-c">
-                    <div class="row">
+                    <!-- 非i卡操作类型查询条件 -->
+                    <div class="row" v-if="form.source!=8">
                         <span class="dp">操作类型：</span>
                         <div class="m-form-radio">
                             <label>
@@ -65,6 +66,30 @@
                                     <span></span>
                                 </span>
                                 <span class="text">补换卡</span>
+                            </label>
+                        </div>
+                    </div>
+                    <!-- i卡操作类型查询条件 -->
+                    <div class="row" v-if="form.source==8">
+                        <span class="dp">操作类型：</span>
+                        <div class="m-form-radio">
+                            <label>
+                                <span class="radio"><input value="6" type="radio" v-model="form.orderType">
+                                    <span></span>
+                                </span>
+                                <span class="text">开空卡</span>
+                            </label>
+                            <label>
+                                <span class="radio"><input value="5" type="radio" v-model="form.orderType">
+                                    <span></span>
+                                </span>
+                                <span class="text">开白卡</span>
+                            </label>
+                            <label>
+                                <span class="radio"><input value="4" type="radio" v-model="form.orderType">
+                                    <span></span>
+                                </span>
+                                <span class="text">开成卡</span>
                             </label>
                         </div>
                     </div>
@@ -496,7 +521,8 @@
                             <td>{{getDateTime(todo.createTime)[6]}}</td>
                             <td v-if="off.type==4">{{getDateTime(todo.modifyTime)[6]}}</td>
                             <td>
-                                <span>{{translateData(1,todo.type)}}</span>
+                                <span v-if="form.source==8">{{translateData(17,todo.type)}}</span>
+                                <span v-if="form.source!=8">{{translateData(1,todo.type)}}</span>
                             </td>
                             <td>
                                 <span v-if="todo.auditType=='0'">实时审核</span>
@@ -1070,7 +1096,7 @@ export default {
     getTfJson(json) {
       //远特i卡查询采用统一查询接口
       var vm = this,
-        type = vm.off.type,
+        type = vm.off.type, //1，待审核;2，已审核;3，进行中;4，已关闭
         str,
         resJson = {
           opKey: "",
@@ -1079,9 +1105,9 @@ export default {
           pageNum: json.pageNum
         };
         if (type == 3 || type == 4) {
-            str = "A.device_type in (1,2) AND "
+            str = "A.device_type in (1,2) AND A.biz_type="+json.type+" AND "
         }else if(type == 2 || type == 1){
-            str = "B.device_type in (1,2) AND "
+            str = "B.device_type in (1,2) AND B.biz_type="+json.type+" AND "
         }
         var sql =
           str+"A.create_time BETWEEN " +

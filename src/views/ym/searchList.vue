@@ -13,6 +13,8 @@
     .m-sub-page>.fl{
         padding: 20px;
     }
+    .row .dp{display: inline-block;min-width:80px;text-align: justify;text-align-last: justify}
+    .m-col-2>.col-r{margin-left: 0.8rem}
 </style>
 <template>
   <div id="search" :class="{active:off.details}">
@@ -91,6 +93,15 @@
                     </span>
                 </div>
             </div>
+            <!-- <div class="row">
+				<span class="dp">开卡来源：</span>
+				<div class="m-form-radio">
+					<label><span class="radio"><input type="radio" value="0" v-model="form.cardSrc"><span></span></span><span class="text">全部</span></label>
+					<label><span class="radio"><input type="radio" value="1" v-model="form.cardSrc"><span></span></span><span class="text">远盟APP</span></label>
+					<label><span class="radio"><input type="radio" value="2" v-model="form.cardSrc"><span></span></span><span class="text">卡盟APP</span></label>
+					<label><span class="radio"><input type="radio" value="3" v-model="form.cardSrc"><span></span></span><span class="text">远特i卡</span></label>
+				</div>
+			</div> -->
 		</section>
 		<section class="form-c o-no-bgc">
 			<div class="row" :class="{active:form.select==2}">
@@ -289,6 +300,7 @@ export default {
       form: {
         source: [0], //系统名称
         orderType: [1, 2, 6, 4, 5], //操作类型
+        cardSrc:0,//开卡来源
         auditType: 0, //审核方式
         orderStatus: 9, //订单状态
         context1: "", //订单号码

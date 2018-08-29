@@ -15,8 +15,8 @@
 			<div class="row">
 				<span class="dp">充值类型：</span>
 				<div class="m-form-radio">
-					<label><span class="radio"><input value="1" type="radio" v-model="form.rechargeType"><span></span></span><span class="text">流量</span></label>
-					<label><span class="radio"><input value="2" type="radio" v-model="form.rechargeType"><span></span></span><span class="text">话费</span></label>
+					<label @click="shiftRechargeType()"><span class="radio"><input value="1" type="radio" v-model="form.rechargeType"><span></span></span><span class="text">流量</span></label>
+					<label @click="shiftRechargeType()"><span class="radio"><input value="2" type="radio" v-model="form.rechargeType"><span></span></span><span class="text">话费</span></label>
 				</div>
 			</div>
 			<div class="row">
@@ -27,6 +27,7 @@
 					<label><span class="radio"><input type="radio" value="1" v-model="form.isp"><span></span></span><span class="text">移动</span></label>
 					<label><span class="radio"><input type="radio" value="2" v-model="form.isp"><span></span></span><span class="text">联通</span></label>
 					<label><span class="radio"><input type="radio" value="3" v-model="form.isp"><span></span></span><span class="text">电信</span></label>
+					<label v-if="form.rechargeType==2"><span class="radio"><input type="radio" value="other" v-model="form.isp"><span></span></span><span class="text">其他</span></label>
 				</div>
 			</div>
 			<div class="row">
@@ -118,6 +119,7 @@
 						<span v-show="todo.isp==2">联通</span>
 						<span v-show="todo.isp==3">电信</span>
 						<span v-show="todo.isp==4">远特</span>
+                        <span v-show="todo.isp>4">{{todo.ispName}}</span>
 					</td>
 					<td>
 						<span v-show="todo.payType==1" class="u-icon-yuantelrecharge"></span>
@@ -169,7 +171,8 @@ export default{
 			off:{
 				isLoad:0,//加载条
 				details:0,//详情页面开关
-				number:'',//第几条详情
+                number:'',//第几条详情
+                ispName:false,
 			},
 			form:{
 				isp:0,//运营商
@@ -210,7 +213,8 @@ export default{
 		getForm(page){
 			var vm=this,select=vm.form.select,
 			   sql="A.create_time BETWEEN "+getUnixTime(vm.form.startTime)+" AND "+getUnixTime(vm.form.endTime)+"",
-			  json={"pageSize":vm.pageSize,"pageNum":page||1,"params":[]};
+              json={"pageSize":vm.pageSize,"pageNum":page||1,"params":[]};
+              vm.off.ispName=false;
 			let context=vm.form['context'+vm.form.select];
 			if(select==1&&(!context)){
 				layer.open({
@@ -272,17 +276,20 @@ export default{
 					sql+=" AND A.info_isp="+vm.form.isp;
 				}
 				json.sum='A.info_price';
-			}else if(vm.form.rechargeType==2){
+			}else if(vm.form.rechargeType==2){//话费
 				json.opKey="order.rechargePhone.list";
-				if(vm.form.isp!=0){
+				if(vm.form.isp!=0&&vm.form.isp!='other'){
 					sql+=" AND A.isp="+vm.form.isp;
-				}
+				}else if(vm.form.isp=='other'){
+                    sql+=" AND A.isp>4";
+                    vm.off.ispName=true;
+                }
 				json.sum='A.info_fee';
 			}
 			json.params.push(sql);
 			return json;
 		},
-		searchList:function(page){
+		searchList(page){
 			const vm=this;
 			let json=vm.getForm(page);
 			if(!json)return false;
@@ -301,7 +308,7 @@ export default{
             }).catch(error=>errorDeal(error));
 		},
 		// 导出查询结果excel
-		downLoadList:function(){
+		downLoadList(){
 			const vm=this;
 			let json=vm.getForm();
 			if(!json)return false;
@@ -318,7 +325,7 @@ export default{
 		        vm.off.isLoad=false;
 	      	});
 		},
-		details:function(e){//详情
+		details(e){//详情
 			var vm=this,
 			orderId=e.target.name,
 			json={"pageSize":"10","pageNum":"-1","params":['A.sys_order_id="'+orderId+'"']};
@@ -342,7 +349,7 @@ export default{
                  vm.off.isLoad=false;
             }).catch(error=>errorDeal(error)); 	
 		},
-		to_laydate:function(v){
+		to_laydate(v){
 			var vm=this;
 			laydate({
 				istime:true,
@@ -353,9 +360,9 @@ export default{
 				}
 			});
 		},
-		topShiftClick(){
+		shiftRechargeType(){
 			var vm=this;
-			vm.list='';
+			vm.form.isp='0';
 		},
 		getDateTime(v){
 			return getDateTime(v);

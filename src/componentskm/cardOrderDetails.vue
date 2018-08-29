@@ -4,7 +4,7 @@
   *@date 2017-2-11
 * *-->
 <style scoped>
-.supIcon { color: #ff961e; }
+    .supIcon { color: #ff961e; }
 </style>
 <template>
     <section class="g-list-box" id="details">
@@ -40,7 +40,7 @@
                                     <tr v-if="type==1||type==2">
                                         <td>状态修改时间：</td>
                                         <td>{{getDateTime(list.modifyTime)[6]}}
-                                            <a href="javascript:void(0)" @click="detailsTime" class="details m-l">查看详情</a>
+                                            <a v-if="detailsSource!=7" href="javascript:void(0)" @click="detailsTime" class="details m-l">查看详情</a>
                                         </td>
                                     </tr>
                                    
@@ -191,9 +191,12 @@
                                         <td>号卡分类：</td>
                                         <td>{{translateData(10,list.monopolyType)}}</td>
                                     </tr>
-                                    <tr v-if="source == 6">
+                                    <tr >
                                         <td>操作类型：</td>
-                                        <td>{{translateData(1,list.operatorType)}}</td>
+                                        <td>
+                                            <span v-if="source == 6">{{translateData(1,list.operatorType)}}</span>
+                                            <span v-if="source == 8||source == 7">{{translateData(17,list.type)}}</span>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>开卡方式：</td>
@@ -329,9 +332,7 @@
                 <RealNameRechCard v-if="list.operatorType==8" :auditStatus="type" :auditData="list" :imgData="imgData"></RealNameRechCard>
             </table>
         </div>
-        <um-details-view v-if="isShowDetails" :type="typeDetails" :list="detailsList" :dealerId="list.dealerId">
-
-        </um-details-view>
+        <um-details-view v-if="isShowDetails" :type="typeDetails" :list="detailsList" :dealerId="list.dealerId"></um-details-view>
     </section>
 </template>
 <script>
@@ -415,6 +416,13 @@ export default {
         if (userMoreInfo) {
             vm.userMoreInfo = userMoreInfo;
             vm.imgData = [ { src: imgUrl + userMoreInfo.imageName, name: "正面" }, { src: imgUrl + userMoreInfo.backImageName, name: "反面" }, { src: imgUrl + userMoreInfo.livingIdentificationImagePath, name: "活体识别" }, { src: imgUrl + userMoreInfo.signImageName, name: "手签名" } ];
+            if(vm.source==8){
+                if(vm.list.reqParam.hasOwnProperty('reqParam')){
+                    vm.imgData.push({ src: imgUrl + vm.list.reqParam.handImageName, name: "手持照" });                
+                }else{
+                    vm.imgData.push({ src: '', name: "手持照" });                
+                }
+            }
         } else {
             vm.imgData = [ { src: "", name: "正面" }, { src: "", name: "反面" }, { src: "", name: "活体识别" }, { src: "", name: "手签名" } ];
         }
@@ -432,19 +440,19 @@ export default {
       if (vm.type == 2) {
         //已审核
         if (vm.source == 7) {
-          let imgUrl = _CONFIG[_CONFIG.env].SDK_IMAGE_URL;
-          if (vm.list.acceptanceImg) {
-            vm.imgData.push({ src: imgUrl + vm.list.acceptanceImg, name: "受理单" });
-          } else {
-            vm.imgData.push({ src: "", name: "受理单" });
-          }
+            let imgUrl = _CONFIG[_CONFIG.env].SDK_IMAGE_URL;
+            if (vm.list.acceptanceImg) {
+                vm.imgData.push({ src: imgUrl + vm.list.acceptanceImg, name: "受理单" });
+            } else {
+                vm.imgData.push({ src: "", name: "受理单" });
+            }
         } else {
-          if (vm.source == 8) {
-            let imgUrl = _CONFIG[_CONFIG.env].TF_IMAGE_URL;
-            vm.imgData.push({ src: imgUrl + vm.list.acceptanceImg, name: "受理单" });
-          } else {
-            vm.imgData.push({ src: vm.list.acceptanceImg, name: "受理单" });
-          }
+            if (vm.source == 8) {
+                let imgUrl = _CONFIG[_CONFIG.env].TF_IMAGE_URL;
+                vm.imgData.push({ src: imgUrl + vm.list.acceptanceImg, name: "受理单" });
+            } else {
+                vm.imgData.push({ src: vm.list.acceptanceImg, name: "受理单" });
+            }
         }
       }
     }
@@ -461,7 +469,7 @@ export default {
       w < 640 ? (url = "http://map.baidu.com/mobile/?latlng=" + latitude + "," + longitude + "") : (url = "http://map.baidu.com/?latlng=" + latitude + "," + longitude + "");
       window.open(url);
     },
-    close: function() {
+    close() {
       this.$parent.off.details = false;
     },
     detailsTime() {
@@ -484,60 +492,27 @@ export default {
         "km-ecs/w/handler/query"
       )
         .then(data => {
-          var list_item = data.data.list[0],
-            str = "",
-            str2 = "";
+          var list_item = data.data.list[0], str = "", str2 = "";
           if (list_item) {
             if (list_item.card_type == 1) {
-              str += `<li class="clr"><div class="fl">实时审核时间：</div><div class="fright">${
-                vm.getDateTime(list_item.time_real_audited)[6]
-              }</div></li>`;
-              str2 += `<li class="clr"><div class="fl">开卡保存订单时间：</div><div class="fright">${
-                vm.getDateTime(list_item.time_save_order)[6]
-              }</div></li>`;
+              str += `<li class="clr"><div class="fl">实时审核时间：</div><div class="fright">${ vm.getDateTime(list_item.time_real_audited)[6] }</div></li>`;
+              str2 += `<li class="clr"><div class="fl">开卡保存订单时间：</div><div class="fright">${ vm.getDateTime(list_item.time_save_order)[6] }</div></li>`;
             } else if (list_item.card_type == 2) {
-              str += `<li class="clr"><div class="fl">开户成功时间：</div><div class="fright">${
-                vm.getDateTime(list_item.time_serverice_open)[6]
-              }</div></li>`;
+              str += `<li class="clr"><div class="fl">开户成功时间：</div><div class="fright">${ vm.getDateTime(list_item.time_serverice_open)[6] }</div></li>`;
             }
             layer.open({
               content: `<ul class="f-scroll-lt lay-details">
-						<li class="clr"><div class="fl">生成时间：</div><div class="fright">${
-              vm.getDateTime(list_item.time_create_order)[6]
-            }</div></li>
-						<li class="clr"><div class="fl">保存套餐时间：</div><div class="fright">${
-              vm.getDateTime(list_item.time_set_business)[6]
-            }</div></li>
-						<li class="clr"><div class="fl">保存身份信息时间：</div><div class="fright">${
-              vm.getDateTime(list_item.time_set_user_info)[6]
-            }</div></li>
-						<li class="clr"><div class="fl">支付时间：</div><div class="fright">${
-              vm.getDateTime(list_item.time_payed)[6]
-            }</div></li>
-						<li class="clr"><div class="fl">自动审核时间：</div><div class="fright">${
-              vm.getDateTime(list_item.time_auto_audited)[6]
-            }</div></li>${str}
-						<li class="clr"><div class="fl">受理单提交时间：</div><div class="fright">${
-              vm.getDateTime(list_item.time_accepted)[6]
-            }</div></li>
-						<li class="clr"><div class="fl">请求IMSI时间：</div><div class="fright">${
-              vm.getDateTime(list_item.time_imsi_request)[6]
-            }</div></li>
-						<li class="clr"><div class="fl">拿到IMSI时间：</div><div class="fright">${
-              vm.getDateTime(list_item.time_imsi_got)[6]
-            }</div></li>
-						<li class="clr"><div class="fl">提交写卡结果时间：</div><div class="fright">${
-              vm.getDateTime(list_item.time_write_card)[6]
-            }</div></li>${str2}
-						<li class="clr"><div class="fl">提交到BOSS时间：</div><div class="fright">${
-              vm.getDateTime(list_item.time_submit_order)[6]
-            }</div></li>
-						<li class="clr"><div class="fl">开卡异步结果时间：</div><div class="fright">${
-              vm.getDateTime(list_item.time_order_result)[6]
-            }</div></li>
-						<li class="clr"><div class="fl">事后审核时间：</div><div class="fright">${
-              vm.getDateTime(list_item.time_after_audit)[6]
-            }</div></li></ul>`,
+						<li class="clr"><div class="fl">生成时间：</div><div class="fright">${ vm.getDateTime(list_item.time_create_order)[6] }</div></li>
+						<li class="clr"><div class="fl">保存套餐时间：</div><div class="fright">${ vm.getDateTime(list_item.time_set_business)[6] }</div></li>
+						<li class="clr"><div class="fl">保存身份信息时间：</div><div class="fright">${ vm.getDateTime(list_item.time_set_user_info)[6] }</div></li>
+						<li class="clr"><div class="fl">支付时间：</div><div class="fright">${ vm.getDateTime(list_item.time_payed)[6] }</div></li>
+						<li class="clr"><div class="fl">自动审核时间：</div><div class="fright">${ vm.getDateTime(list_item.time_auto_audited)[6] }</div></li>${str} <li class="clr"><div class="fl">受理单提交时间：</div><div class="fright">${ vm.getDateTime(list_item.time_accepted)[6] }</div></li>
+						<li class="clr"><div class="fl">请求IMSI时间：</div><div class="fright">${ vm.getDateTime(list_item.time_imsi_request)[6] }</div></li>
+						<li class="clr"><div class="fl">拿到IMSI时间：</div><div class="fright">${ vm.getDateTime(list_item.time_imsi_got)[6] }</div></li>
+						<li class="clr"><div class="fl">提交写卡结果时间：</div><div class="fright">${ vm.getDateTime(list_item.time_write_card)[6] }</div></li>${str2} <li class="clr"><div class="fl">提交到BOSS时间：</div><div class="fright">${ vm.getDateTime(list_item.time_submit_order)[6] }</div></li>
+						<li class="clr"><div class="fl">开卡异步结果时间：</div><div class="fright">${ vm.getDateTime(list_item.time_order_result)[6] }</div></li>
+                        <li class="clr"><div class="fl">事后审核时间：</div><div class="fright">${ vm.getDateTime(list_item.time_after_audit)[6] }</div></li>
+                        </ul>`,
               type: 0,
               title: "开卡时间详情",
               btn: 0,
@@ -556,8 +531,7 @@ export default {
     },
     detailsOrder: function() {
       //开卡订单详情
-      var vm = this,
-        url;
+      var vm = this,url;
       if (vm.detailsSource == 8||vm.detailsSource==7) {
         url = "km-ecs/w/audit/tfopenCardInfo";
       } else {
@@ -565,9 +539,7 @@ export default {
       }
       reqCommonMethod({ transactionId: vm.list.orderId }, false, url)
         .then(data => {
-          var list = data.data,
-            str = "",
-            payed = "";
+          var list = data.data, str = "", payed = "";
           if (list.optionalPackage instanceof Array === false) {
             list.optionalPackage = list.optionalPackage.split(",");
           }
@@ -580,84 +552,28 @@ export default {
           }
           if (list.payed == 1) {
             payed +=
-              '<li class="clr"><div class="fl">实付价格：</div><div class="fright">' +
-              (parseFloat(list.actualPrice) / 100).toFixed(2) +
-              '元<b class="f-c-grey">（系统号码占用费' +
-              (parseFloat(list.actualPrice_x) / 10000).toFixed(2) +
-              "元+商家自定占用费" +
-              (parseFloat(list.updPrice) / 100).toFixed(2) +
-              "元+预存话费" +
-              (parseFloat(list.actualPrice_y) / 10000).toFixed(2) +
-              "元+实付首充预存" +
-              (parseFloat(list.actualFirstCharge) / 10000).toFixed(2) +
-              "元）</b></div></li>" +
-              '<li class="clr"><div class="fl">抵扣金额：</div><div class="fright">' +
-              (parseFloat(list.deductionMoney) / 100).toFixed(2) +
-              "元</div></li>" +
-              '<li class="clr"><div class="fl">开卡返佣：</div><div class="fright">' +
-              (parseFloat(list.commission) / 100).toFixed(2) +
-              '元<b class="f-c-grey">（系统号码占用费' +
-              (parseFloat(list.commission_x) / 100).toFixed(2) +
-              "元+商家自定占用费" +
-              (parseFloat(list.updPrice) / 100).toFixed(2) +
-              "元+预存话费" +
-              (parseFloat(list.commission_y) / 100).toFixed(2) +
-              "元）</b></div></li>" +
-              '<li class="clr"><div class="fl">支付模式：</div><div class="fright">' +
-              list.payChannel +
-              "</div></li>";
+              '<li class="clr"><div class="fl">实付价格：</div><div class="fright">' + (parseFloat(list.actualPrice) / 100).toFixed(2) + '元<b class="f-c-grey">（系统号码占用费' + (parseFloat(list.actualPrice_x) / 10000).toFixed(2) + "元+商家自定占用费" + (parseFloat(list.updPrice) / 100).toFixed(2) + "元+预存话费" + (parseFloat(list.actualPrice_y) / 10000).toFixed(2) + "元+实付首充预存" + (parseFloat(list.actualFirstCharge) / 10000).toFixed(2) + "元）</b></div></li>" +
+              '<li class="clr"><div class="fl">抵扣金额：</div><div class="fright">' + (parseFloat(list.deductionMoney) / 100).toFixed(2) + "元</div></li>" +
+              '<li class="clr"><div class="fl">开卡返佣：</div><div class="fright">' + (parseFloat(list.commission) / 100).toFixed(2) + '元<b class="f-c-grey">（系统号码占用费' + (parseFloat(list.commission_x) / 100).toFixed(2) + "元+商家自定占用费" + (parseFloat(list.updPrice) / 100).toFixed(2) + "元+预存话费" + (parseFloat(list.commission_y) / 100).toFixed(2) + "元）</b></div></li>" +
+              '<li class="clr"><div class="fl">支付模式：</div><div class="fright">' + list.payChannel + "</div></li>";
           }
           if (vm.detailsSource == "8"||vm.detailsSource == "7") {
             layer.open({
               content:
                 '<ul class="f-scroll-lt lay-details">' +
-                '<li class="clr"><div class="fl">订单号：</div><div class="fright">' +
-                list.sysOrderId +
-                "</div></li>" +
-                '<li class="clr"><div class="fl">BOSS流水号：</div><div class="fright">' +
-                list.transactionId +
-                "</div></li>" +
-                '<li class="clr"><div class="fl">用户姓名：</div><div class="fright">' +
-                list.userName +
-                "</div></li>" +
-                '<li class="clr"><div class="fl">电话号码：</div><div class="fright">' +
-                list.phoneNumber +
-                '（<b class="f-c-grey">' +
-                vm.$parent.translateData(5, list.bigNumberLevel) +
-                "</b>，" +
-                list.phoneHome +
-                "）</div></li>" +
-                '<li class="clr"><div class="fl">ICCID：</div><div class="fright">' +
-                list.iccid +
-                "</div></li>" +
-                '<li class="clr"><div class="fl">IMSI卡号：</div><div class="fright">' +
-                list.imsi +
-                "</div></li>" +
-                '<li class="clr"><div class="fl">状态修改时间：</div><div class="fright">' +
-                vm.getDateTime(list.modifyTime)[6] +
-                "</div></li>" +
-                '<li class="clr"><div class="fl">选号费：</div><div class="fright">' +
-                (parseFloat(list.cardMoney) / 100).toFixed(2) +
-                "元</b></div></li>" +
-                payed +
-                '<li class="clr"><div class="fl">折后选号费：</div><div class="fright">' +
-                (parseFloat(list.actualCardMoney) / 100).toFixed(2) +
-                "元</div></li>" +
-                '<li class="clr"><div class="fl">预存话费：</div><div class="fright">' +
-                (parseFloat(list.prestoreMoney) / 100).toFixed(2) +
-                "元</div></li>" +
-                '<li class="clr"><div class="fl">折后预存：</div><div class="fright">' +
-                (parseFloat(list.actualPrestoreMoney) / 100).toFixed(2) +
-                "元</div></li>" +
-                '<li class="clr"><div class="fl">实际支付：</div><div class="fright">' +
-                (parseFloat(list.actualMoney) / 100).toFixed(2) +
-                "元</div></li>" +
-                '<li class="clr"><div class="fl">已选套餐：</div><div class="fright">' +
-                list.tfPackageinfo +
-                "</div></li>" +
-                '<li class="clr"><div class="fl">已选可选包：</div><div class="fright">' +
-                str +
-                "</div></li></ul>",
+                '<li class="clr"><div class="fl">订单号：</div><div class="fright">' + list.sysOrderId + "</div></li>" +
+                '<li class="clr"><div class="fl">BOSS流水号：</div><div class="fright">' + list.transactionId + "</div></li>" +
+                '<li class="clr"><div class="fl">用户姓名：</div><div class="fright">' + list.userName + "</div></li>" +
+                '<li class="clr"><div class="fl">电话号码：</div><div class="fright">' + list.phoneNumber + '（<b class="f-c-grey">' + vm.$parent.translateData(5, list.bigNumberLevel) + "</b>，" + list.phoneHome + "）</div></li>" +
+                '<li class="clr"><div class="fl">ICCID：</div><div class="fright">' + list.iccid + "</div></li>" +
+                '<li class="clr"><div class="fl">IMSI卡号：</div><div class="fright">' + list.imsi + "</div></li>" +
+                '<li class="clr"><div class="fl">状态修改时间：</div><div class="fright">' + vm.getDateTime(list.modifyTime)[6] + "</div></li>" +
+                '<li class="clr"><div class="fl">选号费：</div><div class="fright">' + (parseFloat(list.cardMoney) / 100).toFixed(2) + "元</b></div></li>" + payed + '<li class="clr"><div class="fl">折后选号费：</div><div class="fright">' + (parseFloat(list.actualCardMoney) / 100).toFixed(2) + "元</div></li>" +
+                '<li class="clr"><div class="fl">预存话费：</div><div class="fright">' + (parseFloat(list.prestoreMoney) / 100).toFixed(2) + "元</div></li>" +
+                '<li class="clr"><div class="fl">折后预存：</div><div class="fright">' + (parseFloat(list.actualPrestoreMoney) / 100).toFixed(2) + "元</div></li>" +
+                '<li class="clr"><div class="fl">实际支付：</div><div class="fright">' + (parseFloat(list.actualMoney) / 100).toFixed(2) + "元</div></li>" +
+                '<li class="clr"><div class="fl">已选套餐：</div><div class="fright">' + list.tfPackageinfo + "</div></li>" +
+                '<li class="clr"><div class="fl">已选可选包：</div><div class="fright">' + str + "</div></li></ul>",
               type: 0,
               title: "开卡订单详情",
               btn: 0,
@@ -747,8 +663,7 @@ export default {
           "km-ecs/w/handler/query"
         )
           .then(data => {
-            var list = data.data.list[0],
-              content;
+            var list = data.data.list[0],content;
             content =
               '<ul class="f-scroll-lt lay-details">' +
               '<li class="clr"><div class="fl">支付流水号：</div><div class="fright">' +
@@ -776,31 +691,16 @@ export default {
           })
           .catch(e => errorDeal(e));
       } else {
-        reqCommonMethod(
-          { payId: vm.list.payOrderId },
-          false,
-          "km-ecs/w/audit/payInfo"
-        )
-          .then(data => {
+        reqCommonMethod({ payId: vm.list.payOrderId }, false, "km-ecs/w/audit/payInfo")
+        .then(data => {
             var list = data.data;
             layer.open({
               content:
-                '<ul class="f-scroll-lt lay-details">' +
-                '<li class="clr"><div class="fl">系统流水号：</div><div class="fright">' +
-                list.sysPayId +
-                "</div></li>" +
-                '<li class="clr"><div class="fl">第三方流水号：</div><div class="fright">' +
-                list.payId +
-                "</div></li>" +
-                '<li class="clr"><div class="fl">支付渠道：</div><div class="fright">' +
-                list.payChannel +
-                "</div></li>" +
-                '<li class="clr"><div class="fl">支付方式：</div><div class="fright">' +
-                list.payType +
-                "</div></li>" +
-                '<li class="clr"><div class="fl">支付金额：</div><div class="fright">' +
-                list.payMoney +
-                "元</div></li></ul>",
+                '<ul class="f-scroll-lt lay-details">' + '<li class="clr"><div class="fl">系统流水号：</div><div class="fright">' + list.sysPayId + "</div></li>" +
+                '<li class="clr"><div class="fl">第三方流水号：</div><div class="fright">' + list.payId + "</div></li>" +
+                '<li class="clr"><div class="fl">支付渠道：</div><div class="fright">' + list.payChannel + "</div></li>" +
+                '<li class="clr"><div class="fl">支付方式：</div><div class="fright">' + list.payType + "</div></li>" +
+                '<li class="clr"><div class="fl">支付金额：</div><div class="fright">' + list.payMoney + "元</div></li></ul>",
               type: 0,
               title: "支付订单详情",
               btn: 0,
@@ -813,11 +713,7 @@ export default {
     detailsUser: function() {
       //操作者详情
       var vm = this;
-      reqCommonMethod(
-        { userId: vm.list.operatorId },
-        false,
-        "km-ecs/w/audit/getUserInfo"
-      )
+      reqCommonMethod({ userId: vm.list.operatorId }, false, "km-ecs/w/audit/getUserInfo")
         .then(data => {
           vm.detailsList = data.data;
           vm.isShowDetails = true;
@@ -872,7 +768,7 @@ export default {
                 style = 'fCRed';
                 break;
             case 3:
-                name = '未定';
+                name = '检验失败';
                 style = 'fCYellow';
                 break;
             default:
@@ -897,68 +793,34 @@ export default {
           list_item1
             ? layer.open({
                 content: `<ul class="f-scroll-lt lay-details o-fl-w">
-					<li class="clr"><div class="fl">正面与手持对比相似度：</div><div class="fright">${
-            transfer(list_item1.frontHandImageSimilarity)
-          }</div></li>
-					<li class="clr"><div class="fl">正面与第三方对比相似度：</div><div class="fright">${
-            transfer(list_item1.frontImageSimilarity)
-          }</div></li>
-					<li class="clr"><div class="fl">手持与第三方相似度：</div><div class="fright">${
-            transfer(list_item1.handImageSimilarity)
-          }</div></li>
-					<li class="clr"><div class="fl">活体识别照相似度：</div><div class="fright">${
-            transfer(list_item1.livingImageSimilarity)
-          }</div></li>
-					<li class="clr"><div class="fl">年龄校验结果：</div><div class="fright ${transfer_result(list_item1.ageCheck).style}">${
-                    transfer_result(list_item1.ageCheck).name
-            }</div></li>
-					<li class="clr"><div class="fl">地址校验结果：</div><div class="fright ${transfer_result(list_item1.addressCheck).style}">${
-                    transfer_result(list_item1.addressCheck).name
-          }</div></li>
-					<li class="clr"><div class="fl">身份证有效期校验结果：</div><div class="fright ${transfer_result(list_item1.periodCheck).style}">${
-                    transfer_result(list_item1.periodCheck).name
-          }</div></li>
-					<li class="clr"><div class="fl">身份证号与正面OCR匹配结果：</div><div class="fright ${transfer_result(list_item1.ocrIdCardNoCheck).style}">${
-                    transfer_result(list_item1.ocrIdCardNoCheck).name
-          }</div></li>
-					<li class="clr"><div class="fl">有效期与背面OCR匹配结果：</div><div class="fright ${transfer_result(list_item1.ocrIdCardPeriodCheck).style}">${
-                    transfer_result(list_item1.ocrIdCardPeriodCheck).name
-          }</div></li>
-					<li class="clr"><div class="fl">上传身份证号与OCR对比相似度：</div><div class="fright">${
-            transfer(list_item1.idCardNoSimilarity)
-          }</div></li>
-					<li class="clr"><div class="fl">上传姓名与OCR对比相似度：</div><div class="fright">${
-            transfer(list_item1.idCardNameSimilarity)
-          }</div></li>
-					<li class="clr"><div class="fl">上传地址与OCR对比相似度：</div><div class="fright">${
-            transfer(list_item1.idCardAddressSimilarity)
-          }</div></li>
-					<li class="clr"><div class="fl">上传有效期与OCR对比相似度：</div><div class="fright">${
-            transfer(list_item1.idCardPeriodSimilarity)
-          }</div></li>
-					<li class="clr"><div class="fl">审核结果：</div><div class="fright">${
-            list_item1.result == 1
-              ? '<span class="fCGreen">成功</span>'
-              : list_item1.result == 2
-                ? '<span class="fCRed">拒绝</span>'
-                : list_item1.result == 3
-                  ? '<span class="fCYellow">转人工审核</span>'
-                  : "--"
-          }</div></li>
-					<li class="clr"><div class="fl">拒绝理由：</div><div class="fright">${
-            list_item1.desc
-          }</div></li></ul>`,
-                type: 0,
-                title: "自动审核详情",
-                btn: 0,
-                style: "width:auto;"
-              })
-            : layer.open({
-                content: "未查到审核信息",
-                skin: "msg",
-                time: 4,
-                msgSkin: "error"
-              });
+                <li class="clr"><div class="fl">正面与手持对比相似度：</div><div class="fright">${transfer(list_item1.frontHandImageSimilarity)}</div></li>
+				<li class="clr"><div class="fl">正面与第三方对比相似度：</div><div class="fright">${transfer(list_item1.frontImageSimilarity)}</div></li>
+				<li class="clr"><div class="fl">手持与第三方相似度：</div><div class="fright">${transfer(list_item1.handImageSimilarity)}</div></li>
+				<li class="clr"><div class="fl">活体识别照相似度：</div><div class="fright">${transfer(list_item1.livingImageSimilarity)}</div></li>
+				<li class="clr"><div class="fl">年龄校验结果：</div><div class="fright ${transfer_result(list_item1.ageCheck).style}">${transfer_result(list_item1.ageCheck).name}</div></li>
+				<li class="clr"><div class="fl">地址校验结果：</div><div class="fright ${transfer_result(list_item1.addressCheck).style}">${transfer_result(list_item1.addressCheck).name}</div></li>
+				<li class="clr"><div class="fl">身份证有效期校验结果：</div><div class="fright ${transfer_result(list_item1.periodCheck).style}">${transfer_result(list_item1.periodCheck).name}</div></li>
+				<li class="clr"><div class="fl">身份证号与正面OCR匹配结果：</div><div class="fright ${transfer_result(list_item1.ocrIdCardNoCheck).style}">${transfer_result(list_item1.ocrIdCardNoCheck).name}</div></li>
+				<li class="clr"><div class="fl">有效期与背面OCR匹配结果：</div><div class="fright ${transfer_result(list_item1.ocrIdCardPeriodCheck).style}">${transfer_result(list_item1.ocrIdCardPeriodCheck).name}</div></li>
+				<li class="clr"><div class="fl">上传身份证号与OCR对比相似度：</div><div class="fright">${transfer(list_item1.idCardNoSimilarity)}</div></li>
+				<li class="clr"><div class="fl">上传姓名与OCR对比相似度：</div><div class="fright">${transfer(list_item1.idCardNameSimilarity)}</div></li>
+				<li class="clr"><div class="fl">上传地址与OCR对比相似度：</div><div class="fright">${transfer(list_item1.idCardAddressSimilarity)}</div></li>
+				<li class="clr"><div class="fl">上传有效期与OCR对比相似度：</div><div class="fright">${transfer(list_item1.idCardPeriodSimilarity)}</div></li>
+				<li class="clr"><div class="fl">审核结果：</div><div class="fright">${list_item1.result == 1? '<span class="fCGreen">成功</span>': list_item1.result == 2? '<span class="fCRed">拒绝</span>': list_item1.result == 3? '<span class="fCYellow">转人工审核</span>': "--"}</div></li>
+                <li class="clr"><div class="fl">拒绝理由：</div><div class="fright">${list_item1.desc}</div></li>
+                <li class="clr"><div class="fl">已开卡数：</div><div class="fright">${list_item1.openedNum}</div></li>
+                </ul>`,
+                    type: 0,
+                    title: "自动审核详情",
+                    btn: 0,
+                    style: "width:auto;"
+                })
+                : layer.open({
+                    content: "未查到审核信息",
+                    skin: "msg",
+                    time: 4,
+                    msgSkin: "error"
+                });
         })
         .catch(error => errorDeal(error));
     },
