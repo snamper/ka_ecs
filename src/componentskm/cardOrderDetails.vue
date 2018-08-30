@@ -417,11 +417,12 @@ export default {
             vm.userMoreInfo = userMoreInfo;
             vm.imgData = [ { src: imgUrl + userMoreInfo.imageName, name: "正面" }, { src: imgUrl + userMoreInfo.backImageName, name: "反面" }, { src: imgUrl + userMoreInfo.livingIdentificationImagePath, name: "活体识别" }, { src: imgUrl + userMoreInfo.signImageName, name: "手签名" } ];
             if(vm.source==8){
-                if(vm.list.hasOwnProperty('reqParam')){
-                    vm.imgData.push({ src: imgUrl + vm.list.reqParam.handImageName, name: "手持/免冠照" });                
-                }else{
-                    vm.imgData.push({ src: '', name: "手持/免冠照" });                
-                }
+                // if(vm.list.hasOwnProperty('reqParam')){
+                //     vm.imgData.push({ src: imgUrl + vm.list.reqParam.handImageName, name: "手持/免冠照" });                
+                // }else{
+                //     vm.imgData.push({ src: '', name: "手持/免冠照" });                
+                // }
+                vm.imgData.push({ src: imgUrl + userMoreInfo.handImageName, name: "手持/免冠照" });
             }
         } else {
             vm.imgData = [ { src: "", name: "正面" }, { src: "", name: "反面" }, { src: "", name: "活体识别" }, { src: "", name: "手签名" } ];
