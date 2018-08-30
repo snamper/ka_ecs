@@ -384,10 +384,9 @@ export default{
   						list_item1.result==3?'<span class="fCYellow">转人工审核</span>':	'--'
   					}</div></li>
 					<li class="clr"><div class="fl">审核结果描述：</div><div class="fright">${list_item1.desc}</div></li>
-					<li class="clr"><div class="fl">拒绝理由：</div><div class="fright">${
-						list_item1.code==1018?'<span class="fCGreen">远特开卡超过上限</span>':
-						list_item1.code==1019?'<span class="fCRed">联通开卡超过上限</span>':'--'
-					}</div></li></ul>`,
+					<li class="clr"><div class="fl">拒绝理由：</div><div class="fright">${ list_item1.code==1018?'<span class="fCGreen">远特开卡超过上限</span>': list_item1.code==1019?'<span class="fCRed">联通开卡超过上限</span>':'--' }</div></li>
+					<li class="clr"><div class="fl">已开卡数：</div><div class="fright">${ list_item1.openedNum }</div></li>
+                    </ul>`,
 					type:0,
 					title:'自动审核详情',
 					btn:0,
