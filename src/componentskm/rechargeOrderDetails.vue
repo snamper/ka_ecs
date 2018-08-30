@@ -57,10 +57,11 @@
 								<tr><td>充值号码：</td><td>{{ list.phone }}</td></tr>
 								<tr v-show="list.rechargeType==1"><td>所属省份：</td><td>{{ list.province }}</td></tr>
 								<tr><td>运营商：</td><td>
-									<span v-show="list.isp==1">移动</span>
-									<span v-show="list.isp==2">联通</span>
-									<span v-show="list.isp==3">电信</span>
-									<span v-show="list.isp==4">远特</span>
+                                    <span v-show="list.isp==1">移动</span>
+                                    <span v-show="list.isp==2">联通</span>
+                                    <span v-show="list.isp==3">电信</span>
+                                    <span v-show="list.isp==4">远特</span>
+                                    <span v-show="list.isp>4">{{list.ispName}}</span>
 								</td></tr>
 								
 								<tr v-show="list.rechargeType==1"><td>订单状态：</td><td>

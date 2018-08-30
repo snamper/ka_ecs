@@ -317,6 +317,10 @@ export default{
                 return val == 0 ? '未执行' : val == -1 ? '不适用' : val + '%';
             }
 
+            const transferGztCheck = (val)=>{
+                return val == -1 ? '不适用' : val == 0 ? '未执行' : val==1 ? '成功' : val==2 ? '拒绝' : val==3 ? '无法校验' : '--';
+            }
+
             const transfer_result = (val)=>{
                 let name = '', style = 'fCGrey';
 
@@ -375,9 +379,7 @@ export default{
 					<li class="clr"><div class="fl">上传姓名与OCR对比相似度：</div><div class="fright">${transfer(list_item1.id_card_name_similarity)}</div></li>
 					<li class="clr"><div class="fl">上传地址与OCR对比相似度：</div><div class="fright">${transfer(list_item1.id_card_address_similarity)}</div></li>
 					<li class="clr"><div class="fl">上传有效期与OCR对比相似度：</div><div class="fright">${transfer(list_item1.id_card_period_similarity)}</div></li>
-					<li class="clr"><div class="fl">国政通校验结果：</div><div class="fright ${transfer_result(list_item1.gzt_check).style}">${
-                        transfer_result(list_item1.gzt_check).name
-  					}</div></li>			
+					<li class="clr"><div class="fl">国政通校验结果：</div><div class="fright ${transfer_result(list_item1.gzt_check).style}">${ transferGztCheck(list_item1.gzt_check) }</div></li>			
   					<li class="clr"><div class="fl">审核结果：</div><div class="fright">${
   						list_item1.result==1?'<span class="fCGreen">成功</span>':
   						list_item1.result==2?'<span class="fCRed">拒绝</span>':

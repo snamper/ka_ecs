@@ -144,7 +144,7 @@
 						<span v-show="todo.orderStatus==0" class="f-c-yellow">进行中</span>
 						<span v-show="todo.orderStatus==2" class="f-c-red">失败</span>
 						<span v-show="todo.orderStatus==1" class="f-c-green">成功</span>
-						<span v-show="todo.orderStatus==3" class="f-c-blue">进行中</span>
+						<span v-show="todo.orderStatus==3" class="f-c-blue">充值中</span>
 					</td>
 					<td><a :name="todo.orderId" @click="details" href="javascript:void(0)" class="details">详情</a></td>
 				</tr>
