@@ -327,7 +327,7 @@ export default{
             window.onresize=()=>vm.debounce(300,vm.windowChange());
 			vm.timer.count=setInterval(()=>vm.getAuditStatisticsInfo(),5000);
             vm.timer.OpcountT=setInterval(()=>vm.getOpinionCountInfo(),60000);
-			vm.timer.countYm=setInterval(()=>vm.getAuditStatisticsInfoYm(),5000);            
+			vm.timer.countYm=setInterval(()=>vm.getAuditStatisticsInfoYm(),6000);            
 			vm.SET_ONLINE_TIME();
 			let userInfo=getStore("KA_ECS_USER");
 			vm.userInfo=userInfo;
