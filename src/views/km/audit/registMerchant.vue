@@ -302,23 +302,28 @@ export default{
 		}
 		,
 		dealAuditList:function(){//处理分配的订单
-			const vm=this,len=vm.list.length;
+			var vm=this,len=vm.list.length,imgUrl;
 			vm.auditData='';
 			if(len&&(vm.off.auditIndex+1)<=len){
 				vm.auditData=vm.list[vm.off.auditIndex];
+
+				if(window.location.href.indexOf('192.168')>-1){
+					imgUrl = _CONFIG.dev.REGISTER_MERCHANT_IMAGE_URL;
+				}else imgUrl = _CONFIG.prod.REGISTER_MERCHANT_IMAGE_URL;
+
 				if(vm.auditData.merchantType==1){//企业
 					vm.imgData=[
-						{'src':vm.auditData.doorPictureLeft,'name':'门店照片-左'},
-						{'src':vm.auditData.doorPictureRight,'name':'门店照片-右'},
-						{'src':vm.auditData.handPicture,'name':'手持/免冠证件照'},
-						{'src':vm.auditData.signPicture,'name':'手签名'},
+						{'src':imgUrl + vm.auditData.doorPictureLeft,'name':'门店照片-左'},
+						{'src':imgUrl + vm.auditData.doorPictureRight,'name':'门店照片-右'},
+						{'src':imgUrl + vm.auditData.handPicture,'name':'手持/免冠证件照'},
+						{'src':imgUrl + vm.auditData.signPicture,'name':'手签名'},
 					];
 				}else if(vm.auditData.merchantType==2){//个人
 					vm.imgData=[
-						{'src':vm.auditData.doorPictureLeft,'name':'身份证正面'},
-						{'src':vm.auditData.doorPictureRight,'name':'身份证反面'},
-						{'src':vm.auditData.handPicture,'name':'手持/免冠证件照'},
-						{'src':vm.auditData.signPicture,'name':'手签名'},
+						{'src':imgUrl + vm.auditData.doorPictureLeft,'name':'身份证正面'},
+						{'src':imgUrl + vm.auditData.doorPictureRight,'name':'身份证反面'},
+						{'src':imgUrl + vm.auditData.handPicture,'name':'手持/免冠证件照'},
+						{'src':imgUrl + vm.auditData.signPicture,'name':'手签名'},
 					];
 				}
 				vm.off.auditIndex++;
