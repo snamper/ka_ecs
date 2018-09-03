@@ -79,12 +79,12 @@
                                 </span>
                                 <span class="text">开空卡</span>
                             </label>
-                            <!-- <label>
+                            <label>
                                 <span class="radio"><input value="5" type="radio" v-model="form.orderType">
                                     <span></span>
                                 </span>
                                 <span class="text">开白卡</span>
-                            </label> -->
+                            </label>
                             <label>
                                 <span class="radio"><input value="4" type="radio" v-model="form.orderType">
                                     <span></span>
