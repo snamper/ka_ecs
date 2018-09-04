@@ -236,7 +236,7 @@ export default {
             "searchType": vm.form.select||0,//搜索分类0:无，1:8位号码段，2设备号
         };
         if(v==1&&vm.orderId==""){
-            vm.whichSearch=v;
+            
             layer.open({
                 content:"请输入查询的单号",
                 skin:"msg",
@@ -246,7 +246,7 @@ export default {
             return false;
         }
         if(v==2){
-            vm.whichSearch=v;
+           
             json.orderId="";
             if(vm.flowResult.length==0){
                 layer.open({
@@ -264,6 +264,7 @@ export default {
         }else{
             json.context=vm.deviceId
         }
+        vm.whichSearch=v;
         vm.off.isLoad=true;
         if(v==1){//订单查询
             requestGetExclusiveNumerFlowList(json,()=>{vm.off.isLoad=false;})
