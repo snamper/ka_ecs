@@ -264,6 +264,7 @@ export default {
         }else{
             json.context=vm.deviceId
         }
+        vm.off.isLoad=true;
         if(v==1){//订单查询
             requestGetExclusiveNumerFlowList(json,()=>{vm.off.isLoad=false;})
             .then((data)=>{
@@ -401,7 +402,7 @@ export default {
     },
     //按钮
     isChe: function() {
-      this.form.select = "";
+        this.form.select = "";
     },
     BtnCheckAll(){
         if(this.checkAll==true){
