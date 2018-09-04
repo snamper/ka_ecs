@@ -12,6 +12,7 @@
     <section class="g-search-menu">
         <div  id="search" :class="{active:off.details}">
             <header class="m-scroll-bar animated infinite" :class="{active:off.isLoad}"></header>
+            <section class="m-occlusion" :class="{active:off.isLoad}"></section>
             <!--查询-->
             <section v-if="!off.flowDetails">
                 <div class="g-search-form">
@@ -76,7 +77,7 @@
                     <div class="total-head">
                         统计结果
                         <b>{{total}}</b>
-                        <button class="btn_export_excel" v-if="false" :disabled="searchFlowList.length==0" @click="exportList">导出excel</button>
+                        <button class="btn_export_excel" v-if="searchFlowList" :disabled="searchFlowList.length==0" @click="exportList">导出excel</button>
                     </div>
                     <table>
                         <thead>
@@ -123,7 +124,7 @@
 import { requestGetExclusiveNumerFlowList,requestGetExclusiveNumerFlowDetails1,requestGetExclusiveNumerFlowDetails2 } from "../../../config/service.js";
 import pagination from "../../../componentskm/page.vue";
 import numberFlowDetails from "../../../componentskm/numberFlowDetails";
-import { createDownload, errorDeal,getDateTime ,translateData} from "../../../config/utils";
+import { createDownload, errorDeal,getDateTime ,translateData,getStore,getUnixTime } from "../../../config/utils";
 export default {
   data() {
     return {
@@ -161,7 +162,8 @@ export default {
         whiteCardTotal:0,
         emptyCardTotal:0,
         tdWhite:[],
-        tdEmpty:[]
+        tdEmpty:[],
+        whichSearch:"",
     };
   },
   components: {
@@ -234,6 +236,7 @@ export default {
             "searchType": vm.form.select||0,//搜索分类0:无，1:8位号码段，2设备号
         };
         if(v==1&&vm.orderId==""){
+            vm.whichSearch=v;
             layer.open({
                 content:"请输入查询的单号",
                 skin:"msg",
@@ -243,7 +246,18 @@ export default {
             return false;
         }
         if(v==2){
-            json.orderId=""
+            vm.whichSearch=v;
+            json.orderId="";
+            if(vm.flowResult.length==0){
+                layer.open({
+                    content:"请选择要查询的流转结果",
+                    skin:"msg",
+                    time: 2,
+                    msgSkin: "error"
+                });
+                vm.searchFlowList="";
+                return false;
+            }
         }
         if(vm.form.select==1){
             json.context=vm.cardNumber
@@ -358,6 +372,32 @@ export default {
             }
             return "success";     
         })
+    },
+    exportList(){
+        let vm=this,select=vm.form.select,
+			sql="",
+			json={"pageSize":-1,"pageNum":-1,"params":[],"opKey":"list.flow.exout","exportType":4};
+            if(vm.whichSearch==1){
+                sql+="a.sys_order_id="+vm.orderId+""
+            }else if(vm.whichSearch==2){
+                sql+="a.status in("+vm.flowResult+") AND A.create_time>"+getUnixTime(vm.form.startTime)+" AND A.create_time<"+getUnixTime(vm.form.endTime)+""
+                if(vm.dealerId!=''){
+                    sql+=" AND (a.old_dealer_id="+vm.dealerId+" or a.new_dealer_id="+vm.dealerId+")"
+                }
+            }
+            if(select==1){
+                sql+=" AND a.phone_title="+vm.cardNumber+""
+            }else if(select==2){
+                sql+=" AND a.use_device_id="+vm.deviceId+""
+            }
+            json.params.push(sql);
+			let userInfo = getStore("KA_ECS_USER");
+			json.customerId = userInfo.customerId;
+            json.codeId = userInfo.codeId;
+            console.log(json)
+            createDownload('km-ecs/w/handler/queryExport',BASE64.encode(JSON.stringify(json)),  function(){
+		        vm.off.isLoad=false;
+	      	})
     },
     //按钮
     isChe: function() {

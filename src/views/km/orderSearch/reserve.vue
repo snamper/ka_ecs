@@ -7,6 +7,7 @@
 <section class="g-search-menu">
   <div id="search" :class="{active:off.details}">
   	<header class="m-scroll-bar animated infinite" :class="{active:off.isLoad}"></header>
+    <section class="m-occlusion" :class="{active:off.isLoad}"></section>
   	<!--查询-->
   	<section v-if="!off.details">
   	<div class="g-search-form">
@@ -242,14 +243,14 @@ export default{
 		// 导出查询结果excel
 		downLoadList:function(){
 			const vm=this;
-			let json=vm.getForm();
+            let json=vm.getForm();
+            debugger;
 			if(!json)return false;
 			json.exportType=3;
 			json.pageNum="-1";
 			let userInfo = getStore("KA_ECS_USER");
 			json.customerId = userInfo.customerId;
 			json.codeId = userInfo.codeId;
-
 			if(vm.off.isLoad)return false;
 			vm.off.isLoad=true;
 			createDownload('km-ecs/w/handler/queryExport',BASE64.encode(JSON.stringify(json)),  function(){

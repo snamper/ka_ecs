@@ -7,6 +7,7 @@
   <section class="g-search-menu">
     <div id="search" :class="{active:off.details}">
       <header class="m-scroll-bar animated infinite" :class="{active:off.isLoad}"></header>
+      <section class="m-occlusion" :class="{active:off.isLoad}"></section>
       <!--查询-->
       <section v-if="!off.details">
         <div class="g-search-form">

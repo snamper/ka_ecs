@@ -3,15 +3,12 @@
   *@author: thinkmix
   *@date 2017-11-6
 * *-->
-<style scoped>
-    .m-top-shift>.box{margin-bottom: 0}
-    div.input-box{width: 60%;}
-    a.linka{color: #20A0FF;cursor: pointer;}
-</style>
+
 <template>
 <section class="g-search-menu">
     <div id="search" :class="{active:off.cardDetails}">
         <header class="m-scroll-bar animated infinite" :class="{active:off.isLoad}"></header>
+        <section class="m-occlusion" :class="{active:off.isLoad}"></section>
         <!--查询-->
         <section v-if="!off.cardDetails">
             <div class="g-search-form">
@@ -440,3 +437,8 @@ export default {
     }
 };
 </script>
+<style scoped>
+    .m-top-shift>.box{margin-bottom: 0}
+    div.input-box{width: 60%;}
+    a.linka{color: #20A0FF;cursor: pointer;}
+</style>

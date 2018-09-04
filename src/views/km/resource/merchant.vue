@@ -12,6 +12,7 @@
 <template>
 	<div id="merchantSearch">
 		<header class="m-scroll-bar animated infinite" :class="{active:off.isLoad}"></header>
+        <section class="m-occlusion" :class="{active:off.isLoad}"></section>
             <div v-if="form.type!=1&&form.type!=2">
                 <section class="g-search-form">
                 <table class="g-base-table o-headTotal-table">
