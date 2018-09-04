@@ -380,17 +380,17 @@ export default {
 			sql="",
 			json={"pageSize":-1,"pageNum":-1,"params":[],"opKey":"list.flow.exout","exportType":4};
             if(vm.whichSearch==1){
-                sql+="a.sys_order_id="+vm.orderId+""
+                sql+='a.sys_order_id="'+vm.orderId+'"'
             }else if(vm.whichSearch==2){
                 sql+="a.status in("+vm.flowResult+") and a.create_time>"+getUnixTime(vm.form.startTime)+" and a.create_time<"+getUnixTime(vm.form.endTime)+""
                 if(vm.dealerId!=''){
-                    sql+=" and (a.old_dealer_id="+vm.dealerId+" or a.new_dealer_id="+vm.dealerId+")"
+                    sql+=' and (a.old_dealer_id="'+vm.dealerId+'" or a.new_dealer_id="'+vm.dealerId+'")'
                 }
             }
             if(select==1){
-                sql+=" and a.phone_title="+vm.cardNumber+""
+                sql+=' and a.phone_title="'+vm.cardNumber+'"'
             }else if(select==2){
-                sql+=" and a.use_device_id="+vm.deviceId+""
+                sql+=' and a.use_device_id="'+vm.deviceId+'"'
             }
             json.params.push(sql);
 			let userInfo = getStore("KA_ECS_USER");
