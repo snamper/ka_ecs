@@ -198,7 +198,7 @@ export default {
                 deviceId:vm.deviceId,
                 prestoreMoney:vm.context5,
                 cityCode:vm.searchCityCode,
-                flowCount:vm.flow
+                flowCount:vm.flow.join(',')
             };
             if(vm.flow.length==5){
                 json.flowCount='';
