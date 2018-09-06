@@ -46,7 +46,7 @@ export default {
 		}
     },
     getAuditedSearchListYm:state=>{
-        let searchListYm=sate.ymAuditedSearchList;
+        let searchListYm=state.ymAuditedSearchList;
         return searchListYm;
     }
 };

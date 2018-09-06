@@ -15,12 +15,24 @@
                         <span class="text m-title">号码/段：</span>
                         <div class="input-box"><input v-model="form.context1"  maxlength="11" type="tel" placeholder="请输入查询的专营号码/段"></div>
                     </div>
-                    <div class="row" >
-                        <span class="text m-title">归属地：</span>
-                        <select name="citysSelect" id="city" class="selectStyle" v-model="selectedNode">
-                            <option v-for="(v,i) in citys" :key="i" :value="v.cityCode">{{v.cityName}}</option>
-                        </select>
-                    </div>
+                    <div class="row" style="margin-top:10px;">
+                            <span class="text m-title">归属地：</span>
+                            <div style="width:80%;display:inline-block">
+                                <input type="text" v-on:input="filterData()" v-model="searchKey" @blur="msHide" @focus="msShow">
+                                <p v-if="isShowCitySearch" class="m-searchCity" style="width:400px;height:400px">
+                                    <span v-for="(v,i) in ret" @mousedown="checkCity(v)">{{v.cityName}}</span>
+                                </p>
+                                <p v-if="isShowCityAll" class="m-allCity" style="width:400px;height:400px">
+                                    <span>
+                                        <span class="m-mapCityBox" v-for="(v,i) in letterList.a" @mousedown="checkCity(v)">{{v.cityName}}</span> 
+                                    </span>
+                                    <span v-for="(item,key,index) in letterList"  v-if="key!='a'" >
+                                        <h2 style="color:red" >{{key}}</h2>
+                                        <span class="m-mapCityBox" v-for="(v,i) in item" @mousedown="checkCity(v)">{{v.cityName}}</span> 
+                                    </span>
+                                </p>
+                            </div>
+                        </div>  
                     <div class="row fullRow" >
                         <span class="text m-title">面额：</span>
                         <div class="m-form-checkbox">
@@ -161,7 +173,7 @@
 </section>
 </template>
 <script>
-import { requestGetGeneralNumberList1,requestGetGeneralNumberList2,requestGetGeneralNumberDesc } from "../../../config/service.js";  
+import { requestGetGeneralNumberList1,requestGetGeneralNumberList2,requestGetGeneralNumberDesc,getCitys } from "../../../config/service.js";  
 import { getDateTime,translateData,getUnixTime,createDownload,getStore, errorDeal } from "../../../config/utils.js";
 import pagination from "../../../componentskm/page.vue";
 import details from "../../../componentskm/reserveOrderDetails.vue";
@@ -198,12 +210,18 @@ export default{
             total1:0,//总查询条数
 			maxpage1:1,//最大页数
 			callback1:Function//page组件点击回调
-            ,citys:[{"cityName":"全国","cityCode":"100"},{"cityName":"北京","cityCode":"110"},{"cityName":"长春","cityCode":"901"},{"cityName":"长沙","cityCode":"741"},{"cityName":"沧州","cityCode":"180"},{"cityName":"常州","cityCode":"440"},{"cityName":"成都","cityCode":"810"},{"cityName":"重庆","cityCode":"831"},{"cityName":"大连","cityCode":"940"},{"cityName":"大庆","cityCode":"981"},{"cityName":"东莞","cityCode":"580"},{"cityName":"佛山","cityCode":"530"},{"cityName":"福州","cityCode":"380"},{"cityName":"广州","cityCode":"510"},{"cityName":"贵阳","cityCode":"850"},{"cityName":"哈尔滨","cityCode":"971"},{"cityName":"海口","cityCode":"501"},{"cityName":"杭州","cityCode":"360"},{"cityName":"合肥","cityCode":"305"},{"cityName":"呼和浩特","cityCode":"101"},{"cityName":"湖州","cityCode":"362"},{"cityName":"惠州","cityCode":"570"},{"cityName":"济南","cityCode":"170"},{"cityName":"嘉兴","cityCode":"363"},{"cityName":"江门","cityCode":"550"},{"cityName":"金华","cityCode":"367"},{"cityName":"开封","cityCode":"762"},{"cityName":"昆明","cityCode":"860"},{"cityName":"丽水","cityCode":"469"},{"cityName":"南昌","cityCode":"750"},{"cityName":"南京","cityCode":"340"},{"cityName":"南宁","cityCode":"591"},{"cityName":"南通","cityCode":"358"},{"cityName":"宁波","cityCode":"370"},{"cityName":"平顶山","cityCode":"769"},{"cityName":"青岛","cityCode":"166"},{"cityName":"衢州","cityCode":"468"},{"cityName":"泉州","cityCode":"480"},{"cityName":"汕头","cityCode":"560"},{"cityName":"上海","cityCode":"310"},{"cityName":"绍兴","cityCode":"365"},{"cityName":"深圳","cityCode":"540"},{"cityName":"沈阳","cityCode":"910"},{"cityName":"石家庄","cityCode":"188"},{"cityName":"苏州","cityCode":"450"},{"cityName":"台州","cityCode":"476"},{"cityName":"泰州","cityCode":"445"},{"cityName":"天津","cityCode":"130"},{"cityName":"潍坊","cityCode":"155"},{"cityName":"温州","cityCode":"470"},{"cityName":"乌鲁木齐","cityCode":"890"},{"cityName":"无锡","cityCode":"330"},{"cityName":"芜湖","cityCode":"303"},{"cityName":"武汉","cityCode":"710"},{"cityName":"西安","cityCode":"841"},{"cityName":"厦门","cityCode":"390"},{"cityName":"徐州","cityCode":"350"},{"cityName":"烟台","cityCode":"161"},{"cityName":"盐城","cityCode":"348"},{"cityName":"银川","cityCode":"880"},{"cityName":"珠海","cityCode":"620"},{"cityName":"镇江","cityCode":"343"},{"cityName":"中山","cityCode":"556"},{"cityName":"舟山","cityCode":"364"},{"cityName":"郑州","cityCode":"760"},{"cityName":"安顺","cityCode":"789"},{"cityName":"白银","cityCode":"879"},{"cityName":"北海","cityCode":"599"},
-            {"cityName": "潮州", cityCode: "531"},{"cityName": "德阳", cityCode: "825"},{"cityName": "大理", cityCode: "862"},{"cityName": "桂林", cityCode: "592"},{"cityName": "赣州", cityCode: "752"},{"cityName": "固原", cityCode: "885"},{"cityName": "淮安", cityCode: "354"},{"cityName": "黄石", cityCode: "715"},{"cityName": "酒泉", cityCode: "931"},{"cityName": "荆州", cityCode: "712"},{"cityName": "荆门", cityCode: "724"},{"cityName": "泸州", cityCode: "815"},{"cityName": "兰州", cityCode: "870"},{"cityName": "柳州", cityCode: "593"},{"cityName": "乐山", cityCode: "814"},{"cityName": "南充", cityCode: "822"},{"cityName": "梅州", cityCode: "528"},{"cityName": "绵阳", cityCode: "824"},{"cityName": "清远", cityCode: "535"},{"cityName": "韶关", cityCode: "558"},{"cityName": "石嘴山", cityCode: "884"},{"cityName": "吴忠", cityCode: "883"},{"cityName": "孝感", cityCode: "717"},{"cityName": "咸宁", cityCode: "719"},{"cityName": "宜昌", cityCode: "711"},{"cityName": "宜宾", cityCode: "817"},{"cityName": "扬州", cityCode: "430"},{"cityName": "湛江", cityCode: "520"},{"cityName": "肇庆", cityCode: "536"},{"cityName": "中卫", cityCode: "886"},{"cityName": "资阳", cityCode: "830"},{"cityName": "天水", cityCode: "877"}]
-            ,selectedNode:"100"
+            ,letterList:""
             ,phoneNum:""
             ,phoneStatus:""
             ,listShow:""
+            ,searchKey:"全国",
+            searchCityCode:100,
+            letterList:"",
+            selectedNode:"100",
+            isShowCitySearch:false,
+            isShowCityAll:false,
+            findCitylist:[],
+            ret:[],
 		}
 	},
 	components:{
@@ -211,7 +229,12 @@ export default{
         'list-details':details,
 	},
 	created:function(){
-
+        let vm=this;
+        getCitys({"monoType":0})
+        .then((data)=>{
+            vm.letterList=data.data.list;
+            vm.letterList.a=[{ "cityName": "全国","cityCode":100}]
+        }).catch(e=>errorDeal(e))
     },
     watch:{
         context5(){
@@ -270,7 +293,7 @@ export default{
                     vm.callback=function(v){vm.searchList(v)};                
                 }).catch(e=>errorDeal(e)) 
             }else{
-                data={phone:vm.form.context1,cityCode:vm.selectedNode,prestoreMoney:vm.context5,pageNow:page||1,pageSize:10} 
+                data={phone:vm.form.context1,cityCode:vm.searchCityCode,prestoreMoney:vm.context5,pageNow:page||1,pageSize:10} 
                 requestGetGeneralNumberList2(data,()=>{vm.off.isLoad=false;})
                 .then((data)=>{
                     vm.dataList=data.data
@@ -307,6 +330,51 @@ export default{
                     this.funScrollTop()
                 },50) 
             }).catch(e=>errorDeal(e))
+        },
+        filterData(v){
+            let vm = this;
+            var sKey = vm.searchKey && vm.searchKey.toLowerCase();
+            var data =  vm.letterList;vm.ret=[];
+            if (sKey) {
+                Object.entries(data).forEach(
+                    (row,index)=>{
+                        if(row[0].toLowerCase().indexOf(sKey)>-1){//首字母匹配
+                            vm.ret=row[1];
+                            return;
+                        }else{
+                            let todo = row[1].filter((value)=>
+                                Object.keys(value).some((key)=>
+                                    String(value[key]).indexOf(sKey) > -1
+                                )
+                            );
+                            if(todo.length)vm.ret=vm.ret.concat(todo);
+                        }
+                    }
+                );
+                vm.isShowCityAll=false;
+                vm.isShowCitySearch=true;
+            }else{
+                vm.isShowCitySearch=false;
+                vm.isShowCityAll=true;
+            }
+        },
+        checkCity(v){
+            let vm=this;
+            vm.searchKey="";
+            vm.searchKey=v.cityName;
+            vm.searchCityCode=v.cityCode;
+        },
+        msHide(){
+            this.isShowCitySearch=false;
+            this.isShowCityAll=false;
+            let vm=this;
+            if(vm.searchKey==''){
+                vm.searchKey="全国";
+            }
+        },msShow(){
+            let vm=this;
+            vm.isShowCitySearch=false;
+            vm.isShowCityAll=true;
         },
         funScrollTop(){
             let ch=this.$parent.$parent.$refs.psec.clientHeight;
@@ -381,5 +449,9 @@ export default{
     div.m-total-table{background: transparent}
     .m-title{text-align: justify;text-align-last: justify}
     span.f-checkText{display: inline-block;margin-left: 5px;margin-right: 5px;}
+    .m-searchCity, .m-allCity{position: absolute;z-index: 999;background: #fff;border: 1px solid #eee;margin-top: 5px;border-radius: 6px;padding: 10px;overflow-y: auto}
+.m-allCity>span{display: block;}
+.m-allCity .m-mapCityBox{cursor: pointer;display: inline-block;margin-right:5px;line-height: 25px;overflow: auto;width: 80px;height: 25px;}
+.m-searchCity>span{cursor: pointer;display: inline-block;margin-right:5px;width: 70px;height: 25px;line-height: 25px;overflow: auto}
 </style>
 

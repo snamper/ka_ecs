@@ -53,8 +53,11 @@
                                     <span v-for="(v,i) in ret" @mousedown="checkCity(v)">{{v.cityName}}</span>
                                 </p>
                                 <p v-if="isShowCityAll" class="m-allCity" style="width:400px;height:400px">
-                                    <span v-for="(item,key,index) in letterList">
-                                        <h2 style="color:red">{{key}}</h2>
+                                    <span>
+                                        <span class="m-mapCityBox" v-for="(v,i) in letterList.a" @mousedown="checkCity(v)">{{v.cityName}}</span> 
+                                    </span>
+                                    <span v-for="(item,key,index) in letterList"  v-if="key!='a'" >
+                                        <h2 style="color:red" >{{key}}</h2>
                                         <span class="m-mapCityBox" v-for="(v,i) in item" @mousedown="checkCity(v)">{{v.cityName}}</span> 
                                     </span>
                                 </p>
@@ -137,7 +140,7 @@ export default {
             numberInfo:"",
             searchKey:"全国",
             searchCityCode:100,
-            letterList:{"Q":[{ "cityName": "全国","cityCode":100}]},
+            letterList:"",
             selectedNode:"100",
             isShowCitySearch:false,
             isShowCityAll:false,
@@ -163,14 +166,10 @@ export default {
                 vm.searchList()
             }
         },300);
-        getCitys()
+        getCitys({"monoType":1})
         .then((data)=>{
             vm.letterList=data.data.list;
-            if(vm.letterList.hasOwnProperty('Q')){
-                vm.letterList.Q.push({ "cityName": "全国", "cityCode": "100" })
-            }else{
-                vm.letterList.Q=[{ "cityName": "全国", "cityCode": "100" }];
-            }
+            vm.letterList.a=[{ "cityName": "全国","cityCode":100}]
         }).catch(e=>errorDeal(e))
     },watch:{
         context5(){
