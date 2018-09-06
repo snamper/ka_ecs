@@ -30,11 +30,11 @@
 				<span class="dp">系统名称：</span>
 				<div class="m-form-checkbox">
 					<label><span class="checkbox"><input type="checkbox" value="0" v-model="form.source"><span></span></span><span class="text">远盟</span></label>
+					<label><span class="checkbox"><input type="checkbox" value="21" v-model="form.source"><span></span></span><span class="text">远特i卡</span></label>
 					<label><span class="checkbox"><input type="checkbox" value="1" v-model="form.source"><span></span></span><span class="text">远易站</span></label>
 					<label><span class="checkbox"><input type="checkbox" value="3" v-model="form.source"><span></span></span><span class="text">远微商城</span></label>
 					<label><span class="checkbox"><input type="checkbox" value="2" v-model="form.source"><span></span></span><span class="text">信时空</span></label>
 					<label><span class="checkbox"><input type="checkbox" value="4" v-model="form.source"><span></span></span><span class="text">网厅</span></label>
-					<label><span class="checkbox"><input type="checkbox" value="21" v-model="form.source"><span></span></span><span class="text">远特i卡</span></label>
 				</div>
 			</div>
 
@@ -247,11 +247,15 @@
 					</td>
 					<td colspan="2" v-if="todo.result==2&&parseInt(todo.recheckLastTime)>=new Date().getTime()" class="td-col-2">
 						<div class="f-c-red">拒绝</div>
-						<div v-show="todo.source!=21"><a :name="todo.orderId" :title="index" @click="details" class="details" href="javascript:void(0)">查看详情</a><br><a :name="todo.orderId"  v-if="off.power3" :title="index" @click="agree" class="agree f-mgt-10" href="javascript:void(0)">同意</a></div>
+						<div>
+							<a :name="todo.orderId" :title="index" @click="details" class="details" href="javascript:void(0)">查看详情</a>
+							<br>
+							<a :name="todo.orderId"  v-if="off.power3 && todo.source!=21" :title="index" @click="agree" class="agree f-mgt-10" href="javascript:void(0)">同意</a>
+						</div>
 					</td>
 					<td colspan="2" v-if="todo.result==3" class="td-col-2">
 						<div class="f-c-blue">复审同意</div>
-						<div><a :name="todo.orderId" :title="index" @click="details" class="details" href="javascript:void(0)">查看详情</a></div>
+						<div><a :name="todo.orderId" :title="index" v-show="todo.source!=21" @click="details" class="details" href="javascript:void(0)">查看详情</a></div>
 					</td>
 					<td colspan="2" v-if="todo.result==4" class="td-col-2">
 						<div :class= "{ 'f-c-green': todo.updName==1||todo.updAddress==1||todo.updPapersCode==1, 'f-c-purple': todo.updName==0&&todo.updAddress==0&&todo.updPapersCode==0}">准同意</div>
