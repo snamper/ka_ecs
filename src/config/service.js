@@ -64,10 +64,13 @@ export const requestGetGeneralNumberList1=(data,load)=>fetch("km-ecs/w/monopoly/
 export const requestGetGeneralNumberList2=(data,load)=>fetch("km-ecs/w/monopoly/getGeneralList",data,"POST",load);
 /*大众号个数查询*/
 export const requestGetGeneralNumberDesc=(data,load)=>fetch("km-ecs/w/monopoly/getGNumsDesList",data,"POST",load);
+/*获取卡盟专营号城市列表*/
+export const getCitys=(data,load)=>fetch("km-ecs/w/monopoly/getCitys",data,"POST",load);
 /*实名资源库*/
 export const getRealNameSource=(data,load)=>fetch("km-ecs/w/realNameAuth/query",data,"POST",load);
 export const getRealNameSourceDetail=(data,load)=>fetch("km-ecs/w/realNameAuth/queryDetail",data,"POST",load);
 
 /*远盟订单查询总条数*/
 export const getOrderTotal=(data,load)=>fetch("ym-ecs/c/audit/orderSearchTotal",data,"POST",load);
+
 

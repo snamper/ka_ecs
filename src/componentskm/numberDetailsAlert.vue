@@ -12,7 +12,8 @@
 <template>
 <section id="detailsView">
 	<div @mousewheel="stopScroll">
-  	    <header class="m-scroll-bar animated infinite" :class="{active:off.isLoad}"></header>        
+  	    <header class="m-scroll-bar animated infinite" :class="{active:off.isLoad}"></header> 
+        <section class="m-occlusion" :class="{active:off.isLoad}"></section>       
 		<table>
 			<thead>
 				<tr>

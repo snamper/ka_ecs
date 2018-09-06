@@ -5,6 +5,7 @@
 <section >
     <div class="g-search-menu" id="search" :class="{active:off.details}">
         <header class="m-scroll-bar animated infinite" :class="{active:off.isLoad}"></header>
+        <section class="m-occlusion" :class="{active:off.isLoad}"></section>
         <!--查询-->
         <section>
             <div class="g-search-form">

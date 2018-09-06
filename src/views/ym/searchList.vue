@@ -19,7 +19,8 @@
 <template>
   <div id="search" :class="{active:off.details}">
   	<header class="m-scroll-bar animated infinite" :class="{active:off.isLoad}" v-if="!off.detailsList"></header>
-  	<!--查询-->
+    <section class="m-occlusion" :class="{active:off.isLoad}"></section>        	
+    <!--查询-->
   	<section v-if="!off.detailsList">
   	<div class="g-search-form">
 		<div class="m-tag"><b></b>系统类型</div>

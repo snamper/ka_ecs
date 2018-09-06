@@ -555,10 +555,6 @@
   transform: translateX(-100%);
   z-index: 888;
   background: #20A0FF;
-  /*background-image: -webkit-linear-gradient(to right, #40C4FF 0,#3E88FA 50%, #40C4FF 100%);
-  background-image: -moz-linear-gradient(to right, #40C4FF 0,#3E88FA 50%, #40C4FF 100%);
-  background-image: linear-gradient(to right, #40C4FF 0,#3E88FA 50%, #40C4FF 100%);
-  background-image: -ms-linear-gradient(to right, #40C4FF 0,#3E88FA 50%, #40C4FF 100%);*/
 }
 .m-scroll-bar.active{
   display: block;

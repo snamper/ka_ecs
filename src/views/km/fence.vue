@@ -9,9 +9,8 @@
 <template>
 	<div class="f-fullscreen clr">
 		<header class="m-scroll-bar animated infinite" :class="{active:off.isLoad}"></header>
-		<div id="mapBox" class="fl">
-			
-		</div>
+        <section class="m-occlusion" :class="{active:off.isLoad}"></section>
+		<div id="mapBox" class="fl"></div>
 		<div class="m-city-display f-scroll-lt fl">
 			<ul class="m-citylist-ul">
 				<li v-for="(item,index) in cityList" @click="citySelectClick(index)" :class="{active:off.select==index}">{{ item.name }}</li>

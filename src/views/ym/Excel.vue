@@ -51,6 +51,7 @@ select {
 <template>
 <div>
 <header class="m-scroll-bar animated infinite" :class="{active:off.isLoad}"></header>
+<section class="m-occlusion" :class="{active:off.isLoad}"></section>
     <section >
     <div>
         <p v-cloak class="timeDiv">现在时间:{{time}}</p>

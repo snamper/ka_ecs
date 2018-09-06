@@ -6,6 +6,7 @@
 <template>
 	<div style="padding:15px;">
 		<header class="m-scroll-bar animated infinite" :class="{active:off.isLoad}"></header>
+        <section class="m-occlusion" :class="{active:off.isLoad}"></section>
 		<div class="m-input-button o-input-button">
 			<input maxlength="11" type="tel" v-model="form.phone" placeholder="请输入查询的手机号码"><button @click="searchPhone">查询</button>
 		</div>
@@ -67,7 +68,6 @@ export default{
 		searchPhone(){
 			var vm=this;
 			if(vm.off.isLoad)return false;
-			// vm.phoneList={};
 			if(!vm.form.phone){
 				layer.open({
 		            content:'请输入查询的号码',
@@ -78,11 +78,6 @@ export default{
 		        return false;
 			}
 			vm.off.isLoad=true;
-			// vm.AJAX("w/frozen/getPhone",{"phone":vm.form.phone},function(data){
-			// 	vm.phoneList=data.data;
-			// },function(){
-			// 	vm.off.isLoad=false;
-            // })
             reqCommonMethod({"phone":vm.form.phone},function(){vm.off.isLoad=false;},"km-ecs/w/frozen/getPhone")
             .then((data)=>{
                 if(typeof data=='object'){
@@ -95,17 +90,6 @@ export default{
 			var vm=this;
 			if(vm.off.isLoad)return false;
 			vm.off.isLoad=true;
-			// vm.AJAX("w/frozen/phoneThaw",{"phone":vm.form.phone,"type":0},function(data){
-			// 	layer.open({
-		    //         content:'解冻成功',
-		    //         skin: 'msg',
-		    //         time: 4,
-		    //         msgSkin:'success',
-		    //     });
-	        // vm.searchPhone();
-			// },function(){
-			// 	vm.off.isLoad=false;
-            // })
             reqCommonMethod({"phone":vm.form.phone,"type":0},function(){vm.off.isLoad=false;},"km-ecs/w/frozen/phoneThaw")
             .then(()=>{
                 layer.open({
@@ -122,17 +106,6 @@ export default{
 			var vm=this;
 			if(vm.off.isLoad)return false;
 			vm.off.isLoad=true;
-			// vm.AJAX("w/frozen/phoneThaw",{"phone":vm.form.phone,"type":1},function(data){
-			// 	layer.open({
-		    //         content:'占用成功',
-		    //         skin: 'msg',
-		    //         time: 4,
-		    //         msgSkin:'success',
-		    //     });
-	        // vm.searchPhone();
-			// },function(){
-			// 	vm.off.isLoad=false;
-            // });
             reqCommonMethod({"phone":vm.form.phone,"type":1},function(){vm.off.isLoad=false;},"km-ecs/w/frozen/phoneThaw")
             .then((data)=>{
                 layer.open({

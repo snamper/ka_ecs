@@ -14,6 +14,7 @@
 <template>
 	<div style="padding:15px;">
 		<header class="m-scroll-bar animated infinite" :class="{active:off.isLoad}"></header>
+        <section class="m-occlusion" :class="{active:off.isLoad}"></section>
 		<div class="m-input-button o-input-button">
 			<input maxlength="16" type="tel" v-model="form.dealerId" placeholder="请输入查询的推广方ID"><button @click="searchClick">查询</button>
 		</div>
