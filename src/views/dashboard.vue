@@ -290,7 +290,7 @@ import CountUp from 'vue-countup-v2';
         TimerNotice:[],//消息定时器
         TimerLine:[],
         off:{
-          cardTry_index:0,//开卡尝试legend selected index
+          cardMake_index:0,//开卡尝试legend selected index
           onlineUser_index:0,//在线用户legend selected index
           recharge_index:0,//充值legend selected index
           cardCreate_index:0,//开卡统计：时、天、月切换index
@@ -558,7 +558,7 @@ import CountUp from 'vue-countup-v2';
               vm.initMap({
                 id: "makeCardSuccess",
                 name: "制卡成功数",
-                index:vm.off.recharge_index,
+                index:vm.off.cardMake_index,
                 legend: ["时", "天", "月"],
                 category: [vm.getLatelyTime(data.data.lasttime[0],'hour',12),vm.getLatelyTime(data.data.lasttime[1],'day',7),vm.getLatelyTime(data.data.lasttime[2],'month',6)],
                 lineData: [data.data.hour,data.data.day,data.data.month]
@@ -721,6 +721,8 @@ import CountUp from 'vue-countup-v2';
             vm.off.onlineUser_index=index
           }else if(params.id=="rechargeMoney"){
             vm.off.recharge_index=index
+          }else if(params.id=="makeCardSuccess"){
+            vm.off.cardMake_index=index
           }
           option.xAxis.data = params.category[index];
 

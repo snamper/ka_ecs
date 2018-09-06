@@ -247,7 +247,7 @@
 					</td>
 					<td colspan="2" v-if="todo.result==2&&parseInt(todo.recheckLastTime)>=new Date().getTime()" class="td-col-2">
 						<div class="f-c-red">拒绝</div>
-						<div><a :name="todo.orderId" :title="index" @click="details" class="details" href="javascript:void(0)">查看详情</a><br><a :name="todo.orderId"  v-if="off.power3" :title="index" @click="agree" class="agree f-mgt-10" href="javascript:void(0)">同意</a></div>
+						<div v-show="todo.source!=21"><a :name="todo.orderId" :title="index" @click="details" class="details" href="javascript:void(0)">查看详情</a><br><a :name="todo.orderId"  v-if="off.power3" :title="index" @click="agree" class="agree f-mgt-10" href="javascript:void(0)">同意</a></div>
 					</td>
 					<td colspan="2" v-if="todo.result==3" class="td-col-2">
 						<div class="f-c-blue">复审同意</div>

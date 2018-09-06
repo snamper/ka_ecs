@@ -28,7 +28,10 @@
                                         <td v-if="list.result==3"><b class="f-c-blue">复审同意</b></td>
                                         <td v-if="list.result==4"><b class="f-c-purple">准同意</b></td>
                                         <td v-if="list.result==2&&parseInt(list.recheckLastTime)<new Date().getTime()"><b class="f-c-red" style="padding-right:10px">拒绝</b><span class="red">超过复审时间</span></td>
-                                        <td v-if="list.result==2&&parseInt(list.recheckLastTime)>=new Date().getTime()"><b class="f-c-red" style="padding-right:10px">拒绝</b><a :name="list.orderId" @="agree" class="agree" href="javascript:void(0)" @click="agree">同意</a></td>
+                                        <td v-if="list.result==2&&parseInt(list.recheckLastTime)>=new Date().getTime()">
+                                            <b class="f-c-red" style="padding-right:10px">拒绝</b>
+                                            <a v-show="list.source!=21" :name="list.orderId" class="agree" href="javascript:void(0)" @click="agree">同意</a>
+                                        </td>
                                     </tr>
                                     <tr v-if="type==2"><td>审核方式：</td><td>
                                         <span v-show="list.auditType==1">实时审核</span>
