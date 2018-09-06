@@ -48,7 +48,7 @@
                         <div class="row" style="margin-top:10px;">
                             <span class="text m-title">归属地：</span>
                             <div style="width:80%;display:inline-block">
-                                <input type="text" v-on:input="filterData()" v-model="searchKey" @blur="msHide">
+                                <input type="text" v-on:input="filterData()" v-model="searchKey" @blur="msHide" @focus="msShow">
                                 <p v-if="isShowCitySearch" class="m-searchCity" style="width:400px;height:400px">
                                     <span v-for="(v,i) in ret" @mousedown="checkCity(v)">{{v.cityName}}</span>
                                 </p>
@@ -316,6 +316,10 @@ export default {
             if(vm.searchKey==''){
                 vm.searchKey="全国";
             }
+        },msShow(){
+            let vm=this;
+            vm.isShowCitySearch=false;
+            vm.isShowCityAll=true;
         },
         funScrollTop(){
             let ch=this.$parent.$parent.$refs.psec.clientHeight;
