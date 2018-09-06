@@ -12,30 +12,19 @@ import {
 } from './mutation-types.js';
 
 export default {
-	async getAuditStatisticsInfo({
-		commit,
-		state
-	}) {
+    async getAuditStatisticsInfo({ commit, state }){
 		let res = await getAuditStatistics();
 		res&&commit(SET_AUDIT_STATISTICS_INFO, res)
 	},
-    async getAuditStatisticsInfoYm({
-		commit,
-        state
-	}) {
+    async getAuditStatisticsInfoYm({ commit, state }) {
         let res = await getAuditStatisticsYm();
 		res&&commit(SET_AUDIT_STATISTICS_INFO_YM, res)
 	},
-	async getOpinionCountInfo({
-		commit,
-		state
-	}){
+	async getOpinionCountInfo({ commit, state }){
 		let res = await getOpinionCount();
         res&&commit(SET_OPINION_COUNT, res)  
     },
-    async getSearchListAuditInfoYm({
-        commit,state
-    }){
+    async getSearchListAuditInfoYm({ commit,state }){
         let res=await getSearchListAuditYm();
         res&&commit(SET_AUDITED_SEARCHLIST_YM,res)
     }
