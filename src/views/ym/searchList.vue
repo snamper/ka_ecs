@@ -33,6 +33,7 @@
 					<label><span class="checkbox"><input type="checkbox" value="3" v-model="form.source"><span></span></span><span class="text">远微商城</span></label>
 					<label><span class="checkbox"><input type="checkbox" value="2" v-model="form.source"><span></span></span><span class="text">信时空</span></label>
 					<label><span class="checkbox"><input type="checkbox" value="4" v-model="form.source"><span></span></span><span class="text">网厅</span></label>
+					<label><span class="checkbox"><input type="checkbox" value="21" v-model="form.source"><span></span></span><span class="text">远特i卡</span></label>
 				</div>
 			</div>
 
@@ -704,6 +705,9 @@ export default {
             minute = Math.floor((v % (60 * 60)) / 60);
             second = Math.floor(v % 60);
             return day > 0 ? day + "天" + hour + "时" + minute + "分" + second + "秒" : hour > 0 ? hour + "时" + minute + "分" + second + "秒" : minute > 0 ? minute + "分" + second + "秒" : second + "秒";
+            break;
+        case 7: //系统名称
+            return v == 0 ? "远盟" : v == 1 ? "远易站" : v == 2 ? "信时空" : v == 3 ? "远微商城" : v == 4 ? "网厅" : v == 21 ? "远特i卡" : "--";
             break;
         }
     },

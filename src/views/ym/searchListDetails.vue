@@ -21,6 +21,7 @@
                                 <tbody>
                                     <tr><td>订单号码：</td><td>{{list.orderId}}</td></tr>
                                     <tr><td>生成时间：</td><td>{{$parent.getDateTime(list.createTime)[6]}}</td></tr>
+                                    <tr><td>订单来源：</td><td>{{$parent.translateData(7,list.source)}}</td></tr>
                                     <tr v-if="type==2"><td>开卡状态：</td><td>{{ $parent.translateData(4,list.cardStatus) }}</td></tr>
                                     <tr v-if="type==2"><td>订单状态：</td>
                                         <td v-if="list.result==1"><b class="f-c-green">通过</b></td>
