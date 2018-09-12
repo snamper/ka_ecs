@@ -739,7 +739,7 @@ export default {
         }
         reqCommonMethod({sysOrderId:orderId},false,"km-ecs/w/audit/autoAuditDesc")
         .then(data => {
-            let detailslist = data.data.checkList, content=`<li class="clr"><div class="fl tl autoAudit">识别模式</div><div class="fright"> : A、识别仪 | B、OCR | C、活体 </div></li>
+            let detailslist = data.data.checkList, content=`<li style="text-align:left" class="clr"><span>**识别模式**</span><span> (A:识别仪 , B:OCR , C:活体) </span></li>
             <li class="clr"><div class="fl tl autoAudit">本次识别模式</div><div class="fright"> : ${data.data.mode}</div></li>`;
             for(let i=0;i<detailslist.length;i++){
                 Object.keys(detailslist[i]).forEach((key)=>{
