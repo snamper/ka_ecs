@@ -3,7 +3,6 @@
   *@author: thinkmix
   *@date 2017-11-6
 * *-->
-
 <template>
 <section class="g-search-menu">
     <div id="search" :class="{active:off.cardDetails}">
@@ -190,6 +189,8 @@
                                         <span class="f-c-green" v-if="todo.status==2">成功</span>
                                         <span class="f-c-red" v-if="todo.status==3">失败</span>
                                         <span class="f-c-red" v-if="todo.status==4">订单已关闭</span>
+                                        <span class="f-c-green" v-if="todo.status==5">已激活</span>
+                                        <span class="f-c-red" v-if="todo.status==6">废卡</span>
                                     </td>
                                 </tr>
                             </tbody>
