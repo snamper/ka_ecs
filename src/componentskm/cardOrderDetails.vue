@@ -3,9 +3,7 @@
   *@author: thinkmix
   *@date 2017-2-11
 * *-->
-<style scoped>
-    .supIcon { color: #ff961e; }
-</style>
+
 <template>
     <section class="g-list-box" id="details">
         <header class="g-lis-head">
@@ -360,6 +358,8 @@ export default {
       detailsList: "",
       userMoreInfo: "", //更多用户信息
       detailsSource: "" //要查询的详情 6、卡盟APP；7、卡盟SDK；8远特i卡
+      ,checkType:1
+      ,tdata:[{'活体识别相似度':'86%','mode':'2'},{'活体识别相似度':'86%','mode':'2'},{'活体识别相似度':'86%','mode':'2'},{'校验结果':'成功'}]
     };
   },
   components: {
@@ -649,179 +649,121 @@ export default {
         })
         .catch(error => errorDeal(error));
     },
-    detailsPayOrder: function() {
-      //支付订单详情
-      var vm = this;
-      if (vm.detailsSource == 8) {
-        reqCommonMethod(
-          {
-            opKey: "tf.orderApp.payInfo",
-            params: ['pay_transaction_id="' + vm.list.payOrderId + '"'],
-            pageSize: "10",
-            pageNum: "-1"
-          },
-          false,
-          "km-ecs/w/handler/query"
-        )
-          .then(data => {
+    detailsPayOrder: function() {//支付订单详情
+        var vm = this;
+        if (vm.detailsSource == 8) {
+            reqCommonMethod( { opKey: "tf.orderApp.payInfo", params: ['pay_transaction_id="' + vm.list.payOrderId + '"'], pageSize: "10", pageNum: "-1" }, false, "km-ecs/w/handler/query" )
+            .then(data => {
             var list = data.data.list[0],content;
             content =
-              '<ul class="f-scroll-lt lay-details">' +
-              '<li class="clr"><div class="fl">支付流水号：</div><div class="fright">' +
-              list.pay_transaction_id +
-              "</div></li>" +
-              '<li class="clr"><div class="fl">第三方流水号：</div><div class="fright">' +
-              list.sys_order_id_pay +
-              "</div></li>" +
-              '<li class="clr"><div class="fl">支付账号：</div><div class="fright">' +
-              list.pay_user_id +
-              "</div></li>" +
-              '<li class="clr"><div class="fl">支付方式：</div><div class="fright">' +
-              list.payType +
-              "</div></li>" +
-              '<li class="clr"><div class="fl">支付金额：</div><div class="fright">' +
-              list.actual_money / 100 +
-              "元</div></li></ul>";
+                '<ul class="f-scroll-lt lay-details">' +
+                '<li class="clr"><div class="fl">支付流水号：</div><div class="fright">' +
+                list.pay_transaction_id +
+                "</div></li>" +
+                '<li class="clr"><div class="fl">第三方流水号：</div><div class="fright">' +
+                list.sys_order_id_pay +
+                "</div></li>" +
+                '<li class="clr"><div class="fl">支付账号：</div><div class="fright">' +
+                list.pay_user_id +
+                "</div></li>" +
+                '<li class="clr"><div class="fl">支付方式：</div><div class="fright">' +
+                list.payType +
+                "</div></li>" +
+                '<li class="clr"><div class="fl">支付金额：</div><div class="fright">' +
+                list.actual_money / 100 +
+                "元</div></li></ul>";
             layer.open({
-              content: content,
-              type: 0,
-              title: "支付订单详情",
-              btn: 0,
-              style: "width:auto;"
+                content: content,
+                type: 0,
+                title: "支付订单详情",
+                btn: 0,
+                style: "width:auto;"
             });
-          })
-          .catch(e => errorDeal(e));
-      } else {
-        reqCommonMethod({ payId: vm.list.payOrderId }, false, "km-ecs/w/audit/payInfo")
-        .then(data => {
-            var list = data.data;
-            layer.open({
-              content:
-                '<ul class="f-scroll-lt lay-details">' + '<li class="clr"><div class="fl">系统流水号：</div><div class="fright">' + list.sysPayId + "</div></li>" +
-                '<li class="clr"><div class="fl">第三方流水号：</div><div class="fright">' + list.payId + "</div></li>" +
-                '<li class="clr"><div class="fl">支付渠道：</div><div class="fright">' + list.payChannel + "</div></li>" +
-                '<li class="clr"><div class="fl">支付方式：</div><div class="fright">' + list.payType + "</div></li>" +
-                '<li class="clr"><div class="fl">支付金额：</div><div class="fright">' + list.payMoney + "元</div></li></ul>",
-              type: 0,
-              title: "支付订单详情",
-              btn: 0,
-              style: "width:auto;"
-            });
-          })
-          .catch(error => errorDeal(error));
-      }
-    },
-    detailsUser: function() {
-      //操作者详情
-      var vm = this;
-      reqCommonMethod({ userId: vm.list.operatorId }, false, "km-ecs/w/audit/getUserInfo")
-        .then(data => {
-          vm.detailsList = data.data;
-          vm.isShowDetails = true;
-          vm.typeDetails = 1;
-        })
-        .catch(error => errorDeal(error));
-    },
-    detailsMerchant: function() {
-      //商户详情
-      var vm = this;
-      reqCommonMethod(
-        { dealerId: vm.list.dealerId },
-        false,
-        "km-ecs/w/audit/getMerchantInfo"
-      )
-        .then(data => {
-          vm.detailsList = data.data;
-          vm.isShowDetails = true;
-          vm.typeDetails = 2;
-        })
-        .catch(error => errorDeal(error));
-    },
-    autoAuditInfo() {
-      //自动审核详情
-      var vm = this,
-        orderId = vm.list.orderId;
-      if (vm.list.sysOrderId) {
-        orderId = vm.list.sysOrderId;
-      }
-
-      const transfer = (val)=>{
-        return val == 0 ? '未执行' : val == -1 ? '不适用' : val + '%';
-      }
-
-      const transfer_result = (val)=>{
-        let name = '', style = 'fCGrey';
-
-        switch(parseInt(val)){
-            case 0:
-                name = '未执行';
-                style = 'fCRed';
-                break;
-            case -1:
-                name = '不适用';
-                break;
-            case 1:
-                name = '成功';
-                style = 'fCGreen';
-                break;
-            case 2:
-                name = '失败';
-                style = 'fCRed';
-                break;
-            case 3:
-                name = '检验失败';
-                style = 'fCYellow';
-                break;
-            default:
-                name = '--';
-                break;
-        }
-        return {name:name,style:style};
-      }
-
-      reqCommonMethod(
-        {
-          opKey: "order.autoAudit.details",
-          params: ['order_id="' + orderId + '"'],
-          pageSize: "10",
-          pageNum: "-1"
-        },
-        false,
-        "km-ecs/w/handler/query"
-      )
-        .then(data => {
-          var list_item1 = data.data.list[0];
-          list_item1
-            ? layer.open({
-                content: `<ul class="f-scroll-lt lay-details o-fl-w">
-                <li class="clr"><div class="fl">正面与手持对比相似度：</div><div class="fright">${transfer(list_item1.frontHandImageSimilarity)}</div></li>
-				<li class="clr"><div class="fl">正面与第三方对比相似度：</div><div class="fright">${transfer(list_item1.frontImageSimilarity)}</div></li>
-				<li class="clr"><div class="fl">手持与第三方相似度：</div><div class="fright">${transfer(list_item1.handImageSimilarity)}</div></li>
-				<li class="clr"><div class="fl">活体识别照相似度：</div><div class="fright">${transfer(list_item1.livingImageSimilarity)}</div></li>
-				<li class="clr"><div class="fl">年龄校验结果：</div><div class="fright ${transfer_result(list_item1.ageCheck).style}">${transfer_result(list_item1.ageCheck).name}</div></li>
-				<li class="clr"><div class="fl">地址校验结果：</div><div class="fright ${transfer_result(list_item1.addressCheck).style}">${transfer_result(list_item1.addressCheck).name}</div></li>
-				<li class="clr"><div class="fl">身份证有效期校验结果：</div><div class="fright ${transfer_result(list_item1.periodCheck).style}">${transfer_result(list_item1.periodCheck).name}</div></li>
-				<li class="clr"><div class="fl">身份证号与正面OCR匹配结果：</div><div class="fright ${transfer_result(list_item1.ocrIdCardNoCheck).style}">${transfer_result(list_item1.ocrIdCardNoCheck).name}</div></li>
-				<li class="clr"><div class="fl">有效期与背面OCR匹配结果：</div><div class="fright ${transfer_result(list_item1.ocrIdCardPeriodCheck).style}">${transfer_result(list_item1.ocrIdCardPeriodCheck).name}</div></li>
-				<li class="clr"><div class="fl">上传身份证号与OCR对比相似度：</div><div class="fright">${transfer(list_item1.idCardNoSimilarity)}</div></li>
-				<li class="clr"><div class="fl">上传姓名与OCR对比相似度：</div><div class="fright">${transfer(list_item1.idCardNameSimilarity)}</div></li>
-				<li class="clr"><div class="fl">上传地址与OCR对比相似度：</div><div class="fright">${transfer(list_item1.idCardAddressSimilarity)}</div></li>
-				<li class="clr"><div class="fl">上传有效期与OCR对比相似度：</div><div class="fright">${transfer(list_item1.idCardPeriodSimilarity)}</div></li>
-				<li class="clr"><div class="fl">审核结果：</div><div class="fright">${list_item1.result == 1? '<span class="fCGreen">成功</span>': list_item1.result == 2? '<span class="fCRed">拒绝</span>': list_item1.result == 3? '<span class="fCYellow">转人工审核</span>': "--"}</div></li>
-                <li class="clr"><div class="fl">拒绝理由：</div><div class="fright">${list_item1.desc}</div></li>
-                <li class="clr"><div class="fl">已开卡数：</div><div class="fright">${list_item1.openedNum}</div></li>
-                </ul>`,
+            })
+            .catch(e => errorDeal(e));
+        } else {
+            reqCommonMethod({ payId: vm.list.payOrderId }, false, "km-ecs/w/audit/payInfo")
+            .then(data => {
+                var list = data.data;
+                layer.open({
+                    content:
+                    '<ul class="f-scroll-lt lay-details">' + '<li class="clr"><div class="fl">系统流水号：</div><div class="fright">' + list.sysPayId + "</div></li>" +
+                    '<li class="clr"><div class="fl">第三方流水号：</div><div class="fright">' + list.payId + "</div></li>" +
+                    '<li class="clr"><div class="fl">支付渠道：</div><div class="fright">' + list.payChannel + "</div></li>" +
+                    '<li class="clr"><div class="fl">支付方式：</div><div class="fright">' + list.payType + "</div></li>" +
+                    '<li class="clr"><div class="fl">支付金额：</div><div class="fright">' + list.payMoney + "元</div></li></ul>",
                     type: 0,
-                    title: "自动审核详情",
+                    title: "支付订单详情",
                     btn: 0,
                     style: "width:auto;"
-                })
-                : layer.open({
-                    content: "未查到审核信息",
-                    skin: "msg",
-                    time: 4,
-                    msgSkin: "error"
                 });
+            })
+            .catch(error => errorDeal(error));
+        }
+    },
+    detailsUser: function() {
+        //操作者详情
+        var vm = this;
+        reqCommonMethod({ userId: vm.list.operatorId }, false, "km-ecs/w/audit/getUserInfo")
+        .then(data => {
+            vm.detailsList = data.data;
+            vm.isShowDetails = true;
+            vm.typeDetails = 1;
+        })
+        .catch(error => errorDeal(error));
+    },
+    detailsMerchant: function() {//商户详情
+        var vm = this;
+        reqCommonMethod({dealerId:vm.list.dealerId},false,"km-ecs/w/audit/getMerchantInfo")
+        .then(data => {
+            vm.detailsList = data.data;
+            vm.isShowDetails = true;
+            vm.typeDetails = 2;
+        })
+        .catch(error => errorDeal(error));
+    },
+    autoAuditInfo(){//自动审核详情
+        var vm = this,
+            orderId = vm.list.orderId;
+        if (vm.list.sysOrderId) {
+            orderId = vm.list.sysOrderId;
+        }
+        const transferStyle = (i1,i2)=>{
+            if(i1.indexOf('结果')>-1){
+                if(i2.indexOf('成功')>-1){
+                    return 'fCGreen'
+                }else if(i2.indexOf('未执行')>-1){
+                    return 'fCRed'
+                }
+            }
+        }
+        reqCommonMethod({sysOrderId:orderId},false,"km-ecs/w/audit/autoAuditDesc")
+        .then(data => {
+            let detailslist = data.data.checkList, content=`<li class="clr"><div class="fl tl autoAudit">识别模式</div><div class="fright"> : A、识别仪 | B、OCR | C、活体 </div></li>
+            <li class="clr"><div class="fl tl autoAudit">本次识别模式</div><div class="fright"> : ${data.data.mode}</div></li>`;
+            for(let i=0;i<detailslist.length;i++){
+                Object.keys(detailslist[i]).forEach((key)=>{
+                    if(key!="mode"){
+                        if(detailslist[i].hasOwnProperty('mode')&&detailslist[i].mode!=""){
+                            content+=`<li class="clr"><div class="fl tl autoAudit">${key}（${detailslist[i]['mode']}）</div><div class="fright"> : <span class="${transferStyle(key,detailslist[i][key])}">${detailslist[i][key]}</span> </div></li>`
+                        }else{
+                            content+=`<li class="clr"><div class="fl tl autoAudit">${key}</div><div class="fright"> : <span class="${transferStyle(key,detailslist[i][key])}">${detailslist[i][key]}</span> </div></li>`
+                        }
+                    }
+                })
+            }
+            detailslist? layer.open({
+                content: `<ul class="f-scroll-lt lay-details o-fl-w">${content}</ul>`,
+                type: 0,
+                title: "自动审核详情",
+                btn: 0,
+                style: "width:auto;"
+            }):layer.open({
+                content: "未查到审核信息",
+                skin: "msg",
+                time: 4,
+                msgSkin: "error"
+            });
         })
         .catch(error => errorDeal(error));
     },
@@ -946,3 +888,10 @@ export default {
   }
 };
 </script>
+<style>
+    .supIcon { color: #ff961e; }
+    .checkType{display:inline-block}
+    .checkType label{margin-right: 10px;}
+    .checkType label input{position: relative;top: 1px}
+    label.active{color: #4b8cd6}
+</style>

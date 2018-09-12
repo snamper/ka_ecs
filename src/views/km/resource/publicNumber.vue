@@ -114,7 +114,7 @@
                                 <!-- <a v-if="dataList.makeDealer=='--'">{{dataList.makeDealerName||'--'}}({{dataList.makeDealer||'--'}})</a> -->
                             </td>
                             <td>
-                                <a :href="'#/homek/orderSearch/card/audited/'+dataList.openCardId" class="details">{{dataList.openCardId||'--'}}</a>
+                                <a :href="'#/homek/orderSearch/card/audited/null/'+dataList.openCardId" class="details">{{dataList.openCardId||'--'}}</a>
                                 <!-- <a v-if="dataList.makeDealer=='--'">{{dataList.openCardId||'--'}}</a> -->
                             </td>
                             <td>
@@ -155,7 +155,7 @@
                                 <a v-if="v.makeDealer=='--'" :class="{'details':v.makeDealerName!='--'}">{{v.makeDealerName||'--'}}({{v.makeDealer||'--'}})</a>
                             </td>
                             <td>
-                                <a v-if="v.openCardId!='--'" :href="'#/homek/orderSearch/card/audited/'+v.openCardId" :class="{'details':v.openCardId!='--'}">{{v.openCardId||'--'}}</a>
+                                <a v-if="v.openCardId!='--'" :href="'#/homek/orderSearch/card/audited/null/'+v.openCardId" :class="{'details':v.openCardId!='--'}">{{v.openCardId||'--'}}</a>
                                 <a v-if="v.openCardId=='--'" :class="{'details':v.openCardId!='--'}">--</a>
                             </td>
                             <td>

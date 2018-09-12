@@ -706,8 +706,6 @@ export default {
             vm.form.source=8
         }else if(deviceType==3){
             vm.form.source=7
-        }else{
-            return false
         }
         if(id!="null"){
             vm.form.select='1';

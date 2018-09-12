@@ -9,7 +9,7 @@ body{background-color:#F1F2F3;margin: auto;color: rgba(0,0,0,0.65);font-family: 
 #app{position: absolute;top:0; width: 100%;height: 100%;min-width: 300px;}
 input::-webkit-outer-spin-button, input::-webkit-inner-spin-button{-webkit-appearance: none !important; margin: 0;}
 input[type="number"]{-moz-appearance:textfield;}
-input, button{ -webkit-appearance: none;-moz-appearance: none;-ms-appearance: none;appearance: none;outline: none;}
+/* input, button{ -webkit-appearance: none;-moz-appearance: none;-ms-appearance: none;appearance: none;outline: none;} */
 
 /*公共基础*/
 .f-tal{text-align: left;}
@@ -256,7 +256,10 @@ input, button{ -webkit-appearance: none;-moz-appearance: none;-ms-appearance: no
 .lay-details{max-height:4.5rem;overflow-y: scroll;}
 .lay-details>li{margin-bottom:2px;}
 .lay-details>li>.fl{width:1.3rem;text-align: right;}
+.lay-details>li>.tl{text-align: left;}
 .lay-details>li>.fright{margin-left: 1.35rem;text-align: left; }
+.lay-details>li>.autoAudit{width: 3rem !important}
+.lay-details>li>.autoAudit+.fright{margin-left: 3rem !important}
 
 .lay-details.light>li>.fl{width: 1rem}
 .lay-details.light>li>.fright{margin-left: 0.85rem;}
@@ -295,6 +298,7 @@ input, button{ -webkit-appearance: none;-moz-appearance: none;-ms-appearance: no
 .o-fl-w>.clr>.fright{
     width:auto;
     margin-left:2.2rem;
+    margin-right: .1rem;
 }
 /*拒绝弹出层*/
 

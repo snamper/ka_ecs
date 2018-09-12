@@ -37,7 +37,7 @@
                         <tr v-for="(todo,index) in flowlist" :key="index">
                             <td>{{ ((pageNumf-1)*10+(index+1)) }}</td>
                             <td>{{getDateTime(todo.createTime)[6]}}</td>
-                            <td><a class="f-a-td" :href="'#/homek/orderSearch/flowCard/'+todo.sysOrderId">{{todo.sysOrderId||'--'}}</a></td>
+                            <td><a class="f-a-td" :href="'#/homek/orderSearch/flowCard/'+null+todo.sysOrderId">{{todo.sysOrderId||'--'}}</a></td>
                             <td>
                                 <a class="f-a-td" v-if="!isNaN(todo.actived)&&todo.actived!=0" @click="getNumberInfo({s:3,info:todo})">{{todo.actived}}</a>
                                 <a v-else-if="todo.actived==0">{{todo.actived}}</a>
@@ -96,7 +96,7 @@
                                 <!-- <a v-if="todo.makeCardId=='--'">{{todo.makeCardId}}</a> -->
                             </td>
                             <td>
-                                <a :href="todo.openCardId!='--'?'#/homek/orderSearch/card/audited/'+todo.openCardId:`javascript:void(0)`" :class="todo.openCardId!='--'?'f-a-td':''">{{todo.openCardId||'--'}}</a>
+                                <a :href="todo.openCardId!='--'?'#/homek/orderSearch/card/audited/null/'+todo.openCardId:`javascript:void(0)`" :class="todo.openCardId!='--'?'f-a-td':''">{{todo.openCardId||'--'}}</a>
                                 <!-- <a v-if="todo.openCardId=='--'">{{todo.openCardId||'--'}}</a> -->
                             </td>
                             <td>{{translateData(16,todo.safeType)}}</td>

@@ -46,7 +46,7 @@
                             <td>{{list.prdName}}</td>
                             <td><a :href="tomakeCardNo(list.makeCardNo)" :class="{'details':list.makeCardNo!='--'}">{{list.makeCardNo||'--'}}</a></td>
                             <td><a :href="list.makeCardDealerId!='--'?'#/homek/resource/merchant/'+list.makeCardDealerId:`javascript:void(0)`" :class="{'details':list.makeCardDealerName!='--'}">{{list.makeCardDealerName||'--'}}</br> ({{list.makeCardDealerId||'--'}})</a></td>
-                            <td><a :href="list.openCardNo!='--'?'#/homek/orderSearch/card/audited/'+list.openCardNo+'/'+list.deviceType:`javascript:void(0)`" :class="{'details':list.openCardNo!='--'}">{{list.openCardNo||'--'}}</a></td>
+                            <td><a :href="list.openCardNo!='--'?'#/homek/orderSearch/card/audited/'+list.deviceType+'/'+list.openCardNo:`javascript:void(0)`" :class="{'details':list.openCardNo!='--'}">{{list.openCardNo||'--'}}</a></td>
                             <td><a :href="list.openCardDealerId!='--'?'#/homek/resource/merchant/'+list.openCardDealerId:`javascript:void(0)`" :class="{'details':list.openCardDealerId!='--'}">{{list.openCardDealerName||'--'}}</br>({{list.openCardDealerId||'--'}})</a></td>
                         </tr>
                     </tbody>

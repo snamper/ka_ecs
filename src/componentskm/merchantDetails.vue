@@ -488,6 +488,7 @@ export default{
 			vm.getList();
         },
         close(v){
+            debugger;
             let vm=this.$parent,
             road=vm.searchRoad;
             vm.i--;

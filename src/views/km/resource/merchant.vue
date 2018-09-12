@@ -13,8 +13,8 @@
 	<div id="merchantSearch">
 		<header class="m-scroll-bar animated infinite" :class="{active:off.isLoad}"></header>
         <section class="m-occlusion" :class="{active:off.isLoad}"></section>
-            <div v-if="form.type!=1&&form.type!=2">
-                <section class="g-search-form">
+        <div v-if="form.type!=1&&form.type!=2">
+            <section class="g-search-form">
                 <table class="g-base-table o-headTotal-table">
                     <thead>
                         <tr>
@@ -65,7 +65,7 @@
                                 <label><span class="radio"><input @click="changeSearchType"  type="radio" value="1" v-model="form.searchType" checked="checked"><span></span></span><span class="text">商户ID</span></label>
                                 <label><span class="radio"><input @click="changeSearchType" type="radio" value="2" v-model="form.searchType" checked="checked"><span></span></span><span class="text">员工手机号码</span></label>
                                 <div style="display:inline-block" class="col-r m-input">
-                                    <input @focus="inpFocus" @blur="inpBlur" v-model="form.searchContext" maxlength="24" type="tel" :placeholder="form.searchType==1 ? '请输入查询的商户ID':'请输入查询的手机号码'"/>
+                                    <input v-model="form.searchContext" maxlength="24" type="tel" :placeholder="form.searchType==1 ? '请输入查询的商户ID':'请输入查询的手机号码'"/>
                                 </div>
                             </div>
                         </div>
@@ -77,7 +77,7 @@
                                 <label><span class="radio"><input @click="changeSearchType"  type="radio" value="1" v-model="form.searchType" checked="checked"><span></span></span><span class="text">卡盟ID</span></label>
                                 <label><span class="radio"><input @click="changeSearchType" type="radio" value="2" v-model="form.searchType" checked="checked"><span></span></span><span class="text">手机号码</span></label>
                                 <div style="display:inline-block" class="col-r m-input">
-                                    <input @focus="inpFocus" @blur="inpBlur" v-model="form.searchContext" maxlength="24" type="tel" :placeholder="form.searchType==1 ? '请输入查询的卡盟ID':'请输入查询的手机号码'"/>
+                                    <input v-model="form.searchContext" maxlength="24" type="tel" :placeholder="form.searchType==1 ? '请输入查询的卡盟ID':'请输入查询的手机号码'"/>
                                 </div>
                             </div>
                         </div>
@@ -94,13 +94,13 @@
                     <div class="row clr m-col-2"   v-if="form.content==1">
                         <span class="dp" >商户名称：</span>
                         <div style="display:inline-block;width:60%;">
-                            <input @focus="inpFocus" @blur="inpBlur" v-model="form.searchDealerName" maxlength="24" type="tel" placeholder="请输入查询的商户名称"/>
+                            <input v-model="form.searchDealerName" maxlength="24" type="tel" placeholder="请输入查询的商户名称"/>
                         </div>
                     </div>
                     <div class="row clr m-col-2"   v-if="form.content==2">
                         <span class="dp" >用户名称：</span>
                         <div style="display:inline-block;width:60%;">
-                            <input @focus="inpFocus" @blur="inpBlur" v-model="form.searchDealerName" maxlength="24" type="tel" placeholder="请输入查询的用户名称"/>
+                            <input v-model="form.searchDealerName" maxlength="24" type="tel" placeholder="请输入查询的用户名称"/>
                         </div>
                     </div>
                     <div class="row pdl" v-if="form.content==1">
@@ -224,9 +224,7 @@
         <!--查看商户照片-->
         <Pop v-if="off.pop" :callBack="closePop">
             <div slot="content" style="height:500px">
-                <ImgZoom :imgData="merchantImgData">
-
-                </ImgZoom>
+                <ImgZoom :imgData="merchantImgData"></ImgZoom>
             </div>
         </Pop>
         <!--修改商户信息-->
@@ -241,7 +239,6 @@
 <script>
 import {reqCommonMethod,requestGetMerchantList} from "../../../config/service.js";  
 import { getDateTime,errorDeal,createDownload,getStore } from "../../../config/utils.js";
-
 import pagination from "../../../componentskm/page.vue";
 import Pop from '../../../componentskm/pop';
 import ImgZoom from '../../../componentskm/ImgZoom';
@@ -335,14 +332,17 @@ export default{
 		var vm=this;
 		setTimeout(function(){
 			vm.getTotal();
-			let val=vm.$route.params.val;
+            let val=vm.$route.params.val;
 			if(val!='null'){
                 vm.form.type=1;
 				if(val.indexOf('phone')>-1){
 					vm.form.type=2;
 					val=parseInt(val);
 				}
-				vm.form.context=val;
+                vm.form.context=val;
+                vm.form.searchContext=val;
+                vm.form.searchKind=1;
+                // vm.searchList('',1);
 				vm.getDetails();
 			}
 		},300);
@@ -356,20 +356,14 @@ export default{
             vm.form.startTime=laydate.now(0,'YYYY-MM-DD 00:00:00');
             vm.form.endTime=laydate.now(0,'YYYY-MM-DD 23:59:59');
         },
-        inpFocus(){
-            
-        },
-        inpBlur(){
-            
-        },
         closePop(off){
           this.off.pop=off;
         },
         searchList(index,page){
             let vm=this,
             searchData={
-                chooseSearch:vm.form.searchKind, //精确查找,组合查找
-                getListType:vm.form.content,//商户查询，工号查询
+                chooseSearch:vm.form.searchKind, //1精确查找,2组合查找
+                getListType:vm.form.content,//1商户查询2工号查询
                 userName:"",//商户名称
                 typeKey:"",//商户id，手机号码
                 typeValue:"",//商户id,手机号码的值
@@ -457,11 +451,11 @@ export default{
             vm.off.detailskind=i;
             vm.form.type=type;
             vm.form.context=context;
-
             vm.getDetails();
 		},
-		getDetails(isBtn){//获取商户/工号基本信息
-			var vm=this,type=vm.form.type,json,url,time=new Date().getTime();
+        getDetails(isBtn){//获取商户/工号基本信息
+            var vm=this,type=vm.form.type,json,url,time=new Date().getTime();
+            debugger;
 			type==1 ? (json={dealerId:vm.form.context},url='km-ecs/w/merchant/getInfo') : (json={phone:vm.form.context},url='km-ecs/w/user/getInfo');
 			if(vm.off.isLoad)return false;
 			if(isBtn&&vm.form.time&&(time-vm.form.time<3000)){
@@ -527,11 +521,8 @@ export default{
             var index = str .lastIndexOf("\.");  
             return str.substring(index + 1, str.length);
         },
-
-
         changeSearchType(){
             let vm=this;
-
             vm.form.searchContext='',
             vm.form.searchDealerName="",
             vm.ajaxData={//ajax响应数据
