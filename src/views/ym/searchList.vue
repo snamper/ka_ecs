@@ -35,9 +35,9 @@
 					<label><span class="checkbox"><input type="checkbox" value="3" v-model="form.source"><span></span></span><span class="text">远微商城</span></label>
 					<label><span class="checkbox"><input type="checkbox" value="2" v-model="form.source"><span></span></span><span class="text">信时空</span></label>
 					<label><span class="checkbox"><input type="checkbox" value="4" v-model="form.source"><span></span></span><span class="text">网厅</span></label>
+					<label><span class="checkbox"><input type="checkbox" value="22" v-model="form.source"><span></span></span><span class="text">卡盟App</span></label>
 				</div>
 			</div>
-
 		</section>
 		<div class="m-tag"><b></b>订单查询</div>
 		<section class="form-c">
@@ -250,7 +250,7 @@
 						<div>
 							<a :name="todo.orderId" :title="index" @click="details" class="details" href="javascript:void(0)">查看详情</a>
 							<br>
-							<a :name="todo.orderId"  v-if="off.power3 && todo.source!=21" :title="index" @click="agree" class="agree f-mgt-10" href="javascript:void(0)">同意</a>
+							<a :name="todo.orderId"  v-if="off.power3 && todo.source!=21 && todo.source!=22" :title="index" @click="agree" class="agree f-mgt-10" href="javascript:void(0)">同意</a>
 						</div>
 					</td>
 					<td colspan="2" v-if="todo.result==3" class="td-col-2">
