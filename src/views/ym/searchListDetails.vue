@@ -30,7 +30,7 @@
                                         <td v-if="list.result==2&&parseInt(list.recheckLastTime)<new Date().getTime()"><b class="f-c-red" style="padding-right:10px">拒绝</b><span class="red">超过复审时间</span></td>
                                         <td v-if="list.result==2&&parseInt(list.recheckLastTime)>=new Date().getTime()">
                                             <b class="f-c-red" style="padding-right:10px">拒绝</b>
-                                            <a v-show="list.source!=21" :name="list.orderId" class="agree" href="javascript:void(0)" @click="agree">同意</a>
+                                            <a v-show="list.source!=21&&list.source!=22" :name="list.orderId" class="agree" href="javascript:void(0)" @click="agree">同意</a>
                                         </td>
                                     </tr>
                                     <tr v-if="type==2"><td>审核方式：</td><td>
@@ -170,11 +170,6 @@
                             <span class="o-order-modify" v-if="list.result==4&&list.updAddress==0">
                                 <i v-if="!modify.off2">{{ list.userAddress }}</i>
                                 <input v-if="modify.off2" maxlength="50" type="text" v-model="modify.userAddress">
-                                <!-- <div class="btn-group">
-                                    <a href="javascript:void(0)" v-if="!modify.off2" @click="modifyOrder(1,2)" title="修改" class="modify"></a>
-                                    <a href="javascript:void(0)" v-if="modify.off2" @click="modifyOrder(2,2)" title="完成" class="myicon-success-circle f-c-green complete"></a>
-                                    <a href="javascript:void(0)" v-if="modify.off2" @click="modifyOrder(3,2)" title="取消" class="myicon-cancel f-c-red cancel"></a>
-                                </div> -->
                             </span>
                             <span v-else>{{ list.userAddress }}</span>
                         </td>
@@ -199,7 +194,7 @@
                             <i v-if="list.result==3"><b class="f-c-blue">复审同意</b></i>
                             <i v-if="list.result==4"><b class="f-c-yellow">准同意</b></i>
                             <i v-if="list.result==2&&parseInt(list.recheckLastTime)<new Date().getTime()"><b class="f-c-red" style="padding-right:10px">拒绝</b><span class="red">超过复审时间</span></i>
-                            <i v-if="list.result==2&&parseInt(list.recheckLastTime)>=new Date().getTime()"><b class="f-c-red" style="padding-right:10px">拒绝</b><a :name="list.orderId" @="agree" class="agree" href="javascript:void(0)" @click="agree">同意</a></i>
+                            <i v-if="list.result==2&&parseInt(list.recheckLastTime)>=new Date().getTime()&&list.source!=22"><b class="f-c-red" style="padding-right:10px">拒绝</b><a :name="list.orderId" @="agree" class="agree" href="javascript:void(0)" @click="agree">同意</a></i>
                         </td>
                         <td><span>开卡状态说明：</span>{{ list.cardStatusReason }}</td>
                     </tr>
