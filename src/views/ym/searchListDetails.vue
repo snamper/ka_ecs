@@ -422,19 +422,19 @@ export default{
                 var list_item1= data.data;
 				layer.open({
 					content:`<ul class="f-scroll-lt lay-details o-fl-w">
-					<li class="clr"><div class="fl">正面与手持对比相似度：</div><div class="fright">${transfer(list_item1.front_hand_image_similarity)}</div></li>
-					<li class="clr"><div class="fl">正面与第三方对比相似度：</div><div class="fright">${transfer(list_item1.front_image_similarity)}</div></li>
-					<li class="clr"><div class="fl">手持与第三方相似度：</div><div class="fright">${transfer(list_item1.hand_image_similarity)}</div></li>
+					<li class="clr"><div class="fl">正面与免冠照对比相似度：</div><div class="fright">${transfer(list_item1.front_hand_image_similarity)}</div></li>
+					<li class="clr"><div class="fl">正面与证件大头照对比相似度：</div><div class="fright">${transfer(list_item1.front_image_similarity)}</div></li>
+					<li class="clr"><div class="fl">免冠照与证件大头照对比相似度：</div><div class="fright">${transfer(list_item1.hand_image_similarity)}</div></li>
 					<li class="clr"><div class="fl">活体识别照相似度：</div><div class="fright">${transfer(list_item1.living_image_similarity)}</div></li>
 					<li class="clr"><div class="fl">年龄校验结果：</div><div class="fright ${transfer_result(list_item1.age_check).style}">${ transfer_result(list_item1.age_check).name }</div></li>
 					<li class="clr"><div class="fl">地址校验结果：</div><div class="fright ${transfer_result(list_item1.address_check).style}">${ transfer_result(list_item1.address_check).name }</div></li>
 					<li class="clr"><div class="fl">身份证有效期校验结果：</div><div class="fright ${transfer_result(list_item1.period_check).style}">${ transfer_result(list_item1.period_check).name }</div></li>
-					<li class="clr"><div class="fl">身份证号与正面OCR匹配结果：</div><div class="fright ${transfer_result(list_item1.ocr_id_card_no_check).style}">${ transfer_result(list_item1.ocr_id_card_no_check).name }</div></li>
-					<li class="clr"><div class="fl">有效期与背面OCR匹配结果：</div><div class="fright ${transfer_result(list_item1.ocr_id_card_period_check).style}">${ transfer_result(list_item1.ocr_id_card_period_check).name }</div></li>
-					<li class="clr"><div class="fl">上传身份证号与OCR对比相似度：</div><div class="fright">${transfer(list_item1.id_card_no_similarity)}</div></li>
-					<li class="clr"><div class="fl">上传姓名与OCR对比相似度：</div><div class="fright">${transfer(list_item1.id_card_name_similarity)}</div></li>
-					<li class="clr"><div class="fl">上传地址与OCR对比相似度：</div><div class="fright">${transfer(list_item1.id_card_address_similarity)}</div></li>
-					<li class="clr"><div class="fl">上传有效期与OCR对比相似度：</div><div class="fright">${transfer(list_item1.id_card_period_similarity)}</div></li>
+					<li class="clr"><div class="fl">上传身份证号与正面OCR对比结果：</div><div class="fright ${transfer_result(list_item1.ocr_id_card_no_check).style}">${ transfer_result(list_item1.ocr_id_card_no_check).name }</div></li>
+					<li class="clr"><div class="fl">上传有效期与背面OCR对比结果：</div><div class="fright ${transfer_result(list_item1.ocr_id_card_period_check).style}">${ transfer_result(list_item1.ocr_id_card_period_check).name }</div></li>
+					<li class="clr"><div class="fl">上传身份证号与正面OCR对比相似度：</div><div class="fright">${transfer(list_item1.id_card_no_similarity)}</div></li>
+					<li class="clr"><div class="fl">上传姓名与正面OCR对比相似度：</div><div class="fright">${transfer(list_item1.id_card_name_similarity)}</div></li>
+					<li class="clr"><div class="fl">上传地址与正面OCR对比相似度：</div><div class="fright">${transfer(list_item1.id_card_address_similarity)}</div></li>
+					<li class="clr"><div class="fl">上传有效期与背面OCR对比相似度：</div><div class="fright">${transfer(list_item1.id_card_period_similarity)}</div></li>
 					<li class="clr"><div class="fl">国政通校验结果：</div><div class="fright ${transfer_result(list_item1.gzt_check).style}">${ transferGztCheck(list_item1.gzt_check) }</div></li>			
                     <li class="clr">
                       <div class="fl">审核结果：</div>
@@ -445,7 +445,7 @@ export default{
                       }</div>
                     </li>
 					<li class="clr"><div class="fl">审核结果描述：</div><div class="fright">${list_item1.desc}</div></li>
-                    <li class="clr"><div class="fl">拒绝理由：</div><div class="fright">${ list_item1.code==1018?'<span class="fCGreen">远特开卡超过上限</span>': list_item1.code==1019?'<span class="fCRed">联通开卡超过上限</span>':'--' }</div></li>
+                    <li class="clr"><div class="fl">备注：</div><div class="fright">${ list_item1.code==1018?'<span class="fCGreen">远特开卡超过上限</span>': list_item1.code==1019?'<span class="fCRed">联通开卡超过上限</span>':'--' }</div></li>
                     <li class="clr"><div class="fl">已开卡数：</div><div class="fright">${ list_item1.openedNum }</div></li>              
                     </ul>`,
 					type:0,
