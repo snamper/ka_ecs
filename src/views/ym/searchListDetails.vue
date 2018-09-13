@@ -81,7 +81,7 @@
                                         <span v-else>{{ list.userAddress }}</span>
                                     </td></tr>
                                     <tr><td>证件期限：</td><td>{{ list.validityPeriod}}</td></tr>
-                                    <tr><td>号码归属部门：</td><td>{{ list.phone_depName }}</td></tr>
+                                    <tr><td>号码归属部门：</td><td>{{ list.phoneDepName }}</td></tr>
                                     <tr><td>UCCID：</td><td>{{ list.cardNumber }}</td></tr>
                                     <tr><td>Mac地址：</td><td>{{ list.devMacAddr }}</td></tr>
                                     <tr><td>终端类型：</td><td>{{ list.terminalType }}</td></tr>
