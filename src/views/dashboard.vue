@@ -6,7 +6,7 @@
     <div class="dashboard-box-inner">
       <div class="notice map-box-out">
         <header>实时公告</header>
-        <div class="noticediv f-scroll-lt" id="notice-box" @mouseover="noticeMouseEvent(false)" @mouseleave="noticeMouseEvent(true)" :style="{height:noticeUlHeight}">
+        <div class="noticediv f-scroll-lt" id="notice-box" @mousewheel="noticeMouseEvent(false,'wheel')" @mouseover="noticeMouseEvent(false)" @mouseleave="noticeMouseEvent(true)" :style="{height:noticeUlHeight}">
           <ul class="m-notice-ul" id="notice-ul">
             <li class="clr" v-for="(msg,i) in notice" :key="i">
               <div class="fl msg-type">
@@ -379,7 +379,7 @@ import CountUp from 'vue-countup-v2';
       toogle:function(){//切屏
         this.isA = !this.isA;
       },
-      noticeMouseEvent(off){//轮循获取公共数据数据
+      noticeMouseEvent(off,type){//轮循获取公共数据数据
         const vm=this;
         if(off){ 
           let timer=setInterval(function(){
@@ -389,6 +389,14 @@ import CountUp from 'vue-countup-v2';
         }else{
           for(let i=0;i<vm.TimerNotice.length;i++){
             clearInterval(vm.TimerNotice[i]);
+            clearTimeout(vm.TimerNotice[i]);
+          }
+
+          if(type == 'wheel'){//滚轮滚动后10秒没有动
+            let timer=setTimeout(()=>{
+              vm.noticeMouseEvent(true);
+            },10*1000);
+            vm.TimerNotice.push(timer);
           }
         }
       },
@@ -425,7 +433,7 @@ import CountUp from 'vue-countup-v2';
         var vm=this;
         reqCommonMethod({"maxId":vm.noticelatestMaxid},function(){vm.off.isLoad=false;},"km-ecs/w/statistics/realtimenotice")
         .then((data)=>{
-            if(data.code==200){
+          if(data.code==200){
             data.data.list.reverse();
             for(let i=0;i<data.data.list.length;i++){
               vm.notice.push(data.data.list[i]);
@@ -437,9 +445,6 @@ import CountUp from 'vue-countup-v2';
             if(data.data.list[0]){
               vm.noticelatestMaxid=data.data.list[0].maxId;
             }
-          }
-          if(data.data.list[0]){
-            vm.noticelatestMaxid=data.data.list[0].maxId;
           }
         }).catch(error=>errorDeal(error));  
       },
