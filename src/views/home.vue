@@ -325,9 +325,9 @@ export default{
             let kmOpinionInfo=vm.getOpinionCountInfo();//km意见反馈数统计
             let ymAuditInfo=vm.getAuditStatisticsInfoYm();//ym订单审核数统计
             window.onresize=()=>vm.debounce(300,vm.windowChange());
-			vm.timer.count=setInterval(()=>vm.getAuditStatisticsInfo(),10000);
-            vm.timer.OpcountT=setInterval(()=>vm.getOpinionCountInfo(),60000);
-			vm.timer.countYm=setInterval(()=>vm.getAuditStatisticsInfoYm(),10000);            
+			// vm.timer.count=setInterval(()=>vm.getAuditStatisticsInfo(),10000);
+            // vm.timer.OpcountT=setInterval(()=>vm.getOpinionCountInfo(),60000);
+			// vm.timer.countYm=setInterval(()=>vm.getAuditStatisticsInfoYm(),10000);            
 			vm.SET_ONLINE_TIME();
 			let userInfo=getStore("KA_ECS_USER");
 			vm.userInfo=userInfo;

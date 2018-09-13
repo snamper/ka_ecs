@@ -1,7 +1,4 @@
-<style scoped>
-  @import "../../assets/ym/css/searchDetails.css";
-  /* @import "../../assets/km/css/cardOrderDetails.css"; */
-</style>
+
 <template>
     <section class="g-list-box" id="details">
         <header class="g-lis-head">
@@ -575,4 +572,8 @@ export default{
 	}
 }
 </script>
-
+<style>
+    @import "../../assets/ym/css/searchDetails.css";
+    .o-fl-w>.clr>.fl{width: 3rem !important;}
+    .o-fl-w>.clr>.fright{margin-left: 3rem !important;}
+</style>
