@@ -177,6 +177,7 @@
                             <label><span class="checkbox"><input type="checkbox" value="1" v-model="form.sourceFrom" checked="checked"><span></span></span><span class="text">卡盟</span></label>
                             <label><span class="checkbox"><input type="checkbox" value="6" v-model="form.sourceFrom" checked="checked"><span></span></span><span class="text">远微商城</span></label>
                             <label><span class="checkbox"><input type="checkbox" value="7" v-model="form.sourceFrom" checked="checked"><span></span></span><span class="text">信时空公众号</span></label>
+                            <label><span class="checkbox"><input type="checkbox" value="8" v-model="form.sourceFrom" checked="checked"><span></span></span><span class="text">S2S开卡盟成卡</span></label>
                         </div>
                     </div>
                     <div class="row">
@@ -636,7 +637,7 @@ export default {
             cardType: 0, //运营商
             orderStatus: 0, //订单状态
             operatorType:1,//操作类型
-            sourceFrom :[1,6,7],//开卡方式
+            sourceFrom :[1,6,7,8],//开卡方式
             auditType: 9, //审核方式
             context1: "", //订单号码
             context2: "", //手机号码
@@ -681,7 +682,7 @@ export default {
             this.form.select = 6;
         },
         'form.sourceFrom'(){
-            if(this.form.sourceFrom.length==3){
+            if(this.form.sourceFrom.length==4){
                 this.checkAllopencardType=true;
             }else{
                 this.checkAllopencardType=false;
@@ -1347,7 +1348,7 @@ export default {
     },
     BtnCheckAllopencardType(){
         if(this.checkAllopencardType==true){
-            this.form.sourceFrom=[1,6,7]
+            this.form.sourceFrom=[1,6,7,8]
         }else{
             this.form.sourceFrom=[]
         }

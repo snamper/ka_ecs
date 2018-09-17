@@ -424,7 +424,8 @@ const router=new Router({
         path:"busCard",
         component:OrderSearch_busCard,
         children:[{
-          path:":type",component:OrderSearch_busCardItem
+          path:":type",
+          component:OrderSearch_busCardItem
         }]
       },{//充值订单
         path:"recharge",
