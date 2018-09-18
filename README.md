@@ -28,7 +28,7 @@ yarn build
 │   ├── router（路由）
 │   ├── store（vuex）
 │   ├── utils（公共工具）
-│   ├── views
+│   └── views
 │       ├── km
 │	│   │   ├── audit（订单审核）
 │	│   │   │   │   ├── components（组件）
