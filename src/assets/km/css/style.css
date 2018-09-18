@@ -399,49 +399,49 @@ input[type="number"]{-moz-appearance:textfield;}
 .navInfoDiv p{ margin: 5px 0; }
 .u-bg>div{background-repeat: no-repeat;background-position:center 35%;background-size:0.48rem;}
 /*开卡*/
-.navBg1>div{background-image:url(../images/sim.png);background-color: #54C7C4;}
+.navBg1>div{background-image:url(../../images/sim.png);background-color: #54C7C4;}
 .navBg1>p{background-color:rgba(63,147,147, 1); color:rgba(63,147,147, 1);}
 /*成卡*/
-/*.navBg2>div{background-image:url(../../assets/images/icon_yuanmeng_chengka.png);background-color:#00B07F;}
+/*.navBg2>div{background-image:url(../../images/icon_yuanmeng_chengka.png);background-color:#00B07F;}
 .navBg2>p{background-color:#00B07F; color:#00B07F;}*/
 /*白卡*/
-/*.navBg3>div{background-image:url(../../assets/images/icon_yuanmeng_baika.png);background-color:#FC7F53;}
+/*.navBg3>div{background-image:url(../../images/icon_yuanmeng_baika.png);background-color:#FC7F53;}
 .navBg3>p{background-color:#FC7F53; color:#FC7F53;}*/
 /*实名补录*/
-.navBg4>div{background-image:url(../images/icon_yuanmeng_bulu.png);background-color: #FF9800;}
+.navBg4>div{background-image:url(../../images/icon_yuanmeng_bulu.png);background-color: #FF9800;}
 .navBg4>p{background-color:#FF9800; color:#FF9800;}
 /*过户*/
-.navBg5>div{background-image:url(../images/icon_yuanmeng_guohu.png);background-color:#4D96F5;}
+.navBg5>div{background-image:url(../../images/icon_yuanmeng_guohu.png);background-color:#4D96F5;}
 .navBg5>p{background-color:#4D96F5; color:#4D96F5;}
 /*实名登记*/
-.navBg6>div{background-image:url(../images/icon_yuanmeng_dengji.png);background-color:#24BAC9;}
+.navBg6>div{background-image:url(../../images/icon_yuanmeng_dengji.png);background-color:#24BAC9;}
 .navBg6>p{background-color:#24BAC9; color:#24BAC9;}
 
 /*公交一卡通*/
-.navBg7>div{background-image:url(../images/dingdan.png);background-color:#13ce66;}
+.navBg7>div{background-image:url(../../images/dingdan.png);background-color:#13ce66;}
 .navBg7>p{background-color:#13ce66; color:#13ce66;}
 
-.navBg8>div{background-image:url(../images/jiaoyi.png);background-color:#4b3887;}
+.navBg8>div{background-image:url(../../images/jiaoyi.png);background-color:#4b3887;}
 .navBg8>p{background-color:#4b3887; color:#4b3887;}
 /*SDK开卡*/
-.navBg9>div{background-image:url(../images/sim_sdk.png);background-color:#4b3887;}
+.navBg9>div{background-image:url(../../images/sim_sdk.png);background-color:#4b3887;}
 .navBg9>p{background-color:#4b3887; color:#4b3887;}
 /*卡盟I卡开卡*/
-.navBg11>div{background-image:url(../images/sim_tf.png);background-color:#D81B60;}
+.navBg11>div{background-image:url(../../images/sim_tf.png);background-color:#D81B60;}
 .navBg11>p{background-color:#D81B60; color:#D81B60;}
 /*激活商户*/
-.navBg10>div{background-image:url(../images/icon_jihuo_audit.png);background-color: #FFB300;}
+.navBg10>div{background-image:url(../../images/icon_jihuo_audit.png);background-color: #FFB300;}
 .navBg10>p{background-color:#FF8F00; color:#FF8F00;}
 /* 补换卡 */
 /*卡盟穿戴*/
-.navBg12>div{background-image:url(../images/icon_buhuanka.png);background-color: #E18383;}
+.navBg12>div{background-image:url(../../images/icon_buhuanka.png);background-color: #E18383;}
 .navBg12>p{background-color:#E18383; color:#E18383;}
-.u-icon-back{background-image: url("../images/left.png");background-size: contain;}
+.u-icon-back{background-image: url("../../images/left.png");background-size: contain;}
 .u-icon-success-no-circle{
-    background-image: url("../images/rightssss.png");
+    background-image: url("../../images/rightssss.png");
 }
 .u-icon-clear{
-    background-image: url("../images/error.png");
+    background-image: url("../../images/error.png");
 }
 /*layer-loading*/
 .m-loading-mask {

@@ -17,7 +17,7 @@
 .bg-b{ background-color: #20a0ff; }
 .bg-b:hover{ background-color:#4db3ff ;}
 .login-box{margin: auto; display: table;position: relative;width:100%;height: 100%; table-layout: fixed;max-width: 1400px;}
-.login-bg{display: table-cell;vertical-align: middle;background-image: url(../images/login_bg.jpg);background-position:center;background-size:100%;background-repeat: no-repeat;}
+.login-bg{display: table-cell;vertical-align: middle;background-image: url(../../images/login_bg.jpg);background-position:center;background-size:100%;background-repeat: no-repeat;}
 .login-bg>form{background-color: #fff; float: right;margin-right:7%;border-radius: 3px;
 box-shadow:0 0 10px rgba(0,0,0,0.2);-moz-box-shadow:0 0 10px rgba(0,0,0,0.2);-webkit-box-shadow:0 0 10px rgba(0,0,0,0.2);
 transition-duration: .25s;-webkit-transition-duration: .25s;-moz-transition-duration: .25s;
@@ -30,9 +30,9 @@ form>.form-controll>.letter-space2>em{margin:0 6px;}
 form>.form-controll>.input-outter{width: 80%; display:inline-block; position: relative; vertical-align: middle; }
 form>.form-controll>.input-outter>b{ position: absolute;font-size: 0.1rem;color:#ff4949; left: 0.1rem;bottom: -0.16rem;}
 
-form>.form-controll.user>label{background-image: url(../images/user.png);}
-form>.form-controll.password>label{background-image: url(../images/password.png);}
-form>.form-controll.reg>label{background-image: url(../images/reg.png);}
+form>.form-controll.user>label{background-image: url(../../images/user.png);}
+form>.form-controll.password>label{background-image: url(../../images/password.png);}
+form>.form-controll.reg>label{background-image: url(../../images/reg.png);}
 form>.form-controll.reg>div>input{width:64% !important;}
 form>.form-controll.reg>div>img{width: 0.8rem; position: absolute;right: 0; top:0.06rem;}
 

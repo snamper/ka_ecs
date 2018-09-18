@@ -341,7 +341,7 @@ import ImgZoom from "../componentskm/ImgZoom";
 import RealTimeCollection from "./audit/realTimeCollection";
 import RealNameRechCard from "./audit/realNameRechCard";
 import detailsView from "../componentskm/cardOrderDetailsAlert";
-import "../../static/config.js";
+
 export default {
   name: "cardOrderDetails",
   props: {

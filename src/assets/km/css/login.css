@@ -19,7 +19,7 @@
 .bg-b{ background-color: #20a0ff; }
 .bg-b:hover{ background-color:#4db3ff ;}
 .login-box{margin: auto; display: table;position: relative;width:100%;height: 100%; table-layout: fixed;}
-.login-bg{display: table-cell;vertical-align: middle;background-color: #1F5093;background-image: url(../assets/km/images/img_bg01.png);background-position:center;background-size:contain;background-repeat: no-repeat;}
+.login-bg{display: table-cell;vertical-align: middle;background-color: #1F5093;background-image: url(../../images/img_bg01.png);background-position:center;background-size:contain;background-repeat: no-repeat;}
 .login-bg>form{position: absolute;margin: auto;top: 0;bottom: 0;left: 0;right: 0; border-radius: 3px;
 transition-duration: .25s;-webkit-transition-duration: .25s;-moz-transition-duration: .25s;
 }
@@ -31,29 +31,29 @@ form .form-controll>.letter-space2>em{margin:0 6px;}
 form .form-controll>.input-outter{width: 80%; display:inline-block; position: relative; vertical-align: middle; }
 form .form-controll>.input-outter>b{ position: absolute;font-size: 0.1rem;color:#ff4949; left: 0.1rem;bottom: -0.16rem;}
 
-form .form-controll.user>label{background-image: url(../assets/km/images/user.png);}
-form .form-controll.password>label{background-image: url(../assets/km/images/password.png);}
-form .form-controll.reg>label{background-image: url(../assets/km/images/reg.png);}
+form .form-controll.user>label{background-image: url(../../images/user.png);}
+form .form-controll.password>label{background-image: url(../../images/password.png);}
+form .form-controll.reg>label{background-image: url(../../images/reg.png);}
 form .form-controll.reg>div>input{width:64% !important;}
 form .form-controll.reg>div>img{width: 0.8rem; position: absolute;right: 0; top:0.06rem;}
 
 @media screen and (min-width: 1401px){
    .login-bg>form{width: 750px;height: 450px;}
     form>.btn{margin-top:0.4rem;}
-    .login-box .login-bg div.loginForm{background-image:url(../assets/km/images/login_bg.png);}
+    .login-box .login-bg div.loginForm{background-image:url(../../images/login_bg.png);}
 }
 
 @media screen and (min-width: 1201px) and (max-width: 1400px){
     .login-bg>form{width: 750px;height: 450px;}
     form .btn{margin-top:0.4rem;}
-    .login-box .login-bg div.loginForm{background-image:url(../assets/km/images/login_bg.png);}
+    .login-box .login-bg div.loginForm{background-image:url(../../images/login_bg.png);}
 }
 
 @media screen and (min-width: 992px) and (max-width: 1200px){
     form>.btn{margin-top:0.3rem;}
     .login-bg>form{width: 750px;height: 450px;}
     form .form-controll.reg>div>input{width: 60%;}
-    .login-box .login-bg div.loginForm{background-image:url(../assets/km/images/login_bg.png);}
+    .login-box .login-bg div.loginForm{background-image:url(../../images/login_bg.png);}
     
 }
 

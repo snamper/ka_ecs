@@ -44,7 +44,7 @@
         </header>
         <aside class="g-side f-scroll-lt">
             <nav class="g-side-nav">
-                <header class="g-side-head"><img src="../assets/km/images/logo_page.png" alt="titleLogo"></header>
+                <header class="g-side-head"><img src="../assets/images/logo_page.png" alt="titleLogo"></header>
                 <ul class="m-mainCatalog">
                     <li :class="{'active':isCheckk}" @click="isCheck('k')" v-if="!off.powerKmHidden">
                         <span>卡盟</span>

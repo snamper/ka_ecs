@@ -124,7 +124,7 @@ export default{
 .pagination-sm>li:first-child>a{border-bottom-left-radius:3px;border-top-left-radius:3px;}
 .pagination-sm>li:last-child>a{border-top-right-radius:3px;border-bottom-right-radius:3px;}
 .pagination-sm>li>a>i{ display: inline-block; padding:0px 15px; height: 23px;}
-.fa-chevron-left{ background-image: url(../assets/km/images/page-left.png);background-repeat: no-repeat;background-position: center 6px;background-size:50%; }
-.fa-chevron-right{background-image: url(../assets/km/images/page-right.png);background-repeat:  no-repeat;background-position: center 6px;background-size:50%;}
+.fa-chevron-left{ background-image: url(../assets/images/page-left.png);background-repeat: no-repeat;background-position: center 6px;background-size:50%; }
+.fa-chevron-right{background-image: url(../assets/images/page-right.png);background-repeat:  no-repeat;background-position: center 6px;background-size:50%;}
 </style>
 

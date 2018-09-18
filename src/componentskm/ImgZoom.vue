@@ -14,7 +14,7 @@
 	</div>
 </template>
 <script>
-import noImage from '../assets/km/images/no-img.png';
+import noImage from '../assets/images/no-img.png';
 export default{
 	name:'pagination',
 	props:{
@@ -130,20 +130,20 @@ export default{
 	background-repeat: no-repeat;
 	transition-duration: .3s;-webkit-transition-duration: .3s;-moz-transition-duration: .3s;}
 #imgContent, .g-transfer-img>.fl>.box{background-size:contain;background-repeat: no-repeat;background-position: center;}
-.zoom-c>.slide-left{left:0;background-image: url(../assets/km/images/left.png);}
-.zoom-c>.slide-left:hover{background-image: url(../assets/km/images/left2.png);}
-.zoom-c>.slide-right{right:0;background-image: url(../assets/km/images/right.png);}
-.zoom-c>.slide-right:hover{background-image: url(../assets/km/images/right2.png);}
+.zoom-c>.slide-left{left:0;background-image: url(../assets/images/left.png);}
+.zoom-c>.slide-left:hover{background-image: url(../assets/images/left2.png);}
+.zoom-c>.slide-right{right:0;background-image: url(../assets/images/right.png);}
+.zoom-c>.slide-right:hover{background-image: url(../assets/images/right2.png);}
 #imgContent{/*background-image:url(../../assets/images/test1.jpg);*/position: absolute;height: 100%;overflow: hidden; width: 80%; top:0;left: 10%;}
 .m-img-c{overflow:hidden; position: absolute;width:92%;height: 90%;top: 5%;left: 4%;}
 .zoom-c>.rotate{position: absolute; display: none;left: 50%;margin-left: -0.15rem; bottom:5px;text-align: center; width:0.25rem;height: 0.25rem;}
 .zoom-c>.download{position: absolute; display: none;left: 60%;margin-left: -0.15rem; bottom:7px;text-align: center; width:0.25rem;height: 0.25rem;}
-.zoom-c>.rotate>span{background-image:url(../assets/km/images/rotate2.png);background-repeat: no-repeat;background-size:0.25rem;background-position: center;display: inline-block;height: 0.25rem;width: 0.25rem;cursor: pointer;}
-.zoom-c>.download>span{background-image:url(../assets/km/images/download.png);background-repeat: no-repeat;background-size:0.35rem;background-position: center;display: inline-block;height: 0.35rem;width: 0.35rem;cursor: pointer;}
+.zoom-c>.rotate>span{background-image:url(../assets/images/rotate2.png);background-repeat: no-repeat;background-size:0.25rem;background-position: center;display: inline-block;height: 0.25rem;width: 0.25rem;cursor: pointer;}
+.zoom-c>.download>span{background-image:url(../assets/images/download.png);background-repeat: no-repeat;background-size:0.35rem;background-position: center;display: inline-block;height: 0.35rem;width: 0.35rem;cursor: pointer;}
 /*.zoom-c>.rotate>span:hover{background-image:url(../../assets/images/rotate2.png);}*/
 .zoom-c>a{outline: none;}
 .m-zoomContent:hover .rotate, .m-zoomContent:hover .download, .m-zoomContent:hover .delete{ display: block;}
 .m-zoomContent>.text{position: absolute;top: 6px;left: 0;width: 100%;text-align: center;font-size: 0.16rem;font-weight:bold;}
 .zoom-c>.rotate2{position: absolute; display: none;left: 50%;margin-left: 0.45rem; bottom:5px;text-align: center; width:0.25rem;height: 0.25rem;}
-.zoom-c>.rotate2>span{background-image:url(../assets/km/images/rotates.png);background-repeat: no-repeat;background-size:0.25rem;background-position: center;display: inline-block;height: 0.25rem;width: 0.25rem;cursor: pointer;}
+.zoom-c>.rotate2>span{background-image:url(../assets/images/rotates.png);background-repeat: no-repeat;background-size:0.25rem;background-position: center;display: inline-block;height: 0.25rem;width: 0.25rem;cursor: pointer;}
 </style>

@@ -1,15 +1,16 @@
-/**
-  *@info 入口文件
-  *@author: thinkmix
-  *@date 2017-11-6
-* */
+/* eslint-disable */
+
 import Vue from 'vue';
+import App from './App';
 import store from './store';
 import router from './router';
+import './registerServiceWorker'
 
-import App from './App';
+
 
 Vue.config.debug = true;
+Vue.config.productionTip = false
+
 require("./assets/km/css/style.css");
 require("./assets/km/js/layer/need/layer.css");
 require("./assets/km/js/laydate/skins/default/laydate.css");
@@ -23,9 +24,7 @@ require("./config/service.js");
 require("./assets/ym/js/trim.js");
 
 new Vue({
-  el: '#app',
-  store,
   router,
-  template: '<App/>',
-  components: { App },
-});
+  store,
+  render: h => h(App)
+}).$mount('#app')

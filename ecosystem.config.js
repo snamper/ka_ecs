@@ -17,11 +17,11 @@ module.exports = {
     test : {
       user : 'root',
       host : '192.168.10.110',
-      ref  : 'origin/master',
+      ref  : 'origin/dev',
       // repo : 'git@github.com:thinkmix/ka_ecs.git',
       repo : 'https://github.com/thinkmix/ka_ecs.git',
       path : '/home/nginx/html/ka_ecs',
-      'post-deploy' : 'cnpm install && npm run build && pm2 reload ecosystem.config.js --env test'
+      'post-deploy' : 'yarn install && yarn build && pm2 reload ecosystem.config.js --env test'
     },
     onlineTest : {
       user : 'root',
@@ -30,7 +30,7 @@ module.exports = {
       // repo : 'git@github.com:thinkmix/ka_ecs.git',
       repo : 'https://github.com/thinkmix/ka_ecs.git',
       path : '/usr/local/nginx/html/ka_ecs',
-      'post-deploy' : 'cnpm install && npm run build && pm2 reload ecosystem.config.js --env production'
+      'post-deploy' : 'yarn install && yarn build && pm2 reload ecosystem.config.js --env production'
     },
     production : {
       user : 'root',
@@ -39,7 +39,7 @@ module.exports = {
       // repo : 'git@github.com:thinkmix/ka_ecs.git',
       repo : 'https://github.com/thinkmix/ka_ecs.git',
       path : '/usr/local/nginx/html/ka_ecs',
-      'post-deploy' : 'cnpm install && npm run build && pm2 reload ecosystem.config.js --env production'
+      'post-deploy' : 'yarn install && yarn build && pm2 reload ecosystem.config.js --env production'
     },
   }
 };

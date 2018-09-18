@@ -1,11 +1,11 @@
 @font-face{
   font-family:'gotham';
-  src:url('../assets/fonts/gotham/Gotham-Medium.otf');
-  src:url('../assets/fonts/gotham/Gotham-Medium.eot?#iefix') format('embedded-opentype'),
-    url('../assets/fonts/gotham/Gotham-Medium.woff2') format('woff2'),
-    url('../assets/fonts/gotham/Gotham-Medium.woff') format('woff'),
-    url('../assets/fonts/gotham/Gotham-Medium.ttf') format('truetype'),
-    url('../assets/fonts/gotham/Gotham-Medium.svg#webfont') format('svg');  
+  src:url('../../fonts/gotham/Gotham-Medium.otf');
+  src:url('../../fonts/gotham/Gotham-Medium.eot?#iefix') format('embedded-opentype'),
+    url('../../fonts/gotham/Gotham-Medium.woff2') format('woff2'),
+    url('../../fonts/gotham/Gotham-Medium.woff') format('woff'),
+    url('../../fonts/gotham/Gotham-Medium.ttf') format('truetype'),
+    url('../../fonts/gotham/Gotham-Medium.svg#webfont') format('svg');  
 
   font-weight:normal;
   font-style:normal;
@@ -243,49 +243,49 @@
   width:80%;
 }
 .u-icon-chongzhi{
-  background-image: url(../assets/km/images/icon_chongzhi.png);
+  background-image: url(../../images/icon_chongzhi.png);
 }
 .u-icon-jili{
-  background-image: url(../assets/km/images/icon_jili.png);
+  background-image: url(../../images/icon_jili.png);
 }
 .u-icon-kaika{
-  background-image: url(../assets/km/images/icon_kaika.png);
+  background-image: url(../../images/icon_kaika.png);
 }
 .u-icon-jifen{
-  background-image: url(../assets/km/images/icon_jifen.png);
+  background-image: url(../../images/icon_jifen.png);
 }
 .u-icon-icon_yewu{
-  background-image: url(../assets/km/images/icon_yewu.png);
+  background-image: url(../../images/icon_yewu.png);
 }
 .u-icon-liuliang{
-  background-image: url(../assets/km/images/icon_liuliang.png)
+  background-image: url(../../images/icon_liuliang.png)
 }
 .u-icon-zhuce{
-  background-image: url(../assets/km/images/icon_zhuce.png)
+  background-image: url(../../images/icon_zhuce.png)
 }
 .u-icon-jihuo{
-  background-image: url(../assets/km/images/icon_jihuo.png)
+  background-image: url(../../images/icon_jihuo.png)
 }
 .u-icon-huafei{
-  background-image: url(../assets/km/images/icon_huafei.png)
+  background-image: url(../../images/icon_huafei.png)
 }
 .u-icon-bulu{
-  background-image: url(../assets/km/images/icon_bulu.png)
+  background-image: url(../../images/icon_bulu.png)
 }
 .u-icon-guohu{
-    background-image: url(../assets/km/images/icon_guohu.png)
+    background-image: url(../../images/icon_guohu.png)
 }
 .u-icon-buhuanka{
-    background-image: url(../assets/km/images/icon_buhuanka2.png)
+    background-image: url(../../images/icon_buhuanka2.png)
 }
 .u-icon-chengka{
-    background-image: url(../assets/km/images/icon_chengka.png);
+    background-image: url(../../images/icon_chengka.png);
 }
 .u-icon-baika{
-    background-image: url(../assets/km/images/icon_baika.png);
+    background-image: url(../../images/icon_baika.png);
 }
 .u-icon-shiftEchart{
-  background-image: url(../assets/km/images/echarts-shift.png);
+  background-image: url(../../images/echarts-shift.png);
   background-size: 0.25rem;
 }
 

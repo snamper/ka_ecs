@@ -315,82 +315,82 @@
 }
 
 .u-icon-menu {
-  background-image: url(../assets/km/images/menu.png);
+  background-image: url(../../images/menu.png);
   width: 0.2rem;
   height: 0.2rem;
 }
 
 .u-icon-home {
-  background-image: url(../assets/km/images/home.png);
+  background-image: url(../../images/home.png);
   width: 0.17rem;
   height: 0.17rem;
 }
 .u-icon-audit {
-  background-image: url(../assets/km/images/audit.png);
+  background-image: url(../../images/audit.png);
   width: 0.17rem;
   height: 0.17rem;
 }
 
 .u-icon-search {
-  background-image: url(../assets/km/images/search.png);
+  background-image: url(../../images/search.png);
   width: 0.17rem;
   height: 0.17rem;
 }
 .u-icon-searchResource {
-  background-image: url(../assets/km/images/net-order.png);
+  background-image: url(../../images/net-order.png);
   width: 0.17rem;
   height: 0.17rem;
 }
 .u-icon-statistics {
-  background-image: url(../assets/km/images/statistics.png);
+  background-image: url(../../images/statistics.png);
   width: 0.17rem;
   height: 0.17rem;
 }
 .u-icon-opinion {
-  background-image: url(../assets/km/images/opinion.png);
+  background-image: url(../../images/opinion.png);
   width: 0.17rem;
   height: 0.17rem;
 }
 .u-icon-fence {
-  background-image: url(../assets/km/images/fence.png);
+  background-image: url(../../images/fence.png);
   width: 0.17rem;
   height: 0.17rem;
 }
 .u-icon-menu2 {
-  background-image: url(../assets/km/images/menu2.png);
+  background-image: url(../../images/menu2.png);
   width: 0.2rem;
   height: 0.2rem;
 }
 
 .u-icon-right {
-  background-image: url(../assets/km/images/right-w.png);
+  background-image: url(../../images/right-w.png);
   width: 0.15rem;
   height: 0.15rem;
 }
 
 .u-icon-main {
-  background-image: url(../assets/km/images/main.png);
+  background-image: url(../../images/main.png);
   width: 0.2rem;
   height: 0.2rem;
 }
 
 .u-icon-wechat{
-  background-image: url(../assets/km/images/wechat.png);
+  background-image: url(../../images/wechat.png);
   padding:0.1rem;
   display: inline;
 }
 .u-icon-alipay{
-  background-image: url(../assets/km/images/alipay.png);
+  background-image: url(../../images/alipay.png);
   padding:0.1rem;
   display: inline;
 }
 .u-icon-yuantelrecharge{
-  background-image: url(../assets/km/images/icon_yt_chongzhi.png);
+  background-image: url(../../images/icon_yt_chongzhi.png);
   padding:0.1rem;
   display: inline;
 }
 .u-icon-morefn{
-  background-image: url(../assets/images/more.png);
+  background-image: url(../../images/more.png);
   width: 0.17rem;
   height: 0.17rem;
 }
@@ -420,7 +420,7 @@
   background-repeat: no-repeat;
   background-position: center;
   background-size: 0.25rem;
-  background-image: url(../assets/km/images/admin.png);
+  background-image: url(../../images/admin.png);
 }
 
 .m-navside-show,
@@ -507,7 +507,7 @@
   background-repeat: no-repeat;
   background-position: center;
   background-size: 0.25rem;
-  background-image: url(../assets/km/images/admin.png);
+  background-image: url(../../images/admin.png);
 }
 
 .m-user-dropdown>li>.user>.info {

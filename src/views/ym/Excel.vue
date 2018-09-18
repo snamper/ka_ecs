@@ -67,7 +67,7 @@ select {
         </p>
         <ul > 
             <li v-for="(v,index) in downloadDate">
-                <span><img src="../../assets/ym/images/excel.svg" alt="icon"></span>
+                <span><img src="../../assets/images/excel.svg" alt="icon"></span>
                 <span> <label v-cloak for="">{{v}}</label> <label for=""> <a href="javascript:void(0)" @click="downLoadExcel(v)"> 下载报表</a></label></span>
             </li>
         </ul>

@@ -6,7 +6,7 @@
   <section class="login-box">
     <div class="login-bg clr">
       <form>
-        <header><img src="../assets/km/images/logo_yyzx.png"></header>
+        <header><img src="../assets/images/logo_yyzx.png"></header>
         <div class="loginForm">
             <div class="">
                 <img src="" alt="">

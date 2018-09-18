@@ -42,7 +42,7 @@
               <span>总数：</span>
               <CountUp class="f-fst-gotham"
                 :start="0"
-                :end="amountCard[0]"
+                :endVal="amountCard[0]"
                 :decimals="0"
                 :duration="3"
                 :options="countOptions"
@@ -55,7 +55,7 @@
               <div>远特普号<span class="media-540">（可售）</span></div>
               <CountUp class="f-fst-gotham"
                 :start="0"
-                :end="phoneTotal[0]"
+                :endVal="phoneTotal[0]"
                 :decimals="0"
                 :duration="3"
                 :options="countOptions"
@@ -63,7 +63,7 @@
               <div>远特靓号<span class="media-540">（可售）</span></div>
               <CountUp class="f-fst-gotham"
                 :start="0"
-                :end="phoneTotal[1]"
+                :endVal="phoneTotal[1]"
                 :decimals="0"
                 :duration="3"
                 :options="countOptions"
@@ -73,7 +73,7 @@
               <div>联通普号<span class="media-540">（可售）</span></div>
               <CountUp class="f-fst-gotham"
                 :start="0"
-                :end="phoneTotal[2]"
+                :endVal="phoneTotal[2]"
                 :decimals="0"
                 :duration="3"
                 :options="countOptions"
@@ -81,7 +81,7 @@
               <div>联通靓号<span class="media-540">（可售）</span></div>
               <CountUp class="f-fst-gotham"
                 :start="0"
-                :end="phoneTotal[3]"
+                :endVal="phoneTotal[3]"
                 :decimals="0"
                 :duration="3"
                 :options="countOptions"
@@ -97,7 +97,7 @@
               <span>签约总数：</span>
               <CountUp class="f-fst-gotham"
                 :start="0"
-                :end="merchantTotal[0]"
+                :endVal="merchantTotal[0]"
                 :decimals="0"
                 :duration="3"
                 :options="countOptions"
@@ -105,7 +105,7 @@
               <span>激活总数：</span>
               <CountUp class="f-fst-gotham"
                 :start="0"
-                :end="merchantTotal[1]"
+                :endVal="merchantTotal[1]"
                 :decimals="0"
                 :duration="3"
                 :options="countOptions"
@@ -117,7 +117,7 @@
               <div>游客</div>
               <CountUp class="f-fst-gotham"
                 :start="0"
-                :end="userTotal[0]"
+                :endVal="userTotal[0]"
                 :decimals="0"
                 :duration="3"
                 :options="countOptions"
@@ -125,7 +125,7 @@
               <div>远特商户/工号数</div>
               <CountUp class="f-fst-gotham"
                 :start="0"
-                :end="userTotal[1]"
+                :endVal="userTotal[1]"
                 :decimals="0"
                 :duration="3"
                 :options="countOptions"
@@ -133,7 +133,7 @@
               <em>/</em>
               <CountUp class="f-fst-gotham"
                 :start="0"
-                :end="userTotal[4]"
+                :endVal="userTotal[4]"
                 :decimals="0"
                 :duration="3"
                 :options="countOptions"
@@ -143,7 +143,7 @@
               <div>联通商户/工号数</div>
               <CountUp class="f-fst-gotham"
                 :start="0"
-                :end="userTotal[2]"
+                :endVal="userTotal[2]"
                 :decimals="0"
                 :duration="3"
                 :options="countOptions"
@@ -151,7 +151,7 @@
               <em>/</em>
               <CountUp class="f-fst-gotham"
                 :start="0"
-                :end="userTotal[5]"
+                :endVal="userTotal[5]"
                 :decimals="0"
                 :duration="3"
                 :options="countOptions"
@@ -159,7 +159,7 @@
               <div>设备数</div>
               <CountUp class="f-fst-gotham"
                 :start="0"
-                :end="userTotal[3]"
+                :endVal="userTotal[3]"
                 :decimals="0"
                 :duration="3"
                 :options="countOptions"
@@ -178,7 +178,7 @@
               <span>历史总数：</span>
               <CountUp class="f-fst-gotham"
                 :start="0"
-                :end="secondViewTotal[0]"
+                :endVal="secondViewTotal[0]"
                 :decimals="0"
                 :duration="3"
                 :options="countOptions"
@@ -186,7 +186,7 @@
               <span>成功：</span>
               <CountUp class="f-fst-gotham"
                 :start="0"
-                :end="secondViewTotal[1]"
+                :endVal="secondViewTotal[1]"
                 :decimals="0"
                 :duration="3"
                 :options="countOptions"
@@ -224,7 +224,7 @@
               <span>历史总数：</span>
               <CountUp class="f-fst-gotham"
                 :start="0"
-                :end="secondViewTotal[4]"
+                :endVal="secondViewTotal[4]"
                 :decimals="0"
                 :duration="3"
                 :options="countOptions"
@@ -240,7 +240,7 @@
               <span>历史总数：</span>
               <CountUp class="f-fst-gotham"
                 :start="0"
-                :end="secondViewTotal[2]"
+                :endVal="secondViewTotal[2]"
                 :decimals="0"
                 :duration="3"
                 :options="countOptions"
@@ -254,7 +254,7 @@
               <span>历史总数：</span>
               <CountUp class="f-fst-gotham"
                 :start="0"
-                :end="secondViewTotal[3]"
+                :endVal="secondViewTotal[3]"
                 :decimals="0"
                 :duration="3"
                 :options="countOptions"
