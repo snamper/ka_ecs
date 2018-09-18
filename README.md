@@ -29,11 +29,11 @@ yarn build
 │   ├── store（vuex）
 │   ├── utils（公共工具）
 │   ├── views
-│   │   ├── km
+│       ├── km
 │	│   │   ├── audit（订单审核）
-│	│	│   │   ├── components（组件）
-│	│	│   │   ├── api（接口地址管理）
-│	│	│   │   └── ...
+│	│   │   │   │   ├── components（组件）
+│	│   │	│   │   ├── api（接口地址管理）
+│	│   │	│   │   └── ...
 │	│   │   ├── more（更多功能）
 │	│   │   ├── opinion（意见反馈）
 │	│   │   ├── orderSearch（订单查询）
@@ -41,12 +41,12 @@ yarn build
 │	│   │   ├── resource（资源查询）
 │	│   │   ├── statistics（统计报表）
 │	│   │   └── dashboard.vue（数据面板）
-│   │   ├── ym
+│       ├── ym
 │	│   │   ├── audit（订单审核）
 │	│   │   ├── points（积分管理）
 │	│   │   └── orderSearch（订单查询）
-│   │   ├── home.vue（主视图）
-│   │   └── login.vue（登录页面）
+│       ├── home.vue（主视图）
+│       └── login.vue（登录页面）
 ├── vue.config.js（webpack相关配置）
 └── ecosystem.config.js（pm2相关配置）
 ```
