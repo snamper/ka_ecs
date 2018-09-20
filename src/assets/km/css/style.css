@@ -253,7 +253,7 @@ input[type="number"]{-moz-appearance:textfield;}
 .m-occlusion.active{position: absolute;top: 0;left: 0;width: 100%;height: 100%;z-index:999;}
 
 /*layer弹出层公共样式*/
-.lay-details{max-height:4.5rem;overflow-y: scroll;}
+.lay-details{overflow-y: auto;}
 .lay-details>li{margin-bottom:2px;}
 .lay-details>li>.fl{width:1.3rem;text-align: right;}
 .lay-details>li>.tl{text-align: left;}
