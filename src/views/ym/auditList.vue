@@ -1,5 +1,4 @@
 <style scoped>
-  /* @import "../../assets/km/css/cardOrderDetails.css"; */
   @import "../../assets/ym/css/audit.css"; 
 	.redF{
 		color: #AE0B39;
@@ -312,90 +311,53 @@ export default{
 		},
 		autoAuditInfo(){//自动审核详情
 			var vm=this;
-			
-			const transfer = (val)=>{
-                return val == 0 ? '未执行' : val == -1 ? '不适用' : val + '%';
-            }
-
-            const transferGztCheck = (val)=>{
-                return val == -1 ? '不适用' : val == 0 ? '未执行' : val==1 ? '成功' : val==2 ? '拒绝' : val==3 ? '无法校验' : '--';
-            }
-
-            const transfer_result = (val)=>{
-                let name = '', style = 'fCGrey';
-
-                switch(parseInt(val)){
-                    case 0:
-                        name = '未执行';
-                        style = 'fCRed';
-                        break;
-                    case -1:
-                        name = '不适用';
-                        break;
-                    case 1:
-                        name = '成功';
-                        style = 'fCGreen';
-                        break;
-                    case 2:
-                        name = '失败';
-                        style = 'fCRed';
-                        break;
-                    case 3:
-                        name = '未定';
-                        style = 'fCYellow';
-                        break;
-                    default:
-                        name = '--';
-                        break;
+            
+            const transferStyle = (i1,i2)=>{
+                if(i2.indexOf('成功')>-1){
+                    return 'fCGreen'
+                }else if(i2.indexOf('失败')>-1){
+                    return 'fCRed'
                 }
-                return {name:name,style:style};
+                if(i1.indexOf('审核结果')>-1){
+                    if(i2.indexOf('同意')>-1){
+                        return 'fCGreen'
+                    }else if(i2.indexOf('拒绝')>-1){
+                        return 'fCRed'
+                    }else if(i2.indexOf('转人工')>-1){
+                        return 'fCBlue'
+                    }
+                }
             }
+
 
             reqCommonMethod({"orderId":vm.auditData.orderId},function(){vm.off.isLoad=false;},"ym-ecs/c/audit/automaticDetails")            
             .then((data)=>{
-                var list_item1= data.data;
-				layer.open({
-					content:`<ul class="f-scroll-lt lay-details o-fl-w">
-					<li class="clr"><div class="fl">正面与手持对比相似度：</div><div class="fright">${transfer(list_item1.front_hand_image_similarity)}</div></li>
-					<li class="clr"><div class="fl">正面与第三方对比相似度：</div><div class="fright">${transfer(list_item1.front_image_similarity)}</div></li>
-					<li class="clr"><div class="fl">手持与第三方相似度：</div><div class="fright">${transfer(list_item1.hand_image_similarity)}</div></li>
-					<li class="clr"><div class="fl">活体识别照相似度：</div><div class="fright">${transfer(list_item1.living_image_similarity)}</div></li>
-					<li class="clr"><div class="fl">年龄校验结果：</div><div class="fright ${transfer_result(list_item1.age_check).style}">${
-                        transfer_result(list_item1.age_check).name
-					}</div></li>
-					<li class="clr"><div class="fl">地址校验结果：</div><div class="fright ${transfer_result(list_item1.address_check).style}">${
-                        transfer_result(list_item1.address_check).name
-					}</div></li>
-					<li class="clr"><div class="fl">身份证有效期校验结果：</div><div class="fright ${transfer_result(list_item1.period_check).style}">${
-                        transfer_result(list_item1.period_check).name
-					}</div></li>
-					<li class="clr"><div class="fl">身份证号与正面OCR匹配结果：</div><div class="fright ${transfer_result(list_item1.ocr_id_card_no_check).style}">${
-                        transfer_result(list_item1.ocr_id_card_no_check).name
-					}</div></li>
-					<li class="clr"><div class="fl">有效期与背面OCR匹配结果：</div><div class="fright ${transfer_result(list_item1.ocr_id_card_period_check).style}">${
-                        transfer_result(list_item1.ocr_id_card_period_check).name
-					}</div></li>
-					<li class="clr"><div class="fl">上传身份证号与OCR对比相似度：</div><div class="fright">${transfer(list_item1.id_card_no_similarity)}</div></li>
-					<li class="clr"><div class="fl">上传姓名与OCR对比相似度：</div><div class="fright">${transfer(list_item1.id_card_name_similarity)}</div></li>
-					<li class="clr"><div class="fl">上传地址与OCR对比相似度：</div><div class="fright">${transfer(list_item1.id_card_address_similarity)}</div></li>
-					<li class="clr"><div class="fl">上传有效期与OCR对比相似度：</div><div class="fright">${transfer(list_item1.id_card_period_similarity)}</div></li>
-					<li class="clr"><div class="fl">国政通校验结果：</div><div class="fright ${transfer_result(list_item1.gzt_check).style}">${ transferGztCheck(list_item1.gzt_check) }</div></li>			
-  					<li class="clr"><div class="fl">审核结果：</div><div class="fright">${
-  						list_item1.result==1?'<span class="fCGreen">成功</span>':
-  						list_item1.result==2?'<span class="fCRed">拒绝</span>':
-  						list_item1.result==3?'<span class="fCYellow">转人工审核</span>':	'--'
-  					}</div></li>
-					<li class="clr"><div class="fl">审核结果描述：</div><div class="fright">${list_item1.desc}</div></li>
-					<li class="clr"><div class="fl">拒绝理由：</div><div class="fright">${ list_item1.code==1018?'<span class="fCGreen">远特开卡超过上限</span>': list_item1.code==1019?'<span class="fCRed">联通开卡超过上限</span>':'--' }</div></li>
-					<li class="clr"><div class="fl">已开卡数：</div><div class="fright">${ list_item1.openedNum }</div></li>
-                    </ul>`,
-					type:0,
-					title:'自动审核详情',
-					btn:0,
-					style:'width:auto;'
-				});
-                vm.off.isLoad=false;
-            }).catch(error=>errorDeal(error)); 
+                let detailslist = data.data.checkList, content=`<li style="text-align:left" class="clr"><span>**识别模式**</span><span> (A:识别仪 , B:OCR , C:活体) </span></li>
+                <li class="clr"><div class="fl tl autoAudit">本次识别模式</div><div class="fright"> : ${data.data.mode}</div></li>`;
+                for(let i=0;i<detailslist.length;i++){
+                    Object.keys(detailslist[i]).forEach((key)=>{
+                        if(key!="mode"){
+                            if(detailslist[i].hasOwnProperty('mode')&&detailslist[i].mode!=""){
+                                content+=`<li class="clr"><div class="fl tl autoAudit">${key}（${detailslist[i]['mode']}）</div><div class="fright"> : <span class="${transferStyle(key,detailslist[i][key])}">${detailslist[i][key]}</span> </div></li>`
+                            }else{
+                                content+=`<li class="clr"><div class="fl tl autoAudit">${key}</div><div class="fright"> : <span class="${transferStyle(key,detailslist[i][key])}">${detailslist[i][key]}</span> </div></li>`
+                            }
+                        }
+                    })
+                }
+                detailslist? layer.open({
+                    content: `<ul class="f-scroll-lt lay-details o-fl-w">${content}</ul>`,
+                    type: 0,
+                    title: "自动审核详情",
+                    btn: 0,
+                    style: "width:auto;"
+                }):layer.open({
+                    content: "未查到审核信息",
+                    skin: "msg",
+                    time: 4,
+                    msgSkin: "error"
+                });
+            }).catch(error=>errorDeal(error));  
 		},
         getAuditList:function(){//获取订单
             var vm=this,orderId,url,json={},type=vm.$route.params.type;

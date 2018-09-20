@@ -405,11 +405,18 @@ export default {
             orderId = vm.auditData.sysOrderId;
         }
         const transferStyle = (i1,i2)=>{
-            if(i1.indexOf('结果')>-1){
-                if(i2.indexOf('成功')>-1){
+            if(i2.indexOf('成功')>-1){
+                return 'fCGreen'
+            }else if(i2.indexOf('失败')>-1){
+                return 'fCRed'
+            }
+            if(i1.indexOf('审核结果')>-1){
+                if(i2.indexOf('同意')>-1){
                     return 'fCGreen'
-                }else if(i2.indexOf('未执行')>-1){
+                }else if(i2.indexOf('拒绝')>-1){
                     return 'fCRed'
+                }else if(i2.indexOf('转人工')>-1){
+                    return 'fCBlue'
                 }
             }
         }

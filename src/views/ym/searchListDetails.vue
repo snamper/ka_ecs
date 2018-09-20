@@ -377,11 +377,18 @@ export default{
 			var vm=this;
 
             const transferStyle = (i1,i2)=>{
-                if(i1.indexOf('结果')>-1){
-                    if(i2.indexOf('成功')>-1){
+                if(i2.indexOf('成功')>-1){
+                    return 'fCGreen'
+                }else if(i2.indexOf('失败')>-1){
+                    return 'fCRed'
+                }
+                if(i1.indexOf('审核结果')>-1){
+                    if(i2.indexOf('同意')>-1){
                         return 'fCGreen'
-                    }else if(i2.indexOf('未执行')>-1){
+                    }else if(i2.indexOf('拒绝')>-1){
                         return 'fCRed'
+                    }else if(i2.indexOf('转人工')>-1){
+                        return 'fCBlue'
                     }
                 }
             }
@@ -390,39 +397,6 @@ export default{
                 return val == 0 ? '未执行' : val == -1 ? '不适用' : val + '%';
             }
 
-            const transferGztCheck = (val)=>{
-                return val == -1 ? '不适用' : val == 0 ? '未执行' : val==1 ? '成功' : val==2 ? '拒绝' : val==3 ? '无法校验' : '--';
-            }
-
-            const transfer_result = (val)=>{
-                let name = '', style = 'fCGrey';
-
-                switch(parseInt(val)){
-                    case 0:
-                        name = '未执行';
-                        style = 'fCRed';
-                        break;
-                    case -1:
-                        name = '不适用';
-                        break;
-                    case 1:
-                        name = '成功';
-                        style = 'fCGreen';
-                        break;
-                    case 2:
-                        name = '失败';
-                        style = 'fCRed';
-                        break;
-                    case 3:
-                        name = '未定';
-                        style = 'fCYellow';
-                        break;
-                    default:
-                        name = '--';
-                        break;
-                }
-                return {name:name,style:style};
-            }
             reqCommonMethod({"orderId":vm.list.orderId},false,"ym-ecs/c/audit/automaticDetails")
             .then((data)=>{
                 let detailslist = data.data.checkList, content=`<li style="text-align:left" class="clr"><span>**识别模式**</span><span> (A:识别仪 , B:OCR , C:活体) </span></li>
