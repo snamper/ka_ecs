@@ -1,9 +1,5 @@
 <style scoped>
   @import "../../assets/ym/css/audit.css"; 
-	.redF{
-		color: #AE0B39;
-		font-weight: bold;
-	}
 </style>
 <template>
 	<div id="auditList">
@@ -70,7 +66,11 @@
 				<tbody v-if="$route.params.type==3">
 					<tr>
 						<td><span>订单号码：</span>{{auditData.orderId}}</td>
-						<td colspan="2"><span>电话号码：</span>{{auditData.phoneNumber}}（{{typeCheck(4,auditData.phoneLevel)}}）</td>
+						<td><span>电话号码：</span>{{auditData.phoneNumber}}（{{typeCheck(4,auditData.phoneLevel)}}）</td>
+                        <td><span>审核方式：</span><span v-show="list.auditType==1">实时审核</span>
+                            <span v-show="list.auditType==2">自动审核</span>
+                            <a href="javascript:void(0)" @click="autoAuditInfo" class="details m-l">查看详情</a>
+                        </td>
 					</tr>
 					<tr>
 						<td><span>生成时间：</span>{{getDateTime(auditData.create_time)[6]}}</td>
