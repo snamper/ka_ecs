@@ -29,7 +29,7 @@ module.exports = {
 	},
 	devServer: {
 		open: true,
-		// host: '0.0.0.0',
+		host: '0.0.0.0',
 		port: 8080,
 		https: false,
 		hot: true,
@@ -42,7 +42,8 @@ module.exports = {
 	            }
 	        },
 	        '/km-ecs/': {
-	            target:'http://192.168.10.26:6086',
+	            // target:'http://192.168.10.66:6086',
+	            target:'http://192.168.10.117:6086',
 	            changeOrigin:true,
 	            pathRewrite:{
 	                '/ecs/km-ecs/':'/ecs/'
@@ -56,10 +57,11 @@ module.exports = {
 	            }
 	        },
 	        '/ym-ecs/': {
-	            target:'http://192.168.10.110:8080',
+	            // target:'http://192.168.10.110:8080',
+	            target:'http://192.168.10.117:8080',
 	            changeOrigin:true,
 	            pathRewrite:{
-	                '/ecs/ym-ecs/':'/yuangmeng_ecs/'
+	                '/ecs/ym-ecs/':'/ecs/'
 	            }
 	        },
 	    },
