@@ -184,10 +184,9 @@
 import "../../assets/km/css/cardOrderDetails.css";
 import { reqCommonMethod } from "../../config/service";  
 import { errorDeal,getStore } from '../../config/utils';
-var imgToBase64=require('../../utils/imgToBase64').imgToBase64;
-
 import ImgZoom from '../ImgZoom';
 import FileUpload  from '../fileUpload';
+let  imgToBase64 = require('../../../public/imgToBase64.js').imgToBase64;
 
 export default{
 	props:{
@@ -243,6 +242,7 @@ export default{
 	},
 
 	created:function(){
+        console.log(imgToBase64);
 		let vm=this,imgUrl=_CONFIG ? _CONFIG[_CONFIG.env].REGISTER_MERCHANT_IMAGE_URL : '';
 
 		vm.userInfo=getStore('KA_ECS_USER');
@@ -435,9 +435,6 @@ export default{
 	#modifyInfo .g-inner-table>tbody>tr>td>input{
 		width:95%;
 		border-radius:5px;
-	}
-	.m-img-box{
-		
 	}
 	.m-img-box>table{
 		width:100%;

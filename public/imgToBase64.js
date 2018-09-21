@@ -4,12 +4,12 @@
     require 'exif-js' to check image orientation 
  */
 import EXIF from "exif-js";
-//var EXIF=require('exif-js');
+
 (function (global, factory) {
-	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
+    typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
 	typeof define === 'function' && define.amd ? define(factory) :
 	(global.imgToBase64 = factory());
-}(this, (function () { 
+}(window, (function () { 
     'use strict';
 function imgToBase64(params) {
     var options={
