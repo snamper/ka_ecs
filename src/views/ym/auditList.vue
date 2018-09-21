@@ -137,6 +137,7 @@
 import {reqCommonMethod} from "../../config/service.js";
 import {errorDeal,getStore} from "../../config/utils.js";
 import {mapState, mapMutations, mapActions} from 'vuex';
+import noImg from "../../assets/images/no-img.png";
 export default{
 	name:'auditList',
 	data (){
@@ -410,17 +411,17 @@ export default{
 			if(len&&(vm.off.auditIndex+1)<=len){
 				vm.auditData=vm.list[vm.off.auditIndex];
 				if(vm.$route.params.type==3){
-					vm.imgData[0]={'src':vm.auditData.frontImageOld||'../../assets/ym/img/no-img.png','name':'原机主正面照片'};
-					vm.imgData[1]={'src':vm.auditData.transferFrontImageOld||'../../assets/ym/img/no-img.png','name':'原机主过户正面照片'};
-					vm.imgData[2]={'src':vm.auditData.backImageOld||'../../assets/ym/img/no-img.png','name':'原机主反面照片'};//
-					vm.imgData[3]={'src':vm.auditData.transferBackImageOld||'../../assets/ym/img/no-img.png','name':'原机主过户反面照片'};
-					vm.imgData[4]={'src':vm.auditData.handImageOld||'../../assets/ym/img/no-img.png','name':'原机主手持/免冠照片'};
-					vm.imgData[5]={'src':vm.auditData.transferHandImageOld||'../../assets/ym/img/no-img.png','name':'原机主过户手持/免冠照片'};
+					vm.imgData[0]={'src':vm.auditData.frontImageOld||noImg,'name':'原机主正面照片'};
+					vm.imgData[1]={'src':vm.auditData.transferFrontImageOld||noImg,'name':'原机主过户正面照片'};
+					vm.imgData[2]={'src':vm.auditData.backImageOld||noImg,'name':'原机主反面照片'};//
+					vm.imgData[3]={'src':vm.auditData.transferBackImageOld||noImg,'name':'原机主过户反面照片'};
+					vm.imgData[4]={'src':vm.auditData.handImageOld||noImg,'name':'原机主手持/免冠照片'};
+					vm.imgData[5]={'src':vm.auditData.transferHandImageOld||noImg,'name':'原机主过户手持/免冠照片'};
 
-					vm.imgData[6]={'src':vm.auditData.papersImage||'../../assets/ym/img/no-img.png','name':'正面照片'};
-					vm.imgData[7]={'src':vm.auditData.backImage||'../../assets/ym/img/no-img.png','name':'新机主反面照片'};
-					vm.imgData[8]={'src':vm.auditData.avatarImage||'../../assets/ym/img/no-img.png','name':'新机主手持/免冠照片'};
-					vm.imgData[9]={'src':vm.auditData.signImage||'../../assets/ym/img/no-img.png','name':'新机主手签名照片'};
+					vm.imgData[6]={'src':vm.auditData.papersImage||noImg,'name':'正面照片'};
+					vm.imgData[7]={'src':vm.auditData.backImage||noImg,'name':'新机主反面照片'};
+					vm.imgData[8]={'src':vm.auditData.avatarImage||noImg,'name':'新机主手持/免冠照片'};
+					vm.imgData[9]={'src':vm.auditData.signImage||noImg,'name':'新机主手签名照片'};
 
 					vm.zoomStyle_1.backgroundImage='url('+vm.imgData[0].src+')';
 					vm.zoomStyle_2.backgroundImage='url('+vm.imgData[1].src+')';
