@@ -18,9 +18,9 @@
 				<i class="icon"></i>
 				<span class="dp">号码占用/解冻</span>
 			</li>
-            <li class="u-number-release" @click="showFn(4)">
+            <li class="u-SMSCheck-change" @click="showFn(4)">
 				<i class="icon"></i>
-				<span class="dp">短信校验号码</span>
+				<span class="dp">更改成卡短信验证号码</span>
 			</li>
 		</ul>
 		<div class="g-more-fn" v-show="off.fn">
@@ -85,6 +85,8 @@ export default{
 .u-welcome-conf>.dp{color: #60A9D1;}
 .u-number-release>.icon{background-image: url(../../../assets/images/numberRelease.png);}
 .u-number-release>.dp{color: #1A75F2;}
+.u-SMSCheck-change>.icon{background-image: url(../../../assets/images/icon_num.png);}
+.u-SMSCheck-change>.dp{color: #6a21f1;}
 
 #more{
 	width: 100%;
@@ -119,6 +121,7 @@ export default{
 	background-size: 100%;
 	background-position: center;
 }
+
 .g-more-menu>li>.dp{
 	display: inline-block;
 	vertical-align: middle;

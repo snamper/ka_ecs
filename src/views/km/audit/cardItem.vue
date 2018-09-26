@@ -278,8 +278,8 @@ export default {
   methods: {
     agree: function() {
       //审核同意
-      var vm = this, auditType = vm.auditData.auditType, url = "";
-      var orderId = vm.auditData.orderId;
+      let vm = this, auditType = vm.auditData.auditType,orderId = vm.auditData.orderId, url = "";
+      debugger;
       let json = { orderId: orderId, result: 1, remark: "", reason: "", refuseReasonCode: "", auditType: auditType };
       if (vm.off.itemType == 8) {
         url = "km-ecs/w/sdk/auditOrder";

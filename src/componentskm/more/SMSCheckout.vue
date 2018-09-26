@@ -140,22 +140,36 @@ export default{
                 "safePhone": vm.form.checkPhone,
                 "phone": vm.form.phone1
             };
+            if(vm.form.orderId==""||vm.form.phone1==""){
+                layer.open({
+                    content:'请输入或导入要修改的信息',
+                    skin: 'msg',
+                    time: 3,
+                    msgSkin:'error',
+                });
+                return false;
+            }
             vm.dealExcel(++vm.index,vm.excelData);
             updateAdultSafePhone(data,()=>{vm.off.isLoad})
             .then((data)=>{
-                
+                layer.open({
+                    content:'修改短信校验手机号码成功',
+                    skin: 'msg',
+                    time: 3,
+                    msgSkin:'success',
+                });
             }).catch(e=>errorDeal(e))
         },
         fupExcel(e) {
             let vm=this, xlf = document.getElementById('xlf'), f=this.$refs.file.files[0];
             var reader = new FileReader();
             var name = f.name;
-            vm.index=0;
+            vm.index = 0;
+            vm.excelData = "";
             reader.onload = function(e) {
                 if(typeof console !== 'undefined')
-                var data = e.target.result,wb = XLSX.read(btoa(vm.fixdata(data)), {//手动转化
-                    type: 'base64'
-                });vm.excelData = JSON.stringify( XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]]) );
+                var data = e.target.result,wb = XLSX.read(btoa(vm.fixdata(data)), {type:'base64'});
+                vm.excelData = JSON.stringify(XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]]));
                 vm.dealExcel(vm.index,vm.excelData)
             };  
             vm.$refs.file.value=null;
