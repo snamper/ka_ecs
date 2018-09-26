@@ -596,7 +596,7 @@
                                     <a :name="todo.orderId" :title="index" @click="details" class="details" href="javascript:void(0)">详情</a>
                                 </div>
                             </td>
-                            <td><a href="javascript:void(0)" @click="auditBtn(todo.type,todo.orderId)">审核</a></td>
+                            <td><a v-if="off.type==1&&todo.isMe==1" href="javascript:void(0)" @click="auditBtn(todo.type,todo.orderId)">审核</a></td>
                         </tr>
                     </tbody>
                 </table>

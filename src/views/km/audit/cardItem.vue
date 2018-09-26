@@ -277,31 +277,31 @@ export default {
   },
   methods: {
     agree: function() {
-      //审核同意
-      let vm = this, auditType = vm.auditData.auditType,orderId = vm.auditData.orderId, url = "";
-      debugger;
-      let json = { orderId: orderId, result: 1, remark: "", reason: "", refuseReasonCode: "", auditType: auditType };
-      if (vm.off.itemType == 8) {
-        url = "km-ecs/w/sdk/auditOrder";
-      } else if (vm.off.itemType == 9) {
-        url = "km-ecs/w/tongfu/auditOrder";
-      } else if (vm.off.itemType == 1 || vm.off.itemType == 2) {
-        url = "km-ecs/w/audit/auditOfReinput";
-        json.result = 2;
-        json.phone = vm.auditData.phoneNumber;
-        json.orderId = vm.auditData.sysOrderId;
-      } else {
-        url = "km-ecs/w/audit/audit";
-      }
-      reqCommonMethod(json, false, url)
+        //审核同意
+        let vm = this, auditType = vm.auditData.auditType,orderId = vm.auditData.orderId, url = "";
+        let json = { orderId: orderId, result: 1, remark: "", reason: "", refuseReasonCode: "", auditType: auditType };
+        debugger;
+        if (vm.off.itemType == 8) {
+            url = "km-ecs/w/sdk/auditOrder";
+        } else if (vm.off.itemType == 9) {
+            url = "km-ecs/w/tongfu/auditOrder";
+        } else if (vm.off.itemType == 1 || vm.off.itemType == 2) {
+            url = "km-ecs/w/audit/auditOfReinput";
+            json.result = 2;
+            json.phone = vm.auditData.phoneNumber;
+            json.orderId = vm.auditData.sysOrderId;
+        } else {
+            url = "km-ecs/w/audit/audit";
+        }
+        reqCommonMethod(json, false, url)
         .then(data => {
-          layer.open({
+        layer.open({
             content: data.msg,
             skin: "msg",
             time: 4,
             msgSkin: "success",
             success: function() { vm.dealAuditList(); }
-          });
+        });
         })
         .catch(error => errorDeal(error));
     },
