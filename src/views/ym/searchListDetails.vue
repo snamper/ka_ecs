@@ -295,7 +295,7 @@ export default{
 			vm.zoomStyle_1.backgroundImage='url('+vm.imgData[0].src+')';
 			vm.zoomStyle_2.backgroundImage='url('+vm.imgData[1].src+')';
 		}else{
-			vm.imgData=[{'src':vm.list.handImage||'../../assets/ym/img/no-img.png','name':'手持/免冠'},{'src':vm.list.papersImage||'../../assets/ym/img/no-img.png','name':'正面'},{'src':vm.list.backImage||'../../assets/ym/img/no-img.png','name':'反面'},{'src':vm.list.avatarImage||'../../assets/ym/img/no-img.png','name':'头像'},{'src':vm.list.signImage||'../../assets/ym/img/no-img.png','name':'手签名'}];
+			vm.imgData=[{'src':vm.list.handImage||noImg,'name':'手持/免冠'},{'src':vm.list.papersImage||noImg,'name':'正面'},{'src':vm.list.backImage||noImg,'name':'反面'},{'src':vm.list.avatarImage||noImg,'name':'头像'},{'src':vm.list.signImage||noImg,'name':'手签名'}];
 				vm.zoomStyle.backgroundImage='url('+vm.imgData[0].src+')';
 		}
 	},
