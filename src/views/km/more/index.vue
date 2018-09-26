@@ -18,6 +18,10 @@
 				<i class="icon"></i>
 				<span class="dp">号码占用/解冻</span>
 			</li>
+            <li class="u-number-release" @click="showFn(4)">
+				<i class="icon"></i>
+				<span class="dp">短信校验号码</span>
+			</li>
 		</ul>
 		<div class="g-more-fn" v-show="off.fn">
 			<header class="clr">
@@ -30,6 +34,7 @@
 			<PhoneBlackList v-if="off.fn==1"></PhoneBlackList>
 			<WelcomeConf v-if="off.fn==2"></WelcomeConf>
 			<NumberRelease v-if="off.fn==3"></NumberRelease>
+            <SMSCheckout v-if="off.fn==4"></SMSCheckout>
 		</div>
 	</section>
 </template>
@@ -38,13 +43,13 @@ import "../../../assets/km/css/search.css";
 import PhoneBlackList from '../../../componentskm/more/phoneBlackList';
 import WelcomeConf from '../../../componentskm/more/welcomeConf';
 import NumberRelease from '../../../componentskm/more/numberRelease';
+import SMSCheckout from '../../../componentskm/more/SMSCheckout';
 import { powerKm,getStore } from "../../../config/utils.js";
 export default{
 	name:'more',
 	data (){
 		return {
 			off:{
-				// power:'',
 				fn:0
 			},
 		}
@@ -55,7 +60,8 @@ export default{
 	components:{
 		PhoneBlackList,
 		WelcomeConf,
-		NumberRelease
+        NumberRelease,
+        SMSCheckout
 	},
 	created(){
         this.off.power=this.$parent.off;

@@ -58,10 +58,10 @@ module.exports = {
 	        },
 	        '/ym-ecs/': {
 	            // target:'http://192.168.10.110:8080',
-	            target:'http://192.168.10.117:8080',
+	            target:'http://192.168.10.66:8087',
 	            changeOrigin:true,
 	            pathRewrite:{
-	                '/ecs/ym-ecs/':'/ecs/'
+	                '/ecs/ym-ecs/':'/yuangmeng_ecs/'
 	            }
 	        },
 	    },

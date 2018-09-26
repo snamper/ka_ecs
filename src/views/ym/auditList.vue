@@ -163,7 +163,6 @@ export default{
 	},
 	created:function(){
         var userInfo=localStorage.getItem('ECS_INFO');
-        
         userInfo=getStore("KA_ECS_USER");
 		userInfo.isadmin&&userInfo.isadmin.indexOf('4')>-1 ? this.off.isBugginPower=true : this.off.isBugginPower=false;
 		this.getAuditList();
@@ -179,19 +178,7 @@ export default{
 	},
 	methods:{
 		agree:function(){//审核同意
-			var vm=this;
-			var orderId=vm.auditData.orderId;
-			// vm.AJAX('c/audit/audit',{"orderId":orderId,"result":1,"remark":'',"reason": ''},function(data){
-			// 	layer.open({
-			// 		content:data.msg,
-			// 		skin: 'msg',
-			// 		time: 4,
-			// 		msgSkin:'success',
-			// 		success:function(){
-			// 			vm.dealAuditList();
-			// 		}
-			// 	})
-            // });
+			var vm=this,orderId=vm.auditData.orderId;
             reqCommonMethod({"orderId":orderId,"result":1,"remark":'',"reason": ''},function(){vm.off.isLoad=false;console.log(1111)},"ym-ecs/c/audit/audit")
             .then((data)=>{
                 layer.open({

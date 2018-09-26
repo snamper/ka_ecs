@@ -211,7 +211,7 @@
 					<td v-if="todo.orderStatus==1"><b class="f-c-red">待分配</b></td>
 					<td v-if="todo.orderStatus==2"><b class="f-c-blue">已分配</b></td>
 					<td><a :name="todo.orderId" @click="details" href="javascript:void(0)" class="details">查看详情</a></td>
-                    <td><a v-if="todo.orderStatus==1" href="javascript:void(0)"  @click="auditBtn(todo.orderType,todo.orderId)" >审核</a></td>
+                    <td><a v-if="todo.orderStatus==1" href="javascript:void(0)"  @click="auditBtn(todo.orderType,todo.orderId)">审核</a></td>
 				</tr>
 				<tr v-if="off.type==2" v-for="(todo,index) in list" :key="index">
 					<td>{{((pageNum-1)*10+(index+1))}}</td>
@@ -276,12 +276,8 @@
 	</div>
 	</section>
 	<!--详情-->
-	<list-auditdetails  v-if="off.auditdetails==1" >
-      
-	</list-auditdetails>
-    <list-details :list="detailsData" :type="off.type" v-if="off.details==1" :number="off.number">
-      
-	</list-details>
+	<list-auditdetails v-if="off.auditdetails==1"></list-auditdetails>
+    <list-details :list="detailsData" :type="off.type" v-if="off.details==1" :number="off.number"></list-details>
   </div>
 </template>
 <script>

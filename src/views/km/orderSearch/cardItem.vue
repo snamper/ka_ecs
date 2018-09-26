@@ -8,7 +8,7 @@
         <header class="m-scroll-bar animated infinite" :class="{active:off.isLoad}"></header>
         <section class="m-occlusion" :class="{active:off.isLoad}"></section>
         <!--查询-->
-        <section v-if="!off.details">
+        <section v-if="off.searchlist">
             <div class="g-search-form">
                 <section class="m-top-shift f-tas">
                     <div class="box">
@@ -444,7 +444,6 @@
                                 <span class="text">已开卡申请</span>
                             </label>
                         </div>
-
                         <div class="m-form-radio col-radio" v-if="form.orderType==8">
                             <label>
                                 <span class="radio"><input value="0" type="radio" v-model="form.orderStatus">
@@ -513,7 +512,8 @@
                             <th v-show="off.type==2">号卡状态</th>
                             <th v-if="isShowDXYZ==true">短信验证</th>
                             <th v-show="off.type==2">审核状态</th>
-                            <th></th>
+                            <th>操作</th>
+                            <th v-if="off.type==1"></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -586,8 +586,6 @@
                                 <div class="f-c-red">拒绝</div>
                                 <div>
                                     <a :name="todo.orderId" :title="index" @click="details" class="details" href="javascript:void(0)">详情</a>
-                                    <!-- <br>
-							<a v-if="todo.allowRecheck==1" :name="todo.orderId" :title="index" @click="agree" class="agree f-mgt-10" href="javascript:void(0)">同意</a> -->
                                     <span v-if="todo.allowRecheck==2" class="time_out f-c-red">超过复审时间</span>
                                 </div>
                             </td>
@@ -598,11 +596,7 @@
                                     <a :name="todo.orderId" :title="index" @click="details" class="details" href="javascript:void(0)">详情</a>
                                 </div>
                             </td>
-                            
-                            <!-- <td colspan="2" v-if="off.type==2&&todo.status==4" class="td-col-2">
-						<div class="f-c-blue">复审同意</div>
-						<div><a :name="todo.orderId" :title="index" @click="details" class="details" href="javascript:void(0)">详情</a></div>
-					</td> -->
+                            <td><a href="javascript:void(0)" @click="auditBtn(todo.type,todo.orderId)">审核</a></td>
                         </tr>
                     </tbody>
                 </table>
@@ -610,61 +604,65 @@
             </div>
         </section>
         <!--详情-->
-        <list-details :list="detailsData" :source="form.source" :type="off.type" v-if="off.details" :number="off.number"> </list-details>
+        <list-details v-if="off.details" :list="detailsData" :source="form.source" :type="off.type" :number="off.number"> </list-details>
+        <auditDetails v-if="off.auditDetails"></auditDetails>
     </div>
 </template>
 <script>
-require("../../../assets/km/js/base64.min.js");
-// require("../../../assets/km/css/search.css");
+import { getDateTime, translateData, secondsFormat, getUnixTime, createDownload, setStore, getStore, errorDeal } from "../../../config/utils.js";
 import { searchAuditList, reAudit, reqCommonMethod } from "../../../config/service.js";
 import pagination from "../../../componentskm/page.vue";
 import details from "../../../componentskm/cardOrderDetails.vue";
-import { getDateTime, translateData, secondsFormat, getUnixTime, createDownload, setStore, getStore, errorDeal } from "../../../config/utils.js";
+import auditDetails from "../audit/cardItem";
+require("../../../assets/km/js/base64.min.js");
 
 export default {
     data() {
         return {
-        off: {
-            type: 1, //1，待审核;2，已审核;3，进行中;4，已关闭
-            isLoad: 0, //加载条
-            details: 0, //详情页面开关
-            number: "", //第几条详情
-            showData: 0
-        },
-        form: {
-            source: "6", //订单来源，6、卡盟APP；7、卡盟SDK；8远特i卡
-            orderType: 6, //6 开空卡 9 开白卡 10 开成卡 7 过户 4 实名补录 8 补换卡
-            cardType: 0, //运营商
-            orderStatus: 0, //订单状态
-            operatorType:1,//操作类型
-            sourceFrom :[1,6,7,8],//开卡方式
-            auditType: 9, //审核方式
-            context1: "", //订单号码
-            context2: "", //手机号码
-            context3: "", //审核人ID
-            context4: "", //身份证号
-            context5: "", // 操作者ID
-            context6: 0, //号卡状态
-            context7: "", //开卡者姓名
-            context8: -1, //号卡类型
-            startTime: "",
-            select: 6 ,//条件查询 1 订单号码2 手机号码 3 审核人ID 4 身份证号 5 操作者ID 6 订单状态7 用户姓名 8 号卡类型
-            endTime: "",
-        },
-        checkAllopencardType:true,
-        list: "", //查询数据
-        detailsData: "", //详情数据
-        total: 0, //总查询条数
-        pageNum: 1, //当前页数
-        pageSize: 10, //显示条数
-        maxpage: 1, //最大页数
-        callback: Function, //page组件点击回调
-        isShowDXYZ:false,
+            off: {
+                type: 1, //1，待审核;2，已审核;3，进行中;4，已关闭
+                isLoad: 0, //加载条
+                number: "", //第几条详情
+                showData: 0,
+                searchlist:true, //订单列表
+                details: false, //详情页面
+                auditDetails:false //审核订单分配
+            },
+            form: {
+                source: "6", //订单来源，6、卡盟APP；7、卡盟SDK；8远特i卡
+                orderType: 6, //6 开空卡 9 开白卡 10 开成卡 7 过户 4 实名补录 8 补换卡
+                cardType: 0, //运营商
+                orderStatus: 0, //订单状态
+                operatorType:1,//操作类型
+                sourceFrom :[1,6,7,8],//开卡方式
+                auditType: 9, //审核方式
+                context1: "", //订单号码
+                context2: "", //手机号码
+                context3: "", //审核人ID
+                context4: "", //身份证号
+                context5: "", // 操作者ID
+                context6: 0, //号卡状态
+                context7: "", //开卡者姓名
+                context8: -1, //号卡类型
+                startTime: "",
+                select: 6 ,//条件查询 1 订单号码2 手机号码 3 审核人ID 4 身份证号 5 操作者ID 6 订单状态7 用户姓名 8 号卡类型
+                endTime: "",
+            },
+            checkAllopencardType:true,
+            list: "", //查询数据
+            detailsData: "", //详情数据
+            total: 0, //总查询条数
+            pageNum: 1, //当前页数
+            pageSize: 10, //显示条数
+            maxpage: 1, //最大页数
+            callback: Function, //page组件点击回调
+            isShowDXYZ:false,
         };
     },
     components: {
         "my-page": pagination,
-        "list-details": details
+        "list-details": details,
+        auditDetails
     },
     computed: {
         context8() {
@@ -1294,10 +1292,20 @@ export default {
             vm.detailsData = data.data;
             }
             vm.off.details = true;
+            vm.off.searchlist = false;
             vm.off.isLoad = false;
             vm.off.examine = true;
         })
         .catch(error => errorDeal(error));
+    },
+    auditBtn(type, orderId) {
+        var vm = this;
+        vm.cardT = type;
+        vm.orderId = orderId;
+        vm.off.detailsList = 1;
+        vm.off.details = false;
+        vm.off.searchlist = false;
+        vm.off.auditDetails = true;
     },
     to_laydate: function(v) {
       var vm = this;

@@ -42,8 +42,8 @@
                                         <tr>
                                             <td>审核方式：</td>
                                             <td>
-                                                <span v-show="off.auditType==0">实时审核</span>
-                                                <span v-show="off.auditType==1">事后审核</span>
+                                                <span v-show="auditData.auditType==0">实时审核</span>
+                                                <span v-show="auditData.auditType==1">事后审核</span>
                                                 <a v-if="off.itemType=='4,5,6'||off.itemType=='8'||off.itemType=='9'" href="javascript:void(0)" @click="autoAuditInfo" class="details m-l">查看详情</a>
                                             </td>
                                         </tr>
@@ -233,11 +233,11 @@
 <script>
 import "../../../assets/km/css/cardOrderDetails.css";
 import "../../../assets/km/css/audit.css";
-import { reqCommonMethod } from "../../../config/service.js";
 import { errorDeal, getDateTime,translateData } from "../../../config/utils.js";
-import ImgZoom from "../../../componentskm/ImgZoom";
+import { reqCommonMethod } from "../../../config/service.js";
 import RealTimeCollection from "../../../componentskm/audit/realTimeCollection";
 import RealNameRechCard from "../../../componentskm/audit/realNameRechCard";
+import ImgZoom from "../../../componentskm/ImgZoom";
 export default {
   data() {
     return {
@@ -267,21 +267,18 @@ export default {
     var vm = this;
     vm.off.auditType = vm.$parent.off.auditType; //0,实时;1,事后;
     vm.off.itemType = vm.$route.params.type; //6 业务订单；7 过户；8 SDK开卡；9 通服开卡；1 实名补录；2 补换卡；
-    reqCommonMethod(
-      { auditType: vm.off.auditType },
-      function() {},
-      "km-ecs/w/audit/getRefuseReasons"
-    )
-      .then(data => {
+    reqCommonMethod({ auditType: vm.off.auditType },function() {},"km-ecs/w/audit/getRefuseReasons")
+    .then(data => {
         vm.refuseArr = data.data;
-      })
-      .catch(error => errorDeal(error));
-    vm.getAuditList();
+    }).then(()=>{
+        vm.getAuditList();
+    })
+    .catch(error => errorDeal(error));
   },
   methods: {
     agree: function() {
       //审核同意
-      var vm = this, auditType = vm.off.auditType, url = "";
+      var vm = this, auditType = vm.auditData.auditType, url = "";
       var orderId = vm.auditData.orderId;
       let json = { orderId: orderId, result: 1, remark: "", reason: "", refuseReasonCode: "", auditType: auditType };
       if (vm.off.itemType == 8) {
@@ -450,44 +447,55 @@ export default {
         })
         .catch(error => errorDeal(error));
     },
-    getAuditList: function() {
-        //获取订单
-        const vm = this,
-        auditType = vm.off.auditType;
-        var url = "";
-        if (vm.off.isLoad == 1) {
-            return false;
-        }
-        vm.off.isLoad = 1;
-        if (vm.off.itemType == 8) {//sdk开卡
-            url = "km-ecs/w/sdk/distributeOrder";
-        } else if (vm.off.itemType == 9) {//i卡开卡
-            url = "km-ecs/w/tongfu/distributeOrder";
-        } else if (vm.off.itemType == 1 || vm.off.itemType == 2) {
-            url = "km-ecs/w/audit/getAuditOfReinput";
-        } else {
-            url = "km-ecs/w/audit/toaudit";
-        }
-        reqCommonMethod({ type: vm.off.itemType, auditType: auditType },function() {vm.off.isLoad = false;},url)
-        .then(data => {
-            if (data.data.list.length == 0) {
-                layer.open({
-                    content: "当前没有分配的订单",
-                    skin: "msg",
-                    time: 4,
-                    msgSkin: "error"
-                });
-                vm.off.isLoad = false;
+    getAuditList: function() {//获取订单
+        let vm = this,auditType = vm.off.auditType,url = "",searchtype=vm.$route.params.type; 
+        if(typeof searchtype=='number'||searchtype=='4,5,6'){
+            if (vm.off.isLoad == 1) {
                 return false;
             }
-            vm.list = data.data.list;
-            vm.off.auditIndex = 0;
-            vm.dealAuditList();
-            window.clearInterval(vm.timer);
-            vm.timeDown(parseInt(vm.list[0].expireTime));
-            vm.off.isLoad = false;
-        })
-        .catch(error => errorDeal(error));
+            vm.off.isLoad = 1;
+            if (vm.off.itemType == 8) {//sdk开卡
+                url = "km-ecs/w/sdk/distributeOrder";
+            } else if (vm.off.itemType == 9) {//i卡开卡
+                url = "km-ecs/w/tongfu/distributeOrder";
+            } else if (vm.off.itemType == 1 || vm.off.itemType == 2) {
+                url = "km-ecs/w/audit/getAuditOfReinput";
+            } else {
+                url = "km-ecs/w/audit/toaudit";
+            }
+            reqCommonMethod({ type: vm.off.itemType, auditType: auditType },function() {vm.off.isLoad = false;},url)
+            .then(data => {
+                if (data.data.list.length == 0) {
+                    layer.open({
+                        content: "当前没有分配的订单",
+                        skin: "msg",
+                        time: 4,
+                        msgSkin: "error"
+                    });
+                    vm.off.isLoad = false;
+                    return false;
+                }
+                vm.list = data.data.list;
+                vm.off.auditIndex = 0;
+                vm.dealAuditList();
+                window.clearInterval(vm.timer);
+                vm.timeDown(parseInt(vm.list[0].expireTime));
+                vm.off.isLoad = false;
+            })
+            .catch(error => errorDeal(error));
+        }else{
+            let json={orderId:vm.$parent.orderId},url="km-ecs/w/audit/toAuditByOrderId";
+            reqCommonMethod(json,()=>{vm.off.isLoad=true},url)
+            .then((data)=>{
+                vm.list = data.data.list;
+                vm.off.auditIndex = 0;
+                vm.dealAuditList();
+                window.clearInterval(vm.timer);
+                vm.timeDown(parseInt(vm.list[0].expireTime));
+                vm.off.isLoad = false;
+            })
+            .catch((e)=>errorDeal(e))
+        }
     },
     dealAuditList: function() {//处理分配的订单
         const vm = this, len = vm.list.length;

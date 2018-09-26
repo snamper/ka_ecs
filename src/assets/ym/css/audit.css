@@ -61,7 +61,7 @@
 .navBg6>p{background-color:#24BAC9; color:#24BAC9;}
 
 /*审核列表*/
-#auditList{display: table-cell;position: relative; }
+/* #auditList{display: table-cell;position: relative; } */
 .g-list-box, .g-lis-head{position: absolute;}
 .g-box{padding-top: 0.6rem;}
 .g-lis-head{background-color: #fff;width: 100%;padding:0.15rem 0.1rem;box-shadow: 0 0 10px rgba(0,0,0,0.1);border-radius: 4px;}

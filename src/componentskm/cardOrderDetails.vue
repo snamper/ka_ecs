@@ -3,7 +3,6 @@
   *@author: thinkmix
   *@date 2017-2-11
 * *-->
-
 <template>
     <section class="g-list-box" id="details">
         <header class="g-lis-head">
@@ -471,7 +470,9 @@ export default {
       window.open(url);
     },
     close() {
-      this.$parent.off.details = false;
+        let vmp = this.$parent;
+        vmp.off.details = false;
+        vmp.off.searchlist = true;
     },
     detailsTime() {
       //用时信息
@@ -897,8 +898,6 @@ export default {
 </script>
 <style>
     .supIcon { color: #ff961e; }
-    .checkType{display:inline-block}
-    .checkType label{margin-right: 10px;}
-    .checkType label input{position: relative;top: 1px}
     label.active{color: #4b8cd6}
+    .m-audit-btn{position: absolute;right: 200px;}
 </style>
