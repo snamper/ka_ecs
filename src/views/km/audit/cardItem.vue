@@ -313,7 +313,7 @@ export default {
         popIndex,
         ww = window.innerWidth,
         wwSet,
-        auditType = vm.off.auditType;
+        auditType = vm.auditData.auditType;
       for (let i = 0; i < vm.refuseArr.list.length; i++) {
         var b = "";
         if (vm.refuseArr.list[i].stopCard == 1) b = '<b class="f-c-red">★</b>';

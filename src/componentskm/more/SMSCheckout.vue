@@ -167,7 +167,7 @@ export default{
             vm.index = 0;
             vm.excelData = "";
             reader.onload = function(e) {
-                if(typeof console !== 'undefined')
+                if(typeof console !== 'undefined')//验证浏览器支持
                 var data = e.target.result,wb = XLSX.read(btoa(vm.fixdata(data)), {type:'base64'});
                 vm.excelData = JSON.stringify(XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]]));
                 vm.dealExcel(vm.index,vm.excelData)
