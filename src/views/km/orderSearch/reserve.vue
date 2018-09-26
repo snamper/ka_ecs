@@ -244,7 +244,6 @@ export default{
 		downLoadList:function(){
 			const vm=this;
             let json=vm.getForm();
-            debugger;
 			if(!json)return false;
 			json.exportType=3;
 			json.pageNum="-1";

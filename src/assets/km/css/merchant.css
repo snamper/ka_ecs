@@ -21,10 +21,10 @@
 .o-headTotal-table thead th{ height:0.3rem; background-color: #eef1f6;font-weight: normal;}
 .o-headTotal-table tbody tr>td{padding: 6px 0;}
 .g-in-table{text-align: left !important;}
-.g-in-table tr>td:nth-child(2){border-right:1px solid #dfe6ec;border-left:1px solid #dfe6ec;}
 .g-in-table td>span{display: inline-block;text-align:right;}
-.g-in-table.col-l td>span{width: 1.2rem;}
-.g-in-table.col-r td>span{width: 1.6rem;}
+/* .g-in-table tr>td:nth-child(2){border-right:1px solid #dfe6ec;border-left:1px solid #dfe6ec;} */
+/* .g-in-table.col-l td>span{width: 1.2rem;} */
+/* .g-in-table.col-r td>span{width: 1.6rem;} */
 .m-no-data{text-align: center;padding:0.1rem 0;}
 .o-clr-bd tr:nth-child(even){background: #fff !important;}
 @media screen and (max-width: 960px){
