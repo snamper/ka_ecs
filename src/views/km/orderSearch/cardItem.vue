@@ -444,7 +444,6 @@
                                 <span class="text">已开卡申请</span>
                             </label>
                         </div>
-
                         <div class="m-form-radio col-radio" v-if="form.orderType==8">
                             <label>
                                 <span class="radio"><input value="0" type="radio" v-model="form.orderStatus">
@@ -597,7 +596,7 @@
                                     <a :name="todo.orderId" :title="index" @click="details" class="details" href="javascript:void(0)">详情</a>
                                 </div>
                             </td>
-                            <td v-if="off.type==1"><a href="javascript:void(0)" @click="auditBtn(todo.type,todo.orderId)">审核</a></td>
+                            <td><a href="javascript:void(0)" @click="auditBtn(todo.type,todo.orderId)">审核</a></td>
                         </tr>
                     </tbody>
                 </table>

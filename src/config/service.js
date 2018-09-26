@@ -42,8 +42,10 @@ export const requestGetMakeWhiteDetails=(data,load)=>fetch("km-ecs/w/monopoly/ge
 /**制成卡 */
 export const requestGetMakeChengList=(data,load)=>fetch("km-ecs/w/monopoly/getMakeReadyList",data,"POST",load);
 export const requestGetMakeChengDetails=(data,load)=>fetch("km-ecs/w/monopoly/getMakeReadyDesc",data,"POST",load);
-/*手机号码查询订单详情*/
-export const getAdultByPhone=(data,load)=>fetch("km-ecsw/monopoly/getAdultByPhone",data,"POST",load);
+/*手机号码查询制卡订单详情*/
+export const getAdultByPhone=(data,load)=>fetch("km-ecs/w/monopoly/getAdultByPhone",data,"POST",load);
+/*修改制卡订单验证号码*/
+export const updateAdultSafePhone=(data,load)=>fetch("km-ecs/w/monopoly/updateAdultSafePhone",data,"POST",load);
 
 /*专营号制卡相关*/
 // export const requestGetExclusiveWhite=(data,load)=>fetch("km-ecs/w/monopoly/getMakeReadyDesc",data,"POST",load);
