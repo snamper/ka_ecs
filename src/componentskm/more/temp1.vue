@@ -25,7 +25,6 @@
                     <thead>
                         <tr>
                             <th></th>
-                            <th>订单号</th>
                             <th>制卡号码</th>
                             <th>码号类型</th>
                             <th>码号等级</th>
@@ -36,9 +35,8 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-if="JSON.stringify(listInfo)!='{}'">
+                        <tr>
                             <td></td>
-                            <td>{{listInfo.sys_order_id}}</td>
                             <td>{{listInfo.phone_number}}</td>
                             <td>{{translateData(10,listInfo.monopoly_type)}}</td>
                             <td>{{translateData(5,listInfo.big_number_level)}}</td>
@@ -50,9 +48,6 @@
                                 <p v-if="off.changePhone" class="m-changePhone"><input ref="changePhone1" v-focus maxlength="11" type="text" v-model="listInfo.safe_phone"><span @click="fcloseChange('2')"></span>
                                 <button @click="fchangePhone('2',listInfo.safe_phone)">确定</button></p>
                             </td>
-                        </tr>
-                        <tr v-if="JSON.stringify(listInfo)=='{}'">
-                            <td colspan="9">暂无数据！</td>
                         </tr>
                     </tbody>
                 </table>
@@ -72,7 +67,7 @@
     </div>
 </template>
 <script>
-import { getAdultByPhone,updateAdultSafePhone,batchUpdateAdultSafePhone } from '../../config/service.js';
+import { getAdultByPhone,updateAdultSafePhone } from '../../config/service.js';
 import { errorDeal,translateData } from '../../config/utils.js';
 import XLSX from 'xlsx';
 export default{
@@ -104,7 +99,6 @@ export default{
             getAdultByPhone({phone:vm.form.phone},()=>{vm.off.isLoad})
             .then((data)=>{
                 vm.listInfo=data.data;
-                vm.off.changePhone=false;
             })
         },
         fchangePhone(i,v){
@@ -112,17 +106,7 @@ export default{
             if(i==1){
                 vm.off.changePhone=true;
             }else if(i==2){
-                if(vm.listInfo.safe_phone.length!=11||!isNaN(vm.listInfo.safe_phone)){
-                    layer.open({
-                        content:'请输入正确的手机号码',
-                        skin: 'msg',
-                        time: 3,
-                        msgSkin:'error',
-                    });
-                    vm.searchPhone();
-                    return false;
-                }
-                let data={
+                let vm=this,data={
                     "sysOrderId":vm.listInfo.sys_order_id,
                     "safePhone": vm.listInfo.safe_phone,
                     "phone": vm.listInfo.phone_number
@@ -138,13 +122,36 @@ export default{
                     });
                 }).then(()=>{
                     vm.searchPhone();
-                }).catch(e=>errorDeal(e,()=>{vm.searchPhone()}))
+                }).catch(e=>errorDeal(e))
                 }
         },
         fcloseChange(){
             let vm=this;
             vm.listInfo.safe_phone="";
             vm.$refs.changePhone1.focus();
+        },
+        changeSafePhone(){
+            let vm=this,data={
+                "sysOrderId":vm.form.orderId,
+                "safePhone": vm.form.checkPhone,
+                "phone": vm.form.phone1
+            };
+            if(vm.form.orderId==""||vm.form.phone1==""){
+                layer.open({
+                    content:'请输入或导入要修改的信息',
+                    skin: 'msg',
+                    time: 3,
+                    msgSkin:'error',
+                });
+                return false;
+            }
+            vm.dealExcel();
+            updateAdultSafePhone(data,()=>{vm.off.isLoad})
+            .then((data)=>{
+               
+            }).catch(e=>errorDeal(e,()=>{
+                vm.errorLog.push({index:vm.index,desc:e.msg});
+            }))
         },
         fupExcel(e) {
             let vm=this, xlf = document.getElementById('xlf'), f=this.$refs.file.files[0],reader = new FileReader(),name = f.name;
@@ -161,23 +168,28 @@ export default{
             reader.readAsArrayBuffer(f);  
         },
         dealExcel(){
-            let vm=this,data = JSON.parse(vm.excelData);
-            vm.off.isLoad=true;
-            let json = {"list":data}
-            let msg="" ;
-            batchUpdateAdultSafePhone(json,()=>{vm.off.isLoad=false})
-            .then((data)=>{
-                for(let v of data.data){
-                   msg+=`<p>第${v.index}条，${v.msg}</p>`;
-                } 
+            let vm=this,data = JSON.parse(vm.excelData),i=vm.index++;
+            if(data.length>i){
+                vm.form.orderId=data[i]['订单号'];
+                vm.form.phone1=data[i]['成卡号码'];
+                vm.form.checkPhone=data[i]['验证号码'];
+                vm.changeSafePhone();
+            }else{
+                let error;
+                vm.form.orderId="";
+                vm.form.phone1="";
+                vm.form.checkPhone="";
+                console.log(vm.errorLog);
+                for(let i of vm.errorLog){
+                    error+=i.index+":"+i.desc
+                }
                 layer.open({
-                    content:msg,
-                    style:"height:auto;width:500px;",
-                    time: 10,
+                    content:error,
+                    skin: 'msg',
+                    time: 3,
                     msgSkin:'error',
-                    title:'上传结果'
                 });
-            }).catch(e=>errorDeal(e))
+            }
         },
         fixdata(data) { //文件流转BinaryString
             var o = "",
@@ -216,13 +228,13 @@ export default{
 .m-total-table tr td:last-child p.m-changePhone span{position: absolute;left: 200px;top:6px;display: inline-block;width: 15px;height: 15px;background: url('../../assets/images/close-circle.png') no-repeat;background-size: 100%;cursor: pointer;}
 .m-total-table tr td:last-child p.m-changePhone button{position: absolute;left: 220px;height: 25px;width: 50px;border-radius: 0 4px 4px 0;background: #ff6600;outline: none;border: 1px solid #ff6600;color: #fff;cursor: pointer;}
 .m-changephone{margin-top: 20px;width: 100%;position: relative;}
+.m-changephone .m-changephone-box{margin-right: 100px;}
 .m-changephone button{position: absolute;right: 0px;top:0px;width: 66px;background: #01AA01;color:#fff;border: 1px solid #01AA01;height: 35px;line-height: 35px;border-radius: 4px;}
 .m-changephone span{display: inline-block;width: 33.333%;position: relative;}
 .m-changephone input{height: 35px;line-height: 35px;border-radius: 4px;padding-left: 10px;border: 1px solid #bfcbd9;width: 80%;min-width:300px;}
-.m-changephone .m-changephone-box{margin-right: 100px;}
 .m-upExcel{position: absolute;width: 400px;height: 60px;margin: auto;top: 0;left: 0;right: 0;bottom: 0;text-align: center}
-.m-upExcel .m-upExcel-icon span{display: inline-block;width: 50px;height: 50px;background: url('../../assets/images/excel.png') no-repeat;background-size: 100%;}
-.m-upExcel .m-upExcel-icon button{position: absolute;left: 230px;top:26px;background: #44C688;color: #fff;border: 1px solid #44C688;border-radius: 4px;padding: 2px 5px;outline: none}
-.m-upExcel .m-upExcel-icon #xlf{position:absolute;opacity: 0;height: 50px;width: 50px;z-index:999;}
+.m-upExcel .m-upExcel-icon span{display: inline-block;width: 40px;height: 40px;background: url('../../assets/images/excel.png') no-repeat;background-size: 100%;}
+.m-upExcel .m-upExcel-icon #xlf{position:absolute;opacity: 0;height: 40px;width: 40px;z-index:999;}
+.m-upExcel .m-upExcel-icon button{position: absolute;left: 220px;top:16px;background: #44C688;color: #fff;border: 1px solid #44C688;border-radius: 4px;padding: 2px 5px;outline: none}
 .m-upExcel .m-upExcel-icon p b{font-weight: bold}
 </style>

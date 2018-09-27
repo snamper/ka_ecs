@@ -229,10 +229,10 @@
                                 <span class="radio"><input type="radio" value="4" v-model="form.select">
                                     <span></span>
                                 </span>
-                                <span class="text">身份证号：</span>
+                                <span class="text">证件号码：</span>
                             </label>
                         </span>
-                        <div class="input-box"><input v-model="form.context4" :readonly="form.select!=4" maxlength="18" type="text" placeholder="请输入查询的身份证号码"></div>
+                        <div class="input-box"><input v-model="form.context4" :readonly="form.select!=4" maxlength="18" type="text" placeholder="请输入查询的证件号码"></div>
                     </div>
                     <div class="row" :class="{active:form.select==5}" v-show="form.source!=7&&form.source!=8">
                         <span class="m-form-radio">
@@ -254,7 +254,7 @@
                                 <span class="text">用户姓名：</span>
                             </label>
                         </span>
-                        <div class="input-box"><input v-model="form.context7" :readonly="form.select!=7" maxlength="12" type="tel" placeholder="请输入查询的开卡身份证姓名"></div>
+                        <div class="input-box"><input v-model="form.context7" :readonly="form.select!=7" maxlength="12" type="tel" placeholder="请输入查询的开卡证件姓名"></div>
                     </div>
                     <div class="row" :class="{active:form.select==6}" v-if="off.type==1">
                         <span class="m-form-radio">
@@ -503,7 +503,7 @@
                             <th>用户姓名</th>
                             <th>用户号码</th>
                             <!-- <th>号码等级</th> -->
-                            <th>身份证号码</th>
+                            <th>证件号码</th>
                             <th v-show="off.type==1||off.type==2">审核姓名</th>
                             <th v-show="form.source!=7&&form.source!=8">操作人</th>
                             <!-- <th v-show="off.type==1||off.type==2">状态修改时间</th> -->
@@ -513,7 +513,7 @@
                             <th v-if="isShowDXYZ==true">短信验证</th>
                             <th v-show="off.type==2">审核状态</th>
                             <th>操作</th>
-                            <th v-if="off.type==1"></th>
+                            <th v-if="off.type==1&&form.source==6"></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -596,7 +596,7 @@
                                     <a :name="todo.orderId" :title="index" @click="details" class="details" href="javascript:void(0)">详情</a>
                                 </div>
                             </td>
-                            <td><a v-if="off.type==1&&todo.isMe==1" href="javascript:void(0)" @click="auditBtn(todo.type,todo.orderId)">审核</a></td>
+                            <td><a v-if="off.type==1&&todo.isMe==1&&form.source==6" href="javascript:void(0)" @click="auditBtn(todo.type,todo.orderId)">审核</a></td>
                         </tr>
                     </tbody>
                 </table>
@@ -657,6 +657,8 @@ export default {
             maxpage: 1, //最大页数
             callback: Function, //page组件点击回调
             isShowDXYZ:false,
+            requestlistData:"",
+            requestlistUrl:""
         };
     },
     components: {
@@ -776,7 +778,7 @@ export default {
         return false;
       } else if (vm.form.select == 4 && !context) {
         layer.open({
-          content: "请输入身份证号",
+          content: "请输入证件号码",
           skin: "msg",
           time: 2,
           msgSkin: "error"
@@ -817,6 +819,8 @@ export default {
       }
       if (vm.off.isLoad) return false;
       vm.off.isLoad = true;
+      vm.requestlistData = json;
+      vm.requestlistUrl = url;
       reqCommonMethod( json, function() { vm.off.isLoad = false; }, url )
         .then(data => {
           vm.list = data.data.list;
@@ -873,7 +877,7 @@ export default {
         return false;
       } else if (vm.form.select == 4 && !context) {
         layer.open({
-          content: "请输入身份证号",
+          content: "请输入证件号码",
           skin: "msg",
           time: 2,
           msgSkin: "error"
@@ -965,7 +969,7 @@ export default {
         return false;
       } else if (vm.form.select == 4 && !context) {
         layer.open({
-          content: "请输入身份证号",
+          content: "请输入证件号码",
           skin: "msg",
           time: 2,
           msgSkin: "error"

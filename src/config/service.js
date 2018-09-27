@@ -45,6 +45,7 @@ export const requestGetMakeChengDetails=(data,load)=>fetch("km-ecs/w/monopoly/ge
 /*手机号码查询制卡订单详情*/
 export const getAdultByPhone=(data,load)=>fetch("km-ecs/w/monopoly/getAdultByPhone",data,"POST",load);
 /*修改制卡订单验证号码*/
+export const batchUpdateAdultSafePhone=(data,load)=>fetch("km-ecs/w/monopoly/batchUpdateAdultSafePhone",data,"POST",load);
 export const updateAdultSafePhone=(data,load)=>fetch("km-ecs/w/monopoly/updateAdultSafePhone",data,"POST",load);
 
 /*专营号制卡相关*/

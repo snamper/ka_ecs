@@ -75,7 +75,7 @@
                                         <td>状态说明：</td>
                                         <td class="fCRed">{{ list.cardStatusReason }}</td>
                                     </tr>
-                                     <tr v-show="type==2">
+                                    <tr v-show="type==2">
                                         <td>审核用时：</td>
                                         <td>
                                             <span v-if="source==7||source==8">{{ $parent.secondsFormat(parseInt(list.modifyTime)/1000-parseInt(list.createTime)/1000) }}</span>
@@ -204,7 +204,14 @@
                                         <td>{{ list.userName }}</td>
                                     </tr>
                                     <tr>
-                                        <td>身份证号码：</td>
+                                        <td>证件类型：</td>
+                                        <td>
+                                            <span v-if="list.papersType==1">身份证</span>
+                                            <span v-if="list.papersType==2">居住证</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>证件号码：</td>
                                         <td>{{ list.identityCard }}</td>
                                     </tr>
                                     <tr v-if="list.operatorType==7">
@@ -212,7 +219,7 @@
                                         <td>{{ list.identityCardOld }}</td>
                                     </tr>
                                     <tr>
-                                        <td>身份证地址：</td>
+                                        <td>证件地址：</td>
                                         <td>
                                             <span v-if="source==7||source==8">{{ userMoreInfo.userAddress }}</span>
                                             <span v-else>{{ list.userAddress }}</span>
@@ -314,6 +321,8 @@
                                     </tr>
                                 </tbody>
                             </table>
+                        </td>
+                            
                         </td>
                         <td class="m-meida-640up m-box-img">
                             <ImgZoom :imgData="imgData"></ImgZoom>
@@ -433,7 +442,7 @@ export default {
             { src: vm.list.backImageUrl, name: "反面" },
             { src: vm.list.livingImg, name: "活体识别" },
             { src: vm.list.signImageUrl, name: "手签名" },
-            { src: vm.list.headImageName, name: "身份证照片" }
+            { src: vm.list.headImageName, name: "证件照片" }
         ];
       }
 

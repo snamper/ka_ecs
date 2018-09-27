@@ -71,7 +71,10 @@
 
                                         <tr>
                                             <td>证件类型：</td>
-                                            <td>身份证</td>
+                                            <td>
+                                                <span v-if="auditData.papersType==1">身份证</span>
+                                                <span v-if="auditData.papersType==2">居住证</span>
+                                            </td>
                                         </tr>
                                         <tr v-show="off.itemType==7">
                                             <td>原机主姓名：</td>
@@ -266,7 +269,11 @@ export default {
   created: function() {
     var vm = this;
     vm.off.auditType = vm.$parent.off.auditType; //0,实时;1,事后;
-    vm.off.itemType = vm.$route.params.type; //6 业务订单；7 过户；8 SDK开卡；9 通服开卡；1 实名补录；2 补换卡；
+    if(vm.$route.params.type==="auditing"){
+        vm.off.itemType="4,5,6";
+    }else{
+        vm.off.itemType = vm.$route.params.type; //6 业务订单；7 过户；8 SDK开卡；9 通服开卡；1 实名补录；2 补换卡；   
+    }
     reqCommonMethod({ auditType: vm.off.auditType },function() {},"km-ecs/w/audit/getRefuseReasons")
     .then(data => {
         vm.refuseArr = data.data;
@@ -280,7 +287,6 @@ export default {
         //审核同意
         let vm = this, auditType = vm.auditData.auditType,orderId = vm.auditData.orderId, url = "";
         let json = { orderId: orderId, result: 1, remark: "", reason: "", refuseReasonCode: "", auditType: auditType };
-        debugger;
         if (vm.off.itemType == 8) {
             url = "km-ecs/w/sdk/auditOrder";
         } else if (vm.off.itemType == 9) {
@@ -295,13 +301,31 @@ export default {
         }
         reqCommonMethod(json, false, url)
         .then(data => {
-        layer.open({
-            content: data.msg,
-            skin: "msg",
-            time: 4,
-            msgSkin: "success",
-            success: function() { vm.dealAuditList(); }
-        });
+            layer.open({
+                content: data.msg,
+                skin: "msg",
+                time: 4,
+                msgSkin: "success",
+                success: function() { vm.dealAuditList(); }
+            });
+        }).then(()=>{
+            if(vm.$route.params.type==="auditing"){
+                vm.$parent.off.details = false;
+                vm.$parent.off.searchlist = true;
+                vm.$parent.off.auditDetails = false;
+            }
+            reqCommonMethod( vm.$parent.requestlistData, function() { vm.$parent.off.isLoad = false; }, vm.$parent.requestlistUrl )
+            .then(data => {
+                vm.$parent.list = data.data.list;
+                vm.$parent.total = data.data.total;
+                vm.$parent.maxpage = Math.ceil(parseInt(data.data.total) / 10);
+                vm.$parent.pageNum =  1;
+                vm.$parent.callback = function(v) {
+                    vm.$parent.searchList(v);
+                };
+                vm.$parent.off.isLoad = false;
+            })
+            .catch(error => errorDeal(error));
         })
         .catch(error => errorDeal(error));
     },
@@ -499,6 +523,7 @@ export default {
     },
     dealAuditList: function() {//处理分配的订单
         const vm = this, len = vm.list.length;
+        
         vm.auditData = "";
         vm.imgData = [];
         if (len && vm.off.auditIndex + 1 <= len) {
@@ -533,7 +558,7 @@ export default {
             this.$set(vm.imgData, 3, { src: vm.auditData.livingImgUrl, name: "活体识别" });
             this.$set(vm.imgData, 4, { src: vm.auditData.signImageUrl || vm.auditData.signImgUrl, name: "手签名" });
             if (vm.off.itemType == '4,5,6') {//业务订单
-                this.$set(vm.imgData, 5, { src: vm.auditData.headImageName, name: "身份证照片" });
+                this.$set(vm.imgData, 5, { src: vm.auditData.headImageName, name: "证件照片" });
             }
             }
             vm.off.auditIndex++;

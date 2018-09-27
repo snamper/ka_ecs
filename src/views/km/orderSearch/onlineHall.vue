@@ -49,9 +49,9 @@
             </div>
             <div class="row" :class="{active:form.select==4}">
 				<span class="m-form-radio">
-					<label><span class="radio"><input type="radio" value="4" @click="isChe" v-model="form.select"><span></span></span><span class="text">身份证号：</span></label>
+					<label><span class="radio"><input type="radio" value="4" @click="isChe" v-model="form.select"><span></span></span><span class="text">证件号码：</span></label>
 				</span>
-              <div class="input-box"><input v-model="form.context4" :readonly="form.select!=4" maxlength="18" type="text" placeholder="请输入查询的身份证号码"></div>
+              <div class="input-box"><input v-model="form.context4" :readonly="form.select!=4" maxlength="18" type="text" placeholder="请输入查询的证件号码"></div>
             </div>
 
             <button class="f-btn f-btn-line" @click="searchList(1)">查询</button>
@@ -70,7 +70,7 @@
               <th>卡号</th>
               <th>电话号码</th>
               <th>用户姓名</th>
-              <th>身份证号码</th>
+              <th>证件号码</th>
               <th>用户地址</th>
               <th>激活时间</th>
               <th>详情</th>
@@ -194,7 +194,7 @@
           }
           else if(s==4&&vm.form.context4===''){
             layer.open({
-              content:"请输入要查询的身份证号",
+              content:"请输入要查询的证件号码",
               skin: 'msg',
               time: 4,
               msgSkin:'error',
