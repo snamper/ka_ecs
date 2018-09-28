@@ -72,8 +72,7 @@
                                         <tr>
                                             <td>证件类型：</td>
                                             <td>
-                                                <span v-if="auditData.papersType==1">身份证</span>
-                                                <span v-if="auditData.papersType==2">居住证</span>
+                                                {{translateData(2,auditData.papersType)}}
                                             </td>
                                         </tr>
                                         <tr v-show="off.itemType==7">
@@ -313,19 +312,19 @@ export default {
                 vm.$parent.off.details = false;
                 vm.$parent.off.searchlist = true;
                 vm.$parent.off.auditDetails = false;
+                reqCommonMethod( vm.$parent.requestlistData, function() { vm.$parent.off.isLoad = false; }, vm.$parent.requestlistUrl )
+                .then(data => {
+                    vm.$parent.list = data.data.list;
+                    vm.$parent.total = data.data.total;
+                    vm.$parent.maxpage = Math.ceil(parseInt(data.data.total) / 10);
+                    vm.$parent.pageNum =  1;
+                    vm.$parent.callback = function(v) {
+                        vm.$parent.searchList(v);
+                    };
+                    vm.$parent.off.isLoad = false;
+                })
+                .catch(error => errorDeal(error));
             }
-            reqCommonMethod( vm.$parent.requestlistData, function() { vm.$parent.off.isLoad = false; }, vm.$parent.requestlistUrl )
-            .then(data => {
-                vm.$parent.list = data.data.list;
-                vm.$parent.total = data.data.total;
-                vm.$parent.maxpage = Math.ceil(parseInt(data.data.total) / 10);
-                vm.$parent.pageNum =  1;
-                vm.$parent.callback = function(v) {
-                    vm.$parent.searchList(v);
-                };
-                vm.$parent.off.isLoad = false;
-            })
-            .catch(error => errorDeal(error));
         })
         .catch(error => errorDeal(error));
     },

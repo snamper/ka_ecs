@@ -35,15 +35,15 @@ module.exports = {
 		hot: true,
 		proxy: {
 	        '/km_center_ecs/': {
-	            target:'http://192.168.10.110:8081',
+	            target:'http://192.168.10.117:8081',
 	            changeOrigin:true,
 	            pathRewrite:{
 	                '/ecs/km_center_ecs/':'/km_center_ecs/'
 	            }
 	        },
 	        '/km-ecs/': {
-	            // target:'http://192.168.10.66:6086',
-	            target:'http://192.168.10.117:6086',
+	            target:'http://192.168.10.66:6086',
+	            // target:'http://192.168.10.117:6086',
 	            changeOrigin:true,
 	            pathRewrite:{
 	                '/ecs/km-ecs/':'/ecs/'

@@ -206,8 +206,7 @@
                                     <tr>
                                         <td>证件类型：</td>
                                         <td>
-                                            <span v-if="list.papersType==1">身份证</span>
-                                            <span v-if="list.papersType==2">居住证</span>
+                                            {{translateData(2,list.papersType)}}
                                         </td>
                                     </tr>
                                     <tr>

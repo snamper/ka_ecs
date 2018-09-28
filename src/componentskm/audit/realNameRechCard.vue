@@ -23,9 +23,7 @@
             <tr><td>开卡子系统：</td><td>{{auditData.oldSource}}</td></tr>
             <tr><td>证件类型：</td>
               <td>
-                <span v-if="auditData.newPapersType==1">身份证</span>
-                <span v-if="auditData.newPapersType==2">护照</span>
-                <span v-if="auditData.newPapersType==3">军官证</span>
+                {{translateData(2,auditData.newPapersType)}}
               </td>
             </tr>
             <tr><td>证件号码：</td><td>{{auditData.newIdCard}}</td></tr>

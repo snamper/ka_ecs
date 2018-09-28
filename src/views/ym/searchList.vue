@@ -687,7 +687,7 @@ export default {
             return v == 1 ? "开成卡": v == 2 ? "开白卡" : v == 4 ? "实名补录" : v == 3 ? "过户办理" : v == 5 ? "实名登记" : void 0;
             break;
         case 2: //证件类型
-            return v == 1 ? "身份证" : v == 2 ? "军官证" : v == 3 ? "护照" : void 0;
+            return v == 1 ? "身份证" : v == 2 ? "护照" : v == 3 ? "军官证" : v==6 ? '居住证' : void 0;
             break;
         case 3: //已审核，订单状态
             break;
