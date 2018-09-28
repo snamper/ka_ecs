@@ -1,5 +1,6 @@
 <style scoped>
   @import "../../assets/ym/css/audit.css"; 
+  /* .g-box{position: static;} */
 </style>
 <template>
 	<div id="auditList">
@@ -177,7 +178,8 @@ export default{
 		};
 	},
 	methods:{
-		agree:function(){//审核同意
+        agree:function(){//审核同意
+            debugger;
 			var vm=this,orderId=vm.auditData.orderId;
             reqCommonMethod({"orderId":orderId,"result":1,"remark":'',"reason": ''},function(){vm.off.isLoad=false;console.log(1111)},"ym-ecs/c/audit/audit")
             .then((data)=>{
@@ -194,6 +196,7 @@ export default{
             }).catch(error=>errorDeal(error)); 
 		},
         agree2:function(){//准同意
+            debugger;
 			var vm=this,orderId=vm.auditData.orderId,popIndex,ww=window.innerWidth,wwSet;
 			ww<=640 ? wwSet='width:98%' : wwSet='max-width:610px';
 			popIndex=layer.open({
@@ -241,7 +244,8 @@ export default{
 			});
 
 		},
-		refuse:function(obj){//审核拒绝
+        refuse:function(obj){//审核拒绝
+            debugger;
 			var str='',vm=this,orderId=vm.auditData.orderId,popIndex,ww=window.innerWidth,wwSet;
 			for(var i=0;i<vm.refuseArr.length;i++){
 				var b='';
