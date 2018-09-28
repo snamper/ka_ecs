@@ -167,7 +167,7 @@ export default{
             let msg="" ,layerIndex;
             batchUpdateAdultSafePhone(json,()=>{vm.off.isLoad=false})
             .then((data)=>{
-
+                vm.imageName="";
                 for(let v of data.data){
                     if(v.index==0){
                         msg+=`<p> ${v.msg}</p>`
