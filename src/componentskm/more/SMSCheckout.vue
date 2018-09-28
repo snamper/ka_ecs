@@ -112,7 +112,7 @@ export default{
             if(i==1){
                 vm.off.changePhone=true;
             }else if(i==2){
-                if(vm.listInfo.safe_phone.length!=11){
+                if(vm.listInfo.safe_phone.length!=11&&vm.listInfo.safe_phone!=""){
                     layer.open({
                         content:'请输入正确的手机号码',
                         skin: 'msg',
@@ -164,7 +164,7 @@ export default{
             let vm=this,data = JSON.parse(vm.excelData);
             vm.off.isLoad=true;
             let json = {"list":data}
-            let msg="" ;
+            let msg="" ,layerIndex;
             batchUpdateAdultSafePhone(json,()=>{vm.off.isLoad=false})
             .then((data)=>{
 
@@ -175,12 +175,15 @@ export default{
                         msg+=`<p>第${v.index}条 : ${v.msg}</p>`;
                     }
                 } 
-                layer.open({
-                    content:`<div style="text-align:left">${msg}</div>`,
-                    style:"height:300px;width:500px;overflow-y:auto",
-                    time: 10,
+                layerIndex = layer.open({
+                    content:`<div style="text-align:left;overflow-y:auto;height:300px;width:500px">${msg}</div>`,
+                    style:"width:520px",
+                    btn:['确定','取消'],
                     msgSkin:'error',
-                    title:'上传结果'
+                    title:'上传结果',
+                    yes:function(){
+                        layer.close(layerIndex);
+                    }
                 });
             }).catch(e=>errorDeal(e))
         },
