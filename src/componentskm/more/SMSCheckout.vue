@@ -112,7 +112,7 @@ export default{
             if(i==1){
                 vm.off.changePhone=true;
             }else if(i==2){
-                if(vm.listInfo.safe_phone.length!=11||!isNaN(vm.listInfo.safe_phone)){
+                if(vm.listInfo.safe_phone.length!=11){
                     layer.open({
                         content:'请输入正确的手机号码',
                         skin: 'msg',
@@ -167,12 +167,17 @@ export default{
             let msg="" ;
             batchUpdateAdultSafePhone(json,()=>{vm.off.isLoad=false})
             .then((data)=>{
+
                 for(let v of data.data){
-                   msg+=`<p>第${v.index}条，${v.msg}</p>`;
+                    if(v.index==0){
+                        msg+=`<p> ${v.msg}</p>`
+                    }else{
+                        msg+=`<p>第${v.index}条 : ${v.msg}</p>`;
+                    }
                 } 
                 layer.open({
-                    content:msg,
-                    style:"height:auto;width:500px;",
+                    content:`<div style="text-align:left">${msg}</div>`,
+                    style:"height:300px;width:500px;overflow-y:auto",
                     time: 10,
                     msgSkin:'error',
                     title:'上传结果'
