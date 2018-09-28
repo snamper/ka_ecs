@@ -167,6 +167,7 @@ export default{
             let msg="" ,layerIndex;
             batchUpdateAdultSafePhone(json,()=>{vm.off.isLoad=false})
             .then((data)=>{
+                vm.off.upExcel=false;
                 vm.imageName="";
                 for(let v of data.data){
                     if(v.index==0){
@@ -178,7 +179,7 @@ export default{
                 layerIndex = layer.open({
                     content:`<div style="text-align:left;overflow-y:auto;height:300px;width:500px">${msg}</div>`,
                     style:"width:520px",
-                    btn:['确定','取消'],
+                    btn:['确定'],
                     msgSkin:'error',
                     title:'上传结果',
                     yes:function(){
