@@ -18,7 +18,7 @@
 				<i class="icon"></i>
 				<span class="dp">号码占用/解冻</span>
 			</li>
-            <li class="u-SMSCheck-change" @click="showFn(4)">
+            <li v-if="off.powerKm_xghm_cx" class="u-SMSCheck-change" @click="showFn(4)">
 				<i class="icon"></i>
 				<span class="dp">更改成卡短信验证号码</span>
 			</li>
