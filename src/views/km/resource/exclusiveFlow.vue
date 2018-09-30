@@ -149,14 +149,6 @@ export default{
             vm.off.isLoad=true;            
             requestGetExclusiveNumberDesc(json,()=>{vm.off.isLoad=false})
             .then((data)=>{
-                vm.numberList=data.data;
-                vm.maxpage1=Math.ceil(parseInt(data.data.length)/10);
-                vm.total1=data.data.length;
-                vm.pageNum1=p||1;
-                // vm.phoneNum=vm.search.number1.phoneTitle;
-                vm.phoneDealerId=v.info.newDealerId;
-                vm.phoneDealerName=v.info.newCompanyName;
-                vm.phoneStatus=v.s;
                 if(v.s==1){
                     vm.phoneTotal=v.info.whited;
                 }else if(v.s==2){
@@ -168,10 +160,15 @@ export default{
                 }else{
                     return false
                 }
-                vm.callback1=function(v){vm.searchList(v)};
-                // setTimeout(()=>{
-                //     this.funScrollTop()
-                // },50)     
+                vm.numberList=data.data;
+                vm.maxpage1=Math.ceil(parseInt(vm.phoneTotal)/10);
+                vm.total1=vm.phoneTotal;
+                vm.pageNum1=p||1;
+                vm.phoneDealerId=v.info.newDealerId;
+                vm.phoneDealerName=v.info.newCompanyName;
+                vm.phoneStatus=v.s;
+                let v1 = json;
+                vm.callback1=function(p){vm.getNumberInfo(v,p)};
             }).catch(e=>errorDeal(e))
         },
         funScrollTop(){
