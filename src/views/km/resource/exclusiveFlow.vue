@@ -37,7 +37,7 @@
                         <tr v-for="(todo,index) in flowlist" :key="index">
                             <td>{{ ((pageNumf-1)*10+(index+1)) }}</td>
                             <td>{{getDateTime(todo.createTime)[6]}}</td>
-                            <td><a class="f-a-td" :href="'#/homek/orderSearch/flowCard/'+null+todo.sysOrderId">{{todo.sysOrderId||'--'}}</a></td>
+                            <td><a class="f-a-td" :href="'#/homek/orderSearch/flowCard/'+todo.sysOrderId">{{todo.sysOrderId||'--'}}</a></td>
                             <td>
                                 <a class="f-a-td" v-if="!isNaN(todo.actived)&&todo.actived!=0" @click="getNumberInfo({s:3,info:todo})">{{todo.actived}}</a>
                                 <a v-else-if="todo.actived==0">{{todo.actived}}</a>
