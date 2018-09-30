@@ -67,6 +67,10 @@
                     <b v-if="!imageName">上传excel（ 请按规定格式上传! ）</b>
                     <b v-if="imageName">{{imageName}}</b>
                 </p>
+                <p class="m-excel-demo">
+                    <label>excel示例及说明如下：</label>
+                    <img src="../../assets/images/excle-demo.png" alt="excel-demo">
+                </p>
             </div>
         </div>
     </div>
@@ -229,9 +233,11 @@ export default{
 .m-changephone span{display: inline-block;width: 33.333%;position: relative;}
 .m-changephone input{height: 35px;line-height: 35px;border-radius: 4px;padding-left: 10px;border: 1px solid #bfcbd9;width: 80%;min-width:300px;}
 .m-changephone .m-changephone-box{margin-right: 100px;}
-.m-upExcel{position: absolute;width: 400px;height: 60px;margin: auto;top: 0;left: 0;right: 0;bottom: 0;text-align: center}
+.m-upExcel{position: absolute;width: 700px;height: 400px;margin: auto;top: 0;left: 0;right: 0;bottom: 0;text-align: center}
 .m-upExcel .m-upExcel-icon span{display: inline-block;width: 50px;height: 50px;background: url('../../assets/images/excel.png') no-repeat;background-size: 100%;}
-.m-upExcel .m-upExcel-icon button{position: absolute;left: 230px;top:26px;background: #44C688;color: #fff;border: 1px solid #44C688;border-radius: 4px;padding: 2px 5px;outline: none}
+.m-upExcel .m-upExcel-icon button{position: absolute;left: 380px;top:26px;background: #44C688;color: #fff;border: 1px solid #44C688;border-radius: 4px;padding: 2px 5px;outline: none}
 .m-upExcel .m-upExcel-icon #xlf{position:absolute;opacity: 0;height: 50px;width: 50px;z-index:999;}
 .m-upExcel .m-upExcel-icon p b{font-weight: bold}
+.m-excel-demo{margin-top: 15px;}
+.m-excel-demo label{display:block;text-align: left;height: 30px;color: #fa4040}
 </style>
