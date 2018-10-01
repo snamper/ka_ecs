@@ -15,26 +15,18 @@ import { errorDeal } from '../config/utils';
 export default {
     async getAuditStatisticsInfo({ commit, state }){
         let res = await getAuditStatistics()
-        .then(()=>{})
-        .catch(e=>errorDeal(e));
-		res&&commit(SET_AUDIT_STATISTICS_INFO, res)
+	res&&commit(SET_AUDIT_STATISTICS_INFO, res)
 	},
     async getAuditStatisticsInfoYm({ commit, state }) {
         let res = await getAuditStatisticsYm()
-        .then(()=>{})
-        .catch(e=>errorDeal(e));
-		res&&commit(SET_AUDIT_STATISTICS_INFO_YM, res)
+        res&&commit(SET_AUDIT_STATISTICS_INFO_YM, res)
 	},
 	async getOpinionCountInfo({ commit, state }){
         let res = await getOpinionCount()
-        .then(()=>{})
-        .catch(e=>errorDeal(e));
         res&&commit(SET_OPINION_COUNT, res)  
     },
     async getSearchListAuditInfoYm({ commit,state }){
         let res=await getSearchListAuditYm()
-        .then(()=>{})
-        .catch(e=>errorDeal(e));
         res&&commit(SET_AUDITED_SEARCHLIST_YM,res)
     }
 }
