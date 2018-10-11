@@ -23,9 +23,7 @@ export default {
 	},
     async getAuditStatisticsInfoYm({ commit, state }) {
         let res = await getAuditStatisticsYm()
-        .then(()=>{})
-        .catch(e=>errorDeal(e));
-		res&&commit(SET_AUDIT_STATISTICS_INFO_YM, res)
+        res&&commit(SET_AUDIT_STATISTICS_INFO_YM, res)
 	},
 	async getOpinionCountInfo({ commit, state }){
         let res = await getOpinionCount()
