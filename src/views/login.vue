@@ -162,7 +162,7 @@ export default {
         }
         }else{
           vm.getVlidateCode();
-          vm.showMessage(2,res.msg);
+          vm.showMessage(2,res.message);
           vm.load=false;
         }
       }).catch(error=>{

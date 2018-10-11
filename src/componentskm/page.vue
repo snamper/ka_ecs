@@ -17,6 +17,8 @@
 			</li>
 			<li><a @click="handle('next')"><i class="fa-chevron-right"></i></a></li>
 		</ul>
+        &nbsp;
+        <label v-if="maxpage>=10" class="m-input-page">去<input v-model="vpage" type="text" style="">页&nbsp;<button style="padding:5px;border-radius:4px;" @click="handle('index',vpage)">确定</button></label>
 		<div v-if="!maxpage" style="text-align:center">暂无数据</div>
 	</div>
 </template>
@@ -27,6 +29,11 @@ export default{
 		maxpage:Number,
 		page:Number,
 		callback:Function
+    },
+    data(){
+        return{
+            vpage:''
+        }
     },
 	computed:{
 		pages(){
@@ -89,6 +96,8 @@ export default{
 	},
 	methods:{
 		handle(type,page){
+            let vm = this;
+            vm.vpage="";
 			switch(type){
 		        case 0:
 		            page=page
@@ -104,8 +113,18 @@ export default{
 		        case "home":
 		            page=1
 		            break;
-		    }
-		    this.callback(page);
+            }
+            if(page>vm.maxpage){
+                layer.open({
+                    content:"请输入正确的页码",
+                    skin: 'msg',
+                    time: 4,
+                    msgSkin:'error',
+                });
+                return false;
+            }else{
+                this.callback(page);
+            }
 		}
 	}
 }
@@ -126,5 +145,9 @@ export default{
 .pagination-sm>li>a>i{ display: inline-block; padding:0px 15px; height: 23px;}
 .fa-chevron-left{ background-image: url(../assets/images/page-left.png);background-repeat: no-repeat;background-position: center 6px;background-size:50%; }
 .fa-chevron-right{background-image: url(../assets/images/page-right.png);background-repeat:  no-repeat;background-position: center 6px;background-size:50%;}
+.m-input-page{height:29px;float:right}
+.m-input-page input{width:66px;height:29px;margin:0 5px;border-radius: 4px;}
+.m-input-page button{height: 28px;background: #fff;outline: none;border: 1px solid #8391a5}
+.m-input-page button:active{box-shadow: 0 0 5px #8391a5}
 </style>
 

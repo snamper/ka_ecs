@@ -35,7 +35,8 @@ module.exports = {
 		hot: true,
 		proxy: {
 	        '/km_center_ecs/': {
-	            target:'http://192.168.10.110:8081',
+	            // target:'http://192.168.10.110:8081',
+	            target:'http://192.168.10.66:8091',
 	            changeOrigin:true,
 	            pathRewrite:{
 	                '/ecs/km_center_ecs/':'/km_center_ecs/'

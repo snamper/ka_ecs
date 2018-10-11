@@ -130,7 +130,7 @@
 				</span>
 				<div class="input-box"><input v-model="form.context6" :readonly="form.select!=6" maxlength="11" type="tel" placeholder="请输入查询的操作者工号"></div>
 			</div>
-            <div class="row" :class="{active:form.select==6}">
+            <div class="row" :class="{active:form.select==8}">
 				<span class="m-form-radio">
 					<label><span class="radio"><input type="radio" value="8" v-model="form.select"><span></span></span><span class="text">用户姓名：</span></label>
 				</span>
@@ -151,9 +151,9 @@
 					<label><span class="radio"><input type="radio" value="7" :readonly="form.select!=7" v-model="form.select"><span></span></span><span class="text">开卡状态：</span></label>
 				</span>
 				<div class="m-form-radio col-radio">
-					<label><span class="radio"><input value="9" type="radio" v-model="form.context7"><span></span></span><span class="text">全部</span></label>
-					<label><span class="radio"><input value="1" type="radio" v-model="form.context7"><span></span></span><span class="text">成功</span></label>
-					<label><span class="radio"><input value="2" type="radio" v-model="form.context7"><span></span></span><span class="text">失败</span></label>
+					<label><span @click="checked7" class="radio"><input value="9" type="radio" v-model="form.context7"><span></span></span><span class="text">全部</span></label>
+					<label><span @click="checked7" class="radio"><input value="1" type="radio" v-model="form.context7"><span></span></span><span class="text">成功</span></label>
+					<label><span @click="checked7" class="radio"><input value="2" type="radio" v-model="form.context7"><span></span></span><span class="text">失败</span></label>
 				</div>
 			</div>
 			<button class="f-btn f-btn-line" @click="searchList(1)">查询</button>
@@ -346,8 +346,12 @@ export default {
   created: function() {
     this.init();
   },
-  computed:{
-
+  watch:{
+      'form.select'(){
+          if(this.form.select!=7){
+              this.form.context7=9;
+          }
+      }
   },
   methods: {
     init: function() {
@@ -664,6 +668,9 @@ export default {
             vm.off.detailsList = true;
             vm.off.isLoad=false;
         }).catch(error=>errorDeal(error));          
+    },
+    checked7(){
+        this.form.select=7;
     },
     to_laydate: function(v) {
       var vm = this;

@@ -74,10 +74,10 @@
 					<label><span class="radio"><input type="radio" value="4" :readonly="form.select!=4" v-model="form.select"><span></span></span><span class="text">订单状态：</span></label>
 				</span>
 				<div class="m-form-radio col-radio">
-					<label><span class="radio"><input type="radio" value="0" v-model="form.context4"><span></span></span><span class="text">全部</span></label>
-					<label><span class="radio"><input type="radio" value="1" v-model="form.context4"><span></span></span><span class="text">成功</span></label>
-					<label><span class="radio"><input type="radio" value="2" v-model="form.context4"><span></span></span><span class="text">失败</span></label>
-					<label><span class="radio"><input type="radio" value="3" v-model="form.context4"><span></span></span><span class="text">进行中</span></label>
+					<label><span @click="checked4" class="radio"><input type="radio" value="0" v-model="form.context4"><span></span></span><span class="text">全部</span></label>
+					<label><span @click="checked4" class="radio"><input type="radio" value="1" v-model="form.context4"><span></span></span><span class="text">成功</span></label>
+					<label><span @click="checked4" class="radio"><input type="radio" value="2" v-model="form.context4"><span></span></span><span class="text">失败</span></label>
+					<label><span @click="checked4" class="radio"><input type="radio" value="3" v-model="form.context4"><span></span></span><span class="text">进行中</span></label>
 					<label v-show="form.rechargeType==1"><span class="radio"><input type="radio" value="4" v-model="form.context4"><span></span></span><span class="text">已关闭</span></label>
 				</div>
 			</div>
@@ -155,9 +155,7 @@
 	</div>
 	</section>
 	<!--详情-->
-	<list-details :list="detailsData" v-if="off.details" :number="off.number">
-
-	</list-details>
+	<list-details :list="detailsData" v-if="off.details" :number="off.number"></list-details>
   </div>
 </section>
 </template>
@@ -203,7 +201,14 @@ export default{
 	},
 	created:function(){
 		this.init()
-	},
+    },
+    watch:{
+        'form.select'(){
+            if(this.form.select!=4){
+                this.form.context4=0;
+            }
+        }
+    },
 	methods:{
 		init:function(){
 			var vm=this;
@@ -360,7 +365,10 @@ export default{
 					v==1 ? vm.form.startTime=dates : vm.form.endTime=dates;
 				}
 			});
-		},
+        },
+        checked4(){
+            this.form.select=4;
+        },
 		shiftRechargeType(){
 			var vm=this;
 			vm.form.isp='0';

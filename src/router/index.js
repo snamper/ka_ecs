@@ -360,7 +360,7 @@ const router=new Router({
         component:Audit,
         redirect:function(){
             let _switch=getKmMenu();
-            if(_switch.powerKm5a&&_switch.powerKm5b){
+            if(_switch.powerKm5a&&_switch.powerKm5b){//开卡订单审核和查询
                 return "audit/card/realtime"
             }else{
                 return "audit/businessPower/auditing"
@@ -396,14 +396,7 @@ const router=new Router({
     {//订单查询
       path:"orderSearch",
       component:OrderSearch,
-      redirect:function(){
-        let _switch=getKmMenu();
-        if(_switch.powerKm5b){
-          return "orderSearch/card"
-        }else{
-          return "orderSearch/businessPower/audited"
-        }
-      }(),
+      redirect:"orderSearch/card",
       children:[{//开卡
         path:"card",
         name:"orderSearch_card",

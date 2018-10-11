@@ -29,6 +29,8 @@
 				<div class="dp">
 					<b v-show="off.fn==1">号码黑名单</b>
 					<b v-show="off.fn==2">欢迎页管理</b>
+					<b v-show="off.fn==3">号码占用/解冻</b>
+					<b v-show="off.fn==4">更改成卡短信验证号码</b>
 				</div>
 			</header>
 			<PhoneBlackList v-if="off.fn==1"></PhoneBlackList>

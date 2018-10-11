@@ -78,4 +78,8 @@ export const getRealNameSourceDetail=(data,load)=>fetch("km-ecs/w/realNameAuth/q
 /*远盟订单查询总条数*/
 export const getOrderTotal=(data,load)=>fetch("ym-ecs/c/audit/orderSearchTotal",data,"POST",load);
 
+/*卡盟获取黑名单列表*/
+export const getBlackList=(data,load)=>fetch("km-ecs/w/msgFile/list",data,"POST",load);
 
+/*卡盟黑名单文件列表*/
+export const downLoadBlackList=(data,load)=>fetch("km-ecs/w/msgFile/download",data,"POST",load);

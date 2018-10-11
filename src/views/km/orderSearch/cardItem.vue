@@ -141,7 +141,7 @@
                             </label>
                         </div>
                     </div>
-                    <div class="row" v-if="off.type==1||off.type==2" v-show="form.source!=7&&form.source!=8">
+                    <div class="row" v-if="off.type==1||off.type==2">
                         <span class="dp">审核方式：</span>
                         <div class="m-form-radio">
                             <label>
@@ -318,7 +318,7 @@
                         </span>
                         <div class="m-form-radio col-radio">
                             <label>
-                                <span @click="checked6" class="radio"><input value="0" type="radio" v-model="form.context6">
+                                <span @click="checked6" class="radio"><input value="0" type="radio"  v-model="form.context6">
                                     <span></span>
                                 </span>
                                 <span class="text">全部</span>
@@ -396,49 +396,49 @@
                         </span>
                         <div class="m-form-radio col-radio" v-if="form.orderType!=8">
                             <label>
-                                <span class="radio"><input value="0" type="radio" v-model="form.orderStatus">
+                                <span @click="checked6" class="radio"><input value="0" type="radio" v-model="form.orderStatus">
                                     <span></span>
                                 </span>
                                 <span class="text">全部</span>
                             </label>
                             <label>
-                                <span class="radio"><input value="1" type="radio" v-model="form.orderStatus">
+                                <span @click="checked6" class="radio"><input value="1" type="radio" v-model="form.orderStatus">
                                     <span></span>
                                 </span>
                                 <span class="text">已选号</span>
                             </label>
                             <label>
-                                <span class="radio"><input value="2" type="radio" v-model="form.orderStatus">
+                                <span @click="checked6" class="radio"><input value="2" type="radio" v-model="form.orderStatus">
                                     <span></span>
                                 </span>
                                 <span class="text">已选套餐</span>
                             </label>
                             <label>
-                                <span class="radio"><input value="3" type="radio" v-model="form.orderStatus">
+                                <span @click="checked6" class="radio"><input value="3" type="radio" v-model="form.orderStatus">
                                     <span></span>
                                 </span>
                                 <span class="text">已上传资料</span>
                             </label>
                             <label>
-                                <span class="radio"><input value="4" type="radio" v-model="form.orderStatus">
+                                <span  @click="checked6"  class="radio"><input value="4" type="radio" v-model="form.orderStatus">
                                     <span></span>
                                 </span>
                                 <span class="text">已支付</span>
                             </label>
                             <label>
-                                <span class="radio"><input value="6" type="radio" v-model="form.orderStatus">
+                                <span  @click="checked6"  class="radio"><input value="6" type="radio" v-model="form.orderStatus">
                                     <span></span>
                                 </span>
                                 <span class="text">已审核，待支付</span>
                             </label>
                             <label>
-                                <span class="radio"><input value="7" type="radio" v-model="form.orderStatus">
+                                <span @click="checked6"  class="radio"><input value="7" type="radio" v-model="form.orderStatus">
                                     <span></span>
                                 </span>
                                 <span class="text">已获取IMSI</span>
                             </label>
                             <label>
-                                <span class="radio"><input value="8" type="radio" v-model="form.orderStatus">
+                                <span @click="checked6"  class="radio"><input value="8" type="radio" v-model="form.orderStatus">
                                     <span></span>
                                 </span>
                                 <span class="text">已开卡申请</span>
@@ -666,20 +666,21 @@ export default {
         "list-details": details,
         auditDetails
     },
-    computed: {
-        context8() {
-            return this.form.context8;
-        },
-        context6() {
-            return this.form.context6;
-        }
-    },
     watch: {
         context8() {
             this.form.select = 8;
         },
         context6() {
             this.form.select = 6;
+        },
+        'form.select'(nv,ov){
+            if(this.form.select!=6){
+                this.form.context6='0';
+                this.form.orderStatus='0';
+            }
+            if(this.form.select!=8){
+                this.form.context8='-1';
+            }
         },
         'form.sourceFrom'(){
             if(this.form.sourceFrom.length==4){
