@@ -13,7 +13,7 @@
                 <section class="form-c o-no-bgc">
                     <div class="row">
                         <span class="text m-title">号码/段：</span>
-                        <div class="input-box"><input v-model="form.context1"  maxlength="11" type="tel" placeholder="请输入查询的专营号码/段"></div>
+                        <div class="input-box"><input v-model="form.context1"  maxlength="11" type="tel" placeholder="请输入查询的号码/段"></div>
                     </div>
                     <div class="row" style="margin-top:10px;">
                             <span class="text m-title">归属地：</span>
@@ -230,7 +230,7 @@ export default{
 	},
 	created:function(){
         let vm=this;
-        getCitys({"monoType":0})
+        getCitys({"monoType":0},()=>{vm.off.isLoad=false})
         .then((data)=>{
             vm.letterList=data.data.list;
             vm.letterList.a=[{ "cityName": "全国","cityCode":100}]

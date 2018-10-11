@@ -87,22 +87,12 @@ export default{
             json.customerId = customerId;
             json.codeId = codeId;
             createDownload('km-ecs/w/msgFile/download',BASE64.encode(JSON.stringify(json)),()=>{});
-            // downLoadBlackList(json)
-            // .then((data)=>{
-            //     if(data.code==200){
-            //         layer.open({
-            //             content:'下载成功',
-            //             skin: 'msg',
-            //             time: 3,
-            //             msgSkin:'success',
-            //         });
-            //     }
-            // }).catch(e=>errorDeal(e));
         },
         getNumberList(p){
             let vm=this;
             let json = {pageSize:20,pageNum:p||1};
-            getBlackList(json)
+            vm.off.isLoad = true;
+            getBlackList(json,()=>{vm.off.isLoad=false})
             .then((data)=>{
                 vm.list = data.data.datas;
                 vm.pageNum = p||1;
@@ -124,7 +114,8 @@ export default{
                 });
                 vm.getNumberList(1);
 	       	}else if(res){
-	       		errorDeal(res)
+
+	       		errorDeal(res,vm.getNumberList(1))
 	       	}
 	    },
 	    imagechanged(res) {

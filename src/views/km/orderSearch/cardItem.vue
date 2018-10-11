@@ -141,7 +141,7 @@
                             </label>
                         </div>
                     </div>
-                    <div class="row" v-if="off.type==1||off.type==2">
+                    <div class="row" v-if="off.type==1&&form.source!=7||off.type==2&&form.source!=7">
                         <span class="dp">审核方式：</span>
                         <div class="m-form-radio">
                             <label>
@@ -1100,6 +1100,7 @@ export default {
       //远特i卡查询采用统一查询接口
       var vm = this,
         type = vm.off.type, //1，待审核;2，已审核;3，进行中;4，已关闭
+        auditType = vm.form.auditType,//9.全部 0.实时 1.事后 2.自动
         str,
         resJson = {
           opKey: "",
@@ -1177,7 +1178,9 @@ export default {
           sql += " AND A.latest_phase=" + code;
         }
       }
-
+      if(auditType!=9){
+          sql += ' AND A.audit_type= ' +auditType; 
+      }
       if (json.searchtype == 1) {
         sql += ' AND A.sys_order_id="' + json.context + '"';
       } else if (json.searchtype == 2) {
@@ -1187,6 +1190,7 @@ export default {
       } else if (json.searchtype == 4) {
         sql += ' AND A.papers_code="' + json.context + '"';
       }
+      
       resJson.params.push(sql);
       return resJson;
     },

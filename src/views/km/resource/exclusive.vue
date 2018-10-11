@@ -166,7 +166,7 @@ export default {
                 vm.searchList()
             }
         },300);
-        getCitys({"monoType":1})
+        getCitys({"monoType":1},()=>{vm.off.isLoad=false})
         .then((data)=>{
             vm.letterList=data.data.list;
             vm.letterList.a=[{ "cityName": "全国","cityCode":100}]
