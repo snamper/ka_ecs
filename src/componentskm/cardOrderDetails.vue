@@ -139,11 +139,14 @@
                                     <tr>
                                         <td>开卡位置信息：</td>
                                         <td>
-                                            <span v-show="list.longitude||userMoreInfo.longitude">
-                                                <i v-if="source==8">{{ userMoreInfo.latitude }}，{{ userMoreInfo.longitude }}</i>
+                                            <span v-if="list.longitude||userMoreInfo.longitude">
+                                                <i v-if="source==8||source==7">{{ userMoreInfo.latitude }}，{{ userMoreInfo.longitude }}</i>
                                                 <i v-else>{{ list.latitude }}，{{ list.longitude }}</i>
                                                 <a href="javascript:void(0)" @click="toMap" class="details m-l">查看地图</a>
                                                 <em>{{ list.street }}</em>
+                                            </span>
+                                            <span v-else>
+                                                --
                                             </span>
                                         </td>
                                     </tr>
@@ -205,8 +208,11 @@
                                     </tr>
                                     <tr>
                                         <td>证件类型：</td>
-                                        <td>
+                                        <td v-if="list.papersType">
                                             {{translateData(2,list.papersType)}}
+                                        </td>
+                                        <td v-else>
+                                            --
                                         </td>
                                     </tr>
                                     <tr>
@@ -238,7 +244,7 @@
                                     <tr>
                                         <td>IMEI：</td>
                                         <td>
-                                            <span v-if="source!=8">{{ list.IMEI||'--' }}</span>
+                                            <span v-if="source==6">{{ list.IMEI||'--' }}</span>
                                             <span v-else>{{ userMoreInfo.IMEI||'--' }}</span>
                                         </td>
                                     </tr>
@@ -247,17 +253,18 @@
                                         <td>{{ list.ICCID||'--' }}</td>
                                     </tr>
 
-                                    <tr v-show="source!=8">
+                                    <tr v-show="source==6">
                                         <td>终端类型：</td>
                                         <td>
                                             <span v-if="source==7">
                                                 <b v-show="list.terminalType==1">IOS</b>
                                                 <b v-show="list.terminalType==2">Android</b>
+                                                <b v-show="!list.terminalType">--</b>
                                             </span>
                                             <span v-else>{{ list.terminalType }}</span>
                                         </td>
                                     </tr>
-                                    <tr v-show="source==8">
+                                    <tr v-show="source==8||source==7">
                                         <td>终端类型：</td>
                                         <td>
                                             <span>{{ userMoreInfo.phoneType }}</span>
@@ -268,15 +275,15 @@
                                     <tr v-show="source!=8">
                                         <td>Mac地址：</td>
                                         <td>
-                                            <span v-show="source!=7">{{ list.devMac }}</span>
-                                            <span v-show="source==7">{{ userMoreInfo.devMac }}</span>
+                                            <span v-if="source!=7&&source!=8">{{ list.devMac||'--' }}</span>
+                                            <span v-else>{{ userMoreInfo.devMac||'--' }}</span>
                                         </td>
                                     </tr>
                                     <tr v-show="source!=8">
                                         <td>识别仪名称：</td>
                                         <td>
-                                            <span v-show="source!=7">{{ list.devInfo }}</span>
-                                            <span v-show="source==7">{{ userMoreInfo.devInfo }}</span>
+                                            <span v-show="source==6">{{ list.devInfo||'--' }}</span>
+                                            <span v-show="source==7">{{ userMoreInfo.devInfo||'--' }}</span>
                                         </td>
                                     </tr>
                                     <tr v-show="source!=7&&source!=8">
@@ -412,7 +419,7 @@ export default {
             } else {
                 imgUrl = _CONFIG[_CONFIG.env].SDK_IMAGE_URL;
             }
-        if (vm.source == 8) {
+        if (vm.source == 8||vm.source == 7) {
             Object.assign( userMoreInfo, JSON.parse(decodeURIComponent(vm.list.tokenInfo)) );
             if ( process.env.NODE_ENV == "development" || process.env.NODE_ENV == "test" ) {
                 imgUrl = _CONFIG.dev.TF_IMAGE_URL;

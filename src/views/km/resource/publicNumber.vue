@@ -106,20 +106,16 @@
                             <td>{{translateData(17,dataList.status)}}</td>
                             <td>{{translateData(16,dataList.safeType)}}</td>
                             <td>
-                                <a :href="'#/homek/orderSearch/makeCard/'+dataList.makeCardId" class="details">{{dataList.makeCardId||'--'}}</a>
-                                <!-- <a v-if="dataList.makeCardId==0&&dataList.makeCardId=='--'">{{dataList.makeCardId||'--'}}</a> -->
+                                <a :href="dataList.makeCardId!=''?'#/homek/orderSearch/makeCard/'+dataList.makeCardId:`javascript:void(0)`" class="details">{{dataList.makeCardId||'--'}}</a>
                             </td>
                             <td>
-                                <a :href="'#/homek/resource/merchant/'+dataList.makeDealer" class="details">{{dataList.makeDealerName||'--'}}({{dataList.makeDealer||'--'}})</a>
-                                <!-- <a v-if="dataList.makeDealer=='--'">{{dataList.makeDealerName||'--'}}({{dataList.makeDealer||'--'}})</a> -->
+                                <a :href="dataList.makeDealer!=''?'#/homek/resource/merchant/'+dataList.makeDealer:`javascript:void(0)`" class="details">{{dataList.makeDealerName||'--'}}({{dataList.makeDealer||'--'}})</a>
                             </td>
                             <td>
-                                <a :href="'#/homek/orderSearch/card/audited/null/'+dataList.openCardId" class="details">{{dataList.openCardId||'--'}}</a>
-                                <!-- <a v-if="dataList.makeDealer=='--'">{{dataList.openCardId||'--'}}</a> -->
+                                <a :href="dataList.openCardId!=''?'#/homek/orderSearch/card/audited/null/'+dataList.openCardId:`javascript:void(0)`" class="details">{{dataList.openCardId||'--'}}</a>
                             </td>
                             <td>
-                                <a :href="'#/homek/resource/merchant/'+dataList.openDealer" class="details">{{dataList.openDealerName||'--'}}({{dataList.openDealer||'--'}})</a>
-                                <!-- <a v-if="dataList.openDealer=='--'">{{dataList.openDealerName||'--'}}({{dataList.openDealer||'--'}})</a> -->
+                                <a :href="dataList.openDealer?'#/homek/resource/merchant/'+dataList.openDealer:`javascript:void(0)`" class="details">{{dataList.openDealerName||'--'}}({{dataList.openDealer||'--'}})</a>
                             </td>
                         </tr>
                     </tbody>
@@ -147,20 +143,20 @@
                             <td>{{translateData('money',v.preStore)}}</td>
                             <td>{{v.pkgName||'--'}}</td>
                             <td>
-                                <a v-if="v.makeCardId!='--'" :href="'#/homek/orderSearch/makeCard/'+v.makeCardId" :class="{'details':v.makeCardId!='--'}">{{v.makeCardId||'--'}}</a>
-                                <a v-if="v.makeCardId=='--'" :class="{'details':v.makeCardId!='--'}">--</a>
+                                <a v-if="v.makeCardId!=''" :href="'#/homek/orderSearch/makeCard/'+v.makeCardId" :class="{'details':v.makeCardId!=''}">{{v.makeCardId||'--'}}</a>
+                                <a v-if="v.makeCardId==''" :class="{'details':v.makeCardId!=''}">--</a>
                             </td>
                             <td>
-                                <a v-if="v.makeDealer!='--'" :href="'#/homek/resource/merchant/'+v.makeDealer" :class="{'details':v.makeDealerName!='--'}">{{v.makeDealerName||'--'}}({{v.makeDealer||'--'}})</a>
-                                <a v-if="v.makeDealer=='--'" :class="{'details':v.makeDealerName!='--'}">{{v.makeDealerName||'--'}}({{v.makeDealer||'--'}})</a>
+                                <a v-if="v.makeDealer!=''" :href="'#/homek/resource/merchant/'+v.makeDealer" :class="{'details':v.makeDealerName!=''}">{{v.makeDealerName||'--'}}({{v.makeDealer||'--'}})</a>
+                                <a v-if="v.makeDealer==''" :class="{'details':v.makeDealerName!=''}">{{v.makeDealerName||'--'}}({{v.makeDealer||'--'}})</a>
                             </td>
                             <td>
-                                <a v-if="v.openCardId!='--'" :href="'#/homek/orderSearch/card/audited/null/'+v.openCardId" :class="{'details':v.openCardId!='--'}">{{v.openCardId||'--'}}</a>
-                                <a v-if="v.openCardId=='--'" :class="{'details':v.openCardId!='--'}">--</a>
+                                <a v-if="v.openCardId!=''" :href="'#/homek/orderSearch/card/audited/null/'+v.openCardId" :class="{'details':v.openCardId!='--'}">{{v.openCardId||'--'}}</a>
+                                <a v-if="v.openCardId==''" :class="{'details':v.openCardId!=''}">--</a>
                             </td>
                             <td>
-                                <a v-if="v.openDealer!='--'" :href="'#/homek/resource/merchant/'+v.openDealer" :class="{'details':v.openDealerName!='--'}">{{v.openDealerName||'--'}}({{v.openDealer||'--'}})</a>
-                                <a v-if="v.openDealer=='--'" :class="{'details':v.openDealerName!='--'}">{{v.openDealerName||'--'}}({{v.openDealer||'--'}})</a>
+                                <a v-if="v.openDealer!=''" :href="'#/homek/resource/merchant/'+v.openDealer" :class="{'details':v.openDealerName!=''}">{{v.openDealerName||'--'}}({{v.openDealer||'--'}})</a>
+                                <a v-if="v.openDealer==''" :class="{'details':v.openDealerName!=''}">{{v.openDealerName||'--'}}({{v.openDealer||'--'}})</a>
                             </td>
                             <td>{{translateData(16,v.safeType)}}</td>
                         </tr>
