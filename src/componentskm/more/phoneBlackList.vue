@@ -28,7 +28,7 @@
                     </thead>
                     <tbody>
                         <tr v-for="(todo,index) in list" :key="index">
-                            <td>{{((pageNum-1)*10+(index+1))}}</td>
+                            <td>{{((pageNum-1)*20+(index+1))}}</td>
                             <td>{{getDateTime(todo.createTime)[6]}}</td>
                             <td>{{todo.userName}}</td>
                             <td>{{todo.opertPhone}}</td>
