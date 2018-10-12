@@ -97,7 +97,7 @@ export default{
                 vm.list = data.data.datas;
                 vm.pageNum = p||1;
                 vm.maxpage = Math.ceil(parseInt(data.data.total) / 20);
-                vm.callback=(p)=>{vm.updateList(p)}
+                vm.callback=(p)=>{vm.getNumberList(p)}
             }).catch(e=>errorDeal(e))
         },
 		imageuploaded(res,data) {
