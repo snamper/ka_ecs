@@ -30,8 +30,8 @@
                         <tr v-for="(todo,index) in list" :key="index">
                             <td>{{((pageNum-1)*20+(index+1))}}</td>
                             <td>{{getDateTime(todo.createTime)[6]}}</td>
-                            <td>{{todo.userName}}</td>
-                            <td>{{todo.opertPhone}}</td>
+                            <td>{{todo.userName||'--'}}</td>
+                            <td>{{todo.opertPhone||'--'}}</td>
                             <td>
                                 <a href="javascript:void(0)" @click="updateList(todo.fileName)">{{todo.fileName}}</a>
                             </td>
