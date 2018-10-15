@@ -130,7 +130,7 @@
 				</span>
 				<div class="input-box"><input v-model="form.context6" :readonly="form.select!=6" maxlength="11" type="tel" placeholder="请输入查询的操作者工号"></div>
 			</div>
-            <div class="row" :class="{active:form.select==6}">
+            <div class="row" :class="{active:form.select==8}">
 				<span class="m-form-radio">
 					<label><span class="radio"><input type="radio" value="8" v-model="form.select"><span></span></span><span class="text">用户姓名：</span></label>
 				</span>
@@ -151,9 +151,9 @@
 					<label><span class="radio"><input type="radio" value="7" :readonly="form.select!=7" v-model="form.select"><span></span></span><span class="text">开卡状态：</span></label>
 				</span>
 				<div class="m-form-radio col-radio">
-					<label><span class="radio"><input value="9" type="radio" v-model="form.context7"><span></span></span><span class="text">全部</span></label>
-					<label><span class="radio"><input value="1" type="radio" v-model="form.context7"><span></span></span><span class="text">成功</span></label>
-					<label><span class="radio"><input value="2" type="radio" v-model="form.context7"><span></span></span><span class="text">失败</span></label>
+					<label><span @click="checked7" class="radio"><input value="9" type="radio" v-model="form.context7"><span></span></span><span class="text">全部</span></label>
+					<label><span @click="checked7" class="radio"><input value="1" type="radio" v-model="form.context7"><span></span></span><span class="text">成功</span></label>
+					<label><span @click="checked7" class="radio"><input value="2" type="radio" v-model="form.context7"><span></span></span><span class="text">失败</span></label>
 				</div>
 			</div>
 			<button class="f-btn f-btn-line" @click="searchList(1)">查询</button>
@@ -211,7 +211,7 @@
 					<td v-if="todo.orderStatus==1"><b class="f-c-red">待分配</b></td>
 					<td v-if="todo.orderStatus==2"><b class="f-c-blue">已分配</b></td>
 					<td><a :name="todo.orderId" @click="details" href="javascript:void(0)" class="details">查看详情</a></td>
-                    <td><a v-if="todo.orderStatus==1" href="javascript:void(0)"  @click="auditBtn(todo.orderType,todo.orderId)" >审核</a></td>
+                    <td><a v-if="todo.orderStatus==1" href="javascript:void(0)"  @click="auditBtn(todo.orderType,todo.orderId)">审核</a></td>
 				</tr>
 				<tr v-if="off.type==2" v-for="(todo,index) in list" :key="index">
 					<td>{{((pageNum-1)*10+(index+1))}}</td>
@@ -276,12 +276,8 @@
 	</div>
 	</section>
 	<!--详情-->
-	<list-auditdetails  v-if="off.auditdetails==1" >
-      
-	</list-auditdetails>
-    <list-details :list="detailsData" :type="off.type" v-if="off.details==1" :number="off.number">
-      
-	</list-details>
+	<list-auditdetails v-if="off.auditdetails==1"></list-auditdetails>
+    <list-details :list="detailsData" :type="off.type" v-if="off.details==1" :number="off.number"></list-details>
   </div>
 </template>
 <script>
@@ -350,8 +346,12 @@ export default {
   created: function() {
     this.init();
   },
-  computed:{
-
+  watch:{
+      'form.select'(){
+          if(this.form.select!=7){
+              this.form.context7=9;
+          }
+      }
   },
   methods: {
     init: function() {
@@ -669,6 +669,9 @@ export default {
             vm.off.isLoad=false;
         }).catch(error=>errorDeal(error));          
     },
+    checked7(){
+        this.form.select=7;
+    },
     to_laydate: function(v) {
       var vm = this;
       laydate({
@@ -691,7 +694,7 @@ export default {
             return v == 1 ? "开成卡": v == 2 ? "开白卡" : v == 4 ? "实名补录" : v == 3 ? "过户办理" : v == 5 ? "实名登记" : void 0;
             break;
         case 2: //证件类型
-            return v == 1 ? "身份证" : v == 2 ? "军官证" : v == 3 ? "护照" : void 0;
+            return v == 1 ? "身份证" : v == 2 ? "护照" : v == 3 ? "军官证" : v==6 ? '居住证' : void 0;
             break;
         case 3: //已审核，订单状态
             break;

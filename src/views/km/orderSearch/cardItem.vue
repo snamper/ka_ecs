@@ -8,7 +8,7 @@
         <header class="m-scroll-bar animated infinite" :class="{active:off.isLoad}"></header>
         <section class="m-occlusion" :class="{active:off.isLoad}"></section>
         <!--查询-->
-        <section v-if="!off.details">
+        <section v-if="off.searchlist">
             <div class="g-search-form">
                 <section class="m-top-shift f-tas">
                     <div class="box">
@@ -141,7 +141,7 @@
                             </label>
                         </div>
                     </div>
-                    <div class="row" v-if="off.type==1||off.type==2" v-show="form.source!=7&&form.source!=8">
+                    <div class="row" v-if="off.type==1&&form.source!=7||off.type==2&&form.source!=7">
                         <span class="dp">审核方式：</span>
                         <div class="m-form-radio">
                             <label>
@@ -237,10 +237,10 @@
                                 <span class="radio"><input type="radio" value="4" v-model="form.select">
                                     <span></span>
                                 </span>
-                                <span class="text">身份证号：</span>
+                                <span class="text">证件号码：</span>
                             </label>
                         </span>
-                        <div class="input-box"><input v-model="form.context4" :readonly="form.select!=4" maxlength="18" type="text" placeholder="请输入查询的身份证号码"></div>
+                        <div class="input-box"><input v-model="form.context4" :readonly="form.select!=4" maxlength="18" type="text" placeholder="请输入查询的证件号码"></div>
                     </div>
                     <div class="row" :class="{active:form.select==5}" v-show="form.source!=7&&form.source!=8">
                         <span class="m-form-radio">
@@ -262,7 +262,7 @@
                                 <span class="text">用户姓名：</span>
                             </label>
                         </span>
-                        <div class="input-box"><input v-model="form.context7" :readonly="form.select!=7" maxlength="12" type="tel" placeholder="请输入查询的开卡身份证姓名"></div>
+                        <div class="input-box"><input v-model="form.context7" :readonly="form.select!=7" maxlength="12" type="tel" placeholder="请输入查询的开卡证件姓名"></div>
                     </div>
                     <div class="row" :class="{active:form.select==6}" v-if="off.type==1">
                         <span class="m-form-radio">
@@ -326,7 +326,7 @@
                         </span>
                         <div class="m-form-radio col-radio">
                             <label>
-                                <span @click="checked6" class="radio"><input value="0" type="radio" v-model="form.context6">
+                                <span @click="checked6" class="radio"><input value="0" type="radio"  v-model="form.context6">
                                     <span></span>
                                 </span>
                                 <span class="text">全部</span>
@@ -404,55 +404,54 @@
                         </span>
                         <div class="m-form-radio col-radio" v-if="form.orderType!=8">
                             <label>
-                                <span class="radio"><input value="0" type="radio" v-model="form.orderStatus">
+                                <span @click="checked6" class="radio"><input value="0" type="radio" v-model="form.orderStatus">
                                     <span></span>
                                 </span>
                                 <span class="text">全部</span>
                             </label>
                             <label>
-                                <span class="radio"><input value="1" type="radio" v-model="form.orderStatus">
+                                <span @click="checked6" class="radio"><input value="1" type="radio" v-model="form.orderStatus">
                                     <span></span>
                                 </span>
                                 <span class="text">已选号</span>
                             </label>
                             <label>
-                                <span class="radio"><input value="2" type="radio" v-model="form.orderStatus">
+                                <span @click="checked6" class="radio"><input value="2" type="radio" v-model="form.orderStatus">
                                     <span></span>
                                 </span>
                                 <span class="text">已选套餐</span>
                             </label>
                             <label>
-                                <span class="radio"><input value="3" type="radio" v-model="form.orderStatus">
+                                <span @click="checked6" class="radio"><input value="3" type="radio" v-model="form.orderStatus">
                                     <span></span>
                                 </span>
                                 <span class="text">已上传资料</span>
                             </label>
                             <label>
-                                <span class="radio"><input value="4" type="radio" v-model="form.orderStatus">
+                                <span  @click="checked6"  class="radio"><input value="4" type="radio" v-model="form.orderStatus">
                                     <span></span>
                                 </span>
                                 <span class="text">已支付</span>
                             </label>
                             <label>
-                                <span class="radio"><input value="6" type="radio" v-model="form.orderStatus">
+                                <span  @click="checked6"  class="radio"><input value="6" type="radio" v-model="form.orderStatus">
                                     <span></span>
                                 </span>
                                 <span class="text">已审核，待支付</span>
                             </label>
                             <label>
-                                <span class="radio"><input value="7" type="radio" v-model="form.orderStatus">
+                                <span @click="checked6"  class="radio"><input value="7" type="radio" v-model="form.orderStatus">
                                     <span></span>
                                 </span>
                                 <span class="text">已获取IMSI</span>
                             </label>
                             <label>
-                                <span class="radio"><input value="8" type="radio" v-model="form.orderStatus">
+                                <span @click="checked6"  class="radio"><input value="8" type="radio" v-model="form.orderStatus">
                                     <span></span>
                                 </span>
                                 <span class="text">已开卡申请</span>
                             </label>
                         </div>
-
                         <div class="m-form-radio col-radio" v-if="form.orderType==8">
                             <label>
                                 <span class="radio"><input value="0" type="radio" v-model="form.orderStatus">
@@ -513,7 +512,7 @@
                             <th>用户姓名</th>
                             <th>用户号码</th>
                             <!-- <th>号码等级</th> -->
-                            <th>身份证号码</th>
+                            <th>证件号码</th>
                             <th v-show="off.type==1||off.type==2">审核姓名</th>
                             <th v-show="form.source!=7&&form.source!=8">操作人</th>
                             <!-- <th v-show="off.type==1||off.type==2">状态修改时间</th> -->
@@ -522,7 +521,8 @@
                             <th v-show="off.type==2">号卡状态</th>
                             <th v-if="isShowDXYZ==true">短信验证</th>
                             <th v-show="off.type==2">审核状态</th>
-                            <th></th>
+                            <th>操作</th>
+                            <th v-if="off.type==1&&form.source==6"></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -596,8 +596,6 @@
                                 <div class="f-c-red">拒绝</div>
                                 <div>
                                     <a :name="todo.orderId" :title="index" @click="details" class="details" href="javascript:void(0)">详情</a>
-                                    <!-- <br>
-							<a v-if="todo.allowRecheck==1" :name="todo.orderId" :title="index" @click="agree" class="agree f-mgt-10" href="javascript:void(0)">同意</a> -->
                                     <span v-if="todo.allowRecheck==2" class="time_out f-c-red">超过复审时间</span>
                                 </div>
                             </td>
@@ -608,11 +606,7 @@
                                     <a :name="todo.orderId" :title="index" @click="details" class="details" href="javascript:void(0)">详情</a>
                                 </div>
                             </td>
-                            
-                            <!-- <td colspan="2" v-if="off.type==2&&todo.status==4" class="td-col-2">
-						<div class="f-c-blue">复审同意</div>
-						<div><a :name="todo.orderId" :title="index" @click="details" class="details" href="javascript:void(0)">详情</a></div>
-					</td> -->
+                            <td v-if="off.type==1&&form.source==6"><a v-if="todo.isMe==1" href="javascript:void(0)" @click="auditBtn(todo.type,todo.orderId)">审核</a></td>
                         </tr>
                     </tbody>
                 </table>
@@ -620,70 +614,68 @@
             </div>
         </section>
         <!--详情-->
-        <list-details :list="detailsData" :source="form.source" :type="off.type" v-if="off.details" :number="off.number"> </list-details>
+        <list-details v-if="off.details" :list="detailsData" :source="form.source" :type="off.type" :number="off.number"> </list-details>
+        <auditDetails v-if="off.auditDetails"></auditDetails>
     </div>
 </template>
 <script>
-require("../../../assets/km/js/base64.min.js");
-// require("../../../assets/km/css/search.css");
+import { getDateTime, translateData, secondsFormat, getUnixTime, createDownload, setStore, getStore, errorDeal } from "../../../config/utils.js";
 import { searchAuditList, reAudit, reqCommonMethod } from "../../../config/service.js";
 import pagination from "../../../componentskm/page.vue";
 import details from "../../../componentskm/cardOrderDetails.vue";
-import { getDateTime, translateData, secondsFormat, getUnixTime, createDownload, setStore, getStore, errorDeal } from "../../../config/utils.js";
+import auditDetails from "../audit/cardItem";
+require("../../../assets/km/js/base64.min.js");
 
 export default {
     data() {
         return {
-        off: {
-            type: 1, //1，待审核;2，已审核;3，进行中;4，已关闭
-            isLoad: 0, //加载条
-            details: 0, //详情页面开关
-            number: "", //第几条详情
-            showData: 0
-        },
-        form: {
-            source: "6", //订单来源，6、卡盟APP；7、卡盟SDK；8远特i卡
-            orderType: 6, //6 开空卡 9 开白卡 10 开成卡 7 过户 4 实名补录 8 补换卡
-            cardType: 0, //运营商
-            orderStatus: 0, //订单状态
-            operatorType:1,//操作类型
-            deviceType:[1,2,4],//远特i卡，开卡方式：1，远特i卡；2，远特eSIM；4，eSIM助手
-            sourceFrom :[1,6,7,8],//开卡方式
-            auditType: 9, //审核方式
-            context1: "", //订单号码
-            context2: "", //手机号码
-            context3: "", //审核人ID
-            context4: "", //身份证号
-            context5: "", // 操作者ID
-            context6: 0, //号卡状态
-            context7: "", //开卡者姓名
-            context8: -1, //号卡类型
-            startTime: "",
-            select: 6 ,//条件查询 1 订单号码2 手机号码 3 审核人ID 4 身份证号 5 操作者ID 6 订单状态7 用户姓名 8 号卡类型
-            endTime: "",
-        },
-        checkAllopencardType:true,
-        list: "", //查询数据
-        detailsData: "", //详情数据
-        total: 0, //总查询条数
-        pageNum: 1, //当前页数
-        pageSize: 10, //显示条数
-        maxpage: 1, //最大页数
-        callback: Function, //page组件点击回调
-        isShowDXYZ:false,
+            off: {
+                type: 1, //1，待审核;2，已审核;3，进行中;4，已关闭
+                isLoad: 0, //加载条
+                number: "", //第几条详情
+                showData: 0,
+                searchlist:true, //订单列表
+                details: false, //详情页面
+                auditDetails:false //审核订单分配
+            },
+            form: {
+                source: "6", //订单来源，6、卡盟APP；7、卡盟SDK；8远特i卡
+                orderType: 6, //6 开空卡 9 开白卡 10 开成卡 7 过户 4 实名补录 8 补换卡
+                cardType: 0, //运营商
+                orderStatus: 0, //订单状态
+                operatorType:1,//操作类型
+                sourceFrom :[1,6,7,8],//开卡方式
+                deviceType:[1,2,4],//远特i卡，开卡方式：1，远特i卡；2，远特eSIM；4，eSIM助手
+                auditType: 9, //审核方式
+                context1: "", //订单号码
+                context2: "", //手机号码
+                context3: "", //审核人ID
+                context4: "", //身份证号
+                context5: "", // 操作者ID
+                context6: 0, //号卡状态
+                context7: "", //开卡者姓名
+                context8: -1, //号卡类型
+                startTime: "",
+                select: 6 ,//条件查询 1 订单号码2 手机号码 3 审核人ID 4 身份证号 5 操作者ID 6 订单状态7 用户姓名 8 号卡类型
+                endTime: "",
+            },
+            checkAllopencardType:true,
+            list: "", //查询数据
+            detailsData: "", //详情数据
+            total: 0, //总查询条数
+            pageNum: 1, //当前页数
+            pageSize: 10, //显示条数
+            maxpage: 1, //最大页数
+            callback: Function, //page组件点击回调
+            isShowDXYZ:false,
+            requestlistData:"",
+            requestlistUrl:""
         };
     },
     components: {
         "my-page": pagination,
-        "list-details": details
-    },
-    computed: {
-        context8() {
-            return this.form.context8;
-        },
-        context6() {
-            return this.form.context6;
-        }
+        "list-details": details,
+        auditDetails
     },
     watch: {
         context8() {
@@ -691,6 +683,15 @@ export default {
         },
         context6() {
             this.form.select = 6;
+        },
+        'form.select'(nv,ov){
+            if(this.form.select!=6){
+                this.form.context6='0';
+                this.form.orderStatus='0';
+            }
+            if(this.form.select!=8){
+                this.form.context8='-1';
+            }
         },
         'form.sourceFrom'(){
             if(this.form.sourceFrom.length==4){
@@ -789,7 +790,7 @@ export default {
         return false;
       } else if (vm.form.select == 4 && !context) {
         layer.open({
-          content: "请输入身份证号",
+          content: "请输入证件号码",
           skin: "msg",
           time: 2,
           msgSkin: "error"
@@ -830,6 +831,8 @@ export default {
       }
       if (vm.off.isLoad) return false;
       vm.off.isLoad = true;
+      vm.requestlistData = json;
+      vm.requestlistUrl = url;
       reqCommonMethod( json, function() { vm.off.isLoad = false; }, url )
         .then(data => {
           vm.list = data.data.list;
@@ -886,7 +889,7 @@ export default {
         return false;
       } else if (vm.form.select == 4 && !context) {
         layer.open({
-          content: "请输入身份证号",
+          content: "请输入证件号码",
           skin: "msg",
           time: 2,
           msgSkin: "error"
@@ -978,7 +981,7 @@ export default {
         return false;
       } else if (vm.form.select == 4 && !context) {
         layer.open({
-          content: "请输入身份证号",
+          content: "请输入证件号码",
           skin: "msg",
           time: 2,
           msgSkin: "error"
@@ -1108,6 +1111,7 @@ export default {
       //远特i卡查询采用统一查询接口
       var vm = this,
         type = vm.off.type, //1，待审核;2，已审核;3，进行中;4，已关闭
+        auditType = vm.form.auditType,//9.全部 0.实时 1.事后 2.自动
         str,
         resJson = {
           opKey: "",
@@ -1186,7 +1190,9 @@ export default {
           sql += " AND A.latest_phase=" + code;
         }
       }
-
+      if(auditType!=9){
+          sql += ' AND A.audit_type= ' +auditType; 
+      }
       if (json.searchtype == 1) {
         sql += ' AND A.sys_order_id="' + json.context + '"';
       } else if (json.searchtype == 2) {
@@ -1196,6 +1202,7 @@ export default {
       } else if (json.searchtype == 4) {
         sql += ' AND A.papers_code="' + json.context + '"';
       }
+      
       resJson.params.push(sql);
       return resJson;
     },
@@ -1306,10 +1313,20 @@ export default {
             vm.detailsData = data.data;
             }
             vm.off.details = true;
+            vm.off.searchlist = false;
             vm.off.isLoad = false;
             vm.off.examine = true;
         })
         .catch(error => errorDeal(error));
+    },
+    auditBtn(type, orderId) {
+        var vm = this;
+        vm.cardT = type;
+        vm.orderId = orderId;
+        vm.off.detailsList = 1;
+        vm.off.details = false;
+        vm.off.searchlist = false;
+        vm.off.auditDetails = true;
     },
     to_laydate: function(v) {
       var vm = this;

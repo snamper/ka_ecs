@@ -455,7 +455,6 @@ export default{
 		},
         getDetails(isBtn){//获取商户/工号基本信息
             var vm=this,type=vm.form.type,json,url,time=new Date().getTime();
-            debugger;
 			type==1 ? (json={dealerId:vm.form.context},url='km-ecs/w/merchant/getInfo') : (json={phone:vm.form.context},url='km-ecs/w/user/getInfo');
 			if(vm.off.isLoad)return false;
 			if(isBtn&&vm.form.time&&(time-vm.form.time<3000)){

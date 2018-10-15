@@ -13,33 +13,93 @@
           class="m-upload"/>
         </FileUpload>
         <span class="progress" :style="{width:progress}"></span>
-	</section>
+        <div class="m-upload-list">
+            <p class="title">黑名单上传列表</p>
+            <div v-if="list" class="m-total-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>序号</th>
+                            <th>上传时间</th>
+                            <th>操作人姓名</th>
+                            <th>操作人号码</th>
+                            <th>上传文件列表</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="(todo,index) in list" :key="index">
+                            <td>{{((pageNum-1)*20+(index+1))}}</td>
+                            <td>{{getDateTime(todo.createTime)[6]}}</td>
+                            <td>{{todo.userName||'--'}}</td>
+                            <td>{{todo.opertPhone||'--'}}</td>
+                            <td>
+                                <a href="javascript:void(0)" @click="updateList(todo.fileName)">{{todo.fileName}}</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <my-page :page="pageNum" :maxpage="maxpage" :callback="callback"></my-page>
+            </div>
+        </div>
+    </section>
 </template>
 <script>
 import FileUpload  from '../fileUpload';
-import { errorDeal } from '../../config/utils';
+import pagination from "../page.vue";
+import { errorDeal,getDateTime,createDownload,getStore } from '../../config/utils';
+import {getBlackList,downLoadBlackList} from '../../config/service.js';
+require ('../../assets/km/js/base64.min.js');
 export default{
 	name:'phoneBlackList',
 	data (){
 		return {
 			off:{
-				power:'',
+                power:'',
 			},
 			upload:{
 				files:'',
 				action:'km-ecs/w/msgFile/freezen',
 				response:''
 			},
-			progress:'0%',
+            progress:'0%',
+            list:"",
+            maxpage:0,
+            pageNum:0,
+            callback:Function,
+            numberList:[]
 		}
 	},
 	components:{
-		FileUpload
+        FileUpload,
+        "my-page": pagination,
 	},
 	created(){
-		this.off.power=this.$parent.off;
+        this.off.power=this.$parent.off;
+        this.getNumberList(1);
 	},
 	methods:{
+        updateList(reqdata){
+            let vm=this;
+            let json = {fileName:reqdata};
+            let userInfo = getStore("KA_ECS_USER");
+            let customerId = userInfo.customerId;
+            let codeId = userInfo.codeId;
+            json.customerId = customerId;
+            json.codeId = codeId;
+            createDownload('km-ecs/w/msgFile/download',BASE64.encode(JSON.stringify(json)),()=>{});
+        },
+        getNumberList(p){
+            let vm=this;
+            let json = {pageSize:20,pageNum:p||1};
+            vm.off.isLoad = true;
+            getBlackList(json,()=>{vm.off.isLoad=false})
+            .then((data)=>{
+                vm.list = data.data.datas;
+                vm.pageNum = p||1;
+                vm.maxpage = Math.ceil(parseInt(data.data.total) / 20);
+                vm.callback=(p)=>{vm.getNumberList(p)}
+            }).catch(e=>errorDeal(e))
+        },
 		imageuploaded(res,data) {
 			var vm=this;
 			setTimeout(function(){
@@ -51,9 +111,11 @@ export default{
 			        skin: 'msg',
 			        time: 3,
 			        msgSkin:'success',
-			    });
+                });
+                vm.getNumberList(1);
 	       	}else if(res){
-	       		errorDeal(res)
+
+	       		errorDeal(res,vm.getNumberList(1))
 	       	}
 	    },
 	    imagechanged(res) {
@@ -72,26 +134,24 @@ export default{
 		  },300)
 		  
 		  errorDeal('上传失败')
-		},
+		},getDateTime(v) {
+            return getDateTime(v);
+        },
 	}
 }
 </script>
 <style scoped>
 .m-upload-box{
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	margin-left: -0.5rem;
-	margin-top: -0.5rem;
-	width: 1rem;
-	height: 1rem;
+	width: 100%;
+	height: .5rem;
+    margin-top: .2rem;
 }
 .m-upload{
 	position: absolute;
-	width: 100%;
-	height: 100%;
-	top: 0;
-	left: 0;
+	width: 70px;
+	height: 30px;
+	top: 65px;
+	right: 20px;
 
 }
 .m-upload-box>.progress{
@@ -103,13 +163,19 @@ export default{
 	transition: height .3s linear;
 }
 .m-upload-box>.dp{
-	background-image: url(../../assets/images/txt.png);
-	background-size: 0.5rem;
-	background-repeat: no-repeat;
-	background-position: center top;
-	height: 0.5rem;
+    background: #00A901;
+    color: #fff;
 	text-align: center;
-	line-height: 1.25rem;
-	font-weight: bold;
+	height: 25px;
+    width: 70px;
+	line-height: 25px;
+    border-radius: 4px;
+    float: right;
+}
+.m-upload-list .title{
+    height: 25px;
+    line-height: 25px;
+    font-weight: bold;
+    margin-bottom: 10px;
 }
 </style>

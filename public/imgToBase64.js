@@ -9,7 +9,8 @@ import EXIF from "exif-js";
     typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
 	typeof define === 'function' && define.amd ? define(factory) :
 	(global.imgToBase64 = factory());
-}(window, (function () { 
+}
+(window, (function () { 
     'use strict';
 function imgToBase64(params) {
     var options={

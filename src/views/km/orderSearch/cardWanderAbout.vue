@@ -61,7 +61,7 @@
                             </span>
                             <div class="input-box"><input v-model="deviceId" :readonly="form.select!=2" maxlength="14" type="tel" placeholder="请输入查询的设备号码"></div>
                         </div>
-                        <div class="row pdl">
+                        <div class="row">
                             <span class="dp">流转结果：</span>
                             <div class="m-form-checkbox">
                                 <label><span class="checkbox"><input type="checkbox" value="true" v-model="checkAll" checked="checked" @change="BtnCheckAll"><span></span></span><span class="text">全部</span></label>

@@ -61,12 +61,12 @@
 					<label><span class="radio"><input type="radio" value="5" :readonly="form.select!=5" v-model="form.select"><span></span></span><span class="text">订单状态：</span></label>
 				</span>
 				<div class="m-form-radio col-radio">
-					<label><span class="radio"><input type="radio" value="0" v-model="form.context5"><span></span></span><span class="text">全部</span></label>
-					<label><span class="radio"><input type="radio" value="1" v-model="form.context5"><span></span></span><span class="text">占用中</span></label>
-					<label><span class="radio"><input type="radio" value="2" v-model="form.context5"><span></span></span><span class="text">手动解除占用</span></label>
-					<label><span class="radio"><input type="radio" value="3" v-model="form.context5"><span></span></span><span class="text">超时解除占用</span></label>
-					<label><span class="radio"><input type="radio" value="4" v-model="form.context5"><span></span></span><span class="text">开卡中</span></label>
-					<label><span class="radio"><input type="radio" value="5" v-model="form.context5"><span></span></span><span class="text">开卡成功解除占用</span></label>
+					<label><span @click="checked5" class="radio"><input type="radio" value="0" v-model="form.context5"><span></span></span><span class="text">全部</span></label>
+					<label><span @click="checked5" class="radio"><input type="radio" value="1" v-model="form.context5"><span></span></span><span class="text">占用中</span></label>
+					<label><span @click="checked5" class="radio"><input type="radio" value="2" v-model="form.context5"><span></span></span><span class="text">手动解除占用</span></label>
+					<label><span @click="checked5" class="radio"><input type="radio" value="3" v-model="form.context5"><span></span></span><span class="text">超时解除占用</span></label>
+					<label><span @click="checked5" class="radio"><input type="radio" value="4" v-model="form.context5"><span></span></span><span class="text">开卡中</span></label>
+					<label><span @click="checked5" class="radio"><input type="radio" value="5" v-model="form.context5"><span></span></span><span class="text">开卡成功解除占用</span></label>
 				</div>
 			</div>
 			<button class="f-btn f-btn-line" @click="searchList()">查询</button>
@@ -159,11 +159,17 @@ export default{
 	},
 	created:function(){
 		this.init()
-	},
+    },
+    watch:{
+        'form.select'(){
+            if(this.form.select!=5){
+                this.form.context5=0;
+            }
+        }
+    },
 	methods:{
 		init:function(){
 			var vm=this;
-
 			vm.form.startTime=laydate.now(0,'YYYY-MM-DD 00:00:00');
 			vm.form.endTime=laydate.now(0,'YYYY-MM-DD 23:59:59');
 		},
@@ -244,7 +250,6 @@ export default{
 		downLoadList:function(){
 			const vm=this;
             let json=vm.getForm();
-            debugger;
 			if(!json)return false;
 			json.exportType=3;
 			json.pageNum="-1";
@@ -291,7 +296,10 @@ export default{
 					v==1 ? vm.form.startTime=dates : vm.form.endTime=dates;
 				}
 			});
-		},
+        },
+        checked5(){
+            this.form.select=5;
+        },
 		topShiftClick(){
 			var vm=this;
 			vm.list='';

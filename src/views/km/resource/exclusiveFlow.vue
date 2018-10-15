@@ -37,7 +37,7 @@
                         <tr v-for="(todo,index) in flowlist" :key="index">
                             <td>{{ ((pageNumf-1)*10+(index+1)) }}</td>
                             <td>{{getDateTime(todo.createTime)[6]}}</td>
-                            <td><a class="f-a-td" :href="'#/homek/orderSearch/flowCard/'+null+todo.sysOrderId">{{todo.sysOrderId||'--'}}</a></td>
+                            <td><a class="f-a-td" :href="'#/homek/orderSearch/flowCard/'+todo.sysOrderId">{{todo.sysOrderId||'--'}}</a></td>
                             <td>
                                 <a class="f-a-td" v-if="!isNaN(todo.actived)&&todo.actived!=0" @click="getNumberInfo({s:3,info:todo})">{{todo.actived}}</a>
                                 <a v-else-if="todo.actived==0">{{todo.actived}}</a>
@@ -149,14 +149,6 @@ export default{
             vm.off.isLoad=true;            
             requestGetExclusiveNumberDesc(json,()=>{vm.off.isLoad=false})
             .then((data)=>{
-                vm.numberList=data.data;
-                vm.maxpage1=Math.ceil(parseInt(data.data.length)/10);
-                vm.total1=data.data.length;
-                vm.pageNum1=p||1;
-                // vm.phoneNum=vm.search.number1.phoneTitle;
-                vm.phoneDealerId=v.info.newDealerId;
-                vm.phoneDealerName=v.info.newCompanyName;
-                vm.phoneStatus=v.s;
                 if(v.s==1){
                     vm.phoneTotal=v.info.whited;
                 }else if(v.s==2){
@@ -168,10 +160,15 @@ export default{
                 }else{
                     return false
                 }
-                vm.callback1=function(v){vm.searchList(v)};
-                // setTimeout(()=>{
-                //     this.funScrollTop()
-                // },50)     
+                vm.numberList=data.data;
+                vm.maxpage1=Math.ceil(parseInt(vm.phoneTotal)/10);
+                vm.total1=vm.phoneTotal;
+                vm.pageNum1=p||1;
+                vm.phoneDealerId=v.info.newDealerId;
+                vm.phoneDealerName=v.info.newCompanyName;
+                vm.phoneStatus=v.s;
+                let v1 = json;
+                vm.callback1=function(p){vm.getNumberInfo(v,p)};
             }).catch(e=>errorDeal(e))
         },
         funScrollTop(){

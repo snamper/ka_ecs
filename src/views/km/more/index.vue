@@ -18,6 +18,10 @@
 				<i class="icon"></i>
 				<span class="dp">号码占用/解冻</span>
 			</li>
+            <li v-if="off.powerKm_xghm_cx" class="u-SMSCheck-change" @click="showFn(4)">
+				<i class="icon"></i>
+				<span class="dp">更改成卡短信验证号码</span>
+			</li>
 		</ul>
 		<div class="g-more-fn" v-show="off.fn">
 			<header class="clr">
@@ -25,11 +29,14 @@
 				<div class="dp">
 					<b v-show="off.fn==1">号码黑名单</b>
 					<b v-show="off.fn==2">欢迎页管理</b>
+					<b v-show="off.fn==3">号码占用/解冻</b>
+					<b v-show="off.fn==4">更改成卡短信验证号码</b>
 				</div>
 			</header>
 			<PhoneBlackList v-if="off.fn==1"></PhoneBlackList>
 			<WelcomeConf v-if="off.fn==2"></WelcomeConf>
 			<NumberRelease v-if="off.fn==3"></NumberRelease>
+            <SMSCheckout v-if="off.fn==4"></SMSCheckout>
 		</div>
 	</section>
 </template>
@@ -38,13 +45,13 @@ import "../../../assets/km/css/search.css";
 import PhoneBlackList from '../../../componentskm/more/phoneBlackList';
 import WelcomeConf from '../../../componentskm/more/welcomeConf';
 import NumberRelease from '../../../componentskm/more/numberRelease';
+import SMSCheckout from '../../../componentskm/more/SMSCheckout';
 import { powerKm,getStore } from "../../../config/utils.js";
 export default{
 	name:'more',
 	data (){
 		return {
 			off:{
-				// power:'',
 				fn:0
 			},
 		}
@@ -55,7 +62,8 @@ export default{
 	components:{
 		PhoneBlackList,
 		WelcomeConf,
-		NumberRelease
+        NumberRelease,
+        SMSCheckout
 	},
 	created(){
         this.off.power=this.$parent.off;
@@ -79,6 +87,8 @@ export default{
 .u-welcome-conf>.dp{color: #60A9D1;}
 .u-number-release>.icon{background-image: url(../../../assets/images/numberRelease.png);}
 .u-number-release>.dp{color: #1A75F2;}
+.u-SMSCheck-change>.icon{background-image: url(../../../assets/images/icon_num.png);}
+.u-SMSCheck-change>.dp{color: #6a21f1;}
 
 #more{
 	width: 100%;
@@ -113,6 +123,7 @@ export default{
 	background-size: 100%;
 	background-position: center;
 }
+
 .g-more-menu>li>.dp{
 	display: inline-block;
 	vertical-align: middle;

@@ -1,17 +1,4 @@
-<style scoped>
-    .numberInfo{width:98%;background-color:#fff;padding:12px 8px;border-radius:6px}
-    .numberInfo>label{margin-right: 30px;}
-    p.whiteDetailsTitle, p.emptyDetailsTitle{padding: 10px;}
-    p.whiteDetailsTitle>span, p.emptyDetailsTitle>span{display: inline-block;width: 10px;height: 10px;background: url('../assets/images/dian.png') no-repeat center;background-size: contain}
-    .table-numberDetails{border:none}
-    table.orderInfo tr td:nth-child(odd), table.chengCardInfo tr td:nth-child(odd){width:200px;text-align: right;color: #a5a5a5;}
-    table.orderInfo tr td:nth-child(even), table.chengCardInfo tr td:nth-child(even){text-align: left;}
-    table.whiteCard tr td:nth-child(odd){width:200px;text-align: right;color: #a5a5a5}
-    table.whiteCard tr td:nth-child(even){text-align: left;}
-    .m-total-table{background-color:transparent }
-    .g-list-table, .g-inner-table, .g-box{height: auto;width:99%}
-    a.linka{color: #20A0FF;cursor: pointer;}
-</style>
+
 <template>
     <section class="g-list-box" id="details">
         <!--商户ID详情-->
@@ -194,9 +181,10 @@
                                     <td>{{translateData('money',detailsEmpty.prestore_money)||'--'}}元</td>
                                     <td>短信验证：</td>
                                     <td>
-                                        <span v-if="detailsEmpty.safe_type==1">是（{{detailsEmpty.safe_phone||'--'}}）</span>
-                                        <span v-else-if="detailsEmpty.safe_type==0">否</span>
-                                        <span v-else>--</span>
+                                        <p v-if="detailsEmpty.safe_type==1&&off.changePhone==false">是（{{detailsEmpty.safe_phone||'--'}}）</p>
+                                        <p v-if="detailsEmpty.safe_type==1&&off.changePhone==true" class="m-changePhone">是<input ref="changePhone1" v-focus maxlength="11" type="text" v-model="detailsEmpty.safe_phone"><span @click="fcloseChange"></span><button @click="fchangePhone('2')">确定</button></p>
+                                        <p v-if="detailsEmpty.safe_type==0">否</p>
+                                        <p v-if="detailsEmpty.safe_type!=1&&detailsEmpty.safe_type!=2">--</p>
                                     </td>
                                 </tr>
                             </tbody>
@@ -252,8 +240,8 @@
 </template>
 <script>
 import "../assets/km/css/cardOrderDetails.css";
-import {getDateTime, errorDeal,translateData} from "../../src/config/utils.js"
-import {requestGetExclusiveNumerList,reqCommonMethod} from "../config/service.js";
+import { getDateTime, errorDeal,translateData } from "../../src/config/utils.js"
+import { requestGetExclusiveNumerList,reqCommonMethod } from "../config/service.js";
 import detailsView from '../componentskm/cardOrderDetailsAlert';
 export default{
     name:"merchantDetails",
@@ -267,14 +255,14 @@ export default{
             isShowDetails:0,
 			typeDetails:0,
             detailsList:'',
-            searchDealerId:''
+            searchDealerId:'',
+            off:{
+                changePhone:false
+            }
         }
     },
     components:{
         detailsView
-    },
-    created:function(){
-
     },
     methods:{
        close(){
@@ -357,12 +345,52 @@ export default{
                return false;
            }
        },
-       getDateTime(v){
-           return getDateTime(v)
-       },translateData(v,i){
-           return translateData(v,i)
-       }
+        fchangePhone(v){
+            let vm=this;
+            if(v==1){
+                vm.off.changePhone=true;
+            }else if(v==2){
+                let newPhone = vm.detailsEmpty.safe_phone;
+            }
+        },
+        fcloseChange(){
+            let vm=this;
+            vm.detailsEmpty.safe_phone="";
+            vm.$refs.changePhone1.focus();
+        },
+        getDateTime(v){
+            return getDateTime(v)
+        },translateData(v,i){
+            return translateData(v,i)
+        }
+    },
+    directives: {
+        focus:{
+            inserted:(el)=>{
+                el.focus();
+            }
+        }
     }
 }
 </script>
+<style scoped>
+    .numberInfo{width:98%;background-color:#fff;padding:12px 8px;border-radius:6px}
+    .numberInfo>label{margin-right: 30px;}
+    p.whiteDetailsTitle, p.emptyDetailsTitle{padding: 10px;}
+    p.whiteDetailsTitle>span, p.emptyDetailsTitle>span{display: inline-block;width: 10px;height: 10px;background: url('../assets/images/dian.png') no-repeat center;background-size: contain}
+    .table-numberDetails{border:none}
+    table.orderInfo tr td:nth-child(odd), table.chengCardInfo tr td:nth-child(odd){width:200px;text-align: right;color: #a5a5a5;}
+    table.orderInfo tr td:nth-child(even), table.chengCardInfo tr td:nth-child(even){text-align: left;}
+    table.whiteCard tr td:nth-child(odd){width:200px;text-align: right;color: #a5a5a5}
+    table.whiteCard tr td:nth-child(even){text-align: left;}
+    .m-total-table{background-color:transparent }
+    .g-list-table, .g-inner-table, .g-box{height: auto;width:99%}
+    .linka{color: #20A0FF;cursor: pointer;}
+    .m-btn-changePhone{background: #01AA01;padding: 2px 5px;outline: none;border: 1px solid #01AA01;border-radius: 4px;color: #fff}
+    .m-changePhone{position: relative;height: 25px;line-height: 25px;}
+    .m-changePhone input{position: absolute;width: 200px;height: 25px;line-height: 25px;margin-left: 10px;}
+    .m-changePhone span{position: absolute;left: 180px;top:6px;display: inline-block;width: 15px;height: 15px;background: url('../assets/images/close-circle.png') no-repeat;background-size: 100%;cursor: pointer;}
+    .m-changePhone button{position: absolute;left: 200px;height: 25px;width: 50px;border-radius: 0 4px 4px 0;background: #ff6600;outline: none;border: 1px solid #ff6600;color: #fff;cursor: pointer;}
+
+</style>
 

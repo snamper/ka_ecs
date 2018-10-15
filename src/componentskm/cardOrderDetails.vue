@@ -3,7 +3,6 @@
   *@author: thinkmix
   *@date 2017-2-11
 * *-->
-
 <template>
     <section class="g-list-box" id="details">
         <header class="g-lis-head">
@@ -76,7 +75,7 @@
                                         <td>状态说明：</td>
                                         <td class="fCRed">{{ list.cardStatusReason }}</td>
                                     </tr>
-                                     <tr v-show="type==2">
+                                    <tr v-show="type==2">
                                         <td>审核用时：</td>
                                         <td>
                                             <span v-if="source==7||source==8">{{ $parent.secondsFormat(parseInt(list.modifyTime)/1000-parseInt(list.createTime)/1000) }}</span>
@@ -140,11 +139,14 @@
                                     <tr>
                                         <td>开卡位置信息：</td>
                                         <td>
-                                            <span v-show="list.longitude||userMoreInfo.longitude">
-                                                <i v-if="source==8">{{ userMoreInfo.latitude }}，{{ userMoreInfo.longitude }}</i>
+                                            <span v-if="list.longitude||userMoreInfo.longitude">
+                                                <i v-if="source==8||source==7">{{ userMoreInfo.latitude }}，{{ userMoreInfo.longitude }}</i>
                                                 <i v-else>{{ list.latitude }}，{{ list.longitude }}</i>
                                                 <a href="javascript:void(0)" @click="toMap" class="details m-l">查看地图</a>
                                                 <em>{{ list.street }}</em>
+                                            </span>
+                                            <span v-else>
+                                                --
                                             </span>
                                         </td>
                                     </tr>
@@ -205,7 +207,16 @@
                                         <td>{{ list.userName }}</td>
                                     </tr>
                                     <tr>
-                                        <td>身份证号码：</td>
+                                        <td>证件类型：</td>
+                                        <td v-if="list.papersType">
+                                            {{translateData(2,list.papersType)}}
+                                        </td>
+                                        <td v-else>
+                                            --
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>证件号码：</td>
                                         <td>{{ list.identityCard }}</td>
                                     </tr>
                                     <tr v-if="list.operatorType==7">
@@ -213,7 +224,7 @@
                                         <td>{{ list.identityCardOld }}</td>
                                     </tr>
                                     <tr>
-                                        <td>身份证地址：</td>
+                                        <td>证件地址：</td>
                                         <td>
                                             <span v-if="source==7||source==8">{{ userMoreInfo.userAddress }}</span>
                                             <span v-else>{{ list.userAddress }}</span>
@@ -233,7 +244,7 @@
                                     <tr>
                                         <td>IMEI：</td>
                                         <td>
-                                            <span v-if="source!=8">{{ list.IMEI||'--' }}</span>
+                                            <span v-if="source==6">{{ list.IMEI||'--' }}</span>
                                             <span v-else>{{ userMoreInfo.IMEI||'--' }}</span>
                                         </td>
                                     </tr>
@@ -242,17 +253,18 @@
                                         <td>{{ list.ICCID||'--' }}</td>
                                     </tr>
 
-                                    <tr v-show="source!=8">
+                                    <tr v-show="source==6">
                                         <td>终端类型：</td>
                                         <td>
                                             <span v-if="source==7">
                                                 <b v-show="list.terminalType==1">IOS</b>
                                                 <b v-show="list.terminalType==2">Android</b>
+                                                <b v-show="!list.terminalType">--</b>
                                             </span>
                                             <span v-else>{{ list.terminalType }}</span>
                                         </td>
                                     </tr>
-                                    <tr v-show="source==8">
+                                    <tr v-show="source==8||source==7">
                                         <td>终端类型：</td>
                                         <td>
                                             <span>{{ userMoreInfo.phoneType }}</span>
@@ -263,15 +275,15 @@
                                     <tr v-show="source!=8">
                                         <td>Mac地址：</td>
                                         <td>
-                                            <span v-show="source!=7">{{ list.devMac }}</span>
-                                            <span v-show="source==7">{{ userMoreInfo.devMac }}</span>
+                                            <span v-if="source!=7&&source!=8">{{ list.devMac||'--' }}</span>
+                                            <span v-else>{{ userMoreInfo.devMac||'--' }}</span>
                                         </td>
                                     </tr>
                                     <tr v-show="source!=8">
                                         <td>识别仪名称：</td>
                                         <td>
-                                            <span v-show="source!=7">{{ list.devInfo }}</span>
-                                            <span v-show="source==7">{{ userMoreInfo.devInfo }}</span>
+                                            <span v-show="source==6">{{ list.devInfo||'--' }}</span>
+                                            <span v-show="source==7">{{ userMoreInfo.devInfo||'--' }}</span>
                                         </td>
                                     </tr>
                                     <tr v-show="source!=7&&source!=8">
@@ -315,6 +327,8 @@
                                     </tr>
                                 </tbody>
                             </table>
+                        </td>
+                            
                         </td>
                         <td class="m-meida-640up m-box-img">
                             <ImgZoom :imgData="imgData"></ImgZoom>
@@ -405,7 +419,7 @@ export default {
             } else {
                 imgUrl = _CONFIG[_CONFIG.env].SDK_IMAGE_URL;
             }
-        if (vm.source == 8) {
+        if (vm.source == 8||vm.source == 7) {
             Object.assign( userMoreInfo, JSON.parse(decodeURIComponent(vm.list.tokenInfo)) );
             if ( process.env.NODE_ENV == "development" || process.env.NODE_ENV == "test" ) {
                 imgUrl = _CONFIG.dev.TF_IMAGE_URL;
@@ -434,7 +448,7 @@ export default {
             { src: vm.list.backImageUrl, name: "反面" },
             { src: vm.list.livingImg, name: "活体识别" },
             { src: vm.list.signImageUrl, name: "手签名" },
-            { src: vm.list.headImageName, name: "身份证照片" }
+            { src: vm.list.headImageName, name: "证件照片" }
         ];
       }
 
@@ -471,7 +485,9 @@ export default {
       window.open(url);
     },
     close() {
-      this.$parent.off.details = false;
+        let vmp = this.$parent;
+        vmp.off.details = false;
+        vmp.off.searchlist = true;
     },
     detailsTime() {
       //用时信息
@@ -897,8 +913,6 @@ export default {
 </script>
 <style>
     .supIcon { color: #ff961e; }
-    .checkType{display:inline-block}
-    .checkType label{margin-right: 10px;}
-    .checkType label input{position: relative;top: 1px}
     label.active{color: #4b8cd6}
+    .m-audit-btn{position: absolute;right: 200px;}
 </style>

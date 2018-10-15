@@ -148,7 +148,7 @@ export const translateData=(type,v)=> {
 				return v==1 ? '开成卡' : v==2 ? '开白卡' :v==3? '--' : v==4 ? '实名补登' : v==5 ? '实名登记' :v==6 ? '开空卡' : v==7 ? '过户办理' : v==8 ? '补换卡' :  '--';
 			break;
 		case 2://证件类型
-				return v==1 ? '身份证' : v==2 ? '军官证' : v==3 ? '护照' :void 0;
+				return v==1 ? '身份证' : v==2 ? '军官证' : v==3 ? '护照' : v==6 ? '居住证' : void 0;
 			break;
 		case 3://卡盟统计报表查询操作类型
                 return v==1 ? '开卡' : v==2 ? '激活商户' : v==3 ? '过户' : v==4 ? '实名补登' : v==5 ? '补换卡' : '--';
@@ -228,21 +228,23 @@ export const powerKm=(v)=>{
     powerKm=powerKm.split(',');
     for(let i in powerKm){
         if(powerKm[i].indexOf('1')>-1){
-            var powerKm_yjfk=powerKm[i]
+            var powerKm_yjfk=powerKm[i]//意见反馈模块
         }else if(powerKm[i].indexOf('2')>-1){
-            var powerKm_hyy=powerKm[i]
+            var powerKm_hyy=powerKm[i]//欢迎页
         }else if(powerKm[i].indexOf('3')>-1){
-            var powerKm_hmzy=powerKm[i]
+            var powerKm_hmzy=powerKm[i]//号码占用解冻
         }else if(powerKm[i].indexOf('4')>-1){
-            var powerKm_hmd=powerKm[i]
+            var powerKm_hmd=powerKm[i]//黑名单
         }else if(powerKm[i].indexOf('5')>-1){
-            var powerKm_kk=powerKm[i]
+            var powerKm_kk=powerKm[i]//开卡
         }else if(powerKm[i].indexOf('6')>-1){
-            var powerKm_sh=powerKm[i]
+            var powerKm_sh=powerKm[i]//审核
         }else if(powerKm[i].indexOf('7')>-1){
-            var powerKm_bb=powerKm[i]
+            var powerKm_bb=powerKm[i]//报表
         }else if(powerKm[i].indexOf('8')>-1){
-            var powerKm_jbpz=powerKm[i]
+            var powerKm_jbpz=powerKm[i]//基本配置
+        }else if(powerKm[i].indexOf('9')>-1){
+            var powerKm_xghm=powerKm[i]//修改成卡验证号码
         }
     }
     for(let _i in powerKm_yjfk){//意见反馈
@@ -295,6 +297,19 @@ export const powerKm=(v)=>{
             vm.off.powerKm_hmd_xg=true;
         }if(powerKm_hmd[_i]=='e'){
             vm.off.powerKm_hmd_sc=true;
+        }
+    }
+    for(let _i in powerKm_xghm){//
+        if(powerKm_xghm[_i]=='a'){
+            vm.off.powerKm_xghm_sh=true;
+        }if(powerKm_xghm[_i]=='b'){
+            vm.off.powerKm_xghm_cx=true;
+        }if(powerKm_xghm[_i]=='c'){
+            vm.off.powerKm_xghm_xz=true;
+        }if(powerKm_xghm[_i]=='d'){
+            vm.off.powerKm_xghm_xg=true;
+        }if(powerKm_xghm[_i]=='e'){
+            vm.off.powerKm_xghm_sc=true;
         }
     }
     for(let _i in powerKm_kk){//开卡

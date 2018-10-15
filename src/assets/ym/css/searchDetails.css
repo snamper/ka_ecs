@@ -1,7 +1,7 @@
-#details{display: table-cell;padding: 0.15rem;}
+#details{padding: 0.15rem;}
 .g-list-box, #details, .g-list-table, .g-inner-table, .g-box{width: 100%; height: 100%;}
-.g-list-box, .g-lis-head{position: absolute;}
-.g-box{padding-top: 0.6rem;}
+/* .g-list-box, .g-lis-head{position: absolute;} */
+.g-box{padding-top: 0.6rem;width: 100%;height: 100%;}
 .g-lis-head{background-color: #fff;width: 100%;padding:0.12rem 0.1rem;box-shadow: 0 0 10px rgba(0,0,0,0.1);border-radius: 4px;}
 .g-lis-head>div{ display: inline-block;vertical-align: top;}
 .m-details-back{display: inline-block;width: 0.2rem;height: 0.2rem;cursor: pointer;vertical-align: middle;}

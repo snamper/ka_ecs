@@ -79,7 +79,47 @@
                 </div>
                 <div class="m-total-table" v-if="dataList">
                     <div class="total-head">查询结果<b>{{total}}</b></div>
-                    <table class="exclusiveNumberTab">
+                    <table class="exclusiveNumberTab" v-if="listShow==1">
+                        <thead>
+                            <tr>
+                                <th>序号</th>
+                                <th>号码</th>
+                                <th>归属地</th>
+                                <th>面额(元)</th>
+                                <th>产品名称</th>
+                                <th>当前状态</th>
+                                <th>短信校验</th>
+                                <th>制卡订单号码</th>
+                                <th>制卡商户</th>
+                                <th>开卡订单号码</th>
+                                <th>开卡商户</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-if="JSON.stringify(dataList)!='{}'">
+                                <td>1</td>
+                                <td>{{dataList.phone}}</td>
+                                <td>{{dataList.home||'--'}}</td>
+                                <td>{{translateData('money',dataList.preStore)}}</td>
+                                <td>{{dataList.pkgName||'--'}}</td>
+                                <td>{{translateData(17,dataList.status)}}</td>
+                                <td>{{translateData(16,dataList.safeType)}}</td>
+                                <td>
+                                    <a :href="dataList.makeCardId!=''?'#/homek/orderSearch/makeCard/'+dataList.makeCardId:`javascript:void(0)`" class="details">{{dataList.makeCardId||'--'}}</a>
+                                </td>
+                                <td>
+                                    <a :href="dataList.makeDealer!=''?'#/homek/resource/merchant/'+dataList.makeDealer:`javascript:void(0)`" class="details">{{dataList.makeDealerName||'--'}}({{dataList.makeDealer||'--'}})</a>
+                                </td>
+                                <td>
+                                    <a :href="dataList.openCardId!=''?'#/homek/orderSearch/card/audited/null/'+dataList.openCardId:`javascript:void(0)`" class="details">{{dataList.openCardId||'--'}}</a>
+                                </td>
+                                <td>
+                                    <a :href="dataList.openDealer?'#/homek/resource/merchant/'+dataList.openDealer:`javascript:void(0)`" class="details">{{dataList.openDealerName||'--'}}({{dataList.openDealer||'--'}})</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="exclusiveNumberTab" v-if="listShow==2">
                         <thead>
                             <tr>
                                 <th>序号</th>
@@ -105,7 +145,7 @@
                             </tr>
                         </tbody>
                     </table>
-                    <my-page v-if="total" :page="pageNum" :maxpage="maxpage" :callback="callback"></my-page>
+                    <my-page v-if="total&&listShow==2" :page="pageNum" :maxpage="maxpage" :callback="callback"></my-page>
                 </div>
             </section>
             <numberFlow v-if="off.numberFlow" :numberInfo="numberInfo" :flowlist="flowlist" :pageNumf="pageNumf" :maxPagef="maxPagef" :callbackf="callbackf"></numberFlow>
@@ -115,7 +155,7 @@
 <script>
 import "../../../assets/km/css/search.css";
 import { translateData,getDateTime, errorDeal } from '../../../config/utils.js';
-import { requestGetExclusiveNumberList,requestGetExclusiveNumberFlow,getCitys } from "../../../config/service.js";
+import { requestGetExclusiveNumberList,requestGetExclusiveNumberFlow,getCitys,requestGetGeneralNumberList1 } from "../../../config/service.js";
 import pagination from "../../../componentskm/page.vue";
 import numberFlow from './exclusiveFlow.vue';
 export default {
@@ -149,7 +189,8 @@ export default {
             /*流转详情页数据*/
             flowlist:"",
             pageNumf:"",
-            maxPagef:""
+            maxPagef:"",
+            listshow:""
         }
     },
     components:{
@@ -166,7 +207,7 @@ export default {
                 vm.searchList()
             }
         },300);
-        getCitys({"monoType":1})
+        getCitys({"monoType":1},()=>{vm.off.isLoad=false})
         .then((data)=>{
             vm.letterList=data.data.list;
             vm.letterList.a=[{ "cityName": "全国","cityCode":100}]
@@ -239,18 +280,30 @@ export default {
                 json.phone="";
             }
             vm.off.isLoad=true;
-            requestGetExclusiveNumberList(json,()=>{vm.off.isLoad=false})
-            .then((data)=>{
-                if(data.data.hasOwnProperty('datas')){
-                    vm.dataList=data.data.datas;
-                    vm.maxpage=Math.ceil(parseInt(data.data.total)/10);
-                    vm.total=data.data.total;
-                    vm.pageNum=page||1;
-                    vm.callback=function(v){vm.searchList(v)};     
-                }else{
-                    vm.dataList={}
-                }
-            }).catch(e=>errorDeal(e))
+            if(vm.numberSection.length==11){
+                requestGetGeneralNumberList1(json,()=>{vm.off.isLoad=false})
+                .then((data)=>{
+                    vm.dataList=data.data
+                    vm.maxpage=1;
+                    vm.total=1;
+                    vm.pageNum=1;
+                    vm.listShow=1;
+                }).catch(e=>errorDeal(e)) 
+            }else{
+                requestGetExclusiveNumberList(json,()=>{vm.off.isLoad=false})
+                .then((data)=>{
+                    if(data.data.hasOwnProperty('datas')){
+                        vm.dataList=data.data.datas;
+                        vm.maxpage=Math.ceil(parseInt(data.data.total)/10);
+                        vm.total=data.data.total;
+                        vm.pageNum=page||1;
+                        vm.callback=function(v){vm.searchList(v)}; 
+                        vm.listShow=2;    
+                    }else{
+                        vm.dataList={}
+                    }
+                }).catch(e=>errorDeal(e))
+            }
         },
         getFlowDetails(v){
             let vm=this,json={

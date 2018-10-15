@@ -36,12 +36,14 @@ module.exports = {
 		proxy: {
 	        '/km_center_ecs/': {
 	            target:'http://192.168.10.110:8081',
+	            // target:'http://192.168.10.66:8091',
 	            changeOrigin:true,
 	            pathRewrite:{
 	                '/ecs/km_center_ecs/':'/km_center_ecs/'
 	            }
 	        },
 	        '/km-ecs/': {
+	            // target:'http://192.168.10.66:6086',
 	            target:'http://192.168.10.117:6086',
 	            changeOrigin:true,
 	            pathRewrite:{
@@ -56,10 +58,11 @@ module.exports = {
 	            }
 	        },
 	        '/ym-ecs/': {
-	            target:'http://192.168.10.117:8080',
+	            // target:'http://192.168.10.110:8080',
+	            target:'http://192.168.10.66:8087',
 	            changeOrigin:true,
 	            pathRewrite:{
-	                '/ecs/ym-ecs/':'/ecs/'
+	                '/ecs/ym-ecs/':'/yuangmeng_ecs/'
 	            }
 	        },
 	    },

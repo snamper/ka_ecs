@@ -1,5 +1,6 @@
 <style scoped>
   @import "../../assets/ym/css/audit.css"; 
+  /* .g-box{position: static;} */
 </style>
 <template>
 	<div id="auditList">
@@ -163,7 +164,6 @@ export default{
 	},
 	created:function(){
         var userInfo=localStorage.getItem('ECS_INFO');
-        
         userInfo=getStore("KA_ECS_USER");
 		userInfo.isadmin&&userInfo.isadmin.indexOf('4')>-1 ? this.off.isBugginPower=true : this.off.isBugginPower=false;
 		this.getAuditList();
@@ -178,20 +178,9 @@ export default{
 		};
 	},
 	methods:{
-		agree:function(){//审核同意
-			var vm=this;
-			var orderId=vm.auditData.orderId;
-			// vm.AJAX('c/audit/audit',{"orderId":orderId,"result":1,"remark":'',"reason": ''},function(data){
-			// 	layer.open({
-			// 		content:data.msg,
-			// 		skin: 'msg',
-			// 		time: 4,
-			// 		msgSkin:'success',
-			// 		success:function(){
-			// 			vm.dealAuditList();
-			// 		}
-			// 	})
-            // });
+        agree:function(){//审核同意
+            debugger;
+			var vm=this,orderId=vm.auditData.orderId;
             reqCommonMethod({"orderId":orderId,"result":1,"remark":'',"reason": ''},function(){vm.off.isLoad=false;console.log(1111)},"ym-ecs/c/audit/audit")
             .then((data)=>{
                 layer.open({
@@ -207,6 +196,7 @@ export default{
             }).catch(error=>errorDeal(error)); 
 		},
         agree2:function(){//准同意
+            debugger;
 			var vm=this,orderId=vm.auditData.orderId,popIndex,ww=window.innerWidth,wwSet;
 			ww<=640 ? wwSet='width:98%' : wwSet='max-width:610px';
 			popIndex=layer.open({
@@ -254,7 +244,8 @@ export default{
 			});
 
 		},
-		refuse:function(obj){//审核拒绝
+        refuse:function(obj){//审核拒绝
+            debugger;
 			var str='',vm=this,orderId=vm.auditData.orderId,popIndex,ww=window.innerWidth,wwSet;
 			for(var i=0;i<vm.refuseArr.length;i++){
 				var b='';

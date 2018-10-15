@@ -42,6 +42,11 @@ export const requestGetMakeWhiteDetails=(data,load)=>fetch("km-ecs/w/monopoly/ge
 /**制成卡 */
 export const requestGetMakeChengList=(data,load)=>fetch("km-ecs/w/monopoly/getMakeReadyList",data,"POST",load);
 export const requestGetMakeChengDetails=(data,load)=>fetch("km-ecs/w/monopoly/getMakeReadyDesc",data,"POST",load);
+/*手机号码查询制卡订单详情*/
+export const getAdultByPhone=(data,load)=>fetch("km-ecs/w/monopoly/getAdultByPhone",data,"POST",load);
+/*修改制卡订单验证号码*/
+export const batchUpdateAdultSafePhone=(data,load)=>fetch("km-ecs/w/monopoly/batchUpdateAdultSafePhone",data,"POST",load);
+export const updateAdultSafePhone=(data,load)=>fetch("km-ecs/w/monopoly/updateAdultSafePhone",data,"POST",load);
 
 /*专营号制卡相关*/
 // export const requestGetExclusiveWhite=(data,load)=>fetch("km-ecs/w/monopoly/getMakeReadyDesc",data,"POST",load);
@@ -73,4 +78,8 @@ export const getRealNameSourceDetail=(data,load)=>fetch("km-ecs/w/realNameAuth/q
 /*远盟订单查询总条数*/
 export const getOrderTotal=(data,load)=>fetch("ym-ecs/c/audit/orderSearchTotal",data,"POST",load);
 
+/*卡盟获取黑名单列表*/
+export const getBlackList=(data,load)=>fetch("km-ecs/w/msgFile/list",data,"POST",load);
 
+/*卡盟黑名单文件列表*/
+export const downLoadBlackList=(data,load)=>fetch("km-ecs/w/msgFile/download",data,"POST",load);

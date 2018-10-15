@@ -63,13 +63,13 @@
 									</td><td>{{auditData.companyName}}</td></tr>
 									<tr><td>
 										<span v-show="auditData.merchantType==1">营业执照编号：</span>
-										<span v-show="auditData.merchantType==2">身份证号码：</span>
+										<span v-show="auditData.merchantType==2">证件号码：</span>
 									</td>
 									<td>{{auditData.businessLicence}}
 										<!-- <button class="gztBtn" @click="gztBtn" v-show="auditData.merchantType==2">国政通检验</button> -->
 									</td>
 								</tr>
-									<tr v-show="auditData.merchantType==2"><td>身份证有效期：</td><td>{{auditData.idCardPeriod}}</td></tr>
+									<tr v-show="auditData.merchantType==2"><td>证件有效期：</td><td>{{auditData.idCardPeriod}}</td></tr>
 
 									<tr><td>商户注册电话：</td><td>{{auditData.phone}}</td></tr>
 									<tr><td>门店地址：</td><td>{{auditData.storeAddress}}</td></tr>
@@ -320,8 +320,8 @@ export default{
 					];
 				}else if(vm.auditData.merchantType==2){//个人
 					vm.imgData=[
-						{'src':imgUrl + vm.auditData.doorPictureLeft,'name':'身份证正面'},
-						{'src':imgUrl + vm.auditData.doorPictureRight,'name':'身份证反面'},
+						{'src':imgUrl + vm.auditData.doorPictureLeft,'name':'证件正面'},
+						{'src':imgUrl + vm.auditData.doorPictureRight,'name':'证件反面'},
 						{'src':imgUrl + vm.auditData.handPicture,'name':'手持/免冠证件照'},
 						{'src':imgUrl + vm.auditData.signPicture,'name':'手签名'},
 					];

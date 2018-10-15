@@ -14,6 +14,7 @@
   </div>
 </template>
 <script>
+import { getStore } from '../config/utils.js';
   export default {
     props: {
       url:String,
@@ -64,10 +65,12 @@
         options: this.props,
         uploading: false,
         formID: (Math.random() * 10000 + '').split('.')[0],
+        customerId:''
       }
     },
     created:function(){
-
+        let customerInfo = getStore("KA_ECS_USER");
+        this.customerId = customerInfo.customerId;
     },
     computed: {
       name() {
@@ -189,6 +192,7 @@
             }
           }
         }
+        
         this.xhr('POST',this.url, this.headers, data, done, errorUpload, isBinary, this.credentials,onprogressCb);
       },
       xhr(method, url, headers, data, callback, err, isBinary, withCredentials,onprogressCb) {
@@ -216,6 +220,7 @@
           }
           var headers = headersToJSON(r.getAllResponseHeaders());
           headers.statusCode = r.status;
+          
           callback(json || (method === 'GET' ? error('empty_response', 'Could not get resource') : {}), headers);
         };
         r.onerror = function () {
@@ -291,9 +296,11 @@
         }
         r.withCredentials = typeof withCredentials === 'undefined' ? true : withCredentials;
         if (isBinary) {
-          r.setRequestHeader('Content-Type', 'multipart/form-data; boundary=' + boundary);
+          r.setRequestHeader('Content-Type','multipart/form-data; boundary=' + boundary); 
+          r.setRequestHeader('customerId',this.customerId);         
           return r.sendAsBinary(data);
         }
+        r.setRequestHeader('customerId',this.customerId);
         r.send(data);
         return r;
         // Headers are returned as a string
