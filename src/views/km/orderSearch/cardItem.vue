@@ -180,6 +180,14 @@
                             <label><span class="checkbox"><input type="checkbox" value="8" v-model="form.sourceFrom" checked="checked"><span></span></span><span class="text">S2S开卡盟成卡</span></label>
                         </div>
                     </div>
+                    <div class="row" v-if="form.source==8">
+                        <span class="dp">开卡方式：</span>
+                        <div class="m-form-checkbox">
+                            <label><span class="checkbox"><input type="checkbox" value="1" v-model="form.deviceType" checked="checked"><span></span></span><span class="text">远特i卡</span></label>
+                            <label><span class="checkbox"><input type="checkbox" value="2" v-model="form.deviceType" checked="checked"><span></span></span><span class="text">远特eSIM</span></label>
+                            <label><span class="checkbox"><input type="checkbox" value="4" v-model="form.deviceType" checked="checked"><span></span></span><span class="text">eSIM助手</span></label>
+                        </div>
+                    </div>
                     <div class="row">
                         <span class="dp">时间区间：</span>
                         <div class="f-inline-block">
@@ -500,6 +508,7 @@
                             <th>生成时间</th>
                             <th v-show="off.type==4">关闭时间</th>
                             <th>操作类型</th>
+                            <th v-show="form.source==8">开卡方式</th>
                             <th>审核方式</th>
                             <th>用户姓名</th>
                             <th>用户号码</th>
@@ -526,6 +535,7 @@
                                 <span v-if="form.source==8">{{translateData(17,todo.type)}}</span>
                                 <span v-if="form.source!=8">{{translateData(1,todo.type)}}</span>
                             </td>
+                            <td v-show="form.source==8">{{ translateData(15,parseInt(todo.deviceType) + 1) }}</td>
                             <td>
                                 <span v-if="todo.auditType=='0'">实时审核</span>
                                 <span v-else-if="todo.auditType==1">事后审核</span>
@@ -637,6 +647,7 @@ export default {
             cardType: 0, //运营商
             orderStatus: 0, //订单状态
             operatorType:1,//操作类型
+            deviceType:[1,2,4],//远特i卡，开卡方式：1，远特i卡；2，远特eSIM；4，eSIM助手
             sourceFrom :[1,6,7,8],//开卡方式
             auditType: 9, //审核方式
             context1: "", //订单号码
@@ -1104,10 +1115,11 @@ export default {
           pageSize: "10",
           pageNum: json.pageNum
         };
+        let deviceType = vm.form.deviceType.join(',') || '1,2,4';
         if (type == 3 || type == 4) {
-            str = "A.device_type in (1,2) AND A.biz_type="+json.type+" AND "
+            str = `A.device_type in (${deviceType}) AND A.biz_type=${json.type} AND `;
         }else if(type == 2 || type == 1){
-            str = "B.device_type in (1,2) AND B.biz_type="+json.type+" AND "
+            str = `B.device_type in (${deviceType}) AND B.biz_type=${json.type} AND `;
         }
         var sql =
           str+"A.create_time BETWEEN " +

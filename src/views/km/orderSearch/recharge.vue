@@ -31,14 +31,16 @@
 					<label v-if="form.rechargeType==2"><span class="radio"><input type="radio" value="other" v-model="form.isp"><span></span></span><span class="text">其他</span></label>
 				</div>
 			</div>
-			<div class="row">
-				<span class="dp">时间区间：</span>
-				<div class="f-inline-block">
-					<span class="m-time-area">
-						<input @click="to_laydate(1)" v-model="form.startTime" type="text" readonly="readonly"><input @click="to_laydate(2)" v-model="form.endTime" type="text" readonly="readonly">
-					</span>
-				</div>
-			</div>
+			<div class="row" v-if="form.rechargeType==2">
+                <span class="dp">充值来源：</span>
+                <div class="m-form-checkbox">
+                    <label><span class="checkbox"><input type="checkbox" value="1" v-model="form.sourceType" checked="checked"><span></span></span><span class="text">卡盟APP</span></label>
+                    <label><span class="checkbox"><input type="checkbox" value="5" v-model="form.sourceType" checked="checked"><span></span></span><span class="text">远特i卡</span></label>
+                    <label><span class="checkbox"><input type="checkbox" value="6" v-model="form.sourceType" checked="checked"><span></span></span><span class="text">远特eSIM</span></label>
+                    <label><span class="checkbox"><input type="checkbox" value="7" v-model="form.sourceType" checked="checked"><span></span></span><span class="text">eSIM助手</span></label>
+                    <label><span class="checkbox"><input type="checkbox" value="8" v-model="form.sourceType" checked="checked"><span></span></span><span class="text">sdk</span></label>
+                </div>
+            </div>
 			<div class="row">
 				<span class="dp">支付方式：</span>
 				<div class="m-form-radio">
@@ -46,6 +48,14 @@
 					<label><span class="radio"><input type="radio" value="1" v-model="form.payType"><span></span></span><span class="text">远特账户</span></label>
 					<label><span class="radio"><input type="radio" value="2" v-model="form.payType"><span></span></span><span class="text">微信</span></label>
 					<label><span class="radio"><input type="radio" value="3" v-model="form.payType"><span></span></span><span class="text">支付宝</span></label>
+				</div>
+			</div>
+			<div class="row">
+				<span class="dp">时间区间：</span>
+				<div class="f-inline-block">
+					<span class="m-time-area">
+						<input @click="to_laydate(1)" v-model="form.startTime" type="text" readonly="readonly"><input @click="to_laydate(2)" v-model="form.endTime" type="text" readonly="readonly">
+					</span>
 				</div>
 			</div>
 		</section>
@@ -95,6 +105,7 @@
 				<tr>
 					<th>序号</th>
 					<th>订单号</th>
+					<th v-show="form.rechargeType == 2">充值来源</th>
 					<th>充值号码</th>
 					<th>充值面额</th>
 					<th>运营商</th>
@@ -110,6 +121,13 @@
 				<tr v-for="(todo,index) in list">
 					<td>{{((pageNum-1)*10+(index+1))}}</td>
 					<td>{{todo.orderId}}</td>
+					<td v-show="form.rechargeType == 2">
+						<span v-show="todo.sourceType == 1">卡盟APP</span>
+						<span v-show="todo.sourceType == 5">远特i卡</span>
+						<span v-show="todo.sourceType == 6">远特eSIM</span>
+						<span v-show="todo.sourceType == 7">eSIM助手</span>
+						<span v-show="todo.sourceType == 8">SDK</span>
+					</td>
 					<td>{{todo.phone}}</td>
 					<td>
 						<span v-show="todo.rechargeType==2">{{parseFloat(todo.money)/100}}</span>
@@ -185,6 +203,7 @@ export default{
 				context4:0,//订单状态
 				startTime:'',
 				endTime:'',
+				sourceType:[1,5,6,7,8],
 				select:4//条件查询，选择的条件
 			},
 			list:'',//查询数据
@@ -285,6 +304,9 @@ export default{
                     sql+=" AND A.isp>4";
                     vm.off.ispName=true;
                 }
+                let sourceType = vm.form.sourceType.join(',') || '1,5,6,7,8';
+                sql += ` AND A.source_type in (${sourceType})`;
+
 				json.sum='A.info_fee';
 			}
 			json.params.push(sql);

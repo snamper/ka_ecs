@@ -15,6 +15,13 @@
 							<tbody>
 								<tr><td>系统订单号：</td><td>{{ list.orderId }}</td></tr>
 								<tr v-show="list.payOrderId"><td>支付订单号：</td><td>{{ list.payOrderId }}</td></tr>
+								<tr v-show="list.rechargeType==2"><td>充值来源：</td><td>
+									<span v-show="list.sourceType == 1">卡盟APP</span>
+									<span v-show="list.sourceType == 5">远特i卡</span>
+									<span v-show="list.sourceType == 6">远特eSIM</span>
+									<span v-show="list.sourceType == 7">eSIM助手</span>
+									<span v-show="list.sourceType == 8">SDK</span>
+								</td></tr>
 								
 								<tr><td>生成时间：</td><td>{{ getDateTime(list.createTime)[6] }}</td></tr>
 								<tr><td>支付耗时：</td><td>

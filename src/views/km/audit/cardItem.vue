@@ -29,7 +29,7 @@
                                     <tbody>
                                         <tr>
                                             <td>订单号码：</td>
-                                            <td>{{auditData.orderId}}</td>
+                                            <td>{{auditData.orderId}}<span v-show="auditData.deviceType == 1">（远特i卡）</span><span v-show="auditData.deviceType == 2">（远特eSIM）</span><span v-show="auditData.deviceType == 4">（eSIM助手）</span></td>
                                         </tr>
                                         <tr>
                                             <td>生成时间：</td>
@@ -266,7 +266,7 @@ export default {
   created: function() {
     var vm = this;
     vm.off.auditType = vm.$parent.off.auditType; //0,实时;1,事后;
-    vm.off.itemType = vm.$route.params.type; //6 业务订单；7 过户；8 SDK开卡；9 通服开卡；1 实名补录；2 补换卡；
+    vm.off.itemType = vm.$route.params.type; //6 业务订单；7 过户；8 SDK开卡；9 i卡开卡；1 实名补录；2 补换卡；
     reqCommonMethod(
       { auditType: vm.off.auditType },
       function() {},
