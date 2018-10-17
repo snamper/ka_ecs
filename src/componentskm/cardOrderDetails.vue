@@ -208,11 +208,11 @@
                                     </tr>
                                     <tr>
                                         <td>证件类型：</td>
-                                        <td v-if="list.papersType">
+                                        <td v-if="list.papersType&&source!=8">
                                             {{translateData(2,list.papersType)}}
                                         </td>
-                                        <td v-else>
-                                            --
+                                        <td v-if="source==8">
+                                            身份证
                                         </td>
                                     </tr>
                                     <tr>
