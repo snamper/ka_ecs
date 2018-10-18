@@ -71,9 +71,10 @@
 
                                         <tr>
                                             <td>证件类型：</td>
-                                            <td>
+                                            <td v-if="off.itemType!=9">
                                                 {{translateData(2,auditData.papersType)}}
                                             </td>
+                                            <td v-else>身份证</td>
                                         </tr>
                                         <tr v-show="off.itemType==7">
                                             <td>原机主姓名：</td>
