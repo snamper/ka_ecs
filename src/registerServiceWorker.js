@@ -15,6 +15,23 @@ if (process.env.NODE_ENV === 'production') {
     },
     updated () {
       console.log('New content is available; please refresh.')
+
+      self.addEventListener('activate', function(event) {
+
+        var cacheWhitelist = ['ka_ecs'];
+
+        event.waitUntil(
+          caches.keys().then(function(cacheNames) {
+            return Promise.all(
+              cacheNames.map(function(cacheName) {
+                if (cacheWhitelist.indexOf(cacheName) === -1) {
+                  return caches.delete(cacheName);
+                }
+              })
+            );
+          })
+        );
+      });
     },
     offline () {
       console.log('No internet connection found. App is running in offline mode.')
