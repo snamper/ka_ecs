@@ -835,14 +835,14 @@ export default {
       vm.requestlistUrl = url;
       reqCommonMethod( json, function() { vm.off.isLoad = false; }, url )
         .then(data => {
-          vm.list = data.data.list;
-          vm.total = data.data.total;
-          vm.maxpage = Math.ceil(parseInt(data.data.total) / 10);
-          vm.pageNum = page || 1;
-          vm.callback = function(v) {
-            vm.searchList(v);
-          };
-          vm.off.isLoad = false;
+            vm.list = data.data.list;
+            vm.total = data.data.total;
+            vm.maxpage = Math.ceil(parseInt(data.data.total) / 10);
+            vm.pageNum = page || 1;
+            vm.callback = function(v) {
+                vm.searchList(v);
+            };
+            vm.off.isLoad = false;
         })
         .catch(error => errorDeal(error));
     },

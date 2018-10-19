@@ -97,6 +97,16 @@ export default{
 	methods:{
 		handle(type,page){
             let vm = this;
+            if(page>vm.maxpage){
+                layer.open({
+                    content:"请输入正确的页码",
+                    skin: 'msg',
+                    time: 4,
+                    msgSkin:'error',
+                });
+                return false;
+            }
+            
             vm.vpage="";
 			switch(type){
 		        case 0:
@@ -112,19 +122,12 @@ export default{
 		            break;
 		        case "home":
 		            page=1
-		            break;
+                    break;
+                case "index":
+                    page=parseInt(page); 
+                    break;
             }
-            if(page>vm.maxpage){
-                layer.open({
-                    content:"请输入正确的页码",
-                    skin: 'msg',
-                    time: 4,
-                    msgSkin:'error',
-                });
-                return false;
-            }else{
-                this.callback(page);
-            }
+            this.callback(page);
 		}
 	}
 }
