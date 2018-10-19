@@ -18,7 +18,7 @@
 			<li><a @click="handle('next')"><i class="fa-chevron-right"></i></a></li>
 		</ul>
         &nbsp;
-        <label v-if="maxpage>=10" class="m-input-page">去<input v-model="vpage" type="text" style="">页&nbsp;<button style="padding:5px;border-radius:4px;" @click="handle('index',vpage)">确定</button></label>
+        <label v-if="maxpage>=10" class="m-input-page">去<input v-model="vpage" type="text" style="">页&nbsp;<button style="padding:5px;border-radius:4px;" @click="handle('index',parseInt(vpage))">确定</button></label>
 		<div v-if="!maxpage" style="text-align:center">暂无数据</div>
 	</div>
 </template>
@@ -37,7 +37,7 @@ export default{
     },
 	computed:{
 		pages(){
-			var arr={isHome:!1,isSpace:!1,left:[],right:[]},maxpage=this.maxpage,page=this.page;
+			var arr={isHome:!1,isSpace:!1,left:[],right:[]},maxpage=parseInt(this.maxpage),page=parseInt(this.page);
 			if(maxpage<=8){
 		        for(var i=1;i<=maxpage;i++){
 		        	arr.left.push(i)		            
