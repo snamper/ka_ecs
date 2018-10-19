@@ -37,7 +37,7 @@ export default{
     },
 	computed:{
 		pages(){
-			var arr={isHome:!1,isSpace:!1,left:[],right:[]},maxpage=this.maxpage,page=this.page;
+			var arr={isHome:!1,isSpace:!1,left:[],right:[]},maxpage=parseInt(this.maxpage),page=parseInt(this.page);
 			if(maxpage<=8){
 		        for(var i=1;i<=maxpage;i++){
 		        	arr.left.push(i)		            
