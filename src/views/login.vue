@@ -64,6 +64,7 @@ export default {
     }
   },
   mounted:function(){
+    console.log('login')
     this.getVlidateCode();
   },
   methods:{
