@@ -325,6 +325,12 @@
   width: 0.17rem;
   height: 0.17rem;
 }
+
+.u-icon-chart {
+    background-image: url(../../images/icon_chart.png);
+    width: 0.17rem;
+    height:0.17rem;
+}
 .u-icon-audit {
   background-image: url(../../images/audit.png);
   width: 0.17rem;

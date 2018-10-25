@@ -192,7 +192,7 @@ import { getStore } from '../config/utils.js';
             }
           }
         }
-        
+        debugger;
         this.xhr('POST',this.url, this.headers, data, done, errorUpload, isBinary, this.credentials,onprogressCb);
       },
       xhr(method, url, headers, data, callback, err, isBinary, withCredentials,onprogressCb) {
@@ -300,7 +300,7 @@ import { getStore } from '../config/utils.js';
           r.setRequestHeader('customerId',this.customerId);         
           return r.sendAsBinary(data);
         }
-        r.setRequestHeader('customerId',this.customerId);
+        // r.setRequestHeader('customerId',this.customerId);
         r.send(data);
         return r;
         // Headers are returned as a string

@@ -178,6 +178,7 @@
                             <label><span class="checkbox"><input type="checkbox" value="6" v-model="form.sourceFrom" checked="checked"><span></span></span><span class="text">远微商城</span></label>
                             <label><span class="checkbox"><input type="checkbox" value="7" v-model="form.sourceFrom" checked="checked"><span></span></span><span class="text">信时空公众号</span></label>
                             <label><span class="checkbox"><input type="checkbox" value="8" v-model="form.sourceFrom" checked="checked"><span></span></span><span class="text">S2S开卡盟成卡</span></label>
+                            <label><span class="checkbox"><input type="checkbox" value="9" v-model="form.sourceFrom" checked="checked"><span></span></span><span class="text">喜牛</span></label>
                         </div>
                     </div>
                     <div class="row" v-if="form.source==8">
@@ -644,7 +645,7 @@ export default {
                 cardType: 0, //运营商
                 orderStatus: 0, //订单状态
                 operatorType:1,//操作类型
-                sourceFrom :[1,6,7,8],//开卡方式
+                sourceFrom :[1,6,7,8,9],//开卡方式
                 deviceType:[1,2,4],//远特i卡，开卡方式：1，远特i卡；2，远特eSIM；4，eSIM助手
                 auditType: 9, //审核方式
                 context1: "", //订单号码
@@ -694,7 +695,7 @@ export default {
             }
         },
         'form.sourceFrom'(){
-            if(this.form.sourceFrom.length==4){
+            if(this.form.sourceFrom.length==5){
                 this.checkAllopencardType=true;
             }else{
                 this.checkAllopencardType=false;
@@ -837,7 +838,7 @@ export default {
         .then(data => {
             vm.list = data.data.list;
             vm.total = data.data.total;
-            vm.maxpage = Math.ceil(parseInt(data.data.total) / 10);
+            vm.maxpage = Math.ceil(parseInt(data.data.total) / vm.pageSize);
             vm.pageNum = page || 1;
             vm.callback = function(v) {
                 vm.searchList(v);
@@ -1377,7 +1378,7 @@ export default {
     },
     BtnCheckAllopencardType(){
         if(this.checkAllopencardType==true){
-            this.form.sourceFrom=[1,6,7,8]
+            this.form.sourceFrom=[1,6,7,8,9]
         }else{
             this.form.sourceFrom=[]
         }

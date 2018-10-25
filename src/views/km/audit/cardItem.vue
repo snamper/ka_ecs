@@ -8,230 +8,232 @@
 .supIcon {color: #ff961e;}
 </style>
 <template>
-    <div id="auditList">
-        <section class="g-list-box" v-if="auditData">
-            <header class="g-lis-head">
-                <div class="m-has-db">审核状态：<span><b>{{off.auditIndex}}</b>/<i>{{list.length}}</i></span>
-                </div>
-                <div class="m-time-down">审核计时：<span class="f-c-red">{{off.time}}</span>
-                </div>
-                <div class="m-foot-btn">
-                    <a class="f-btn f-btn-success" @click="agree">同意</a>
-                    <a class="f-btn f-btn-danger" @click="refuse">拒绝</a>
-                </div>
-            </header>
-            <div class="g-box">
-                <table class="g-list-table">
-                    <tbody v-if="off.itemType!=1&&off.itemType!=2">
-                        <tr>
-                            <td>
-                                <table class="g-inner-table">
-                                    <tbody>
-                                        <tr>
-                                            <td>订单号码：</td>
-                                            <td>{{auditData.orderId}}<span v-show="auditData.deviceType == 1">（远特i卡）</span><span v-show="auditData.deviceType == 2">（远特eSIM）</span><span v-show="auditData.deviceType == 4">（eSIM助手）</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>生成时间：</td>
-                                            <td>{{getDateTime(auditData.createTime)[6]}}</td>
-                                        </tr>
-                                        <tr v-show="off.itemType=='4,5,6'">
-                                            <td>完工时间：</td>
-                                            <td>{{auditData.getResultTime==0? '--' : getDateTime(auditData.getResultTime)[6]}}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>审核方式：</td>
-                                            <td>
-                                                <span v-show="auditData.auditType==0">实时审核</span>
-                                                <span v-show="auditData.auditType==1">事后审核</span>
-                                                <a v-if="off.itemType=='4,5,6'||off.itemType=='8'||off.itemType=='9'" href="javascript:void(0)" @click="autoAuditInfo" class="details m-l">查看详情</a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>电话号码：</td>
-                                            <td>
-                                                <span>{{ auditData.phone }}</span>
-                                                <span v-if="auditData.isMonopoly==1" class="supIcon">【专营号】</span>
-                                                <span class="f-c-purple" v-if="auditData.cardType==1">远特</span>
-                                                <span class="f-c-yellow" v-if="auditData.cardType==2">联通</span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>归属地：</td>
-                                            <td>{{ auditData.cityName||'--'}}</td>
-                                        </tr>
-                                        <tr v-show="off.itemType!=8&&off.itemType!=9">
-                                            <td>IMEI：</td>
-                                            <td>{{ auditData.IMEI ||'--'}}</td>
-                                        </tr>
-                                        <tr v-show="off.itemType==9">
-                                            <td>appId：</td>
-                                            <td>{{ auditData.appId ||'--'}}</td>
-                                        </tr>
-
-                                        <tr>
-                                            <td>证件类型：</td>
-                                            <td v-if="off.itemType!=9">
-                                                {{translateData(2,auditData.papersType)}}
-                                            </td>
-                                            <td v-else>身份证</td>
-                                        </tr>
-                                        <tr v-show="off.itemType==7">
-                                            <td>原机主姓名：</td>
-                                            <td>{{auditData.userNameOld}}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>用户姓名：</td>
-                                            <td>{{auditData.userName}}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>证件号码：</td>
-                                            <td>{{ auditData.papersCode }}</td>
-                                        </tr>
-                                        <tr v-show="off.itemType==7">
-                                            <td>原机主证件号码：</td>
-                                            <td>{{auditData.papersCodeOld}}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>证件地址：</td>
-                                            <td>{{ auditData.userAddress }}</td>
-                                        </tr>
-                                        <tr v-show="off.itemType==7">
-                                            <td>原机主证件地址：</td>
-                                            <td>{{auditData.userAddressOld}}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>证件期限：</td>
-                                            <td>{{ auditData.validityPeriod }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>活体识别相似度：</td>
-                                            <td>{{ auditData.similarity }}%</td>
-                                        </tr>
-                                        <tr>
-                                            <td>终端类型：</td>
-                                            <td>
-                                                <span v-if="auditData.terminalType==1">ios</span>
-                                                <span v-else-if="auditData.terminalType==2">android</span>
-                                                <span v-else>{{ auditData.terminalType }}</span>
-                                            </td>
-                                        </tr>
-                                        <tr v-show="off.itemType!=8&&off.itemType!=9">
-                                            <td>Mac地址：</td>
-                                            <td>{{ auditData.devMacAddr ||'--'}}</td>
-                                        </tr>
-                                        <tr v-show="off.itemType!=8&&off.itemType!=9">
-                                            <td>识别仪名称：</td>
-                                            <td>{{ auditData.devSN }}</td>
-                                        </tr>
-                                        <tr v-show="off.itemType!=8&&off.itemType!=9">
-                                            <td>操作人：</td>
-                                            <td>{{ auditData.operatorName }}【ID：{{ auditData.operator }}】</td>
-                                        </tr>
-
-                                        <tr v-show="off.itemType!=8">
-                                            <td>操作人IP：</td>
-                                            <td>{{ auditData.host ||'--'}}</td>
-                                        </tr>
-                                        <tr v-show="off.itemType!=8">
-                                            <td>操作人GPS：</td>
-                                            <td>{{ auditData.longitude ||'--'}} , {{ auditData.latitude ||'--'}}</td>
-                                        </tr>
-                                        <tr v-show="off.itemType!=8&&off.itemType!=9">
-                                            <td>商户名称：</td>
-                                            <td>
-                                                <span>{{ auditData.companyName }}</span>
-                                                <span>【信用等级：{{auditData.levelName}}】</span>
-                                            </td>
-                                        </tr>
-                                        <tr v-if="off.itemType == '4,5,6'">
-                                            <td>号卡分类：</td>
-                                            <td>{{translateData(10,auditData.monopolyType)}}</td>
-                                        </tr>
-                                        <tr v-if="off.itemType == '4,5,6'">
-                                            <td>号卡类型：</td>
-                                            <td>{{translateData(14,auditData.operatorType)}}</td>
-                                        </tr>
-                                        <tr v-if="off.itemType == '4,5,6'">
-                                            <td>开卡方式：</td>
-                                            <td>{{translateData(15,auditData.appType)}}</td>
-                                        </tr>
-                                        <tr v-if="off.itemType == '4,5,6'">
-                                            <td>预存补差价：</td>
-                                            <td>{{translateData('money',auditData.prodRecords.diffPrestore)}}元</td>
-                                        </tr>
-                                        <tr v-if="off.itemType == '4,5,6'">
-                                            <td>账户抵扣：</td>
-                                            <td>{{translateData('money',auditData.prodRecords.deductionMoney)}}元</td>
-                                        </tr>
-                                        <tr v-if="off.itemType == '4,5,6'">
-                                            <td>实付金额：</td>
-                                            <td>{{translateData('money',auditData.prodRecords.actualMoney/100)}}元</td>
-                                        </tr>
-                                        <tr v-if="(off.itemType=='4,5,6'&&auditData.monopolyType==1)||(off.itemType=='4,5,6'&&auditData.monopolyType==2)">
-                                            <td>初始信息：</td>
-                                            <td>可选包：{{auditData.prodRecords.primalyOptPkg||'--'}}；
-                                                套餐：{{auditData.prodRecords.primalyPkg||'--'}}；
-                                                预存：{{translateData('money',auditData.prodRecords.primalyPrestore)}}元
-                                            </td>
-                                        </tr>
-                                        <tr v-if="(off.itemType=='4,5,6'&&auditData.monopolyType==1)||(off.itemType=='4,5,6'&&auditData.monopolyType==2)">
-                                            <td>制卡信息：</td>
-                                            <td>可选包：{{auditData.prodRecords.makeOptPkg||'--'}}；
-                                                套餐：{{auditData.prodRecords.makePkg||'--'}}；
-                                                预存：{{translateData('money',auditData.prodRecords.makePrestore)}}元
-                                            </td>
-                                        </tr>
-                                        <tr v-if="(off.itemType=='4,5,6'&&auditData.monopolyType==1)||(off.itemType=='4,5,6'&&auditData.monopolyType==2)">
-                                            <td>开卡信息：</td>
-                                            <td>可选包：{{auditData.prodRecords.openOptPkg||'--'}}；
-                                                套餐：{{auditData.prodRecords.openPkg||'--'}}；
-                                                预存：{{translateData('money',auditData.prodRecords.openPrestore)}}元
-                                            </td>
-                                        </tr>
-                                        <tr v-if="(off.itemType=='4,5,6'&&auditData.monopolyType==1)||(off.itemType=='4,5,6'&&auditData.monopolyType==2)">
-                                            <td>首充金额：</td>
-                                            <td>{{translateData('money',auditData.prodRecords.firstCharge)}}元</td>
-                                        </tr>
-                                        <tr v-if="(off.itemType=='4,5,6'&&auditData.monopolyType==1)||(off.itemType=='4,5,6'&&auditData.monopolyType==2)">
-                                            <td>首充金额折扣：</td>
-                                            <td>{{auditData.prodRecords.firstChargeDiscount/1000}}折</td>
-                                        </tr>
-                                        <tr v-if="(off.itemType=='4,5,6'&&auditData.monopolyType==1)||(off.itemType=='4,5,6'&&auditData.monopolyType==2)">
-                                            <td>首充实际支付：</td>
-                                            <td>{{translateData('money',auditData.prodRecords.firstChargeActual/100)}}元</td>
-                                        </tr>
-                                        <tr v-if="off.itemType == '4,5,6'">
-                                            <td>短信校验：</td>
-                                            <td>{{translateData(16,auditData.safeType)}}</td>
-                                        </tr>
-                                        <tr v-if="off.itemType == 9">
-                                            <td>操作类型：</td>
-                                            <td>{{translateData(17,auditData.bizType)}}</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </td>
-                            <td class="m-box-img m-meida-640up">
-                                <ImgZoom :imgData="imgData"></ImgZoom>
-                            </td>
-                        </tr>
-                        <tr class="m-box-img m-meida-640down">
-                            <img v-for="(item,i) in imgData" :key="i" :src="item.src">
-                        </tr>
-                    </tbody>
-                    <!-- 实名补登 -->
-                    <RealTimeCollection v-if="off.itemType==1" :auditStatus="1" :auditData="auditData" :imgData="imgData"></RealTimeCollection>
-                    <!-- 补换卡 -->
-                    <RealNameRechCard v-if="off.itemType==2" :auditStatus="1" :auditData="auditData" :imgData="imgData"></RealNameRechCard>
-                </table>
-            </div>
-        </section>
-        <div class="m-refresh" v-if="!auditData">
-            <span class="u-icon-refresh" :class="{rotate360:off.isLoad}"></span>
-            <a @click="getAuditList">{{off.isLoad?'loading':'点击刷新'}}</a>
+  <div id="auditList">
+    <section class="g-list-box" v-if="auditData">
+      <header class="g-lis-head">
+        <div class="m-has-db">审核状态：<span><b>{{off.auditIndex}}</b>/<i>{{list.length}}</i></span>
         </div>
+        <div class="m-time-down">审核计时：<span class="f-c-red">{{off.time}}</span>
+        </div>
+        <div class="m-foot-btn">
+          <a class="f-btn f-btn-success" @click="agree">同意</a>
+          <a class="f-btn f-btn-danger" @click="refuse">拒绝</a>
+        </div>
+      </header>
+      <div class="g-box">
+        <table class="g-list-table">
+          <tbody v-if="off.itemType!=1&&off.itemType!=2">
+            <tr>
+              <td>
+                <table class="g-inner-table">
+                  <tbody>
+                    <tr>
+                      <td>订单号码：</td>
+                      <td>{{auditData.orderId}}<span v-show="auditData.deviceType == 1">（远特i卡）</span><span v-show="auditData.deviceType == 2">（远特eSIM）</span><span
+                          v-show="auditData.deviceType == 4">（eSIM助手）</span></td>
+                    </tr>
+                    <tr>
+                      <td>生成时间：</td>
+                      <td>{{getDateTime(auditData.createTime)[6]}}</td>
+                    </tr>
+                    <tr v-show="off.itemType=='4,5,6'">
+                      <td>完工时间：</td>
+                      <td>{{auditData.getResultTime==0? '--' : getDateTime(auditData.getResultTime)[6]}}</td>
+                    </tr>
+                    <tr>
+                      <td>审核方式：</td>
+                      <td>
+                        <span v-show="auditData.auditType==0">实时审核</span>
+                        <span v-show="auditData.auditType==1">事后审核</span>
+                        <a v-if="off.itemType=='4,5,6'||off.itemType=='8'||off.itemType=='9'" href="javascript:void(0)"
+                          @click="autoAuditInfo" class="details m-l">查看详情</a>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>电话号码：</td>
+                      <td>
+                        <span>{{ auditData.phone }}</span>
+                        <span v-if="auditData.isMonopoly==1" class="supIcon">【专营号】</span>
+                        <span class="f-c-purple" v-if="auditData.cardType==1">远特</span>
+                        <span class="f-c-yellow" v-if="auditData.cardType==2">联通</span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>归属地：</td>
+                      <td>{{ auditData.cityName||'--'}}</td>
+                    </tr>
+                    <tr v-show="off.itemType!=8&&off.itemType!=9">
+                      <td>IMEI：</td>
+                      <td>{{ auditData.IMEI ||'--'}}</td>
+                    </tr>
+                    <tr v-show="off.itemType==9">
+                      <td>appId：</td>
+                      <td>{{ auditData.appId ||'--'}}</td>
+                    </tr>
+
+                    <tr>
+                      <td>证件类型：</td>
+                      <td v-if="off.itemType!=9">
+                        {{translateData(2,auditData.papersType)}}
+                      </td>
+                      <td v-else>身份证</td>
+                    </tr>
+                    <tr v-show="off.itemType==7">
+                      <td>原机主姓名：</td>
+                      <td>{{auditData.userNameOld}}</td>
+                    </tr>
+                    <tr>
+                      <td>用户姓名：</td>
+                      <td>{{auditData.userName}}</td>
+                    </tr>
+                    <tr>
+                      <td>证件号码：</td>
+                      <td>{{ auditData.papersCode }}</td>
+                    </tr>
+                    <tr v-show="off.itemType==7">
+                      <td>原机主证件号码：</td>
+                      <td>{{auditData.papersCodeOld}}</td>
+                    </tr>
+                    <tr>
+                      <td>证件地址：</td>
+                      <td>{{ auditData.userAddress }}</td>
+                    </tr>
+                    <tr v-show="off.itemType==7">
+                      <td>原机主证件地址：</td>
+                      <td>{{auditData.userAddressOld}}</td>
+                    </tr>
+                    <tr>
+                      <td>证件期限：</td>
+                      <td>{{ auditData.validityPeriod }}</td>
+                    </tr>
+                    <tr>
+                      <td>活体识别相似度：</td>
+                      <td>{{ auditData.similarity }}%</td>
+                    </tr>
+                    <tr>
+                      <td>终端类型：</td>
+                      <td>
+                        <span v-if="auditData.terminalType==1">ios</span>
+                        <span v-else-if="auditData.terminalType==2">android</span>
+                        <span v-else>{{ auditData.terminalType }}</span>
+                      </td>
+                    </tr>
+                    <tr v-show="off.itemType!=8&&off.itemType!=9">
+                      <td>Mac地址：</td>
+                      <td>{{ auditData.devMacAddr ||'--'}}</td>
+                    </tr>
+                    <tr v-show="off.itemType!=8&&off.itemType!=9">
+                      <td>识别仪名称：</td>
+                      <td>{{ auditData.devSN }}</td>
+                    </tr>
+                    <tr v-show="off.itemType!=8&&off.itemType!=9">
+                      <td>操作人：</td>
+                      <td>{{ auditData.operatorName }}【ID：{{ auditData.operator }}】</td>
+                    </tr>
+
+                    <tr v-show="off.itemType!=8">
+                      <td>操作人IP：</td>
+                      <td>{{ auditData.host ||'--'}}</td>
+                    </tr>
+                    <tr v-show="off.itemType!=8">
+                      <td>操作人GPS：</td>
+                      <td>{{ auditData.longitude ||'--'}} , {{ auditData.latitude ||'--'}}</td>
+                    </tr>
+                    <tr v-show="off.itemType!=8&&off.itemType!=9">
+                      <td>商户名称：</td>
+                      <td>
+                        <span>{{ auditData.companyName }}</span>
+                        <span>【信用等级：{{auditData.levelName}}】</span>
+                      </td>
+                    </tr>
+                    <tr v-if="off.itemType == '4,5,6'">
+                      <td>号卡分类：</td>
+                      <td>{{translateData(10,auditData.monopolyType)}}</td>
+                    </tr>
+                    <tr v-if="off.itemType == '4,5,6'">
+                      <td>号卡类型：</td>
+                      <td>{{translateData(14,auditData.operatorType)}}</td>
+                    </tr>
+                    <tr v-if="off.itemType == '4,5,6'">
+                      <td>开卡方式：</td>
+                      <td>{{translateData(15,auditData.appType)}}</td>
+                    </tr>
+                    <tr v-if="off.itemType == '4,5,6'">
+                      <td>预存补差价：</td>
+                      <td>{{translateData('money',auditData.prodRecords.diffPrestore)}}元</td>
+                    </tr>
+                    <tr v-if="off.itemType == '4,5,6'">
+                      <td>账户抵扣：</td>
+                      <td>{{translateData('money',auditData.prodRecords.deductionMoney)}}元</td>
+                    </tr>
+                    <tr v-if="off.itemType == '4,5,6'">
+                      <td>实付金额：</td>
+                      <td>{{translateData('money',auditData.prodRecords.actualMoney/100)}}元</td>
+                    </tr>
+                    <tr v-if="(off.itemType=='4,5,6'&&auditData.monopolyType==1)||(off.itemType=='4,5,6'&&auditData.monopolyType==2)">
+                      <td>初始信息：</td>
+                      <td>可选包：{{auditData.prodRecords.primalyOptPkg||'--'}}；
+                        套餐：{{auditData.prodRecords.primalyPkg||'--'}}；
+                        预存：{{translateData('money',auditData.prodRecords.primalyPrestore)}}元
+                      </td>
+                    </tr>
+                    <tr v-if="(off.itemType=='4,5,6'&&auditData.monopolyType==1)||(off.itemType=='4,5,6'&&auditData.monopolyType==2)">
+                      <td>制卡信息：</td>
+                      <td>可选包：{{auditData.prodRecords.makeOptPkg||'--'}}；
+                        套餐：{{auditData.prodRecords.makePkg||'--'}}；
+                        预存：{{translateData('money',auditData.prodRecords.makePrestore)}}元
+                      </td>
+                    </tr>
+                    <tr v-if="(off.itemType=='4,5,6'&&auditData.monopolyType==1)||(off.itemType=='4,5,6'&&auditData.monopolyType==2)">
+                      <td>开卡信息：</td>
+                      <td>可选包：{{auditData.prodRecords.openOptPkg||'--'}}；
+                        套餐：{{auditData.prodRecords.openPkg||'--'}}；
+                        预存：{{translateData('money',auditData.prodRecords.openPrestore)}}元
+                      </td>
+                    </tr>
+                    <tr v-if="(off.itemType=='4,5,6'&&auditData.monopolyType==1)||(off.itemType=='4,5,6'&&auditData.monopolyType==2)">
+                      <td>首充金额：</td>
+                      <td>{{translateData('money',auditData.prodRecords.firstCharge)}}元</td>
+                    </tr>
+                    <tr v-if="(off.itemType=='4,5,6'&&auditData.monopolyType==1)||(off.itemType=='4,5,6'&&auditData.monopolyType==2)">
+                      <td>首充金额折扣：</td>
+                      <td>{{auditData.prodRecords.firstChargeDiscount/1000}}折</td>
+                    </tr>
+                    <tr v-if="(off.itemType=='4,5,6'&&auditData.monopolyType==1)||(off.itemType=='4,5,6'&&auditData.monopolyType==2)">
+                      <td>首充实际支付：</td>
+                      <td>{{translateData('money',auditData.prodRecords.firstChargeActual/100)}}元</td>
+                    </tr>
+                    <tr v-if="off.itemType == '4,5,6'">
+                      <td>短信校验：</td>
+                      <td>{{translateData(16,auditData.safeType)}}</td>
+                    </tr>
+                    <tr v-if="off.itemType == 9">
+                      <td>操作类型：</td>
+                      <td>{{translateData(17,auditData.bizType)}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </td>
+              <td class="m-box-img m-meida-640up">
+                <ImgZoom :imgData="imgData"></ImgZoom>
+              </td>
+            </tr>
+            <tr class="m-box-img m-meida-640down">
+              <img v-for="(item,i) in imgData" :key="i" :src="item.src">
+            </tr>
+          </tbody>
+          <!-- 实名补登 -->
+          <RealTimeCollection v-if="off.itemType==1" :auditStatus="1" :auditData="auditData" :imgData="imgData"></RealTimeCollection>
+          <!-- 补换卡 -->
+          <RealNameRechCard v-if="off.itemType==2" :auditStatus="1" :auditData="auditData" :imgData="imgData"></RealNameRechCard>
+        </table>
+      </div>
+    </section>
+    <div class="m-refresh" v-if="!auditData">
+      <span class="u-icon-refresh" :class="{rotate360:off.isLoad}"></span>
+      <a @click="getAuditList">{{off.isLoad?'loading':'点击刷新'}}</a>
     </div>
+  </div>
 </template>
 <script>
 import "../../../assets/km/css/cardOrderDetails.css";
@@ -244,18 +246,18 @@ import ImgZoom from "../../../componentskm/ImgZoom";
 export default {
   data() {
     return {
-        off: {
-            auditIndex: 0, //订单索引
-            time: "00:00", //审核计时
-            isLoad: 0, //是否ajax请求
-            auditType: 1, //0,实时;1,事后;
-            itemType: '4,5,6', //4,5,6业务订单；7 过户；8 SDK开卡；9 i卡；1 实名补录；2 补换卡；
-        },
-        timer: Number, //审核倒计时
-        list: [], //分配的订单
-        auditData: "", //当前处理的订单
-        imgData: [], //当前订单的图片
-        refuseArr: {} //拒绝原因
+      off: {
+          auditIndex: 0, //订单索引
+          time: "00:00", //审核计时
+          isLoad: 0, //是否ajax请求
+          auditType: 1, //0,实时;1,事后;
+          itemType: '4,5,6', //4,5,6业务订单；7 过户；8 SDK开卡；9 i卡；1 实名补录；2 补换卡；
+      },
+      timer: Number, //审核倒计时
+      list: [], //分配的订单
+      auditData: "", //当前处理的订单
+      imgData: [], //当前订单的图片
+      refuseArr: {} //拒绝原因
     };
   },
   components: {
@@ -269,7 +271,6 @@ export default {
   created: function() {
     var vm = this;
     vm.off.auditType = vm.$parent.off.auditType; //0,实时;1,事后;
-
     if(vm.$route.params.type==="auditing"){
         vm.off.itemType="4,5,6";
     }else{
@@ -285,50 +286,50 @@ export default {
   },
   methods: {
     agree: function() {
-        //审核同意
-        let vm = this, auditType = vm.auditData.auditType,orderId = vm.auditData.orderId, url = "";
-        let json = { orderId: orderId, result: 1, remark: "", reason: "", refuseReasonCode: "", auditType: auditType };
-        if (vm.off.itemType == 8) {
-            url = "km-ecs/w/sdk/auditOrder";
-        } else if (vm.off.itemType == 9) {
-            url = "km-ecs/w/tongfu/auditOrder";
-        } else if (vm.off.itemType == 1 || vm.off.itemType == 2) {
-            url = "km-ecs/w/audit/auditOfReinput";
-            json.result = 2;
-            json.phone = vm.auditData.phoneNumber;
-            json.orderId = vm.auditData.sysOrderId;
-        } else {
-            url = "km-ecs/w/audit/audit";
-        }
-        reqCommonMethod(json, false, url)
-        .then(data => {
-            layer.open({
-                content: data.msg,
-                skin: "msg",
-                time: 4,
-                msgSkin: "success",
-                success: function() { vm.dealAuditList(); }
-            });
-        }).then(()=>{
-            if(vm.$route.params.type==="auditing"){
-                vm.$parent.off.details = false;
-                vm.$parent.off.searchlist = true;
-                vm.$parent.off.auditDetails = false;
-                reqCommonMethod( vm.$parent.requestlistData, function() { vm.$parent.off.isLoad = false; }, vm.$parent.requestlistUrl )
-                .then(data => {
-                    vm.$parent.list = data.data.list;
-                    vm.$parent.total = data.data.total;
-                    vm.$parent.maxpage = Math.ceil(parseInt(data.data.total) / 10);
-                    vm.$parent.pageNum =  1;
-                    vm.$parent.callback = function(v) {
-                        vm.$parent.searchList(v);
-                    };
-                    vm.$parent.off.isLoad = false;
-                })
-                .catch(error => errorDeal(error));
-            }
-        })
-        .catch(error => errorDeal(error));
+      //审核同意
+      let vm = this, auditType = vm.auditData.auditType,orderId = vm.auditData.orderId, url = "";
+      let json = { orderId: orderId, result: 1, remark: "", reason: "", refuseReasonCode: "", auditType: auditType };
+      if (vm.off.itemType == 8) {
+          url = "km-ecs/w/sdk/auditOrder";
+      } else if (vm.off.itemType == 9) {
+          url = "km-ecs/w/tongfu/auditOrder";
+      } else if (vm.off.itemType == 1 || vm.off.itemType == 2) {
+          url = "km-ecs/w/audit/auditOfReinput";
+          json.result = 2;
+          json.phone = vm.auditData.phoneNumber;
+          json.orderId = vm.auditData.sysOrderId;
+      } else {
+          url = "km-ecs/w/audit/audit";
+      }
+      reqCommonMethod(json, false, url)
+      .then(data => {
+          layer.open({
+              content: data.msg,
+              skin: "msg",
+              time: 4,
+              msgSkin: "success",
+              success: function() { vm.dealAuditList(); }
+          });
+      }).then(()=>{
+          if(vm.$route.params.type==="auditing"){
+              vm.$parent.off.details = false;
+              vm.$parent.off.searchlist = true;
+              vm.$parent.off.auditDetails = false;
+              reqCommonMethod( vm.$parent.requestlistData, function() { vm.$parent.off.isLoad = false; }, vm.$parent.requestlistUrl )
+              .then(data => {
+                  vm.$parent.list = data.data.list;
+                  vm.$parent.total = data.data.total;
+                  vm.$parent.maxpage = Math.ceil(parseInt(data.data.total) / 10);
+                  vm.$parent.pageNum =  1;
+                  vm.$parent.callback = function(v) {
+                      vm.$parent.searchList(v);
+                  };
+                  vm.$parent.off.isLoad = false;
+              })
+              .catch(error => errorDeal(error));
+          }
+      })
+      .catch(error => errorDeal(error));
     },
     refuse: function(obj) {
       //审核拒绝

@@ -319,9 +319,15 @@ const router=new Router({
             component:Wsimy,
         },{
             path:'search',
-            component:resolve => require(['@/views/ym/search'], resolve),
+            component:resolve => {
+                require(['@/views/ym/search'], resolve)
+            },
             name:'search',
-            children:[{path:':type',component:resolve => require(['@/views/ym/searchList'], resolve),name:'order'}]
+            children:[{
+                path:':type',
+                component:resolve => {require(['@/views/ym/searchList'],resolve);},
+                name:'order'
+            }]
           },
           {
             path:'pointsSearch',
