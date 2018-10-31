@@ -74,10 +74,10 @@
                                 <label><span class="radioYes"><input @click="changeSearchType" type="radio" value="1" v-model="form.searchKind" checked="checked"><span></span></span><span class="text">精确查找：</span></label>                            
                             </div>
                             <div class="m-form-radio">
-                                <label><span class="radio"><input @click="changeSearchType"  type="radio" value="1" v-model="form.searchType" checked="checked"><span></span></span><span class="text">卡盟ID</span></label>
+                                <label><span class="radio"><input @click="changeSearchType"  type="radio" value="1" v-model="form.searchType" checked="checked"><span></span></span><span class="text">工号ID</span></label>
                                 <label><span class="radio"><input @click="changeSearchType" type="radio" value="2" v-model="form.searchType" checked="checked"><span></span></span><span class="text">手机号码</span></label>
                                 <div style="display:inline-block" class="col-r m-input">
-                                    <input v-model="form.searchContext" maxlength="24" type="tel" :placeholder="form.searchType==1 ? '请输入查询的卡盟ID':'请输入查询的手机号码'"/>
+                                    <input v-model="form.searchContext" maxlength="24" type="tel" :placeholder="form.searchType==1 ? '请输入查询的工号ID':'请输入查询的手机号码'"/>
                                 </div>
                             </div>
                         </div>
