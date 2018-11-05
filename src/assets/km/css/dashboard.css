@@ -14,7 +14,7 @@
 .f-fst-gotham{
   font-family:'gotham';
   color: #4b3887;
-  font-size: 0.28rem;
+  font-size: 0.27rem;
   letter-spacing: 1px;
 }
 
@@ -323,13 +323,22 @@
     font-size: 0.13rem;
   }
 }
-@media screen and (min-width: 961px) and (max-width: 1199px){
-  .statistics>.col>b{
-    font-size: 0.24rem;
+@media screen and (max-width: 1199px){
+  .second-total{
+    top: auto !important;
+    right: auto !important;
+    bottom: 0.1rem;
+    left: 0.2rem;
   }
 }
+@media screen and (min-width: 961px) and (max-width: 1199px){
+  .f-fst-gotham{
+    font-size: 0.24rem;
+  }
+  
+}
 @media screen and (max-width: 960px){
-  .statistics>.col>b, .map-box>.inner-total>b{
+  .f-fst-gotham{
     font-size: 0.18rem;
   }
   .notice{
@@ -341,10 +350,6 @@
   }
   .map-box-inner{
     flex: 1;
-  }
-  .map-box>.inner-total.total-3{
-    top: -5px;
-    text-align: right;
   }
   .switch{
     left: 20px;
@@ -358,11 +363,8 @@
   }
 }
 @media screen and (max-width: 540px){
-  .statistics>.col>b, .map-box>.inner-total>b, .statistics>.col>div, .statistics>.col>div>span{
+  .f-fst-gotham, .statistics>.col>div{
     font-size: 0.1rem;
-  }
-  .map-box>.inner-total.total-3{
-    top: -15px;
   }
   .media-540{
     display: none;

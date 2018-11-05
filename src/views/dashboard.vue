@@ -174,7 +174,7 @@
           <!--开卡统计-->
           <div class="map-box-inner">
             <div id="cardCreate" class="render"></div>
-            <div class="inner-total">
+            <div class="inner-total second-total">
               <span>历史总数：</span>
               <CountUp class="f-fst-gotham"
                 :start="0"
@@ -220,7 +220,7 @@
           <!--制卡成功数-->
           <div class="map-box-inner">
             <div id="makeCardSuccess" class="render"></div>
-            <div class="inner-total">
+            <div class="inner-total second-total">
               <span>历史总数：</span>
               <CountUp class="f-fst-gotham"
                 :start="0"
@@ -236,7 +236,7 @@
           <!--在线用户-->
           <div class="map-box-inner">
             <div id="onlineUser" class="render"></div>
-            <div class="inner-total">
+            <div class="inner-total second-total">
               <span>历史总数：</span>
               <CountUp class="f-fst-gotham"
                 :start="0"
@@ -250,7 +250,7 @@
           <!--充值金额-->
           <div class="map-box-inner">
             <div id="rechargeMoney" class="render"></div>
-            <div class="inner-total">
+            <div class="inner-total second-total">
               <span>历史总数：</span>
               <CountUp class="f-fst-gotham"
                 :start="0"
@@ -326,9 +326,10 @@ import CountUp from 'vue-countup-v2';
     },
     mounted() {
       let userInfo=getStore("KA_ECS_USER");
-     if(userInfo.isadmin.length<=0){
+      
+      if(userInfo.isadmin.length<=0){
          return false;
-     }
+      }
       //   ajax请求获取数据统计
       var vm=this;
       
@@ -692,7 +693,6 @@ import CountUp from 'vue-countup-v2';
 
           option.yAxis[0].min=_min;
           option.yAxis[0].max=_max;
-          option.yAxis[0].name=params.legend[0];
           option.yAxis.push({
             show:false,
             name:params.legend[1],
@@ -760,7 +760,7 @@ import CountUp from 'vue-countup-v2';
         vm.off.cardCreate_index = index;
         vm.initMap({
             id: "cardCreate",
-            name: "",
+            name: "开卡",
             legend: ["开卡尝试", "开卡成功"],
             index:index,
             category: [vm.getLatelyTime(cardCreateData.created.lasttime[0],'hour',12),vm.getLatelyTime(cardCreateData.created.lasttime[1],'day',7),vm.getLatelyTime(cardCreateData.created.lasttime[2],'month',6)],
