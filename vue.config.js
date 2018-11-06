@@ -38,7 +38,7 @@ module.exports = {
 		    target: 'http://192.168.10.110:8081',
 		    changeOrigin: true,
 		    pathRewrite: {
-		      '/ecs/km_center_ecs/': '/km_center_ecs/'
+		      '/ecs/km_center_ecs/':'/km_center_ecs/'
 		    }
 		  },
 		  '/km-ecs/': {
@@ -57,7 +57,6 @@ module.exports = {
 		  },
 		  '/ym-ecs/': {
 		    target: 'http://192.168.10.110:8080',
-		    // target:'http://192.168.10.66:8087',
 		    changeOrigin: true,
 		    pathRewrite: {
 		      '/ecs/ym-ecs/': '/ecs/'

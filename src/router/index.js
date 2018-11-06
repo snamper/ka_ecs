@@ -5,9 +5,241 @@
 * */
 import Vue from "vue";
 import Router from "vue-router";
-import {mapState, mapMutations, mapActions} from 'vuex';
 import {getStore,getKmMenu} from '../config/utils';
+
 Vue.use(Router);
+
+const router=new Router({
+  routes: [
+    {
+      path:"/login",
+      component:() => import("@/views/login/")
+    },
+    {
+      path:"/homey",
+      component:() => import("@/views/home"),
+      children:[
+        {
+          path:"audit/:source",
+          name:"audit",
+          component:() => import("@/views/ym/audit"),
+          children:[{
+              path:":type",
+              component:() => import("@/views/ym/auditList"),
+              name:"card",
+          }]
+        },
+        {
+          path:"wsim",
+          component:() => import("@/views/ym/wsim"),
+        },
+        {
+          path:'search',
+          component:() => import("@/views/ym/search"),
+          name:'search',
+          children:[{
+              path:':type',
+              component:() => import("@/views/ym/searchList"),
+              name:'order'
+          }]
+        },
+        {
+          path:'pointsSearch',
+          component:() => import("@/views/ym/pointsSearch"),
+        },
+        {
+          path:'pointsEx',
+          component:() => import("@/views/ym/pointsEx"),
+        },
+        {
+          path:'pointsGain',
+          component:() => import("@/views/ym/pointsGain"),
+        },
+        {
+          path:'pointsManage',
+          component:() => import("@/views/ym/pointsManage"),
+        },
+        {
+            path:'exceldownload',
+            component:() => import("@/views/ym/Excel"),
+          },
+        {
+          path:'illegalSearch',
+          component:() => import("@/views/ym/illegalSearch"),
+        }
+      ]
+    },
+    {
+      path:"/homek",
+      component:() => import("@/views/home"),
+      children:[
+        {
+          path:"dashboard",
+          component:() => import("@/views/dashboard")
+        },
+        {//审核
+          path:"audit",
+          component:() => import("@/views/km/audit/index"),
+          redirect:function(){
+              let _switch=getKmMenu();
+              if(_switch.powerKm5a&&_switch.powerKm5b){//开卡订单审核和查询
+                  return "audit/card/realtime"
+              }else{
+                  return "audit/businessPower/auditing"
+              }
+          }(),
+          children:[{//开卡
+            path:"card/:source",
+            name:"audit_card",
+            component:() => import("@/views/km/audit/card"),
+            children:[{//实时审核
+                path:":type",
+                component:() => import("@/views/km/audit/cardItem"),
+                name:"realtime"
+            },{//事后审核
+                path:":type",
+                component:() => import("@/views/km/audit/cardItem"),
+                name:"afterwards"
+            }]
+          },{//售卡权限
+              path:"businessPower/:type",
+              name:'businessPowerAudit',
+              component:() => import("@/views/km/orderSearch/businessPower"),
+          },{//激活商户
+              path:"registMerchant/:type",
+              name:'registMerchantAudit',
+              component:() => import("@/views/km/audit/registMerchant"),
+          },{//激活商户
+              path:"applySellArea",
+              name:'applySellArea',
+              component:() => import("@/views/km/audit/applySellArea"),
+          }]
+        },
+        {//订单查询
+          path:"orderSearch",
+          component:() => import("@/views/km/orderSearch/index"),
+          redirect:"orderSearch/card",
+          children:[{//开卡
+            path:"card",
+            name:"orderSearch_card",
+            component:() => import("@/views/km/orderSearch/card"),
+            children:[{
+                path:":type/:deviceType/:id",
+                component:() => import("@/views/km/orderSearch/cardItem"),
+                name:"orderSearch_cardItem"
+            }]
+          },{//售卡权限
+            path:"businessPower/:type",
+            component:() => import("@/views/km/orderSearch/businessPower"),
+            name:'businessPowerSearch'
+          },{//网厅
+            path:"onlineHall",
+            component:() => import("@/views/km/orderSearch/onlineHall"),
+          },{//公交一卡通
+            path:"busCard",
+            component:() => import("@/views/km/orderSearch/busCard"),
+            children:[{
+              path:":type",
+              component:() => import("@/views/km/orderSearch/busCardItem")
+            }]
+          },{//充值订单
+            path:"recharge",
+            component:() => import("@/views/km/orderSearch/recharge"),
+          },{//激活商户
+            path:"registMerchant/:type",
+            name:'registMerchantSearch',
+            component:() => import("@/views/km/orderSearch/registMerchant"),
+          },{//预占号码
+            path:"reserve",
+            name:'reserveSearch',
+            component:() => import("@/views/km/orderSearch/reserve"),
+          },{//号码流转
+            path:"flowCard/:val",
+            name:'flowCard',
+            component:() => import("@/views/km/orderSearch/cardWanderAbout"),
+          },{//制卡
+            path:"makeCard/:val",
+            name:'makeCard',
+            component:() => import("@/views/km/orderSearch/makeCard"),
+          }]
+        },
+        {//资源查询
+          path:"resource",
+          component:() => import("@/views/km/resource/index"),
+          redirect:"resource/merchant/null",
+          children:[{//商户查询
+            path:"merchant/:val",
+            component:() => import("@/views/km/resource/merchant"),
+            name:"merchant"
+          },{//推广方查询
+            path:"promoter/:val",
+            component:() => import("@/views/km/resource/promoter"),
+            name:"promoter"
+          },{//设备查询
+            path:"device/:val",
+            component:() => import("@/views/km/resource/device"),
+            name:"device"
+          },{//大众专营号
+            path:"ordinaryExclusive/:val",
+            component:() => import("@/views/km/resource/publicNumber"),
+            name:"ordinaryExclusive"
+          },{//专营号
+            path:"exclusive/:val",
+            component:() => import("@/views/km/resource/exclusive"),
+            name:"exclusive"
+          },{//专属专营号
+            path:"specialExclusive/:val",
+            component:() => import("@/views/km/resource/specialExclusive"),
+            name:"specialExclusive"
+          },{//sim卡查询
+            path:"simCard/:val",
+            component:() => import("@/views/km/resource/simCard"),
+            name:"simCard"
+          }]
+        },
+        {//统计报表
+          path:"statistics",
+          component:() => import("@/views/km/statistics/index"),
+          redirect:"statistics/cardOrder",
+          children:[{
+            path:"cardOrder",
+            component:() => import("@/views/km/statistics/cardOrder"),
+          },{
+            path:"softwareUseTimes/:type",
+            component:() => import("@/views/km/statistics/softwareUseTimes"),
+            name:"softwareUseTimes"
+          }]
+        },
+        {//意见反馈
+          path:"opinion",
+          component:() => import("@/views/km/opinion/index"),
+          name:"opinion",
+          children:[{
+            path:":type",
+            component:() => import("@/views/km/opinion/opinion"),
+            name:"opinion_item"
+          }]
+        },
+        {//更多功能
+          path:"more",
+          component:() => import("@/views/km/more/index"),
+          name:"more"
+        },
+        {//实名资源
+          path:"realNameResource",
+          component:() => import("@/views/km/realNameSource/index"),
+          name:"realNameResource"
+        },
+        // {//区域管理
+        //   path:"fence",
+        //   component:() => import("@/views/fence"),
+        //   name:"fence"
+        // }
+      ]
+    },
+  ]
+});
+
 const load=(isShow)=>{
   var routerLoad=document.getElementById("routerLoading");
   if(routerLoad){
@@ -17,516 +249,8 @@ const load=(isShow)=>{
   }
 };
 
-const Login = resolve => {
-  require.ensure(["@/views/login"], () => {
-    resolve(require("@/views/login"));
-  });
-};
-const Home = resolve => {
-  require.ensure(["@/views/home"], () => {
-    resolve(require("@/views/home"));
-  });
-};
-const Dashboard = resolve => {//首页-数据面板
-  load(true);
-  require.ensure(["@/views/dashboard"], () => {
-    resolve(require("@/views/dashboard"));
-    load();
-  });
-};
-/*审核*/
-const Audit = resolve => {
-  load(true);
-  require.ensure(["@/views/km/audit/index"], () => {
-    resolve(require("@/views/km/audit/index"));
-    load();
-  });
-};
-const Audit_card = resolve => {//开卡
-  load(true);
-  require.ensure(["@/views/km/audit/card"], () => {
-    resolve(require("@/views/km/audit/card"));
-    load();
-  });
-};
-const Audit_cardItem = resolve => {//开卡子模块
-  load(true);
-  require.ensure(["@/views/km/audit/cardItem"], () => {
-    resolve(require("@/views/km/audit/cardItem"));
-    load();
-  });
-};
-const Audit_registMerchant = resolve => {//激活商户
-  load(true);
-  require.ensure(["@/views/km/audit/registMerchant"], () => {
-    resolve(require("@/views/km/audit/registMerchant"));
-    load();
-  });
-};
-const Audit_applySellArea = resolve => {//申请区域审核
-    load(true);
-    require.ensure(["@/views/km/audit/applySellArea"], () => {
-      resolve(require("@/views/km/audit/applySellArea"));
-      load();
-    });
-  };
-/*订单查询*/
-const OrderSearch = resolve => {
-  load(true);
-  require.ensure(["@/views/km/orderSearch/index"], () => {
-    resolve(require("@/views/km/orderSearch/index"));
-    load();
-  });
-};
-const OrderSearch_card = resolve => {//开卡订单
-  load(true);
-  require.ensure(["@/views/km/orderSearch/card"], () => {
-    resolve(require("@/views/km/orderSearch/card"));
-    load();
-  });
-};
-const OrderSearch_cardItem = resolve => {//开卡订单子模块
-  load(true);
-  require.ensure(["@/views/km/orderSearch/cardItem"], () => {
-    resolve(require("@/views/km/orderSearch/cardItem"));
-    load();
-  });
-};
-const OrderSearch_businessPower = resolve => {//售卡范围
-  load(true);
-  require.ensure(["@/views/km/orderSearch/businessPower"], () => {
-    resolve(require("@/views/km/orderSearch/businessPower"));
-    load();
-  });
-};
-const OrderSearch_onlineHall = resolve => {//网厅订单
-  load(true);
-  require.ensure(["@/views/km/orderSearch/onlineHall"], () => {
-    resolve(require("@/views/km/orderSearch/onlineHall"));
-    load();
-  });
-};
-const OrderSearch_busCard = resolve => {//公交一卡通
-  load(true);
-  require.ensure(["@/views/km/orderSearch/busCard"], () => {
-    resolve(require("@/views/km/orderSearch/busCard"));
-    load();
-  });
-};
-const OrderSearch_busCardItem = resolve => {//公交一卡通子模块
-  load(true);
-  require.ensure(["@/views/km/orderSearch/busCardItem"], () => {
-    resolve(require("@/views/km/orderSearch/busCardItem"));
-    load();
-  });
-};
-const OrderSearch_recharge = resolve => {//充值订单
-  load(true);
-  require.ensure(["@/views/km/orderSearch/recharge"], () => {
-    resolve(require("@/views/km/orderSearch/recharge"));
-    load();
-  });
-};
-const OrderSearch_registMerchant = resolve => {//激活商户
-  load(true);
-  require.ensure(["@/views/km/orderSearch/registMerchant"], () => {
-    resolve(require("@/views/km/orderSearch/registMerchant"));
-    load();
-  });
-};
-const OrderSearch_reserve = resolve => {//预占号码
-  load(true);
-  require.ensure(["@/views/km/orderSearch/reserve"], () => {
-    resolve(require("@/views/km/orderSearch/reserve"));
-    load();
-  });
-}
-;const OrderSearch_makeCard = resolve => {//制卡订单
-  load(true);
-  require.ensure(["@/views/km/orderSearch/makeCard"], () => {
-    resolve(require("@/views/km/orderSearch/makeCard"));
-    load();
-  });
-}
-;const OrderSearch_cardWanderAbout = resolve => {//号码流转
-  load(true);
-  require.ensure(["@/views/km/orderSearch/cardWanderAbout"], () => {
-    resolve(require("@/views/km/orderSearch/cardWanderAbout"));
-    load();
-  });
-};
-/*资源查询*/
-const Resource = resolve => {
-  load(true);
-  require.ensure(["@/views/km/resource/index"], () => {
-    resolve(require("@/views/km/resource/index"));
-    load();
-  });
-};
-const Resource_merchant = resolve => {//商户查询
-  load(true);
-  require.ensure(["@/views/km/resource/merchant"], () => {
-    resolve(require("@/views/km/resource/merchant"));
-    load();
-  });
-};
-const Resource_promoter = resolve => {//推广方查询
-  load(true);
-  require.ensure(["@/views/km/resource/promoter"], () => {
-    resolve(require("@/views/km/resource/promoter"));
-    load();
-  });
-};
-const Resource_device = resolve => {//设备查询
-    load(true);
-    require.ensure(["@/views/km/resource/device"], () => {
-        resolve(require("@/views/km/resource/device"));
-        load();
-    });
-};
-const Resource_ordinaryExclusive = resolve => {//大众专营号
-    load(true);
-    require.ensure(["@/views/km/resource/publicNumber"], () => {
-      resolve(require("@/views/km/resource/publicNumber"));
-      load();
-    });
-};
-const Resource_exclusive = resolve => {//专营号
-    load(true);
-    require.ensure(["@/views/km/resource/exclusive"], () => {
-      resolve(require("@/views/km/resource/exclusive"));
-      load();
-    });
-};
-const Resource_specialExclusive = resolve => {//专属专营号
-    load(true);
-    require.ensure(["@/views/km/resource/specialExclusive"], () => {
-      resolve(require("@/views/km/resource/specialExclusive"));
-      load();
-    });
-};
-const Resource_simCard = resolve => {//专属专营号
-    load(true);
-    require.ensure(["@/views/km/resource/simCard"], () => {
-      resolve(require("@/views/km/resource/simCard"));
-      load();
-    });
-};
-
-/*统计报表*/
-const Statistics = resolve => {
-  load(true);
-  require.ensure(["@/views/km/statistics/index"], () => {
-    resolve(require("@/views/km/statistics/index"));
-    load();
-  });
-};
-const Statistics_cardOrder = resolve => {//开卡统计
-  load(true);
-  require.ensure(["@/views/km/statistics/cardOrder"], () => {
-    resolve(require("@/views/km/statistics/cardOrder"));
-    load();
-  });
-};
-const Statistics_softwareUseTimes= resolve => {//身份证识别/活体识别统计
-  load(true);
-  require.ensure(["@/views/km/statistics/softwareUseTimes"], () => {
-    resolve(require("@/views/km/statistics/softwareUseTimes"));
-    load();
-  });
-};
-/*意见反馈*/
-const Opinion = resolve =>{
-  load(true);
-  require.ensure(["@/views/km/opinion/index"], () => {
-    resolve(require("@/views/km/opinion/index"));
-    load();
-  });
-};
-const Opinion_item = resolve => {
-  load(true);
-  require.ensure(["@/views/km/opinion/opinion"], () => {
-    resolve(require("@/views/km/opinion/opinion"));
-    load();
-  });
-};
-/*更多功能*/
-const More = resolve =>{
-  load(true);
-  require.ensure(["@/views/km/more/index"], () => {
-    resolve(require("@/views/km/more/index"));
-    load();
-  });
-};
-/*实名资源库*/
-const realNameResource = resolve =>{
-    load(true);
-    require.ensure(["@/views/km/realNameSource/index"], () => {
-      resolve(require("@/views/km/realNameSource/index"));
-      load();
-    });
-  };
-/*区域管理*/
-// const Fence = resolve =>{
-//   load(true);
-//   require.ensure(["@/views/fence"], () => {
-//     resolve(require("@/views/fence"));
-//     load();
-//   });
-// };
-const Audity = resolve => {
-    load(true);
-    require.ensure(["@/views/ym/audit"], () => {
-      resolve(require("@/views/ym/audit"));
-      load();
-    });
-  };
-  const Wsimy = resolve => {
-    load(true);
-    require.ensure(["@/views/ym/wsim"], () => {
-      resolve(require("@/views/ym/wsim"));
-      load();
-    });
-  };
-  const AuditListy = resolve => {
-    load(true);
-    require.ensure(["@/views/ym/auditList"], () => {
-      resolve(require("@/views/ym/auditList"));
-      load();
-    });
-  };
-const router=new Router({
-  routes: [
-    {
-      path:"/login",
-      component:Login
-    },
-    {
-        path:"/homey",
-        component:Home,
-        // redirect:"homey/audit/yuanmeng",
-        children:[{
-            path:"audit/:source",
-            name:"audit",
-            component:Audity,
-            children:[{
-                path:":type",
-                component:AuditListy,
-                name:"card",
-            }]
-        },{
-            path:"wsim",
-            component:Wsimy,
-        },{
-            path:'search',
-            component:resolve => {
-                require(['@/views/ym/search'], resolve)
-            },
-            name:'search',
-            children:[{
-                path:':type',
-                component:resolve => {require(['@/views/ym/searchList'],resolve);},
-                name:'order'
-            }]
-          },
-          {
-            path:'pointsSearch',
-            component:resolve => require(['@/views/ym/pointsSearch'],resolve),
-          },
-          {
-            path:'pointsEx',
-            component:resolve => require(['@/views/ym/pointsEx'],resolve),
-          },
-          {
-            path:'pointsGain',
-            component:resolve => require(['@/views/ym/pointsGain'],resolve),
-          },
-          {
-            path:'pointsManage',
-            component:resolve => require(['@/views/ym/pointsManage'],resolve),
-          },
-          {
-              path:'exceldownload',
-              component:resolve => require(['@/views/ym/Excel'],resolve),
-            },
-          {
-            path:'illegalSearch',
-            component:resolve => require(['@/views/ym/illegalSearch'],resolve),
-          }]
-    }
-    ,{
-      path:"/homek",
-      component:Home,
-      children:[{
-        path:"dashboard",
-        component:Dashboard
-      },
-      {//审核
-        path:"audit",
-        component:Audit,
-        redirect:function(){
-            let _switch=getKmMenu();
-            if(_switch.powerKm5a&&_switch.powerKm5b){//开卡订单审核和查询
-                return "audit/card/realtime"
-            }else{
-                return "audit/businessPower/auditing"
-            }
-        }(),
-        children:[{//开卡
-        path:"card/:source",
-        name:"audit_card",
-        component:Audit_card,
-        children:[{//实时审核
-          path:":type",
-          component:Audit_cardItem,
-          name:"realtime"
-        },{//事后审核
-          path:":type",
-          component:Audit_cardItem,
-          name:"afterwards"
-        }]
-        },{//售卡权限
-          path:"businessPower/:type",
-          name:'businessPowerAudit',
-          component:OrderSearch_businessPower,
-        },{//激活商户
-          path:"registMerchant/:type",
-          name:'registMerchantAudit',
-          component:Audit_registMerchant,
-      },{//激活商户
-          path:"applySellArea",
-          name:'applySellArea',
-          component:Audit_applySellArea,
-      }]
-    },
-    {//订单查询
-      path:"orderSearch",
-      component:OrderSearch,
-      redirect:"orderSearch/card",
-      children:[{//开卡
-        path:"card",
-        name:"orderSearch_card",
-        component:OrderSearch_card,
-        children:[{
-            path:":type/:deviceType/:id",
-            component:OrderSearch_cardItem,
-            name:"orderSearch_cardItem"
-        }]
-      },{//售卡权限
-        path:"businessPower/:type",
-        component:OrderSearch_businessPower,
-        name:'businessPowerSearch'
-      },{//网厅
-        path:"onlineHall",
-        component:OrderSearch_onlineHall,
-      },{//公交一卡通
-        path:"busCard",
-        component:OrderSearch_busCard,
-        children:[{
-          path:":type",
-          component:OrderSearch_busCardItem
-        }]
-      },{//充值订单
-        path:"recharge",
-        component:OrderSearch_recharge,
-      },{//激活商户
-        path:"registMerchant/:type",
-        name:'registMerchantSearch',
-        component:OrderSearch_registMerchant,
-      },{//预占号码
-        path:"reserve",
-        name:'reserveSearch',
-        component:OrderSearch_reserve,
-      },{//号码流转
-        path:"flowCard/:val",
-        name:'flowCard',
-        component:OrderSearch_cardWanderAbout,
-      },{//制卡
-        path:"makeCard/:val",
-        name:'makeCard',
-        component:OrderSearch_makeCard,
-      }]
-    },
-    {//资源查询
-      path:"resource",
-      component:Resource,
-      redirect:"resource/merchant/null",
-      children:[{//商户查询
-        path:"merchant/:val",
-        component:Resource_merchant,
-        name:"merchant"
-      },{//推广方查询
-        path:"promoter/:val",
-        component:Resource_promoter,
-        name:"promoter"
-      },{//设备查询
-        path:"device/:val",
-        component:Resource_device,
-        name:"device"
-      },{//大众专营号
-        path:"ordinaryExclusive/:val",
-        component:Resource_ordinaryExclusive,
-        name:"ordinaryExclusive"
-      },{//专营号
-        path:"exclusive/:val",
-        component:Resource_exclusive,
-        name:"exclusive"
-      },{//专属专营号
-        path:"specialExclusive/:val",
-        component:Resource_specialExclusive,
-        name:"specialExclusive"
-      },{//sim卡查询
-        path:"simCard/:val",
-        component:Resource_simCard,
-        name:"simCard"
-      }]
-    },
-    {//统计报表
-      path:"statistics",
-      component:Statistics,
-      redirect:"statistics/cardOrder",
-      children:[{
-        path:"cardOrder",
-        component:Statistics_cardOrder,
-      },{
-        path:"softwareUseTimes/:type",
-        component:Statistics_softwareUseTimes,
-        name:"softwareUseTimes"
-      }]
-    },
-    {//意见反馈
-      path:"opinion",
-      component:Opinion,
-      name:"opinion",
-      children:[{
-        path:":type",
-        component:Opinion_item,
-        name:"opinion_item"
-      }]
-    },
-    {//更多功能
-      path:"more",
-      component:More,
-      name:"more"
-    },
-    {//实名资源
-        path:"realNameResource",
-        component:realNameResource,
-        name:"realNameResource"
-    }
-        // {//区域管理
-        //   path:"fence",
-        //   component:Fence,
-        //   name:"fence"
-        // }
-      ]
-    }
-  ]
-});
-
-
 router.beforeEach((to, from, next) => {
-    
+    load(true);
     var token = localStorage.getItem("KA_ECS_USER");
     if (!token&&to.path!=="/login"||to.path=="/"){
         next({path:"/login"});
@@ -534,6 +258,9 @@ router.beforeEach((to, from, next) => {
     }
      next();
 });
+router.afterEach((to, from) => {
+  load();
+})
 export default router;
 
 
