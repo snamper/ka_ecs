@@ -196,6 +196,9 @@ export const translateData=(type,v)=> {
         case 18://号卡状态
             return v==0?'未激活':v==1?'预占':v==2?'成卡':v==3?'已激活':'--';
         break;
+        case 19:
+            return v==0?'非成卡开卡':v==1?'卡盟app':v==2?'sdk':v==3?'dwatch':v==4?'wear':v==9?'喜牛':'--';
+        break;
         case 'money'://金额转换
             if(!isNaN(v)){
                 return (v/100).toFixed(2)

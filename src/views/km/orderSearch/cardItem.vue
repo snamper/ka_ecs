@@ -144,30 +144,10 @@
                     <div class="row" v-if="off.type==1&&form.source!=7||off.type==2&&form.source!=7">
                         <span class="dp">审核方式：</span>
                         <div class="m-form-radio">
-                            <label>
-                                <span class="radio"><input type="radio" value="9" v-model="form.auditType">
-                                    <span></span>
-                                </span>
-                                <span class="text">全部</span>
-                            </label>
-                            <label>
-                                <span class="radio"><input type="radio" value="0" v-model="form.auditType">
-                                    <span></span>
-                                </span>
-                                <span class="text">实时审核</span>
-                            </label>
-                            <label v-if="form.orderType!=4">
-                                <span class="radio"><input type="radio" value="1" v-model="form.auditType">
-                                    <span></span>
-                                </span>
-                                <span class="text">事后审核</span>
-                            </label>
-                            <label>
-                                <span class="radio"><input type="radio" value="2" v-model="form.auditType">
-                                    <span></span>
-                                </span>
-                                <span class="text">自动审核</span>
-                            </label>
+                            <label> <span class="radio"><input type="radio" value="9" v-model="form.auditType"> <span></span> </span> <span class="text">全部</span> </label>
+                            <label> <span class="radio"><input type="radio" value="0" v-model="form.auditType"> <span></span> </span> <span class="text">实时审核</span> </label>
+                            <label v-if="form.orderType!=4"> <span class="radio"><input type="radio" value="1" v-model="form.auditType"> <span></span> </span> <span class="text">事后审核</span> </label>
+                            <label> <span class="radio"><input type="radio" value="2" v-model="form.auditType"> <span></span> </span> <span class="text">自动审核</span> </label>
                         </div>
                     </div>
                     <div class="row" v-if="form.source==6">
@@ -187,6 +167,28 @@
                             <label><span class="checkbox"><input type="checkbox" value="1" v-model="form.deviceType" checked="checked"><span></span></span><span class="text">远特i卡</span></label>
                             <label><span class="checkbox"><input type="checkbox" value="2" v-model="form.deviceType" checked="checked"><span></span></span><span class="text">远特eSIM</span></label>
                             <label><span class="checkbox"><input type="checkbox" value="4" v-model="form.deviceType" checked="checked"><span></span></span><span class="text">eSIM助手</span></label>
+                        </div>
+                    </div>
+                    <div class="row" v-if="form.source==6&&form.orderType==10">
+                        <span class="dp">制卡商户：</span>
+                        <div class="m-form-radio">
+                            <label><span class="radio"><input type="radio" value="0" v-model="form.merchants" checked="checked"><span></span></span><span
+                            class="text">全部</span></label>
+                            <label><span class="radio"><input type="radio" value="1" v-model="form.merchants" checked="checked"><span></span></span><span
+                            class="text">卡盟</span></label>
+                            <label><span class="radio"><input type="radio" value="9" v-model="form.merchants" checked="checked"><span></span></span><span
+                            class="text">喜牛</span></label>
+                        </div>
+                    </div>
+                    <div class="row" v-if="form.source==8&&form.orderType==4">
+                        <span class="dp">制卡商户：</span>
+                        <div class="m-form-radio">
+                            <label><span class="radio"><input type="radio" value="0" v-model="form.merchants" checked="checked"><span></span></span><span
+                            class="text">全部</span></label>
+                            <label><span class="radio"><input type="radio" value="1" v-model="form.merchants" checked="checked"><span></span></span><span
+                            class="text">卡盟</span></label>
+                            <label><span class="radio"><input type="radio" value="9" v-model="form.merchants" checked="checked"><span></span></span><span
+                            class="text">喜牛</span></label>
                         </div>
                     </div>
                     <div class="row">
@@ -647,6 +649,7 @@ export default {
                 operatorType:1,//操作类型
                 sourceFrom :[1,6,7,8,9],//开卡方式
                 deviceType:[1,2,4],//远特i卡，开卡方式：1，远特i卡；2，远特eSIM；4，eSIM助手
+                merchants: 0,//商户类型
                 auditType: 9, //审核方式
                 context1: "", //订单号码
                 context2: "", //手机号码
@@ -660,7 +663,9 @@ export default {
                 select: 6 ,//条件查询 1 订单号码2 手机号码 3 审核人ID 4 身份证号 5 操作者ID 6 订单状态7 用户姓名 8 号卡类型
                 endTime: "",
             },
+            options:[1,2],
             checkAllopencardType:true,
+            checkAllmerchants:true,
             list: "", //查询数据
             detailsData: "", //详情数据
             total: 0, //总查询条数
@@ -700,7 +705,15 @@ export default {
             }else{
                 this.checkAllopencardType=false;
             }
-        }
+        },
+        'form.merchants'(){
+            if(this.form.merchants.length==2){
+                this.checkAllmerchants=true;
+            }else{
+                this.checkAllmerchants=false;
+            }
+        },
+        
     },
   created: function() {
     this.init();
@@ -744,7 +757,8 @@ export default {
           auditType: vm.form.auditType,//审核方式
           cardType: vm.form.cardType,//运营商
           periodType: vm.off.type,//1，待审核;2，已审核;3，进行中;4，已关闭
-          sourceFrom :vm.form.sourceFrom.join(',')//开卡方式
+          sourceFrom :vm.form.sourceFrom.join(','),//开卡方式
+          makeSource:vm.form.merchants 
         };
         vm.isShowDXYZ=false;
       //非卡盟SDK+远特I卡，进行中，已关闭
@@ -1113,6 +1127,7 @@ export default {
       var vm = this,
         type = vm.off.type, //1，待审核;2，已审核;3，进行中;4，已关闭
         auditType = vm.form.auditType,//9.全部 0.实时 1.事后 2.自动
+        merchantType = vm.form.merchants,
         str,
         resJson = {
           opKey: "",
@@ -1203,7 +1218,9 @@ export default {
       } else if (json.searchtype == 4) {
         sql += ' AND A.papers_code="' + json.context + '"';
       }
-      
+      if(merchantType!=0){
+          sql+=' AND (select app_type from tb_adultcard_order where sys_order_id=B.sys_activation_order_id limit 1)='+ merchantType + ''
+      }
       resJson.params.push(sql);
       return resJson;
     },
@@ -1381,6 +1398,13 @@ export default {
             this.form.sourceFrom=[1,6,7,8,9]
         }else{
             this.form.sourceFrom=[]
+        }
+    },
+    BtnCheckAllMerchants(){
+        if(this.checkAllmerchants==true){
+            this.form.merchants=[1,2]
+        }else{
+            this.form.merchants=[]
         }
     }
   }

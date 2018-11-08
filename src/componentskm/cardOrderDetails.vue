@@ -199,6 +199,10 @@
                                         </td>
                                     </tr>
                                     <tr>
+                                        <td>制卡方式：</td>
+                                        <td>{{translateData(19,list.makeSource)}}</td>
+                                    </tr>
+                                    <tr>
                                         <td>开卡方式：</td>
                                         <td>{{translateData(15,list.appType || (parseInt(list.deviceType) + 1))}}</td>
                                     </tr>
@@ -371,9 +375,14 @@ export default {
       typeDetails: 0,
       detailsList: "",
       userMoreInfo: "", //更多用户信息
-      detailsSource: "" //要查询的详情 6、卡盟APP；7、卡盟SDK；8远特i卡
-      ,checkType:1
-      ,tdata:[{'活体识别相似度':'86%','mode':'2'},{'活体识别相似度':'86%','mode':'2'},{'活体识别相似度':'86%','mode':'2'},{'校验结果':'成功'}]
+      detailsSource: "", //要查询的详情 6、卡盟APP；7、卡盟SDK；8远特i卡
+      checkType: 1,
+      tdata: [
+        { 活体识别相似度: "86%", mode: "2" },
+        { 活体识别相似度: "86%", mode: "2" },
+        { 活体识别相似度: "86%", mode: "2" },
+        { 校验结果: "成功" }
+      ]
     };
   },
   components: {
@@ -385,109 +394,183 @@ export default {
   created: function() {
     var vm = this;
 
-    if(this.source != 6) this.list.prodRecords = {};
+    if (this.source != 6) this.list.prodRecords = {};
     vm.detailsSource = vm.$parent.form.source;
-    if (vm.list.operatorType == 7) {//过户办理
+    if (vm.list.operatorType == 7) {
+      //过户办理
       vm.imgData[0] = { src: vm.list.frontImageOld, name: "原机主正面照片" };
       vm.imgData[1] = { src: vm.list.backImageOld, name: "原机主反面照片" };
-      vm.imgData[2] = { src: vm.list.handImageOld, name: "原机主手持/免冠照片" };
+      vm.imgData[2] = {
+        src: vm.list.handImageOld,
+        name: "原机主手持/免冠照片"
+      };
       vm.imgData[3] = { src: vm.list.papersImage, name: "新机主正面照片" };
       vm.imgData[4] = { src: vm.list.backImage, name: "新机主反面照片" };
       vm.imgData[5] = { src: vm.list.handImage, name: "新机主手持/免冠照片" };
       vm.imgData[6] = { src: vm.list.signImage, name: "新机主手签名照片" };
       vm.imgData[7] = { src: vm.list.livingImg, name: "活体识别" };
-    } else if (vm.list.operatorType == 8) {//补换卡
+    } else if (vm.list.operatorType == 8) {
+      //补换卡
       vm.imgData[0] = { src: vm.list.reqParam.imageName, name: "正面照片" };
       vm.imgData[1] = { src: vm.list.reqParam.backImageName, name: "反面照片" };
-      vm.imgData[2] = { src: vm.list.reqParam.handImageName, name: "手持/免冠照片" };
-      vm.imgData[3] = { src: vm.list.reqParam.signImageName, name: "手签名照片" };
+      vm.imgData[2] = {
+        src: vm.list.reqParam.handImageName,
+        name: "手持/免冠照片"
+      };
+      vm.imgData[3] = {
+        src: vm.list.reqParam.signImageName,
+        name: "手签名照片"
+      };
       // vm.imgData[3]={'src':vm.list.reqParam.livingIdentificationImagePath,'name':'活体识别'};
-    } else if (vm.list.operatorType == 4) {//实名补登
-      vm.imgData[0] = { src: vm.list.oldReqParam.imageName, name: "原正面照片" };
-      vm.imgData[1] = { src: vm.list.oldReqParam.backImageName, name: "原反面照片" }; //
-      vm.imgData[2] = { src: vm.list.oldReqParam.handImageName, name: "原手持/免冠照片" };
+    } else if (vm.list.operatorType == 4) {
+      //实名补登
+      vm.imgData[0] = {
+        src: vm.list.oldReqParam.imageName,
+        name: "原正面照片"
+      };
+      vm.imgData[1] = {
+        src: vm.list.oldReqParam.backImageName,
+        name: "原反面照片"
+      }; //
+      vm.imgData[2] = {
+        src: vm.list.oldReqParam.handImageName,
+        name: "原手持/免冠照片"
+      };
       vm.imgData[3] = { src: vm.list.reqParam.imageName, name: "正面照片" };
       vm.imgData[4] = { src: vm.list.reqParam.backImageName, name: "反面照片" };
-      vm.imgData[5] = { src: vm.list.reqParam.handImageName, name: "手持/免冠照片" };
-      vm.imgData[6] = { src: vm.list.reqParam.signImageName, name: "手签名照片" };
-      vm.imgData[7] = { src: vm.list.reqParam.livingIdentificationImagePath, name: "活体识别" };
-    } else {//空卡,成卡,白卡
-        if (vm.source == 7 || vm.source == 8) {//7、卡盟SDK；8远特i卡
-            let imgUrl,userMoreInfo = JSON.parse(decodeURIComponent(vm.list.userMoreInfo));
-            if ( process.env.NODE_ENV == "development" ||process.env.NODE_ENV == "test" ) {
-                 _CONFIG.dev.SDK_IMAGE_URL;
-            } else {
-                imgUrl = _CONFIG[_CONFIG.env].SDK_IMAGE_URL;
-            }
-        if (vm.source == 8||vm.source == 7) {
-            Object.assign( userMoreInfo, JSON.parse(decodeURIComponent(vm.list.tokenInfo)) );
-            if ( process.env.NODE_ENV == "development" || process.env.NODE_ENV == "test" ) {
-                imgUrl = _CONFIG.dev.TF_IMAGE_URL;
-            } else {
-                imgUrl = _CONFIG[_CONFIG.env].TF_IMAGE_URL;
-            }
+      vm.imgData[5] = {
+        src: vm.list.reqParam.handImageName,
+        name: "手持/免冠照片"
+      };
+      vm.imgData[6] = {
+        src: vm.list.reqParam.signImageName,
+        name: "手签名照片"
+      };
+      vm.imgData[7] = {
+        src: vm.list.reqParam.livingIdentificationImagePath,
+        name: "活体识别"
+      };
+    } else {
+      //空卡,成卡,白卡
+      if (vm.source == 7 || vm.source == 8) {
+        //7、卡盟SDK；8远特i卡
+        let imgUrl,
+          userMoreInfo = JSON.parse(decodeURIComponent(vm.list.userMoreInfo));
+        if (
+          process.env.NODE_ENV == "development" ||
+          process.env.NODE_ENV == "test"
+        ) {
+          _CONFIG.dev.SDK_IMAGE_URL;
+        } else {
+          imgUrl = _CONFIG[_CONFIG.env].SDK_IMAGE_URL;
+        }
+        if (vm.source == 8 || vm.source == 7) {
+          Object.assign(
+            userMoreInfo,
+            JSON.parse(decodeURIComponent(vm.list.tokenInfo))
+          );
+          if (
+            process.env.NODE_ENV == "development" ||
+            process.env.NODE_ENV == "test"
+          ) {
+            imgUrl = _CONFIG.dev.TF_IMAGE_URL;
+          } else {
+            imgUrl = _CONFIG[_CONFIG.env].TF_IMAGE_URL;
+          }
         }
         if (userMoreInfo) {
-            vm.userMoreInfo = userMoreInfo;
-            vm.imgData = [ { src: imgUrl + userMoreInfo.imageName, name: "正面" }, { src: imgUrl + userMoreInfo.backImageName, name: "反面" }, { src: imgUrl + userMoreInfo.livingIdentificationImagePath, name: "活体识别" }, { src: imgUrl + userMoreInfo.signImageName, name: "手签名" } ];
-            if(vm.source==8){
-                // if(vm.list.hasOwnProperty('reqParam')){
-                //     vm.imgData.push({ src: imgUrl + vm.list.reqParam.handImageName, name: "手持/免冠照" });                
-                // }else{
-                //     vm.imgData.push({ src: '', name: "手持/免冠照" });                
-                // }
-                vm.imgData.push({ src: imgUrl + userMoreInfo.handImageName, name: "手持/免冠照" });
-            }
+          vm.userMoreInfo = userMoreInfo;
+          vm.imgData = [
+            { src: imgUrl + userMoreInfo.imageName, name: "正面" },
+            { src: imgUrl + userMoreInfo.backImageName, name: "反面" },
+            {
+              src: imgUrl + userMoreInfo.livingIdentificationImagePath,
+              name: "活体识别"
+            },
+            { src: imgUrl + userMoreInfo.signImageName, name: "手签名" }
+          ];
+          if (vm.source == 8) {
+            // if(vm.list.hasOwnProperty('reqParam')){
+            //     vm.imgData.push({ src: imgUrl + vm.list.reqParam.handImageName, name: "手持/免冠照" });
+            // }else{
+            //     vm.imgData.push({ src: '', name: "手持/免冠照" });
+            // }
+            vm.imgData.push({
+              src: imgUrl + userMoreInfo.handImageName,
+              name: "手持/免冠照"
+            });
+          }
         } else {
-            vm.imgData = [ { src: "", name: "正面" }, { src: "", name: "反面" }, { src: "", name: "活体识别" }, { src: "", name: "手签名" } ];
+          vm.imgData = [
+            { src: "", name: "正面" },
+            { src: "", name: "反面" },
+            { src: "", name: "活体识别" },
+            { src: "", name: "手签名" }
+          ];
         }
       } else {
         vm.imgData = [
-            { src: vm.list.handImageUrl, name: "手持/免冠" },
-            { src: vm.list.imageUrl, name: "正面" },
-            { src: vm.list.backImageUrl, name: "反面" },
-            { src: vm.list.livingImg, name: "活体识别" },
-            { src: vm.list.signImageUrl, name: "手签名" },
-            { src: vm.list.headImageName, name: "证件照片" }
+          { src: vm.list.handImageUrl, name: "手持/免冠" },
+          { src: vm.list.imageUrl, name: "正面" },
+          { src: vm.list.backImageUrl, name: "反面" },
+          { src: vm.list.livingImg, name: "活体识别" },
+          { src: vm.list.signImageUrl, name: "手签名" },
+          { src: vm.list.headImageName, name: "证件照片" }
         ];
       }
 
       if (vm.type == 2) {
         //已审核
         if (vm.source == 7) {
-            let imgUrl = _CONFIG[_CONFIG.env].SDK_IMAGE_URL;
-            if (vm.list.acceptanceImg) {
-                vm.imgData.push({ src: imgUrl + vm.list.acceptanceImg, name: "受理单" });
-            } else {
-                vm.imgData.push({ src: "", name: "受理单" });
-            }
+          let imgUrl = _CONFIG[_CONFIG.env].SDK_IMAGE_URL;
+          if (vm.list.acceptanceImg) {
+            vm.imgData.push({
+              src: imgUrl + vm.list.acceptanceImg,
+              name: "受理单"
+            });
+          } else {
+            vm.imgData.push({ src: "", name: "受理单" });
+          }
         } else {
-            if (vm.source == 8) {
-                let imgUrl = _CONFIG[_CONFIG.env].TF_IMAGE_URL;
-                vm.imgData.push({ src: imgUrl + vm.list.acceptanceImg, name: "受理单" });
-            } else {
-                vm.imgData.push({ src: vm.list.acceptanceImg, name: "受理单" });
-            }
+          if (vm.source == 8) {
+            let imgUrl = _CONFIG[_CONFIG.env].TF_IMAGE_URL;
+            vm.imgData.push({
+              src: imgUrl + vm.list.acceptanceImg,
+              name: "受理单"
+            });
+          } else {
+            vm.imgData.push({ src: vm.list.acceptanceImg, name: "受理单" });
+          }
         }
       }
     }
   },
   methods: {
     toMap() {
-      var w = document.documentElement.clientWidth, url = "", vm = this;
+      var w = document.documentElement.clientWidth,
+        url = "",
+        vm = this;
       let latitude = parseFloat(vm.list.latitude);
       let longitude = parseFloat(vm.list.longitude);
       if (vm.source == 8) {
         latitude = parseFloat(vm.userMoreInfo.latitude);
         longitude = parseFloat(vm.userMoreInfo.longitude);
       }
-      w < 640 ? (url = "http://map.baidu.com/mobile/?latlng=" + latitude + "," + longitude + "") : (url = "http://map.baidu.com/?latlng=" + latitude + "," + longitude + "");
+      w < 640
+        ? (url =
+            "http://map.baidu.com/mobile/?latlng=" +
+            latitude +
+            "," +
+            longitude +
+            "")
+        : (url =
+            "http://map.baidu.com/?latlng=" + latitude + "," + longitude + "");
       window.open(url);
     },
     close() {
-        let vmp = this.$parent;
-        vmp.off.details = false;
-        vmp.off.searchlist = true;
+      let vmp = this.$parent;
+      vmp.off.details = false;
+      vmp.off.searchlist = true;
     },
     detailsTime() {
       //用时信息
@@ -509,26 +592,58 @@ export default {
         "km-ecs/w/handler/query"
       )
         .then(data => {
-          var list_item = data.data.list[0], str = "", str2 = "";
+          var list_item = data.data.list[0],
+            str = "",
+            str2 = "";
           if (list_item) {
             if (list_item.card_type == 1) {
-              str += `<li class="clr"><div class="fl">实时审核时间：</div><div class="fright">${ vm.getDateTime(list_item.time_real_audited)[6] }</div></li>`;
-              str2 += `<li class="clr"><div class="fl">开卡保存订单时间：</div><div class="fright">${ vm.getDateTime(list_item.time_save_order)[6] }</div></li>`;
+              str += `<li class="clr"><div class="fl">实时审核时间：</div><div class="fright">${
+                vm.getDateTime(list_item.time_real_audited)[6]
+              }</div></li>`;
+              str2 += `<li class="clr"><div class="fl">开卡保存订单时间：</div><div class="fright">${
+                vm.getDateTime(list_item.time_save_order)[6]
+              }</div></li>`;
             } else if (list_item.card_type == 2) {
-              str += `<li class="clr"><div class="fl">开户成功时间：</div><div class="fright">${ vm.getDateTime(list_item.time_serverice_open)[6] }</div></li>`;
+              str += `<li class="clr"><div class="fl">开户成功时间：</div><div class="fright">${
+                vm.getDateTime(list_item.time_serverice_open)[6]
+              }</div></li>`;
             }
             layer.open({
               content: `<ul class="f-scroll-lt lay-details">
-						<li class="clr"><div class="fl">生成时间：</div><div class="fright">${ vm.getDateTime(list_item.time_create_order)[6] }</div></li>
-						<li class="clr"><div class="fl">保存套餐时间：</div><div class="fright">${ vm.getDateTime(list_item.time_set_business)[6] }</div></li>
-						<li class="clr"><div class="fl">保存身份信息时间：</div><div class="fright">${ vm.getDateTime(list_item.time_set_user_info)[6] }</div></li>
-						<li class="clr"><div class="fl">支付时间：</div><div class="fright">${ vm.getDateTime(list_item.time_payed)[6] }</div></li>
-						<li class="clr"><div class="fl">自动审核时间：</div><div class="fright">${ vm.getDateTime(list_item.time_auto_audited)[6] }</div></li>${str} <li class="clr"><div class="fl">受理单提交时间：</div><div class="fright">${ vm.getDateTime(list_item.time_accepted)[6] }</div></li>
-						<li class="clr"><div class="fl">请求IMSI时间：</div><div class="fright">${ vm.getDateTime(list_item.time_imsi_request)[6] }</div></li>
-						<li class="clr"><div class="fl">拿到IMSI时间：</div><div class="fright">${ vm.getDateTime(list_item.time_imsi_got)[6] }</div></li>
-						<li class="clr"><div class="fl">提交写卡结果时间：</div><div class="fright">${ vm.getDateTime(list_item.time_write_card)[6] }</div></li>${str2} <li class="clr"><div class="fl">提交到BOSS时间：</div><div class="fright">${ vm.getDateTime(list_item.time_submit_order)[6] }</div></li>
-						<li class="clr"><div class="fl">开卡异步结果时间：</div><div class="fright">${ vm.getDateTime(list_item.time_order_result)[6] }</div></li>
-                        <li class="clr"><div class="fl">事后审核时间：</div><div class="fright">${ vm.getDateTime(list_item.time_after_audit)[6] }</div></li>
+						<li class="clr"><div class="fl">生成时间：</div><div class="fright">${
+              vm.getDateTime(list_item.time_create_order)[6]
+            }</div></li>
+						<li class="clr"><div class="fl">保存套餐时间：</div><div class="fright">${
+              vm.getDateTime(list_item.time_set_business)[6]
+            }</div></li>
+						<li class="clr"><div class="fl">保存身份信息时间：</div><div class="fright">${
+              vm.getDateTime(list_item.time_set_user_info)[6]
+            }</div></li>
+						<li class="clr"><div class="fl">支付时间：</div><div class="fright">${
+              vm.getDateTime(list_item.time_payed)[6]
+            }</div></li>
+						<li class="clr"><div class="fl">自动审核时间：</div><div class="fright">${
+              vm.getDateTime(list_item.time_auto_audited)[6]
+            }</div></li>${str} <li class="clr"><div class="fl">受理单提交时间：</div><div class="fright">${
+                vm.getDateTime(list_item.time_accepted)[6]
+              }</div></li>
+						<li class="clr"><div class="fl">请求IMSI时间：</div><div class="fright">${
+              vm.getDateTime(list_item.time_imsi_request)[6]
+            }</div></li>
+						<li class="clr"><div class="fl">拿到IMSI时间：</div><div class="fright">${
+              vm.getDateTime(list_item.time_imsi_got)[6]
+            }</div></li>
+						<li class="clr"><div class="fl">提交写卡结果时间：</div><div class="fright">${
+              vm.getDateTime(list_item.time_write_card)[6]
+            }</div></li>${str2} <li class="clr"><div class="fl">提交到BOSS时间：</div><div class="fright">${
+                vm.getDateTime(list_item.time_submit_order)[6]
+              }</div></li>
+						<li class="clr"><div class="fl">开卡异步结果时间：</div><div class="fright">${
+              vm.getDateTime(list_item.time_order_result)[6]
+            }</div></li>
+                        <li class="clr"><div class="fl">事后审核时间：</div><div class="fright">${
+                          vm.getDateTime(list_item.time_after_audit)[6]
+                        }</div></li>
                         </ul>`,
               type: 0,
               title: "开卡时间详情",
@@ -548,20 +663,23 @@ export default {
     },
     detailsOrder: function() {
       //开卡订单详情
-      var vm = this,url;
-      if (vm.detailsSource == 8||vm.detailsSource==7) {
+      var vm = this,
+        url;
+      if (vm.detailsSource == 8 || vm.detailsSource == 7) {
         url = "km-ecs/w/audit/tfopenCardInfo";
       } else {
         url = "km-ecs/w/audit/openCardInfo";
       }
       reqCommonMethod({ transactionId: vm.list.orderId }, false, url)
         .then(data => {
-          var list = data.data, str = "", payed = "";
+          var list = data.data,
+            str = "",
+            payed = "";
           if (list.optionalPackage instanceof Array === false) {
             list.optionalPackage = list.optionalPackage.split(",");
           }
           for (let i in list.optionalPackage) {
-            if (vm.detailsSource == "8"||vm.detailsSource == "7") {
+            if (vm.detailsSource == "8" || vm.detailsSource == "7") {
               str += "<p>" + list.optionalPackage[i] + "</p>";
             } else {
               str += "<p>" + list.optionalPackage[i].title + "</p>";
@@ -569,28 +687,84 @@ export default {
           }
           if (list.payed == 1) {
             payed +=
-              '<li class="clr"><div class="fl">实付价格：</div><div class="fright">' + (parseFloat(list.actualPrice) / 100).toFixed(2) + '元<b class="f-c-grey">（系统号码占用费' + (parseFloat(list.actualPrice_x) / 10000).toFixed(2) + "元+商家自定占用费" + (parseFloat(list.updPrice) / 100).toFixed(2) + "元+预存话费" + (parseFloat(list.actualPrice_y) / 10000).toFixed(2) + "元+实付首充预存" + (parseFloat(list.actualFirstCharge) / 10000).toFixed(2) + "元）</b></div></li>" +
-              '<li class="clr"><div class="fl">抵扣金额：</div><div class="fright">' + (parseFloat(list.deductionMoney) / 100).toFixed(2) + "元</div></li>" +
-              '<li class="clr"><div class="fl">开卡返佣：</div><div class="fright">' + (parseFloat(list.commission) / 100).toFixed(2) + '元<b class="f-c-grey">（系统号码占用费' + (parseFloat(list.commission_x) / 100).toFixed(2) + "元+商家自定占用费" + (parseFloat(list.updPrice) / 100).toFixed(2) + "元+预存话费" + (parseFloat(list.commission_y) / 100).toFixed(2) + "元）</b></div></li>" +
-              '<li class="clr"><div class="fl">支付模式：</div><div class="fright">' + list.payChannel + "</div></li>";
+              '<li class="clr"><div class="fl">实付价格：</div><div class="fright">' +
+              (parseFloat(list.actualPrice) / 100).toFixed(2) +
+              '元<b class="f-c-grey">（系统号码占用费' +
+              (parseFloat(list.actualPrice_x) / 10000).toFixed(2) +
+              "元+商家自定占用费" +
+              (parseFloat(list.updPrice) / 100).toFixed(2) +
+              "元+预存话费" +
+              (parseFloat(list.actualPrice_y) / 10000).toFixed(2) +
+              "元+实付首充预存" +
+              (parseFloat(list.actualFirstCharge) / 10000).toFixed(2) +
+              "元）</b></div></li>" +
+              '<li class="clr"><div class="fl">抵扣金额：</div><div class="fright">' +
+              (parseFloat(list.deductionMoney) / 100).toFixed(2) +
+              "元</div></li>" +
+              '<li class="clr"><div class="fl">开卡返佣：</div><div class="fright">' +
+              (parseFloat(list.commission) / 100).toFixed(2) +
+              '元<b class="f-c-grey">（系统号码占用费' +
+              (parseFloat(list.commission_x) / 100).toFixed(2) +
+              "元+商家自定占用费" +
+              (parseFloat(list.updPrice) / 100).toFixed(2) +
+              "元+预存话费" +
+              (parseFloat(list.commission_y) / 100).toFixed(2) +
+              "元）</b></div></li>" +
+              '<li class="clr"><div class="fl">支付模式：</div><div class="fright">' +
+              list.payChannel +
+              "</div></li>";
           }
-          if (vm.detailsSource == "8"||vm.detailsSource == "7") {
+          if (vm.detailsSource == "8" || vm.detailsSource == "7") {
             layer.open({
               content:
                 '<ul class="f-scroll-lt lay-details">' +
-                '<li class="clr"><div class="fl">订单号：</div><div class="fright">' + list.sysOrderId + "</div></li>" +
-                '<li class="clr"><div class="fl">BOSS流水号：</div><div class="fright">' + list.transactionId + "</div></li>" +
-                '<li class="clr"><div class="fl">用户姓名：</div><div class="fright">' + list.userName + "</div></li>" +
-                '<li class="clr"><div class="fl">电话号码：</div><div class="fright">' + list.phoneNumber + '（<b class="f-c-grey">' + vm.$parent.translateData(5, list.bigNumberLevel) + "</b>，" + list.phoneHome + "）</div></li>" +
-                '<li class="clr"><div class="fl">ICCID：</div><div class="fright">' + list.iccid + "</div></li>" +
-                '<li class="clr"><div class="fl">IMSI卡号：</div><div class="fright">' + list.imsi + "</div></li>" +
-                '<li class="clr"><div class="fl">状态修改时间：</div><div class="fright">' + vm.getDateTime(list.modifyTime)[6] + "</div></li>" +
-                '<li class="clr"><div class="fl">选号费：</div><div class="fright">' + (parseFloat(list.cardMoney) / 100).toFixed(2) + "元</b></div></li>" + payed + '<li class="clr"><div class="fl">折后选号费：</div><div class="fright">' + (parseFloat(list.actualCardMoney) / 100).toFixed(2) + "元</div></li>" +
-                '<li class="clr"><div class="fl">预存话费：</div><div class="fright">' + (parseFloat(list.prestoreMoney) / 100).toFixed(2) + "元</div></li>" +
-                '<li class="clr"><div class="fl">折后预存：</div><div class="fright">' + (parseFloat(list.actualPrestoreMoney) / 100).toFixed(2) + "元</div></li>" +
-                '<li class="clr"><div class="fl">实际支付：</div><div class="fright">' + (parseFloat(list.actualMoney) / 100).toFixed(2) + "元</div></li>" +
-                '<li class="clr"><div class="fl">已选套餐：</div><div class="fright">' + list.tfPackageinfo + "</div></li>" +
-                '<li class="clr"><div class="fl">已选可选包：</div><div class="fright">' + str + "</div></li></ul>",
+                '<li class="clr"><div class="fl">订单号：</div><div class="fright">' +
+                list.sysOrderId +
+                "</div></li>" +
+                '<li class="clr"><div class="fl">BOSS流水号：</div><div class="fright">' +
+                list.transactionId +
+                "</div></li>" +
+                '<li class="clr"><div class="fl">用户姓名：</div><div class="fright">' +
+                list.userName +
+                "</div></li>" +
+                '<li class="clr"><div class="fl">电话号码：</div><div class="fright">' +
+                list.phoneNumber +
+                '（<b class="f-c-grey">' +
+                vm.$parent.translateData(5, list.bigNumberLevel) +
+                "</b>，" +
+                list.phoneHome +
+                "）</div></li>" +
+                '<li class="clr"><div class="fl">ICCID：</div><div class="fright">' +
+                list.iccid +
+                "</div></li>" +
+                '<li class="clr"><div class="fl">IMSI卡号：</div><div class="fright">' +
+                list.imsi +
+                "</div></li>" +
+                '<li class="clr"><div class="fl">状态修改时间：</div><div class="fright">' +
+                vm.getDateTime(list.modifyTime)[6] +
+                "</div></li>" +
+                '<li class="clr"><div class="fl">选号费：</div><div class="fright">' +
+                (parseFloat(list.cardMoney) / 100).toFixed(2) +
+                "元</b></div></li>" +
+                payed +
+                '<li class="clr"><div class="fl">折后选号费：</div><div class="fright">' +
+                (parseFloat(list.actualCardMoney) / 100).toFixed(2) +
+                "元</div></li>" +
+                '<li class="clr"><div class="fl">预存话费：</div><div class="fright">' +
+                (parseFloat(list.prestoreMoney) / 100).toFixed(2) +
+                "元</div></li>" +
+                '<li class="clr"><div class="fl">折后预存：</div><div class="fright">' +
+                (parseFloat(list.actualPrestoreMoney) / 100).toFixed(2) +
+                "元</div></li>" +
+                '<li class="clr"><div class="fl">实际支付：</div><div class="fright">' +
+                (parseFloat(list.actualMoney) / 100).toFixed(2) +
+                "元</div></li>" +
+                '<li class="clr"><div class="fl">已选套餐：</div><div class="fright">' +
+                list.tfPackageinfo +
+                "</div></li>" +
+                '<li class="clr"><div class="fl">已选可选包：</div><div class="fright">' +
+                str +
+                "</div></li></ul>",
               type: 0,
               title: "开卡订单详情",
               btn: 0,
@@ -629,8 +803,8 @@ export default {
                 (
                   parseFloat(list.price_x) / 100 +
                   parseFloat(list.price_y) / 100 +
-                  parseFloat(list.updPrice) / 100+
-                  parseFloat(list.firstCharge)/100
+                  parseFloat(list.updPrice) / 100 +
+                  parseFloat(list.firstCharge) / 100
                 ).toFixed(2) +
                 '元<b class="f-c-grey">（系统号码占用费' +
                 (parseFloat(list.price_x) / 100).toFixed(2) +
@@ -665,128 +839,184 @@ export default {
         })
         .catch(error => errorDeal(error));
     },
-    detailsPayOrder: function() {//支付订单详情
-        var vm = this;
-        if (vm.detailsSource == 8) {
-            reqCommonMethod( { opKey: "tf.orderApp.payInfo", params: ['pay_transaction_id="' + vm.list.payOrderId + '"'], pageSize: "10", pageNum: "-1" }, false, "km-ecs/w/handler/query" )
-            .then(data => {
-            var list = data.data.list[0],content;
+    detailsPayOrder: function() {
+      //支付订单详情
+      var vm = this;
+      if (vm.detailsSource == 8) {
+        reqCommonMethod(
+          {
+            opKey: "tf.orderApp.payInfo",
+            params: ['pay_transaction_id="' + vm.list.payOrderId + '"'],
+            pageSize: "10",
+            pageNum: "-1"
+          },
+          false,
+          "km-ecs/w/handler/query"
+        )
+          .then(data => {
+            var list = data.data.list[0],
+              content;
             content =
+              '<ul class="f-scroll-lt lay-details">' +
+              '<li class="clr"><div class="fl">支付流水号：</div><div class="fright">' +
+              list.pay_transaction_id +
+              "</div></li>" +
+              '<li class="clr"><div class="fl">第三方流水号：</div><div class="fright">' +
+              list.sys_order_id_pay +
+              "</div></li>" +
+              '<li class="clr"><div class="fl">支付账号：</div><div class="fright">' +
+              list.pay_user_id +
+              "</div></li>" +
+              '<li class="clr"><div class="fl">支付方式：</div><div class="fright">' +
+              list.payType +
+              "</div></li>" +
+              '<li class="clr"><div class="fl">支付金额：</div><div class="fright">' +
+              list.actual_money / 100 +
+              "元</div></li></ul>";
+            layer.open({
+              content: content,
+              type: 0,
+              title: "支付订单详情",
+              btn: 0,
+              style: "width:auto;"
+            });
+          })
+          .catch(e => errorDeal(e));
+      } else {
+        reqCommonMethod(
+          { payId: vm.list.payOrderId },
+          false,
+          "km-ecs/w/audit/payInfo"
+        )
+          .then(data => {
+            var list = data.data;
+            layer.open({
+              content:
                 '<ul class="f-scroll-lt lay-details">' +
-                '<li class="clr"><div class="fl">支付流水号：</div><div class="fright">' +
-                list.pay_transaction_id +
+                '<li class="clr"><div class="fl">系统流水号：</div><div class="fright">' +
+                list.sysPayId +
                 "</div></li>" +
                 '<li class="clr"><div class="fl">第三方流水号：</div><div class="fright">' +
-                list.sys_order_id_pay +
+                list.payId +
                 "</div></li>" +
-                '<li class="clr"><div class="fl">支付账号：</div><div class="fright">' +
-                list.pay_user_id +
+                '<li class="clr"><div class="fl">支付渠道：</div><div class="fright">' +
+                list.payChannel +
                 "</div></li>" +
                 '<li class="clr"><div class="fl">支付方式：</div><div class="fright">' +
                 list.payType +
                 "</div></li>" +
                 '<li class="clr"><div class="fl">支付金额：</div><div class="fright">' +
-                list.actual_money / 100 +
-                "元</div></li></ul>";
-            layer.open({
-                content: content,
-                type: 0,
-                title: "支付订单详情",
-                btn: 0,
-                style: "width:auto;"
+                list.payMoney +
+                "元</div></li></ul>",
+              type: 0,
+              title: "支付订单详情",
+              btn: 0,
+              style: "width:auto;"
             });
-            })
-            .catch(e => errorDeal(e));
-        } else {
-            reqCommonMethod({ payId: vm.list.payOrderId }, false, "km-ecs/w/audit/payInfo")
-            .then(data => {
-                var list = data.data;
-                layer.open({
-                    content:
-                    '<ul class="f-scroll-lt lay-details">' + '<li class="clr"><div class="fl">系统流水号：</div><div class="fright">' + list.sysPayId + "</div></li>" +
-                    '<li class="clr"><div class="fl">第三方流水号：</div><div class="fright">' + list.payId + "</div></li>" +
-                    '<li class="clr"><div class="fl">支付渠道：</div><div class="fright">' + list.payChannel + "</div></li>" +
-                    '<li class="clr"><div class="fl">支付方式：</div><div class="fright">' + list.payType + "</div></li>" +
-                    '<li class="clr"><div class="fl">支付金额：</div><div class="fright">' + list.payMoney + "元</div></li></ul>",
-                    type: 0,
-                    title: "支付订单详情",
-                    btn: 0,
-                    style: "width:auto;"
-                });
-            })
-            .catch(error => errorDeal(error));
-        }
+          })
+          .catch(error => errorDeal(error));
+      }
     },
     detailsUser: function() {
-        //操作者详情
-        var vm = this;
-        reqCommonMethod({ userId: vm.list.operatorId }, false, "km-ecs/w/audit/getUserInfo")
+      //操作者详情
+      var vm = this;
+      reqCommonMethod(
+        { userId: vm.list.operatorId },
+        false,
+        "km-ecs/w/audit/getUserInfo"
+      )
         .then(data => {
-            vm.detailsList = data.data;
-            vm.isShowDetails = true;
-            vm.typeDetails = 1;
+          vm.detailsList = data.data;
+          vm.isShowDetails = true;
+          vm.typeDetails = 1;
         })
         .catch(error => errorDeal(error));
     },
-    detailsMerchant: function() {//商户详情
-        var vm = this;
-        reqCommonMethod({dealerId:vm.list.dealerId},false,"km-ecs/w/audit/getMerchantInfo")
+    detailsMerchant: function() {
+      //商户详情
+      var vm = this;
+      reqCommonMethod(
+        { dealerId: vm.list.dealerId },
+        false,
+        "km-ecs/w/audit/getMerchantInfo"
+      )
         .then(data => {
-            vm.detailsList = data.data;
-            vm.isShowDetails = true;
-            vm.typeDetails = 2;
+          vm.detailsList = data.data;
+          vm.isShowDetails = true;
+          vm.typeDetails = 2;
         })
         .catch(error => errorDeal(error));
     },
-    autoAuditInfo(){//自动审核详情
-        var vm = this,
-            orderId = vm.list.orderId;
-        if (vm.list.sysOrderId) {
-            orderId = vm.list.sysOrderId;
+    autoAuditInfo() {
+      //自动审核详情
+      var vm = this,
+        orderId = vm.list.orderId;
+      if (vm.list.sysOrderId) {
+        orderId = vm.list.sysOrderId;
+      }
+      const transferStyle = (i1, i2) => {
+        if (i2.indexOf("成功") > -1) {
+          return "fCGreen";
+        } else if (i2.indexOf("失败") > -1) {
+          return "fCRed";
         }
-        const transferStyle = (i1,i2)=>{
-            if(i2.indexOf('成功')>-1){
-                return 'fCGreen'
-            }else if(i2.indexOf('失败')>-1){
-                return 'fCRed'
-            }
-            if(i1.indexOf('审核结果')>-1){
-                if(i2.indexOf('同意')>-1){
-                    return 'fCGreen'
-                }else if(i2.indexOf('拒绝')>-1){
-                    return 'fCRed'
-                }else if(i2.indexOf('转人工')>-1){
-                    return 'fCBlue'
+        if (i1.indexOf("审核结果") > -1) {
+          if (i2.indexOf("同意") > -1) {
+            return "fCGreen";
+          } else if (i2.indexOf("拒绝") > -1) {
+            return "fCRed";
+          } else if (i2.indexOf("转人工") > -1) {
+            return "fCBlue";
+          }
+        }
+      };
+      reqCommonMethod(
+        { sysOrderId: orderId },
+        false,
+        "km-ecs/w/audit/autoAuditDesc"
+      )
+        .then(data => {
+          let detailslist = data.data.checkList,
+            content = `<li style="text-align:left" class="clr"><span>**识别模式**</span><span> (A:识别仪 , B:OCR , C:活体) </span></li>
+            <li class="clr"><div class="fl tl autoAudit">本次识别模式</div><div class="fright"> : ${
+              data.data.mode
+            }</div></li>`;
+          for (let i = 0; i < detailslist.length; i++) {
+            Object.keys(detailslist[i]).forEach(key => {
+              if (key != "mode") {
+                if (
+                  detailslist[i].hasOwnProperty("mode") &&
+                  detailslist[i].mode != ""
+                ) {
+                  content += `<li class="clr"><div class="fl tl autoAudit">${key}（${
+                    detailslist[i]["mode"]
+                  }）</div><div class="fright"> : <span class="${transferStyle(
+                    key,
+                    detailslist[i][key]
+                  )}">${detailslist[i][key]}</span> </div></li>`;
+                } else {
+                  content += `<li class="clr"><div class="fl tl autoAudit">${key}</div><div class="fright"> : <span class="${transferStyle(
+                    key,
+                    detailslist[i][key]
+                  )}">${detailslist[i][key]}</span> </div></li>`;
                 }
-            }
-        }
-        reqCommonMethod({sysOrderId:orderId},false,"km-ecs/w/audit/autoAuditDesc")
-        .then(data => {
-            let detailslist = data.data.checkList, content=`<li style="text-align:left" class="clr"><span>**识别模式**</span><span> (A:识别仪 , B:OCR , C:活体) </span></li>
-            <li class="clr"><div class="fl tl autoAudit">本次识别模式</div><div class="fright"> : ${data.data.mode}</div></li>`;
-            for(let i=0;i<detailslist.length;i++){
-                Object.keys(detailslist[i]).forEach((key)=>{
-                    if(key!="mode"){
-                        if(detailslist[i].hasOwnProperty('mode')&&detailslist[i].mode!=""){
-                            content+=`<li class="clr"><div class="fl tl autoAudit">${key}（${detailslist[i]['mode']}）</div><div class="fright"> : <span class="${transferStyle(key,detailslist[i][key])}">${detailslist[i][key]}</span> </div></li>`
-                        }else{
-                            content+=`<li class="clr"><div class="fl tl autoAudit">${key}</div><div class="fright"> : <span class="${transferStyle(key,detailslist[i][key])}">${detailslist[i][key]}</span> </div></li>`
-                        }
-                    }
-                })
-            }
-            detailslist? layer.open({
+              }
+            });
+          }
+          detailslist
+            ? layer.open({
                 content: `<ul class="f-scroll-lt lay-details o-fl-w">${content}</ul>`,
                 type: 0,
                 title: "自动审核详情",
                 btn: 0,
                 style: "width:auto;"
-            }):layer.open({
+              })
+            : layer.open({
                 content: "未查到审核信息",
                 skin: "msg",
                 time: 4,
                 msgSkin: "error"
-            });
+              });
         })
         .catch(error => errorDeal(error));
     },
@@ -875,9 +1105,9 @@ export default {
         .catch(error => errorDeal(error));
     },
     filterReason: function(reason) {
-        if(reason==null){
-            return false;
-        }
+      if (reason == null) {
+        return false;
+      }
       var reasonArr = reason.split("|"),
         str = [];
       var starReason = [
@@ -912,7 +1142,14 @@ export default {
 };
 </script>
 <style>
-    .supIcon { color: #ff961e; }
-    label.active{color: #4b8cd6}
-    .m-audit-btn{position: absolute;right: 200px;}
+.supIcon {
+  color: #ff961e;
+}
+label.active {
+  color: #4b8cd6;
+}
+.m-audit-btn {
+  position: absolute;
+  right: 200px;
+}
 </style>

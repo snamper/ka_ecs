@@ -184,8 +184,14 @@
                                         <p v-if="detailsEmpty.safe_type==1&&off.changePhone==false">是（{{detailsEmpty.safe_phone||'--'}}）</p>
                                         <p v-if="detailsEmpty.safe_type==1&&off.changePhone==true" class="m-changePhone">是<input ref="changePhone1" v-focus maxlength="11" type="text" v-model="detailsEmpty.safe_phone"><span @click="fcloseChange"></span><button @click="fchangePhone('2')">确定</button></p>
                                         <p v-if="detailsEmpty.safe_type==0">否</p>
-                                        <p v-if="detailsEmpty.safe_type!=1&&detailsEmpty.safe_type!=2">--</p>
+                                        <!-- <p v-if="detailsEmpty.safe_type!=1&&detailsEmpty.safe_type!=2">--</p> -->
                                     </td>
+                                </tr>
+                                <tr>
+                                    <td>制卡方式：</td>   
+                                    <td>{{translateData(19,detailsEmpty.app_type)}}</td>
+                                    <td></td>
+                                    <td></td>
                                 </tr>
                             </tbody>
                         </table>

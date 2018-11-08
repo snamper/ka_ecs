@@ -4,15 +4,15 @@
   *@date 2017-11-6
 * *-->
 <style scoped>
-  .form-c.o-no-bgc>.row .text{
-  	width: auto;
-  }
-  .m-sub-page>.fl{
-  	padding: 20px;
-  }
-  .m-sub-page>.fl>.f-btn{
-  	padding: 8px;
-  }
+.form-c.o-no-bgc > .row .text {
+  width: auto;
+}
+.m-sub-page > .fl {
+  padding: 20px;
+}
+.m-sub-page > .fl > .f-btn {
+  padding: 8px;
+}
 </style>
 <template>
 <section class="g-search-menu">
@@ -78,6 +78,14 @@
 					<label><span class="radio"><input type="radio" value="0" v-model="form.opType"><span></span></span><span class="text">全部</span></label>
 					<label><span class="radio"><input type="radio" value="1" v-model="form.opType"><span></span></span><span class="text">开通权限</span></label>
 					<label><span class="radio"><input type="radio" value="2" v-model="form.opType"><span></span></span><span class="text">扩展区域</span></label>
+				</div>
+			</div>
+			<div class="row">
+				<span class="dp">归属商户：</span>
+				<div class="m-form-radio">
+					<label><span class="radio"><input type="radio" value="0" v-model="form.merchants"><span></span></span><span class="text">全部</span></label>
+					<label><span class="radio"><input type="radio" value="1" v-model="form.merchants"><span></span></span><span class="text">卡盟</span></label>
+					<label><span class="radio"><input type="radio" value="2" v-model="form.merchants"><span></span></span><span class="text">喜牛</span></label>
 				</div>
 			</div>
 			<button class="f-btn f-btn-line" @click="searchList(2)">查询</button>
@@ -198,164 +206,179 @@
 </template>
 <script>
 import "../../../assets/km/css/search.css";
-import {reqCommonMethod} from "../../../config/service.js";
-import {errorDeal} from "../../../config/utils.js";
+import { reqCommonMethod } from "../../../config/service.js";
+import { errorDeal } from "../../../config/utils.js";
 import pagination from "../../../componentskm/page.vue";
 import details from "../../../componentskm/merchantAuditOrderDetails.vue";
 import { getDateTime } from "../../../config/utils.js";
-export default{
-	data (){
-		return {
-			off:{
-				type:1,//1，待审核；2，已审核
-				isLoad:0,//加载条
-                details:0,//详情页面开关
-                number:'',
-			},
-			form:{
-				orderId:'',//订单号码
-				status:0,//订单状态
-				type:0,//业务范围
-				customerPhone:'',//审核人ID
-				dealerId:'',//商户号
-				userPhone:'',//申请人ID
-				startTime:'',
-				endTime:'',
-                select:6,//条件查询，选择的条件
-                opType:0,//操作类型
-			},
-			list:'',//列表数据
-			detailsData:'',//详情数据
-			total:0,//总查询条数
-			pageNum:1,//当前页数
-			pageSize:10,//显示条数
-			maxpage:1,//最大页数
-			callback:Function//page组件点击回调
-		}
-	},
-	components:{
-		'my-page':pagination,
-		'list-details':details
-	},
-	created:function(){
-		this.init();
-	},
-	methods:{
-		init:function(){
-			var vm=this,type=this.$route.params.type;
-			type=='auditing' ? (vm.off.type=1,vm.form.status=1) : (vm.off.type=2,vm.form.status=0);
-			vm.form.startTime=laydate.now(0,'YYYY-MM-DD 00:00:00');
-			vm.form.endTime=laydate.now(0,'YYYY-MM-DD 23:59:59');
-		},
-		searchList(index,page){//充值订单
-			var vm=this,url,json={"pageSize":vm.pageSize,"pageNum":page||1,"startTime":vm.form.startTime,"endTime":vm.form.endTime,"operateType":vm.form.opType,"status":vm.form.status,'type':vm.form.type,'orderId':'','customerPhone':vm.form.customerPhone,'dealerId':'','userPhone':''};
-			if(index=='order'){
-				if(vm.form.orderId.length==0){
-					layer.open({
-			            content:'请输入订单号码',
-			            skin: 'msg',
-			            time: 2,
-			            msgSkin:'error',
-			        });
-			        return false;
-				}
-				json.orderId=vm.form.orderId;
-			}else if(index==2){
-				json.dealerId=vm.form.dealerId;
-				json.userPhone=vm.form.userPhone;
-				if(vm.form.select==1){
-					// if(vm.form.dealerId.length==0){
-					// 	layer.open({
-				 //            content:'请输入查询的商户ID',
-				 //            skin: 'msg',
-				 //            time: 2,
-				 //            msgSkin:'error',
-				 //        });
-				 //        return false;
-				 //    }else{
-				 //    	json.dealerId=vm.form.dealerId;
-				 //    }
-					// json.dealerId=vm.form.dealerId;			 	
-				}else if(vm.form.select==2){
-					// if(vm.form.userPhone.length==0){
-					// 	layer.open({
-				 //            content:'请输入查询的申请人ID',
-				 //            skin: 'msg',
-				 //            time: 2,
-				 //            msgSkin:'error',
-				 //        });
-				 //        return false;
-				 //    }else{
-				 //    	json.userPhone=vm.form.userPhone;
-				 //    }
-				 //    json.userPhone=vm.form.userPhone;
-				}
-			}
-			if(vm.off.isLoad)return false;
-			vm.off.isLoad=true;
-			// vm.AJAX('w/attribute/search',json,function(data){
-			// 	vm.list=data.data.list;
-			// 	vm.total=data.data.total;
-			// 	vm.maxpage=Math.ceil(parseInt(data.data.total)/10);
-			// 	vm.pageNum=page||1;
-			// 	vm.callback=function(v){vm.searchList(index,v)};
-			// },function(){
-			// 	vm.off.isLoad=false;
-            // });
-            reqCommonMethod(json,function(){vm.off.isLoad=false;},"km-ecs/w/attribute/search")
-            .then((data)=>{
-                vm.list=data.data.list;
-				vm.total=data.data.total;
-				vm.maxpage=Math.ceil(parseInt(data.data.total)/10);
-				vm.pageNum=page||1;
-                vm.callback=function(v){vm.searchList(index,v)};
-                vm.off.isLoad=false
-            }).catch(error=>errorDeal(error)); 	
-		},
-		details:function(e){//详情
-			var vm=this,url,orderId=e.target.name;
-			
-			if(vm.off.isLoad)return false;
-			vm.off.isLoad=true;
-			// vm.AJAX('w/attribute/detail',{"orderId":orderId},function(data){
-			// 	vm.detailsData=data.data;
-			// 	vm.off.details=true;
-			// },function(){
-			// 	vm.off.isLoad=false;
-            // });
-             reqCommonMethod({"orderId":orderId},function(){vm.off.isLoad=false;},"km-ecs/w/attribute/detail")
-             .then((data)=>{
-                vm.detailsData=data.data;
-                for(let i=0;i<vm.list.length;i++){
-                    if(vm.list[i].orderId==orderId){
-                        vm.off.number=i;
-                    }
-                };
-                vm.off.details=true;
-                vm.off.isLoad=false;
-             }).catch(error=>errorDeal(error)); 	
-		},
-		downLoadList:function(){//导出EXCEL
-			var vm=this,json={"startTime":vm.form.startTime,"endTime":vm.form.endTime,"status":vm.form.status,'type':vm.form.type,'orderId':'','customerPhone':vm.form.customerPhone,'dealerId':vm.form.dealerId,'userPhone':vm.form.userPhone};
-			vm.AJAX('km-ecs/w/attribute/attributeLoad',json,function(data){
-				document.getElementById('loadIframe').src=data.data.url;
-			});
-		},
-		to_laydate:function(v){
-			var vm=this;
-			laydate({
-				istime:true,
-				format: 'YYYY-MM-DD hh:mm:ss',
-				isclear: false,
-				choose: function(dates){ //选择好日期的回调
-					v==1 ? vm.form.startTime=dates : vm.form.endTime=dates;
-				}
-			});
-		},
-		getDateTime(v){
-			return getDateTime(v);
-		}
-	}
-}
+export default {
+  data() {
+    return {
+      off: {
+        type: 1, //1，待审核；2，已审核
+        isLoad: 0, //加载条
+        details: 0, //详情页面开关
+        number: ""
+      },
+      form: {
+        orderId: "", //订单号码
+        status: 0, //订单状态
+        type: 0, //业务范围
+        customerPhone: "", //审核人ID
+        dealerId: "", //商户号
+        userPhone: "", //申请人ID
+        startTime: "",
+        endTime: "",
+        select: 6, //条件查询，选择的条件
+        opType: 0, //操作类型
+        merchants: 0
+      },
+      list: "", //列表数据
+      detailsData: "", //详情数据
+      total: 0, //总查询条数
+      pageNum: 1, //当前页数
+      pageSize: 10, //显示条数
+      maxpage: 1, //最大页数
+      callback: Function //page组件点击回调
+    };
+  },
+  components: {
+    "my-page": pagination,
+    "list-details": details
+  },
+  created: function() {
+    this.init();
+  },
+  methods: {
+    init: function() {
+      var vm = this,
+        type = this.$route.params.type;
+      type == "auditing"
+        ? ((vm.off.type = 1), (vm.form.status = 1))
+        : ((vm.off.type = 2), (vm.form.status = 0));
+      vm.form.startTime = laydate.now(0, "YYYY-MM-DD 00:00:00");
+      vm.form.endTime = laydate.now(0, "YYYY-MM-DD 23:59:59");
+    },
+    searchList(index, page) {
+      //充值订单
+      var vm = this,
+        url,
+        json = {
+          pageSize: vm.pageSize,
+          pageNum: page || 1,
+          startTime: vm.form.startTime,
+          endTime: vm.form.endTime,
+          operateType: vm.form.opType,
+          status: vm.form.status,
+          type: vm.form.type,
+          orderId: "",
+          customerPhone: vm.form.customerPhone,
+          dealerId: "",
+		  userPhone: "",
+		  merchType: vm.form.merchants
+        };
+      if (index == "order") {
+        if (vm.form.orderId.length == 0) {
+          layer.open({
+            content: "请输入订单号码",
+            skin: "msg",
+            time: 2,
+            msgSkin: "error"
+          });
+          return false;
+        }
+        json.orderId = vm.form.orderId;
+      } else if (index == 2) {
+        json.dealerId = vm.form.dealerId;
+        json.userPhone = vm.form.userPhone;
+      }
+      if (vm.off.isLoad) return false;
+      vm.off.isLoad = true;
+      reqCommonMethod(
+        json,
+        function() {
+          vm.off.isLoad = false;
+        },
+        "km-ecs/w/attribute/search"
+      )
+        .then(data => {
+          vm.list = data.data.list;
+          vm.total = data.data.total;
+          vm.maxpage = Math.ceil(parseInt(data.data.total) / 10);
+          vm.pageNum = page || 1;
+          vm.callback = function(v) {
+            vm.searchList(index, v);
+          };
+          vm.off.isLoad = false;
+        })
+        .catch(error => errorDeal(error));
+    },
+    details: function(e) {
+      //详情
+      var vm = this,
+        url,
+        orderId = e.target.name;
+
+      if (vm.off.isLoad) return false;
+      vm.off.isLoad = true;
+      // vm.AJAX('w/attribute/detail',{"orderId":orderId},function(data){
+      // 	vm.detailsData=data.data;
+      // 	vm.off.details=true;
+      // },function(){
+      // 	vm.off.isLoad=false;
+      // });
+      reqCommonMethod(
+        { orderId: orderId },
+        function() {
+          vm.off.isLoad = false;
+        },
+        "km-ecs/w/attribute/detail"
+      )
+        .then(data => {
+          vm.detailsData = data.data;
+          for (let i = 0; i < vm.list.length; i++) {
+            if (vm.list[i].orderId == orderId) {
+              vm.off.number = i;
+            }
+          }
+          vm.off.details = true;
+          vm.off.isLoad = false;
+        })
+        .catch(error => errorDeal(error));
+    },
+    downLoadList: function() {
+      //导出EXCEL
+      var vm = this,
+        json = {
+          startTime: vm.form.startTime,
+          endTime: vm.form.endTime,
+          status: vm.form.status,
+          type: vm.form.type,
+          orderId: "",
+          customerPhone: vm.form.customerPhone,
+          dealerId: vm.form.dealerId,
+          userPhone: vm.form.userPhone
+        };
+      vm.AJAX("km-ecs/w/attribute/attributeLoad", json, function(data) {
+        document.getElementById("loadIframe").src = data.data.url;
+      });
+    },
+    to_laydate: function(v) {
+      var vm = this;
+      laydate({
+        istime: true,
+        format: "YYYY-MM-DD hh:mm:ss",
+        isclear: false,
+        choose: function(dates) {
+          //选择好日期的回调
+          v == 1 ? (vm.form.startTime = dates) : (vm.form.endTime = dates);
+        }
+      });
+    },
+    getDateTime(v) {
+      return getDateTime(v);
+    }
+  }
+};
 </script>
 

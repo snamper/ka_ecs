@@ -23,6 +23,14 @@
 		</section>
 		<section class="form-c">
 			<div class="row">
+				<span class="dp">归属商户：</span>
+				<div class="m-form-radio">
+					<label><span class="radio"><input value="0" type="radio" v-model="form.merchants"><span></span></span><span class="text">全部</span></label>
+					<label><span class="radio"><input value="1" type="radio" v-model="form.merchants"><span></span></span><span class="text">卡盟</span></label>
+					<label><span class="radio"><input value="2" type="radio" v-model="form.merchants"><span></span></span><span class="text">喜牛</span></label>
+				</div>
+			</div>
+			<div class="row">
 				<span class="dp">商户类型：</span>
 				<div class="m-form-radio">
 					<label><span class="radio"><input value="0" type="radio" v-model="form.merchantType"><span></span></span><span class="text">全部</span></label>
@@ -100,7 +108,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr v-for="(todo,index) in list">
+				<tr v-for="(todo,index) in list" :key="index">
 					<td>{{((pageNum-1)*10+(index+1))}}</td>
 					<td>{{todo.orderId}}</td>
 					<td>{{getDateTime(todo.createTime)[6]}}</td>
@@ -140,164 +148,193 @@
 	</div>
 	</section>
 	<!--详情-->
-	<list-details :list="detailsData" v-if="off.details" :orderType="form.orderType">
-
-	</list-details>
+	<list-details :list="detailsData" v-if="off.details" :orderType="form.orderType"></list-details>
   </div>
 </section>
 </template>
 <script>
-import {reqCommonMethod} from "../../../config/service.js";  
+import { reqCommonMethod } from "../../../config/service.js";
 import pagination from "../../../componentskm/page.vue";
 import details from "../../../componentskm/registMerchantOrderDetails.vue";
-import { getDateTime,getUnixTime ,errorDeal} from "../../../config/utils.js";
-export default{
-	data (){
-		return {
-			off:{
-				isLoad:0,//加载条
-				details:0,//详情页面开关
-			},
-			form:{
-				auditType:0,//审核方式
-				orderType:1,//1,待审核；2，已审核
-				merchantType:0,//1,企业；2，个人
-				orderStatus:0,//订单状态
-				context1:'',//订单号码
-				context2:'',//充值号码
-				startTime:'',
-				endTime:'',
-				select:0//条件查询，选择的条件
-			},
-			list:'',//查询数据
-			detailsData:'',//详情数据
-			total:0,//总查询条数
-			pageNum:1,//当前页数
-			pageSize:10,//显示条数
-			maxpage:1,//最大页数
-			callback:Function//page组件点击回调
-		}
-	},
-	components:{
-		'my-page':pagination,
-		'list-details':details
-	},
-	created:function(){
-		this.init()
-	},
-	methods:{
-		init:function(){
-			var vm=this;
+import { getDateTime, getUnixTime, errorDeal } from "../../../config/utils.js";
+export default {
+  data() {
+    return {
+      off: {
+        isLoad: 0, //加载条
+        details: 0 //详情页面开关
+      },
+      form: {
+        auditType: 0, //审核方式
+        orderType: 1, //1,待审核；2，已审核
+        merchantType: 0, //1,企业；2，个人
+        orderStatus: 0, //订单状态
+        context1: "", //订单号码
+        context2: "", //充值号码
+        startTime: "",
+        endTime: "",
+		select: 0 ,//条件查询，选择的条件
+		merchants:0,
+      },
+      list: "", //查询数据
+      detailsData: "", //详情数据
+      total: 0, //总查询条数
+      pageNum: 1, //当前页数
+      pageSize: 10, //显示条数
+      maxpage: 1, //最大页数
+      callback: Function //page组件点击回调
+    };
+  },
+  components: {
+    "my-page": pagination,
+    "list-details": details
+  },
+  created: function() {
+    this.init();
+  },
+  methods: {
+    init: function() {
+      var vm = this;
 
-			vm.form.startTime=laydate.now(0,'YYYY-MM-DD 00:00:00');
-			vm.form.endTime=laydate.now(0,'YYYY-MM-DD 23:59:59');
-		},
-		radioClick(){
-			this.form.select=0;
-		},
-		searchList:function(page){
-			var vm=this,select=vm.form.select,
-			   sql="A.create_time BETWEEN "+getUnixTime(vm.form.startTime)+" AND "+getUnixTime(vm.form.endTime)+"",
-			  json={"pageSize":vm.pageSize,"pageNum":page||1,"params":[],"opKey":"order.registerMerchant.list"};
-			let context=vm.form['context'+vm.form.select];
-			if(select==1&&(!context)){
-				layer.open({
-		            content:'请输入订单号码',
-		            skin: 'msg',
-		            time: 2,
-		            msgSkin:'error',
-		        });
-		        return false;
-			}else if(select==2&&context.length!=11){
-				layer.open({
-		            content:'申请人号码格式错误',
-		            skin: 'msg',
-		            time: 2,
-		            msgSkin:'error',
-		        });
-		        return false;
-			}
-			if(vm.form.merchantType!=0)sql+=" AND A.merchant_type="+vm.form.merchantType;
-			if(vm.form.auditType!=0)sql+=" AND A.audit_type="+vm.form.auditType;
+      vm.form.startTime = laydate.now(0, "YYYY-MM-DD 00:00:00");
+      vm.form.endTime = laydate.now(0, "YYYY-MM-DD 23:59:59");
+    },
+    radioClick() {
+      this.form.select = 0;
+    },
+    searchList: function(page) {
+      var vm = this,
+        select = vm.form.select,
+        sql =
+          "A.create_time BETWEEN " +
+          getUnixTime(vm.form.startTime) +
+          " AND " +
+          getUnixTime(vm.form.endTime) +
+          "",
+        json = {
+          pageSize: vm.pageSize,
+          pageNum: page || 1,
+          params: [],
+          opKey: "order.registerMerchant.list"
+        };
+      let context = vm.form["context" + vm.form.select];
+      if (select == 1 && !context) {
+        layer.open({
+          content: "请输入订单号码",
+          skin: "msg",
+          time: 2,
+          msgSkin: "error"
+        });
+        return false;
+      } else if (select == 2 && context.length != 11) {
+        layer.open({
+          content: "申请人号码格式错误",
+          skin: "msg",
+          time: 2,
+          msgSkin: "error"
+        });
+        return false;
+      }
+      if (vm.form.merchantType != 0)
+        sql += " AND A.merchant_type=" + vm.form.merchantType;
+      if (vm.form.auditType != 0)
+        sql += " AND A.audit_type=" + vm.form.auditType;
 
-			if(select==1){
-				sql+=' AND A.order_id="'+context+'"';
-			}else if(select==2){
-				sql+=' AND A.request_phone="'+context+'"';
-			}
-			let orderStatus=vm.form.orderStatus;
-			if(vm.form.orderType==1){
-				 if(orderStatus==0){
-					sql+=" AND (A.order_status=3 OR A.order_status=4)";
-				 }else sql+=" AND A.order_status="+orderStatus;
-			}else if(vm.form.orderType==2){
-				if(orderStatus==0){
-					sql+=" AND (A.order_status=1 OR A.order_status=2 OR A.order_status=6)";
-				}else if(orderStatus==1){
-					sql+=" AND (A.order_status=1 OR A.order_status=6)";
-				}else sql+=" AND A.order_status="+orderStatus;
-			}
-
-			json.params.push(sql);
-			if(vm.off.isLoad)return false;
-			vm.off.isLoad=true;
-			// vm.AJAX("w/handler/query",json,function(data){
-			// 	vm.list=data.data.list
-			// 	vm.total=data.data.total;
-			// 	vm.maxpage=Math.ceil(parseInt(data.data.total)/10);
-			// 	vm.pageNum=page||1;
-			// 	vm.callback=function(v){vm.searchList(v)};
-			// },function(){
-			// 	vm.off.isLoad=false;
-            // })
-            reqCommonMethod(json,function(){vm.off.isLoad=false;},"km-ecs/w/handler/query")
-            .then((data)=>{
-                vm.list=data.data.list
-				vm.total=data.data.total;
-				vm.maxpage=Math.ceil(parseInt(data.data.total)/10);
-				vm.pageNum=page||1;
-                vm.callback=function(v){vm.searchList(v)};
-                vm.off.isLoad=false;
-            }).catch(error=>errorDeal(error)); 	
-		},
-		details:function(e){//详情
-			var vm=this,
-			orderId=e.target.name,
-			json={"pageSize":"10","pageNum":"-1","params":['A.order_id="'+orderId+'"'],"opKey":"order.registerMerchant.details"};
-			if(vm.off.isLoad)return false;
-			vm.off.isLoad=true;
-			// vm.AJAX("w/handler/query",json,function(data){
-			// 	vm.detailsData=data.data.list[0];
-			// 	vm.off.details=true;
-			// },function(){
-			// 	vm.off.isLoad=false;
-            // })
-            reqCommonMethod(json,function(){vm.off.isLoad=false;},"km-ecs/w/handler/query")
-            .then((data)=>{
-	            vm.detailsData=data.data.list[0];
-                vm.off.details=true;
-                vm.off.isLoad=false;
-            }).catch(error=>errorDeal(error)); 	
-		},
-		to_laydate:function(v){
-			var vm=this;
-			laydate({
-				istime:true,
-				format: 'YYYY-MM-DD hh:mm:ss',
-				isclear: false,
-				choose: function(dates){ //选择好日期的回调
-					v==1 ? vm.form.startTime=dates : vm.form.endTime=dates;
-				}
-			});
-		},
-		topShiftClick(){
-			var vm=this;
-			vm.form.context3=0
-		},
-		getDateTime(v){
-			return getDateTime(v);
-		}
-	}
-}
+      if (select == 1) {
+        sql += ' AND A.order_id="' + context + '"';
+      } else if (select == 2) {
+        sql += ' AND A.request_phone="' + context + '"';
+      }
+      let orderStatus = vm.form.orderStatus;
+      if (vm.form.orderType == 1) {
+        if (orderStatus == 0) {
+          sql += " AND (A.order_status=3 OR A.order_status=4)";
+        } else sql += " AND A.order_status=" + orderStatus;
+      } else if (vm.form.orderType == 2) {
+        if (orderStatus == 0) {
+          sql +=
+            " AND (A.order_status=1 OR A.order_status=2 OR A.order_status=6)";
+        } else if (orderStatus == 1) {
+          sql += " AND (A.order_status=1 OR A.order_status=6)";
+        } else sql += " AND A.order_status=" + orderStatus;
+	  }
+	  if(vm.form.merchants!=0){
+		  sql+= ' and (select source_type from tb_merchant where  dealer_id=A.dealer_id limit 1)='+vm.form.merchants+''
+	  }
+      json.params.push(sql);
+      if (vm.off.isLoad) return false;
+      vm.off.isLoad = true;
+      reqCommonMethod(
+        json,
+        function() {
+          vm.off.isLoad = false;
+        },
+        "km-ecs/w/handler/query"
+      )
+        .then(data => {
+          vm.list = data.data.list;
+          vm.total = data.data.total;
+          vm.maxpage = Math.ceil(parseInt(data.data.total) / 10);
+          vm.pageNum = page || 1;
+          vm.callback = function(v) {
+            vm.searchList(v);
+          };
+          vm.off.isLoad = false;
+        })
+        .catch(error => errorDeal(error));
+    },
+    details: function(e) {
+      //详情
+      var vm = this,
+        orderId = e.target.name,
+        json = {
+          pageSize: "10",
+          pageNum: "-1",
+          params: ['A.order_id="' + orderId + '"'],
+          opKey: "order.registerMerchant.details"
+        };
+      if (vm.off.isLoad) return false;
+      vm.off.isLoad = true;
+      // vm.AJAX("w/handler/query",json,function(data){
+      // 	vm.detailsData=data.data.list[0];
+      // 	vm.off.details=true;
+      // },function(){
+      // 	vm.off.isLoad=false;
+      // })
+      reqCommonMethod(
+        json,
+        function() {
+          vm.off.isLoad = false;
+        },
+        "km-ecs/w/handler/query"
+      )
+        .then(data => {
+          vm.detailsData = data.data.list[0];
+          vm.off.details = true;
+          vm.off.isLoad = false;
+        })
+        .catch(error => errorDeal(error));
+    },
+    to_laydate: function(v) {
+      var vm = this;
+      laydate({
+        istime: true,
+        format: "YYYY-MM-DD hh:mm:ss",
+        isclear: false,
+        choose: function(dates) {
+          //选择好日期的回调
+          v == 1 ? (vm.form.startTime = dates) : (vm.form.endTime = dates);
+        }
+      });
+    },
+    topShiftClick() {
+      var vm = this;
+      vm.form.context3 = 0;
+    },
+    getDateTime(v) {
+      return getDateTime(v);
+    }
+  }
+};
 </script>
 
