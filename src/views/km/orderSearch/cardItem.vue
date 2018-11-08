@@ -190,6 +190,14 @@
                         </div>
                     </div>
                     <div class="row">
+                        <span class="dp">开卡商户：</span>
+                        <div class="m-form-checkbox">
+                            <label><span class="checkbox"><input type="checkbox" value="true" v-model="checkAllmerchants" checked="checked"><span></span></span><span class="text">全部</span></label>
+                            <label><span class="checkbox"><input type="checkbox" value="1" v-model="form.merchants" checked="checked"><span></span></span><span class="text">卡盟App</span></label>
+                            <label><span class="checkbox"><input type="checkbox" value="2" v-model="form.merchants" checked="checked"><span></span></span><span class="text">喜牛App</span></label>
+                        </div>
+                    </div>
+                    <div class="row">
                         <span class="dp">时间区间：</span>
                         <div class="f-inline-block">
                             <span class="m-time-area">
@@ -647,6 +655,7 @@ export default {
                 operatorType:1,//操作类型
                 sourceFrom :[1,6,7,8,9],//开卡方式
                 deviceType:[1,2,4],//远特i卡，开卡方式：1，远特i卡；2，远特eSIM；4，eSIM助手
+                merchants: [1,2],//商户类型
                 auditType: 9, //审核方式
                 context1: "", //订单号码
                 context2: "", //手机号码
@@ -661,6 +670,7 @@ export default {
                 endTime: "",
             },
             checkAllopencardType:true,
+            checkAllmerchants:true,
             list: "", //查询数据
             detailsData: "", //详情数据
             total: 0, //总查询条数

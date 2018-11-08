@@ -60,6 +60,17 @@
           </div>
           <div>
             <div v-if="form.content==1">
+              <div style="margin-top:20px;color:#000">
+                <span style="display:inline-block;width:88px;text-align:right;margin-right:10px" type="text">商户名称：</span>
+                <div class="m-form-checkbox">
+                  <label><span class="checkbox"><input type="checkbox" value="1" v-model="all" checked="checked"><span></span></span><span
+                      class="text">全部</span></label>
+                  <label><span class="checkbox"><input type="checkbox" value="1" v-model="form.merchantType" checked="checked"><span></span></span><span
+                      class="text">喜牛商户</span></label>
+                  <label><span class="checkbox"><input type="checkbox" value="2" v-model="form.merchantType" checked="checked"><span></span></span><span
+                      class="text">卡盟商户</span></label>
+                </div>
+              </div>
               <div class="m-form-radio">
                 <label><span class="radioYes"><input @click="changeSearchType" type="radio" value="1" v-model="form.searchKind"
                       checked="checked"><span></span></span><span class="text">精确查找：</span></label>
