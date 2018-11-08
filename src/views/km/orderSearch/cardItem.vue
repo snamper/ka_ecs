@@ -254,7 +254,7 @@
                                 <span class="text">操作者ID：</span>
                             </label>
                         </span>
-                        <div class="input-box"><input v-model="form.context5" :readonly="form.select!=5" maxlength="12" type="tel" placeholder="请输入查询的操作者ID"></div>
+                        <div class="input-box"><input v-model="form.context5" :readonly="form.select!=5" type="tel" placeholder="请输入查询的操作者ID"></div>
                     </div>
                     <div class="row" :class="{active:form.select==7}" v-show="form.source!=7&&form.source!=8">
                         <span class="m-form-radio">

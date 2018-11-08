@@ -61,7 +61,7 @@
           <div>
             <div v-if="form.content==1">
               <div style="margin-top:20px;color:#000">
-                <span style="display:inline-block;width:88px;text-align:right;margin-right:10px" type="text">归属商户：</span>
+                <span style="display:inline-block;width:88px;text-align:right;margin-right:10px" type="text">商户来源：</span>
                 <div class="m-form-radio">
                   <label><span class="radio"><input type="radio" value="0" v-model="form.merchants" checked="checked"><span></span></span><span
                   class="text">全部</span></label>
@@ -86,6 +86,17 @@
               </div>
             </div>
             <div v-if="form.content==2">
+              <div style="margin-top:20px;color:#000">
+                <span style="display:inline-block;width:88px;text-align:right;margin-right:10px" type="text">工号来源：</span>
+                <div class="m-form-radio">
+                  <label><span class="radio"><input type="radio" value="0" v-model="form.merchants" checked="checked"><span></span></span><span
+                  class="text">全部</span></label>
+                  <label><span class="radio"><input type="radio" value="1" v-model="form.merchants" checked="checked"><span></span></span><span
+                  class="text">卡盟</span></label>
+                  <label><span class="radio"><input type="radio" value="2" v-model="form.merchants" checked="checked"><span></span></span><span
+                  class="text">喜牛</span></label>
+                </div>
+              </div>
               <div class="m-form-radio">
                 <label><span class="radioYes"><input @click="changeSearchType" type="radio" value="1" v-model="form.searchKind"
                       checked="checked"><span></span></span><span class="text">精确查找：</span></label>
@@ -228,7 +239,7 @@
                 <th>卡盟ID</th>
                 <th>登录手机号码</th>
                 <th>所属商户名称</th>
-                <th>商户来源</th>
+                <th>工号来源</th>
                 <th>当前城市</th>
                 <th></th>
               </tr>
@@ -384,7 +395,6 @@ export default {
         vm.form.context = val;
         vm.form.searchContext = val;
         vm.form.searchKind = 1;
-        // vm.searchList('',1);
         vm.getDetails();
       }
     }, 300);

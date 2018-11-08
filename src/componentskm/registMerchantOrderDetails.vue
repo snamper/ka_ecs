@@ -74,7 +74,7 @@
 								<tr><td>上级商户：</td><td>{{list.superDealerId}}（{{list.superDealerName}}）</td></tr>
 								<tr><td>上级de上级商户：</td><td>{{list.superSuperDealerId}}[{{ list.superSuperDealerName }}]</td></tr>
 								<tr><td>操作人：</td><td>{{list.userId}}（{{list.userName}}）</td></tr>
-								<tr><td>归属商户</td><td>{{list.merchType==1?'卡盟':list.merchType==2?'喜牛':'--'}}</td></tr>
+								<tr><td>商户来源：</td><td>{{list.merchType==1?'卡盟':list.merchType==2?'喜牛':'--'}}</td></tr>
 								<tr v-show="orderType==2"><td>审核人ID：</td><td>{{list.customer}}</td></tr>
 								<tr v-show="orderType==2&&list.orderStatus==2"><td>备注：</td><td v-html="filterReason()"></td></tr>
 							</tbody>

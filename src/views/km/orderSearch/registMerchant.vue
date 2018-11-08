@@ -23,7 +23,7 @@
 		</section>
 		<section class="form-c">
 			<div class="row">
-				<span class="dp">归属商户：</span>
+				<span class="dp">商户来源：</span>
 				<div class="m-form-radio">
 					<label><span class="radio"><input value="0" type="radio" v-model="form.merchants"><span></span></span><span class="text">全部</span></label>
 					<label><span class="radio"><input value="1" type="radio" v-model="form.merchants"><span></span></span><span class="text">卡盟</span></label>
@@ -96,6 +96,7 @@
 					<th>订单号</th>
 					<th>申请时间</th>
 					<th>商户类型</th>
+          <th>商户来源</th>
 					<th>售卡范围</th>
 					<th>申请人号码</th>
 					<th>审核方式</th>
@@ -116,11 +117,12 @@
 						<span v-show="todo.merchantType==1">企业</span>
 						<span v-show="todo.merchantType==2">个人</span>
 					</td>
+          <td>{{todo.source_type==1?'卡盟':todo.source_type==2?'喜牛':'--'}}</td>
 					<td>
 						<span v-show="todo.openingType==1">远特卡<span v-if="todo.openingArea">({{todo.openingArea}})</span></span>
-                        <span v-show="todo.openingType==2">联通卡<span v-if="todo.openingArea">({{todo.openingArea}})</span></span>
-                        <span v-show="todo.openingType==3">移动卡<span v-if="todo.openingArea">({{todo.openingArea}})</span></span>
-                        <span v-show="todo.openingType==4">电信卡<span v-if="todo.openingArea">({{todo.openingArea}})</span></span>
+            <span v-show="todo.openingType==2">联通卡<span v-if="todo.openingArea">({{todo.openingArea}})</span></span>
+            <span v-show="todo.openingType==3">移动卡<span v-if="todo.openingArea">({{todo.openingArea}})</span></span>
+            <span v-show="todo.openingType==4">电信卡<span v-if="todo.openingArea">({{todo.openingArea}})</span></span>
 					</td>
 					<td>{{todo.phone}}</td>
 					<td>
