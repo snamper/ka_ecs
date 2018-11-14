@@ -1044,7 +1044,7 @@ export default {
             str = "B.device_type=3 AND "
         }
         var sql =
-          str+" A.create_time BETWEEN " +
+          str+" B.modify_time BETWEEN " +
           getUnixTime(json.startTime) +
           " AND " +
           getUnixTime(json.endTime) +
@@ -1142,7 +1142,7 @@ export default {
             str = `B.device_type in (${deviceType}) AND B.biz_type=${json.type} AND `;
         }
         var sql =
-          str+"A.create_time BETWEEN " +
+          str+"B.modify_time BETWEEN " +
           getUnixTime(json.startTime) +
           " AND " +
           getUnixTime(json.endTime) +
