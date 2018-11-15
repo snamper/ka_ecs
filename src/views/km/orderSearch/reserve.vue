@@ -251,7 +251,6 @@ export default{
 			const vm=this;
             let json=vm.getForm();
 			if(!json)return false;
-			json.exportType=3;
 			json.pageNum="-1";
 			let userInfo = getStore("KA_ECS_USER");
 			json.customerId = userInfo.customerId;

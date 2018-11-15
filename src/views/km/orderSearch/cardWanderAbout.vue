@@ -378,7 +378,7 @@ export default {
     exportList(){
         let vm=this,select=vm.form.select,
 			sql="",
-			json={"pageSize":-1,"pageNum":-1,"params":[],"opKey":"list.flow.exout","exportType":4};
+			json={"pageSize":-1,"pageNum":-1,"params":[],"opKey":"list.flow.exout"};
             if(vm.whichSearch==1){
                 sql+='a.sys_order_id="'+vm.orderId+'"'
             }else if(vm.whichSearch==2){

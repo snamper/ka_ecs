@@ -300,7 +300,7 @@ export default{
 				if(vm.form.isp!=0){
 					sql+=" AND A.info_isp="+vm.form.isp;
 				}
-				json.sum='A.info_price';
+				json.sum='info_price';
 			}else if(vm.form.rechargeType==2){//话费
 				json.opKey="order.rechargePhone.list";
 				if(vm.form.isp!=0&&vm.form.isp!='other'){
@@ -312,7 +312,7 @@ export default{
                 let sourceType = vm.form.sourceType.join(',') || '1,5,6,7,8';
                 sql += ` AND A.source_type in (${sourceType})`;
 
-				json.sum='A.info_fee';
+				json.sum='info_fee';
 			}
 			json.params.push(sql);
 			return json;
@@ -340,8 +340,6 @@ export default{
 			const vm=this;
 			let json=vm.getForm();
 			if(!json)return false;
-			if(vm.form.rechargeType==1)json.exportType=2;
-			if(vm.form.rechargeType==2)json.exportType=1;
 			json.pageNum="-1";
 			let userInfo = getStore("KA_ECS_USER");
 			json.customerId = userInfo.customerId;
