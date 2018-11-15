@@ -150,7 +150,7 @@
                             <label> <span class="radio"><input type="radio" value="2" v-model="form.auditType"> <span></span> </span> <span class="text">自动审核</span> </label>
                         </div>
                     </div>
-                    <div class="row" v-if="form.source==6">
+                    <div class="line" v-if="form.source==6">
                         <span class="dp">开卡方式：</span>
                         <div class="m-form-checkbox">
                             <label><span class="checkbox"><input type="checkbox" value="true" v-model="checkAllopencardType" checked="checked" @change="BtnCheckAllopencardType"><span></span></span><span class="text">全部</span></label>

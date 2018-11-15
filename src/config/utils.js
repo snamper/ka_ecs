@@ -185,7 +185,7 @@ export const translateData=(type,v)=> {
                 return v==4 ? '成卡' : v==5 ? '白卡' : v==6 ? '空卡' : '--';
             break;
         case 15://开卡方式
-                return v==1 ? '卡盟APP' : v==2 ? '远特i卡' : v==3 ? '远特eSIM' : v==4 ? 'SDK' : v==5 ? 'eSIM助手' : v==6 ? '远微商城' : v==7 ? '信时空公众号' : v==8? 'S2S开卡盟成卡':v==9? '喜牛':'--' ;
+                return v==1 ? '卡盟APP' : v==2 ? '远特i卡' : v==3 ? '远特eSIM' : v==4 ? 'SDK' : v==5 ? 'eSIM助手' : v==6 ? '远微商城' : v==7 ? '信时空公众号' : v==8? 'S2S开卡盟成卡':v==9? '喜牛':v==10? '小程序':'--' ;
             break;
         case 16://短信验证
                 return v==1?'是':v==0?'否':'--';
