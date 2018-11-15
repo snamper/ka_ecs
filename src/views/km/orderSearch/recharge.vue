@@ -312,7 +312,7 @@ export default{
                 let sourceType = vm.form.sourceType.join(',') || '1,5,6,7,8';
                 sql += ` AND A.source_type in (${sourceType})`;
 
-				json.sum='info_fee';
+				json.sum='money';
 			}
 			json.params.push(sql);
 			return json;
