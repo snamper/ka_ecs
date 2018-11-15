@@ -501,7 +501,7 @@
             <div class="m-total-table" v-if="list">
                 <div class="total-head">统计结果
                     <b>{{total}}</b>
-                    <button class="btn_export_excel" v-if="maxpage&&form.source==6&&off.type==2" @click="downLoadList">导出excel</button>
+                    <button class="btn_export_excel" v-if="maxpage&&off.type==2" @click="downLoadList">导出excel</button>
                 </div>
                 <table>
                     <thead>
@@ -1065,18 +1065,31 @@ export default {
       json.codeId = codeId;
       json.context = context;
       json.searchtype = vm.form.select;
-      if (
-        vm.form.orderType == 7 ||
-        vm.form.orderType == 6 ||
-        vm.form.orderType == 9 ||
-        vm.form.orderType == 10
-      ) {
-        //过户，开空卡,成卡，白卡
-        url = "km-ecs/w/audit/downloadEdList";
-      } else if (vm.form.orderType == 4 || vm.form.orderType == 8) {
-        //实名补录，补换卡
-        url = "km-ecs/w/audit/downloadReinput";
+      if(vm.form.source==6){
+        if (
+          vm.form.orderType == 7 ||
+          vm.form.orderType == 6 ||
+          vm.form.orderType == 9 ||
+          vm.form.orderType == 10
+        ) {
+          //过户，开空卡,成卡，白卡
+          url = "km-ecs/w/audit/downloadEdList";
+        } else if (
+          (vm.form.source == 6 && vm.form.orderType == 4) ||
+          (vm.form.source == 6 && vm.form.orderType == 8)
+        ) {
+          //实名补录，补换卡
+          url = "km-ecs/w/audit/downloadReinput";
+        } 
+      } else if (vm.form.source != 6) {
+        url = "km-ecs/w/handler/queryExport";
+        if (vm.form.source == 7) {
+          json = vm.getSdkJson(json);
+        } else if (vm.form.source == 8) {
+          json = vm.getTfJson(json);
+        }
       }
+
       createDownload(url, BASE64.encode(JSON.stringify(json)), function() {
         vm.off.isLoad = false;
       });
@@ -1090,8 +1103,11 @@ export default {
           opKey: "",
           params: [],
           pageSize: "10",
-          pageNum: json.pageNum
+          pageNum: json.pageNum,
         };
+      var userInfo = getStore("KA_ECS_USER");
+      var customerId = userInfo.customerId;
+      var codeId = userInfo.codeId;
       if (type == 3 || type == 4) {
         str = "A.device_type=3 AND ";
       } else if (type == 2 || type == 1) {
@@ -1175,6 +1191,8 @@ export default {
       } else if (json.searchtype == 4) {
         sql += ' AND A.papers_code="' + json.context + '"';
       }
+      resJson.codeId=codeId;
+      resJson.customerId=customerId;
       resJson.params.push(sql);
       return resJson;
     },
@@ -1191,6 +1209,9 @@ export default {
           pageSize: "10",
           pageNum: json.pageNum
         };
+      var userInfo = getStore("KA_ECS_USER");
+      var customerId = userInfo.customerId;
+      var codeId = userInfo.codeId;
       let deviceType = vm.form.deviceType.join(",") || "1,2,4";
       if (type == 3 || type == 4) {
         str = `A.device_type in (${deviceType}) AND A.biz_type=${
@@ -1285,6 +1306,8 @@ export default {
           merchantType +
           "";
       }
+      resJson.codeId=codeId;
+      resJson.customerId=customerId;
       resJson.params.push(sql);
       return resJson;
     },

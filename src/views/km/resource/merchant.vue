@@ -167,7 +167,7 @@
           <table v-if="searchResultList.list.length">
             <thead>
               <tr>
-                <th class="total-head" colspan="15" style="background-color:#fff;text-align:left;padding-left:20px;">
+                <th class="total-head" colspan="12" style="background-color:#fff;text-align:left;padding-left:20px;">
                   统计结果<b>{{total}}</b><button class="btn_export_excel" v-if="searchResultList.maxpage" @click="downLoadList">导出excel</button>
                 </th>
               </tr>
@@ -183,9 +183,6 @@
                 <th>激活状态</th>
                 <th>售卡范围</th>
                 <th>签约状态</th>
-                <th>开卡数</th>
-                <th>制卡数</th>
-                <th>激活卡数</th>
                 <th></th>
               </tr>
             </thead>
@@ -217,9 +214,6 @@
                   <span v-if="item. merchant_attribute.indexOf('2')>-1">联通</span>
                 </td>
                 <td>{{item.isSignAgreement}}</td>
-                <td>{{item.openCardNum}}</td>
-                <td>{{item.makeCardNum}}</td>
-                <td>{{item.activeCardNum}}</td>
                 <td><a :name="item.dealer_id" @click="details(item.dealer_id,form.content,1)" href="javascript:void(0)"
                     class="details">详情</a></td>
               </tr>

@@ -130,6 +130,19 @@
                         <td><span>总部推广渠道：</span>{{ _ajaxData.details.topDealerId||'--' }}【名称：{{
                           _ajaxData.details.topDealerName||'--' }}】</td>
                       </tr>
+                      <tr>
+                        <td><span>制卡数：</span>
+                          {{_ajaxData.details.makeCardNum}}
+                        </td>
+                        <td><span>开卡数：</span>
+                          {{_ajaxData.details.openCardNum}}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td><span>激活卡数：</span>
+                          {{_ajaxData.details.activeCardNum}}
+                        </td>
+                      </tr>
                     </tbody>
                   </table>
                 </td>
