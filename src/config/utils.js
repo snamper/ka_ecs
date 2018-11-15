@@ -197,7 +197,7 @@ export const translateData=(type,v)=> {
             return v==0?'未激活':v==1?'预占':v==2?'成卡':v==3?'已激活':'--';
         break;
         case 19:
-            return v==0?'非成卡开卡':v==1?'卡盟app':v==2?'sdk':v==3?'dwatch':v==4?'wear':v==9?'喜牛':'--';
+            return v==0?'非成卡开卡':v==1?'卡盟app':v==2?'sdk':v==3?'dwatch':v==4?'wear':v==5?'i卡':v==6?'远微商城':v==7?'信时空公众号':v==8?'亚飞达s2s开成卡':v==9?'喜牛':v==10?'小程序':'--';
         break;
         case 'money'://金额转换
             if(!isNaN(v)){
