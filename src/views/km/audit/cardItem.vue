@@ -68,7 +68,7 @@
                       <td>归属地：</td>
                       <td>{{ auditData.cityName||'--'}}</td>
                     </tr>
-                    <tr v-show="off.itemType==8||off.itemType==9">
+                    <tr>
                       <td>ICCID：</td>
                       <td>{{ auditData.iccid ||'--'}}</td>
                     </tr>
