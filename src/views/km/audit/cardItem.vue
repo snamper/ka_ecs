@@ -68,6 +68,10 @@
                       <td>归属地：</td>
                       <td>{{ auditData.cityName||'--'}}</td>
                     </tr>
+                    <tr v-show="off.itemType==8||off.itemType==9">
+                      <td>ICCID：</td>
+                      <td>{{ auditData.iccid ||'--'}}</td>
+                    </tr>
                     <tr v-show="off.itemType!=8&&off.itemType!=9">
                       <td>IMEI：</td>
                       <td>{{ auditData.IMEI ||'--'}}</td>
