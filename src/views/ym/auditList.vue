@@ -371,7 +371,6 @@ export default {
         { orderId: orderId, result: 1, remark: "", reason: "" },
         function() {
           vm.off.isLoad = false;
-          console.log(1111);
         },
         "ym-ecs/c/audit/audit"
       )
@@ -649,54 +648,33 @@ export default {
       if (len && vm.off.auditIndex + 1 <= len) {
         vm.auditData = vm.list[vm.off.auditIndex];
         if (vm.$route.params.type == 3 || vm.$route.params.type == 5) {
-          vm.imgData[0] = {
-            src: vm.auditData.frontImageOld || noImg,
-            name: "原机主正面照片"
-          };
-          vm.imgData[1] = {
-            src: vm.auditData.papersImage || noImg,
-            name: "新机主正面照片"
-          };
-
-          vm.imgData[2] = {
-            src: vm.auditData.backImageOld || noImg,
-            name: "原机主反面照片"
-          };
-          vm.imgData[3] = {
-            src: vm.auditData.backImage || noImg,
-            name: "新机主反面照片"
-          };
-
-          vm.imgData[4] = {
-            src: vm.auditData.handImageOld || noImg,
-            name: "原机主手持/免冠照片"
-          };
-          vm.imgData[5] = {
-            src: vm.auditData.avatarImage || noImg,
-            name: "新机主手持/免冠照片"
-          };
-          vm.imgData[6] = {
-            src: vm.auditData.signImageOld || noImg,
-            name: "原机主手签名照片"
-          };
-          vm.imgData[7] = {
-            src: vm.auditData.signImage || noImg,
-            name: "新机主手签名照片"
-          };
+          if(vm.$route.params.type == 3){//过户
+            vm.imgData[0]={'src':vm.auditData.frontImageOld||noImg,'name':'原机主正面照片'};
+            vm.imgData[1]={'src':vm.auditData.transferFrontImageOld||noImg,'name':'原机主过户正面照片'};
+            vm.imgData[2]={'src':vm.auditData.backImageOld||noImg,'name':'原机主反面照片'};//
+            vm.imgData[3]={'src':vm.auditData.transferBackImageOld||noImg,'name':'原机主过户反面照片'};
+            vm.imgData[4]={'src':vm.auditData.handImageOld||noImg,'name':'原机主手持/免冠照片'};
+            vm.imgData[5]={'src':vm.auditData.transferHandImageOld||noImg,'name':'原机主过户手持/免冠照片'};
+            vm.imgData[6]={'src':vm.auditData.papersImage||noImg,'name':'正面照片'};
+            vm.imgData[7]={'src':vm.auditData.backImage||noImg,'name':'新机主反面照片'};
+            vm.imgData[8]={'src':vm.auditData.avatarImage||noImg,'name':'新机主手持/免冠照片'};
+            vm.imgData[9]={'src':vm.auditData.signImage||noImg,'name':'新机主手签名照片'};
+            debugger;
+          }else if(vm.$route.params.type == 5){//补登
+            vm.imgData[0] = { src: vm.auditData.papersImageOld || noImg, name: "原机主正面照片" }; 
+            vm.imgData[1] = { src: vm.auditData.papersImage || noImg, name: "新机主正面照片" };
+            vm.imgData[2] = { src: vm.auditData.backImageOld || noImg, name: "原机主反面照片" }; 
+            vm.imgData[3] = { src: vm.auditData.backImage || noImg, name: "新机主反面照片" };
+            vm.imgData[4] = { src: vm.auditData.avatarImageOld || noImg, name: "原机主手持/免冠照片" }; 
+            vm.imgData[5] = { src: vm.auditData.avatarImage || noImg, name: "新机主手持/免冠照片" };
+            vm.imgData[6] = { src: vm.auditData.headImageOld || noImg, name: "原机主头像照片" }; 
+            vm.imgData[7] = { src: vm.auditData.headImage || noImg, name: "新机主头像照片" };
+            vm.imgData[8] = { src: vm.auditData.signImageOld || noImg, name: "原机主手签名" }; 
+            vm.imgData[9] = { src: vm.auditData.signImage || noImg, name: "新机主手签名" };
+            debugger;
+          }
           vm.zoomStyle_1.backgroundImage = "url(" + vm.imgData[0].src + ")";
           vm.zoomStyle_2.backgroundImage = "url(" + vm.imgData[1].src + ")";
-          //   vm.imgData[1] = {
-          //     src: vm.auditData.transferFrontImageOld || noImg,
-          //     name: "原机主过户正面照片"
-          //   };
-          //   vm.imgData[3] = {
-          //     src: vm.auditData.transferBackImageOld || noImg,
-          //     name: "原机主过户反面照片"
-          //   };
-          //   vm.imgData[5] = {
-          //     src: vm.auditData.transferHandImageOld || noImg,
-          //     name: "原机主过户手持/免冠照片"
-          //   };
         } else {
           vm.imgData = [
             { src: vm.auditData.avatarImage || noImg, name: "手持/免冠" },
@@ -748,7 +726,7 @@ export default {
     slide: function(index) {
       //切换
       var len = this.imgData.length;
-      if (this.$route.params.type == 3) {
+      if (this.$route.params.type == 3||this.$route.params.type == 5) {
         len = len / 2;
         index == 2
           ? this.imgIndex < len - 1
