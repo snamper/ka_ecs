@@ -146,7 +146,7 @@
                         <div class="m-form-radio">
                             <label> <span class="radio"><input type="radio" value="9" v-model="form.auditType"> <span></span> </span> <span class="text">全部</span> </label>
                             <label> <span class="radio"><input type="radio" value="0" v-model="form.auditType"> <span></span> </span> <span class="text">实时审核</span> </label>
-                            <label v-if="form.orderType!=4"> <span class="radio"><input type="radio" value="1" v-model="form.auditType"> <span></span> </span> <span class="text">事后审核</span> </label>
+                            <label> <span class="radio"><input type="radio" value="1" v-model="form.auditType"> <span></span> </span> <span class="text">事后审核</span> </label>
                             <label> <span class="radio"><input type="radio" value="2" v-model="form.auditType"> <span></span> </span> <span class="text">自动审核</span> </label>
                         </div>
                     </div>
