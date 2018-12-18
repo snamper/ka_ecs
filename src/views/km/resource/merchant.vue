@@ -413,7 +413,7 @@ export default {
       vm.form.startTime = laydate.now(0, "YYYY-MM-DD 00:00:00");
       vm.form.endTime = laydate.now(0, "YYYY-MM-DD 23:59:59");
     },
-    closePop(off) {
+    closePop() {
       this.off.pop = off;
     },
     searchList(index, page) {
