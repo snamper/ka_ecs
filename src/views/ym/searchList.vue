@@ -1,101 +1,221 @@
-<style scoped>
-    .g-search-menu #search #auditList .m-refresh {
-    position: absolute;
-    margin: auto;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    }
-    .g-search-menu #search #auditList {
-    display: block;
-    }
-    .m-sub-page>.fl{
-        padding: 20px;
-    }
-    .row .dp{display: inline-block;min-width:80px;text-align: justify;text-align-last: justify}
-    .m-col-2>.col-r{margin-left: 0.8rem}
-</style>
+
 <template>
-  <div id="search" :class="{active:off.details}">
-  	<header class="m-scroll-bar animated infinite" :class="{active:off.isLoad}" v-if="!off.detailsList"></header>
-    <section class="m-occlusion" :class="{active:off.isLoad}"></section>        	
+  <div
+    id="search"
+    :class="{active:off.details}"
+  >
+    <header
+      class="m-scroll-bar animated infinite"
+      :class="{active:off.isLoad}"
+      v-if="!off.detailsList"
+    ></header>
+    <section
+      class="m-occlusion"
+      :class="{active:off.isLoad}"
+    ></section>
     <!--查询-->
-  	<section v-if="!off.detailsList">
-  	<div class="g-search-form">
-		<div class="m-tag"><b></b>系统类型</div>
-		<!--基础条件-->
-		<section class="form-c">
-			<div class="row">
-				<span class="dp">系统名称：</span>
-				<div class="m-form-checkbox">
-					<label><span class="checkbox"><input type="checkbox" value="0" v-model="form.source"><span></span></span><span class="text">远盟</span></label>
-					<label><span class="checkbox"><input type="checkbox" value="21" v-model="form.source"><span></span></span><span class="text">远特i卡</span></label>
-					<label><span class="checkbox"><input type="checkbox" value="1" v-model="form.source"><span></span></span><span class="text">远易站</span></label>
-					<label><span class="checkbox"><input type="checkbox" value="3" v-model="form.source"><span></span></span><span class="text">远微商城</span></label>
-					<label><span class="checkbox"><input type="checkbox" value="2" v-model="form.source"><span></span></span><span class="text">信时空</span></label>
-					<label><span class="checkbox"><input type="checkbox" value="4" v-model="form.source"><span></span></span><span class="text">网厅</span></label>
-					<label><span class="checkbox"><input type="checkbox" value="22" v-model="form.source"><span></span></span><span class="text">卡盟App</span></label>
-				</div>
-			</div>
-		</section>
-		<div class="m-tag"><b></b>订单查询</div>
-		<section class="form-c">
-			<div class="row clr m-col-2">
-				<span class="dp col-l" style="width:.65rem;margin-left:0">订单号码：</span>
-				<div class="col-r m-input-button"><input v-model="form.context1" maxlength="32" type="tel" placeholder="请输入查询的订单号码"><button @click="searchList('order')">查询</button></div>
-			</div>
-		</section>
-		<div class="m-tag"><b></b>条件查询</div>
-		<section class="form-c">
-			<div class="row">
-				<span class="dp">操作类型：</span>
-				<div class="m-form-checkbox">
-					<label><span class="checkbox"><input value="1" type="checkbox" v-model="form.orderType"><span></span></span><span class="text">成卡</span></label>
-					<label><span class="checkbox"><input value="2" type="checkbox" v-model="form.orderType"><span></span></span><span class="text">白卡</span></label>
-					<label><span class="checkbox"><input value="6" type="checkbox" v-model="form.orderType"><span></span></span><span class="text">过户办理</span></label>
-					<label><span class="checkbox"><input value="4" type="checkbox" v-model="form.orderType"><span></span></span><span class="text">实名补录</span></label>
-					<label><span class="checkbox"><input value="5" type="checkbox" v-model="form.orderType"><span></span></span><span class="text">实名登记</span></label>
-				</div>
-			</div>
-			<div class="row" v-if="off.type==2">
-				<span class="dp">订单状态：</span>
-				<div class="m-form-radio">
-					<label><span class="radio"><input type="radio" value="9" v-model="form.orderStatus"><span></span></span><span class="text">全部</span></label>
-					<label><span class="radio"><input type="radio" value="1" v-model="form.orderStatus"><span></span></span><span class="text">同意</span></label>
-					<label><span class="radio"><input type="radio" value="2" v-model="form.orderStatus"><span></span></span><span class="text">拒绝</span></label>
-					<label><span class="radio"><input type="radio" value="3" v-model="form.orderStatus"><span></span></span><span class="text">复审同意</span></label>
-					<label><span class="radio"><input type="radio" value="4" v-model="form.orderStatus"><span></span></span><span class="text">准同意</span></label>
-				</div>
-			</div>
-			<div class="row" v-if="off.type==2">
-				<span class="dp">国政通校验：</span>
-				<div class="m-form-radio">
-					<label><span class="radio"><input type="radio" value=0 v-model="form.gztChe"><span></span></span><span class="text">全部</span></label>
-					<label><span class="radio"><input type="radio" value=1 v-model="form.gztChe"><span></span></span><span class="text">成功</span></label>
-					<label><span class="radio"><input type="radio" value=2 v-model="form.gztChe"><span></span></span><span class="text">失败</span></label>
-					<label><span class="radio"><input type="radio" value=3 v-model="form.gztChe"><span></span></span><span class="text">成功+失败</span></label>
-					<label><span class="radio"><input type="radio" value=4 v-model="form.gztChe"><span></span></span><span class="text">未校验</span></label>
-				</div>
-			</div>
-			
-			<div class="row" v-if="off.type==2">
-				<span class="dp">审核方式：</span>
-				<div class="m-form-radio">
-					<label><span class="radio"><input type="radio" value="0" v-model="form.auditType"><span></span></span><span class="text">全部</span></label>
-					<label><span class="radio"><input type="radio" value="1" v-model="form.auditType"><span></span></span><span class="text">实时审核</span></label>
-					<label><span class="radio"><input type="radio" value="2" v-model="form.auditType"><span></span></span><span class="text">自动审核</span></label>
-				</div>
-			</div>
-            <div class="row">
-                <span class="dp">时间区间：</span>
-                <div class="f-inline-block">
-                    <span class="m-time-area">
-                        <input @click="to_laydate(1)" v-model="form.startTime" type="text" readonly="readonly"><input @click="to_laydate(2)" v-model="form.endTime" type="text" readonly="readonly">
-                    </span>
-                </div>
+    <section v-if="!off.detailsList">
+      <div class="g-search-form">
+        <div class="m-tag"><b></b>系统类型</div>
+        <!--基础条件-->
+        <section class="form-c">
+          <div class="row">
+            <span class="dp">系统名称：</span>
+            <div class="m-form-checkbox">
+              <label><span class="checkbox"><input
+                    type="checkbox"
+                    value="0"
+                    v-model="form.source"
+                  ><span></span></span><span class="text">远盟</span></label>
+              <label><span class="checkbox"><input
+                    type="checkbox"
+                    value="21"
+                    v-model="form.source"
+                  ><span></span></span><span class="text">远特i卡</span></label>
+              <label><span class="checkbox"><input
+                    type="checkbox"
+                    value="1"
+                    v-model="form.source"
+                  ><span></span></span><span class="text">远易站</span></label>
+              <label><span class="checkbox"><input
+                    type="checkbox"
+                    value="3"
+                    v-model="form.source"
+                  ><span></span></span><span class="text">远微商城</span></label>
+              <label><span class="checkbox"><input
+                    type="checkbox"
+                    value="2"
+                    v-model="form.source"
+                  ><span></span></span><span class="text">信时空</span></label>
+              <label><span class="checkbox"><input
+                    type="checkbox"
+                    value="4"
+                    v-model="form.source"
+                  ><span></span></span><span class="text">网厅</span></label>
+              <label><span class="checkbox"><input
+                    type="checkbox"
+                    value="22"
+                    v-model="form.source"
+                  ><span></span></span><span class="text">卡盟App</span></label>
             </div>
-            <!-- <div class="row">
+          </div>
+        </section>
+        <div class="m-tag"><b></b>订单查询</div>
+        <section class="form-c">
+          <div class="row clr m-col-2">
+            <span
+              class="dp col-l"
+              style="width:.65rem;margin-left:0"
+            >订单号码：</span>
+            <div class="col-r m-input-button"><input
+                v-model="form.context1"
+                maxlength="32"
+                type="tel"
+                placeholder="请输入查询的订单号码"
+              ><button @click="searchList('order')">查询</button></div>
+          </div>
+        </section>
+        <div class="m-tag"><b></b>条件查询</div>
+        <section class="form-c">
+          <div class="row">
+            <span class="dp">操作类型：</span>
+            <div class="m-form-checkbox">
+              <label><span class="checkbox"><input
+                    value="1"
+                    type="checkbox"
+                    v-model="form.orderType"
+                  ><span></span></span><span class="text">成卡</span></label>
+              <label><span class="checkbox"><input
+                    value="2"
+                    type="checkbox"
+                    v-model="form.orderType"
+                  ><span></span></span><span class="text">白卡</span></label>
+              <label><span class="checkbox"><input
+                    value="6"
+                    type="checkbox"
+                    v-model="form.orderType"
+                  ><span></span></span><span class="text">过户办理</span></label>
+              <label><span class="checkbox"><input
+                    value="4"
+                    type="checkbox"
+                    v-model="form.orderType"
+                  ><span></span></span><span class="text">实名补录</span></label>
+              <label><span class="checkbox"><input
+                    value="5"
+                    type="checkbox"
+                    v-model="form.orderType"
+                  ><span></span></span><span class="text">实名登记</span></label>
+            </div>
+          </div>
+          <div
+            class="row"
+            v-if="off.type==2"
+          >
+            <span class="dp">订单状态：</span>
+            <div class="m-form-radio">
+              <label><span class="radio"><input
+                    type="radio"
+                    value="9"
+                    v-model="form.orderStatus"
+                  ><span></span></span><span class="text">全部</span></label>
+              <label><span class="radio"><input
+                    type="radio"
+                    value="1"
+                    v-model="form.orderStatus"
+                  ><span></span></span><span class="text">同意</span></label>
+              <label><span class="radio"><input
+                    type="radio"
+                    value="2"
+                    v-model="form.orderStatus"
+                  ><span></span></span><span class="text">拒绝</span></label>
+              <label><span class="radio"><input
+                    type="radio"
+                    value="3"
+                    v-model="form.orderStatus"
+                  ><span></span></span><span class="text">复审同意</span></label>
+              <label><span class="radio"><input
+                    type="radio"
+                    value="4"
+                    v-model="form.orderStatus"
+                  ><span></span></span><span class="text">准同意</span></label>
+            </div>
+          </div>
+          <div
+            class="row"
+            v-if="off.type==2"
+          >
+            <span class="dp">国政通校验：</span>
+            <div class="m-form-radio">
+              <label><span class="radio"><input
+                    type="radio"
+                    value=0
+                    v-model="form.gztChe"
+                  ><span></span></span><span class="text">全部</span></label>
+              <label><span class="radio"><input
+                    type="radio"
+                    value=1
+                    v-model="form.gztChe"
+                  ><span></span></span><span class="text">成功</span></label>
+              <label><span class="radio"><input
+                    type="radio"
+                    value=2
+                    v-model="form.gztChe"
+                  ><span></span></span><span class="text">失败</span></label>
+              <label><span class="radio"><input
+                    type="radio"
+                    value=3
+                    v-model="form.gztChe"
+                  ><span></span></span><span class="text">成功+失败</span></label>
+              <label><span class="radio"><input
+                    type="radio"
+                    value=4
+                    v-model="form.gztChe"
+                  ><span></span></span><span class="text">未校验</span></label>
+            </div>
+          </div>
+
+          <div
+            class="row"
+            v-if="off.type==2"
+          >
+            <span class="dp">审核方式：</span>
+            <div class="m-form-radio">
+              <label><span class="radio"><input
+                    type="radio"
+                    value="0"
+                    v-model="form.auditType"
+                  ><span></span></span><span class="text">全部</span></label>
+              <label><span class="radio"><input
+                    type="radio"
+                    value="1"
+                    v-model="form.auditType"
+                  ><span></span></span><span class="text">实时审核</span></label>
+              <label><span class="radio"><input
+                    type="radio"
+                    value="2"
+                    v-model="form.auditType"
+                  ><span></span></span><span class="text">自动审核</span></label>
+            </div>
+          </div>
+          <div class="row">
+            <span class="dp">时间区间：</span>
+            <div class="f-inline-block">
+              <span class="m-time-area">
+                <input
+                  @click="to_laydate(1)"
+                  v-model="form.startTime"
+                  type="text"
+                  readonly="readonly"
+                ><input
+                  @click="to_laydate(2)"
+                  v-model="form.endTime"
+                  type="text"
+                  readonly="readonly"
+                >
+              </span>
+            </div>
+          </div>
+          <!-- <div class="row">
 				<span class="dp">开卡来源：</span>
 				<div class="m-form-radio">
 					<label><span class="radio"><input type="radio" value="0" v-model="form.cardSrc"><span></span></span><span class="text">全部</span></label>
@@ -104,180 +224,403 @@
 					<label><span class="radio"><input type="radio" value="3" v-model="form.cardSrc"><span></span></span><span class="text">远特i卡</span></label>
 				</div>
 			</div> -->
-		</section>
-		<section class="form-c o-no-bgc">
-			<div class="row" :class="{active:form.select==2}">
-				<span class="m-form-radio">
-					<label><span class="radio"><input type="radio" value="2" v-model="form.select"><span></span></span><span class="text">手机号码：</span></label>
-				</span>
-				<div class="input-box"><input v-model="form.context2" :readonly="form.select!=2" maxlength="11" type="tel" placeholder="请输入查询的手机号码"></div>
-			</div>
-			<div class="row" :class="{active:form.select==3}">
-				<span class="m-form-radio">
-					<label><span class="radio"><input type="radio" value="3" v-model="form.select"><span></span></span><span class="text">审核人工号：</span></label>
-				</span>
-				<div class="input-box"><input v-model="form.context3" :readonly="form.select!=3" maxlength="11" type="tel" placeholder="请输入查询的审核人号码"></div>
-			</div>
-			<div class="row" :class="{active:form.select==4}">
-				<span class="m-form-radio">
-					<label><span class="radio"><input type="radio" value="4" v-model="form.select"><span></span></span><span class="text">身份证号：</span></label>
-				</span>
-				<div class="input-box"><input v-model="form.context4" :readonly="form.select!=4" maxlength="18" type="text" placeholder="请输入查询的身份证号码"></div>
-			</div>
-			<div class="row" :class="{active:form.select==6}">
-				<span class="m-form-radio">
-					<label><span class="radio"><input type="radio" value="6" v-model="form.select"><span></span></span><span class="text">操作者工号：</span></label>
-				</span>
-				<div class="input-box"><input v-model="form.context6" :readonly="form.select!=6" maxlength="11" type="tel" placeholder="请输入查询的操作者工号"></div>
-			</div>
-            <div class="row" :class="{active:form.select==8}">
-				<span class="m-form-radio">
-					<label><span class="radio"><input type="radio" value="8" v-model="form.select"><span></span></span><span class="text">用户姓名：</span></label>
-				</span>
-				<div class="input-box"><input v-model="form.context8" :readonly="form.select!=8" maxlength="11" type="tel" placeholder="请输入查询的开卡身份证姓名"></div>
-			</div>
-			<div class="row" :class="{active:form.select==5}" v-if="off.type==1">
-				<span class="m-form-radio">
-					<label><span class="radio"><input type="radio" value="5" :readonly="form.select!=5" v-model="form.select"><span></span></span><span class="text">订单状态：</span></label>
-				</span>
-				<div class="m-form-radio col-radio">
-					<label><span class="radio"><input type="radio" checked="checked" value="9" v-model="form.orderStatus"><span></span></span><span class="text">全部</span></label>
-					<label><span class="radio"><input type="radio" value="1" v-model="form.orderStatus"><span></span></span><span class="text">待分配</span></label>
-					<label><span class="radio"><input type="radio" value="2" v-model="form.orderStatus"><span></span></span><span class="text">已分配</span></label>
-				</div>
-			</div>
-			<div class="row" :class="{active:form.select==7}" v-if="off.type==2">
-				<span class="m-form-radio">
-					<label><span class="radio"><input type="radio" value="7" :readonly="form.select!=7" v-model="form.select"><span></span></span><span class="text">开卡状态：</span></label>
-				</span>
-				<div class="m-form-radio col-radio">
-					<label><span @click="checked7" class="radio"><input value="9" type="radio" v-model="form.context7"><span></span></span><span class="text">全部</span></label>
-					<label><span @click="checked7" class="radio"><input value="1" type="radio" v-model="form.context7"><span></span></span><span class="text">成功</span></label>
-					<label><span @click="checked7" class="radio"><input value="2" type="radio" v-model="form.context7"><span></span></span><span class="text">失败</span></label>
-				</div>
-			</div>
-			<button class="f-btn f-btn-line" @click="searchList(1)">查询</button>
-		</section>
-  	</div>
-  	<div id="totalDiv" v-if="list">
-		<div class="total-head">统计结果<b>{{total}}</b> <button class="btn_export_excel" v-if="maxpage"  @click="downLoadList">导出excel</button> </div>
-		<table>
-			<thead>
-				<tr v-if="off.type==1">
-					<th>序号</th>
-					<th>订单号</th>
-					<th>操作类型</th>
-					<th>用户姓名</th>
-					<th>用户号码</th>
-					<th>号码等级</th>
-					<th>身份证号码</th>
-					<th>审核人</th>
-					<th>操作者工号</th>
-					<th>生成时间</th>
-					<th>状态</th>
-					<th>操作</th>
-          <th></th>
-				</tr>
-				<tr v-if="off.type==2">
-					<th>序号</th>
-					<th>订单号</th>
-					<th>操作类型</th>
-					<th>用户姓名</th>
-					<th>用户号码</th>
-					<th>号码等级</th>
-					<th>审核方式</th>
-					<th>审核人</th>
-					<th>操作人</th>
-					<th>生成时间</th>
-					<th>审核用时</th>
-					<th>开卡状态</th>
-					<th>国政通校验</th>
-					<th>订单状态</th>
-					<th></th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr v-if="off.type==1" v-for="(todo,index) in list" :key="index">
-					<td>{{((pageNum-1)*10+(index+1))}}</td>
-					<td>{{todo.orderId}}</td>
-					<td>{{translateData(1,todo.orderType)}}</td>
-					<td>{{todo.userName}}</td>
-					<td>{{todo.phoneNumber}}</td>
-					<td>{{translateData(5,todo.phoneLevel)}}</td>
-					<td>{{todo.identityCard}}</td>
-					<td>{{todo.customerId}}({{todo.customerName}})</td>
-					<td>{{todo.operator}}({{todo.operatorName}})</td>
-					<td>{{todo.createTime?getDateTime(todo.createTime)[6]:''}}</td>
-					<td v-if="todo.orderStatus==1"><b class="f-c-red">待分配</b></td>
-					<td v-if="todo.orderStatus==2"><b class="f-c-blue">已分配</b></td>
-					<td><a :name="todo.orderId" @click="details" href="javascript:void(0)" class="details">查看详情</a></td>
-                    <td><a v-if="todo.orderStatus==1" href="javascript:void(0)"  @click="auditBtn(todo.orderType,todo.orderId)">审核</a></td>
-				</tr>
-				<tr v-if="off.type==2" v-for="(todo,index) in list" :key="index">
-					<td>{{((pageNum-1)*10+(index+1))}}</td>
-					<td>{{todo.orderId}}</td>
-					<td>{{translateData(1,todo.orderType)}}</td>
-					<td>{{todo.userName}}</td>
-					<td>{{todo.userPhone}}</td>
-					<td>{{translateData(5,todo.phoneLevel)}}</td>
-					<td>
-						<span v-show="todo.auditType==1">实时审核</span>
-						<span v-show="todo.auditType==2">自动审核</span>
-					</td>
-					<td>{{todo.customerId}}({{todo.customerName}})</td>
-					<td>{{todo.operator}}({{todo.operatorName}})</td>
-					<td>{{todo.createTime?getDateTime(todo.createTime)[6]:''}}</td>
-					<td>{{translateData(6,todo.takeTime)}}</td>
-					<td :class="{fCYellow:todo.cardStatus==1,fCGreen:todo.cardStatus==2,fCRed:todo.cardStatus==3,fCGrey:todo.cardStatus==9}">{{translateData(4,todo.cardStatus)}}</td>
-					<td>
-					    <span v-if="todo.gztCheckResult==-1">不适用</span>
-					    <span v-if="todo.gztCheckResult==0">未执行</span>
-					    <span v-if="todo.gztCheckResult==1">成功</span>
-					    <span v-if="todo.gztCheckResult==2">拒绝</span>
-					    <span v-if="todo.gztCheckResult==3">无法校验</span>
-					    <span v-if="!todo.hasOwnProperty('gztCheckResult')">未校验</span>
-				    </td>
-					<td colspan="2" v-if="todo.result==1" class="td-col-2">
-						<div class="f-c-green">同意</div>
-						<div><a :name="todo.orderId" :title="index" @click="details" class="details" href="javascript:void(0)">查看详情</a></div>
-					</td>
-					<td colspan="2" v-if="todo.result==2&&parseInt(todo.recheckLastTime)<new Date().getTime()" class="td-col-2">
-						<div class="f-c-red">拒绝</div>
-						<div><a :name="todo.orderId" :title="index" @click="details" class="details" href="javascript:void(0)">查看详情</a><br><span class="time_out f-c-red">超过复审时间</span></div>
-					</td>
-					<td colspan="2" v-if="todo.result==2&&parseInt(todo.recheckLastTime)>=new Date().getTime()" class="td-col-2">
-						<div class="f-c-red">拒绝</div>
-						<div>
-							<a :name="todo.orderId" :title="index" @click="details" class="details" href="javascript:void(0)">查看详情</a>
-							<br>
-							<a :name="todo.orderId"  v-if="off.power3 && todo.source!=21 && todo.source!=22" :title="index" @click="agree" class="agree f-mgt-10" href="javascript:void(0)">同意</a>
-						</div>
-					</td>
-					<td colspan="2" v-if="todo.result==3" class="td-col-2">
-						<div class="f-c-blue">复审同意</div>
-						<div><a :name="todo.orderId" :title="index" v-show="todo.source!=21" @click="details" class="details" href="javascript:void(0)">查看详情</a></div>
-					</td>
-					<td colspan="2" v-if="todo.result==4" class="td-col-2">
-						<div :class= "{ 'f-c-green': todo.updName==1||todo.updAddress==1||todo.updPapersCode==1, 'f-c-purple': todo.updName==0&&todo.updAddress==0&&todo.updPapersCode==0}">准同意</div>
-						<div><a :name="todo.orderId" :title="index" @click="details"
-						:class="{fCPurple:todo.updAddress==1&&todo.updPapersCode==1&&todo.updName==1}" class="details" href="javascript:void(0)">查看详情</a></div>
-					</td>
-				</tr>
-			</tbody>
-		</table>
-		<section class="m-sub-page clr">
-			<div v-if="form.orderStatus==4&&list.length" class="o-export-excel fl">
-				<a href="javascript:void(0)" @click="downloadBugOrder" class="f-btn-success">导出准同意数据</a>
-				<iframe src="" frameborder="0" id="downloadFrame" style="width:0;height:0;opacity:0"></iframe>
-			</div>
-			<my-page :page="pageNum" :maxpage="maxpage" :callback="callback"></my-page>
-		</section>
-		
-	</div>
-	</section>
-	<!--详情-->
-	<list-auditdetails v-if="off.auditdetails==1"></list-auditdetails>
-    <list-details :list="detailsData" :type="off.type" v-if="off.details==1" :number="off.number"></list-details>
+        </section>
+        <section class="form-c o-no-bgc">
+          <div
+            class="row"
+            :class="{active:form.select==2}"
+          >
+            <span class="m-form-radio">
+              <label><span class="radio"><input
+                    type="radio"
+                    value="2"
+                    v-model="form.select"
+                  ><span></span></span><span class="text">手机号码：</span></label>
+            </span>
+            <div class="input-box"><input
+                v-model="form.context2"
+                :readonly="form.select!=2"
+                maxlength="11"
+                type="tel"
+                placeholder="请输入查询的手机号码"
+              ></div>
+          </div>
+          <div
+            class="row"
+            :class="{active:form.select==3}"
+          >
+            <span class="m-form-radio">
+              <label><span class="radio"><input
+                    type="radio"
+                    value="3"
+                    v-model="form.select"
+                  ><span></span></span><span class="text">审核人工号：</span></label>
+            </span>
+            <div class="input-box"><input
+                v-model="form.context3"
+                :readonly="form.select!=3"
+                maxlength="11"
+                type="tel"
+                placeholder="请输入查询的审核人号码"
+              ></div>
+          </div>
+          <div
+            class="row"
+            :class="{active:form.select==4}"
+          >
+            <span class="m-form-radio">
+              <label><span class="radio"><input
+                    type="radio"
+                    value="4"
+                    v-model="form.select"
+                  ><span></span></span><span class="text">身份证号：</span></label>
+            </span>
+            <div class="input-box"><input
+                v-model="form.context4"
+                :readonly="form.select!=4"
+                maxlength="18"
+                type="text"
+                placeholder="请输入查询的身份证号码"
+              ></div>
+          </div>
+          <div
+            class="row"
+            :class="{active:form.select==6}"
+          >
+            <span class="m-form-radio">
+              <label><span class="radio"><input
+                    type="radio"
+                    value="6"
+                    v-model="form.select"
+                  ><span></span></span><span class="text">操作者工号：</span></label>
+            </span>
+            <div class="input-box"><input
+                v-model="form.context6"
+                :readonly="form.select!=6"
+                maxlength="11"
+                type="tel"
+                placeholder="请输入查询的操作者工号"
+              ></div>
+          </div>
+          <div
+            class="row"
+            :class="{active:form.select==8}"
+          >
+            <span class="m-form-radio">
+              <label><span class="radio"><input
+                    type="radio"
+                    value="8"
+                    v-model="form.select"
+                  ><span></span></span><span class="text">用户姓名：</span></label>
+            </span>
+            <div class="input-box"><input
+                v-model="form.context8"
+                :readonly="form.select!=8"
+                maxlength="11"
+                type="tel"
+                placeholder="请输入查询的开卡身份证姓名"
+              ></div>
+          </div>
+          <div
+            class="row"
+            :class="{active:form.select==5}"
+            v-if="off.type==1"
+          >
+            <span class="m-form-radio">
+              <label><span class="radio"><input
+                    type="radio"
+                    value="5"
+                    :readonly="form.select!=5"
+                    v-model="form.select"
+                  ><span></span></span><span class="text">订单状态：</span></label>
+            </span>
+            <div class="m-form-radio col-radio">
+              <label><span class="radio"><input
+                    type="radio"
+                    checked="checked"
+                    value="9"
+                    v-model="form.orderStatus"
+                  ><span></span></span><span class="text">全部</span></label>
+              <label><span class="radio"><input
+                    type="radio"
+                    value="1"
+                    v-model="form.orderStatus"
+                  ><span></span></span><span class="text">待分配</span></label>
+              <label><span class="radio"><input
+                    type="radio"
+                    value="2"
+                    v-model="form.orderStatus"
+                  ><span></span></span><span class="text">已分配</span></label>
+            </div>
+          </div>
+          <div
+            class="row"
+            :class="{active:form.select==7}"
+            v-if="off.type==2"
+          >
+            <span class="m-form-radio">
+              <label><span class="radio"><input
+                    type="radio"
+                    value="7"
+                    :readonly="form.select!=7"
+                    v-model="form.select"
+                  ><span></span></span><span class="text">开卡状态：</span></label>
+            </span>
+            <div class="m-form-radio col-radio">
+              <label><span
+                  @click="checked7"
+                  class="radio"
+                ><input
+                    value="9"
+                    type="radio"
+                    v-model="form.context7"
+                  ><span></span></span><span class="text">全部</span></label>
+              <label><span
+                  @click="checked7"
+                  class="radio"
+                ><input
+                    value="1"
+                    type="radio"
+                    v-model="form.context7"
+                  ><span></span></span><span class="text">成功</span></label>
+              <label><span
+                  @click="checked7"
+                  class="radio"
+                ><input
+                    value="2"
+                    type="radio"
+                    v-model="form.context7"
+                  ><span></span></span><span class="text">失败</span></label>
+            </div>
+          </div>
+          <button
+            class="f-btn f-btn-line"
+            @click="searchList(1)"
+          >查询</button>
+        </section>
+      </div>
+      <div
+        id="totalDiv"
+        v-if="list"
+      >
+        <div class="total-head">统计结果<b>{{total}}</b> <button
+            class="btn_export_excel"
+            v-if="maxpage"
+            @click="downLoadList"
+          >导出excel</button> </div>
+        <table>
+          <thead>
+            <tr v-if="off.type==1">
+              <th>序号</th>
+              <th>订单号</th>
+              <th>操作类型</th>
+              <th>用户姓名</th>
+              <th>用户号码</th>
+              <th>号码等级</th>
+              <th>身份证号码</th>
+              <th>审核人</th>
+              <th>操作者工号</th>
+              <th>生成时间</th>
+              <th>状态</th>
+              <th>操作</th>
+              <th></th>
+            </tr>
+            <tr v-if="off.type==2">
+              <th>序号</th>
+              <th>订单号</th>
+              <th>操作类型</th>
+              <th>用户姓名</th>
+              <th>用户号码</th>
+              <th>号码等级</th>
+              <th>审核方式</th>
+              <th>审核人</th>
+              <th>操作人</th>
+              <th>生成时间</th>
+              <th>审核用时</th>
+              <th>开卡状态</th>
+              <th>国政通校验</th>
+              <th>订单状态</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              v-if="off.type==1"
+              v-for="(todo,index) in list"
+              :key="index"
+            >
+              <td>{{((pageNum-1)*10+(index+1))}}</td>
+              <td>{{todo.orderId}}</td>
+              <td>{{translateData(1,todo.orderType)}}</td>
+              <td>{{todo.userName}}</td>
+              <td>{{todo.phoneNumber}}</td>
+              <td>{{translateData(5,todo.phoneLevel)}}</td>
+              <td>{{todo.identityCard}}</td>
+              <td>{{todo.customerId}}({{todo.customerName}})</td>
+              <td>{{todo.operator}}({{todo.operatorName}})</td>
+              <td>{{todo.createTime?getDateTime(todo.createTime)[6]:''}}</td>
+              <td v-if="todo.orderStatus==1"><b class="f-c-red">待分配</b></td>
+              <td v-if="todo.orderStatus==2"><b class="f-c-blue">已分配</b></td>
+              <td><a
+                  :name="todo.orderId"
+                  @click="details"
+                  href="javascript:void(0)"
+                  class="details"
+                >查看详情</a></td>
+              <td><a
+                  v-if="todo.orderStatus==1"
+                  href="javascript:void(0)"
+                  @click="auditBtn(todo.orderType,todo.orderId)"
+                >审核</a></td>
+            </tr>
+            <tr
+              v-if="off.type==2"
+              v-for="(todo,index) in list"
+              :key="index"
+            >
+              <td>{{((pageNum-1)*10+(index+1))}}</td>
+              <td>{{todo.orderId}}</td>
+              <td>{{translateData(1,todo.orderType)}}</td>
+              <td>{{todo.userName}}</td>
+              <td>{{todo.userPhone}}</td>
+              <td>{{translateData(5,todo.phoneLevel)}}</td>
+              <td>
+                <span v-show="todo.auditType==1">实时审核</span>
+                <span v-show="todo.auditType==2">自动审核</span>
+              </td>
+              <td>{{todo.customerId}}({{todo.customerName}})</td>
+              <td>{{todo.operator}}({{todo.operatorName}})</td>
+              <td>{{todo.createTime?getDateTime(todo.createTime)[6]:''}}</td>
+              <td>{{translateData(6,todo.takeTime)}}</td>
+              <td :class="{fCYellow:todo.cardStatus==1,fCGreen:todo.cardStatus==2,fCRed:todo.cardStatus==3,fCGrey:todo.cardStatus==9}">{{translateData(4,todo.cardStatus)}}</td>
+              <td>
+                <span v-if="todo.gztCheckResult==-1">不适用</span>
+                <span v-if="todo.gztCheckResult==0">未执行</span>
+                <span v-if="todo.gztCheckResult==1">成功</span>
+                <span v-if="todo.gztCheckResult==2">拒绝</span>
+                <span v-if="todo.gztCheckResult==3">无法校验</span>
+                <span v-if="!todo.hasOwnProperty('gztCheckResult')">未校验</span>
+              </td>
+              <td
+                colspan="2"
+                v-if="todo.result==1"
+                class="td-col-2"
+              >
+                <div class="f-c-green">同意</div>
+                <div><a
+                    :name="todo.orderId"
+                    :title="index"
+                    @click="details"
+                    class="details"
+                    href="javascript:void(0)"
+                  >查看详情</a></div>
+              </td>
+              <td
+                colspan="2"
+                v-if="todo.result==2&&parseInt(todo.recheckLastTime)<new Date().getTime()"
+                class="td-col-2"
+              >
+                <div class="f-c-red">拒绝</div>
+                <div><a
+                    :name="todo.orderId"
+                    :title="index"
+                    @click="details"
+                    class="details"
+                    href="javascript:void(0)"
+                  >查看详情</a><br><span class="time_out f-c-red">超过复审时间</span></div>
+              </td>
+              <td
+                colspan="2"
+                v-if="todo.result==2&&parseInt(todo.recheckLastTime)>=new Date().getTime()"
+                class="td-col-2"
+              >
+                <div class="f-c-red">拒绝</div>
+                <div>
+                  <a
+                    :name="todo.orderId"
+                    :title="index"
+                    @click="details"
+                    class="details"
+                    href="javascript:void(0)"
+                  >查看详情</a>
+                  <br>
+                  <a
+                    :name="todo.orderId"
+                    v-if="off.power3 && todo.source!=21 && todo.source!=22"
+                    :title="index"
+                    @click="agree"
+                    class="agree f-mgt-10"
+                    href="javascript:void(0)"
+                  >同意</a>
+                </div>
+              </td>
+              <td
+                colspan="2"
+                v-if="todo.result==3"
+                class="td-col-2"
+              >
+                <div class="f-c-blue">复审同意</div>
+                <div><a
+                    :name="todo.orderId"
+                    :title="index"
+                    v-show="todo.source!=21"
+                    @click="details"
+                    class="details"
+                    href="javascript:void(0)"
+                  >查看详情</a></div>
+              </td>
+              <td
+                colspan="2"
+                v-if="todo.result==4"
+                class="td-col-2"
+              >
+                <div :class="{ 'f-c-green': todo.updName==1||todo.updAddress==1||todo.updPapersCode==1, 'f-c-purple': todo.updName==0&&todo.updAddress==0&&todo.updPapersCode==0}">准同意</div>
+                <div><a
+                    :name="todo.orderId"
+                    :title="index"
+                    @click="details"
+                    :class="{fCPurple:todo.updAddress==1&&todo.updPapersCode==1&&todo.updName==1}"
+                    class="details"
+                    href="javascript:void(0)"
+                  >查看详情</a></div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <section class="m-sub-page clr">
+          <div
+            v-if="form.orderStatus==4&&list.length"
+            class="o-export-excel fl"
+          >
+            <a
+              href="javascript:void(0)"
+              @click="downloadBugOrder"
+              class="f-btn-success"
+            >导出准同意数据</a>
+            <iframe
+              src=""
+              frameborder="0"
+              id="downloadFrame"
+              style="width:0;height:0;opacity:0"
+            ></iframe>
+          </div>
+          <my-page
+            :page="pageNum"
+            :maxpage="maxpage"
+            :callback="callback"
+          ></my-page>
+        </section>
+
+      </div>
+    </section>
+    <!--详情-->
+    <list-auditdetails v-if="off.auditdetails==1"></list-auditdetails>
+    <list-details
+      :list="detailsData"
+      :type="off.type"
+      v-if="off.details==1"
+      :number="off.number"
+    ></list-details>
   </div>
 </template>
 <script>
@@ -285,8 +628,13 @@ import "../../assets/ym/css/search.css";
 import pagination from "../../componentskm/page.vue";
 import details from "../ym/searchListDetails.vue";
 import auditdetails from "../ym/auditList.vue";
-import { setStore, getStore, createDownload,errorDeal } from "../../config/utils";
-import {reqCommonMethod,getOrderTotal} from "../../config/service.js";
+import {
+  setStore,
+  getStore,
+  createDownload,
+  errorDeal
+} from "../../config/utils";
+import { reqCommonMethod, getOrderTotal } from "../../config/service.js";
 export default {
   name: "search",
   data() {
@@ -299,12 +647,12 @@ export default {
         auditdetails: 0, //审核
         number: "", //第几条详情
         whichbtn: "",
-        power3:0,
+        power3: 0
       },
       form: {
         source: [0], //系统名称
         orderType: [1, 2, 6, 4, 5], //操作类型
-        cardSrc:0,//开卡来源
+        cardSrc: 0, //开卡来源
         auditType: 0, //审核方式
         orderStatus: 9, //订单状态
         context1: "", //订单号码
@@ -314,7 +662,7 @@ export default {
         context5: "", // type=5时订单状态
         context6: "", //操作者工号
         context7: 9, //开卡状态
-        context8:'',//开卡人姓名
+        context8: "", //开卡人姓名
         startTime: "",
         endTime: "",
         select: 7, //条件查询，选择的条件
@@ -331,11 +679,11 @@ export default {
       callback: Function, //page组件点击回调
       cardT: "",
       orderId: "",
-      info:'',
-      searchListData:"",//查询参数
-      auditDetailsData:""//获取详情参数
-      ,lastSearchPage:"1"
-      ,lastSearchIndex:""
+      info: "",
+      searchListData: "", //查询参数
+      auditDetailsData: "", //获取详情参数
+      lastSearchPage: "1",
+      lastSearchIndex: ""
     };
   },
   components: {
@@ -346,188 +694,209 @@ export default {
   created: function() {
     this.init();
   },
-  watch:{
-      'form.select'(){
-          if(this.form.select!=7){
-              this.form.context7=9;
-          }
+  watch: {
+    "form.select"() {
+      if (this.form.select != 7) {
+        this.form.context7 = 9;
       }
+    }
   },
   methods: {
     init: function() {
-        const vm=this;
-        let userInfo=getStore("KA_ECS_USER");
-        vm.userInfo=userInfo;
-        vm.userInfo.isadminYm&&(vm.userInfo.isadminYm.indexOf('1')>-1||vm.userInfo.isadminYm.indexOf('3')>-1) ? vm.off.power3=true : vm.off.power3=false;
-        var type = this.$route.params.type;
-        type == "auditing" ? (vm.off.type = 1) : (vm.off.type = 2);
-        vm.form.startTime = laydate.now(0, "YYYY-MM-DD 00:00:00");
-        vm.form.endTime = laydate.now(0, "YYYY-MM-DD 23:59:59");
-        vm.off.type == 1 ? (vm.form.select = 5) : (vm.form.select = 7);
+      const vm = this;
+      let userInfo = getStore("KA_ECS_USER");
+      vm.userInfo = userInfo;
+      vm.userInfo.isadminYm &&
+      (vm.userInfo.isadminYm.indexOf("1") > -1 ||
+        vm.userInfo.isadminYm.indexOf("3") > -1)
+        ? (vm.off.power3 = true)
+        : (vm.off.power3 = false);
+      var type = this.$route.params.type;
+      type == "auditing" ? (vm.off.type = 1) : (vm.off.type = 2);
+      vm.form.startTime = laydate.now(0, "YYYY-MM-DD 00:00:00");
+      vm.form.endTime = laydate.now(0, "YYYY-MM-DD 23:59:59");
+      vm.off.type == 1 ? (vm.form.select = 5) : (vm.form.select = 7);
     },
     auditBtn: function(type, orderId) {
-        var vm = this;
-        vm.cardT = type;
-        vm.orderId = orderId;
-        vm.off.detailsList = 1;
-        vm.off.auditdetails = 1;
+      var vm = this;
+      vm.cardT = type;
+      vm.orderId = orderId;
+      vm.off.detailsList = 1;
+      vm.off.auditdetails = 1;
     },
     searchList: function(index, page) {
-        var vm = this,
+      var vm = this,
         url,
         json = {
-            source:vm.form.source.join(","),
-            orderType: vm.form.orderType.join(","),
-            pageSize: vm.pageSize,
-            pageNum: page || 1,
-            startTime: vm.form.startTime,
-            endTime: vm.form.endTime,
-            orderStatus: vm.form.orderStatus,
-            auditType: vm.form.auditType,
-            gztCheck: vm.form.gztChe
+          source: vm.form.source.join(","),
+          orderType: vm.form.orderType.join(","),
+          pageSize: vm.pageSize,
+          pageNum: page || 1,
+          startTime: vm.form.startTime,
+          endTime: vm.form.endTime,
+          orderStatus: vm.form.orderStatus,
+          auditType: vm.form.auditType,
+          gztCheck: vm.form.gztChe
         };
-        vm.list="";
-        vm.pageNum=page;
-        vm.lastSearchPage=page;
-        vm.lastSearchIndex=index;
-        if (index == "order") {
-            vm.off.whichbtn = "index";
-            if (!vm.form.context1) {
-                layer.open({
-                content: "请输入订单号码",
-                skin: "msg",
-                time: 2,
-                msgSkin: "error"
-                });
-                return false;
-            }
-            json.context = vm.form.context1;
-            json.type = 1;
-        } else if (index == 1) {
-            vm.off.whichbtn = 1;
-            let context = vm.form["context" + vm.form.select];
-            vm.off.type == 1 &&
-                vm.form.select == 5 &&
-                (context = vm.form.orderStatus);
-            if(vm.form.source==""){
-                layer.open({
-                    content: "请选择要查询的系统类型",
-                    skin: "msg",
-                    time: 2,
-                    msgSkin: "error"
-                });
-                return false;
-            }else if(vm.form.orderType==""){
-                layer.open({
-                    content: "请选择要查询的操作类型",
-                    skin: "msg",
-                    time: 2,
-                    msgSkin: "error"
-                });
-                return false;
-            }else if (vm.form.select == 2 && !context) {
-                layer.open({
-                content: "请输入手机号码",
-                skin: "msg",
-                time: 2,
-                msgSkin: "error"
-                });
-                return false;
-            } else if (vm.form.select == 2 && context.length != 11) {
-                layer.open({
-                content: "手机号码格式错误",
-                skin: "msg",
-                time: 2,
-                msgSkin: "error"
-                });
-                return false;
-            } else if (vm.form.select == 3 && !context) {
-                layer.open({
-                content: "请输入审核人工号",
-                skin: "msg",
-                time: 2,
-                msgSkin: "error"
-                });
-                return false;
-            } else if (vm.form.select == 4 && !context) {
-                layer.open({
-                content: "请输入身份证号",
-                skin: "msg",
-                time: 2,
-                msgSkin: "error"
-                });
-                return false;
-            } else if (vm.form.select == 6 && !context) {
-                layer.open({
-                content: "请输入操作者工号",
-                skin: "msg",
-                time: 2,
-                msgSkin: "error"
-                });
-                return false;
-            }else if (vm.form.select == 8 && !context) {
-                layer.open({
-                content: "请输入查询的用户姓名",
-                skin: "msg",
-                time: 2,
-                msgSkin: "error"
-                });
-                return false;
-            }
-            json.context = context;
-            json.type = vm.form.select;
-        }
-        vm.off.type == 1 ? (url = "ym-ecs/c/audit/auditOrderSearch") : (url = "ym-ecs/c/audit/orderSearch");
-        vm.off.isLoad=true;
-        vm.searchListData=json;
-        if(vm.off.type==1){
-            reqCommonMethod(vm.searchListData,function(){vm.off.isLoad=false},url)
-            .then((data)=>{
-                vm.list = data.data.list;
-                vm.total = data.data.total;
-                vm.maxpage = Math.ceil(parseInt(data.data.total) / 10);
-                vm.pageNum = page || 1;
-                vm.callback = function(v) {
-                    vm.searchList(index, v);
-                };
-                vm.off.isLoad=false;
-            }).catch(error=>errorDeal(error));    
-        }else if(vm.off.type==2){
-            if(typeof(page) == "undefined"){
-                vm.maxpage=1;
-                vm.total=" 加载中... ";
-                getOrderTotal(vm.searchListData,function(){vm.off.isLoad=false})
-                .then((data)=>{
-                    vm.maxpage = Math.ceil(parseInt(data.data) / 10);
-                    vm.total = data.data;
-                })
-            }
-            reqCommonMethod(vm.searchListData,function(){vm.off.isLoad=false},url)
-            .then((data)=>{
-                vm.list = data.data.list;
-                vm.pageNum = page || 1;
-                vm.callback = function(v) {
-                    vm.searchList(index, v);
-                };
-                vm.off.isLoad=false;
-            }).catch(error=>errorDeal(error));
-        }else{
-            layer.open({
-            content: "未知错误",
+      vm.list = "";
+      vm.pageNum = page;
+      vm.lastSearchPage = page;
+      vm.lastSearchIndex = index;
+      if (index == "order") {
+        vm.off.whichbtn = "index";
+        if (!vm.form.context1) {
+          layer.open({
+            content: "请输入订单号码",
             skin: "msg",
             time: 2,
             msgSkin: "error"
           });
           return false;
         }
+        json.context = vm.form.context1;
+        json.type = 1;
+      } else if (index == 1) {
+        vm.off.whichbtn = 1;
+        let context = vm.form["context" + vm.form.select];
+        vm.off.type == 1 &&
+          vm.form.select == 5 &&
+          (context = vm.form.orderStatus);
+        if (vm.form.source == "") {
+          layer.open({
+            content: "请选择要查询的系统类型",
+            skin: "msg",
+            time: 2,
+            msgSkin: "error"
+          });
+          return false;
+        } else if (vm.form.orderType == "") {
+          layer.open({
+            content: "请选择要查询的操作类型",
+            skin: "msg",
+            time: 2,
+            msgSkin: "error"
+          });
+          return false;
+        } else if (vm.form.select == 2 && !context) {
+          layer.open({
+            content: "请输入手机号码",
+            skin: "msg",
+            time: 2,
+            msgSkin: "error"
+          });
+          return false;
+        } else if (vm.form.select == 2 && context.length != 11) {
+          layer.open({
+            content: "手机号码格式错误",
+            skin: "msg",
+            time: 2,
+            msgSkin: "error"
+          });
+          return false;
+        } else if (vm.form.select == 3 && !context) {
+          layer.open({
+            content: "请输入审核人工号",
+            skin: "msg",
+            time: 2,
+            msgSkin: "error"
+          });
+          return false;
+        } else if (vm.form.select == 4 && !context) {
+          layer.open({
+            content: "请输入身份证号",
+            skin: "msg",
+            time: 2,
+            msgSkin: "error"
+          });
+          return false;
+        } else if (vm.form.select == 6 && !context) {
+          layer.open({
+            content: "请输入操作者工号",
+            skin: "msg",
+            time: 2,
+            msgSkin: "error"
+          });
+          return false;
+        } else if (vm.form.select == 8 && !context) {
+          layer.open({
+            content: "请输入查询的用户姓名",
+            skin: "msg",
+            time: 2,
+            msgSkin: "error"
+          });
+          return false;
+        }
+        json.context = context;
+        json.type = vm.form.select;
+      }
+      vm.off.type == 1
+        ? (url = "ym-ecs/c/audit/auditOrderSearch")
+        : (url = "ym-ecs/c/audit/orderSearch");
+      vm.off.isLoad = true;
+      vm.searchListData = json;
+      if (vm.off.type == 1) {
+        reqCommonMethod(
+          vm.searchListData,
+          function() {
+            vm.off.isLoad = false;
+          },
+          url
+        )
+          .then(data => {
+            vm.list = data.data.list;
+            vm.total = data.data.total;
+            vm.maxpage = Math.ceil(parseInt(data.data.total) / 10);
+            vm.pageNum = page || 1;
+            vm.callback = function(v) {
+              vm.searchList(index, v);
+            };
+            vm.off.isLoad = false;
+          })
+          .catch(error => errorDeal(error));
+      } else if (vm.off.type == 2) {
+        if (typeof page == "undefined") {
+          vm.maxpage = 1;
+          vm.total = " 加载中... ";
+          getOrderTotal(vm.searchListData, function() {
+            vm.off.isLoad = false;
+          }).then(data => {
+            vm.maxpage = Math.ceil(parseInt(data.data) / 10);
+            vm.total = data.data;
+          });
+        }
+        reqCommonMethod(
+          vm.searchListData,
+          function() {
+            vm.off.isLoad = false;
+          },
+          url
+        )
+          .then(data => {
+            vm.list = data.data.list;
+            vm.pageNum = page || 1;
+            vm.callback = function(v) {
+              vm.searchList(index, v);
+            };
+            vm.off.isLoad = false;
+          })
+          .catch(error => errorDeal(error));
+      } else {
+        layer.open({
+          content: "未知错误",
+          skin: "msg",
+          time: 2,
+          msgSkin: "error"
+        });
+        return false;
+      }
     },
     downLoadList: function(index, page) {
       //导出EXCEL
       var vm = this,
         url,
         json = {
-        //   source: vm.form.source,
-          source:vm.form.source.join(","),
+          //   source: vm.form.source,
+          source: vm.form.source.join(","),
           orderType: vm.form.orderType.join(","),
           pageSize: vm.pageSize,
           pageNum: page || 1,
@@ -604,73 +973,92 @@ export default {
         url = "ym-ecs/c/audit/downloadOrderSearch";
       }
       vm.off.load = true;
-      let userInfo=getStore("KA_ECS_USER");
-      json.customerId=userInfo.customerId;
-	  json.codeId=userInfo.codeId;
+      let userInfo = getStore("KA_ECS_USER");
+      json.customerId = userInfo.customerId;
+      json.codeId = userInfo.codeId;
       createDownload(url, JSON.stringify(json), function() {
         vm.off.load = false;
       });
     },
     downloadBugOrder() {
-        //下载准同意excel
-        var vm = this;
-        vm.off.load = true;
-        let userInfo=getStore("KA_ECS_USER"),json={
-        startTime: vm.form.startTime,
-        endTime: vm.form.endTime,
-        cardStatus: vm.form.context7,
-        customerId:userInfo.customerId,
-        codeId:userInfo.codeId
+      //下载准同意excel
+      var vm = this;
+      vm.off.load = true;
+      let userInfo = getStore("KA_ECS_USER"),
+        json = {
+          startTime: vm.form.startTime,
+          endTime: vm.form.endTime,
+          cardStatus: vm.form.context7,
+          customerId: userInfo.customerId,
+          codeId: userInfo.codeId
         };
-        createDownload("ym-ecs/c/audit/exportBuggingOrder", JSON.stringify(json), function() {
-            vm.off.load = false;
-        });
+      createDownload(
+        "ym-ecs/c/audit/exportBuggingOrder",
+        JSON.stringify(json),
+        function() {
+          vm.off.load = false;
+        }
+      );
     },
     agree: function(e) {
-        var vm = this,
+      var vm = this,
         url,
         orderId = e.target.name,
         number = e.target.title;
-        reqCommonMethod({ orderId: orderId },function(){vm.off.isLoad=false;},"ym-ecs/c/audit/orderRecheck")
-        .then((response)=>{
-            layer.open({
+      reqCommonMethod(
+        { orderId: orderId },
+        function() {
+          vm.off.isLoad = false;
+        },
+        "ym-ecs/c/audit/orderRecheck"
+      )
+        .then(response => {
+          layer.open({
             content: "复审成功",
             skin: "msg",
             time: 4,
             msgSkin: "success"
-            });
-            vm.list[number].result = 3;
-            vm.list[number].cardStatus = 1;
-            vm.off.isLoad=false;
-        }).catch(error=>errorDeal(error));         
+          });
+          vm.list[number].result = 3;
+          vm.list[number].cardStatus = 1;
+          vm.off.isLoad = false;
+        })
+        .catch(error => errorDeal(error));
     },
     details: function(e) {
-    var vm = this,
+      var vm = this,
         orderId,
         url;
-        if(typeof(e)!="undefined"){
-            orderId = e.target.name;
-            vm.off.number = e.target.title;
-        }
-        vm.off.type == 1
+      if (typeof e != "undefined") {
+        orderId = e.target.name;
+        vm.off.number = e.target.title;
+      }
+      vm.off.type == 1
         ? (url = "ym-ecs/c/audit/auditOrderDetails")
         : (url = "ym-ecs/c/audit/orderDetails");
-        if (vm.off.isLoad) return false;
-        vm.off.isLoad = true;
+      if (vm.off.isLoad) return false;
+      vm.off.isLoad = true;
 
-        if(typeof(orderId)!="undefined"){
-            vm.auditDetailsData={orderId:orderId}
-        }
-        reqCommonMethod(vm.auditDetailsData,function(){vm.off.isLoad=false;},url)
-        .then((data)=>{
-            vm.detailsData = data.data;
-            vm.off.details = true;
-            vm.off.detailsList = true;
-            vm.off.isLoad=false;
-        }).catch(error=>errorDeal(error));          
+      if (typeof orderId != "undefined") {
+        vm.auditDetailsData = { orderId: orderId };
+      }
+      reqCommonMethod(
+        vm.auditDetailsData,
+        function() {
+          vm.off.isLoad = false;
+        },
+        url
+      )
+        .then(data => {
+          vm.detailsData = data.data;
+          vm.off.details = true;
+          vm.off.detailsList = true;
+          vm.off.isLoad = false;
+        })
+        .catch(error => errorDeal(error));
     },
-    checked7(){
-        this.form.select=7;
+    checked7() {
+      this.form.select = 7;
     },
     to_laydate: function(v) {
       var vm = this;
@@ -685,51 +1073,111 @@ export default {
       });
     },
     toSearch: function(e) {
-        e.keyCode == 13 && this.searchList(2);
+      e.keyCode == 13 && this.searchList(2);
     },
     translateData: function(type, v) {
-        v = parseInt(v);
-        switch (type) {
+      v = parseInt(v);
+      switch (type) {
         case 1: //操作类型
-            return v == 1 ? "开成卡": v == 2 ? "开白卡" : v == 4 ? "实名补录" : v == 3 ? "过户办理" : v == 5 ? "实名登记" : void 0;
-            break;
+          return v == 1
+            ? "开成卡"
+            : v == 2
+            ? "开白卡"
+            : v == 4
+            ? "实名补录"
+            : v == 3
+            ? "过户办理"
+            : v == 5
+            ? "实名登记"
+            : void 0;
+          break;
         case 2: //证件类型
-            return v == 1 ? "身份证" : v == 2 ? "护照" : v == 3 ? "军官证" : v==6 ? '居住证' : void 0;
-            break;
+          return v == 1
+            ? "身份证"
+            : v == 2
+            ? "护照"
+            : v == 3
+            ? "军官证"
+            : v == 6
+            ? "居住证"
+            : void 0;
+          break;
         case 3: //已审核，订单状态
-            break;
+          break;
         case 4: //开卡状态
-            return v == 1 ? "处理中" : v == 2 ? "成功" : v == 3 ? "失败" : v == 9 ? "--" : void 0;
-            break;
+          return v == 1
+            ? "处理中"
+            : v == 2
+            ? "成功"
+            : v == 3
+            ? "失败"
+            : v == 9
+            ? "--"
+            : void 0;
+          break;
         case 5: //靓号等级
-            var level = [ "普号", "特级", "一级", "二级", "三级", "四级", "五级", "六级", "七级", "八级", "九级", "十级", "十一级" ];
-            return level[parseInt(v)];
-            break;
+          var level = [
+            "普号",
+            "特级",
+            "一级",
+            "二级",
+            "三级",
+            "四级",
+            "五级",
+            "六级",
+            "七级",
+            "八级",
+            "九级",
+            "十级",
+            "十一级"
+          ];
+          return level[parseInt(v)];
+          break;
         case 6: //天数，时分秒
-            v = parseInt(v);
-            var day, minute, second, hour;
-            day = Math.floor(v / (60 * 60 * 24));
-            hour = Math.floor((v % (60 * 60 * 24)) / (60 * 60));
-            minute = Math.floor((v % (60 * 60)) / 60);
-            second = Math.floor(v % 60);
-            return day > 0 ? day + "天" + hour + "时" + minute + "分" + second + "秒" : hour > 0 ? hour + "时" + minute + "分" + second + "秒" : minute > 0 ? minute + "分" + second + "秒" : second + "秒";
-            break;
+          v = parseInt(v);
+          var day, minute, second, hour;
+          day = Math.floor(v / (60 * 60 * 24));
+          hour = Math.floor((v % (60 * 60 * 24)) / (60 * 60));
+          minute = Math.floor((v % (60 * 60)) / 60);
+          second = Math.floor(v % 60);
+          return day > 0
+            ? day + "天" + hour + "时" + minute + "分" + second + "秒"
+            : hour > 0
+            ? hour + "时" + minute + "分" + second + "秒"
+            : minute > 0
+            ? minute + "分" + second + "秒"
+            : second + "秒";
+          break;
         case 7: //系统名称
-            return v == 0 ? "远盟" : v == 1 ? "远易站" : v == 2 ? "信时空" : v == 3 ? "远微商城" : v == 4 ? "网厅" : v == 21 ? "远特i卡" : v == 22 ? "卡盟App" : "--";
-            break;
-        }
+          return v == 0
+            ? "远盟"
+            : v == 1
+            ? "远易站"
+            : v == 2
+            ? "信时空"
+            : v == 3
+            ? "远微商城"
+            : v == 4
+            ? "网厅"
+            : v == 21
+            ? "远特i卡"
+            : v == 22
+            ? "卡盟App"
+            : "--";
+          break;
+      }
     },
     getDateTime: function(e) {
-        var t;
-        t = e ? new Date(parseInt(e)) : new Date();
-        var n = t.getFullYear(),
+      var t;
+      t = e ? new Date(parseInt(e)) : new Date();
+      var n = t.getFullYear(),
         a = t.getMonth() + 1,
         r = t.getDate(),
         o = t.getHours(),
         i = t.getMinutes(),
         c = t.getSeconds(),
         k = [];
-        a >= 10 ? a : (a = "0" + a),
+      a >= 10 ? a : (a = "0" + a),
         r >= 10 ? r : (r = "0" + r),
         o >= 10 ? o : (o = "0" + o),
         i >= 10 ? i : (i = "0" + i),
@@ -741,7 +1189,7 @@ export default {
         (k[4] = a + "-" + r),
         (k[5] = o + ":" + i + ":" + c),
         (k[6] = n + "-" + a + "-" + r + " " + o + ":" + i + ":" + c);
-        return k;
+      return k;
     }
     // dropSelectButton:function(e){
     // 	var vm=this;
@@ -785,4 +1233,29 @@ export default {
   }
 };
 </script>
+<style scoped>
+.g-search-menu #search #auditList .m-refresh {
+  position: absolute;
+  margin: auto;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+.g-search-menu #search #auditList {
+  display: block;
+}
+.m-sub-page > .fl {
+  padding: 20px;
+}
+.row .dp {
+  display: inline-block;
+  min-width: 80px;
+  text-align: justify;
+  text-align-last: justify;
+}
+.m-col-2 > .col-r {
+  margin-left: 0.8rem;
+}
+</style>
 
