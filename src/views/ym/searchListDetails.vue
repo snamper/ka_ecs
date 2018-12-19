@@ -260,7 +260,11 @@
             <td><span>订单号码：</span>{{list.orderId}}</td>
             <td><span>电话号码：</span>{{list.userPhone}}（{{typeCheck(4,list.phoneLevel)}}）</td>
             <td><span>审核方式：</span>
-              <b v-show="list.auditType==1">实时审核</b>
+              <b v-show="list.auditType==1">实时审核<a
+                  href="javascript:void(0)"
+                  @click="autoAuditInfo"
+                  class="details m-l"
+                >查看详情</a></b>
               <b v-show="list.auditType==2">自动审核<a
                   href="javascript:void(0)"
                   @click="autoAuditInfo"
