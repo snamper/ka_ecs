@@ -40,10 +40,10 @@ export const createDownload=(url,data,cb)=>{
     	try{
             var res = ifr.contentWindow.document.body.textContent;
             if(res!=''&&res.indexOf('code')>-1){
-               var result=JSON.parse(res);
-               if(res.code!=200){
-                  errorDeal(result);
-               }
+                var result=JSON.parse(res);
+                if(res.code!=200){
+                    errorDeal(result);
+                }
             }
     	}catch(error){
     		errorDeal(error);
