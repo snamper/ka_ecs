@@ -187,7 +187,7 @@
 <script>
 import {reqCommonMethod} from "../../../config/service.js";
 import pagination from "../../../componentskm/page.vue";
-import { getDateTime,getUnixTime } from "../../../config/utils.js";
+import { getDateTime,getUnixTime,errorDeal } from "../../../config/utils.js";
 import {setStore, getStore, createDownload,translateData} from '../../../config/utils';
 export default{
 	data (){
