@@ -250,16 +250,14 @@ export default{
 					"appType":vm.form.appType,
 				};
 			if(vm.off.type==1){
-                url="km-ecs/w/statistics/identifier";
-                json.idCardNo=vm.form.idCardNo;
+        url="km-ecs/w/statistics/identifier";
+        json.idCardNo=vm.form.idCardNo;
 			}else if(vm.off.type==2){
-                url="km-ecs/w/statistics/identifierLive";
-                json.idCardNo=vm.form.idCardNo;
+        url="km-ecs/w/statistics/identifierLive";
+        json.idCardNo=vm.form.idCardNo;
 			}else if(vm.off.type==3){
 				url="km-ecs/w/statistics/writecard";
-            }
-
-			if(vm.off.isLoad)return false;
+      }
 			vm.off.isLoad=true;
       reqCommonMethod(json,function(){vm.off.isLoad=false;},url)
       .then((data)=>{
@@ -267,42 +265,41 @@ export default{
 				vm.total=data.data.total;
 				vm.maxpage=Math.ceil(parseInt(data.data.total)/10);
 				vm.pageNum=page||1;
-          vm.callback=function(v){vm.searchList(index,v)};
-          vm.off.isLoad=false;
-        }).catch(error=>errorDeal(error)); 	            
+        vm.callback=function(v){vm.searchList(index,v)};
+      }).catch(error=>errorDeal(error)); 	            
 		},
 		downLoadList:function(){//导出EXCEL
 			var vm=this,url,userInfo=getStore("KA_ECS_USER");
 		    if(!userInfo){
-		         layer.open({
-		            content:'登录已过期，请重新登录',
-		            style:'width:auto;',
-		            btn:['确定'],
-		            shadeClose:false,
-		            yes:function(){
-		                setStore("KA_ECS_USER","");
-		                window.location.href="#/login";
-		                layer.closeAll();
-		            }
-		        });
-		        return false;
+					layer.open({
+						content:'登录已过期，请重新登录',
+						style:'width:auto;',
+						btn:['确定'],
+						shadeClose:false,
+						yes:function(){
+							setStore("KA_ECS_USER","");
+							window.location.href="#/login";
+							layer.closeAll();
+						}
+					});
+					return false;
 		    }
 			var json={
-					"userId":vm.form.userId,
-					"pageSize":vm.pageSize,
-					"pageNum":vm.page||1,
-					"startTime":vm.form.startTime,
-					"endTime":vm.form.endTime,
-					"terminalType":vm.form.terminalType,
-					"deviceId":vm.form.deviceId,
-					"result":vm.form.result,
-					"customerId":userInfo.customerId,
-					"codeId":userInfo.codeId,
-					"orderId":vm.form.orderId,
-					"phoneNo":vm.form.phoneNo,
-					"operation":vm.form.operation,
-					"appType":vm.form.appType,
-				};
+				"userId":vm.form.userId,
+				"pageSize":vm.pageSize,
+				"pageNum":vm.page||1,
+				"startTime":vm.form.startTime,
+				"endTime":vm.form.endTime,
+				"terminalType":vm.form.terminalType,
+				"deviceId":vm.form.deviceId,
+				"result":vm.form.result,
+				"customerId":userInfo.customerId,
+				"codeId":userInfo.codeId,
+				"orderId":vm.form.orderId,
+				"phoneNo":vm.form.phoneNo,
+				"operation":vm.form.operation,
+				"appType":vm.form.appType,
+			};
 			if(vm.off.type==1){
         url="km-ecs/w/statistics/identifierListdown";
         json.idCardNo=vm.form.idCardNo;
