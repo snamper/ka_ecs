@@ -414,7 +414,7 @@ export default {
       vm.form.endTime = laydate.now(0, "YYYY-MM-DD 23:59:59");
     },
     closePop() {
-      this.off.pop = off;
+      this.off.pop = false;
     },
     searchList(index, page) {
       let vm = this,
