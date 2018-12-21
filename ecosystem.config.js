@@ -20,7 +20,7 @@ module.exports = {
       ref  : 'origin/dev',
       repo : 'https://github.com/thinkmix/ka_ecs.git',
       path : '/usr/local/nginx/html/ka_ecs',
-      'post-deploy' : 'yarn install && yarn buildTest && pm2 reload ecosystem.config.js --env test'
+      'post-deploy' : 'yarn install && yarn build && pm2 reload ecosystem.config.js --env test'
     },
     onlineTest : {
       user : 'root',
