@@ -1011,7 +1011,8 @@ export default {
           auditType: vm.form.auditType,
           cardType: vm.form.cardType,
           sourceFrom: vm.form.sourceFrom.join(","),
-          periodType: vm.off.type
+          periodType: vm.off.type,
+          makeSource: vm.form.merchants,
         };
       let context = vm.form["context" + vm.form.select];
       vm.off.type == 1 &&
