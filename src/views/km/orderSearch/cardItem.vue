@@ -1116,7 +1116,7 @@ export default {
       }
       var sql =
         str +
-        " B.modify_time BETWEEN " +
+        "A.create_time BETWEEN " +
         getUnixTime(json.startTime) +
         " AND " +
         getUnixTime(json.endTime) +
@@ -1225,7 +1225,7 @@ export default {
       }
       var sql =
         str +
-        "B.modify_time BETWEEN " +
+        "A.create_time BETWEEN " +
         getUnixTime(json.startTime) +
         " AND " +
         getUnixTime(json.endTime) +
