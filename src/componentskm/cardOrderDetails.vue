@@ -204,7 +204,7 @@
                                     </tr>
                                     <tr>
                                         <td>开卡方式：</td>
-                                        <td>{{translateData(15,list.appType || (parseInt(list.deviceType) + 1))}}</td>
+                                        <td>{{list.appType ? translateData(15,list.appType) : translateData(20,list.deviceType)}}</td>
                                     </tr>
                                     <tr>
                                         <td>用户姓名：</td>

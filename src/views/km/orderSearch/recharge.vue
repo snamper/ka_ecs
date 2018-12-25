@@ -16,8 +16,8 @@
 			<div class="row">
 				<span class="dp">充值类型：</span>
 				<div class="m-form-radio">
-					<label @click="shiftRechargeType()"><span class="radio"><input value="1" type="radio" v-model="form.rechargeType"><span></span></span><span class="text">流量</span></label>
 					<label @click="shiftRechargeType()"><span class="radio"><input value="2" type="radio" v-model="form.rechargeType"><span></span></span><span class="text">话费</span></label>
+					<label @click="shiftRechargeType()"><span class="radio"><input value="1" type="radio" v-model="form.rechargeType"><span></span></span><span class="text">流量</span></label>
 				</div>
 			</div>
 			<div class="row">
@@ -193,7 +193,7 @@ export default{
 			},
 			form:{
 				isp:0,//运营商
-				rechargeType:1,//操作类型
+				rechargeType:2,//操作类型
 				payType:0,//支付方式
 				context1:'',//订单号码
 				context2:'',//充值号码

@@ -35,8 +35,13 @@
                   <tbody>
                     <tr>
                       <td>订单号码：</td>
-                      <td>{{auditData.orderId}}<span v-show="auditData.deviceType == 1">（远特i卡）</span><span v-show="auditData.deviceType == 2">（远特eSIM）</span><span
-                          v-show="auditData.deviceType == 4">（eSIM助手）</span></td>
+                      <td>
+                        <span>{{auditData.orderId}}</span>
+                        <b v-show="auditData.deviceType == 1">（远特i卡）</b>
+                        <b v-show="auditData.deviceType == 2">（远特eSIM）</b>
+                        <b v-show="auditData.deviceType == 4">（eSIM助手）</b>
+                        <b v-show="auditData.deviceType == 5">（国兴卡）</b>
+                      </td>
                     </tr>
                     <tr>
                       <td>生成时间：</td>
