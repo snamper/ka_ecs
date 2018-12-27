@@ -168,7 +168,7 @@
                             <label><span class="checkbox"><input type="checkbox" value="1" v-model="form.deviceType" checked="checked"><span></span></span><span class="text">远特i卡</span></label>
                             <label><span class="checkbox"><input type="checkbox" value="2" v-model="form.deviceType" checked="checked"><span></span></span><span class="text">远特eSIM</span></label>
                             <label><span class="checkbox"><input type="checkbox" value="4" v-model="form.deviceType" checked="checked"><span></span></span><span class="text">eSIM助手</span></label>
-                            <label><span class="checkbox"><input type="checkbox" value="5" v-model="form.deviceType" checked="checked"><span></span></span><span class="text">国兴卡</span></label>
+                            <label><span class="checkbox"><input type="checkbox" value="5" v-model="form.deviceType" checked="checked"><span></span></span><span class="text">国星卡</span></label>
                         </div>
                     </div>
                     <div class="row" v-if="form.source==6&&form.orderType==10">

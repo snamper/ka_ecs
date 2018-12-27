@@ -40,7 +40,7 @@
                         <b v-show="auditData.deviceType == 1">（远特i卡）</b>
                         <b v-show="auditData.deviceType == 2">（远特eSIM）</b>
                         <b v-show="auditData.deviceType == 4">（eSIM助手）</b>
-                        <b v-show="auditData.deviceType == 5">（国兴卡）</b>
+                        <b v-show="auditData.deviceType == 5">（国星卡）</b>
                       </td>
                     </tr>
                     <tr>
