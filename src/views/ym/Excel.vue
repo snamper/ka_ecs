@@ -130,21 +130,16 @@ export default {
       vm.selectedy=initYear+"年";
       vm.selectedm=vm.timemonth[initMonth-1];
       if(initMonth<10){
-          initMonth="0"+initMonth;
+        initMonth="0"+initMonth;
       }
       let initTime=""+initYear+initMonth;
       let data={date:initTime};
-    //   vm.AJAX("c/audit/dailyAudits",data,function(data){
-    //       if(data.code==200){
-    //           vm.downloadDate=data.data.dailyAudits;
-    //       }
-    //   })
       reqCommonMethod(data,function(){vm.off.isLoad=false;},"ym-ecs/c/audit/dailyAudits")    
       .then((data)=>{
           if(data.code==200){
             let arr=[];
-              data.data.dailyAudits.sort((a,b)=> parseInt(a.replace(/[^0-9]/ig,"")) > parseInt(b.replace(/[^0-9]/ig,"")) ? 1 : -1);
-              vm.downloadDate=data.data.dailyAudits;
+            data.data.dailyAudits.sort((a,b)=> parseInt(a.replace(/[^0-9]/ig,"")) > parseInt(b.replace(/[^0-9]/ig,"")) ? 1 : -1);
+            vm.downloadDate=data.data.dailyAudits;
           }
           vm.off.isLoad=false;
       }).catch(error=>errorDeal(error)); 
