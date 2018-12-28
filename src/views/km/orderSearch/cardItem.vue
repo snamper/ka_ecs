@@ -168,6 +168,7 @@
                             <label><span class="checkbox"><input type="checkbox" value="1" v-model="form.deviceType" checked="checked"><span></span></span><span class="text">远特i卡</span></label>
                             <label><span class="checkbox"><input type="checkbox" value="2" v-model="form.deviceType" checked="checked"><span></span></span><span class="text">远特eSIM</span></label>
                             <label><span class="checkbox"><input type="checkbox" value="4" v-model="form.deviceType" checked="checked"><span></span></span><span class="text">eSIM助手</span></label>
+                            <label><span class="checkbox"><input type="checkbox" value="5" v-model="form.deviceType" checked="checked"><span></span></span><span class="text">国星卡</span></label>
                         </div>
                     </div>
                     <div class="row" v-if="form.source==6&&form.orderType==10">
@@ -539,7 +540,7 @@
                                 <span v-if="form.source==8">{{translateData(17,todo.type)}}</span>
                                 <span v-if="form.source!=8">{{translateData(1,todo.type)}}</span>
                             </td>
-                            <td v-show="form.source==8">{{ translateData(15,parseInt(todo.deviceType) + 1) }}</td>
+                            <td v-show="form.source==8">{{ translateData(20,todo.deviceType) }}</td>
                             <td>
                                 <span v-if="todo.auditType=='0'">实时审核</span>
                                 <span v-else-if="todo.auditType==1">事后审核</span>
@@ -662,7 +663,7 @@ export default {
         orderStatus: 0, //订单状态
         operatorType: 1, //操作类型
         sourceFrom: [1, 6, 7, 8, 9, 10], //开卡方式
-        deviceType: [1, 2, 4], //远特i卡，开卡方式：1，远特i卡；2，远特eSIM；4，eSIM助手
+        deviceType: [1, 2, 4, 5], //远特i卡，开卡方式：1，远特i卡；2，远特eSIM；4，eSIM助手；5，国星卡
         merchants: 0, //商户类型
         auditType: 9, //审核方式
         context1: "", //订单号码
@@ -1116,7 +1117,7 @@ export default {
       }
       var sql =
         str +
-        " B.modify_time BETWEEN " +
+        "A.create_time BETWEEN " +
         getUnixTime(json.startTime) +
         " AND " +
         getUnixTime(json.endTime) +
@@ -1225,7 +1226,7 @@ export default {
       }
       var sql =
         str +
-        "B.modify_time BETWEEN " +
+        "A.create_time BETWEEN " +
         getUnixTime(json.startTime) +
         " AND " +
         getUnixTime(json.endTime) +

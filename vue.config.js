@@ -43,7 +43,7 @@ module.exports = {
         }
       },
       '/km-ecs/': {
-        target: 'https://192.168.10.98:6086',
+        target: 'http://192.168.10.98:6086',
         changeOrigin: true,
         secure: false,
         pathRewrite: {
@@ -59,7 +59,7 @@ module.exports = {
         }
       },
       '/km_ums/': {
-        target: 'https://192.168.10.98:6088',
+        target: 'http://192.168.10.98:6088',
         changeOrigin: true,
         secure: false,
         pathRewrite: {
