@@ -63,7 +63,7 @@
                                 <span class="text">实名补登</span>
                             </label>
                             <label v-show="form.source==6">
-                                <span class="radio"><input @change="inpChange(this)" value="8" type="radio" v-model="form.orderType">
+                                <span class="radio"><input value="8" type="radio" v-model="form.orderType">
                                     <span></span>
                                 </span>
                                 <span class="text">补换卡</span>
