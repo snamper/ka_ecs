@@ -27,7 +27,7 @@
 				<div class="m-form-radio">
 					<label><span class="radio"><input value="0" type="radio" v-model="form.merchants"><span></span></span><span class="text">全部</span></label>
 					<label><span class="radio"><input value="1" type="radio" v-model="form.merchants"><span></span></span><span class="text">卡盟</span></label>
-					<label><span class="radio"><input value="2" type="radio" v-model="form.merchants"><span></span></span><span class="text">喜牛</span></label>
+					<label><span class="radio"><input value="2" type="radio" v-model="form.merchants"><span></span></span><span class="text">新零售</span></label>
 				</div>
 			</div>
 			<div class="row">
@@ -117,7 +117,7 @@
 						<span v-show="todo.merchantType==1">企业</span>
 						<span v-show="todo.merchantType==2">个人</span>
 					</td>
-          <td>{{todo.source_type==1?'卡盟':todo.source_type==2?'喜牛':'--'}}</td>
+          <td>{{todo.source_type==1?'卡盟':todo.source_type==2?'新零售':'--'}}</td>
 					<td>
 						<span v-show="todo.openingType==1">远特卡<span v-if="todo.openingArea">({{todo.openingArea}})</span></span>
             <span v-show="todo.openingType==2">联通卡<span v-if="todo.openingArea">({{todo.openingArea}})</span></span>

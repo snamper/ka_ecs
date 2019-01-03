@@ -68,7 +68,7 @@
                   <label><span class="radio"><input type="radio" value="1" v-model="form.merchants" checked="checked"><span></span></span><span
                   class="text">卡盟</span></label>
                   <label><span class="radio"><input type="radio" value="2" v-model="form.merchants" checked="checked"><span></span></span><span
-                  class="text">喜牛</span></label>
+                  class="text">新零售</span></label>
                 </div>
               </div>
               <div class="m-form-radio">
@@ -94,7 +94,7 @@
                   <label><span class="radio"><input type="radio" value="1" v-model="form.merchants" checked="checked"><span></span></span><span
                   class="text">卡盟</span></label>
                   <label><span class="radio"><input type="radio" value="2" v-model="form.merchants" checked="checked"><span></span></span><span
-                  class="text">喜牛</span></label>
+                  class="text">新零售</span></label>
                 </div>
               </div>
               <div class="m-form-radio">
@@ -198,7 +198,7 @@
                                     <span v-if="item.merchant_type==2">个人</span> -->
                 </td>
                 <td>{{item.user_type_name}}</td>
-                <td>{{item.sourceType==1?'卡盟商户':item.sourceType==2?'喜牛商户':'--'}}</td>
+                <td>{{item.sourceType==1?'卡盟商户':item.sourceType==2?'新零售商户':'--'}}</td>
                 <td>
                   <span v-if="item.showLevel==1">普通用户</span>
                   <span v-if="item.showLevel==2">白金用户</span>
@@ -252,7 +252,7 @@
                 <td>{{item.userid||"--"}}</td>
                 <td>{{item.phone||'--'}}</td>
                 <td>{{item.company_name||'--'}}</td>
-                <td>{{item.sourceType==1?'卡盟商户':item.sourceType==2?'喜牛商户':'--'}}</td>
+                <td>{{item.sourceType==1?'卡盟商户':item.sourceType==2?'新零售商户':'--'}}</td>
                 <td>{{item.Cityname||'--'}}</td>
                 <td><a :name="item.dealer_id" @click="details(item.userid,2,2)" href="javascript:void(0)" class="details">详情</a></td>
               </tr>
@@ -421,7 +421,7 @@ export default {
         searchData = {
           chooseSearch: vm.form.searchKind, //1精确查找,2组合查找
           getListType: vm.form.content, //1商户查询2工号查询
-          merchType:vm.form.merchants,//商户 卡盟、喜牛
+          merchType:vm.form.merchants,//商户 卡盟、新零售
           userName: "", //商户名称
           typeKey: "", //商户id，手机号码
           typeValue: "", //商户id,手机号码的值

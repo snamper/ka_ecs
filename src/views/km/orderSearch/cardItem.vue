@@ -63,7 +63,7 @@
                                 <span class="text">实名补登</span>
                             </label>
                             <label v-show="form.source==6">
-                                <span class="radio"><input @change="inpChange(this)" value="8" type="radio" v-model="form.orderType">
+                                <span class="radio"><input value="8" type="radio" v-model="form.orderType">
                                     <span></span>
                                 </span>
                                 <span class="text">补换卡</span>
@@ -157,8 +157,8 @@
                             <label><span class="checkbox"><input type="checkbox" value="1" v-model="form.sourceFrom" checked="checked"><span></span></span><span class="text">卡盟</span></label>
                             <label><span class="checkbox"><input type="checkbox" value="6" v-model="form.sourceFrom" checked="checked"><span></span></span><span class="text">远微商城</span></label>
                             <label><span class="checkbox"><input type="checkbox" value="7" v-model="form.sourceFrom" checked="checked"><span></span></span><span class="text">信时空公众号</span></label>
-                            <label><span class="checkbox"><input type="checkbox" value="8" v-model="form.sourceFrom" checked="checked"><span></span></span><span class="text">S2S开卡盟成卡</span></label>
-                            <label><span class="checkbox"><input type="checkbox" value="9" v-model="form.sourceFrom" checked="checked"><span></span></span><span class="text">喜牛</span></label>
+                            <label><span class="checkbox"><input type="checkbox" value="8" v-model="form.sourceFrom" checked="checked"><span></span></span><span class="text">开卡盟成卡</span></label>
+                            <label><span class="checkbox"><input type="checkbox" value="9" v-model="form.sourceFrom" checked="checked"><span></span></span><span class="text">新零售</span></label>
                             <label><span class="checkbox"><input type="checkbox" value="10" v-model="form.sourceFrom" checked="checked"><span></span></span><span class="text">小程序</span></label>
                         </div>
                     </div>
@@ -179,7 +179,7 @@
                             <label><span class="radio"><input type="radio" value="1" v-model="form.merchants" checked="checked"><span></span></span><span
                             class="text">卡盟</span></label>
                             <label><span class="radio"><input type="radio" value="9" v-model="form.merchants" checked="checked"><span></span></span><span
-                            class="text">喜牛</span></label>
+                            class="text">新零售</span></label>
                         </div>
                     </div>
                     <div class="row" v-if="form.source==8&&form.orderType==4">
@@ -190,7 +190,7 @@
                             <label><span class="radio"><input type="radio" value="1" v-model="form.merchants" checked="checked"><span></span></span><span
                             class="text">卡盟</span></label>
                             <label><span class="radio"><input type="radio" value="9" v-model="form.merchants" checked="checked"><span></span></span><span
-                            class="text">喜牛</span></label>
+                            class="text">新零售</span></label>
                         </div>
                     </div>
                     <div class="row">

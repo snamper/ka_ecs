@@ -85,7 +85,7 @@
 				<div class="m-form-radio">
 					<label><span class="radio"><input type="radio" value="0" v-model="form.merchants"><span></span></span><span class="text">全部</span></label>
 					<label><span class="radio"><input type="radio" value="1" v-model="form.merchants"><span></span></span><span class="text">卡盟</span></label>
-					<label><span class="radio"><input type="radio" value="2" v-model="form.merchants"><span></span></span><span class="text">喜牛</span></label>
+					<label><span class="radio"><input type="radio" value="2" v-model="form.merchants"><span></span></span><span class="text">新零售</span></label>
 				</div>
 			</div>
 			<button class="f-btn f-btn-line" @click="searchList(2)">查询</button>
