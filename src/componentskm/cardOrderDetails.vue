@@ -487,7 +487,7 @@ export default {
               src: imgUrl + userMoreInfo.livingIdentificationImagePath,
               name: "活体识别"
             },
-            { src: imgUrl + userMoreInfo.signImageName, name: "手签名" }
+            // { src: imgUrl + userMoreInfo.signImageName, name: "手签名" }
           ];
           if (vm.source == 8) {
             // if(vm.list.hasOwnProperty('reqParam')){
@@ -505,7 +505,7 @@ export default {
             { src: "", name: "正面" },
             { src: "", name: "反面" },
             { src: "", name: "活体识别" },
-            { src: "", name: "手签名" }
+            // { src: "", name: "手签名" }
           ];
         }
       } else {
@@ -514,7 +514,7 @@ export default {
           { src: vm.list.imageUrl, name: "正面" },
           { src: vm.list.backImageUrl, name: "反面" },
           { src: vm.list.livingImg, name: "活体识别" },
-          { src: vm.list.signImageUrl, name: "手签名" },
+          // { src: vm.list.signImageUrl, name: "手签名" },
           { src: vm.list.headImageName, name: "证件照片" }
         ];
       }
