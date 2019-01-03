@@ -417,10 +417,10 @@ export default {
         src: vm.list.reqParam.handImageName,
         name: "手持/免冠照片"
       };
-      vm.imgData[3] = {
-        src: vm.list.reqParam.signImageName,
-        name: "手签名照片"
-      };
+      // vm.imgData[3] = {
+      //   src: vm.list.reqParam.signImageName,
+      //   name: "手签名照片"
+      // };
       // vm.imgData[3]={'src':vm.list.reqParam.livingIdentificationImagePath,'name':'活体识别'};
     } else if (vm.list.operatorType == 4) {
       //实名补登
