@@ -110,7 +110,7 @@
                                     <label><span class="radio"><input type="radio" value="1" v-model="form.merchants" checked="checked"><span></span></span><span
                                     class="text">卡盟</span></label>
                                     <label><span class="radio"><input type="radio" value="9" v-model="form.merchants" checked="checked"><span></span></span><span
-                                    class="text">喜牛</span></label>
+                                    class="text">新零售</span></label>
                                 </div>
                             </div>
                             <button class="f-btn f-btn-line" @click="searchList(2)">查询</button>
