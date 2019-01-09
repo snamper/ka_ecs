@@ -288,7 +288,7 @@
         // Set any bespoke headers
         if (headers) {
           for (x in headers) {
-            if(x!='departName' && x!='username'){
+            if(headers[x]){
               r.setRequestHeader(x, headers[x]);
             }
           }

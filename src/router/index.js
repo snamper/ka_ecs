@@ -243,9 +243,7 @@ const router=new Router({
 const load=(isShow)=>{
   var routerLoad=document.getElementById("routerLoading");
   if(routerLoad){
-    isShow ? routerLoad.style.display="block" : setTimeout(function(){
-      routerLoad.style.display="none";
-    },200);
+    isShow ? routerLoad.style.display="block" : routerLoad.style.display="none";
   }
 };
 

@@ -169,7 +169,7 @@
                       <td>号卡类型：</td>
                       <td>{{translateData(14,auditData.operatorType)}}</td>
                     </tr>
-                    <tr v-if="off.itemType == '4,5,6'">
+                    <tr>
                       <td>开卡方式：</td>
                       <td>{{translateData(15,auditData.appType)}}</td>
                     </tr>

@@ -22,6 +22,20 @@ export const errorDeal=(res,cb)=>{
     });
 };
 /**
+ * 节流函数
+ */
+export const debounce = function (time, action) {
+    let last
+    return function () {
+      let ctx = this, args = arguments
+  
+      clearTimeout(window.LastDebounce)
+      window.LastDebounce = setTimeout(function () {
+        action.apply(ctx, args)
+      }, time)
+    }
+  }
+/**
  * iframe 文件下载
  */
 export const createDownload=(url,data,cb)=>{
