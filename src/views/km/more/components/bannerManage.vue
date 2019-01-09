@@ -47,9 +47,9 @@
 					<div class="form-c">
 						<label>渐变方向：</label>
 						<div class="inner m-form-radio">
-							<label><span class="radio"><input type="radio" v-model="form.directColor" value="1"><span></span></span><span class="text">左=>右</span></label>
-							<label><span class="radio"><input type="radio" v-model="form.directColor" value="2"><span></span></span><span class="text">左上=>右下</span></label>
-							<label><span class="radio"><input type="radio" v-model="form.directColor" value="3"><span></span></span><span class="text">左下=>右上</span></label>
+							<label @click="directColorShift"><span class="radio"><input type="radio" v-model="form.directColor" value="1"><span></span></span><span class="text">左=>右</span></label>
+							<label @click="directColorShift"><span class="radio"><input type="radio" v-model="form.directColor" value="2"><span></span></span><span class="text">左上=>右下</span></label>
+							<label @click="directColorShift"><span class="radio"><input type="radio" v-model="form.directColor" value="3"><span></span></span><span class="text">左下=>右上</span></label>
 						</div>
 					</div>
 				</div>
@@ -191,7 +191,7 @@ export default{
 			if(!vm.checkGradient(1) || !vm.checkGradient(2)){
 				return false;
 			}
-			form.cssStyle = vm.getGradient('create');
+			form.cssStyle = vm.getGradient();
 			if(!form.title){
 				errorText = '标题不能为空';
 			}else if(form.priority == ''){
@@ -295,16 +295,12 @@ export default{
 				progress:0
 			};
 		},
-		getGradient(type){
+		getGradient(){
 			let start = this.form.startColor,
 				end = this.form.endColor,
 				direct = this.form.directColor,
 				directDesc = '';
-			if(type == 'modify'){
-				start = this.modifyInfo.startColor;
-				end = this.modifyInfo.endColor;
-				direct = this.modifyInfo.directColor;
-			}
+
 			if(direct == 1){
 				directDesc = 'right';
 			}else if(direct == 2){
@@ -315,7 +311,7 @@ export default{
 
 			return `background-image: -webkit-linear-gradient(to ${directDesc}, ${start} 0, ${end} 100%);background-image: linear-gradient(to ${directDesc}, ${start} 0, ${end} 100%);`
 		},
-		checkGradient(type,step){
+		checkGradient(type){
 			let val = '';
 			if(type == 1){
 				val = this.form.startColor;
@@ -335,7 +331,15 @@ export default{
 				errorDeal('请输入6位合法16进制色值');
 				return false;
 			}
+
+			this.form.cssStyle = this.getGradient();
 			return true;
+		},
+		directColorShift(){
+			let t = setTimeout(()=>{
+				clearTimeout(t);
+				this.form.cssStyle = this.getGradient();
+			},0)
 		},
 		imageuploaded(res,data) {//上传文件完成统一回调
 			const vm=this;
