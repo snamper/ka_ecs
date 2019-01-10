@@ -219,7 +219,8 @@ import FileUpload  from '../fileUpload';
 import Pop  from '../pop';
 import { reqCommonMethod } from '../../config/service';
 import { errorDeal,getStore } from '../../config/utils';
-let imgToBase64 = require('../../../public/imgToBase64.js').imgToBase64;
+import imgToBase64 from '@/utils/imgToBase64';
+
 export default{
 	name:'welcomeConf',
 	data (){

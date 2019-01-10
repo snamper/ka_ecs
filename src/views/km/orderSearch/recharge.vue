@@ -39,6 +39,8 @@
                     <label><span class="checkbox"><input type="checkbox" value="6" v-model="form.sourceType" checked="checked"><span></span></span><span class="text">远特eSIM</span></label>
                     <label><span class="checkbox"><input type="checkbox" value="7" v-model="form.sourceType" checked="checked"><span></span></span><span class="text">eSIM助手</span></label>
                     <label><span class="checkbox"><input type="checkbox" value="8" v-model="form.sourceType" checked="checked"><span></span></span><span class="text">sdk</span></label>
+					<label><span class="checkbox"><input type="checkbox" value="9" v-model="form.sourceType" checked="checked"><span></span></span><span class="text">国星卡</span></label>
+					<label><span class="checkbox"><input type="checkbox" value="10" v-model="form.sourceType" checked="checked"><span></span></span><span class="text">新零售</span></label>
                 </div>
             </div>
 			<div class="row">
@@ -127,6 +129,8 @@
 						<span v-show="todo.sourceType == 6">远特eSIM</span>
 						<span v-show="todo.sourceType == 7">eSIM助手</span>
 						<span v-show="todo.sourceType == 8">SDK</span>
+						<span v-show="todo.sourceType == 9">国星卡</span>
+						<span v-show="todo.sourceType == 10">新零售</span>
 					</td>
 					<td>{{todo.phone}}</td>
 					<td>
@@ -201,7 +205,7 @@ export default{
 				context4:0,//订单状态
 				startTime:'',
 				endTime:'',
-				sourceType:[1,5,6,7,8],
+				sourceType:[1,5,6,7,8,9,10],
 				select:4//条件查询，选择的条件
 			},
 			list:'',//查询数据
@@ -309,7 +313,7 @@ export default{
                     sql+=" AND A.isp>4";
                     vm.off.ispName=true;
                 }
-                let sourceType = vm.form.sourceType.join(',') || '1,5,6,7,8';
+                let sourceType = vm.form.sourceType.join(',') || '1,5,6,7,8,9,10';
                 sql += ` AND A.source_type in (${sourceType})`;
 
 				json.sum='money';

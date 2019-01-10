@@ -186,7 +186,7 @@ import { reqCommonMethod } from "../../config/service";
 import { errorDeal,getStore } from '../../config/utils';
 import ImgZoom from '../ImgZoom';
 import FileUpload  from '../fileUpload';
-let  imgToBase64 = require('../../../public/imgToBase64.js').imgToBase64;
+import imgToBase64 from '@/utils/imgToBase64';
 
 export default{
 	props:{
@@ -242,7 +242,6 @@ export default{
 	},
 
 	created:function(){
-        console.log(imgToBase64);
 		let vm=this,imgUrl=_CONFIG ? _CONFIG[_CONFIG.env].REGISTER_MERCHANT_IMAGE_URL : '';
 
 		vm.userInfo=getStore('KA_ECS_USER');

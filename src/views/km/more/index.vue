@@ -22,6 +22,10 @@
 				<i class="icon"></i>
 				<span class="dp">更改成卡短信验证号码</span>
 			</li>
+			<li v-if="off.powerKm_hyy_cx" class="u-banner-manage" @click="showFn(5)">
+				<i class="icon"></i>
+				<span class="dp">卡盟APP首页banner管理</span>
+			</li>
 		</ul>
 		<div class="g-more-fn" v-show="off.fn">
 			<header class="clr">
@@ -31,12 +35,14 @@
 					<b v-show="off.fn==2">欢迎页管理</b>
 					<b v-show="off.fn==3">号码占用/解冻</b>
 					<b v-show="off.fn==4">更改成卡短信验证号码</b>
+					<b v-show="off.fn==5">卡盟APP首页banner管理</b>
 				</div>
 			</header>
 			<PhoneBlackList v-if="off.fn==1"></PhoneBlackList>
 			<WelcomeConf v-if="off.fn==2"></WelcomeConf>
 			<NumberRelease v-if="off.fn==3"></NumberRelease>
             <SMSCheckout v-if="off.fn==4"></SMSCheckout>
+			<BannerManage v-if="off.fn==5"></BannerManage>
 		</div>
 	</section>
 </template>
@@ -46,6 +52,7 @@ import PhoneBlackList from '../../../componentskm/more/phoneBlackList';
 import WelcomeConf from '../../../componentskm/more/welcomeConf';
 import NumberRelease from '../../../componentskm/more/numberRelease';
 import SMSCheckout from '../../../componentskm/more/SMSCheckout';
+import BannerManage from './components/bannerManage';
 import { powerKm,getStore } from "../../../config/utils.js";
 export default{
 	name:'more',
@@ -63,7 +70,8 @@ export default{
 		PhoneBlackList,
 		WelcomeConf,
         NumberRelease,
-        SMSCheckout
+		SMSCheckout,
+		BannerManage
 	},
 	created(){
         this.off.power=this.$parent.off;
@@ -89,6 +97,8 @@ export default{
 .u-number-release>.dp{color: #1A75F2;}
 .u-SMSCheck-change>.icon{background-image: url(../../../assets/images/icon_num.png);}
 .u-SMSCheck-change>.dp{color: #6a21f1;}
+.u-banner-manage>.icon{background-image: url(../../../assets/images/icon_banner.png);}
+.u-banner-manage>.dp{color: #0CA2A4;}
 
 #more{
 	width: 100%;

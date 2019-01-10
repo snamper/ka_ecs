@@ -75,15 +75,12 @@ export default {
   top: 0.1rem;
   right:0.1rem;
   display: inline-block;
-  width: 0.15rem;
-  height: 0.15rem;
-  background-image: url(~/assets/img/close_grey.png);
+  width: 0.2rem;
+  height: 0.2rem;
+  background-image: url(../assets/images/close.png);
   background-size: 100%;
   background-position: center;
   background-repeat: no-repeat;
   z-index: 888;
-}
-.m-pop-box>.box>.inner>.close:hover{
-  background-image: url(~/assets/img/close_red.png);
 }
 </style>

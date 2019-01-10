@@ -21,6 +21,8 @@
 									<span v-show="list.sourceType == 6">远特eSIM</span>
 									<span v-show="list.sourceType == 7">eSIM助手</span>
 									<span v-show="list.sourceType == 8">SDK</span>
+									<span v-show="list.sourceType == 9">国星卡</span>
+									<span v-show="list.sourceType == 10">新零售</span>
 								</td></tr>
 								
 								<tr><td>生成时间：</td><td>{{ getDateTime(list.createTime)[6] }}</td></tr>
