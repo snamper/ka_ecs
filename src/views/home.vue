@@ -84,10 +84,10 @@
                 <b></b>售卡范围审核<span v-if="auditCount.attribute!=0">{{auditCount.attribute}}</span>
               </router-link>
               <router-link v-if="off.powerKm_sh_sh" tag="li" :to="{path:'/homek/audit/registMerchant/realtime',params:{source:'realtime'}}">
-                <b></b>激活商户实时<span v-if="auditCount.registerMerchantRealTime!=0">{{auditCount.registerMerchantRealTime}}</span>
+                <b></b>商户实时审核<span v-if="auditCount.registerMerchantRealTime+auditCount.fillMerchantRealTime!=0">{{auditCount.registerMerchantRealTime+auditCount.fillMerchantRealTime}}</span>
               </router-link>
               <router-link v-if="off.powerKm_sh_sh" tag="li" :to="{path:'/homek/audit/registMerchant/afterwards',params:{source:'afterwards'}}">
-                <b></b>激活商户事后<span v-if="auditCount.registerMerchantAfter!=0">{{auditCount.registerMerchantAfter}}</span>
+                <b></b>商户事后审核<span v-if="auditCount.registerMerchantAfter!=0">{{auditCount.registerMerchantAfter}}</span>
               </router-link>
             </ul>
           </router-link>
@@ -104,6 +104,7 @@
               <router-link v-if="off.powerKm_kk_cx" tag="li" to="/homek/orderSearch/onlineHall"><b></b>网厅订单</router-link>
               <router-link v-if="off.powerKm_sh_cx" tag="li" :to="{path:'/homek/orderSearch/businessPower/audited',params:{type:'audited'}}"><b></b>售卡范围</router-link>
               <router-link v-if="off.powerKm_sh_cx" tag="li" :to="{path:'/homek/orderSearch/registMerchant/search',params:{type:'search'}}"><b></b>激活商户</router-link>
+              <router-link v-if="off.powerKm_sh_cx" tag="li" :to="{path:'/homek/orderSearch/fillMerchant/search',params:{type:'search'}}"><b></b>补录商户</router-link>
               <router-link v-if="off.powerKm_kk_cx" tag="li" to="/homek/orderSearch/reserve"><b></b>预占号码</router-link>
               <router-link tag="li" :to="{path:'/homek/orderSearch/makeCard/null',params:{val:'null'}}"><b></b>制卡订单</router-link>
               <router-link tag="li" :to="{path:'/homek/orderSearch/flowCard/null',params:{val:'null'}}"><b></b>流转订单</router-link>

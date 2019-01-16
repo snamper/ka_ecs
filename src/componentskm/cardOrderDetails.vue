@@ -332,8 +332,6 @@
                                 </tbody>
                             </table>
                         </td>
-                            
-                        </td>
                         <td class="m-meida-640up m-box-img">
                             <ImgZoom :imgData="imgData"></ImgZoom>
                         </td>

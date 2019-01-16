@@ -81,6 +81,10 @@ export default {
         name: '激活商户',
         component: () => import('@/views/km/orderSearch/registMerchant')
       }, {
+        path: 'fillMerchant/:type',
+        name: '补录商户',
+        component: () => import('@/views/km/orderSearch/fillMerchant')
+      }, {
         path: 'reserve',
         name: '预占号码',
         component: () => import('@/views/km/orderSearch/reserve')

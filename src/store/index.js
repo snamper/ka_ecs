@@ -29,7 +29,9 @@ const state = {
     'tfOpenCard': 0, // i卡开卡事后待审核
     'tfOpenCard_': 0, // i卡开卡事后已分配
     'tfOpenCardReal': 0, // i卡开卡实时待审核
-    'tfOpenCardReal_': 0 // i卡开卡实时已分配
+    'tfOpenCardReal_': 0, // i卡开卡实时已分配
+    'fillMerchantRealTime': 0, // 商户实名补录待审核
+    'fillMerchantRealTime_': 0 // 商户实名补录已分配
     // opinionTotal1:0,//意见反馈未处理
     // opinionTotal2:0,//意见反馈处理中
     // opinionTotal3:0,//意见反馈已完成

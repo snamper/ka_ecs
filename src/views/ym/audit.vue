@@ -126,8 +126,6 @@ export default {
   methods: {
     ...mapActions(["getAuditStatisticsInfoYm"]),
     setType: function() {
-      console.log(this.$route.params)
-
       if(this.$route.params.type){
         this.off.openMenu = false;
       }else this.off.openMenu = true;
