@@ -573,7 +573,8 @@ export default {
         auditType = vm.off.auditType,
         url = "",
         searchtype = vm.$route.params.type;
-      if (typeof searchtype == "number" || searchtype == "4,5,6") {
+
+      if (vm.$route.params.type != "auditing") {
         if (vm.off.isLoad == 1) {
           return false;
         }
@@ -615,7 +616,7 @@ export default {
             vm.off.isLoad = false;
           })
           .catch(error => errorDeal(error));
-      } else {
+      } else {// 订单查询，待审核订单，复用
         let json = { orderId: vm.$parent.orderId },
           url = "km-ecs/w/audit/toAuditByOrderId";
         reqCommonMethod(

@@ -29,11 +29,11 @@
 	<section class="g-audit-menu" v-show="!off.isGet">
 		<div class="g-audit-menu-c">
 			<div class="m-menu-div" v-show="off.auditType==1">
-				<router-link :to="{name:'registMerchantAudit',params:{type:'realtime_get'}}" class="u-bg navBg10"><div>激活商户</div><p><span>点击审核</span></p></router-link>
+				<a href="javascript:;" @click="getList" class="u-bg navBg10"><div>激活商户</div><p><span>点击审核</span></p></a>
 				<div class="navInfoDiv"><p>待审核<span>{{auditCount.registerMerchantRealTime}}</span></p><p>已分配<span>{{auditCount.registerMerchantRealTime_}}</span></p></div>
 			</div>
 			<div class="m-menu-div" v-show="off.auditType==2">
-				<router-link :to="{name:'registMerchantAudit',params:{type:'afterwards_get'}}" class="u-bg navBg10"><div>激活商户</div><p><span>点击审核</span></p></router-link>
+				<a href="javascript:;" @click="getList" class="u-bg navBg10"><div>激活商户</div><p><span>点击审核</span></p></a>
 				<div class="navInfoDiv"><p>待审核<span>{{auditCount.registerMerchantAfter}}</span></p><p>已分配<span>{{auditCount.registerMerchantAfter_}}</span></p></div>
 			</div>
 		</div>
@@ -162,19 +162,19 @@ export default{
 	},
 	methods:{
 		setType:function(){
-			const route=this.$route,type=this.$route.params.type;
-			if(type.indexOf("realtime")>-1){
+			const type = this.$route.params.type,
+				  source = this.$route.params.source;
+			if(source == 'realtime'){
 				this.off.auditType=1;
-			}else if(type.indexOf("afterwards")>-1){
+			}else if(source == 'afterwards'){
 				this.off.auditType=2;
 			}
 
-			if(type.indexOf("_get")>-1){
-				this.off.isGet=1;
-				this.getAuditList();
-			}else{
-				this.off.isGet=0;
-			}
+			this.off.isGet=0;
+		},
+		getList(){
+			this.off.isGet=1;
+			this.getAuditList();
 		},
 		agree:function(){//审核同意
 			var vm=this,url='',orderId=vm.auditData.orderId;	

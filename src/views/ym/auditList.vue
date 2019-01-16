@@ -601,11 +601,11 @@ export default {
         url,
         json = {},
         type = vm.$route.params.type;
-      if (typeof type == "number") {
+      if (type != 'auditing') {
         type == 3 && (type = 6);
         url = "ym-ecs/c/audit/toaudit";
         json.type = type;
-      } else {
+      } else {// 订单查询里面复审
         type = vm.$parent.cardT;
         orderId = vm.$parent.orderId;
         url = "ym-ecs/c/audit/dispatchAudit";
