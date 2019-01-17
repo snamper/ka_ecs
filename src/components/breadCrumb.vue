@@ -43,9 +43,10 @@ export default{
 		display: inline-block;
 		vertical-align: middle;
 		margin-right: 0.3rem;
+		color: #D7D7D7;
 		>a{
 			display: block;
-			color: #fff;
+			color: inherit;
 		}
 		&:after{
 			content: '';
@@ -62,8 +63,8 @@ export default{
 		}
 	}
 	>.item:last-child{
-		color: #fff;
-		font-size: 0.12rem;
+		color: #fff !important;
+		font-weight: bold;
 		&:after{
 			display: none;
 		}

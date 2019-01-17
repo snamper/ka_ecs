@@ -98,6 +98,7 @@
 												<FileUpload
 												  text=""
 												  inputAccept="image/png,image/jpeg,image/jpg"
+												  uploadIndex="1"
 												  v-bind:headers="userInfo"
 										          v-bind:crop="false"
 										          v-bind:url=upload.action
@@ -106,7 +107,6 @@
 										          v-on:onprogress="onprogress"
 										          v-on:errorhandle="errorhandle"
 										          class="m-upload"/>
-										        </FileUpload>
 										        <span v-show="upload.index==1" class="progress" :style="{width:`${upload.progress}`}"></span>
 										    </button>
 										</td>
@@ -116,6 +116,7 @@
 												<FileUpload
 												  text=""
 												  inputAccept="image/png,image/jpeg,image/jpg"
+												  uploadIndex="2"
 												  v-bind:headers="userInfo"
 										          v-bind:crop="false"
 										          v-bind:url=upload.action
@@ -124,7 +125,6 @@
 										          v-on:onprogress="onprogress"
 										          v-on:errorhandle="errorhandle"
 										          class="m-upload"/>
-										        </FileUpload>
 										        <span v-show="upload.index==2" class="progress" :style="{width:`${upload.progress}`}"></span>
 										    </button>
 										</td>
@@ -134,6 +134,7 @@
 												<FileUpload
 												  text=""
 												  inputAccept="image/png,image/jpeg,image/jpg"
+												  uploadIndex="3"
 												  v-bind:headers="userInfo"
 										          v-bind:crop="false"
 										          v-bind:url=upload.action
@@ -142,7 +143,6 @@
 										          v-on:onprogress="onprogress"
 										          v-on:errorhandle="errorhandle"
 										          class="m-upload"/>
-										        </FileUpload>
 										        <span v-show="upload.index==3" class="progress" :style="{width:`${upload.progress}`}"></span>
 										    </button>
 										</td>
@@ -185,7 +185,7 @@ import "../../assets/km/css/cardOrderDetails.css";
 import { reqCommonMethod } from "../../config/service";  
 import { errorDeal,getStore } from '../../config/utils';
 import ImgZoom from '../ImgZoom';
-import FileUpload  from '../fileUpload';
+import FileUpload  from '@/components/file-upload';
 import imgToBase64 from '@/utils/imgToBase64';
 
 export default{
@@ -348,9 +348,8 @@ export default{
 				this.userInfo.imgPath=this.merchantInfo.handImageUrl;
 			}
 	    },
-	    imageuploaded(res,data) {
+	    imageuploaded(res,uploadIndex) {
 			const vm=this;
-			let uploadIndex=vm.upload.index;
 
 			setTimeout(function(){
 				vm.upload.progress=0;

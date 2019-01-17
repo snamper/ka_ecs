@@ -51,7 +51,7 @@
 							<thead>
 								<tr>
 									<th style="width:110px;">补录资料</th>
-									<th class="f-tal"><b class="fCRed">(补录原因：{{ oldInfo.remark }})</b></th>
+									<th class="f-tal"><b class="fCRed">(补录原因：{{ oldInfo.remarks }})</b></th>
 								</tr>
 							</thead>
 							<tbody>
@@ -115,7 +115,9 @@ export default{
 				if(res.data){
 					vm.creditRank = res.data;
 				}
-			},false)
+			},function(){
+				//关闭全局loading
+			})
 		},
 		getDateTime(t){
 			return getDateTime(t);
@@ -138,6 +140,7 @@ export default{
 		  height: 200px;
 		  >a{
 			  display: block;
+			  height: 100%;
 		  }
 	  }
   }

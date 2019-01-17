@@ -145,7 +145,7 @@ export default {
       }, {
         path: 'softwareUseTimes/:type',
         component: () => import('@/views/km/statistics/softwareUseTimes'),
-        name: '活体识别统计'
+        name: '识别统计'
       }]
     },
     {

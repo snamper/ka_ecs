@@ -348,6 +348,7 @@
         this.windowChange();
         //设置面包屑
         let breadCrumbList = [], isYm = false,
+            currentPath = this.$route.path,
             currentParams = this.$route.params,//当前路由参数
             lastBreadCrumbName = '';//面包屑最后de名称
 
@@ -360,6 +361,7 @@
             })
           }
         });
+
         if(this.$route.path.indexOf('homey') > -1){// 判断是否远盟系统
           isYm = true;
         }
@@ -423,7 +425,7 @@
               break;
           }
         }
-        if(currentParams.source){
+        if(currentParams.source){// 目前只在审核模块使用
           
           switch (currentParams.source) {
             case 'realtime':
@@ -439,7 +441,9 @@
         }
         if(lastBreadCrumbName){
           
-          if(currentParams.source && currentParams.type){// 订单审核路径
+          if(
+            (currentParams.source && currentParams.type) || currentPath == '/homek/orderSearch/card/audited/null/null'// 订单审核路径和订单查询子项特殊处理
+          ){
             breadCrumbList[breadCrumbList.length - 1] = {
               to: '',
               name: lastBreadCrumbName

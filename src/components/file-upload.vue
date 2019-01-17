@@ -288,14 +288,15 @@
         // Set any bespoke headers
         if (headers) {
           for (x in headers) {
-            if(headers[x]){
+            if(x!='customerName'){
               r.setRequestHeader(x, headers[x]);
             }
           }
         }
         r.withCredentials = typeof withCredentials === 'undefined' ? true : withCredentials;
         if (isBinary) {
-          r.setRequestHeader('Content-Type', 'multipart/form-data; boundary=' + boundary);
+          r.setRequestHeader('Content-Type','multipart/form-data; boundary=' + boundary);
+          r.setRequestHeader('customerId',this.headers.customerId);
           return r.sendAsBinary(data);
         }
         r.send(data);
