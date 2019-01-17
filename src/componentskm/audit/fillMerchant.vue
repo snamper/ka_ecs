@@ -25,7 +25,7 @@
 								<tr><td>生成时间：</td><td>{{ getDateTime(oldInfo.createTime)[6] }}</td></tr>
 								<tr><td>商户属性：</td><td>{{ oldInfo.merchantType == 1 ? '企业' : '个人' }}</td></tr>
 								<tr><td>商户类别：</td><td>{{ oldInfo.nickname }}</td></tr>
-								<tr><td>商户名称：</td><td>{{ oldInfo.companyName }} [{{ oldInfo.creditRank }}]</td></tr>
+								<tr><td>商户名称：</td><td>{{ oldInfo.companyName }} [{{ creditRank }}]</td></tr>
 								<tr><td>门店地址：</td><td>{{ oldInfo.storeAddress || '--' }}</td></tr>
 								<tr><td>{{ oldInfo.merchantType == 1 ? '营业执照编号：' : '身份证号码：' }}</td><td>{{ oldInfo.businessLicence }}</td></tr>
 								<tr v-if="oldInfo.merchantType == 2"><td>证件地址：</td><td>{{ oldInfo.address }}</td></tr>
@@ -59,7 +59,7 @@
 								<tr><td>生成时间：</td><td>{{ getDateTime(newInfo.createTime)[6] }}</td></tr>
 								<tr><td>商户属性：</td><td>{{ newInfo.merchantType == 1 ? '企业' : '个人' }}</td></tr>
 								<tr><td>商户类别：</td><td>{{ newInfo.nickname }}</td></tr>
-								<tr><td>商户名称：</td><td>{{ newInfo.companyName }} [{{ newInfo.creditRank }}]</td></tr>
+								<tr><td>商户名称：</td><td>{{ newInfo.companyName }} [{{ creditRank }}]</td></tr>
 								<tr><td>门店地址：</td><td>{{ newInfo.storeAddress || '--' }}</td></tr>
 								<tr><td>{{ newInfo.merchantType == 1 ? '营业执照编号：' : '身份证号码：' }}</td><td>{{ newInfo.businessLicence }}</td></tr>
 								<tr v-if="newInfo.merchantType == 2"><td>证件地址：</td><td>{{ newInfo.address }}</td></tr>
@@ -87,6 +87,7 @@
 </section>
 </template>
 <script>
+import comApi from '@/comApi/';
 import { getDateTime } from '@/config/utils.js';
 
 export default{
@@ -94,17 +95,28 @@ export default{
 	props:{
 		oldInfo:Object,
 		newInfo:Object,
-		type:Number
+		type:Number//1,审核里面;2,查询详情里面
 	},
 	data(){
 		return {
-
+			creditRank:''
 		}
 	},
 	created:function(){
-
+		if(this.type == 2){
+			this.getMerchantCreditLevel();
+		}
 	},
 	methods:{
+		getMerchantCreditLevel(){
+			const vm = this;
+
+			comApi.getMerchantCreditLevel({dealerId:vm.newInfo.dealerId}).then((res)=>{
+				if(res.data){
+					vm.creditRank = res.data;
+				}
+			},false)
+		},
 		getDateTime(t){
 			return getDateTime(t);
 		},

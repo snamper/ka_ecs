@@ -133,7 +133,7 @@
 	</div>
 	</section>
 	<!--详情-->
-	<FillMerchant v-show="off.details" :oldInfo="oldInfo" :newInfo="newInfo" :type="2"/>
+	<FillMerchant v-if="off.details" :oldInfo="oldInfo" :newInfo="newInfo" :type="2"/>
   </div>
 </section>
 </template>
