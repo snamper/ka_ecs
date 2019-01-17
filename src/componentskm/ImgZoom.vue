@@ -36,14 +36,14 @@ export default{
 		}
 	},
 	created:function(){
-    this.initSet();
+    	this.initSet();
 	},
 	watch:{
 		imgData:'initSet'
 	},
 	methods:{
 		initSet(){
-        this.imgIndex=0;
+			this.imgIndex=0;
 			if(this.imgData[0].src){
 				this.zoomStyle.backgroundImage='url('+this.imgData[0].src+')';
 			}else{
@@ -56,18 +56,18 @@ export default{
 			this.transformStyle.r=deg;
 			var transform='translate3d(0,0,0) scale(1) rotate('+deg+'deg)';
 			this.zoomStyle.transform=transform;
-      },
-      download:function(e){
-        let vm=this,
-        href=vm.imgData[vm.imgIndex].src;
-        var _a = document.createElement('a');
-        _a.setAttribute("href", href);
-        _a.setAttribute("download", "");
-        var evObj = document.createEvent('MouseEvents');
-        evObj.initMouseEvent( 'click', true, true, window, 0, 0, 0, 0, 0, false, false, true, false, 0, null);
-        _a.dispatchEvent(evObj);
-      },
-      slide:function(index){//切换
+		},
+		download:function(e){
+			let vm=this,
+			href=vm.imgData[vm.imgIndex].src;
+			var _a = document.createElement('a');
+			_a.setAttribute("href", href);
+			_a.setAttribute("download", "");
+			var evObj = document.createEvent('MouseEvents');
+			evObj.initMouseEvent( 'click', true, true, window, 0, 0, 0, 0, 0, false, false, true, false, 0, null);
+			_a.dispatchEvent(evObj);
+		},
+		slide:function(index){//切换
 			var len=this.imgData.length;
 			index==2?this.imgIndex<(len-1) ? this.imgIndex+=1 : this.imgIndex=0 : this.imgIndex>0 ? this.imgIndex-=1 : this.imgIndex=len-1;
 			if(this.imgData[this.imgIndex].src){

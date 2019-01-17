@@ -4,12 +4,13 @@
 <template>
   <section class="g-audit-menu">
     <div
-      v-if="off.source==0"
+      v-if="off.openMenu"
       class="g-audit-menu-c"
     >
       <div class="m-menu-div">
         <router-link
-          :to="{name:'card',params:{type:1}}"
+          :to="{path:'1',params:{type:1}}"
+          append
           class="u-bg navBg2"
         >
           <div>成卡审核</div>
@@ -22,7 +23,8 @@
       </div>
       <div class="m-menu-div">
         <router-link
-          :to="{name:'card',params:{type:2}}"
+          :to="{path:'2',params:{type:2}}"
+          append
           class="u-bg navBg3"
         >
           <div>白卡审核</div>
@@ -35,7 +37,8 @@
       </div>
       <div class="m-menu-div">
         <router-link
-          :to="{name:'card',params:{type:3}}"
+          :to="{path:'3',params:{type:3}}"
+          append
           class="u-bg navBg5"
         >
           <div>过户办理</div>
@@ -48,7 +51,8 @@
       </div>
       <div class="m-menu-div">
         <router-link
-          :to="{name:'card',params:{type:4}}"
+          :to="{path:'4',params:{type:4}}"
+          append
           class="u-bg navBg4"
         >
           <div>实名补录</div>
@@ -61,7 +65,8 @@
       </div>
       <div class="m-menu-div">
         <router-link
-          :to="{name:'card',params:{type:5}}"
+          :to="{path:'5',params:{type:5}}"
+          append
           class="u-bg navBg6"
         >
           <div>实名登记</div>
@@ -70,24 +75,6 @@
         <div class="navInfoDiv">
           <p>待审核<span>{{auditCountYm.fill}}</span></p>
           <p>已分配<span>{{auditCountYm.fill_1}}</span></p>
-        </div>
-      </div>
-    </div>
-    <div
-      v-if="off.source==4"
-      class="g-audit-menu-c"
-    >
-      <div class="m-menu-div">
-        <router-link
-          :to="{name:'card',params:{type:1}}"
-          class="u-bg navBg1"
-        >
-          <div>开卡审核</div>
-          <p><span>点击审核</span></p>
-        </router-link>
-        <div class="navInfoDiv">
-          <p>待审核<span>0</span></p>
-          <p>已分配<span>0</span></p>
         </div>
       </div>
     </div>
@@ -102,7 +89,7 @@ export default {
   data() {
     return {
       off: {
-        source: 0
+        openMenu: true
       },
       count: ""
     };
@@ -139,22 +126,9 @@ export default {
   methods: {
     ...mapActions(["getAuditStatisticsInfoYm"]),
     setType: function() {
-      const path = this.$route.path;
-      if (path.indexOf("/homey/audit/yuanmeng/") > -1) {
-        this.off.source = "close";
-      } else if (path.indexOf("/homey/audit/yuanmeng") > -1) {
-        this.off.source = 0;
-      } else if (path.indexOf("/homey/audit/yyz") > -1) {
-        this.off.source = 1;
-      } else if (path.indexOf("/homey/audit/xsk") > -1) {
-        this.off.source = 2;
-      } else if (path.indexOf("/homey/audit/yuanwei") > -1) {
-        this.off.source = 3;
-      } else if (path.indexOf("/homey/audit/kameng/") > -1) {
-        this.off.source = "close";
-      } else if (path.indexOf("/homey/audit/kameng") > -1) {
-        this.off.source = 4;
-      }
+      if(this.$route.params.type){
+        this.off.openMenu = false;
+      }else this.off.openMenu = true;
     }
   }
 };

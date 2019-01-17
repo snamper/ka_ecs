@@ -14,6 +14,8 @@
 .g-list-table{background-color: #fff;}
 .g-list-table>tbody>tr>td{border:1px solid #dfe6ec;}
 
+.g-inner-table>thead>tr{border-bottom:1px solid #dfe6ec;}
+.g-inner-table>thead>tr>th{ padding: 0.1rem 0;}
 .g-inner-table>tbody>tr{border-bottom:1px solid #dfe6ec; }
 .g-inner-table>tbody>tr:nth-child(even){background-color: #fafafa;}
 .g-inner-table>tbody>tr>td:first-child{width:1.1rem;text-align:right;color:#666;}

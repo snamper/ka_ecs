@@ -150,7 +150,7 @@ export default{
 .fa-chevron-right{background-image: url(../assets/images/page-right.png);background-repeat:  no-repeat;background-position: center 6px;background-size:50%;}
 .m-input-page{height:29px;float:right}
 .m-input-page input{width:66px;height:29px;margin:0 5px;border-radius: 4px;}
-.m-input-page button{height: 28px;background: #fff;outline: none;border: 1px solid #8391a5}
+.m-input-page button{height: 28px;background: #fff;outline: none;border: 1px solid #8391a5;cursor: pointer;}
 .m-input-page button:active{box-shadow: 0 0 5px #8391a5}
 </style>
 

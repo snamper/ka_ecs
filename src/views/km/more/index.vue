@@ -108,7 +108,6 @@ export default{
 }
 .g-more-menu{
 	padding:0.4rem;
-	display: flex;
 }
 .g-more-menu>li{
 	position: relative;
@@ -121,6 +120,7 @@ export default{
 	border-color:#ddd;
 	border-radius: 3px;
 	margin-right: 0.2rem;
+	margin-bottom: 0.2rem;
 }
 .g-more-menu>li>.icon{
 	display: inline-block;

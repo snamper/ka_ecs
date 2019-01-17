@@ -7,37 +7,37 @@
 	<section class="g-audit-menu">
 		<div v-if="off.source==4&&off.auditType==0" class="g-audit-menu-c">
 			<div class="m-menu-div">
-				<router-link :to="{name:'realtime',params:{type:'4,5,6'}}" class="u-bg navBg1"><div>业务订单</div><p><span>点击审核</span></p></router-link>
+				<router-link :to="{path:'4,5,6',params:{type:'4,5,6'}}" append class="u-bg navBg1"><div>业务订单</div><p><span>点击审核</span></p></router-link>
 				<div class="navInfoDiv"><p>待审核<span>{{auditCount.opencard}}</span></p><p>已分配<span>{{auditCount.opencard_}}</span></p></div>
 			</div>
 			<div class="m-menu-div">
-				<router-link :to="{name:'afterwards',params:{type:9}}" class="u-bg navBg11"><div>远特i卡订单</div><p><span>点击审核</span></p></router-link>
+				<router-link :to="{path:'9',params:{type:9}}" append class="u-bg navBg11"><div>远特i卡订单</div><p><span>点击审核</span></p></router-link>
 				<div class="navInfoDiv"><p>待审核<span>{{auditCount.tfOpenCardReal}}</span></p><p>已分配<span>{{auditCount.tfOpenCardReal_}}</span></p></div>
 			</div>
 			<div class="m-menu-div">
-				<router-link :to="{name:'realtime',params:{type:8}}" class="u-bg navBg9"><div>SDK订单</div><p><span>点击审核</span></p></router-link>
+				<router-link :to="{path:'8',params:{type:8}}" append class="u-bg navBg9"><div>SDK订单</div><p><span>点击审核</span></p></router-link>
 				<div class="navInfoDiv"><p>待审核<span>{{auditCount.sdkRealTime}}</span></p><p>已分配<span>{{auditCount.sdkRealTime_}}</span></p></div>
 			</div>
 			<div class="m-menu-div">
-				<router-link :to="{name:'realtime',params:{type:7}}" class="u-bg navBg5"><div>过户办理</div><p><span>点击审核</span></p></router-link>
+				<router-link :to="{path:'7',params:{type:7}}" append class="u-bg navBg5"><div>过户办理</div><p><span>点击审核</span></p></router-link>
 				<div class="navInfoDiv"><p>待审核<span>{{auditCount.transfer}}</span></p><p>已分配<span>{{auditCount.transfer_}}</span></p></div>
 			</div>
 			<div class="m-menu-div">
-				<router-link :to="{name:'realtime',params:{type:1}}" class="u-bg navBg4"><div>实名补录</div><p><span>点击审核</span></p></router-link>
+				<router-link :to="{path:'1',params:{type:1}}" append class="u-bg navBg4"><div>实名补录</div><p><span>点击审核</span></p></router-link>
 				<div class="navInfoDiv"><p>待审核<span>{{auditCount.realNameCollection}}</span></p><p>已分配<span>{{auditCount.realNameCollection_}}</span></p></div>
 			</div>
       		<div class="m-menu-div">
-				<router-link :to="{name:'realtime',params:{type:2}}" class="u-bg navBg12"><div>补换卡</div><p><span>点击审核</span></p></router-link>
+				<router-link :to="{path:'2',params:{type:2}}" append class="u-bg navBg12"><div>补换卡</div><p><span>点击审核</span></p></router-link>
 				<div class="navInfoDiv"><p>待审核<span>{{auditCount.realNameRechCard}}</span></p><p>已分配<span>{{auditCount.realNameRechCard_}}</span></p></div>
 			</div>
 		</div>
 		<div v-if="off.source==4&&off.auditType==1" class="g-audit-menu-c">
 			<div class="m-menu-div">
-				<router-link :to="{name:'afterwards',params:{type:'4,5,6'}}" class="u-bg navBg1"><div>业务订单</div><p><span>点击审核</span></p></router-link>
+				<router-link :to="{path:'4,5,6',params:{type:'4,5,6'}}" append class="u-bg navBg1"><div>业务订单</div><p><span>点击审核</span></p></router-link>
 				<div class="navInfoDiv"><p>待审核<span>{{auditCount.opencardAfterwards}}</span></p><p>已分配<span>{{auditCount.opencard_Afterwards}}</span></p></div>
 			</div>
 			<div class="m-menu-div">
-				<router-link :to="{name:'afterwards',params:{type:9}}" class="u-bg navBg11"><div>远特i卡订单</div><p><span>点击审核</span></p></router-link>
+				<router-link :to="{path:'9',params:{type:9}}" append class="u-bg navBg11"><div>远特i卡订单</div><p><span>点击审核</span></p></router-link>
 				<div class="navInfoDiv"><p>待审核<span>{{auditCount.tfOpenCard}}</span></p><p>已分配<span>{{auditCount.tfOpenCard_}}</span></p></div>
 			</div>
 		</div>

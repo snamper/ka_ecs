@@ -8,22 +8,22 @@
 		<div v-show="off.source==1" class="g-search-menu-c">
 			<div class="m-search-menu">
 				<div class="slide">
-					<router-link :to="{name:'orderSearch_cardItem',params:{type:'doing',id:'null',deviceType:'null'}}" class="slide-c f-c-green">进行中</router-link>
+					<router-link :to="{path:'doing/null/null',params:{type:'doing',id:'null',deviceType:'null'}}" append class="slide-c f-c-green">进行中</router-link>
 				</div>
 			</div>
 			<div class="m-search-menu">
 				<div class="slide">
-					<router-link :to="{name:'orderSearch_cardItem',params:{type:'closed',id:'null',deviceType:'null'}}" class="slide-c f-c-purple">已关闭</router-link>
+					<router-link :to="{path:'closed/null/null',params:{type:'closed',id:'null',deviceType:'null'}}" append class="slide-c f-c-purple">已关闭</router-link>
 				</div>
 			</div>
 			<div class="m-search-menu">
 				<div class="slide">
-					<router-link :to="{name:'orderSearch_cardItem',params:{type:'auditing',id:'null',deviceType:'null'}}" class="slide-c f-c-red">待审核</router-link>
+					<router-link :to="{path:'auditing/null/null',params:{type:'auditing',id:'null',deviceType:'null'}}" append class="slide-c f-c-red">待审核</router-link>
 				</div>
 			</div>
 			<div class="m-search-menu">
 				<div class="slide">
-					<router-link :to="{name:'orderSearch_cardItem',params:{type:'audited',id:'null',deviceType:'null'}}" class="slide-c f-c-blue">已审核</router-link>
+					<router-link :to="{path:'audited/null/null',params:{type:'audited',id:'null',deviceType:'null'}}" append class="slide-c f-c-blue">已审核</router-link>
 				</div>
 			</div>
 		</div>

@@ -172,7 +172,7 @@ export default {
         merchantType: 0, //1,企业；2，个人
         orderStatus: 0, //订单状态
         context1: "", //订单号码
-        context2: "", //充值号码
+        context2: "", //申请人号码
         startTime: "",
         endTime: "",
 		select: 0 ,//条件查询，选择的条件
