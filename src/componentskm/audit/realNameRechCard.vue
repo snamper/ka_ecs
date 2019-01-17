@@ -111,7 +111,7 @@
           <tbody>
             <tr>
               <td class="m-box-img">
-                <ImgZoom :imgData="oldImage"></ImgZoom>
+                <ImgZoom :imgData="imgData"></ImgZoom>
               </td>
             </tr>
           </tbody>
@@ -133,7 +133,6 @@ export default {
   data() {
     return {
       newImage: [],
-      oldImage: [],
       examine: false
     };
   },
@@ -142,8 +141,7 @@ export default {
   },
   created: function() {
     let vm = this;
-    this.oldImage = [];
-    this.oldImage = this.imgData.slice(0, 4);
+    
     vm.examine = this.$parent.$parent.off.examine;
   },
   methods: {
