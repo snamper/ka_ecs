@@ -314,23 +314,20 @@ export default{
 				vm.auditData=vm.list[vm.off.auditIndex];
 
 				if(vm.off.type == 1){//激活商户
-					if(window.location.href.indexOf('192.168')>-1){
-						imgUrl = _CONFIG.dev.REGISTER_MERCHANT_IMAGE_URL;
-					}else imgUrl = _CONFIG.prod.REGISTER_MERCHANT_IMAGE_URL;
 
 					if(vm.auditData.merchantType==1){//企业
 						vm.imgData=[
-							{'src':imgUrl + vm.auditData.doorPictureLeft,'name':'门店照片-左'},
-							{'src':imgUrl + vm.auditData.doorPictureRight,'name':'门店照片-右'},
-							{'src':imgUrl + vm.auditData.handPicture,'name':'手持/免冠证件照'},
-							{'src':imgUrl + vm.auditData.signPicture,'name':'手签名'},
+							{'src':vm.auditData.doorPictureLeft,'name':'门店照片-左'},
+							{'src':vm.auditData.doorPictureRight,'name':'门店照片-右'},
+							{'src':vm.auditData.handPicture,'name':'手持/免冠证件照'},
+							{'src':vm.auditData.signPicture,'name':'手签名'},
 						];
 					}else if(vm.auditData.merchantType==2){//个人
 						vm.imgData=[
-							{'src':imgUrl + vm.auditData.doorPictureLeft,'name':'证件正面'},
-							{'src':imgUrl + vm.auditData.doorPictureRight,'name':'证件反面'},
-							{'src':imgUrl + vm.auditData.handPicture,'name':'手持/免冠证件照'},
-							{'src':imgUrl + vm.auditData.signPicture,'name':'手签名'},
+							{'src':vm.auditData.doorPictureLeft,'name':'证件正面'},
+							{'src':vm.auditData.doorPictureRight,'name':'证件反面'},
+							{'src':vm.auditData.handPicture,'name':'手持/免冠证件照'},
+							{'src':vm.auditData.signPicture,'name':'手签名'},
 						];
 					}
 				}else if(vm.off.type == 2){//商户实名补录
