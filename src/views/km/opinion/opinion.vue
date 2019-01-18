@@ -168,7 +168,7 @@
       init:function(){
         var vm=this,
             type=this.$route.params.type;
-            type=='pending' ? vm.off.type=1 : type=='processing' ? vm.off.type=2 : type=='finish' ? vm.off.type=3 : void(0);
+            type=='pending' ? vm.off.type=1 : type=='doing' ? vm.off.type=2 : type=='finish' ? vm.off.type=3 : void(0);
             vm.form.startTime=laydate.now(0,'YYYY-MM-DD 00:00:00');
             vm.form.endTime=laydate.now(0,'YYYY-MM-DD 23:59:59');
       }
