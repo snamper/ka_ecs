@@ -6,20 +6,17 @@
 		<div v-show="off.source==1" class="g-search-menu-c">
 			<div class="m-search-menu">
 				<div class="slide">
-					<router-link :to="{name:off.name,params:{type:'pending'}}" class="slide-c f-c-green">待处理
-					
-					</router-link>
+					<router-link :to="{path:'pending',params:{type:'pending'}}" append class="slide-c f-c-green">待处理</router-link>
 				</div>
 			</div>
 			<div class="m-search-menu">
 				<div class="slide">
-					<router-link :to="{name:off.name,params:{type:'processing'}}" class="slide-c f-c-purple">进行中
-					</router-link>
+					<router-link :to="{path:'doing',params:{type:'doing'}}" append class="slide-c f-c-purple">进行中</router-link>
 				</div>
 			</div>
 			<div class="m-search-menu">
 				<div class="slide">
-					<router-link :to="{name:off.name,params:{type:'finish'}}" class="slide-c f-c-red">已完成</router-link>
+					<router-link :to="{path:'finish',params:{type:'finish'}}" append class="slide-c f-c-red">已完成</router-link>
 				</div>
 			</div>
 		</div>
@@ -36,7 +33,6 @@ export default{
 		return {
 			off:{
 				source:0,
-				name:"opinion_item"
 			}
 		}
 	},
@@ -75,7 +71,6 @@ export default{
 				this.off.source=1;
 			}else if(path.indexOf('/homek/opinion/')>=0){
 				this.off.source=0;
-				this.off.name="opinion_item";
 			}
 		}
 	}

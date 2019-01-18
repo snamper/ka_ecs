@@ -393,6 +393,12 @@
             case 'closed':
               lastBreadCrumbName = '已关闭'
               break;
+            case 'pending':
+              lastBreadCrumbName = '待处理'
+              break;
+            case 'finish':
+              lastBreadCrumbName = '已完成'
+              break;
             case '4,5,6':
               lastBreadCrumbName = '业务订单'
               break;
@@ -439,8 +445,8 @@
               break;
           } 
         }
+
         if(lastBreadCrumbName){
-          
           if(
             (currentParams.source && currentParams.type) || currentPath == '/homek/orderSearch/card/audited/null/null'// 订单审核路径和订单查询子项特殊处理
           ){

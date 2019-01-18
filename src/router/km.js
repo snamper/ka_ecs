@@ -155,7 +155,7 @@ export default {
       children: [{
         path: ':type',
         component: () => import('@/views/km/opinion/opinion'),
-        name: 'item'
+        name: '意见反馈子项'
       }]
     },
     {
