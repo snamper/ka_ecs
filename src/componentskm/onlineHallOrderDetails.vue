@@ -43,7 +43,7 @@
 <script>
   import "../assets/km/css/cardOrderDetails.css";
   import {reqCommonMethod} from "../config/service.js";  
-  import {errcrDeal} from "../config/utils.js";
+  import {errcrDeal,imgUrlDeal} from "../config/utils.js";
   import ImgZoom from '../componentskm/ImgZoom';
   import detailsView from '../componentskm/cardOrderDetailsAlert';
   export default{
@@ -68,9 +68,9 @@
     created:function(){
       var vm=this;
       vm.imgData=[
-        {'src':vm.list.fourthImage,'name':'手持/免冠'},
-        {'src':vm.list.papersImage,'name':'正面'},
-        {'src':vm.list.backImage,'name':'反面'}
+        {'src':imgUrlDeal(vm.list.fourthImage),'name':'手持/免冠'},
+        {'src':imgUrlDeal(vm.list.papersImage),'name':'正面'},
+        {'src':imgUrlDeal(vm.list.backImage),'name':'反面'}
       ];
     },
     methods:{

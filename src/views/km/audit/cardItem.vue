@@ -254,7 +254,8 @@ import "../../../assets/km/css/audit.css";
 import {
   errorDeal,
   getDateTime,
-  translateData
+  translateData,
+  imgUrlDeal
 } from "../../../config/utils.js";
 import { reqCommonMethod } from "../../../config/service.js";
 import RealTimeCollection from "../../../componentskm/audit/realTimeCollection";
@@ -649,114 +650,114 @@ export default {
         if (vm.off.itemType == 7) {
           //过户办理
           this.$set(vm.imgData, 0, {
-            src: vm.auditData.frontImageOld,
+            src: imgUrlDeal(vm.auditData.frontImageOld),
             name: "原机主正面照片"
           });
           this.$set(vm.imgData, 1, {
-            src: vm.auditData.backImageOld,
+            src: imgUrlDeal(vm.auditData.backImageOld),
             name: "原机主反面照片"
           });
           this.$set(vm.imgData, 2, {
-            src: vm.auditData.handImageOld,
+            src: imgUrlDeal(vm.auditData.handImageOld),
             name: "原机主手持/免冠照片"
           });
           this.$set(vm.imgData, 3, {
-            src: vm.auditData.imageUrl,
+            src: imgUrlDeal(vm.auditData.imageUrl),
             name: "新机主正面照片"
           });
           this.$set(vm.imgData, 4, {
-            src: vm.auditData.backImageUrl,
+            src: imgUrlDeal(vm.auditData.backImageUrl),
             name: "新机主反面照片"
           });
           this.$set(vm.imgData, 5, {
-            src: vm.auditData.handImage,
+            src: imgUrlDeal(vm.auditData.handImage),
             name: "新机主手持/免冠照片"
           });
           this.$set(vm.imgData, 6, {
-            src: vm.auditData.signImage,
+            src: imgUrlDeal(vm.auditData.signImage),
             name: "新机主手签名照片"
           });
           this.$set(vm.imgData, 7, {
-            src: vm.auditData.livingImgUrl,
+            src: imgUrlDeal(vm.auditData.livingImgUrl),
             name: "活体识别照片"
           });
         } else if (vm.off.itemType == 1) {
           //实名补登
           this.$set(vm.imgData, 0, {
-            src: vm.auditData.oldReqParam.imageName,
+            src: imgUrlDeal(vm.auditData.oldReqParam.imageName),
             name: "原正面照片"
           });
           this.$set(vm.imgData, 1, {
-            src: vm.auditData.oldReqParam.backImageName,
+            src: imgUrlDeal(vm.auditData.oldReqParam.backImageName),
             name: "原反面照片"
           });
           this.$set(vm.imgData, 2, {
-            src: vm.auditData.oldReqParam.handImageName,
+            src: imgUrlDeal(vm.auditData.oldReqParam.handImageName),
             name: "原手持/免冠照片"
           });
           this.$set(vm.imgData, 3, {
-            src: vm.auditData.reqParam.imageName,
+            src: imgUrlDeal(vm.auditData.reqParam.imageName),
             name: "正面照片"
           });
           this.$set(vm.imgData, 4, {
-            src: vm.auditData.reqParam.backImageName,
+            src: imgUrlDeal(vm.auditData.reqParam.backImageName),
             name: "反面照片"
           });
           this.$set(vm.imgData, 5, {
-            src: vm.auditData.reqParam.handImageName,
+            src: imgUrlDeal(vm.auditData.reqParam.handImageName),
             name: "手持/免冠照片"
           });
           this.$set(vm.imgData, 6, {
-            src: vm.auditData.reqParam.signImageName,
+            src: imgUrlDeal(vm.auditData.reqParam.signImageName),
             name: "手签名照片"
           });
           this.$set(vm.imgData, 7, {
-            src: vm.auditData.reqParam.livingIdentificationImagePath,
+            src: imgUrlDeal(vm.auditData.reqParam.livingIdentificationImagePath),
             name: "活体识别照片"
           });
         } else if (vm.off.itemType == 2) {
           //补换卡
           this.$set(vm.imgData, 0, {
-            src: vm.auditData.reqParam.imageName,
+            src: imgUrlDeal(vm.auditData.reqParam.imageName),
             name: "正面照片"
           });
           this.$set(vm.imgData, 1, {
-            src: vm.auditData.reqParam.backImageName,
+            src: imgUrlDeal(vm.auditData.reqParam.backImageName),
             name: "反面照片"
           });
           this.$set(vm.imgData, 2, {
-            src: vm.auditData.reqParam.handImageName,
+            src: imgUrlDeal(vm.auditData.reqParam.handImageName),
             name: "手持/免冠照片"
           });
           this.$set(vm.imgData, 3, {
-            src: vm.auditData.reqParam.signImageName,
+            src: imgUrlDeal(vm.auditData.reqParam.signImageName),
             name: "手签名照片"
           });
         } else {
           this.$set(vm.imgData, 0, {
-            src: vm.auditData.imageUrl,
+            src: imgUrlDeal(vm.auditData.imageUrl),
             name: "正面照"
           });
           this.$set(vm.imgData, 1, {
-            src: vm.auditData.backImageUrl,
+            src: imgUrlDeal(vm.auditData.backImageUrl),
             name: "反面照"
           });
           this.$set(vm.imgData, 2, {
-            src: vm.auditData.handImageUrl,
+            src: imgUrlDeal(vm.auditData.handImageUrl),
             name: "手持/免冠照"
           });
           this.$set(vm.imgData, 3, {
-            src: vm.auditData.livingImgUrl,
+            src: imgUrlDeal(vm.auditData.livingImgUrl),
             name: "活体识别"
           });
           this.$set(vm.imgData, 4, {
-            src: vm.auditData.signImageUrl || vm.auditData.signImgUrl,
+            src: imgUrlDeal(vm.auditData.signImageUrl || vm.auditData.signImgUrl),
             name: "手签名"
           });
           if (vm.off.itemType == "4,5,6") {
             //业务订单
             this.$set(vm.imgData, 5, {
-              src: vm.auditData.headImageName,
+              src: imgUrlDeal(vm.auditData.headImageName),
               name: "证件照片"
             });
           }

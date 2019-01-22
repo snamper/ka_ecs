@@ -66,7 +66,7 @@ table.g-inner-table tbody tr td:first-child{
 import "../../../assets/km/css/cardOrderDetails.css";
 import "../../../assets/km/css/audit.css";
 import {reqCommonMethod} from "../../../config/service.js";
-import {errorDeal} from "../../../config/utils.js";
+import {errorDeal,imgUrlDeal} from "../../../config/utils.js";
 import ImgZoom from '../../../componentskm/ImgZoom';
 import detailsView from '../../../componentskm/cardOrderDetailsAlert';
 
@@ -98,9 +98,8 @@ export default{
 	},
 	created:function(){
 		var vm=this;
-        // vm.imgData=[{'src':"ka_ecs/src/assets/images/admin.png",'name':'手签名qqqq'}];
         vm.getAuditList();
-        vm.imgData=[{'src':vm.auditData.img,'name':'手签名'}];
+        vm.imgData=[{'src':imgUrlDeal(vm.auditData.img),'name':'手签名'}];
 	},
 	methods:{
           getAuditList:function(){//获取订单
@@ -131,9 +130,7 @@ export default{
 			vm.auditData='';
 			if(len&&(vm.off.auditIndex+1)<=len){
 				vm.auditData=vm.list[vm.off.auditIndex];
-                vm.imgData=[
-                    {'src':vm.auditData.img,'name':'手签名'},
-                ];
+                vm.imgData=[{'src':imgUrlDeal(vm.auditData.img),'name':'手签名'},];
 				vm.off.auditIndex++;
 			}
 		},agree:function(){//审核同意

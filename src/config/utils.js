@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import store from '../store';
 
 /**
@@ -21,6 +23,47 @@ export const errorDeal=(res,cb)=>{
         msgSkin:'error',
     });
 };
+/**
+ * 图片地址处理函数
+ */
+export const imgUrlDeal = (val, source = '/') => {
+    let host = window.location.host,
+        env = 1;
+
+    if(host.indexOf('km.') > -1){//3,正式环境;
+        env = 3;
+    }else if(host.indexOf('kmsdk.') > -1){//2,线上测试环境
+        env = 2;
+    }else {//1,测试环境;
+        env = 1;
+        host = 'https://192.168.10.110';
+    }
+
+    const doIt = (url) => {
+        let temp = '/' + source,// eas,ums,tas
+            n = url.match(new RegExp("^([\\S]*)/yuantel/2017(\\d{4}/[\\S]*)$"));// 匹配/yuantel/2017,并截取其后的字符
+
+        if(null != n){//匹配到
+            temp = 'https://datayuantel.oss-cn-hangzhou.aliyuncs.com' + '/yuantel/2017' + n[2];
+        }else if(/http:\/\/|https:\/\//.test(url)){//绝对路径
+            temp = url;
+        }else {
+            temp = host + temp + url;
+        }
+
+        if(!url)temp = '';
+
+        return temp
+    }
+    if(typeof val === 'string'){//单个地址
+        return doIt(val)
+    }else {//数组对象
+        val.forEach(item => {
+            item.src = doIt(item.src);
+        });
+        return val;
+    }
+}
 /**
  * 节流函数
  */

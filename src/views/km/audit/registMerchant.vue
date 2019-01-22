@@ -52,10 +52,8 @@
 									</td>
 									<td>{{auditData.businessLicence}}
 										<!-- <button class="gztBtn" @click="gztBtn" v-show="auditData.merchantType==2">国政通检验</button> -->
-									</td>
-								</tr>
+									</td></tr>
 									<tr v-show="auditData.merchantType==2"><td>证件有效期：</td><td>{{auditData.idCardPeriod}}</td></tr>
-
 									<tr><td>商户注册电话：</td><td>{{auditData.phone}}</td></tr>
 									<tr><td>门店地址：</td><td>{{auditData.storeAddress}}</td></tr>
 									<tr><td>证件地址：</td><td>{{auditData.address}}</td></tr>
@@ -316,19 +314,19 @@ export default{
 				if(vm.off.type == 1){//激活商户
 
 					if(vm.auditData.merchantType==1){//企业
-						vm.imgData=[
+						vm.imgData=imgUrlDeal([
 							{'src':vm.auditData.doorPictureLeft,'name':'门店照片-左'},
 							{'src':vm.auditData.doorPictureRight,'name':'门店照片-右'},
 							{'src':vm.auditData.handPicture,'name':'手持/免冠证件照'},
 							{'src':vm.auditData.signPicture,'name':'手签名'},
-						];
+						]);
 					}else if(vm.auditData.merchantType==2){//个人
-						vm.imgData=[
+						vm.imgData=imgUrlDeal([
 							{'src':vm.auditData.doorPictureLeft,'name':'证件正面'},
 							{'src':vm.auditData.doorPictureRight,'name':'证件反面'},
 							{'src':vm.auditData.handPicture,'name':'手持/免冠证件照'},
 							{'src':vm.auditData.signPicture,'name':'手签名'},
-						];
+						]);
 					}
 				}else if(vm.off.type == 2){//商户实名补录
 					vm.newInfo = vm.auditData.newInfo;
