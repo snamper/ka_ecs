@@ -23,7 +23,7 @@
   </section>
 </template>
 <script type="text/javascript">
-import { removeStore, errorDeal, getStore, powerKm } from "../config/utils";
+import { removeStore, errorDeal, getStore, powerKm, imgUrlDeal } from "../config/utils";
 import { getSignCode, signIn } from "../config/service.js";
 import { mapMutations } from "vuex";
 import hexMD5 from "../assets/km/js/md5.min.js";
@@ -68,6 +68,7 @@ export default {
     };
   },
   mounted: function() {
+    window.imgUrlDeal = imgUrlDeal
     this.getVlidateCode();
   },
   methods: {
