@@ -133,6 +133,9 @@ export default{
 		close() {
 			this.$parent.off.details = false;
 		},
+		imgUrlDeal(url,source){
+			return imgUrlDeal(url,source)
+		}
 	}
 }
 </script>
