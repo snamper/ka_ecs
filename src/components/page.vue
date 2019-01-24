@@ -115,17 +115,56 @@ export default{
 
 <style scoped>
 .page-div{ padding:20px; text-align: right; }
-.pagination {display:inline-block;padding-left:0;border-radius:4px;}
-.pagination>li {display:inline;}
-.pagination>li>a{position:relative;float:left;color: #2e3e4e;padding:7px 12px;margin-left:-1px;line-height:1.428571429;text-decoration:none;background-color:#ffffff;border:1px solid #dddddd;}
-.pagination>li:first-child>a{margin-left:0;padding: 0;border-bottom-left-radius:4px;border-top-left-radius:4px;}
-.pagination>li:last-child>a{border-top-right-radius:4px;border-bottom-right-radius:4px;padding: 0;}
+.pagination {
+	display:inline-block;
+	padding-left:0;
+	border-radius:4px;
+	}
+.pagination>li {
+	display:inline-block;
+	vertical-align: top;
+}
+.pagination>li>a{
+	position:relative;
+	display:inline-block;
+	vertical-align: top;
+	color: #2e3e4e;
+	padding:0 15px;
+	font-size:14px;
+	margin-left:-1px;
+	height: 35px;
+	line-height:33px;
+	text-decoration:none;
+	background-color:#ffffff;
+	border:1px solid #dddddd;
+	text-align: center;
+	cursor: pointer;
+}
+.pagination>li:first-child>a{
+	margin-left:0;
+	padding: 0;
+	border-bottom-left-radius:4px;
+	border-top-left-radius:4px;
+}
+.pagination>li:last-child>a{
+	border-top-right-radius:4px;
+	border-bottom-right-radius:4px;
+	padding: 0;
+}
 .pagination>li>a:hover, .pagination>li>a:focus{background-color:#eeeeee;}
+.pagination>li>a>i{ display: inline-block;vertical-align: top; padding:0px 20px; height: 35px;}
 .pagination>.active>a, .pagination>.active>a:hover, .pagination>.active>a:focus{z-index:2;color:#ffffff;cursor:default;background-color:#20a0ff;border-color:#20a0ff;}
-.pagination-sm>li>a{padding:5px 10px;font-size:12px; cursor: pointer;}
+
+.pagination-sm>li>a{
+	padding:0 10px;
+	font-size:13px;
+	height: 30px;
+	line-height:28px;
+	cursor: pointer;
+}
 .pagination-sm>li:first-child>a{border-bottom-left-radius:3px;border-top-left-radius:3px;}
 .pagination-sm>li:last-child>a{border-top-right-radius:3px;border-bottom-right-radius:3px;}
-.pagination-sm>li>a>i{ display: inline-block;vertical-align: middle; padding:0px 15px; height: 27px;}
+.pagination-sm>li>a>i{ padding:0px 15px; height: 30px;}
 .fa-chevron-left{ background-image: url(~/assets/img/page-left.png);background-repeat: no-repeat;background-position: center 6px;background-size:50%; }
 .fa-chevron-right{background-image: url(~/assets/img/page-right.png);background-repeat:  no-repeat;background-position: center 6px;background-size:50%;}
 </style>

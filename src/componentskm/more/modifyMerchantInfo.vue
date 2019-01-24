@@ -183,7 +183,7 @@
 <script>
 import "../../assets/km/css/cardOrderDetails.css";
 import { reqCommonMethod } from "../../config/service";  
-import { errorDeal,getStore } from '../../config/utils';
+import { errorDeal,getStore,imgUrlDeal } from '../../config/utils';
 import ImgZoom from '../ImgZoom';
 import FileUpload  from '@/components/file-upload';
 import imgToBase64 from '@/utils/imgToBase64';
@@ -242,13 +242,12 @@ export default{
 	},
 
 	created:function(){
-		let vm=this,imgUrl=_CONFIG ? _CONFIG[_CONFIG.env].REGISTER_MERCHANT_IMAGE_URL : '';
 
 		vm.userInfo=getStore('KA_ECS_USER');
 		vm.imgData={
-			frontImageUrl:imgUrl+vm.merchantInfo.frontImageUrl,
-			backImageUrl:imgUrl+vm.merchantInfo.backImageUrl,
-			handImageUrl:imgUrl+vm.merchantInfo.handImageUrl
+			frontImageUrl:imgUrlDeal(vm.merchantInfo.frontImageUrl,'ums'),
+			backImageUrl:imgUrlDeal(vm.merchantInfo.backImageUrl,'ums'),
+			handImageUrl:imgUrlDeal(vm.merchantInfo.handImageUrl,'ums'),
 		};
 
 		let modify_keys=Object.keys(vm.modifyInfo);

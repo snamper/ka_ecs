@@ -95,7 +95,7 @@
 <script>
 import "../assets/km/css/cardOrderDetails.css";
 import ImgZoom from "./ImgZoom";
-import { getDateTime,translateData } from "../config/utils.js";
+import { getDateTime,translateData,imgUrlDeal } from "../config/utils.js";
 
 export default {
   props: {
@@ -112,31 +112,14 @@ export default {
   },
 
   created: function() {
-    let vm = this,
-      imgUrl;
+    let vm = this;
 
-    if (window.location.href.indexOf("192.168") > -1) {
-      imgUrl = _CONFIG.dev.REGISTER_MERCHANT_IMAGE_URL;
-    } else imgUrl = _CONFIG.prod.REGISTER_MERCHANT_IMAGE_URL;
-
-    vm.imgData = [
-      {
-        src: vm.list.doorPictureLeft ? imgUrl + vm.list.doorPictureLeft : "",
-        name: "门店照片-左"
-      },
-      {
-        src: vm.list.doorPictureRight ? imgUrl + vm.list.doorPictureRight : "",
-        name: "门店照片-右"
-      },
-      {
-        src: vm.list.handPicture ? imgUrl + vm.list.handPicture : "",
-        name: "手持/免冠证件照"
-      },
-      {
-        src: vm.list.signPicture ? imgUrl + vm.list.signPicture : "",
-        name: "手签名"
-      }
-    ];
+    vm.imgData = imgUrlDeal([
+      { src: vm.list.doorPictureLeft, name: "门店照片-左" },
+      { src: vm.list.doorPictureRight, name: "门店照片-右" },
+      { src: vm.list.handPicture, name: "手持/免冠证件照" },
+      { src: vm.list.signPicture, name: "手签名" }
+    ],'ums');
 
     if (vm.list.merchantType == 2) {
       //个人

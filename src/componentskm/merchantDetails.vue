@@ -30,10 +30,11 @@
                         <td><span>有效总次数：</span>{{ _ajaxData.details.totalNums }}</td>
                       </tr>
                       <tr>
-                        <td><span>渠道ID：</span>{{ _ajaxData.details.dealerId }}
+                        <td><span>渠道ID：</span><span>{{ _ajaxData.details.dealerId }}</span>
                           <b v-if="_ajaxData.details.status==0" class="f-c-green">已激活</b>
                           <b v-if="_ajaxData.details.status==1" class="f-c-yellow">待激活</b>
                           <b v-if="_ajaxData.details.status==2" class="f-c-blue">激活待审核</b>
+                          <b v-if="_ajaxData.details.fillStatus != 0">[补录]</b>
                         </td>
                         <td><span>开卡成功次数：</span>{{ _ajaxData.details.successNums }}</td>
                       </tr>
@@ -362,7 +363,8 @@
 <script>
   import {
     getDateTime,
-    errorDeal
+    errorDeal,
+    imgUrlDeal
   } from "../../src/config/utils.js"
   import exclusiveNumber from "./exclusiveNumber";
   import {
@@ -392,21 +394,22 @@
     methods: {
       lookMerchantImg() {
         const vm = this;
-        let imgUrl = _CONFIG ? _CONFIG[_CONFIG.env].REGISTER_MERCHANT_IMAGE_URL : '';
+
         let merchantType = vm._ajaxData.details.merchantType;
-        vm.$parent.merchantImgData = [{
-            'src': vm._ajaxData.details.frontImageUrl ? imgUrl + vm._ajaxData.details.frontImageUrl : '',
+        vm.$parent.merchantImgData = imgUrlDeal([
+          {
+            'src': vm._ajaxData.details.frontImageUrl,
             'name': merchantType == '企业' ? '门店左照片' : '正面照片'
           },
           {
-            'src': vm._ajaxData.details.backImageUrl ? imgUrl + vm._ajaxData.details.backImageUrl : '',
+            'src': vm._ajaxData.details.backImageUrl,
             'name': merchantType == '企业' ? '门店右照片' : '反面照片'
           },
           {
-            'src': vm._ajaxData.details.handImageUrl ? imgUrl + vm._ajaxData.details.handImageUrl : '',
+            'src': vm._ajaxData.details.handImageUrl,
             'name': '手持/免冠照片'
           }
-        ]
+        ],'ums');
         vm.$parent.closePop(1);
       },
       sellScopePower() {

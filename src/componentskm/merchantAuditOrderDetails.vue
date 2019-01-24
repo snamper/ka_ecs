@@ -64,7 +64,7 @@
 <script>
 import "../assets/km/css/cardOrderDetails.css";
 import {reqCommonMethod} from "../config/service.js";
-import {errorDeal} from "../config/utils.js";
+import {errorDeal,imgUrlDeal} from "../config/utils.js";
 import ImgZoom from '../componentskm/ImgZoom';
 import detailsView from '../componentskm/cardOrderDetailsAlert';
 export default{
@@ -88,9 +88,7 @@ export default{
 	},
 	created:function(){
 		var vm=this;
-        vm.imgData=[{'src':vm.list.img,'name':'手签名'}];
-        // vm.imgData=[{'src':"ka_ecs/src/assets/images/admin.png",'name':'手签名qqqq'}];
-        
+        vm.imgData=[{'src':imgUrlDeal(vm.list.img),'name':'手签名'}];
 	},
 	methods:{
 		close:function(){

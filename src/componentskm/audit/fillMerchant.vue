@@ -22,6 +22,10 @@
 							</thead>
 							<tbody>
 								<tr><td>订单号码：</td><td>{{ oldInfo.orderId }}</td></tr>
+								<tr><td>订单来源：</td><td>
+									<span v-if="oldInfo.sourceType == 1">卡盟APP</span>
+									<span v-if="oldInfo.sourceType == 2">新零售APP</span>
+								</td></tr>
 								<tr><td>生成时间：</td><td>{{ getDateTime(oldInfo.createTime)[6] }}</td></tr>
 								<tr><td>商户属性：</td><td>{{ oldInfo.merchantType == 1 ? '企业' : '个人' }}</td></tr>
 								<tr><td>商户类别：</td><td>{{ oldInfo.nickname }}</td></tr>
@@ -36,10 +40,10 @@
 								<tr>
 									<td colspan="2" style="width:auto;">
 										<div class="m-img-list">
-											<div :style="{backgroundImage:`url(${ oldInfo.doorPictureLeft })`}"><a target="_blank" :href="newInfo.doorPictureLeft"></a></div>
-											<div :style="{backgroundImage:`url(${ oldInfo.doorPictureRight })`}"><a target="_blank" :href="newInfo.doorPictureRight"></a></div>
-											<div :style="{backgroundImage:`url(${ oldInfo.handPicture })`}"><a target="_blank" :href="newInfo.handPicture"></a></div>
-											<div :style="{backgroundImage:`url(${ oldInfo.signPicture })`}"><a target="_blank" :href="newInfo.signPicture"></a></div>
+											<div :style="{backgroundImage:`url(${ imgUrlDeal(oldInfo.doorPictureLeft) })`}"><a target="_blank" :href="newInfo.doorPictureLeft"></a></div>
+											<div :style="{backgroundImage:`url(${ imgUrlDeal(oldInfo.doorPictureRight) })`}"><a target="_blank" :href="newInfo.doorPictureRight"></a></div>
+											<div :style="{backgroundImage:`url(${ imgUrlDeal(oldInfo.handPicture) })`}"><a target="_blank" :href="newInfo.handPicture"></a></div>
+											<div :style="{backgroundImage:`url(${ imgUrlDeal(oldInfo.signPicture) })`}"><a target="_blank" :href="newInfo.signPicture"></a></div>
 										</div>
 									</td>
 								</tr>
@@ -56,6 +60,10 @@
 							</thead>
 							<tbody>
 								<tr><td>订单号码：</td><td>{{ newInfo.orderId }}</td></tr>
+								<tr><td>订单来源：</td><td>
+									<span v-if="newInfo.sourceType == 1">卡盟APP</span>
+									<span v-if="newInfo.sourceType == 2">新零售APP</span>
+								</td></tr>
 								<tr><td>生成时间：</td><td>{{ getDateTime(newInfo.createTime)[6] }}</td></tr>
 								<tr><td>商户属性：</td><td>{{ newInfo.merchantType == 1 ? '企业' : '个人' }}</td></tr>
 								<tr><td>商户类别：</td><td>{{ newInfo.nickname }}</td></tr>
@@ -70,10 +78,10 @@
 								<tr>
 									<td colspan="2" style="width:auto;">
 										<div class="m-img-list">
-											<div :style="{backgroundImage:`url(${ newInfo.doorPictureLeft })`}"><a target="_blank" :href="newInfo.doorPictureLeft"></a></div>
-											<div :style="{backgroundImage:`url(${ newInfo.doorPictureRight })`}"><a target="_blank" :href="newInfo.doorPictureRight"></a></div>
-											<div :style="{backgroundImage:`url(${ newInfo.handPicture })`}"><a target="_blank" :href="newInfo.handPicture"></a></div>
-											<div :style="{backgroundImage:`url(${ newInfo.signPicture })`}"><a target="_blank" :href="newInfo.signPicture"></a></div>
+											<div :style="{backgroundImage:`url(${ imgUrlDeal(newInfo.doorPictureLeft) })`}"><a target="_blank" :href="newInfo.doorPictureLeft"></a></div>
+											<div :style="{backgroundImage:`url(${ imgUrlDeal(newInfo.doorPictureRight) })`}"><a target="_blank" :href="newInfo.doorPictureRight"></a></div>
+											<div :style="{backgroundImage:`url(${ imgUrlDeal(newInfo.handPicture) })`}"><a target="_blank" :href="newInfo.handPicture"></a></div>
+											<div :style="{backgroundImage:`url(${ imgUrlDeal(newInfo.signPicture) })`}"><a target="_blank" :href="newInfo.signPicture"></a></div>
 										</div>
 									</td>
 								</tr>
@@ -88,7 +96,7 @@
 </template>
 <script>
 import comApi from '@/comApi/';
-import { getDateTime } from '@/config/utils.js';
+import { getDateTime,imgUrlDeal } from '@/config/utils.js';
 
 export default{
 	name:'fillMercahnt',
@@ -125,6 +133,9 @@ export default{
 		close() {
 			this.$parent.off.details = false;
 		},
+		imgUrlDeal(url,source){
+			return imgUrlDeal(url,source)
+		}
 	}
 }
 </script>

@@ -22,6 +22,14 @@
 			</div>
 		</section>
 		<section class="form-c">
+      <div class="row">
+				<span class="dp">商户来源：</span>
+				<div class="m-form-radio">
+					<label><span class="radio"><input value="0" type="radio" v-model="form.sourceType"><span></span></span><span class="text">全部</span></label>
+					<label><span class="radio"><input value="1" type="radio" v-model="form.sourceType"><span></span></span><span class="text">卡盟</span></label>
+					<label><span class="radio"><input value="2" type="radio" v-model="form.sourceType"><span></span></span><span class="text">新零售</span></label>
+				</div>
+			</div>
 			<div class="row">
 				<span class="dp">商户类型：</span>
 				<div class="m-form-radio">
@@ -88,6 +96,7 @@
 					<th>订单号</th>
 					<th>申请时间</th>
 					<th>商户类型</th>
+          <th>商户来源</th>
 					<th>申请人号码</th>
 					<th>审核方式</th>
 					<th>订单状态</th>
@@ -106,6 +115,10 @@
 					<td>
 						<span v-show="todo.merchantType==1">企业</span>
 						<span v-show="todo.merchantType==2">个人</span>
+					</td>
+          <td>
+						<span v-show="todo.sourceType==1">卡盟</span>
+						<span v-show="todo.sourceType==2">新零售</span>
 					</td>
 					<td>{{todo.phone}}</td>
 					<td>
@@ -159,6 +172,7 @@ export default {
         startTime: "",
         endTime: "",
         select: 0 ,//条件查询，选择的条件
+        sourceType:0,//商户来源
       },
       list: "", //查询数据
       oldInfo: {},
@@ -224,7 +238,8 @@ export default {
         sql += " AND A.merchant_type=" + vm.form.merchantType;
       if (vm.form.auditType != 0)
         sql += " AND A.audit_type=" + vm.form.auditType;
-
+      if(vm.form.sourceType != 0)
+        sql += " AND A.source_type=" + vm.form.sourceType;
       if (select == 1) {
         sql += ' AND A.order_id="' + context + '"';
       } else if (select == 2) {
