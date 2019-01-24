@@ -26,7 +26,7 @@ export const errorDeal=(res,cb)=>{
 /**
  * 图片地址处理函数
  */
-export const imgUrlDeal = (val, source = '/') => {
+export const imgUrlDeal = (val = '', source = '/') => {
     let host = window.location.host,
         env = 1;
 
