@@ -26,10 +26,9 @@ export const errorDeal=(res,cb)=>{
 /**
  * 图片地址处理函数
  */
-export const imgUrlDeal = (val = '', source = '/') => {
+export const imgUrlDeal = (val, source = '/') => {
     let host = 'https://' + window.location.host,
         env = 1;
-
     if(host.indexOf('km.') > -1){//3,正式环境;
         env = 3;
     }else if(host.indexOf('kmsdk.') > -1){//2,线上测试环境
@@ -56,10 +55,10 @@ export const imgUrlDeal = (val = '', source = '/') => {
         return temp
     }
     if(typeof val === 'string'){//单个地址
-        return doIt(val)
+        return doIt(val || '')
     }else {//数组对象
         val.forEach(item => {
-            item.src = doIt(item.src);
+            item.src = doIt(item.src || '');
         });
         return val;
     }
