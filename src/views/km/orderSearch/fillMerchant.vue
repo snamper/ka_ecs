@@ -111,7 +111,9 @@
 				<tr v-for="(todo,index) in list" :key="index">
 					<td>{{((pageNum-1)*10+(index+1))}}</td>
 					<td>{{todo.orderId}}</td>
-					<td>{{getDateTime(todo.createTime)[6]}}</td>
+					<td>{{getDateTime(todo.createTime)[8]}}<br>
+              {{getDateTime(todo.createTime)[5]}}
+          </td>
 					<td>
 						<span v-show="todo.merchantType==1">企业</span>
 						<span v-show="todo.merchantType==2">个人</span>
@@ -136,8 +138,13 @@
 					</td>
 					<td>{{todo.companyName}}</td>
 					<td>{{todo.userName}}</td>
-					<td>{{getDateTime(todo.auditTime)[6]}}</td>
-					<td>{{todo.customer}}</td>
+					<td>{{getDateTime(todo.auditTime)[8]}}<br>
+              {{getDateTime(todo.auditTime)[5]}}
+          </td>
+					<td>
+            {{todo.customerName}}<br>
+            {{todo.customer}}
+          </td>
 					<td><a @click="details(index)" class="fCBlue" href="javascript:;">详情</a></td>
 				</tr>
 			</tbody>
