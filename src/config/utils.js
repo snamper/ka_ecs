@@ -27,7 +27,7 @@ export const errorDeal=(res,cb)=>{
  * 图片地址处理函数
  */
 export const imgUrlDeal = (val = '', source = '/') => {
-    let host = window.location.host,
+    let host = 'https://' + window.location.host,
         env = 1;
 
     if(host.indexOf('km.') > -1){//3,正式环境;
