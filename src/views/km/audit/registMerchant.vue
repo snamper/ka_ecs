@@ -107,7 +107,7 @@ import {reqCommonMethod} from "@/config/service.js";
 import { mapState } from 'vuex';
 import ImgZoom from '@/componentskm/ImgZoom';
 import FillMerchant from '@/componentskm/audit/fillMerchant';
-import { getDateTime, errorDeal } from "@/config/utils.js";
+import { getDateTime, errorDeal, imgUrlDeal } from "@/config/utils.js";
 export default{
 	data (){
 		return {
