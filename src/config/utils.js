@@ -56,7 +56,7 @@ export const imgUrlDeal = (val, source = '/') => {
     }
     if(typeof val === 'string'){//单个地址
         return doIt(val || '')
-    }else {//数组对象
+    }else if(typeof val === 'object' ){//数组对象
         val.forEach(item => {
             item.src = doIt(item.src || '');
         });

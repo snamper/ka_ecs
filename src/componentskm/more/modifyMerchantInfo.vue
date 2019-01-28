@@ -242,7 +242,8 @@ export default{
 	},
 
 	created:function(){
-
+		const vm = this;
+		
 		vm.userInfo=getStore('KA_ECS_USER');
 		vm.imgData={
 			frontImageUrl:imgUrlDeal(vm.merchantInfo.frontImageUrl,'ums'),
